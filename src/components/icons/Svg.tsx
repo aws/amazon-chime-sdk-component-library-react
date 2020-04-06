@@ -33,7 +33,7 @@ const Svg: React.SFC<React.SVGAttributes<HTMLOrSVGElement>> = ({
       width={width}
       {...otherProps}
     >
-      <g fillRule="evenodd" fill="currentColor">
+      <g fillRule='evenodd' fill='currentColor'>
         {children}
       </g>
     </svg>

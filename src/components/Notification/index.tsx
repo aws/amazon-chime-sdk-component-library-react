@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { StyledNotification, StyledButton } from './Styled';
+import { StyledNotification } from './Styled';
 import { Caution, Check, Information } from '../icons';
 import { Button } from '../Button';
 
@@ -42,10 +42,10 @@ export const Notification: React.FC<NotificationProps> = props => {
       size={size}
       {...props}
     >
-      <div className="icon">{icon}</div>
-      <div className="message">{children}</div>
+      <div className='icon'>{icon}</div>
+      <div className='message'>{children}</div>
       {onClose && (
-        <Button className="button" addStyles={StyledButton} onClick={onClose} label={closeText} />
+        <Button className='button' variant='secondary' onClick={onClose} label={closeText} />
       )}
     </StyledNotification>
   );

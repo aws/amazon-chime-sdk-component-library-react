@@ -4,7 +4,7 @@ import { VideoTileProps } from './';
 
 export const StyledVideoTile = styled.div<VideoTileProps>`
   width: 100%;
-  background: #1b1c20;
+  background: ${props => props.theme.colors.greys.grey100};
   position: relative;
   display: inline-block;
   margin: 1%;
@@ -19,7 +19,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
   &:after {
     content: '';
     position: absolute;
-    box-shadow: 0 1rem 2.5rem 0 black;
+    box-shadow: 0 1rem 2.5rem 0 ${props => props.theme.colors.greys.black};
     opacity: 0;
     transition: opacity 0.2s ease-in-out;
     top: 0;
@@ -46,7 +46,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
     width: 1.5rem;
     height: 1.5rem;
     display: inline-block;
-    background-color: papayawhip;
+    background-color: papayawhip; /* TODO: figure out what this is supposed to be */
     margin-right: 0.5rem;
     flex: 0 0 1.5rem;
   }
@@ -56,7 +56,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
     background-color: rgba(46, 47, 52, 0.85);
     border-radius: 0.25rem;
     bottom: 0.5rem;
-    color: white;
+    color: ${props => props.theme.colors.greys.white};
     left: 0.5rem;
     max-width: calc(100% - 2rem);
     padding: 0.5rem;
