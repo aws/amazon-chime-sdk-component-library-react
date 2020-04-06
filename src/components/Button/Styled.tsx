@@ -4,7 +4,7 @@ import { ButtonProps } from './';
 export const StyledButton = styled.button<ButtonProps>`
   font-size: 0.85rem;
   padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
+  border-radius: ${props => props.theme.radii.default};
   border-color: transparent;
   transition: background-color 0.1s ease;
   display: flex;
@@ -24,34 +24,44 @@ export const StyledButton = styled.button<ButtonProps>`
     margin-right: 0.25rem;
   }
 
-  ${props => `${props.addStyles}`}
+  /* variant styles */
+  ${props => props.variant === 'primary' && StyledPrimaryButton}
+  ${props => props.variant === 'secondary'&& StyledSecondaryButton}
 `;
 
 export const StyledPrimaryButton = css`
-  background-color: #075fff;
-  color: white;
+  background-color: ${props => props.theme.colors.button.primary.static};
+  color: ${props => props.theme.colors.greys.white};
+  box-shadow: ${props => props.theme.shadows.default};
 
-  &:hover,
+  &:hover {
+    background-color: ${props => props.theme.colors.button.primary.hover};
+  }
+
   &:focus {
-    background-color: #004ddb;
+    background-color: ${props => props.theme.colors.button.primary.focus};
   }
 
   &:active {
-    background-color: #003eb0;
+    background-color: ${props => props.theme.colors.button.primary.active};
   }
 `;
 
 export const StyledSecondaryButton = css`
-  background-color: white;
-  color: #1b1c20;
-  box-shadow: 0 1.5px 1px 0 rgba(27, 28, 32, 0.35);
+  background-color: ${props => props.theme.colors.button.secondary.static};
+  color: ${props => props.theme.colors.greys.grey100};
+  box-shadow: ${props => props.theme.shadows.default};
 
-  &:hover,
+
+  &:hover {
+    background-color: ${props => props.theme.colors.button.secondary.hover};
+  }
+
   &:focus {
-    background-color: #e4e9f2;
+    background-color: ${props => props.theme.colors.button.secondary.focus};
   }
 
   &:active {
-    background-color: #d4d5d8;
+    background-color: ${props => props.theme.colors.button.secondary.active};
   }
 `;

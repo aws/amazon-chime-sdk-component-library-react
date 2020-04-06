@@ -2,14 +2,6 @@ import styled, { css } from 'styled-components';
 
 import { NotificationProps, Severity, Size } from './';
 
-// Todo - grab style values from theme provider
-const colors = {
-  success: '#98e571',
-  warning: '#fad635',
-  error: '#ea4a4c',
-  info: '#7abef8',
-};
-
 const sizes = {
   sm: '30rem',
   md: '50rem',
@@ -30,15 +22,15 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
   max-width: 100%;
   padding: 0.75rem 0.75rem 0.75rem 1rem;
   border-radius: 0.25rem;
-  color: #1b1c20;
+  color: ${props => props.theme.colors.greys.grey100};
   font-size: 1rem;
   box-sizing: border-box;
-  background: ${({ severity }) => colors[severity]};
+  background: ${({ severity, theme }) => theme.colors[severity].main};
 
   .icon {
     width: 2rem;
     flex-shrink: 0;
-    color: #1b1c20;
+    color: ${props => props.theme.colors.greys.grey100};
   }
 
   .message {
@@ -49,7 +41,7 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
 
 export const StyledButton = css`
   margin-left: auto;
-  border: 0.125rem solid #1b1c20;
+  border: 0.125rem solid ${props => props.theme.colors.greys.grey100};
   background-color: unset;
-  color: #1b1c20;
+  color: ${props => props.theme.colors.greys.grey100};
 `;
