@@ -1,13 +1,45 @@
-## My Project
+# Chime SDK UI Component Library
 
-TODO: Fill this README out!
+This contains reusable components written with React, TypeScript and styled components to be used to create UIs with Chime SDK JS.
 
-Be sure to:
+## To genereate dependencies
 
-* Change the title in this README
-* Edit your repository description on GitHub
+```
+npm install
+```
+
+## To run Storybook locally
+
+```
+npm start
+```
+
+## Build
+
+```
+npm run build
+```
+
+# Usage
+
+After publishing your lib (ie `my-react-lib`) you can use it by importing the styles in your App's entry point:
+
+
+
+Then you can import and use your components:
+
+```tsx
+//
+import React from 'react'
+import { Example } from 'my-react-lib'
+
+export class App extends React.Component {
+  render() {
+    return <Example />
+  }
+}
+```
 
 ## License
 
 This project is licensed under the Apache-2.0 License.
-

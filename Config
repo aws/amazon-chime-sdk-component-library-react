@@ -1,11 +1,21 @@
 package.UCBuzzSDKComponents = {
     interfaces = (1.0);
 
-    # Use NoOpBuild. See https://w.amazon.com/index.php/BrazilBuildSystem/NoOpBuild
-    build-system = no-op;
+
+    deploy = {
+        generic = true;
+    };
+
+    build-environment = {
+        chroot = basic;
+        network-access = blocked;
+    };
+
+    build-system = npm-pretty-much;
     build-tools = {
         1.0 = {
-            NoOpBuild = 1.0;
+            NodeJS        = 12.x;
+            NpmPrettyMuch = 1.0;
         };
     };
 
