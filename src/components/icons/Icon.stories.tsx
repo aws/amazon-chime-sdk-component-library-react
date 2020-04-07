@@ -22,6 +22,7 @@ import {
   Presenter,
   Record,
   ScreenShare,
+  Search,
   Share,
   Sound,
 } from './';
@@ -69,5 +70,6 @@ storiesOf('Icons', module)
   .add('Presenter', () => <Presenter width={text('width', '2rem')} />)
   .add('Record', () => <Record width={text('width', '2rem')} />)
   .add('ScreenShare', () => <ScreenShare width={text('width', '2rem')} />)
+  .add('Search', () => <Search width={text('width', '2rem')} />)
   .add('Share', () => <Share width={text('width', '2rem')} />)
   .add('Sound', () => <Sound width={text('width', '2rem')} />);

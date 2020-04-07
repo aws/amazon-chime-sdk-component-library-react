@@ -17,5 +17,6 @@ export { default as Plus } from './Plus';
 export { default as Presenter } from './Presenter';
 export { default as Record } from './Record';
 export { default as ScreenShare } from './ScreenShare';
+export { default as Search } from './Search';
 export { default as Share } from './Share';
 export { default as Sound } from './Sound';
