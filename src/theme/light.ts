@@ -136,6 +136,23 @@ const buttons = {
   },
 };
 
+const checkbox = {
+	default: {
+		checkmark: colors.greys.white,
+		checkboxBgd: colors.greys.white,
+		labelText: colors.greys.grey80,
+		checkboxBorder: `solid 0.03125rem ${colors.greys.grey30}`,
+		checkboxShadow: "0 0.03125rem 0.0625rem 0 rgba(27, 28, 32, 0.15)",
+	},
+
+	checked: {
+		checkmark: colors.greys.white,
+		checkboxBgd: colors.primary.main,
+		checkboxBorder: `solid 0.03125rem ${colors.primary.main}`,
+		checkboxShadow:	"0 0.03125rem 0.03125rem 0 rgba(0, 77, 219, 0.7)",
+	}
+};
+
 const colorsRgb = {
   greys: {
     grey100: "rgb(27,28,32)",
@@ -153,6 +170,7 @@ const lightTheme = {
   colors,
   colorsRgb,
   shadows,
+  checkbox,
   ...defaultTheme,
 };
 
