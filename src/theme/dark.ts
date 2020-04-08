@@ -35,20 +35,7 @@ const colors = {
         main: "#FBDF64",
         dark: "#FBE378",
     },
-    button: {
-        primary: { 
-            static: "#4FE2F8",
-            hover: "#29dcf8",
-            focus: "#29dcf8",
-            active: "#22b6cb",
-        },
-        secondary: {
-            static: "#7d818b",
-            hover: "#616672",
-            focus: "#616672",
-            active: "#50545e",
-        },
-    },
+
     greys: {
         black: "#000000",
         grey100: "#1b1c20",
@@ -65,6 +52,91 @@ const colors = {
     }
 };
 
+const buttons = {
+    primary: {
+      static: {
+        bgd: "#29DCF8",
+        border: "0.03125rem solid rgba(255, 255, 255, 0.2)",
+        text: "#50545e",
+      },
+      hover: {
+        bgd: "#29DCF8",
+        border: "0.03125rem solid rgba(255, 255, 255, 0.3)",
+        text: "#50545e",
+      },
+      focus: {
+        bgd: "#29DCF8",
+        border: "0.03125rem solid rgba(255, 255, 255, 0.3)",
+        text: "#50545e",
+      },
+      active: {
+        bgd: "#22b6cb",
+        border: "0.03125rem solid rgba(0, 0, 0, 0.6)",
+        text: "#50545e",
+      },
+      selected: {
+        bgd: "#62E5F9",
+        border: "0.03125rem solid rgba(255, 255, 255, 0.4)",
+        text: "#50545e",
+      },
+    },
+    secondary: {
+      static: {
+        bgd: "#7d818b",
+        border: "0.03125rem solid rgba(27,28, 32, 0.15);",
+        text: "#ffffff",
+      },
+      hover: {
+        bgd: "#616672",
+        border: "0.03125rem solid rgba(0, 0, 0, 0.7);",
+        text: "#ffffff",
+      },
+      focus: {
+        bgd: "#616672",
+        border: "0.03125rem solid rgba(0, 0, 0, 0.7);",
+        text: "#ffffff",
+      },
+      active: {
+        bgd: "#50545e",
+        border: "0.03125rem solid rgba(0, 0, 0, 0.8)",
+        text: "#ffffff",
+      },
+      selected: {
+        bgd: "#616672",
+        border: "0.03125rem solid rgba(0, 0, 0, 0.7);",
+        text: "#ffffff",
+      },
+    },
+
+    icon: {
+      static: {
+        bgd: "transparent",
+        border: "none",
+        text: "#e4e9f2",
+      },
+      hover: {
+        bgd: "#29DCF8",
+        border: "none",
+        text: "#2e2f34",
+      },
+      focus: {
+        bgd: "#29DCF8",
+        border: "none",
+        text: "#2e2f34",
+      },
+      active: {
+        bgd: "#22B6CB",
+        border: "none",
+        text: "#2e2f34",
+      },
+      selected: {
+        bgd: "#62E5F9",
+        border: "none",
+        text: "#2e2f34",
+      },
+    },
+  };
+
 const colorsRgb = {
     greys: {
         grey100: "rgb(27,28,32)",
@@ -78,6 +150,7 @@ const shadows = {
   };
 
 const darkTheme = {
+    buttons,
     colors,
     colorsRgb,
     shadows,
