@@ -35,20 +35,6 @@ const colors = {
     main: "#f9cc09",
     dark: "#e3bb08",
   },
-  button: {
-    primary: { 
-      static: "#075fff",
-      hover: "#004ddb",
-      focus: "#004ddb",
-      active: "#075fff",
-    },
-    secondary: {
-      static: "#ffffff",
-      hover: "#e4e9f2",
-      focus: "#e4e9f2",
-      active: "#f0f1f2",
-    },
-  },
   greys: {
     black: "#000000",
     grey100: "#1b1c20",
@@ -62,7 +48,92 @@ const colors = {
     grey20: "#e4e9f2",
     grey10: "#f0f1f2",
     white: "#ffffff",
-  }
+  },
+};
+
+const buttons = {
+  primary: {
+    static: {
+      bgd: "#327aff",
+      border: "0.03125rem solid #004ddb",
+      text: "#ffffff",
+    },
+    hover: {
+      bgd: "#004ddb",
+      border: "0.03125rem solid #0042bb",
+      text: "#ffffff",
+    },
+    focus: {
+      bgd: "#004ddb",
+      border: "0.03125rem solid #0042bb",
+      text: "#ffffff",
+    },
+    active: {
+      bgd: "#0042bb",
+      border: "0.03125rem solid #004ddb",
+      text: "#ffffff",
+    },
+    selected: {
+      bgd: "#327aff",
+      border: "0.03125rem solid #004ddb",
+      text: "#ffffff",
+    },
+  },
+  secondary: {
+    static: {
+      bgd: "#ffffff",
+      border: "0.03125rem solid #d4d5d8",
+      text: "#50545e",
+    },
+    hover: {
+      bgd: "#f0f1f2",
+      border: "0.03125rem solid #d4d5d8",
+      text: "#50545e",
+    },
+    focus: {
+      bgd: "#f0f1f2",
+      border: "0.03125rem solid #d4d5d8",
+      text: "#50545e",
+    },
+    active: {
+      bgd: "#e2e3e5",
+      border: "0.03125rem solid #989da5",
+      text: "#50545e",
+    },
+    selected: {
+      bgd: "#f0f1f2",
+      border: "0.03125rem solid #d4d5d8",
+      text: "#50545e",
+    },
+  },
+
+  icon: {
+    static: {
+      bgd: "transparent",
+      border: "none",
+      text: "#3f4149",
+    },
+    hover: {
+      bgd: "#004ddb",
+      border: "none",
+      text: "#ffffff",
+    },
+    focus: {
+      bgd: "#004ddb",
+      border: "none",
+      text: "#ffffff",
+    },
+    active: {
+      bgd: "#0042bb",
+      border: "none",
+      text: "#ffffff",
+    },
+    selected: {
+      bgd: "#327aff",
+      border: "none",
+      text: "#ffffff",
+    },
+  },
 };
 
 const colorsRgb = {
@@ -74,14 +145,15 @@ const colorsRgb = {
 const shadows = {
   none: "none",
   // TODO pixels to REMs?
-  default: `0 1.5px 1px 0 ${rgbaWithOpacity(colorsRgb.greys.grey100, 0.15)}`,
+  default: `0 0.09375rem 0.0625rem 0 ${rgbaWithOpacity(colorsRgb.greys.grey100, 0.15)}`,
 };
 
 const lightTheme = {
+  buttons,
   colors,
   colorsRgb,
   shadows,
   ...defaultTheme,
 };
-  
+
 export default lightTheme;

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
+import  Button, { ButtonProps } from './';
 
-import { Button, ButtonProps } from './';
-
-export const SecondaryButton: React.FC<ButtonProps> = props => <Button variant='secondary' {...props} />;
+export const SecondaryButton = forwardRef((props: ButtonProps, ref: React.Ref<HTMLButtonElement>) => (
+  <Button variant='secondary' {...props} />
+));
 
 export default SecondaryButton;
