@@ -1,3 +1,8 @@
 node_modules
 package-lock.json
 .DS_Store
+lib
+demo/browser/package-lock.json
+demo/browser/node_modules
+demo/browser/build
+demo/browser/dist
