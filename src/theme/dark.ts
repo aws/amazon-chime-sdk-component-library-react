@@ -58,7 +58,8 @@ const colorsRgb = {
   },
   greys: {
       black: "rgb(0,0,0)",
-      grey100: "rgb(27,28,32)",  
+      grey100: "rgb(27,28,32)",
+      grey90: "rgb(46,47,52)",
       white: "rgb(255,255,255)",
   }
 };
@@ -166,7 +167,7 @@ const checkbox = {
     checkboxBorder: `solid 0.03125rem ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
     checkboxShadow: `inset 0 0.03125rem 0 0 ${rgbaWithOpacity(colorsRgb.greys.white, 0.1)}`,
   },
-  
+
   checked: {
     checkmark: colors.greys.grey80,
     checkboxBgd: colors.primary.light,
@@ -183,7 +184,7 @@ const radioInput = {
     wrapperBorder: "solid 0.03125rem rgba(0, 0, 0, 0.6)",
     wrapperShadow: "inset 0 0.03125rem 0 0 rgba(255, 255, 255, 0.1)",
   },
-  
+
   checked: {
     bodyBgd: colors.greys.grey80,
     wrapperBgd: colors.primary.light,
@@ -198,6 +199,18 @@ const modal = {
   wrapperBgd: overlays.grey100,
 }
 
+const popOver = {
+  menuBgd: `${rgbaWithOpacity(colorsRgb.greys.grey90, 0.85)}`,
+  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  itemBgd: 'transparent',
+  itemText: colors.greys.white,
+  active: {
+    itemBgd: colors.primary.dark,
+    itemText: colors.greys.grey80,
+  },
+  separator: colors.greys.grey100,
+};
+
 const darkTheme = {
     buttons,
     colors,
@@ -207,6 +220,7 @@ const darkTheme = {
     radioInput,
     modal,
     overlays,
+    popOver,
     ...defaultTheme,
 };
 
