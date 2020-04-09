@@ -5,7 +5,8 @@
   "main": "lib/index.js",
   "typings": "lib/src/index.d.ts",
   "scripts": {
-    "start": "start-storybook"
+    "start": "start-storybook",
+    "build": "webpack"
   },
   "keywords": [],
   "author": "",
