@@ -14,7 +14,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "throttle-debounce": "^2.1.0"
+    "throttle-debounce": "^2.1.0",
+    "@popperjs/core": "^2.2.2",
+    "react-popper": "^2.2.1"
   },
   "devDependencies": {
     "@storybook/addon-knobs": "^5.3.18",

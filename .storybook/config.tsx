@@ -7,6 +7,12 @@ import lightTheme from '../src/theme/light';
 import darkTheme from '../src/theme/dark';
 
 const GlobalStyle = createGlobalStyle`
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
   html {
     font-size: 16px;
     font-family: sans-serif;

@@ -57,7 +57,9 @@ const colorsRgb = {
   },
   greys: {
       black: "rgb(0,0,0)",
-      grey100: "rgb(27,28,32)",  
+      grey100: "rgb(27,28,32)",
+      grey40: "rgb(152,157,165)",
+      grey10: "rgb(240,241,242)",
       white: "rgb(255,255,255)",
   }
 };
@@ -203,6 +205,17 @@ const modal = {
     fullscreen: '',
   }
 }
+const popOver = {
+  menuBgd: `${rgbaWithOpacity(colorsRgb.greys.grey10, 0.85)}`,
+  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  itemBgd: 'transparent',
+  itemText: colors.greys.grey70,
+  active: {
+    itemBgd: colors.primary.dark,
+    itemText: colors.greys.white,
+  },
+  separator: `${rgbaWithOpacity(colorsRgb.greys.grey40, 0.7)}`,
+};
 
 const lightTheme = {
   buttons,
@@ -213,6 +226,7 @@ const lightTheme = {
   checkbox,
   radioInput,
   modal,
+  popOver,
   ...defaultTheme,
 };
 
