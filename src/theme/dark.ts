@@ -154,6 +154,23 @@ const checkbox = {
   }
 };
 
+const radioInput = {
+  default: {
+    bodyBgd: colors.greys.grey50,
+    wrapperBgd: colors.greys.grey50,
+    labelText: colors.greys.white,
+    wrapperBorder: "solid 0.03125rem rgba(0, 0, 0, 0.6)",
+    wrapperShadow: "inset 0 0.03125rem 0 0 rgba(255, 255, 255, 0.1)",
+  },
+  
+  checked: {
+    bodyBgd: colors.greys.grey80,
+    wrapperBgd: colors.primary.light,
+    wrapperBorder: "solid 0.03125rem rgba(0, 0, 0, 0.4)",
+    wrapperShadow: "inset 0 0.03125rem 0 0 rgba(255, 255, 255, 0.2)",
+  }
+};
+
 const colorsRgb = {
     greys: {
         grey100: "rgb(27,28,32)",
@@ -172,6 +189,7 @@ const darkTheme = {
     colorsRgb,
     shadows,
     checkbox,
+    radioInput,
     ...defaultTheme,
 };
 
