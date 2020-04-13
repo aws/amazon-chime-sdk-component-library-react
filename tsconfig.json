@@ -30,6 +30,7 @@
     ".storybook",
     "src/internal",
     "src/**/*.test.tsx",
-    "src/**/*.stories.tsx"
+    "src/**/*.stories.tsx",
+    "tst/**/*.test.tsx",
   ]
 }
