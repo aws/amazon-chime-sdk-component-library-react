@@ -52,59 +52,70 @@ const colors = {
   }
 };
 
+const colorsRgb = {
+  primary: {
+    dark: "rgb(41,220,248)",
+  },
+  greys: {
+      black: "rgb(0,0,0)",
+      grey100: "rgb(27,28,32)",  
+      white: "rgb(255,255,255)",
+  }
+};
+
 const buttons = {
   primary: {
     static: {
-      bgd: "#29DCF8",
-      border: "0.03125rem solid rgba(255, 255, 255, 0.2)",
-      text: "#50545e",
+      bgd: colors.primary.dark,
+      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.4)}`,
+      text: colors.greys.grey70,
     },
     hover: {
-      bgd: "#29DCF8",
-      border: "0.03125rem solid rgba(255, 255, 255, 0.3)",
-      text: "#50545e",
+      bgd: colors.primary.dark,
+      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
+      text: colors.greys.grey70,
     },
     focus: {
-      bgd: "#29DCF8",
-      border: "0.03125rem solid rgba(255, 255, 255, 0.3)",
-      text: "#50545e",
+      bgd: colors.primary.dark,
+      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
+      text: colors.greys.grey70,
     },
     active: {
-      bgd: "#22b6cb",
-      border: "0.03125rem solid rgba(0, 0, 0, 0.6)",
-      text: "#50545e",
+      bgd: colors.primary.darker,
+      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
+      text: colors.greys.grey70,
     },
     selected: {
-      bgd: "#62E5F9",
-      border: "0.03125rem solid rgba(255, 255, 255, 0.4)",
-      text: "#50545e",
+      bgd: colors.primary.light,
+      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.4)}`,
+      text: colors.greys.grey70,
     },
   },
   secondary: {
     static: {
-      bgd: "#7d818b",
-      border: "0.03125rem solid rgba(27,28, 32, 0.15);",
-      text: "#ffffff",
+      bgd: colors.greys.grey50,
+      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
+      text: colors.greys.white,
     },
     hover: {
-      bgd: "#616672",
-      border: "0.03125rem solid rgba(0, 0, 0, 0.7);",
-      text: "#ffffff",
+      bgd: colors.greys.grey60,
+     border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.7)}`,
+      text: colors.greys.white,
     },
     focus: {
-      bgd: "#616672",
-      border: "0.03125rem solid rgba(0, 0, 0, 0.7);",
-      text: "#ffffff",
+      bgd: colors.greys.grey60,
+     border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.7)}`,
+      text: colors.greys.white,
     },
     active: {
-      bgd: "#50545e",
-      border: "0.03125rem solid rgba(0, 0, 0, 0.8)",
-      text: "#ffffff",
+      bgd: colors.greys.grey70,
+      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.8)}`,
+      text: colors.greys.white,
     },
     selected: {
-      bgd: "#616672",
-      border: "0.03125rem solid rgba(0, 0, 0, 0.7);",
-      text: "#ffffff",
+      bgd: colors.greys.grey60,
+      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.7)}`,
+      text: colors.greys.white,
     },
   },
 
@@ -112,27 +123,27 @@ const buttons = {
     static: {
       bgd: "transparent",
       border: "none",
-      text: "#e4e9f2",
+      text: colors.greys.grey20,
     },
     hover: {
-      bgd: "#29DCF8",
+      bgd: colors.primary.dark,
       border: "none",
-      text: "#2e2f34",
+      text: colors.greys.grey20,
     },
     focus: {
-      bgd: "#29DCF8",
+      bgd: colors.primary.dark,
       border: "none",
-      text: "#2e2f34",
+      text: colors.greys.grey20,
     },
     active: {
-      bgd: "#22B6CB",
+      bgd: colors.primary.darker,
       border: "none",
-      text: "#2e2f34",
+      text: colors.greys.grey20,
     },
     selected: {
-      bgd: "#62E5F9",
+      bgd: colors.primary.light,
       border: "none",
-      text: "#2e2f34",
+      text: colors.greys.grey20,
     },
   },
 };
@@ -142,15 +153,15 @@ const checkbox = {
     checkmark: colors.greys.grey50,
     checkboxBgd: colors.greys.grey50,
     labelText: colors.greys.white,
-    checkboxBorder: "solid 0.03125rem rgba(0, 0, 0, 0.6)",
-    checkboxShadow: "inset 0 0.03125rem 0 0 rgba(255, 255, 255, 0.1)",
+    checkboxBorder: `solid 0.03125rem ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
+    checkboxShadow: `inset 0 0.03125rem 0 0 ${rgbaWithOpacity(colorsRgb.greys.white, 0.1)}`,
   },
   
   checked: {
     checkmark: colors.greys.grey80,
     checkboxBgd: colors.primary.light,
-    checkboxBorder: "solid 0.03125rem rgba(0, 0, 0, 0.4)",
-    checkboxShadow: "inset 0 0.03125rem 0 0 rgba(255, 255, 255, 0.2)",
+    checkboxBorder: `solid 0.03125rem ${rgbaWithOpacity(colorsRgb.greys.black, 0.4)}`,
+    checkboxShadow: `inset 0 0.03125rem 0 0 ${rgbaWithOpacity(colorsRgb.greys.white, 0.2)}`,
   }
 };
 
@@ -169,12 +180,6 @@ const radioInput = {
     wrapperBorder: "solid 0.03125rem rgba(0, 0, 0, 0.4)",
     wrapperShadow: "inset 0 0.03125rem 0 0 rgba(255, 255, 255, 0.2)",
   }
-};
-
-const colorsRgb = {
-    greys: {
-        grey100: "rgb(27,28,32)",
-    }
 };
 
 const shadows = {
