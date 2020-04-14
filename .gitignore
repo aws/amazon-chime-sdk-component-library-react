@@ -6,5 +6,8 @@ demo/browser/package-lock.json
 demo/browser/node_modules
 demo/browser/build
 demo/browser/dist
+demo/react/package-lock.json
+demo/react/node_modules
+demo/react/public/app.js
 src/.DS_Store
 build
