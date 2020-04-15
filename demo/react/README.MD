@@ -7,4 +7,4 @@ To run the react app:
 
 3. Start the webpack server: `npm run start:client`
 
-4. In another terminal in the same directory, start the node server: `npm run start:backend`
+4. Check out customer's site at http://localhost:9000/customer and agent's site at http://localhost:9000/agent
