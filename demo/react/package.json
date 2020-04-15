@@ -7,6 +7,7 @@
     "@babel/preset-env": "^7.5.0",
     "@babel/preset-react": "^7.0.0",
     "@babel/runtime": "^7.5.0",
+    "@types/react-router-dom": "^5.1.3",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.4",
     "eslint": "^5.16.0",
@@ -39,10 +40,10 @@
     "amazon-chime-sdk-js": "^1.1.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
     "styled-components": "^5.0.0"
   },
   "scripts": {
-    "start:client": "webpack-dev-server",
-    "start:backend": "cd ../browser && npm install && node ../browser/server.js"
+    "start:client": "webpack-dev-server"
   }
 }
