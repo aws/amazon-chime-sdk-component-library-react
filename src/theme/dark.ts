@@ -63,6 +63,16 @@ const colorsRgb = {
   }
 };
 
+const overlays = {
+  grey100: rgbaWithOpacity(colorsRgb.greys.grey100, .7),
+};
+
+const shadows = {
+  none: "none",
+  // TODO pixels to REMs?
+  default: `0 1.5px 1px 0 ${rgbaWithOpacity(colorsRgb.greys.grey100, 0.15)}`,
+};
+
 const buttons = {
   primary: {
     static: {
@@ -182,11 +192,11 @@ const radioInput = {
   }
 };
 
-const shadows = {
-    none: "none",
-    // TODO pixels to REMs?
-    default: `0 1.5px 1px 0 ${rgbaWithOpacity(colorsRgb.greys.grey100, 0.15)}`,
-  };
+const modal = {
+  bgd: colors.greys.grey100,
+  text: colors.greys.grey10,
+  wrapperBgd: overlays.grey100,
+}
 
 const darkTheme = {
     buttons,
@@ -195,6 +205,8 @@ const darkTheme = {
     shadows,
     checkbox,
     radioInput,
+    modal,
+    overlays,
     ...defaultTheme,
 };
 

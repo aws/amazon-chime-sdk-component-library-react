@@ -62,6 +62,16 @@ const colorsRgb = {
   }
 };
 
+const overlays = {
+  grey100: rgbaWithOpacity(colorsRgb.greys.grey100, .7),
+};
+
+const shadows = {
+  none: "none",
+  // TODO pixels to REMs?
+  default: `0 0.09375rem 0.0625rem 0 ${rgbaWithOpacity(colorsRgb.greys.grey100, 0.15)}`,
+};
+
 const buttons = {
   primary: {
     static: {
@@ -181,19 +191,28 @@ const radioInput = {
 	}
 };
 
-const shadows = {
-  none: "none",
-  // TODO pixels to REMs?
-  default: `0 0.09375rem 0.0625rem 0 ${rgbaWithOpacity(colorsRgb.greys.grey100, 0.15)}`,
-};
+const modal = {
+  bgd: colors.greys.grey10,
+  text: colors.greys.grey100,
+  wrapperBgd: overlays.grey100,
+  titleSize: '2.15rem', /* TODO use typography properties */
+  titleWeight: 'normal',
+  sizes: {
+    medium: '',
+    large: '',
+    fullscreen: '',
+  }
+}
 
 const lightTheme = {
   buttons,
   colors,
   colorsRgb,
+  overlays,
   shadows,
   checkbox,
   radioInput,
+  modal,
   ...defaultTheme,
 };
 
