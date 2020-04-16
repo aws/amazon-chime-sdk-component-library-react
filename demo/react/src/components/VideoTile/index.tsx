@@ -6,6 +6,8 @@ export interface VideoTileProps extends React.HTMLAttributes<HTMLDivElement>{
   bindVideoTile: (arg0: any) => void;
 }
 
+//  Temporarily copied this from the component library due to issues importing items from our component library
+//  TODO: Replace with the component Library and delete this file
 export const VideoTile: React.SFC<VideoTileProps> = props => {
   const videoEl = useRef(null);
   const { bindVideoTile } = props;
