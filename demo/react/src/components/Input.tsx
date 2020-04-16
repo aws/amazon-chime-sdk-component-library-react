@@ -9,7 +9,7 @@ interface InputProps {
   onChange: (data: any) => any;
 }
 
-const Input: React.SFC<InputProps> = ({ name, value, title, type, placeholder, onChange }) => {
+const Input: React.FC<InputProps> = ({ name, value, title, type, placeholder, onChange }) => {
   return (
     <div className="form-group">
       <label htmlFor={name} className="form-label">
