@@ -1,13 +1,15 @@
 import React, { FC, useState, FormEvent } from 'react';
 
 import Input from '../components/Input';
+import ApiGatewayClient from '../ApiGatewayClient';
 
 const MeetingForm: FC = () => {
   const [inputName, setInputName] = useState("");
 
   const handleJoinMeeting = (e: FormEvent) => {
     e.preventDefault();
-    console.log("Need to trigger lambda create meeting functiong");
+    ApiGatewayClient.createCustomer(inputName);
+    console.log("TODO: show loading bar or status on UI");
   };
 
   return (
