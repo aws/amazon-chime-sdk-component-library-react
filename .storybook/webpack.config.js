@@ -15,6 +15,26 @@ module.exports = ({ config }) => {
         path.resolve(__dirname, '../src'),
         path.resolve(__dirname, '../.storybook')
       ]
+    },
+    {
+      test: /\.stories\.tsx?$/,
+      loaders: [
+        {
+          loader: require.resolve('@storybook/source-loader'),
+          options: { 
+            parser: 'typescript',
+            prettierConfig: {
+              printWidth: 100,
+              tabWidth: 2,
+              bracketSpacing: true,
+              trailingComma: 'es5',
+              singleQuote: true,
+            },
+            uglyCommentsRegex: [/^eslint-.*/, /^global.*/]
+          }
+        }
+      ],
+      enforce: 'pre',
     }
   ]
   config.resolve.extensions.push('.ts', '.tsx');
