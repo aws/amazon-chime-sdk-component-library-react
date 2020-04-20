@@ -1,3 +1,5 @@
+import { KEY_CODES } from '../constants';
+
 const trapFocus = (e:KeyboardEvent, content: HTMLElement) => {
     if (!content) {
       return
@@ -7,7 +9,7 @@ const trapFocus = (e:KeyboardEvent, content: HTMLElement) => {
     );
     const firstFocusableEl = focusableElements[0];
     const lastFocusableEl = focusableElements[focusableElements.length - 1];
-    if (e.keyCode === 9) {
+    if (e.keyCode === KEY_CODES.TAB) {
       if (e.shiftKey && document.activeElement === firstFocusableEl) {
         e.preventDefault();
         lastFocusableEl.focus();

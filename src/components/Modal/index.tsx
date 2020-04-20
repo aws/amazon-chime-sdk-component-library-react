@@ -1,16 +1,15 @@
-import React, { FC, useEffect, useRef, useState } from 'react';
-import {  createPortal } from "react-dom";
+import React, { FC, useEffect, useRef } from 'react';
 
-import Plus from '../icons/Plus'; // TODO replace with close icon
+import Remove from '../icons/Remove';
 import { StyledModal } from './Styled';
 import trapFocus from '../../utils/trap-focus';
 import IconButton from '../Button/IconButton';
 import Portal from '../Portal';
+import { KEY_CODES } from '../../constants';
 
 export type ModalSize = 'medium' | 'large' | 'fullscreen' 
 
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
-    isCloseable?: boolean;
     onClose?: () => void;
     title?: string;
     children: any;
@@ -20,8 +19,7 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export const Modal:FC<ModalProps> = props => {
     const {
-        isCloseable = true,
-        onClose = () => null,
+        onClose,
         title,
         children,
         size = 'medium',
@@ -31,7 +29,7 @@ export const Modal:FC<ModalProps> = props => {
     const contentEl = useRef<HTMLDivElement>(null);
 
     const onKeyboardEvent = (e:any) => {
-        if (e.keyCode === 27) {
+        if (e.keyCode === KEY_CODES.ESCAPE && onClose) {
             onClose();
         } else {
             trapFocus(e, (contentEl.current as HTMLElement))
@@ -45,13 +43,10 @@ export const Modal:FC<ModalProps> = props => {
 
     return (
         <Portal rootId={rootId}>
-            <StyledModal {...props} onClick={isCloseable ? onClose : () => null} ref={contentEl}>
-                <div
-                    className='main'
-                    onClick={e => e.stopPropagation()}
-                >
+            <StyledModal {...props} onClick={onClose} ref={contentEl} data-testid="modal">
+                <div className='main' onClick={e => e.stopPropagation()}>
                     <div className='header'>
-                        {isCloseable && <IconButton label='Close' icon={<Plus/>} className='closeButton' onClick={onClose}/>}
+                        {onClose && <IconButton label='Close' icon={<Remove/>} className='closeButton' onClick={onClose} data-testid="closeButton"/>}
                         {title && <h1 className='title'>{title}</h1>}
                     </div>
                     <div className='content'>{children}</div>
