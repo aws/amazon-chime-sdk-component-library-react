@@ -21,6 +21,7 @@ import {
   Plus,
   Presenter,
   Record,
+  Remove,
   ScreenShare,
   Search,
   Share,
@@ -69,6 +70,7 @@ storiesOf('Icons', module)
   .add('Plus', () => <Plus width={text('width', '2rem')} />)
   .add('Presenter', () => <Presenter width={text('width', '2rem')} />)
   .add('Record', () => <Record width={text('width', '2rem')} />)
+  .add('Remove', () => <Remove width={text('width', '2rem')} />)
   .add('ScreenShare', () => <ScreenShare width={text('width', '2rem')} />)
   .add('Search', () => <Search width={text('width', '2rem')} />)
   .add('Share', () => <Share width={text('width', '2rem')} />)
