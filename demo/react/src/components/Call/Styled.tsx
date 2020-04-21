@@ -34,12 +34,13 @@ export const StyledVideoContainer = styled.div`
     }
   }
 
-  .attendee-video {
+  #attendee-video {
     &:before {
       padding-top: 75%;
     }
   }
-  .self-video {
+  
+  #self-video {
     position: absolute;
     bottom: 0;
     right: 0;

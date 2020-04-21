@@ -1,37 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Microphone from '../icons/Microphone';
 import Camera from '../icons/Camera';
 import Phone from '../icons/Phone';
 import { StyledCallControls } from './Styled';
 
-
-const CallControls: React.FC = () => {
-    const [muted, setMuted] = useState(false);
-    const [cameraActive, setCameraActive] = useState(true);
-
-    // TODO: Replace implementation
-    const endMeeting = () => {
-        console.log("End the meeting here");
-    };
-
-    const toggleMuted = () => {
-        console.log(`Set Muted to ${!muted}`);
-        setMuted(!muted);
-    };
-
-    const toggleCamera = () => {
-        console.log(`Set camera active to ${!cameraActive}`);
-        setCameraActive(!cameraActive);
-    };
-
-  return (
+export interface CallControlsProps {
+  handleMuteToggle: () => void,
+  handleCameraToggle: () => void,
+  handleEndMeeting: () => void,
+  isMuted: boolean,
+  isCameraActive: boolean,
+}
+const CallControls: React.FC<CallControlsProps> = ({handleCameraToggle, handleEndMeeting, handleMuteToggle, isCameraActive, isMuted}) => {
+return (
     // TODO: Replace components with Library components
     <StyledCallControls className="call-controls">
-        <button onClick={toggleMuted}><Microphone  disabled={muted}/></button>
-        <button onClick={toggleCamera}><Camera disabled={cameraActive}/></button>
-        <button onClick={endMeeting}><Phone /></button>
+      <button onClick={handleMuteToggle}><Microphone  disabled={isMuted}/></button>
+      <button onClick={handleCameraToggle}><Camera disabled={isCameraActive}/></button>
+      <button onClick={handleEndMeeting}><Phone /></button>
     </StyledCallControls>
-
   );
 }
 

@@ -96,6 +96,26 @@ class ApiGatewayClient {
       return response;
     }
   }
+  
+  async endMeeting(meetingId: string): Promise<any> {
+    const pathParams = { meetingId: meetingId };
+    const pathTemplate = '/meeting'
+    const method = 'DELETE';
+    const additionalParams = {
+      queryParams: {
+        meetingId: meetingId
+      }
+    };
+    let response: any;
+    this.apiGatewayClient.invokeApi(pathParams, pathTemplate, method, additionalParams, {})
+      .then((result: any) => {
+        response = result;
+      }).catch((result: Error) => {
+        response = result;
+      });
+    return response;
+  }
+
 }
 
 export default new ApiGatewayClient();
