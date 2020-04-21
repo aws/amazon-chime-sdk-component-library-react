@@ -93,7 +93,6 @@ storiesOf('PopOver', module)
           text="This has very long text"
         />
       </PopOver>
-      <button>click</button>
     </>
   );
 })
