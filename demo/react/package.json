@@ -30,7 +30,6 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "@types/moment": "^2.13.0",
     "@types/react": "^16.9.19",
     "@types/react-dom": "^16.9.5",
     "@types/styled-components": "^4.4.2",
@@ -40,6 +39,7 @@
     "aws-sdk": "^2.642.0",
     "amazon-chime-sdk-js": "^1.1.0",
     "aws-api-gateway-client": "^0.3.3",
+    "date-fns": "^2.12.0",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
