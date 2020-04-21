@@ -13,14 +13,18 @@ type CallItem = {
   CustomerId: string;
 };
 
+export interface CallUpdateProps {
+  handleJoinMeeting: () => void;
+}
+
 interface CallUpdatesState{
   items: CallItem[];
 }
   
-export class CallUpdates extends Component<{}, CallUpdatesState> {
+export class CallUpdates extends Component<CallUpdateProps, CallUpdatesState> {
   private pollTimeout: number;
 
-  constructor(props = {}) {
+  constructor(props: CallUpdateProps) {
     super(props);
     this.state = { items: [] }
     this.pollTimeout = 0;
@@ -44,13 +48,6 @@ export class CallUpdates extends Component<{}, CallUpdatesState> {
     ));
   };
 
-  async handleCreateMeeting() {
-    const firstCustomer = await ApiGatewayClient.getFirstCustomer();
-    const meeting = firstCustomer && await ApiGatewayClient.createMeeting(firstCustomer.CustomerId);
-    console.log("Created meeting", meeting);
-    console.log("TODO: Need to initiate meeting session, set video/audio");
-  }
-
   componentWillUnmount() {
     window.clearTimeout(this.pollTimeout);
   }
@@ -73,7 +70,7 @@ export class CallUpdates extends Component<{}, CallUpdatesState> {
           
         </CallList>
         <br />
-        <button onClick={this.handleCreateMeeting}>Join next customer call</button>
+        <button onClick={this.props.handleJoinMeeting}>Join next customer call</button>
       </div>
     );
   }
