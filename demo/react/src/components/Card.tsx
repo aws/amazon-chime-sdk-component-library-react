@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 
 interface CardProps {
   title: string;
@@ -6,9 +7,13 @@ interface CardProps {
 }
 
 const Card: React.FC<CardProps> = ({ title, time }) => {
-  let res = (
+  const StyledSpan = styled.span`
+    margin-right: 2rem;
+  `;
+  
+  const res = (
     <div>
-      <span style={{ marginRight: "2rem" }}>{title}</span>
+      <StyledSpan>{title}</StyledSpan>
       <span>{time}</span>
     </div>
   );

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import moment from 'moment';
+import { formatDistance } from 'date-fns';
 
 import CallList from './CallList';
 import Card from '../components/Card';
@@ -39,16 +39,16 @@ export class CallUpdates extends Component<{}, CallUpdatesState> {
       <Card
         key={CustomerId}
         title={CustomerName}
-        time={"(Called at " + moment(CreatedDate, 'x').format('LLL') + ")"}
+        time={"(Waiting time: " + formatDistance(new Date(CreatedDate), new Date(), { includeSeconds: true }) + ")"}
       />
     ));
   };
 
   async handleCreateMeeting() {
     const firstCustomer = await ApiGatewayClient.getFirstCustomer();
-    const meeting = await ApiGatewayClient.createMeeting(firstCustomer.CustomerId);
+    const meeting = firstCustomer && await ApiGatewayClient.createMeeting(firstCustomer.CustomerId);
     console.log("Created meeting", meeting);
-    console.log("Need to initiate meeting session, set video/audio");
+    console.log("TODO: Need to initiate meeting session, set video/audio");
   }
 
   componentWillUnmount() {
@@ -62,7 +62,7 @@ export class CallUpdates extends Component<{}, CallUpdatesState> {
 
   render() {
     const { items } = this.state;
-    const msg = items && items.length == 0 && "No incoming customer call"
+    const msg = (!items || !items.length) && "No incoming customer call"
     return (
       <div>
         <CallList

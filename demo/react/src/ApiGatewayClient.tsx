@@ -24,16 +24,13 @@ class ApiGatewayClient {
       }
     };
     const body = {};
-    let response: any;
-    this.apiGatewayClient.invokeApi(pathParams, pathTemplate, method, additionalParams, body)
-      .then((result: any) => {
-        console.log("Create customer success", result);
-        response = result;
-      }).catch((result: Error) => {
-        console.log("Create customer error", result);
-        response = result;
-      });
-    return response;
+    const response = await this.apiGatewayClient.invokeApi(pathParams, pathTemplate, method, additionalParams, body);
+    try {
+      const customer = await response.data.data;
+      return customer;
+    } catch (error) {
+      return response;
+    }
   }
 
   async retriveCustomers(): Promise<any> {
@@ -42,8 +39,8 @@ class ApiGatewayClient {
     
     const response = await this.apiGatewayClient.invokeApi({}, pathTemplate, method, {}, {});
     try {
-      const customer = await response.data.data;
-      return customer;
+      const customers = await response.data.data;
+      return customers;
     } catch (error) {
       return response;
     }
@@ -66,6 +63,25 @@ class ApiGatewayClient {
     const pathParams = { customerId: customerId };
     const pathTemplate = '/meeting';
     const method = 'POST';
+    const additionalParams = {
+      queryParams: {
+        customerId: customerId
+      }
+    };
+
+    const response = await this.apiGatewayClient.invokeApi(pathParams, pathTemplate, method, additionalParams, {});
+    try {
+      const meeting = await response.data;
+      return meeting;
+    } catch (error) {
+      return response;
+    }
+  }
+
+  async getCustomerMeeting(customerId: string): Promise<any> {
+    const pathParams = { customerId: customerId };
+    const pathTemplate = '/customer/meeting';
+    const method = 'GET';
     const additionalParams = {
       queryParams: {
         customerId: customerId
