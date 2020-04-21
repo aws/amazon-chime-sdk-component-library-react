@@ -2,6 +2,7 @@ import { addDecorator, configure } from '@storybook/react';
 import React from 'react';
 import { createGlobalStyle, ThemeProvider } from 'styled-components';
 import { withKnobs } from '@storybook/addon-knobs';
+import { withA11y } from '@storybook/addon-a11y';
 
 import lightTheme from '../src/theme/light';
 import darkTheme from '../src/theme/dark';
@@ -35,6 +36,7 @@ const withGlobalStyles = (cb: Function) => (
 
 addDecorator(withGlobalStyles);
 addDecorator(withKnobs)
+addDecorator(withA11y)
 addDecorator((story) => (
   <ThemeProvider theme={lightTheme}>
     {story()}

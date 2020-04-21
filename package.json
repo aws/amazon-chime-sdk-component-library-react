@@ -21,6 +21,7 @@
     "@types/testing-library__react": "^10.0.1"
   },
   "devDependencies": {
+    "@storybook/addon-a11y": "^5.3.18",
     "@storybook/addon-knobs": "^5.3.18",
     "@storybook/react": "^5.3.18",
     "@testing-library/jest-dom": "^5.5.0",
