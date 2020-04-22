@@ -1,14 +1,14 @@
-import React from 'react';
+import React, { FC, InputHTMLAttributes } from 'react';
 
 import { StyledRadioInput } from './Styled';
 
 
-export interface RadioInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface RadioInputProps extends InputHTMLAttributes<HTMLInputElement> {
   checked?: boolean;
   label: string;
 }
-  
-export const RadioInput: React.FC<RadioInputProps> = (props) => {
+
+export const RadioInput: FC<RadioInputProps> = (props) => {
   const { checked, label, ...rest } = props;
   return (
     <StyledRadioInput {...props}>
