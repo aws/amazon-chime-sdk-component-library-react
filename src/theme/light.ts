@@ -193,6 +193,19 @@ const radioInput = {
 	}
 };
 
+const textarea = {
+  bgd: colors.greys.white,
+  border: `0.03125rem solid ${colors.greys.grey30}`,
+  shadow: `0 0 0 0 ${colors.primary.lightest}`,
+  text: colors.greys.grey70,
+  focus: {
+    bgd: colors.greys.white,
+    border: `solid 0.03125rem ${colors.primary.lighter}`,
+    shadow: `0 0 0 0.125rem ${colors.primary.lightest}`,
+    text: colors.greys.grey70,
+  }
+};
+
 const modal = {
   bgd: colors.greys.grey10,
   text: colors.greys.grey100,
@@ -225,6 +238,7 @@ const lightTheme = {
   shadows,
   checkbox,
   radioInput,
+  textarea,
   modal,
   popOver,
   ...defaultTheme,
