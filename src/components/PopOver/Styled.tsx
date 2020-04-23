@@ -111,7 +111,7 @@ export const StyledPopOverHeader = styled.header`
   .title {
     ${ellipsis};
     padding: 0 2.5rem;
-    margin-top: 0.5rem;;
+    margin-top: 0.5rem;
     line-height: 1.27;
     color: #50545e;
     margin-bottom: 0;
