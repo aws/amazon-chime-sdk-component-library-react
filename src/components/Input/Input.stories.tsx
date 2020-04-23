@@ -6,7 +6,7 @@ import Crown from '../icons/Crown';
 import Input from './';
 import SearchInput from './SearchInput';
 
-storiesOf('Input', module)
+storiesOf('Form/TextInputs', module)
 .add('Basic Input', () => {
   return (
     <Input

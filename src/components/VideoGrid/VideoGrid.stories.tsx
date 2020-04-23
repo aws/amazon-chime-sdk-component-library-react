@@ -17,7 +17,7 @@ const Tile = () => (
   </div>
 );
 
-storiesOf('VideoGrid', module).add('VideoGrid', () => {
+storiesOf('Video/VideoGrid', module).add('VideoGrid', () => {
   const size = number('Size', 3);
   const tiles = new Array(size).fill(0).map((x, index) => <Tile key={index} />);
 
