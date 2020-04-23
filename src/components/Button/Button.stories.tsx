@@ -9,7 +9,7 @@ import IconButton from './IconButton';
 import Meeting from '../icons/Meeting';
 
 
-storiesOf('Button', module)
+storiesOf('Form/Buttons', module)
 .add('Basic button', () => <Button className='basic-button' label='Basic button' />)
 .add('Primary button', () => <PrimaryButton className='primary-button' label='Primary' />)
 .add('Secondary button', () => <SecondaryButton className='secondary-button' label='This is a secondary button' />)

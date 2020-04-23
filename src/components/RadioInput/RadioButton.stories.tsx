@@ -5,7 +5,7 @@ import { boolean } from "@storybook/addon-knobs";
 
 import { RadioInput } from './';
 
-storiesOf('RadioInput', module)
+storiesOf('Form/Radio', module)
 .add('RadioInput', () =>
 <RadioInput
   label="Radio Input"

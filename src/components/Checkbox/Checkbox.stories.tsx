@@ -5,7 +5,7 @@ import { boolean } from "@storybook/addon-knobs";
 
 import { Checkbox } from './';
 
-storiesOf('Checkbox', module)
+storiesOf('Form/Checkbox', module)
 .add('Checkbox', () =>
 <Checkbox
   label="Checkbox"
