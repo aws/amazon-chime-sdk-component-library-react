@@ -18,6 +18,15 @@ const GlobalStyle = createGlobalStyle`
     font-size: 16px;
     font-family: sans-serif;
   }
+
+  body {
+    padding: 0;
+    margin: 0;
+  }
+
+  #root {
+    height: 100vh;
+  }
 `;
 
 // automatically import all files ending in *.stories.tsx in src/components
