@@ -1,5 +1,6 @@
 const webpackConfig = require('../webpack.config');
 const path = require('path');
+const createCompiler = require('@storybook/addon-docs/mdx-compiler-plugin');
 const cssRule = webpackConfig.module.rules[0];
 
 module.exports = ({ config }) => {
@@ -35,6 +36,23 @@ module.exports = ({ config }) => {
         }
       ],
       enforce: 'pre',
+    },
+    { // add loader for mdx file
+      test: /\.stories\.mdx$/,
+      use: [
+        {
+          loader: 'babel-loader',
+          options: {
+            plugins: ['@babel/plugin-transform-react-jsx'],
+          },
+        },
+        {
+          loader: '@mdx-js/loader',
+          options: {
+            compilers: [createCompiler({})],
+          },
+        },
+      ],
     }
   ]
   config.resolve.extensions.push('.ts', '.tsx');

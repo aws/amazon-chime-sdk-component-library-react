@@ -30,7 +30,7 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 // automatically import all files ending in *.stories.tsx in src/components
-const req = require.context('../src/components', true, /\.stories\.tsx$/);
+const req = require.context('../src/components', true, /\.stories\.(tsx|mdx)$/);
 
 function loadStories() {
   req.keys().forEach(req);
