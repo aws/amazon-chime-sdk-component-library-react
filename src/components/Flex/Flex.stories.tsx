@@ -1,6 +1,5 @@
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
-import { storiesOf } from '@storybook/react';
 
 import { Flex } from './';
 
@@ -27,36 +26,48 @@ const Title = styled.h1`
   border-radius: 4px;
 `;
 
-storiesOf('Flex', module)
-.add('fill space centered', () => {
+export default {
+  title: 'Flex',
+};
+
+export const FillSpaceCentered = () => {
   return (
     <Flex layout="fill-space-centered">
       <Title>I'm centered</Title>
     </Flex>
   );
-})
-.add('equal columns', () => {
+};
+
+FillSpaceCentered.story = {
+  name: 'fill space centered',
+};
+
+export const EqualColumns = () => {
   return (
-    <Flex
-      as="header"
-      layout="equal-columns"
-    >
-      <Child as="article"/>
-      <Child as="article"/>
-      <Child as="article"/>
-      <Child as="article"/>
+    <Flex as="header" layout="equal-columns">
+      <Child as="article" />
+      <Child as="article" />
+      <Child as="article" />
+      <Child as="article" />
     </Flex>
   );
-})
-.add('stack', () => {
+};
+
+EqualColumns.story = {
+  name: 'equal columns',
+};
+
+export const _Stack = () => {
   return (
     <Stack layout="stack">
-      <StackChild as="article"/>
-      <StackChild as="article"/>
-      <StackChild as="article"/>
-      <StackChild as="article"/>
+      <StackChild as="article" />
+      <StackChild as="article" />
+      <StackChild as="article" />
+      <StackChild as="article" />
     </Stack>
   );
-})
-;
+};
 
+_Stack.story = {
+  name: 'stack',
+};

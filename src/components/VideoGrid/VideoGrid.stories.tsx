@@ -1,5 +1,4 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { number } from '@storybook/addon-knobs';
 
 import VideoGrid from './';
@@ -17,7 +16,11 @@ const Tile = () => (
   </div>
 );
 
-storiesOf('Video/VideoGrid', module).add('VideoGrid', () => {
+export default {
+  title: 'Video/VideoGrid',
+};
+
+export const _VideoGrid = () => {
   const size = number('Size', 3);
   const tiles = new Array(size).fill(0).map((x, index) => <Tile key={index} />);
 
@@ -26,4 +29,8 @@ storiesOf('Video/VideoGrid', module).add('VideoGrid', () => {
       <VideoGrid>{tiles}</VideoGrid>
     </div>
   );
-});
+};
+
+_VideoGrid.story = {
+  name: 'VideoGrid',
+};

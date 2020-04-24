@@ -23,7 +23,10 @@ const PageWithModal:FC<PageWithModalProps> = ({ size }) => {
     )
 }
 
-storiesOf('Modal', module)  
-.add('Medium', () => <PageWithModal size='medium'/>)
-.add('Large', () => <PageWithModal size='large'/>)
-.add('FullScreen', () => <PageWithModal size='fullscreen'/>);
+export default {
+    title: 'Modal'
+};
+
+export const Medium = () => <PageWithModal size='medium'/>;
+export const Large = () => <PageWithModal size='large'/>;
+export const FullScreen = () => <PageWithModal size='fullscreen'/>;

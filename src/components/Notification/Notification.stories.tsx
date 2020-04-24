@@ -1,10 +1,13 @@
 import React from 'react';
-import { storiesOf } from '@storybook/react';
 import { select } from '@storybook/addon-knobs';
 
 import { Notification } from './';
 
-storiesOf('Notification', module).add('Notification', () => {
+export default {
+  title: 'Notification',
+};
+
+export const _Notification = () => {
   return (
     <div style={{ padding: '1rem' }}>
       <Notification
@@ -20,4 +23,4 @@ storiesOf('Notification', module).add('Notification', () => {
       </Notification>
     </div>
   );
-});
+};
