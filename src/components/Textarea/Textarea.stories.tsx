@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { storiesOf } from '@storybook/react';
 import { text } from '@storybook/addon-knobs';
 
 import Textarea from './';
@@ -10,8 +9,11 @@ const Wrapper = styled.div`
   margin: 10vh auto;
 `;
 
-storiesOf('Textarea', module)
-.add('Textarea', () =>
+export default {
+  title: 'Form/Textarea',
+};
+
+export const _Textarea = () => (
   <Wrapper>
     <Textarea
       placeholder="text goes here"

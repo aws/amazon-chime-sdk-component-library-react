@@ -31,8 +31,11 @@ const getButtonContents = (isOpen: boolean) => {
   );
 }
 
-storiesOf('PopOver', module)
-.add('Basic Popover Menu', () => {
+export default {
+  title: 'PopOver',
+};
+
+export const BasicPopOverMenu = () => {
   return (
     <>
       <PopOver
@@ -64,8 +67,13 @@ storiesOf('PopOver', module)
       </PopOver>
     </>
   );
-})
-.add('Popover Menu with header', () => {
+};
+
+BasicPopOverMenu.story = {
+  name: 'Basic Popover Menu'
+};
+
+export const PopOverMenuWithHeader = () => {
   return (
     <>
 
@@ -95,8 +103,13 @@ storiesOf('PopOver', module)
       </PopOver>
     </>
   );
-})
-.add('Popover Menu with submenu', () => {
+};
+
+PopOverMenuWithHeader.story = {
+  name: 'Popover Menu with header'
+};
+
+export const PopOverMenuWithSubmenu = () => {
   return (
     <>
       <PopOver
@@ -134,4 +147,8 @@ storiesOf('PopOver', module)
       </PopOver>
     </>
   );
-})
+};
+
+PopOverMenuWithSubmenu.story = {
+  name: 'Popover Menu with submenu'
+};

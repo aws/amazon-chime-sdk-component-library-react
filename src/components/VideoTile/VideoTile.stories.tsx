@@ -1,13 +1,19 @@
-import { storiesOf } from '@storybook/react';
 import React from 'react';
 
 import { VideoTile } from './';
 
-storiesOf('Video/VideoTile', module)
-.add('VideoTile', () => {
+export default {
+  title: 'Video/VideoTile',
+};
+
+export const _VideoTile = () => {
   return (
     <div style={{ width: '45%', margin: '2rem auto' }}>
       <VideoTile bindVideoTile={() => {}} nameplate="Test name" />
     </div>
   );
-});
+};
+
+_VideoTile.story = {
+  name: 'VideoTile',
+};

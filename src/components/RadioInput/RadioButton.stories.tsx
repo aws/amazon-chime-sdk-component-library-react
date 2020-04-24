@@ -1,13 +1,17 @@
 import React from 'react';
 
-import { storiesOf } from '@storybook/react';
-import { boolean } from "@storybook/addon-knobs";
+import { boolean } from '@storybook/addon-knobs';
 
 import { RadioInput } from './';
 
-storiesOf('Form/Radio', module)
-.add('RadioInput', () =>
-<RadioInput
-  label="Radio Input"
-  checked={boolean("Checked", false)}
-/>);
+export default {
+  title: 'Form/Radio',
+};
+
+export const _RadioInput = () => (
+  <RadioInput label="Radio Input" checked={boolean('Checked', false)} />
+);
+
+_RadioInput.story = {
+  name: 'RadioInput',
+};
