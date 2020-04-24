@@ -5,6 +5,7 @@ module.exports = {
     moduleFileExtensions: ["ts", "tsx", "js", "json", "jsx", "node",],
     transform: {
         "\\.tsx?$": "ts-jest",
+        "^.+\\.mdx$": "@storybook/addon-docs/jest-transform-mdx",
     },
     globals: {
         "ts-jest": {
