@@ -1,79 +1,68 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { formatDistance } from 'date-fns';
 
 import CallList from './CallList';
 import Card from '../components/Card';
 import ApiGatewayClient from '../ApiGatewayClient';
+import MeetingManager from '../meeting/MeetingManager';
 
-const POLL_TIMEOUT = 30000; // 30 secondes
+const POLL_TIMEOUT = 10000; // 10 secondes
 
-type CallItem = {
-  CustomerName: string;
-  CreatedDate: string;
-  CustomerId: string;
-};
-
-export interface CallUpdateProps {
-  handleJoinMeeting: () => void;
+export interface CallUpdatesProps {
+  onIsInMeetingChange: (isInMeeting: boolean) => void;
 }
 
-interface CallUpdatesState{
-  items: CallItem[];
-}
-  
-export class CallUpdates extends Component<CallUpdateProps, CallUpdatesState> {
-  private pollTimeout: number;
+const CallUpdates: React.FC<CallUpdatesProps> = ({ onIsInMeetingChange }) => {
+  const [callItems, setCallItems] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const pollTimeout: any = useRef(0);
 
-  constructor(props: CallUpdateProps) {
-    super(props);
-    this.state = { items: [] }
-    this.pollTimeout = 0;
-  }
-
-  async fetchCustomerCalls() {
+  const fetchCustomerCalls = async () => {
     const response = await ApiGatewayClient.retriveCustomers();
-    this.setState({ items: response });
+    setCallItems(response);
+    pollTimeout.current = window.setTimeout(() => fetchCustomerCalls(), POLL_TIMEOUT);
+  };
 
-    this.pollTimeout = window.setTimeout(() => this.fetchCustomerCalls(), POLL_TIMEOUT);
-  }
-
-  renderCalls() {
-    const { items } = this.state;
-    return items.map(({ CustomerName, CreatedDate, CustomerId }) => (
+  const renderCalls = () => {
+    return callItems.map(({ CustomerName, CreatedDate, CustomerId }) => (
       <Card
         key={CustomerId}
         title={CustomerName}
-        time={"(Waiting time: " + formatDistance(new Date(CreatedDate), new Date(), { includeSeconds: true }) + ")"}
+        time={`(Waiting time: ${formatDistance(new Date(CreatedDate), new Date(), { includeSeconds: true })})` }
       />
     ));
   };
 
-  componentWillUnmount() {
-    window.clearTimeout(this.pollTimeout);
-  }
-    
-  componentDidMount() {
-    // Poll to get customer calls every 30 sec
-    this.fetchCustomerCalls();
-  }
+  const handleCreateMeeting = async () => {
+    setIsLoading(true);
+    const firstCustomer = await ApiGatewayClient.getFirstCustomer();
+    const meeting = firstCustomer && await ApiGatewayClient.createMeeting(firstCustomer.CustomerId);
+    onIsInMeetingChange(true);
+    console.log("Agent created meeting", meeting);
+    await MeetingManager.initializeMeetingSession(meeting.meeting, meeting.agentAttendee);
+  };
 
-  render() {
-    const { items } = this.state;
-    const msg = (!items || !items.length) && "No incoming customer call"
-    return (
-      <div>
-        <CallList
-          title="Customer calls"
-          defaultMessage={msg}
-        >
-          {items && items.length > 0 && this.renderCalls()}
-          
-        </CallList>
-        <br />
-        <button onClick={this.props.handleJoinMeeting}>Join next customer call</button>
-      </div>
-    );
-  }
+  useEffect(() => {
+    // Poll to get customer calls every 10 sec
+    fetchCustomerCalls();
+    return () => window.clearTimeout(pollTimeout);
+  }, []);
+
+  const msg = (!callItems || !callItems.length) && "No incoming customer call"
+  return (
+    <div>
+      <CallList
+        title="Incoming customer calls"
+        defaultMessage={msg}
+      >
+        {callItems && callItems.length > 0 && renderCalls()}
+      </CallList>
+      <br />
+      <button onClick={handleCreateMeeting} disabled={!callItems || !callItems.length || isLoading}>
+        {isLoading ? "Connecting" : "Join next customer call"}
+      </button>
+    </div>
+  );
 }
 
 export default CallUpdates;

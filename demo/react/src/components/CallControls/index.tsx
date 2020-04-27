@@ -1,23 +1,49 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Microphone from '../icons/Microphone';
 import Camera from '../icons/Camera';
 import Phone from '../icons/Phone';
 import { StyledCallControls } from './Styled';
 
-export interface CallControlsProps {
-  handleMuteToggle: () => void,
-  handleCameraToggle: () => void,
-  handleEndMeeting: () => void,
-  isMuted: boolean,
-  isCameraActive: boolean,
-}
-const CallControls: React.FC<CallControlsProps> = ({handleCameraToggle, handleEndMeeting, handleMuteToggle, isCameraActive, isMuted}) => {
-return (
-    // TODO: Replace components with Library components
+import MeetingManager from '../../meeting/MeetingManager';
+import ApiGatewayClient from '../../ApiGatewayClient';
+
+const CallControls: React.FC = () => {
+  const [isMuted, setMuted] = useState(false);
+  const [localVideoActive, setlocalVideoActive] = useState(false);
+
+  const endMeeting = () => {
+    const meetingId = MeetingManager.meetingSession?.configuration.meetingId;
+    if (meetingId) {
+      console.log("End Meeting: " + meetingId);
+      ApiGatewayClient.endMeeting(meetingId);
+      MeetingManager.endCurrentMeetingSession();
+    }
+  };
+
+  const toggleMuted = () => {
+    const isMeetingMuted = MeetingManager.getIsLocalAudioMuted();
+    console.log(`Set Muted to ${!isMeetingMuted}`);
+    setMuted(!isMeetingMuted);
+    isMeetingMuted ? MeetingManager.unmuteLocalAudio() : MeetingManager.muteLocalAudio();
+  };
+  
+  const toggleCamera = () => {
+    const videoTile = MeetingManager.getLocalVideoTile();
+    let isVideoActive = false;
+    if (videoTile) {
+      isVideoActive = videoTile.state().active;
+    }
+    console.log(`Set camera active to ${!isVideoActive}`);
+    setlocalVideoActive(isVideoActive);
+    isVideoActive ? MeetingManager.stopLocalVideoTile() : MeetingManager.startLocalVideoTile();
+  };
+
+  return (
+    // TODO: Replace with the component Library button
     <StyledCallControls className="call-controls">
-      <button onClick={handleMuteToggle}><Microphone  disabled={isMuted}/></button>
-      <button onClick={handleCameraToggle}><Camera disabled={isCameraActive}/></button>
-      <button onClick={handleEndMeeting}><Phone /></button>
+      <button onClick={toggleMuted}><Microphone disabled={isMuted}/></button>
+      <button onClick={toggleCamera}><Camera disabled={localVideoActive}/></button>
+      <button onClick={endMeeting}><Phone /></button>
     </StyledCallControls>
   );
 }
