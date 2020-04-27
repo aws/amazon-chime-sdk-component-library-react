@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const StyledTextarea = styled.textarea`
-  background-color: transparent;
+  background-color: ${props => props.theme.textarea.text};
   color: ${props => props.theme.textarea.text};
   position: relative;
   border-radius: ${props => props.theme.radii.default};
