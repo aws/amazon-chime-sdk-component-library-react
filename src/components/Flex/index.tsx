@@ -47,3 +47,5 @@ export const Flex: FC<FlexProps> = ({ children, ...props }) => (
     {children}
   </StyledFlex>
 );
+
+export default Flex;
