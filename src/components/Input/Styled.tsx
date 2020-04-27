@@ -9,21 +9,14 @@ const getPadding = (props: InputWrapperProps)  => {
 }
 
 export const StyledInputWrapper = styled.span<InputWrapperProps>`
-  display: inline-flex;
-  border: 0.125rem solid transparent;
-  border-radius: 0.375rem;
   position: relative;
-  transition: all .15s ease-in;
-  &:focus-within {
-    border-color: ${props => props.theme.colors.primary.lightest};
-  }
 
   > .icon {
     position: absolute;
     width: 1rem;
     left: 0.1875rem;
     position: absolute;
-    top: ${props => props.sizing === 'sm' ? '0.3125rem': '0.5rem'};
+    top: ${props => props.sizing === 'sm' ? '0.25rem': '0.5rem'};
   }
 
   > input {
@@ -42,10 +35,16 @@ export const StyledInput = styled.input`
   line-height: 1.43;
   letter-spacing: -0.005625rem;
   box-shadow: 0 0.0625rem 0.0625rem 0 rgba(0, 0, 0, 0.1);
-  transition: all .15s ease-in;
 
-  &:focus {
+  &:focus,
+  &[aria-invalid="true"]:focus {
+    box-shadow: 0 0 0 0.125rem ${props => props.theme.colors.primary.lightest};
+    border-color: ${props => props.theme.colors.primary.main};
     outline: none;
-    border-color: ${props => props.theme.colors.primary.lighter};
+  }
+
+  &[aria-invalid="true"] {
+    box-shadow: 0 0 0 0.125rem ${props => props.theme.colors.error.light};
+    border-color: ${props => props.theme.colors.error.dark};
   }
 `;

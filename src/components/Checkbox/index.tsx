@@ -1,25 +1,43 @@
-import React from 'react';
-import { StyledCheckbox } from './Styled';
+import React, { FC, ChangeEvent, useRef } from 'react';
+import { StyledCheckbox, HiddenCheckbox } from './Styled';
 import { Check } from '../icons';
 
-export interface CheckboxProps extends React.InputHTMLAttributes<HTMLInputElement> {
+export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>,'onChange' | 'value'>  {
+  onChange: (event?: ChangeEvent | string) => void;
+  value: string;
+}
+export interface StyledCheckboxProps {
   checked?: boolean;
-  label: string;
 }
 
-export const Checkbox: React.FC<CheckboxProps> = (props) => {
-  const { checked, label, ...rest } = props;
+export const Checkbox: FC<CheckboxProps> = (props: CheckboxProps) => {
+  const { checked, onChange, value, } = props;
+  const checkboxNode = useRef<HTMLInputElement>(null);
+
+  const handleChange = () => {
+    checkboxNode.current?.click(); // simulate click the native checkbox
+  }
+
   return (
-    <StyledCheckbox {...props}>
-      <label>
-        <input
-          type="checkbox"
-          checked={checked}
-          {...rest}
-        />
-        <span className='checkmark-wrapper'>{checked && <span className="checkmark"><Check/></span>}</span>
-        <span className="label-text">{label}</span>
-      </label>
-    </StyledCheckbox>
+    <>
+      <HiddenCheckbox
+        {...props}
+        ref={checkboxNode}
+        type="Checkbox"
+        value={value}
+        onChange={onChange}
+      />
+      <StyledCheckbox
+        checked={(checked)}
+        className="Checkbox"
+        onClick={handleChange}
+      >
+        {checked && <Check/>}
+      </StyledCheckbox>
+    </>
   );
-}
+};
+
+Checkbox.displayName = 'Checkbox';
+
+export default Checkbox;

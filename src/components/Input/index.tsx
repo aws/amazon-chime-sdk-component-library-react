@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent, ReactNode } from 'react';
+import React, { FC, ChangeEvent, ReactNode, forwardRef, Ref } from 'react';
 import InputWrapper from './InputWrapper';
 import { StyledInput } from './Styled';
 
@@ -11,14 +11,26 @@ export interface InputProps extends Omit<React.InputHTMLAttributes<HTMLInputElem
   value: string;
 }
 
-export const Input: FC<InputProps> = (props) => {
-  const { leadingIcon, sizing,  ...rest } = props;
+export const Input = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>) => {
+  const { className, leadingIcon, sizing, type, onChange,  ...rest } = props;
 
   return (
-    <InputWrapper leadingIcon={leadingIcon} sizing={sizing}>
-      <StyledInput {...rest} />
+    <InputWrapper
+      leadingIcon={leadingIcon}
+      sizing={sizing}
+      className="InputWrapper"
+    >
+      <StyledInput
+        {...rest}
+        type={type || "text"}
+        ref={ref}
+        className="Input"
+        onChange={(e:ChangeEvent) => onChange(e)}
+      />
     </InputWrapper>
   );
-}
+});
+
+Input.displayName = 'Input';
 
 export default Input;

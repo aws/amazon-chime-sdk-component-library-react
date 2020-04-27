@@ -11,9 +11,12 @@ export const Textarea: FC<TextareaProps> = ({ label, ...props }) => {
   return (
     <StyledTextarea
       aria-label={label}
+      className="Textarea"
       {...props}
     />
   );
 };
+
+Textarea.displayName = "Textarea";
 
 export default Textarea;
