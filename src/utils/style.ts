@@ -14,3 +14,10 @@ export const ellipsis = css`
   white-space: nowrap;
   text-overflow: ellipsis;
 `;
+
+export const absoluteCenter = css`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;

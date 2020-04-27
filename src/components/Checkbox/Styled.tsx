@@ -1,63 +1,52 @@
 import styled from 'styled-components';
 
 import { visuallyHidden } from '../../utils/style';
-import { CheckboxProps } from "./";
+import { CheckboxProps, StyledCheckboxProps } from "./";
 
-export const StyledCheckbox = styled.div<CheckboxProps>`
-  display: inline-block;  
-  padding: 0.5rem;
+export const HiddenCheckbox = styled.input<CheckboxProps>`
+  ${visuallyHidden};
 
-  input[type=checkbox] {
-    ${visuallyHidden}
+  &[aria-invalid="true"] + .Checkbox {
+    box-shadow: 0 0 0 0.125rem ${props => props.theme.colors.error.light};
+    border-color: ${props => props.theme.colors.error.dark};
   }
+`;
 
-  label {
-    display: flex;
-    position: relative;
-    align-items: start;
-  }
+export const StyledCheckbox = styled.div<StyledCheckboxProps>`
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  position: relative;
+  border-radius: 0.25rem;
+  box-shadow: ${props =>
+    props.checked ?
+    props.theme.checkbox.checked.checkboxShadow:
+    props.theme.checkbox.default.checkboxShadow
+  };
+  background-color: ${props =>
+    props.checked ?
+    props.theme.checkbox.checked.checkboxBgd:
+    props.theme.checkbox.default.checkboxBgd
+  };
+  border: ${props =>
+    props.checked ?
+    props.theme.checkbox.checked.checkboxBorder:
+    props.theme.checkbox.default.checkboxBorder
+  };
+  color: ${props =>
+    props.checked ?
+    props.theme.checkbox.checked.checkmark:
+    props.theme.checkbox.default.checkmark
+  };
 
-  .checkmark-wrapper {
-    width: 1rem;
-    height: 1rem;
-    display: block;
-    border-radius: 0.25rem;
-    box-shadow: ${props => 
-        props.checked ?
-        props.theme.checkbox.checked.checkboxShadow:
-        props.theme.checkbox.default.checkboxShadow
-      }; 
-    background-color: ${props => 
-      props.checked ?
-      props.theme.checkbox.checked.checkboxBgd:
-      props.theme.checkbox.default.checkboxBgd
-    }; 
-    border: ${props => 
-      props.checked ?
-      props.theme.checkbox.checked.checkboxBorder:
-      props.theme.checkbox.default.checkboxBorder
-    };
-    margin-top: 0.125rem;
-    color: ${props => 
-      props.checked ?
-      props.theme.checkbox.checked.checkmark:
-      props.theme.checkbox.default.checkmark
-    };
-  }
-
-  .checkmark {
-    width: 1.25rem;
+  > svg {
+    transform: scale(1.5);
     position: absolute;
-    left: -0.0625rem;
-    top: 0.0625rem;
+    left: -0.03125rem;
   }
 
-
-  .label-text {
-    font-size: 0.875rem;
-    margin-left: 0.5rem;
-    line-height: 1.43;
-    color: ${props => props.theme.checkbox.default.labelText};
-    letter-spacing: -0.005625rem;
-  }  
+  ${HiddenCheckbox}:focus ~ & {
+    box-shadow: ${props => props.theme.checkbox.focus.checkboxShadow};
+    border: ${props => props.theme.checkbox.focus.checkboxBorder};
+  }
 `;

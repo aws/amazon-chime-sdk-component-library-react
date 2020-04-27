@@ -2,9 +2,8 @@ import React, { ChangeEvent, forwardRef, Ref, InputHTMLAttributes,  } from 'reac
 
 import { StyledSelectInput } from './Styled';
 
-export interface SelectInputProps extends InputHTMLAttributes<HTMLSelectElement> {
+export interface SelectProps extends InputHTMLAttributes<HTMLSelectElement> {
   options: string[];
-  label: string;
   onChange(event: ChangeEvent): void;
   value: string;
 }
@@ -15,9 +14,9 @@ const renderOptions = (options: string[]) => {
   );
 }
 
-export const SelectInput = forwardRef((props: SelectInputProps, ref: Ref<HTMLSelectElement>) => (
+export const Select = forwardRef((props: SelectProps, ref: Ref<HTMLSelectElement>) => (
   <StyledSelectInput
-    aria-label={props.label}
+    className="Select"
     ref={ref}
     {...props}
   >
@@ -25,4 +24,7 @@ export const SelectInput = forwardRef((props: SelectInputProps, ref: Ref<HTMLSel
   </StyledSelectInput>
 ));
 
-export default SelectInput;
+
+Select.displayName = 'Select';
+
+export default Select;

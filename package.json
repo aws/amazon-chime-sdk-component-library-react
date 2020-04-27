@@ -21,7 +21,8 @@
     "@types/testing-library__react": "^10.0.1",
     "@types/uuid": "^7.0.3",
     "react-popper": "^2.2.1",
-    "throttle-debounce": "^2.1.0"
+    "throttle-debounce": "^2.1.0",
+    "uuid": "^8.0.0"
   },
   "devDependencies": {
     "@storybook/addon-a11y": "^5.3.18",

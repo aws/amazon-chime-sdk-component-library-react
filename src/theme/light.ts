@@ -189,10 +189,15 @@ const checkbox = {
 		checkboxBgd: colors.primary.main,
 		checkboxBorder: `solid 0.03125rem ${colors.primary.main}`,
 		checkboxShadow:	`0 0.03125rem 0.03125rem 0 ${rgbaWithOpacity(colorsRgb.primary.dark, 0.7)}`,
-	}
+  },
+
+  focus: {
+    checkboxShadow: `0 0 0 0.125rem ${colors.primary.lighter}`,
+    checkboxBorder: `solid 0.03125rem ${colors.primary.main}`,
+  }
 };
 
-const radioInput = {
+const radio = {
 	default: {
 		bodyBgd: colors.greys.white,
 		wrapperBgd: colors.greys.white,
@@ -206,7 +211,12 @@ const radioInput = {
 		wrapperBgd: colors.primary.main,
 		wrapperBorder: `solid 0.03125rem ${colors.primary.main}`,
 		wrapperShadow:	"0 0.03125rem 0.03125rem 0 rgba(0, 77, 219, 0.7)",
-	}
+  },
+
+  focus: {
+    wrapperShadow: `0 0 0 0.125rem ${colors.primary.lighter}`,
+    wrapperBorder: `solid 0.03125rem ${colors.primary.main}`,
+  }
 };
 
 const textarea = {
@@ -326,7 +336,7 @@ const lightTheme = {
   overlays,
   shadows,
   checkbox,
-  radioInput,
+  radio,
   select,
   textarea,
   modal,

@@ -40,6 +40,7 @@ export interface FlexProps {
   flexShrink?: number;
   justifyContent?: justifyContent
   layout?: Layout;
+  style?: {};
 }
 
 export const Flex: FC<FlexProps> = ({ children, ...props }) => (

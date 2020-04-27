@@ -5,6 +5,7 @@ import { Size } from './';
 export interface InputWrapperProps {
   leadingIcon?: ReactNode;
   sizing?: Size;
+  className?: string;
 }
 
 export const InputWrapper: FC<InputWrapperProps> = (props) => {
