@@ -16,24 +16,40 @@ const colors = {
       dark: "#FFB4A1",
   },
   error: {
-      light: "#E73738",
-      main: "#EA4847",
-      dark: "#F3605F",
+      lightest: "#FBC1C0",
+      lighter: "#FDA8A6",
+      light: "##FD9B99",
+      primary: "#FF8B8A",
+      dark: "#583A39",
+      darker: "#452F2E",
+      darkest:"#302020",
   },
   success: {
-      light: "#8CE261",
-      main: "#A3E881",
-      dark: "#AEEB90",
+    lightest: "#F4FBF1",
+    lighter: "#D2F1C5",
+    light: "#BAF39E",
+    primary: "#A3E881",
+    dark: "#4F6444",
+    darker: "#46573D",
+    darkest:"#324129",
   },
   info: {
-      light: "#65B3F7",
-      main: "#82C3F8",
-      dark: "#92CAF9",
+    lightest: "#F0F5FD",
+    lighter: "#D8E6FB",
+    light: "#C4DBFF",
+    primary: "#BAD4FF",
+    dark: "#555B69",
+    darker: "#494F59",
+    darkest:"#343C48",
   },
   warning: {
-      light: "#FAD946",
-      main: "#FBDF64",
-      dark: "#FBE378",
+    lightest: "#FDFDF7",
+    lighter: "#3F4149",
+    light: "#FFEB96",
+    primary: "#FBDF64",
+    dark: "#6D653C",
+    darker: "#5E5736",
+    darkest:"#47422D",
   },
 
   greys: {
@@ -236,6 +252,65 @@ const select = {
     text: colors.greys.grey70,
   }
 };
+const notification = {
+  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  error: {
+    text: colors.error.darker,
+    closeButton: {
+      text: colors.error.dark,
+      hover: {
+        bgd: colors.error.dark,
+        text: colors.greys.white
+      },
+      active: {
+        bgd: colors.error.darker,
+        text: colors.greys.white
+      }
+    }
+  },
+  success: {
+    text: colors.success.darker,
+    closeButton: {
+      text: colors.success.dark,
+      hover: {
+        bgd: colors.success.dark,
+        text: colors.greys.white
+      },
+      active: {
+        bgd: colors.success.darker,
+        text: colors.greys.white
+      }
+    }
+  },
+  info: {
+    text: colors.info.darker,
+    closeButton: {
+      text: colors.info.dark,
+      hover: {
+        bgd: colors.info.dark,
+        text: colors.greys.white
+      },
+      active: {
+        bgd: colors.info.darker,
+        text: colors.greys.white
+      }
+    }
+  },
+  warning: {
+    text: colors.warning.darker,
+    closeButton: {
+      text: colors.warning.dark,
+      hover: {
+        bgd: colors.warning.dark,
+        text: colors.greys.white
+      },
+      active: {
+        bgd: colors.warning.darker,
+        text: colors.greys.white
+      }
+    }
+  }
+}
 
 const darkTheme = {
     buttons,
@@ -249,6 +324,7 @@ const darkTheme = {
     overlays,
     select,
     textarea,
+    notification,
     ...defaultTheme,
 };
 

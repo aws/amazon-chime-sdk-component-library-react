@@ -1,7 +1,7 @@
 import React from 'react';
 import { select } from '@storybook/addon-knobs';
 
-import { Notification } from './';
+import { Notification } from '.';
 
 export default {
   title: 'Notification',
@@ -9,18 +9,15 @@ export default {
 
 export const _Notification = () => {
   return (
-    <div style={{ padding: '1rem' }}>
       <Notification
-        onClose={() => {}}
-        size={select('size', { sm: 'sm', md: 'md', lg: 'lg', fill: 'fill' }, 'md')}
+        onClose={() => {console.log('Close notification')}}
         severity={select(
           'severity',
           { success: 'success', warning: 'warning', info: 'info', error: 'error' },
-          'warning'
+          'error'
         )}
       >
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.
       </Notification>
-    </div>
   );
 };

@@ -1,47 +1,52 @@
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 
-import { NotificationProps, Severity, Size } from './';
-
-const sizes = {
-  sm: '30rem',
-  md: '50rem',
-  lg: '70rem',
-  fill: '100%',
-};
+import { NotificationProps, Severity } from '.';
+import IconButton from '../Button/IconButton';
 
 interface StyledNotificationProps extends NotificationProps {
   severity: Severity;
-  size: Size;
 }
+
+export const StyledCloseIconButton = styled(IconButton)``;
 
 export const StyledNotification = styled.div<StyledNotificationProps>`
   position: relative;
-  display: flex;
-  align-items: start;
-  width: ${({ size }) => sizes[size]};
-  max-width: 100%;
-  padding: 0.75rem 0.75rem 0.75rem 1rem;
+  display: inline-flex;
+  align-items: flex-start;
+  color: ${({ theme, severity }) => theme.notification[severity].text};
+  background-color: ${({ theme, severity }) => theme.colors[severity].primary};
+  padding: 0.5rem;
+  box-shadow: ${({ theme }) => theme.notification.shadow};
   border-radius: 0.25rem;
-  color: ${props => props.theme.colors.greys.grey100};
-  font-size: 1rem;
-  box-sizing: border-box;
-  background: ${({ severity, theme }) => theme.colors[severity].main};
 
-  .icon {
-    width: 2rem;
+  .severity-icon {
+    width: 1.5rem;
     flex-shrink: 0;
-    color: ${props => props.theme.colors.greys.grey100};
+    margin-top: 0.25rem;
   }
 
   .message {
-    margin: 0 1.5rem 0 0.5rem;
-    line-height: 2;
+    display: flex;
+    flex-flow: column wrap;
+    max-width: 26vw;
+    line-height: 1.43;
+    letter-spacing: -0.005625rem;
+    font-size: 0.875rem;
+    margin: 0.375rem 3.3125rem 0.375rem 0.75rem;
   }
-`;
 
-export const StyledButton = css`
-  margin-left: auto;
-  border: 0.125rem solid ${props => props.theme.colors.greys.grey100};
-  background-color: unset;
-  color: ${props => props.theme.colors.greys.grey100};
+  ${StyledCloseIconButton} {
+    background-color: ${({ theme, severity }) => theme.colors[severity].primary};
+    color: ${({ theme, severity }) => theme.notification[severity].closeButton.text}};
+  }
+
+  ${StyledCloseIconButton}:hover, ${StyledCloseIconButton}:focus {
+    background-color: ${({ theme, severity }) => theme.notification[severity].closeButton.hover.bgd};
+    color: ${({ theme, severity }) => theme.notification[severity].closeButton.hover.text};
+  }
+
+  ${StyledCloseIconButton}:active {
+    background-color: ${({ theme, severity }) => theme.notification[severity].closeButton.active.bgd};
+    color: ${({ theme, severity }) => theme.notification[severity].closeButton.active.text};
+  }
 `;
