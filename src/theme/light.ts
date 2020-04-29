@@ -16,24 +16,40 @@ const colors = {
     dark: "#e86c4d",
   },
   error: {
-    light: "#ea4a4c",
-    main: "#d33436",
-    dark: "#bc1d1f",
+    lightest: "#FCF7F6",
+    lighter: "#F5DDD5",
+    light: "#FF927C",
+    primary: "#C52000",
+    dark: "#9E3319",
+    darker: "#89301A",
+    darkest: "#791800",
   },
   success: {
-    light: "#98e571",
-    main: "#81e052",
-    dark: "#6ab845",
+    lightest: "#EBF1EA",
+    lighter: "#CEE0C8",
+    light: "#50CD49",
+    primary: "#067000",
+    dark: "#305D1D",
+    darker: "#2C511D",
+    darkest: "#184206",
   },
   info: {
-    light: "#7abef8",
-    main: "#54acf6",
-    dark: "#309af4",
+    lightest: "#DADFE7",
+    lighter: "#C4CCD9",
+    light: "#418AFD",
+    primary: "#2555A0",
+    dark: "#264A82",
+    darker: "#243F6B",
+    darkest: "#123366",
   },
   warning: {
-    light: "#fad635",
-    main: "#f9cc09",
-    dark: "#e3bb08",
+    lightest: "#FAF8EA",
+    lighter: "#F7E79E",
+    light: "#F9DC60",
+    primary: "#F9CC09",
+    dark: "#665A2A",
+    darker: "#584E26",
+    darkest:"#534201",
   },
   greys: {
     black: "#000000",
@@ -243,6 +259,66 @@ const popOver = {
   separator: `${rgbaWithOpacity(colorsRgb.greys.grey40, 0.7)}`,
 };
 
+const notification = {
+  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  error: {
+    text: colors.error.lightest,
+    closeButton: {
+      text: colors.error.lighter,
+      hover: {
+        bgd: colors.error.lighter,
+        text: colors.error.dark
+      },
+      active: {
+        bgd: colors.error.lightest,
+        text: colors.error.darker
+      }
+    }
+  },
+  success: {
+    text: colors.success.lightest,
+    closeButton: {
+      text: colors.success.lighter,
+      hover: {
+        bgd: colors.success.lighter,
+        text: colors.success.dark
+      },
+      active: {
+        bgd: colors.success.lightest,
+        text: colors.success.darker
+      }
+    }
+  },
+  info: {
+    text: colors.info.lightest,
+    closeButton: {
+      text: colors.info.lighter,
+      hover: {
+        bgd: colors.info.lighter,
+        text: colors.info.dark
+      },
+      active: {
+        bgd: colors.info.lightest,
+        text: colors.info.darker
+      }
+    }
+  },
+  warning: {
+    text: colors.warning.darker,
+    closeButton: {
+      text: colors.warning.dark,
+      hover: {
+        bgd: colors.warning.dark,
+        text: colors.greys.white
+      },
+      active: {
+        bgd: colors.warning.darker,
+        text: colors.greys.white
+      }
+    }
+  }
+}
+
 const lightTheme = {
   buttons,
   colors,
@@ -255,6 +331,7 @@ const lightTheme = {
   textarea,
   modal,
   popOver,
+  notification,
   ...defaultTheme,
 };
 

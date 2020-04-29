@@ -8,6 +8,8 @@ import {
   Caret,
   Caution,
   Check,
+  CheckRound,
+  Clock,
   Cog,
   Crown,
   DeskPhone,
@@ -61,6 +63,8 @@ export const _Caret = () => (
 
 export const _Caution = () => <Caution width={text('width', '2rem')} />;
 export const _Check = () => <Check width={text('width', '2rem')} />;
+export const _CheckRound = () => <CheckRound width={text('width', '2rem')} />;
+export const _Clock = () => <Clock width={text('width', '2rem')} />;
 export const _Cog = () => <Cog width={text('width', '2rem')} />;
 export const _Crown = () => <Crown width={text('width', '2rem')} />;
 

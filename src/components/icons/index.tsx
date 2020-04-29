@@ -4,6 +4,8 @@ export { default as Camera } from './Camera';
 export { default as Caret } from './Caret';
 export { default as Caution } from './Caution';
 export { default as Check } from './Check';
+export { default as CheckRound } from './CheckRound';
+export { default as Clock } from './Clock';
 export { default as Cog } from './Cog';
 export { default as Crown } from './Crown';
 export { default as DeskPhone } from './DeskPhone';
