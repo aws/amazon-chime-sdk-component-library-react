@@ -14,7 +14,7 @@ export const VideoTile: React.SFC<VideoTileProps> = props => {
 
   useEffect(() => {
     !!videoEl && bindVideoTile(videoEl.current);
-  }, [bindVideoTile, videoEl]);
+  }, [bindVideoTile]);
 
   return (
     <StyledVideoTile {...props}>

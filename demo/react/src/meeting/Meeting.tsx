@@ -2,6 +2,7 @@ import React from 'react';
 
 import MeetingAudio from './MeetingAudio';
 import MeetingVideo from '../components/MeetingVideo';
+import MeetingVideoProvider from './MeetingVideoProvider';
 
 export interface MeetingProps {
   attendeeName: string;
@@ -12,7 +13,9 @@ const Meeting : React.FC<MeetingProps> = ({ attendeeName, onIsInMeetingChange })
   return (
     <>
       <h1>You are talking to {attendeeName}</h1>
-      <MeetingVideo attendeeName={attendeeName} onIsInMeetingChange={onIsInMeetingChange} />
+      <MeetingVideoProvider attendeeName={attendeeName} onIsInMeetingChange={onIsInMeetingChange}>
+        <MeetingVideo />
+      </MeetingVideoProvider>
       <MeetingAudio />
     </>
   )
