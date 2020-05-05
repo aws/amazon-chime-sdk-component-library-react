@@ -84,11 +84,7 @@ API Name: chime-meeting-operations
         Method: GET
         Lambda Function: getOldestCustomer
     
-    3. Path: /customer
-        Method: DELETE
-        URL Query String Parameter: customerId
-        Lambda Function: deleteCustomer
-    
+    3. Path: /customer    
         Method: POST
         URL Query String Parameter: customerName
         Lambda Function: createCustomer
