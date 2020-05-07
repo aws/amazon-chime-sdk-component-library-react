@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "module": "esnext",
-    "outDir": "dist/",
+    "outDir": "build",
     "noImplicitAny": true,
     "noUnusedLocals": true,
     "removeComments": true,

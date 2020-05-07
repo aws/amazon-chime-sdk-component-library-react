@@ -3,12 +3,6 @@ import React from 'react';
 
 import App from './App';
 
-ReactDOM.render(
-  <App/>,
-  document.querySelector('#container')
-);
-
-const anyModule = module as any;
-if (anyModule.hot) {
-  anyModule.hot.accept();
-}
+window.addEventListener('load', () => {
+  ReactDOM.render(<App />, document.getElementById('root'));
+});
