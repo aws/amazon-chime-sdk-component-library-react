@@ -1,5 +1,7 @@
 const path = require('path');
-const webpack = require('webpack');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const app = 'meeting';
 
 module.exports = {
   mode: 'development',
@@ -19,19 +21,37 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    path: `${__dirname}/public`,
+    path: path.join(__dirname, 'dist'),
+    filename: `${app}-bundle.js`,
     publicPath: '/',
-    filename: 'app.js',
   },
   plugins: [
-    new webpack.DefinePlugin({
-      __DEV__: true,
+    new HtmlWebpackPlugin({
+      inlineSource: '.(js|css)$',
+      template: __dirname + `/app/${app}.html`,
+      filename: __dirname + `/dist/${app}.html`,
+      inject: 'head',
     }),
   ],
   devServer: {
-    contentBase: path.resolve(__dirname, 'public'),
+    proxy: {
+      '/': {
+        target: 'http://localhost:8080',
+        bypass: function(req, _res, _proxyOptions) {
+          if (req.headers.accept.indexOf('html') !== -1) {
+            console.log('Skipping proxy for browser request.');
+            return `/${app}.html`;
+          }
+        },
+      },
+    },
+    contentBase: path.join(__dirname, 'dist'),
+    index: `${app}.html`,
+    compress: true,
     liveReload: true,
+    host: '0.0.0.0',
     port: 9000,
+    https: true,
     historyApiFallback: true,
     writeToDisk: true,
   },
