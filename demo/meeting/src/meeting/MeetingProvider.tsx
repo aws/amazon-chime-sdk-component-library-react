@@ -1,3 +1,4 @@
+import React, { ReactNode, createContext } from 'react';
 import {
   AudioVideoFacade,
   // AudioVideoObserver,
@@ -16,8 +17,7 @@ const BASE_URL: string = [
   location.pathname.replace(/\/*$/, '/'),
 ].join('');
 
-
-class MeetingManager {
+export class MeetingManager {
   meetingSession: DefaultMeetingSession | null = null;
   audioVideo: AudioVideoFacade | null = null;
   selfVideo: HTMLVideoElement | null = null;
@@ -88,4 +88,18 @@ class MeetingManager {
   }
 }
 
-export default new MeetingManager();
+export const MeetingContext = createContext<MeetingManager | null>(null);
+
+
+type Props = {
+  children: ReactNode;
+};
+
+
+export default function MeetingProvider(props: Props) {
+  const meetingManager = new MeetingManager();
+
+  return <MeetingContext.Provider value={meetingManager}>
+    {props.children}
+  </MeetingContext.Provider>
+}
