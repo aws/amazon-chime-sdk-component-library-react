@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import Input from '../components/Input';
 import routes from '../constants/routes';
-import MeetingManager from '../MeetingManager';
+import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
 
 const MeetingForm: React.FC = () => {
   const [meetingId, setMeetingId] = useState("");
@@ -11,13 +11,13 @@ const MeetingForm: React.FC = () => {
   const [region, setRegion] = useState("us-east-1");
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
-
+  const meetingManager: MeetingManager | null = useContext(MeetingContext);
 
   const handleJoinMeeting = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
-    const meeting = await MeetingManager.authenticate(meetingId, inputName, region);
+    const meeting = await meetingManager?.authenticate(meetingId, inputName, region);
     console.log("Join meeting info ", meeting);
     history.push(`${routes.MEETING}/${meetingId}`);
   }
