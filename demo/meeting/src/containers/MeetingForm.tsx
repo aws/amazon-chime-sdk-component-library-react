@@ -59,7 +59,6 @@ const MeetingForm: React.FC = () => {
       <button type="submit" disabled={isLoading || !inputName || !meetingId}>Continue</button>
       <p>Anyone with access to the meeting link can join.</p>
     </form>
-
   );
 }
 

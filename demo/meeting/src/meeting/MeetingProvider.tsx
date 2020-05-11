@@ -5,6 +5,7 @@ import {
   ConsoleLogger,
   DefaultDeviceController,
   DefaultMeetingSession,
+ // Device,
   LogLevel,
   MeetingSessionConfiguration,
   // VideoTile,
@@ -22,8 +23,12 @@ export class MeetingManager {
   audioVideo: AudioVideoFacade | null = null;
   selfVideo: HTMLVideoElement | null = null;
   attendeeVideo: HTMLVideoElement | null = null;
+  meetingId: string | null = null;
+  attendeeName: string | null = null;
 
   async authenticate(meetingId: string, name: string, region: string): Promise<string> {
+    this.meetingId = meetingId;
+    this.attendeeName = name;
     const joinInfo = (await this.joinMeeting(meetingId, name, region)).JoinInfo;
     await this.initializeMeetingSession(
       new MeetingSessionConfiguration(joinInfo.Meeting, joinInfo.Attendee)
@@ -55,10 +60,14 @@ export class MeetingManager {
    
     await this.setupAudioVideoDevices();
 
+    // this.audioVideo.addDeviceChangeObserver(this);
+    //// this.setupDeviceLabelTrigger();
+    // await this.populateAllDeviceLists();
     // this.setupMuteHandler();
     // this.setupCanUnmuteHandler();
     // this.setupSubscribeToAttendeeIdPresenceHandler();
     // this.setupScreenViewing();
+    // this.audioVideo.addObserver(this);
   }
 
   async setupAudioVideoDevices(): Promise<void> {
@@ -83,18 +92,57 @@ export class MeetingManager {
   setupDeviceLabelTrigger(): void {
     async (): Promise<MediaStream> => {
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+      // need to switch to flow-devices to check input/output devices
       return stream;
     }
   }
+
+  async join(): Promise<void> {
+    // await this.openAudioInputFromSelection();
+    // await this.openAudioOutputFromSelection();
+    this.audioVideo?.start();
+    // await this.meetingSession.screenShare.open();
+    // await this.meetingSession.screenShareView.open();
+  }
+
+  // async openAudioInputFromSelection(): Promise<void> {
+  //   console.log("karen openAudioInputFromSelection()");
+  //   const audioInput = document.getElementById('audio-input') as HTMLSelectElement;
+  //   await this.audioVideo?.chooseAudioInputDevice(
+  //     this.audioInputSelectionToDevice(audioInput.value)
+  //   );
+  //   // this.startAudioPreview();
+  // }
+
+  // private audioInputSelectionToDevice(value: string): Device {
+  //   if (value === '440 Hz') {
+  //     return DefaultDeviceController.synthesizeAudioDevice(440);
+  //   } else if (value === 'None') {
+  //     return null;
+  //   }
+  //   return value;
+  // }
+
+  // async openAudioOutputFromSelection(): Promise<void> {
+  //   const audioOutput = document.getElementById('audio-output') as HTMLSelectElement;
+  //   await this.audioVideo?.chooseAudioOutputDevice(audioOutput.value);
+  //   const audioMix = document.getElementById('meeting-audio') as HTMLAudioElement;
+  //   await this.audioVideo?.bindAudioElement(audioMix);
+  // }
+
+  async endMeeting(meetingId: string): Promise<any> {
+    await fetch(`${BASE_URL}end?title=${encodeURIComponent(meetingId)}`, {
+      method: 'POST',
+    });
+  }
 }
 
-export const MeetingContext = createContext<MeetingManager | null>(null);
 
+export const MeetingContext = createContext<MeetingManager | null>(null);
 
 type Props = {
   children: ReactNode;
 };
-
 
 export default function MeetingProvider(props: Props) {
   const meetingManager = new MeetingManager();
