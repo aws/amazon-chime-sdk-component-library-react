@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 
 import { StyledNotification, StyledCloseIconButton } from './Styled';
 import { Caution, CheckRound, Information, Remove, Clock } from '../icons';
-
-export type Severity = 'success' | 'warning' | 'error' | 'info';
+import { Severity } from '../../providers/NotificationProvider';
 
 export const DEFAULT_DELAY: number = 8000;
 
 export interface NotificationProps extends React.HTMLAttributes<HTMLDivElement> {
-  icon?: React.ReactNode;
   severity?: Severity;
+  message?: string;
   onClose: () => void;
   autoClose?: boolean;
   autoCloseDelay?: number;
@@ -24,16 +23,15 @@ const iconMapping = {
 
 export const Notification: React.FC<NotificationProps> = props => {
   const {
-    severity = 'error',
-    icon = iconMapping[severity],
+    severity = Severity.ERROR,
+    message,
     onClose,
     autoClose = false,
     autoCloseDelay = DEFAULT_DELAY,
-    children,
   } = props;
   
-  const ariaLive = severity === 'error' ? 'assertive' : 'polite';
-  const ariaRole = severity === 'error' ? 'alert' : 'status';
+  const ariaLive = severity === Severity.ERROR ? 'assertive' : 'polite';
+  const ariaRole = severity === Severity.ERROR ? 'alert' : 'status';
 
   useEffect(() => {
     if (!autoClose) {
@@ -51,10 +49,10 @@ export const Notification: React.FC<NotificationProps> = props => {
       {...props}
       data-testid='notification'
     >
-      <div className='severity-icon' data-testid='severity-icon'>{icon}</div>
-      <div className='message' data-testid='message'>
-        {children}
-      </div>
+      <div className='severity-icon' data-testid='severity-icon'>{iconMapping[severity]}</div>
+      <output className='message' data-testid='message' role={ariaRole}>
+        {message}
+      </output>
       {onClose && (
         <StyledCloseIconButton label='close' icon={<Remove />} onClick={onClose} data-testid='closeButton' />
       )}

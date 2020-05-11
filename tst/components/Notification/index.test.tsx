@@ -1,18 +1,18 @@
-import '@testing-library/jest-dom';
 import React from 'react';
+import '@testing-library/jest-dom';
+import { fireEvent } from '@testing-library/dom';
 
 import lightTheme from '../../../src/theme/light'
 import { renderWithTheme } from '../../test-helpers';
 import Notification from '../../../src/components/Notification';
-import { fireEvent } from '@testing-library/dom';
+import { Severity } from '../../../src/providers/NotificationProvider';
 
 const getNotificationComponent = () => (
   <Notification
     onClose={jest.fn()}
-    severity='error'
-  >
-    Hello
-  </Notification>
+    severity={Severity.ERROR}
+    message='Hello'
+  />
 );
 
 describe('Notification', () => {
@@ -49,12 +49,11 @@ describe('Notification', () => {
     expect(notificationEl).toHaveAttribute('aria-live', 'assertive');
   });
 
-  it('Checks notification close button focus', () => {
+  it('Checks notification close button is an HTML buttom element ', () => {
     const notificationComponent = getNotificationComponent();
     const { getByTestId } = renderWithTheme(lightTheme, notificationComponent);
     const closeButton = getByTestId('closeButton');
-    closeButton.focus();
-    expect(closeButton).toHaveFocus();
+    expect(closeButton.nodeName).toEqual('BUTTON');
   });
 
   it('Checks notification close button calls the onClose function', () => {
@@ -62,7 +61,6 @@ describe('Notification', () => {
     const { getByTestId } = renderWithTheme(lightTheme, notificationComponent);
     const closeButton = getByTestId('closeButton');
     fireEvent.click(closeButton);
-    expect(notificationComponent.props.onClose).toHaveBeenCalled();
+    expect(notificationComponent.props.onClose).toHaveBeenCalledTimes(1);
   });
-
 });

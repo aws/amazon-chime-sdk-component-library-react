@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
-import { NotificationProps, Severity } from '.';
+import { NotificationProps } from '.';
+import { Severity } from '../../providers/NotificationProvider';
 import IconButton from '../Button/IconButton';
 
 interface StyledNotificationProps extends NotificationProps {
@@ -18,6 +19,8 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
   padding: 0.5rem;
   box-shadow: ${({ theme }) => theme.notification.shadow};
   border-radius: 0.25rem;
+  margin: 0.5rem;
+  max-width: 45rem;
 
   .severity-icon {
     width: 1.5rem;
@@ -28,7 +31,6 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
   .message {
     display: flex;
     flex-flow: column wrap;
-    max-width: 26vw;
     line-height: 1.43;
     letter-spacing: -0.005625rem;
     font-size: 0.875rem;
