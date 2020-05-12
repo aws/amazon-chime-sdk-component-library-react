@@ -22,6 +22,7 @@ const MeetingForm: React.FC = () => {
     history.push(`${routes.MEETING}/${meetingId}`);
   }
 
+  //TODO: need to add progress bar at the bottom
   return (
     <form className="MeetingForm" onSubmit={handleJoinMeeting}>
       <h1>Join a meeting</h1>
