@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import RowItem from '../components/RowItem';
 import LocalVideo from '../components/LocalVideo';
@@ -6,9 +6,12 @@ import ProgressBar from '../components/ProgressBar';
 import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
 import TestSound from '../meeting/TestSound';
 import { populateDeviceList } from '../utils/DeviceUtils';
+import Modal from '../components/Modal';
+import Card from '../components/Card';
 
 const SelectDevicesView: React.FC = () => {
   const meetingManager: MeetingManager | null = useContext(MeetingContext)!;
+  const [errorMessage, setErrorMessage] = useState('');
   const meetingId = meetingManager?.meetingId;
   const attendeeName = meetingManager ?.attendeeName;
   const [audioPercent, setAudioPercent] = React.useState(0);
@@ -19,7 +22,11 @@ const SelectDevicesView: React.FC = () => {
 
   //TODO: need to add join progress bar, and switch to in-meeting view
   const handleJoinMeeting = async () => {
-    await meetingManager.join();
+    try {
+      await meetingManager.join();
+    } catch(error) {
+      setErrorMessage(error.message);
+    }
   }
   
   const handleTestSound = (e: React.FormEvent) => {
@@ -110,6 +117,11 @@ const SelectDevicesView: React.FC = () => {
     requestAnimationFrame(analyserNodeCallback);
   }
 
+  const closeError = (): void => {
+    setErrorMessage('');
+  };
+
+  // TODO: add audio progress bar and video review tile
   return (
     <div className="container">
       <h1>Select devices</h1>
@@ -145,6 +157,16 @@ const SelectDevicesView: React.FC = () => {
       <br />
       <button onClick={handleJoinMeeting}>Join</button>
       <p>Ready to join meeting <b>{meetingId}</b> as <b>{attendeeName}</b>.</p>
+      {errorMessage && (
+        <Modal onClose={closeError}>
+          <Card
+            header={`Meeting ID: ${meetingId}`}
+            title="Unable to join meeting"
+            description="There was an issue in joining this meeting. Check your connectivity and try again."
+            smallText={errorMessage}
+          />
+        </Modal>
+      )}
   </div>
   );
 }
