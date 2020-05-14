@@ -4,23 +4,36 @@ import { useHistory } from 'react-router-dom';
 import Input from '../components/Input';
 import routes from '../constants/routes';
 import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import Modal from '../components/Modal';
+import Card from '../components/Card';
 
 const MeetingForm: React.FC = () => {
   const [meetingId, setMeetingId] = useState("");
   const [inputName, setInputName] = useState("");
   const [region, setRegion] = useState("us-east-1");
   const [isLoading, setIsLoading] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
   const meetingManager: MeetingManager | null = useContext(MeetingContext);
 
   const handleJoinMeeting = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-
-    const meeting = await meetingManager?.authenticate(meetingId, inputName, region);
-    console.log("Join meeting info ", meeting);
-    history.push(`${routes.MEETING}/${meetingId}`);
+    try {
+      const meeting = await meetingManager?.authenticate(meetingId, inputName, region);
+      console.log("Join meeting info ", meeting);
+      history.push(`${routes.MEETING}/${meetingId}`);
+    } catch(error) {
+      setErrorMessage(error.message);
+    }
   }
+
+  const closeError = (): void => {
+    setErrorMessage('');
+    setMeetingId('');
+    setInputName('');
+    setIsLoading(false);
+  };
 
   //TODO: need to add progress bar at the bottom
   return (
@@ -59,6 +72,16 @@ const MeetingForm: React.FC = () => {
       <br /><br />
       <button type="submit" disabled={isLoading || !inputName || !meetingId}>Continue</button>
       <p>Anyone with access to the meeting link can join.</p>
+      {errorMessage && (
+        <Modal onClose={closeError}>
+          <Card
+            header={`Meeting ID: ${meetingId}`}
+            title="Unable to find meeting"
+            description="There was an issue finding that meeting. The meeting may have already ended, or your authorization may have expired."
+            smallText={errorMessage}
+          />
+        </Modal>
+      )}
     </form>
   );
 }
