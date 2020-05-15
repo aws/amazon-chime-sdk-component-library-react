@@ -1,18 +1,22 @@
 import React, { useContext, useEffect } from 'react';
 
 import RowItem from '../components/RowItem';
+import LocalVideo from '../components/LocalVideo';
+import ProgressBar from '../components/ProgressBar';
 import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
 import TestSound from '../meeting/TestSound';
+import { populateDeviceList } from '../utils/DeviceUtils';
 
 const SelectDevicesView: React.FC = () => {
   const meetingManager: MeetingManager | null = useContext(MeetingContext)!;
   const meetingId = meetingManager?.meetingId;
-  const attendeeName = meetingManager?.attendeeName;
+  const attendeeName = meetingManager ?.attendeeName;
+  const [audioPercent, setAudioPercent] = React.useState(0);
 
   useEffect(() => {
     populateAllDeviceLists();
-  }, [meetingManager ?.audioInputDevices]);
-  
+  }, []);
+
   //TODO: need to add join progress bar, and switch to in-meeting view
   const handleJoinMeeting = async () => {
     await meetingManager.join();
@@ -24,45 +28,26 @@ const SelectDevicesView: React.FC = () => {
     new TestSound(audioOutput.value);
   }
 
-  const populateAllDeviceLists = async() => {
+  const setAudioInput = async (audioInput: string) => {
+    await meetingManager.setAudioInput(audioInput);
+    startAudioPreview();
+  }
+
+  const setVideoInput = async (videoInput: string) => {
+    await meetingManager.setVideoInput(videoInput);
+    const previewEle = document.getElementById('video-preview') as HTMLVideoElement;
+    await meetingManager.startVideoPreview(previewEle);
+  }
+  
+  const populateAllDeviceLists = async () => {
     await populateAudioInputList();
     await populateVideoInputList();
     await populateAudioOutputList();
-  }
-    
-  const populateDeviceList = (
-    elementId: string,
-    genericName: string,
-    devices: MediaDeviceInfo[],
-    additionalOptions: string[]
-  ) =>  {
-    const list = document.getElementById(elementId) as HTMLSelectElement;
-    while (list.firstElementChild) {
-      list.removeChild(list.firstElementChild);
-    }
-    for (let i = 0; i < devices.length; i++) {
-      const option = document.createElement('option');
-      list.appendChild(option);
-      option.text = devices[i].label || `${genericName} ${i + 1}`;
-      option.value = devices[i].deviceId;
-    }
-    if (additionalOptions.length > 0) {
-      const separator = document.createElement('option');
-      separator.disabled = true;
-      separator.text = '──────────';
-      list.appendChild(separator);
-      for (const additionalOption of additionalOptions) {
-        const option = document.createElement('option');
-        list.appendChild(option);
-        option.text = additionalOption;
-        option.value = additionalOption;
-      }
-    }
-    if (!list.firstElementChild) {
-      const option = document.createElement('option');
-      option.text = 'Device selection unavailable';
-      list.appendChild(option);
-    }
+
+    // Start preview with default media input
+    const previewEle = document.getElementById('video-preview') as HTMLVideoElement;
+    await meetingManager.startVideoPreview(previewEle);
+    startAudioPreview();
   }
 
   const populateAudioInputList = async () => {
@@ -76,7 +61,7 @@ const SelectDevicesView: React.FC = () => {
     );
   }
 
-  const populateVideoInputList = async() => {
+  const populateVideoInputList = async () => {
     const genericName = 'Camera';
     const additionalDevices = ['None', 'Blue', 'SMPTE Color Bars'];
     populateDeviceList(
@@ -87,7 +72,7 @@ const SelectDevicesView: React.FC = () => {
     );
   }
 
-  const populateAudioOutputList = async () =>  {
+  const populateAudioOutputList = async () => {
     const genericName = 'Speaker';
     const additionalDevices: string[] = [];
     populateDeviceList(
@@ -98,20 +83,46 @@ const SelectDevicesView: React.FC = () => {
     );
   }
 
-  // TODO: add audio progress bar and video review tile
+  let analyserNodeCallback = () => {};
+
+  const startAudioPreview = () => {
+    const analyserNode = meetingManager ?.audioVideo ?.createAnalyserNodeForAudioInput();
+    if (!analyserNode || !analyserNode.getByteTimeDomainData) {
+      return;
+    }
+    const data = new Uint8Array(analyserNode.fftSize);
+    let frameIndex = 0;
+    analyserNodeCallback = () => {
+      if (frameIndex === 0) {
+        analyserNode.getByteTimeDomainData(data);
+        const lowest = 0.01;
+        let max = lowest;
+        for (const f of data) {
+          max = Math.max(max, (f - 128) / 128);
+        }
+        const normalized = (Math.log(lowest) - Math.log(max)) / Math.log(lowest);
+        const percent = Math.min(Math.max(normalized * 100, 0), 100);
+        setAudioPercent(percent);
+      }
+      frameIndex = (frameIndex + 1) % 2;
+      requestAnimationFrame(analyserNodeCallback);
+    };
+    requestAnimationFrame(analyserNodeCallback);
+  }
+
   return (
     <div className="container">
       <h1>Select devices</h1>
       <RowItem 
         col1Label="Microphone"
-        col1child={<select id="audio-input" onChange={e => meetingManager.setAudioInput(e.target.value)}/>}
+        col1child={<select id="audio-input" onChange={e => setAudioInput(e.target.value)}/>}
         col2Label="Preview"
-        col2child={<span id="audio-preview"></span>}
+        col2child={<ProgressBar id="audio-preview" percentage={audioPercent}></ProgressBar>}
       />
       <RowItem 
         col1Label="Camera"
-        col1child={<select id="video-input" onChange={e => meetingManager.setVideoInput(e.target.value)}/>}
-        col2child={<span id="video-preview"></span>}
+        col1child={<select id="video-input" onChange={e => setVideoInput(e.target.value)}/>}
+        col2child={<LocalVideo id="video-preview" style={{width:"137px", height:"82px"}}> </LocalVideo>}
       />
       <RowItem 
         col1child={

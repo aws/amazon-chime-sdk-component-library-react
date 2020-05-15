@@ -21,6 +21,16 @@ const BASE_URL: string = [
   location.pathname.replace(/\/*$/, '/'),
 ].join('');
 
+type FullDeviceInfoType = {
+  currentAudioInputDevice: MediaDeviceInfo | null;
+  currentAudioOutputDevice: MediaDeviceInfo | null;
+  currentVideoInputDevice: MediaDeviceInfo | null;
+  audioInputDevices: MediaDeviceInfo[] | null;
+  audioOutputDevices: MediaDeviceInfo[] | null;
+  videoInputDevices: MediaDeviceInfo[] | null;
+};
+
+
 export class MeetingManager implements DeviceChangeObserver {
   private static readonly LOGGER_BATCH_SIZE: number = 85;
   private static readonly LOGGER_INTERVAL_MS: number = 1150;
@@ -31,10 +41,18 @@ export class MeetingManager implements DeviceChangeObserver {
   attendeeVideo: HTMLVideoElement | null = null;
   meetingId: string | null = null;
   attendeeName: string | null = null;
-  videoInputDeviceIds: string[] = [];
+
+  currentAudioInputDevice: MediaDeviceInfo | null = null;
+  currentAudioOutputDevice: MediaDeviceInfo | null = null;
+  currentVideoInputDevice: MediaDeviceInfo | null = null;
+
   audioInputDevices: MediaDeviceInfo[] | null = null;
   audioOutputDevices: MediaDeviceInfo[] | null = null;
   videoInputDevices: MediaDeviceInfo[] | null = null;
+
+  devicesUpdatedCallbacks: ((
+    fullDeviceInfo: FullDeviceInfoType
+  ) => void)[] = [];
 
   async authenticate(meetingId: string, name: string, region: string): Promise<string> {
     this.meetingId = meetingId;
@@ -80,9 +98,11 @@ export class MeetingManager implements DeviceChangeObserver {
     this.meetingSession = new DefaultMeetingSession(configuration, logger, deviceController);
     this.audioVideo = this.meetingSession.audioVideo;
 
+    await this.listAndSelectDevices();
+    this.publishDevicesUpdated();
+
     this.audioVideo.addDeviceChangeObserver(this);
     this.setupDeviceLabelTrigger();
-    await this.populateAllDeviceLists();
     // this.setupMuteHandler();
     // this.setupCanUnmuteHandler();
     // this.setupSubscribeToAttendeeIdPresenceHandler();
@@ -90,10 +110,10 @@ export class MeetingManager implements DeviceChangeObserver {
     // this.audioVideo.addObserver(this);
   }
 
-  async populateAllDeviceLists(): Promise<void> {
-    this.audioInputDevices = (await this.audioVideo ?.listAudioInputDevices())!;
-    this.videoInputDevices = (await this.audioVideo ?.listVideoInputDevices())!;
-    this.audioOutputDevices = (await this.audioVideo ?.listAudioOutputDevices())!;
+  async updateDeviceLists(): Promise<void> {
+    this.audioInputDevices = (await this.audioVideo ?.listAudioInputDevices()) || [];
+    this.videoInputDevices = (await this.audioVideo ?.listVideoInputDevices()) || [];
+    this.audioOutputDevices = (await this.audioVideo ?.listAudioOutputDevices()) || [];
   }
 
   setupDeviceLabelTrigger(): void {
@@ -105,6 +125,9 @@ export class MeetingManager implements DeviceChangeObserver {
 
   // Start meeting view
   async join(): Promise<void> {
+    await this.listAndSelectDevices();
+    // this.audioVideo ?.bindAudioElement(element);
+    
     this.audioVideo?.start();
     await this.meetingSession?.screenShare.open();
     await this.meetingSession?.screenShareView.open();
@@ -114,6 +137,61 @@ export class MeetingManager implements DeviceChangeObserver {
     await fetch(`${BASE_URL}end?title=${encodeURIComponent(meetingId)}`, {
       method: 'POST',
     });
+  }
+
+  async listAndSelectDevices(): Promise<void> {
+    await this.updateDeviceLists();
+    if (
+      !this.currentAudioInputDevice &&
+      this.audioInputDevices &&
+      this.audioInputDevices.length
+    ) {
+      this.currentAudioInputDevice = this.audioInputDevices[0];
+      await this.audioVideo ?.chooseAudioInputDevice(
+        this.audioInputDevices[0].deviceId
+      );
+    }
+    if (
+      !this.currentAudioOutputDevice &&
+      this.audioOutputDevices &&
+      this.audioOutputDevices.length
+    ) {
+      this.currentAudioOutputDevice = this.audioOutputDevices[0];
+      await this.audioVideo?.chooseAudioOutputDevice(
+        this.audioOutputDevices[0].deviceId
+      );
+    }
+    if (
+      !this.currentVideoInputDevice &&
+      this.videoInputDevices &&
+      this.videoInputDevices.length
+    ) {
+      this.currentVideoInputDevice = this.videoInputDevices[0];
+      await this.audioVideo?.chooseVideoInputDevice(
+        this.videoInputDevices[0].deviceId
+      );
+    }
+
+    this.publishDevicesUpdated();
+  }
+
+  private publishDevicesUpdated = () => {
+    this.devicesUpdatedCallbacks.forEach(
+      (callback: (fullDeviceInfo: FullDeviceInfoType) => void) => {
+        callback({
+          currentAudioInputDevice: this.currentAudioInputDevice,
+          currentAudioOutputDevice: this.currentAudioOutputDevice,
+          currentVideoInputDevice: this.currentVideoInputDevice,
+          audioInputDevices: this.audioInputDevices,
+          audioOutputDevices: this.audioOutputDevices,
+          videoInputDevices: this.videoInputDevices,
+        });
+      }
+    );
+  };
+
+  startVideoPreview(element: HTMLVideoElement): void {
+    this.audioVideo?.startVideoPreviewForVideoInput(element);
   }
 
   private audioInputSelectionToDevice(value: string): Device {
@@ -146,7 +224,6 @@ export class MeetingManager implements DeviceChangeObserver {
     await this.audioVideo?.chooseAudioInputDevice(
       this.audioInputSelectionToDevice(value)
     );
-    // this.startAudioPreview();
   }
 
   async setVideoInput(value: string): Promise<void> {
