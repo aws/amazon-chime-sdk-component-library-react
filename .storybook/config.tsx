@@ -16,7 +16,7 @@ const GlobalStyle = createGlobalStyle`
 
   html {
     font-size: 16px;
-    font-family: sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";;
   }
 
   body {

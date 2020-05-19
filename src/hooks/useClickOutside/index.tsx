@@ -22,5 +22,5 @@ export default function useClickOutside(ref: RefObject<HTMLElement>, onClickOuts
         document.removeEventListener('touchstart', onMouseDown);
       };
     }
-  );
+  ), [onClickOutside];
 }

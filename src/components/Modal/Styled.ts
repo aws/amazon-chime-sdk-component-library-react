@@ -1,17 +1,18 @@
 import styled from 'styled-components';
 
+import { fadeAnimation, slideDownAndScaleUp } from '../../utils/animations';
 import { ModalProps } from './';
 
 const ModalWidths = {
-  'medium': '32vw',
-  'large': '50vw',
-  'fullscreen': '100vw',
+  'medium': '35rem',
+  'large': '50rem',
+  'fullscreen': '98vw',
 }
 
 const ModalHeights = {
-  'medium': '60%',
-  'large': '80%',
-  'fullscreen': '100%',
+  'medium': '94vh',
+  'large': '94vh',
+  'fullscreen': '96vh',
 }
 
 export const StyledModal = styled.div<ModalProps>`
@@ -26,52 +27,89 @@ export const StyledModal = styled.div<ModalProps>`
   justify-content: center;
   z-index: 2;
   overflow-x: hidden;
+  animation: ${fadeAnimation} .25s ease 0s forwards;
+  will-change: opacity;
 
-  .main {
+  > section {
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: 0.75rem 0.75rem 0.75rem 1rem;
-    border-radius: 0.25rem;
+    border-radius: ${props => props.theme.radii.default};
     color: ${props => props.theme.modal.text};
     background-color: ${props => props.theme.modal.bgd};
-    width: ${props => ModalWidths[props.size]};
-    max-height: ${props => ModalHeights[props.size]};
-    min-height: ${props => props.size === 'fullscreen' ? '100vh' : '30vh'};
-  }
+    width: ${props => ModalWidths[props.size || 'medium']};
+    box-shadow: ${props => props.theme.modal.shadow};
+    max-width: ${props => props.size === 'fullscreen' ? ModalWidths[props.size] : '90vw'};
+    height: ${props => props.size === 'fullscreen' ? ModalHeights[props.size] : 'auto'};
+    max-height: ${props => ModalHeights[props.size || 'medium']};
+    will-change: transform, opacity;
+    animation: ${slideDownAndScaleUp} .15s ease 0s forwards;
 
-  @media only screen and (max-width: 600px) {
-    .main {
+    @media only screen and (max-height: 25rem) {
+      position: absolute;
+      top: 2rem;
+      height: auto;
       max-height: none;
-      width: 100vw;
-      height: 100vh;
     }
   }
+`;
 
-  .header {
-    flex-shrink: 0;
-  }
+export const StyledModalHeader = styled.header`
+  padding: 1rem 1.5rem;
 
   .closeButton {
-      position: absolute;
-      top: .25rem;
-      right: .25rem;
-      z-index: 3;
+    position: absolute;
+    right: 1.55rem;
+    top: 1rem;
+    z-index: 3;
   }
 
   .title {
-      position: sticky;
-      top: 1rem;
-      margin: 0;
-      text-align: center;
-      padding: .5rem 0;
-      font-size: ${props => props.theme.modal.titleSize};
-      font-weight: ${props => props.theme.modal.titleWeight};
+    padding-right: 2rem;
+    margin: 0;
+    font-size: ${props => props.theme.modal.titleSize};
+    font-weight: ${props => props.theme.modal.titleWeight};
+  }
+`;
+
+export const StyledModalBody = styled.div`
+  padding: 0 1.5rem;
+  flex-grow: 1;
+  overflow-y: auto;
+`;
+
+export const StyledModalButtonGroup = styled.footer`
+  padding: 1.5rem;
+  border-top: 1px solid ${props => props.theme.modal.border};
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+
+  div:first-child {
+    display: flex;
+    flex-direction: row-reverse;
   }
 
-  .content {
-    flex-grow: 1;
-    overflow-y: auto;
+  button + button {
+    margin: 0 0.5rem 0 0;
+  }
+
+  @media(max-width: 35rem) {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+
+    div:first-child {
+      display: flex;
+      flex-direction: column;
+    }
+
+    button + button,
+    div + div {
+      margin: 0.5rem 0 0;
+    }
   }
 `;

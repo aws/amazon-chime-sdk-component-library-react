@@ -47,10 +47,18 @@ export const stack = css`
     .Radio-wrapper {
       display: block;
       margin-bottom: 0.5rem;
+      padding-left: 0.125rem;
+      display: grid;
+      grid-template-columns: 1.5rem 1fr;
+      grid-template-rows: auto;
+
+      align-items: center;
     }
 
     .Radio-label {
       margin-left: 1rem;
+      position: relative;
+      bottom: -0.5px;
     }
   }
 `;
@@ -176,7 +184,7 @@ export const StyledFormField = styled.div<LayoutProps>`
   .helpText {
     font-size: 0.75rem;
     margin-top: 0.5rem;
-    color: ${props => !!props.error ? props.theme.colors.error.main: props.theme.colors.greys.grey60};
+    color: ${props => !!props.error ? props.theme.colors.error.primary : props.theme.colors.greys.grey60};
   }
 
   fieldset {
@@ -187,8 +195,8 @@ export const StyledFormField = styled.div<LayoutProps>`
 
   legend {
     font-size: 0.875rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
+    color: ${props => props.theme.colors.greys.grey60};
+    margin-bottom: 1rem;
   }
 
   ${props => !!props.layout && layoutMap[props.layout]}
