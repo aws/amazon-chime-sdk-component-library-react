@@ -1,8 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import RowItem from '../components/RowItem';
 import LocalVideo from '../components/LocalVideo';
 import ProgressBar from '../components/ProgressBar';
+import routes from '../constants/routes';
 import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
 import TestSound from '../meeting/TestSound';
 import { populateDeviceList } from '../utils/DeviceUtils';
@@ -12,6 +14,7 @@ import Card from '../components/Card';
 const SelectDevicesView: React.FC = () => {
   const meetingManager: MeetingManager | null = useContext(MeetingContext)!;
   const [errorMessage, setErrorMessage] = useState('');
+  const history = useHistory();
   const meetingId = meetingManager?.meetingId;
   const attendeeName = meetingManager ?.attendeeName;
   const [audioPercent, setAudioPercent] = React.useState(0);
@@ -20,9 +23,10 @@ const SelectDevicesView: React.FC = () => {
     populateAllDeviceLists();
   }, []);
 
-  //TODO: need to add join progress bar, and switch to in-meeting view
+  //TODO: need to add join progress bar
   const handleJoinMeeting = async () => {
     try {
+      history.push(`${routes.MEETING}/${meetingId}`);
       await meetingManager.join();
     } catch(error) {
       setErrorMessage(error.message);

@@ -1,7 +1,7 @@
 import React, { ReactNode, createContext } from 'react';
 import {
   AudioVideoFacade,
-  // AudioVideoObserver,
+  AudioVideoObserver,
   ConsoleLogger,
   DefaultDeviceController,
   DefaultMeetingSession,
@@ -11,7 +11,6 @@ import {
   LogLevel,
   MeetingSessionConfiguration,
   MeetingSessionPOSTLogger,
-  // VideoTile,
 } from 'amazon-chime-sdk-js';
 
 const BASE_URL: string = [
@@ -39,8 +38,10 @@ export class MeetingManager implements DeviceChangeObserver {
   audioVideo: AudioVideoFacade | null = null;
   selfVideo: HTMLVideoElement | null = null;
   attendeeVideo: HTMLVideoElement | null = null;
+
   meetingId: string | null = null;
   attendeeName: string | null = null;
+  region: string | null = null;
 
   currentAudioInputDevice: MediaDeviceInfo | null = null;
   currentAudioOutputDevice: MediaDeviceInfo | null = null;
@@ -57,6 +58,7 @@ export class MeetingManager implements DeviceChangeObserver {
   async authenticate(meetingId: string, name: string, region: string): Promise<string> {
     this.meetingId = meetingId;
     this.attendeeName = name;
+    this.region = region;
     const joinInfo = (await this.joinMeeting(meetingId, name, region)).JoinInfo;
 
     await this.initializeMeetingSession(
@@ -244,6 +246,23 @@ export class MeetingManager implements DeviceChangeObserver {
         this.audioVideo?.chooseVideoInputQuality(1280, 720, 15, 1400);
         break;
     }
+  }
+
+  addObserver(observer: AudioVideoObserver): void {
+    if (!this.audioVideo) {
+      console.error('AudioVideo not initialized. Cannot add observer');
+      return;
+    }
+    this.audioVideo.addObserver(observer);
+  }
+
+
+  removeObserver(observer: AudioVideoObserver): void {
+    if (!this.audioVideo) {
+      console.error('AudioVideo not initialized. Cannot remove observer');
+      return;
+    }
+    this.audioVideo.removeObserver(observer);
   }
 
   /**

@@ -5,7 +5,7 @@ import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
 
 interface Props {
   id?: string;
-  style: CSSProperties;
+  style?: CSSProperties;
 }
 
 export const LocalVideo: React.FC<Props> = ({ id, style }) =>{
