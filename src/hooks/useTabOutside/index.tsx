@@ -19,5 +19,5 @@ export default function useTabOutside(ref: RefObject<HTMLElement>, onTabOutside:
         document.removeEventListener('keyup', keyUp);
       };
     }
-  );
+  ), [onTabOutside];
 }

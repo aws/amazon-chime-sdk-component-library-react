@@ -74,6 +74,7 @@ const colorsRgb = {
   greys: {
       black: "rgb(0,0,0)",
       grey100: "rgb(27,28,32)",
+      grey50: "rgb(125, 129, 139)",
       grey40: "rgb(152,157,165)",
       grey10: "rgb(240,241,242)",
       white: "rgb(255,255,255)",
@@ -246,16 +247,13 @@ const select = {
 };
 
 const modal = {
-  bgd: colors.greys.grey10,
-  text: colors.greys.grey100,
-  wrapperBgd: overlays.grey100,
-  titleSize: '2.15rem', /* TODO use typography properties */
+  bgd: colors.greys.white,
+  text: colors.greys.grey80,
+  wrapperBgd: rgbaWithOpacity(colorsRgb.greys.grey50, 0.9),
+  titleSize: '1.5625rem', /* TODO use typography properties */
   titleWeight: 'normal',
-  sizes: {
-    medium: '',
-    large: '',
-    fullscreen: '',
-  }
+  shadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)})`,
+  border: colors.greys.grey30,
 }
 const popOver = {
   menuBgd: `${rgbaWithOpacity(colorsRgb.greys.grey10, 0.85)}`,

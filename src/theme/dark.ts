@@ -76,6 +76,7 @@ const colorsRgb = {
       black: "rgb(0,0,0)",
       grey100: "rgb(27,28,32)",
       grey90: "rgb(46,47,52)",
+      grey60: "rgb(97,102,104)",
       white: "rgb(255,255,255)",
   }
 };
@@ -233,9 +234,13 @@ const textarea = {
 };
 
 const modal = {
-  bgd: colors.greys.grey100,
-  text: colors.greys.grey10,
-  wrapperBgd: overlays.grey100,
+  bgd: colors.greys.grey80,
+  text: colors.greys.white,
+  wrapperBgd: rgbaWithOpacity(colorsRgb.greys.grey60, 0.9),
+  titleSize: '1.5625rem', /* TODO use typography properties */
+  titleWeight: 'normal',
+  shadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)})`,
+  border: colors.greys.black,
 }
 
 const popOver = {

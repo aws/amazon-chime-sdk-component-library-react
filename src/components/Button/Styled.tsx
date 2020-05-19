@@ -9,8 +9,9 @@ export const StyledButton = styled.button<ButtonProps>`
   border-radius: ${props => props.theme.radii.default};
   border-color: transparent;
   transition: background-color 0.1s ease;
-  display: flex;
+  display: inline-flex;
   align-items: center;
+  justify-content: center;
 
   &:hover {
     cursor: pointer;
