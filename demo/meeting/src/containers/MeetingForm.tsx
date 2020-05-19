@@ -22,7 +22,7 @@ const MeetingForm: React.FC = () => {
     try {
       const meeting = await meetingManager?.authenticate(meetingId, inputName, region);
       console.log("Join meeting info ", meeting);
-      history.push(`${routes.MEETING}/${meetingId}`);
+      history.push(`${routes.DEVICE}`);
     } catch(error) {
       setErrorMessage(error.message);
     }

@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
-// import Meeting from './containers/Meeting';
+import MeetingView from './containers/MeetingView';
 import MeetingForm from './containers/MeetingForm';
 import MeetingProvider from './meeting/MeetingProvider';
 import routes from './constants/routes';
@@ -14,7 +14,8 @@ const App: FC = () => {
         <Switch>
           <Route path={routes.HOME}>
             <Route path={routes.HOME} exact component={MeetingForm} />
-            <Route path={routes.MEETING} component={SelectDevicesView} />
+            <Route path={routes.DEVICE} component={SelectDevicesView} />
+            <Route path={routes.MEETING} component={MeetingView} />
           </Route>
         </Switch>
       </MeetingProvider>
