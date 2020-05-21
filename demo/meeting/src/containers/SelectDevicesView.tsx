@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import RowItem from '../components/RowItem';
@@ -10,11 +10,12 @@ import TestSound from '../meeting/TestSound';
 import { populateDeviceList } from '../utils/DeviceUtils';
 import Modal from '../components/Modal';
 import Card from '../components/Card';
+import { getErrorContext } from '../providers/ErrorProvider';
 
 const SelectDevicesView: React.FC = () => {
   const meetingManager: MeetingManager | null = useContext(MeetingContext)!;
-  const [errorMessage, setErrorMessage] = useState('');
   const history = useHistory();
+  const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
   const meetingId = meetingManager?.meetingId;
   const attendeeName = meetingManager ?.attendeeName;
   const [audioPercent, setAudioPercent] = React.useState(0);
@@ -31,7 +32,7 @@ const SelectDevicesView: React.FC = () => {
       meetingManager?.audioVideo?.stopVideoPreviewForVideoInput(previewEle);
       await meetingManager.join();
     } catch(error) {
-      setErrorMessage(error.message);
+      updateErrorMessage(error.message);
     }
   }
   
@@ -124,7 +125,7 @@ const SelectDevicesView: React.FC = () => {
   }
 
   const closeError = (): void => {
-    setErrorMessage('');
+    updateErrorMessage('');
   };
 
   // TODO: add audio progress bar and video review tile

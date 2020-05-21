@@ -6,13 +6,14 @@ import routes from '../constants/routes';
 import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
 import Modal from '../components/Modal';
 import Card from '../components/Card';
+import { getErrorContext } from '../providers/ErrorProvider';
 
 const MeetingForm: React.FC = () => {
   const [meetingId, setMeetingId] = useState("");
   const [inputName, setInputName] = useState("");
   const [region, setRegion] = useState("us-east-1");
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState('');
+  const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
   const history = useHistory();
   const meetingManager: MeetingManager | null = useContext(MeetingContext);
 
@@ -24,12 +25,12 @@ const MeetingForm: React.FC = () => {
       console.log("Join meeting info ", meeting);
       history.push(`${routes.DEVICE}`);
     } catch(error) {
-      setErrorMessage(error.message);
+      updateErrorMessage(error.message);
     }
   }
 
   const closeError = (): void => {
-    setErrorMessage('');
+    updateErrorMessage('');
     setMeetingId('');
     setInputName('');
     setIsLoading(false);
