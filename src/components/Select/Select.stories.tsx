@@ -16,9 +16,8 @@ export const BasicInput = () => {
     <Flex layout="fill-space-centered">
     <StyledSelect
       value={text('value', options[0])}
-
       options={options}
-      label="basic select input"
+      aria-label="basic select input"
       onChange={(e: any) => { console.log(e.target.value)} }
     />
     </Flex>
