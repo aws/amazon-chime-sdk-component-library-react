@@ -7,7 +7,6 @@ const MeetingView = () => {
 
   return (
     <MeetingStatusProvider>
-    {/* <MeetingStatusProvider joinMuted={false} joinWithVideo={false}> */}
       <MeetingControlsContainer />
     </MeetingStatusProvider>
   );

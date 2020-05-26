@@ -8,12 +8,15 @@ import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
 import IconButton from '../components/IconButton';
 import ButtonGroup from '../components/ButtonGroup';
 import LocalVideo from '../components/LocalVideo';
+import { getMeetingStatusContext, MeetingStatus } from '../meeting/MeetingStatusContext';
 
 const MeetingControlsContainer: React.FC = () => {
   const meetingManager: MeetingManager | null = useContext(MeetingContext);
   const history = useHistory();
   const [muted, setMuted] = useState(false);
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
+  const { updateMeetingStatus } = useContext(getMeetingStatusContext());
+
   const meetingId = meetingManager?.meetingId;
   const region = meetingManager ?.region;
 
@@ -61,24 +64,15 @@ const MeetingControlsContainer: React.FC = () => {
 
   const endMeeting = async (): Promise<void> => {
     console.log("TODO: add end meeting alert");
-    const m = meetingManager?.meetingId;
-    meetingManager ?.endMeeting(m!);
+    await meetingManager ?.endMeeting(meetingId!);
+    updateMeetingStatus(MeetingStatus.Ended);
     history.push(`${routes.HOME}`)
   }
 
-  const leaveMeeting = (): void => {
-    // this.meetingSession.screenShare
-    //   .stop()
-    //   .catch(() => {})
-    //   .finally(() => {
-    //     return this.meetingSession.screenShare.close();
-    //   });
-    // this.meetingSession.screenShareView.close();
-
-    // await this.dropAudio();
-    // await this.dropVideo();
-    meetingManager?.audioVideo?.stop();
-    history.push(`${routes.HOME}`)
+  const leaveMeeting = async (): Promise<void> => {
+    meetingManager ?.leaveMeeting().then(() => {
+      history.push(`${routes.HOME}`);
+    });
   }
 
   return (
@@ -105,8 +99,8 @@ const MeetingControlsContainer: React.FC = () => {
         <IconButton icon={faCaretDown} />
       </ButtonGroup>
       <ButtonGroup>
-        <IconButton icon={faSignOutAlt} onClick={endMeeting} />
-        <IconButton icon={faPowerOff} onClick={leaveMeeting} />
+        <IconButton icon={faSignOutAlt} onClick={leaveMeeting} />
+        <IconButton icon={faPowerOff} onClick={endMeeting} />
       </ButtonGroup>
     </div>
       <LocalVideo id="meeting-video"/>
