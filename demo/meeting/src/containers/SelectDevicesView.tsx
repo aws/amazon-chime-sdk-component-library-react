@@ -25,8 +25,10 @@ const SelectDevicesView: React.FC = () => {
 
   //TODO: need to add join progress bar
   const handleJoinMeeting = async () => {
+    const previewEle = document.getElementById('video-preview') as HTMLVideoElement;
     try {
       history.push(`${routes.MEETING}/${meetingId}`);
+      meetingManager?.audioVideo?.stopVideoPreviewForVideoInput(previewEle);
       await meetingManager.join();
     } catch(error) {
       setErrorMessage(error.message);

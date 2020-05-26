@@ -55,6 +55,20 @@ export class MeetingManager implements DeviceChangeObserver {
     fullDeviceInfo: FullDeviceInfoType
   ) => void)[] = [];
 
+  initializeMeetingManager() {
+    this.meetingSession = null;
+    this.audioVideo = null;
+    this.meetingSession = null;
+    this.attendeeName = null;
+    this.region = null;
+    this.currentAudioInputDevice = null;
+    this.currentAudioOutputDevice = null;
+    this.currentVideoInputDevice = null;
+    this.audioInputDevices = [];
+    this.audioOutputDevices = [];
+    this.videoInputDevices = [];
+  }
+
   async authenticate(meetingId: string, name: string, region: string): Promise<string> {
     this.meetingId = meetingId;
     this.attendeeName = name;
@@ -128,8 +142,7 @@ export class MeetingManager implements DeviceChangeObserver {
   // Start meeting view
   async join(): Promise<void> {
     await this.listAndSelectDevices();
-    // this.audioVideo ?.bindAudioElement(element);
-    
+
     this.audioVideo?.start();
     await this.meetingSession?.screenShare.open();
     await this.meetingSession?.screenShareView.open();
@@ -139,6 +152,17 @@ export class MeetingManager implements DeviceChangeObserver {
     await fetch(`${BASE_URL}end?title=${encodeURIComponent(meetingId)}`, {
       method: 'POST',
     });
+  }
+
+  async leaveMeeting(): Promise<void> {
+    await this.audioVideo ?.stopLocalVideoTile();
+    await this.audioVideo ?.chooseVideoInputDevice(null);
+    
+    this.audioVideo ?.unbindAudioElement();
+    await this.audioVideo ?.chooseAudioInputDevice(null);
+    this.audioVideo ?.stop();
+    
+    this.initializeMeetingManager();
   }
 
   async listAndSelectDevices(): Promise<void> {
@@ -295,7 +319,9 @@ type Props = {
 export default function MeetingProvider(props: Props) {
   const meetingManager = new MeetingManager();
 
-  return <MeetingContext.Provider value={meetingManager}>
-    {props.children}
-  </MeetingContext.Provider>
+  return (
+    <MeetingContext.Provider value={meetingManager}>
+      {props.children}
+    </MeetingContext.Provider>
+  );
 }

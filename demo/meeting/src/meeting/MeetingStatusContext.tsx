@@ -7,12 +7,14 @@ import React, {
   ReactNode,
 } from 'react';
 import {
+  MeetingSessionStatus,
+  MeetingSessionStatusCode,
   VideoTileState,
 } from 'amazon-chime-sdk-js';
 
 import { MeetingManager, MeetingContext } from './MeetingProvider';
 
-enum MeetingStatus {
+export enum MeetingStatus {
   Loading,
   Succeeded,
   Failed,
@@ -21,8 +23,7 @@ enum MeetingStatus {
 
 type MeetingContext = {
   meetingStatus: MeetingStatus;
-  errorMessage?: string;
-  attendeeIdToTileId?: Map<string, number>;
+  updateMeetingStatus: (s: MeetingStatus) => void;
 }
 
 type Props = {
@@ -31,17 +32,18 @@ type Props = {
   joinWithVideo?: boolean;
 }
 
-const MeetingStatusContext = createContext<MeetingContext>({ meetingStatus: MeetingStatus.Loading });
+const MeetingStatusContext = createContext<MeetingContext>({ meetingStatus: MeetingStatus.Loading, updateMeetingStatus: (s: MeetingStatus) => {} });
+
+export function getMeetingStatusContext() {
+  return MeetingStatusContext;
+}
 
 export default function MeetingStatusProvider(props: Props) {
   const meetingManager: MeetingManager | null = useContext(MeetingContext);
+  const [meetingStatus, setMeetingStatus] = useState(MeetingStatus.Loading);
   const meetingId = meetingManager?.meetingId;
-  const [meetingStatus, setMeetingStatus] = useState<MeetingContext>({ meetingStatus: MeetingStatus.Loading });
-  // const { children, joinMuted, joinWithVideo } = props;
   const { children } = props;
   const audioRef = useRef<HTMLAudioElement>(null);
-  // const attendeeIdToTileId: Map<string, number> = new Map();
-
 
   useEffect(() => {
     const audioVideoDidStart = () => {
@@ -54,26 +56,33 @@ export default function MeetingStatusProvider(props: Props) {
         return;
       }
       if (tileState ?.boundAttendeeId && tileState ?.tileId) {
-        // attendeeIdToTileId.set(tileState.boundAttendeeId, tileState.tileId!);
-        // tileIdToAttendeeId.set(tileState.tileId, tileState.boundAttendeeId);
-        setMeetingStatus({
-          meetingStatus: MeetingStatus.Succeeded,
-          // attendeeIdToTileId,
-        });
+        setMeetingStatus(MeetingStatus.Succeeded);
       }
     };
     
     const videoTileWasRemoved = (tileId: number) => {
       console.log("Observer videoTileWasRemoved", tileId);
-      setMeetingStatus({
-        meetingStatus: MeetingStatus.Succeeded,
-        // attendeeIdToTileId,
-      });
+      setMeetingStatus(MeetingStatus.Succeeded);
     };
-    const observers = { videoTileDidUpdate, audioVideoDidStart, videoTileWasRemoved };
-    setMeetingStatus({
-      meetingStatus: MeetingStatus.Succeeded,
-    });
+
+    const audioVideoDidStop = (sessionStatus: MeetingSessionStatus) => {
+      console.log("Observer audioVideoDidStop");
+      const sessionStatusCode = sessionStatus.statusCode();
+      console.log("Observer sessionStatusCode", sessionStatusCode);
+      if (sessionStatusCode === MeetingSessionStatusCode.Left) {
+        /*
+          - You called meetingSession.audioVideo.stop().
+          - When closing a browser window or page, Chime SDK attempts to leave the session.
+        */
+        console.log('Observer audioVideoDidStop, You left the session');
+        setMeetingStatus(MeetingStatus.Ended);
+      } else {
+        console.log('Observer audioVideoDidStop, Stopped with a session status code: ', sessionStatusCode);
+      }
+    }
+
+    const observers = { videoTileDidUpdate, audioVideoDidStart, videoTileWasRemoved, audioVideoDidStop };
+    setMeetingStatus(MeetingStatus.Succeeded);
 
     if (!meetingManager || !meetingManager.audioVideo) {
       return;
@@ -81,13 +90,22 @@ export default function MeetingStatusProvider(props: Props) {
     meetingManager.addObserver(observers);
 
     return () => {
-      setMeetingStatus({ meetingStatus: MeetingStatus.Ended });
+      setMeetingStatus(MeetingStatus.Ended);
       meetingManager.removeObserver(observers);
     };
   }, [meetingId]);
 
+  const updateMeetingStatus = (status: MeetingStatus): void => {
+    setMeetingStatus(status);
+  };
+
+  const value = {
+    meetingStatus,
+    updateMeetingStatus,
+  }
+
   return (
-    <MeetingStatusContext.Provider value={meetingStatus}>
+    <MeetingStatusContext.Provider value={value}>
       <audio ref={audioRef} style={{ display: 'none' }} />
       {children}
     </MeetingStatusContext.Provider>
