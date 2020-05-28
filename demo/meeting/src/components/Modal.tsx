@@ -6,6 +6,7 @@ import trapFocus from '../utils/trap-focus';
 interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
   children: any;
   onClose: () => void;
+  onConfirm?: () => void;
 }
 
 const Container = styled.div`
@@ -47,7 +48,7 @@ const Content = styled.div`
   }
 `;
 
-const Modal: React.FC<ModalProps> = ({ children, onClose }: ModalProps) => {
+const Modal: React.FC<ModalProps> = ({ children, onClose, onConfirm }: ModalProps) => {
   const modalEl: any = useRef<HTMLDivElement>(null);
 
   // Keycode event listeners map
@@ -76,7 +77,7 @@ const Modal: React.FC<ModalProps> = ({ children, onClose }: ModalProps) => {
         </div>
         <div className="body">{children}</div>
         <div className="footer">
-          <button type="button" onClick={onClose}>
+          <button type="button" onClick={onConfirm || onClose}>
             Ok
           </button>
         </div>

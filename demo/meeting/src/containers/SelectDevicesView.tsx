@@ -1,16 +1,17 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { getErrorContext } from '../providers/ErrorProvider';
 import RowItem from '../components/RowItem';
 import LocalVideo from '../components/LocalVideo';
 import ProgressBar from '../components/ProgressBar';
 import routes from '../constants/routes';
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
 import TestSound from '../meeting/TestSound';
-import { populateDeviceList } from '../utils/DeviceUtils';
 import Modal from '../components/Modal';
 import Card from '../components/Card';
-import { getErrorContext } from '../providers/ErrorProvider';
+import Spinner from '../components/Spinner';
+import { populateDeviceList } from '../utils/DeviceUtils';
 
 const SelectDevicesView: React.FC = () => {
   const meetingManager: MeetingManager | null = useContext(MeetingContext)!;
@@ -19,13 +20,14 @@ const SelectDevicesView: React.FC = () => {
   const meetingId = meetingManager?.meetingId;
   const attendeeName = meetingManager ?.attendeeName;
   const [audioPercent, setAudioPercent] = React.useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     populateAllDeviceLists();
   }, []);
 
-  //TODO: need to add join progress bar
   const handleJoinMeeting = async () => {
+    setIsLoading(true);
     const previewEle = document.getElementById('video-preview') as HTMLVideoElement;
     try {
       history.push(`${routes.MEETING}/${meetingId}`);
@@ -128,7 +130,6 @@ const SelectDevicesView: React.FC = () => {
     updateErrorMessage('');
   };
 
-  // TODO: add audio progress bar and video review tile
   return (
     <div className="container">
       <h1>Select devices</h1>
@@ -164,6 +165,7 @@ const SelectDevicesView: React.FC = () => {
       <br />
       <button onClick={handleJoinMeeting}>Join</button>
       <p>Ready to join meeting <b>{meetingId}</b> as <b>{attendeeName}</b>.</p>
+      {isLoading && <Spinner />}
       {errorMessage && (
         <Modal onClose={closeError}>
           <Card

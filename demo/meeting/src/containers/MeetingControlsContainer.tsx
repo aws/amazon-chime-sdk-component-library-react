@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState, useRef } from 'react';
 import {
   faCaretDown,
   faMicrophone,
@@ -9,7 +9,8 @@ import {
   faEyeSlash,
   faPause,
   faPlay,
-  faVolumeOff,
+  faVolumeMute,
+  faVolumeUp,
   faSignOutAlt,
   faPowerOff,
 } from '@fortawesome/free-solid-svg-icons'
@@ -22,6 +23,8 @@ import { getMeetingStatusContext, MeetingStatus } from '../meeting/MeetingStatus
 import IconButton from '../components/IconButton';
 import ButtonGroup from '../components/ButtonGroup';
 import LocalVideo from '../components/LocalVideo';
+import Card from '../components/Card';
+import Modal from '../components/Modal';
 
 const MeetingControlsContainer: React.FC = () => {
   const meetingManager: MeetingManager | null = useContext(MeetingContext);
@@ -29,8 +32,11 @@ const MeetingControlsContainer: React.FC = () => {
   const [muted, setMuted] = useState(false);
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
   const [isPauseScreenShare, setIsPauseScreenShare] = useState(false);
+  const [isAudioOn, setIsAudioOn] = useState(true);
+  const [showEndModal, setShowEndModal] = useState(false);
   const { updateMeetingStatus } = useContext(getMeetingStatusContext());
   const { isLocalUserSharing } = useContentShareContext();
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   const meetingId = meetingManager?.meetingId;
   const region = meetingManager ?.region;
@@ -77,10 +83,15 @@ const MeetingControlsContainer: React.FC = () => {
     }
   }
 
+  const toggleEndMeeting = (): void => {
+    setShowEndModal(true);
+  }
+
   const endMeeting = async (): Promise<void> => {
-    console.log("TODO: add end meeting alert");
     await meetingManager ?.endMeeting(meetingId!);
     updateMeetingStatus(MeetingStatus.Ended);
+
+    await meetingManager ?.leaveMeeting();
     history.push(`${routes.HOME}`)
   }
 
@@ -110,35 +121,59 @@ const MeetingControlsContainer: React.FC = () => {
     }
   }
 
+  const toggleAudio = (): void => {
+    if (!audioRef.current) {
+      return;
+    }
+    setIsAudioOn(!isAudioOn);
+    if (isAudioOn) {
+      meetingManager ?.audioVideo ?.unbindAudioElement();
+    } else {
+      meetingManager?.audioVideo?.bindAudioElement(audioRef.current);
+    }
+  }
+
   return (
     <>
-    <div className="MeetingControlContainer" style={{ display: "flex" }}>
-      <p>{`${meetingId} (${region})`}</p>
-      <ButtonGroup>
+      <div className="MeetingControlContainer" style={{ display: "flex" }}>
+        <p>{`${meetingId} (${region})`}</p>
+        <ButtonGroup>
           <IconButton icon={muted ? faMicrophoneSlash : faMicrophone } onClick={toggleMicBtn} />
-        <IconButton icon={faCaretDown} />
-      </ButtonGroup>
-      <ButtonGroup>
-        <IconButton icon={isVideoEnabled ? faVideo : faVideoSlash} onClick={toggleVideoBtn} />
-        <IconButton icon={faCaretDown} />
-      </ButtonGroup>
-      <ButtonGroup>
-        <IconButton icon={isLocalUserSharing ? faEye : faEyeSlash} onClick={toggleScreenShare}/>
-      </ButtonGroup>
-      <ButtonGroup>
-        <IconButton disabled={!isLocalUserSharing} icon={isPauseScreenShare ? faPlay : faPause} onClick={togglePauseScreenShare}/>
-      </ButtonGroup>
-      <ButtonGroup>
-        <IconButton icon={faVolumeOff} />
-        <IconButton icon={faCaretDown} />
-      </ButtonGroup>
-      <ButtonGroup>
-        <IconButton icon={faSignOutAlt} onClick={leaveMeeting} />
-        <IconButton icon={faPowerOff} onClick={endMeeting} />
-      </ButtonGroup>
-    </div>
-    {/* TODO: need to resize video tile dynamically */}
-    <LocalVideo id="meeting-video" style={{ width: "20rem" }} /> 
+          <IconButton icon={faCaretDown} />
+        </ButtonGroup>
+        <ButtonGroup>
+          <IconButton icon={isVideoEnabled ? faVideo : faVideoSlash} onClick={toggleVideoBtn} />
+          <IconButton icon={faCaretDown} />
+        </ButtonGroup>
+        <ButtonGroup>
+          <IconButton icon={isLocalUserSharing ? faEye : faEyeSlash} onClick={toggleScreenShare}/>
+        </ButtonGroup>
+        <ButtonGroup>
+          <IconButton disabled={!isLocalUserSharing} icon={isPauseScreenShare ? faPlay : faPause} onClick={togglePauseScreenShare}/>
+        </ButtonGroup>
+        <ButtonGroup>
+          <IconButton icon={isAudioOn ? faVolumeUp : faVolumeMute} onClick={toggleAudio} />
+          <IconButton icon={faCaretDown} />
+        </ButtonGroup>
+        <ButtonGroup>
+          <IconButton icon={faSignOutAlt} onClick={leaveMeeting} />
+          <IconButton icon={faPowerOff} onClick={toggleEndMeeting} />
+        </ButtonGroup>
+      </div>
+      {showEndModal && (
+        <Modal
+          onClose={() => setShowEndModal(false)}
+          onConfirm={endMeeting}>
+          <Card
+            header={`Meeting ID: ${meetingId}`}
+            title="End Meeting"
+            description="Are you sure you want to end the meeting for everyone? The meeting cannot be used after ending it."
+          />
+        </Modal>
+      )}
+      {/* TODO: need to resize video tile dynamically */}
+      <LocalVideo id="meeting-video" style={{ width: "20rem" }} /> 
+      <audio ref={audioRef} style={{ display: 'none' }} />
     </>
   );
 }

@@ -1,12 +1,15 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
+// import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { getErrorContext } from '../providers/ErrorProvider';
 import Input from '../components/Input';
 import routes from '../constants/routes';
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
 import Modal from '../components/Modal';
 import Card from '../components/Card';
-import { getErrorContext } from '../providers/ErrorProvider';
+import Spinner from '../components/Spinner';
 
 const MeetingForm: React.FC = () => {
   const [meetingId, setMeetingId] = useState("");
@@ -36,13 +39,13 @@ const MeetingForm: React.FC = () => {
     setIsLoading(false);
   };
 
-  //TODO: need to add progress bar at the bottom
   return (
     <form className="MeetingForm" onSubmit={handleJoinMeeting}>
       <h1>Join a meeting</h1>
       <Input
         type={"text"}
         name={"meetingId"}
+        required={true}
         value={meetingId}
         placeholder={"Meeting ID"}
         onChange={e => setMeetingId(e.target.value)}
@@ -50,6 +53,7 @@ const MeetingForm: React.FC = () => {
       <Input
         type={"text"}
         name={"inputName"}
+        required={true}
         value={inputName}
         placeholder={"Your Name"}
         onChange={e => setInputName(e.target.value)}
@@ -71,8 +75,10 @@ const MeetingForm: React.FC = () => {
         <option value="us-west-2">United States (Oregon)</option>
       </select>
       <br /><br />
-      <button type="submit" disabled={isLoading || !inputName || !meetingId}>Continue</button>
+      <button type="submit" disabled={isLoading}>Continue</button>
+      {isLoading && <Spinner />}
       <p>Anyone with access to the meeting link can join.</p>
+      
       {errorMessage && (
         <Modal onClose={closeError}>
           <Card

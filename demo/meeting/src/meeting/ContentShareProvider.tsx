@@ -85,11 +85,11 @@ const ContentShareProvider: React.FC = ({ children }) => {
         }));
       },
     };
-    meetingManager?.audioVideo?.addObserver(videoObserver);
+    meetingManager?.addObserver(videoObserver);
     meetingManager ?.audioVideo ?.addContentShareObserver(screenShareObserver);
     
     return () => {
-      meetingManager?.audioVideo?.removeObserver(videoObserver);
+      meetingManager?.removeObserver(videoObserver);
       meetingManager ?.audioVideo ?.removeContentShareObserver(screenShareObserver);
     };
   }, [activeContentTileId]);
