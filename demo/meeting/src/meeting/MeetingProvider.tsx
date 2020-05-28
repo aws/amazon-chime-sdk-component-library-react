@@ -12,7 +12,10 @@ import {
   LogLevel,
   MeetingSessionConfiguration,
   MeetingSessionPOSTLogger,
+  DefaultModality,
 } from 'amazon-chime-sdk-js';
+
+import { RosterType } from '../types';
 
 const BASE_URL: string = [
   location.protocol,
@@ -52,6 +55,10 @@ export class MeetingManager implements DeviceChangeObserver {
   audioOutputDevices: MediaDeviceInfo[] | null = null;
   videoInputDevices: MediaDeviceInfo[] | null = null;
 
+  roster: RosterType = {};
+
+  rosterUpdateCallbacks: ((roster: RosterType) => void)[] = [];
+
   devicesUpdatedCallbacks: ((
     fullDeviceInfo: FullDeviceInfoType
   ) => void)[] = [];
@@ -69,6 +76,8 @@ export class MeetingManager implements DeviceChangeObserver {
     this.audioInputDevices = [];
     this.audioOutputDevices = [];
     this.videoInputDevices = [];
+    this.roster = {};
+    this.rosterUpdateCallbacks = [];
   }
 
   async authenticate(meetingId: string, name: string, region: string): Promise<string> {
@@ -122,7 +131,7 @@ export class MeetingManager implements DeviceChangeObserver {
     this.setupDeviceLabelTrigger();
     // this.setupMuteHandler();
     // this.setupCanUnmuteHandler();
-    // this.setupSubscribeToAttendeeIdPresenceHandler();
+    this.setupSubscribeToAttendeeIdPresenceHandler();
     // this.setupScreenViewing();
     // this.audioVideo.addObserver(this);
   }
@@ -153,6 +162,7 @@ export class MeetingManager implements DeviceChangeObserver {
     await fetch(`${BASE_URL}end?title=${encodeURIComponent(meetingId)}`, {
       method: 'POST',
     });
+    this.initializeMeetingManager();
   }
 
   async leaveMeeting(): Promise<void> {
@@ -308,13 +318,66 @@ export class MeetingManager implements DeviceChangeObserver {
     this.audioVideo.addContentShareObserver(observer);
   }
 
-
   removeContentShareObserver(observer: ContentShareObserver): void {
     if (!this.audioVideo) {
       console.log('AudioVideo not initialized. Cannot remove observer');
       return;
     }
     this.audioVideo.removeContentShareObserver(observer);
+  }
+
+  private setupSubscribeToAttendeeIdPresenceHandler(): void {
+    const handler = async (
+      presentAttendeeId: string,
+      present: boolean
+    ): Promise<void> => {
+      if (!present) {
+        delete this.roster[presentAttendeeId];
+        this.publishRosterUpdate();
+        return;
+      }
+
+      const baseAttendeeId = new DefaultModality(presentAttendeeId).base();
+      if (baseAttendeeId !== presentAttendeeId) {
+        return;
+      }
+
+      if (!this.roster[presentAttendeeId]) {
+        this.roster[presentAttendeeId] = {
+          name: '',
+          id: presentAttendeeId,
+        };
+      }
+
+      if (
+        this.meetingId &&
+        presentAttendeeId &&
+        !this.roster[presentAttendeeId].name
+      ) {
+        const json = await this.getAttendeeInfo(
+          this.meetingId,
+          presentAttendeeId
+        );
+        this.roster[presentAttendeeId].name = json.AttendeeInfo.Name || '';
+      }
+
+      this.publishRosterUpdate();
+    };
+    this.audioVideo?.realtimeSubscribeToAttendeeIdPresence(handler);
+  }
+
+  async getAttendeeInfo(meetingId: string, presentAttendeeId: string) {
+    const url = `${BASE_URL}attendee?title=${encodeURIComponent(
+      meetingId
+    )}&attendee=${encodeURIComponent(presentAttendeeId)}`;
+    const response = await fetch(url, {
+      method: 'GET',
+    });
+    const json = await response.json();
+    if (json.error) {
+      throw new Error(`Server error: ${json.error}`);
+    }
+    return json;
   }
 
   /**
@@ -336,6 +399,31 @@ export class MeetingManager implements DeviceChangeObserver {
   videoInputsChanged(freshVideoInputDeviceList: MediaDeviceInfo[]): void {
     console.log("DeviceChangeObserver videoInputsChanged");
   }
+
+  /**
+   * ====================================================================
+   * Subscribe and unsubscribe from SDK events
+   * ====================================================================
+   */
+  subscribeToRosterUpdate = (callback: (roster: RosterType) => void): void => {
+    this.rosterUpdateCallbacks.push(callback);
+  };
+
+  unsubscribeFromRosterUpdate = (
+    callback: (roster: RosterType) => void
+  ): void => {
+    const index = this.rosterUpdateCallbacks.indexOf(callback);
+    if (index !== -1) {
+      this.rosterUpdateCallbacks.splice(index, 1);
+    }
+  };
+
+  private publishRosterUpdate = (): void => {
+    for (let i = 0; i < this.rosterUpdateCallbacks.length; i += 1) {
+      const callback = this.rosterUpdateCallbacks[i];
+      callback(this.roster);
+    }
+  };
 }
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
