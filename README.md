@@ -20,6 +20,21 @@ npm start
 npm run build
 ```
 
+## Test
+
+Run all unit tests
+```
+npm run test
+```
+Run one file 
+```
+npm run test -- <filepath>
+```
+Run test in watch mode
+```
+npm run test -- --watch
+```
+
 # Usage
 
 After publishing your lib (ie `my-react-lib`) you can use it by importing the styles in your App's entry point:

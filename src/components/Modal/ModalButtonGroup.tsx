@@ -32,7 +32,7 @@ export const Modal:FC<ModalButtonGroupProps> = ({ primaryButtons, secondaryButto
   };
 
   return (
-    <StyledModalButtonGroup>
+    <StyledModalButtonGroup data-testid='modalButtonGroup'>
       <div>
         {addCloseBehaviorToButtons(primaryButtons)}
       </div>

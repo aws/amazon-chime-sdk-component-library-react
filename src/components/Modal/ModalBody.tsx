@@ -3,7 +3,7 @@ import { StyledModalBody } from './Styled';
 
 export const ModalBody:FC<{}> = ({ children }) => {
   return (
-    <StyledModalBody>
+    <StyledModalBody data-testid='modalBody'>
       {children}
     </StyledModalBody>
   );
