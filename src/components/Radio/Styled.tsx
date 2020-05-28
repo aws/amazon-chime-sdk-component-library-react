@@ -6,8 +6,8 @@ export const HiddenRadio = styled.input`
   ${visuallyHidden};
 
   &[aria-invalid="true"] + .Radio {
-    box-shadow: 0 0 0 0.125rem ${props => props.theme.colors.error.light};
-    border-color: ${props => props.theme.colors.error.dark};
+    border: ${props => props.theme.inputs.error.border};
+    box-shadow: ${props => props.theme.inputs.error.shadow};
   }
 `;
 
@@ -18,47 +18,40 @@ export const StyledRadioWrapper = styled.span`
 `;
 
 export const StyledRadio = styled.div<any>`
-  display: inline-block;
-  width: 1rem;
-  height: 1rem;
+  background-color: ${props => props.theme.inputs.bgd};
+  border: ${props => props.theme.inputs.border};
   border-radius: ${props => props.theme.radii.circle};
-  position: relative;
+  box-shadow: ${props => props.theme.inputs.shadow};
+  display: inline-block;
+  height: 1rem;
   margin-bottom: -0.1875rem;
-
-  box-shadow: ${props =>
-    props.checked ?
-    props.theme.radio.checked.wrapperShadow:
-    props.theme.radio.default.wrapperShadow
-  };
-  background-color: ${props =>
-    props.checked ?
-    props.theme.radio.checked.wrapperBgd:
-    props.theme.radio.default.wrapperBgd
-  };
-  border: ${props =>
-    props.checked ?
-    props.theme.radio.checked.wrapperBorder:
-    props.theme.radio.default.wrapperBorder
-  };
+  position: relative;
+  width: 1rem;
+  transition: box-shadow .05s ease-in;
 
   &:after {
-    content: '';
-    display: block;
-    border-radius: ${props => props.theme.radii.circle};
-    display: block;
-    height: 0.375rem;
-    width: 0.375rem;
-    padding: 0.03125rem;
-    ${absoluteCenter};
     background-color: ${props =>
       props.checked ?
-      props.theme.radio.checked.bodyBgd:
-      props.theme.radio.default.bodyBgd
+      props.theme.inputs.checked.fontColor :
+      props.theme.inputs.bgd
     };
+    border-radius: ${props => props.theme.radii.circle};
+    content: '';
+    display: block;
+    height: 0.375rem;
+    padding: 0.03125rem;
+    width: 0.375rem;
+    ${absoluteCenter};
+  }
+
+  ${HiddenRadio}:checked ~ & {
+    background-color: ${props => props.theme.inputs.checked.bgd};
+    border: ${props => props.theme.inputs.checked.border};
+    box-shadow: ${props => props.theme.inputs.checked.shadow};
   }
 
   ${HiddenRadio}:focus ~ & {
-    box-shadow: ${props => props.theme.radio.focus.wrapperShadow};
-    border: ${props => props.theme.radio.focus.wrapperBorder};
+    border: ${props => props.theme.inputs.focus.border};
+    box-shadow: ${props => props.theme.inputs.focus.shadow};
   }
 `;

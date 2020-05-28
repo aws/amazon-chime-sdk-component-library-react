@@ -1,4 +1,4 @@
-import React, { FC, InputHTMLAttributes, ChangeEvent, useRef } from 'react';
+import React, { FC, InputHTMLAttributes, useRef } from 'react';
 
 import Label from '../Label';
 import useUniqueId from '../../hooks/useUniqueId';
@@ -19,6 +19,7 @@ export const Radio: FC<RadioProps> = (props) => {
 
   const handleChange = () => {
     radioNode.current?.click(); // simulate click the native checkbox
+    radioNode.current?.focus();
   }
 
   return (

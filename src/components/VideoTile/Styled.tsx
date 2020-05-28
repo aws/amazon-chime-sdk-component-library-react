@@ -21,7 +21,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
     position: absolute;
     box-shadow: 0 1rem 2.5rem 0 ${props => props.theme.colors.greys.black};
     opacity: 0;
-    transition: opacity 0.2s ease-in-out;
+    transition: opacity 0.2s ease-in;
     top: 0;
     left: 0;
     right: 0;
