@@ -7,7 +7,7 @@ export interface ModalButtonProps extends ButtonProps {
 }
 
 const ModalButton: React.SFC<ModalButtonProps> = ({ closesModal, ...otherProps }) => {
-  return <Button {...otherProps} />;
+  return <Button {...otherProps} data-testid='modalButton'/>;
 };
 
 export default ModalButton;
