@@ -2,7 +2,6 @@ import React, {
   createContext,
   useContext,
   useEffect,
-  useRef,
   useState,
   ReactNode,
 } from 'react';
@@ -11,8 +10,10 @@ import {
   MeetingSessionStatusCode,
   VideoTileState,
 } from 'amazon-chime-sdk-js';
+import { useHistory } from 'react-router-dom';
 
 import { MeetingManager, MeetingContext } from './MeetingProvider';
+import routes from '../constants/routes';
 
 export enum MeetingStatus {
   Loading,
@@ -43,7 +44,7 @@ export default function MeetingStatusProvider(props: Props) {
   const [meetingStatus, setMeetingStatus] = useState(MeetingStatus.Loading);
   const meetingId = meetingManager?.meetingId;
   const { children } = props;
-  const audioRef = useRef<HTMLAudioElement>(null);
+  const history = useHistory();
 
   useEffect(() => {
     const audioVideoDidStart = () => {
@@ -68,13 +69,16 @@ export default function MeetingStatusProvider(props: Props) {
     const audioVideoDidStop = (sessionStatus: MeetingSessionStatus) => {
       console.log("Observer audioVideoDidStop");
       const sessionStatusCode = sessionStatus.statusCode();
-      console.log("Observer sessionStatusCode", sessionStatusCode);
       if (sessionStatusCode === MeetingSessionStatusCode.Left) {
         /*
           - You called meetingSession.audioVideo.stop().
           - When closing a browser window or page, Chime SDK attempts to leave the session.
         */
-        console.log('Observer audioVideoDidStop, You left the session');
+        console.log('You left the session');
+        setMeetingStatus(MeetingStatus.Ended);
+      } else if (sessionStatusCode === MeetingSessionStatusCode.AudioCallEnded) {
+        console.log('The session has ended');
+        history.push(`${routes.HOME}`);
         setMeetingStatus(MeetingStatus.Ended);
       } else {
         console.log('Observer audioVideoDidStop, Stopped with a session status code: ', sessionStatusCode);
@@ -106,7 +110,6 @@ export default function MeetingStatusProvider(props: Props) {
 
   return (
     <MeetingStatusContext.Provider value={value}>
-      <audio ref={audioRef} style={{ display: 'none' }} />
       {children}
     </MeetingStatusContext.Provider>
   );

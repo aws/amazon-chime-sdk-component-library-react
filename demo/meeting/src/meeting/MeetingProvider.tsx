@@ -3,6 +3,7 @@ import {
   AudioVideoFacade,
   AudioVideoObserver,
   ConsoleLogger,
+  ContentShareObserver,
   DefaultDeviceController,
   DefaultMeetingSession,
   Device,
@@ -97,7 +98,7 @@ export class MeetingManager implements DeviceChangeObserver {
 
   async initializeMeetingSession(configuration: MeetingSessionConfiguration): Promise<any> {
     let logger: Logger;
-    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1') {
+    if (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.hostname === '0.0.0.0') {
       logger = new ConsoleLogger('SDK', LogLevel.INFO);
     } else {
       logger = new MeetingSessionPOSTLogger(
@@ -155,11 +156,13 @@ export class MeetingManager implements DeviceChangeObserver {
   }
 
   async leaveMeeting(): Promise<void> {
+    this.stopContentShare();
     await this.audioVideo ?.stopLocalVideoTile();
     await this.audioVideo ?.chooseVideoInputDevice(null);
     
     this.audioVideo ?.unbindAudioElement();
     await this.audioVideo ?.chooseAudioInputDevice(null);
+    
     this.audioVideo ?.stop();
     
     this.initializeMeetingManager();
@@ -282,7 +285,7 @@ export class MeetingManager implements DeviceChangeObserver {
 
   addObserver(observer: AudioVideoObserver): void {
     if (!this.audioVideo) {
-      console.error('AudioVideo not initialized. Cannot add observer');
+      console.log('AudioVideo not initialized. Cannot add observer');
       return;
     }
     this.audioVideo.addObserver(observer);
@@ -291,10 +294,27 @@ export class MeetingManager implements DeviceChangeObserver {
 
   removeObserver(observer: AudioVideoObserver): void {
     if (!this.audioVideo) {
-      console.error('AudioVideo not initialized. Cannot remove observer');
+      console.log('AudioVideo not initialized. Cannot remove observer');
       return;
     }
     this.audioVideo.removeObserver(observer);
+  }
+
+  addContentShareObserver(observer: ContentShareObserver): void {
+    if (!this.audioVideo) {
+      console.log('AudioVideo not initialized. Cannot add observer');
+      return;
+    }
+    this.audioVideo.addContentShareObserver(observer);
+  }
+
+
+  removeContentShareObserver(observer: ContentShareObserver): void {
+    if (!this.audioVideo) {
+      console.log('AudioVideo not initialized. Cannot remove observer');
+      return;
+    }
+    this.audioVideo.removeContentShareObserver(observer);
   }
 
   /**
