@@ -29,7 +29,6 @@ type FullDeviceInfoType = {
   videoInputDevices: MediaDeviceInfo[] | null;
 };
 
-
 export class MeetingManager implements DeviceChangeObserver {
   private static readonly LOGGER_BATCH_SIZE: number = 85;
   private static readonly LOGGER_INTERVAL_MS: number = 1150;
@@ -38,6 +37,7 @@ export class MeetingManager implements DeviceChangeObserver {
   audioVideo: AudioVideoFacade | null = null;
   selfVideo: HTMLVideoElement | null = null;
   attendeeVideo: HTMLVideoElement | null = null;
+  configuration: MeetingSessionConfiguration | null = null;
 
   meetingId: string | null = null;
   attendeeName: string | null = null;
@@ -58,7 +58,8 @@ export class MeetingManager implements DeviceChangeObserver {
   initializeMeetingManager() {
     this.meetingSession = null;
     this.audioVideo = null;
-    this.meetingSession = null;
+    this.configuration = null;
+    this.meetingId = null;
     this.attendeeName = null;
     this.region = null;
     this.currentAudioInputDevice = null;
@@ -74,10 +75,9 @@ export class MeetingManager implements DeviceChangeObserver {
     this.attendeeName = name;
     this.region = region;
     const joinInfo = (await this.joinMeeting(meetingId, name, region)).JoinInfo;
+    this.configuration = new MeetingSessionConfiguration(joinInfo.Meeting, joinInfo.Attendee);
 
-    await this.initializeMeetingSession(
-      new MeetingSessionConfiguration(joinInfo.Meeting, joinInfo.Attendee)
-    );
+    await this.initializeMeetingSession(this.configuration);
     return joinInfo.Meeting;
   }
 
@@ -163,6 +163,14 @@ export class MeetingManager implements DeviceChangeObserver {
     this.audioVideo ?.stop();
     
     this.initializeMeetingManager();
+  }
+
+  async startContentShare(): Promise<void> {
+    await this.audioVideo ?.startContentShareFromScreenCapture();
+  }
+
+  stopContentShare(): void {
+    this.audioVideo ?.stopContentShare();
   }
 
   async listAndSelectDevices(): Promise<void> {
