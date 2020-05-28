@@ -16,6 +16,7 @@ export const Checkbox: FC<CheckboxProps> = (props: CheckboxProps) => {
 
   const handleChange = () => {
     checkboxNode.current?.click(); // simulate click the native checkbox
+    checkboxNode.current?.focus();
   }
 
   return (

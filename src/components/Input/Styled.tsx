@@ -25,26 +25,31 @@ export const StyledInputWrapper = styled.span<InputWrapperProps>`
 `;
 
 export const StyledInput = styled.input`
-  background-color: ${props => props.theme.colors.greys.white};
-  font-size: 0.85rem;
-  border-radius: 0.25rem;
-  border: 0.03125rem solid ${props => props.theme.colors.greys.grey30};
-  display: flex;
+  background-color: ${props => props.theme.inputs.bgd};
+  border: ${props => props.theme.inputs.border};
+  border-radius: ${props => props.theme.inputs.borderRadius};
+  box-shadow: ${props => props.theme.inputs.shadow};
+  color: ${props => props.theme.inputs.fontColor};
   align-items: center;
-  color: ${props => props.theme.colors.greys.grey70};
-  line-height: 1.43;
+  display: flex;
+  font-size: 0.875rem;
   letter-spacing: -0.005625rem;
-  box-shadow: 0 0.0625rem 0.0625rem 0 rgba(0, 0, 0, 0.1);
+  line-height: 1.43;
+  transition: box-shadow .05s ease-in;
+
+  &::placeholder {
+    color: ${props => props.theme.inputs.placeholder};
+  }
 
   &:focus,
   &[aria-invalid="true"]:focus {
-    box-shadow: 0 0 0 0.125rem ${props => props.theme.colors.primary.lightest};
-    border-color: ${props => props.theme.colors.primary.main};
+    border: ${props => props.theme.inputs.focus.border};
+    box-shadow: ${props => props.theme.inputs.focus.shadow};
     outline: none;
   }
 
   &[aria-invalid="true"] {
-    box-shadow: 0 0 0 0.125rem ${props => props.theme.colors.error.light};
-    border-color: ${props => props.theme.colors.error.dark};
+    border: ${props => props.theme.inputs.error.border};
+    box-shadow: ${props => props.theme.inputs.error.shadow};
   }
 `;

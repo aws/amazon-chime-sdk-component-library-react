@@ -18,7 +18,7 @@ const colors = {
   error: {
       lightest: "#FBC1C0",
       lighter: "#FDA8A6",
-      light: "##FD9B99",
+      light: "#FD9B99",
       primary: "#FF8B8A",
       dark: "#583A39",
       darker: "#452F2E",
@@ -176,60 +176,32 @@ const buttons = {
   },
 };
 
-const checkbox = {
-  default: {
-    checkmark: colors.greys.grey50,
-    checkboxBgd: colors.greys.grey50,
-    labelText: colors.greys.white,
-    checkboxBorder: `solid 0.03125rem ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
-    checkboxShadow: `inset 0 0.03125rem 0 0 ${rgbaWithOpacity(colorsRgb.greys.white, 0.1)}`,
-  },
-
-  checked: {
-    checkmark: colors.greys.grey80,
-    checkboxBgd: colors.primary.light,
-    checkboxBorder: `solid 0.03125rem ${rgbaWithOpacity(colorsRgb.greys.black, 0.4)}`,
-    checkboxShadow: `inset 0 0.03125rem 0 0 ${rgbaWithOpacity(colorsRgb.greys.white, 0.2)}`,
-  },
-
-  focus: {
-    checkboxShadow: `0 0 0 0.125rem ${colors.primary.lighter}`,
-    checkboxBorder: `solid 0.03125rem ${colors.primary.main}`,
-  }
-};
-
-const radio = {
-  default: {
-    bodyBgd: colors.greys.grey50,
-    wrapperBgd: colors.greys.grey50,
-    labelText: colors.greys.white,
-    wrapperBorder: "solid 0.03125rem rgba(0, 0, 0, 0.6)",
-    wrapperShadow: "inset 0 0.03125rem 0 0 rgba(255, 255, 255, 0.1)",
-  },
-
-  checked: {
-    bodyBgd: colors.greys.grey80,
-    wrapperBgd: colors.primary.light,
-    wrapperBorder: "solid 0.03125rem rgba(0, 0, 0, 0.4)",
-    wrapperShadow: "inset 0 0.03125rem 0 0 rgba(255, 255, 255, 0.2)",
-  },
-
-  focus: {
-    wrapperShadow: `0 0 0 0.125rem ${colors.primary.lighter}`,
-    wrapperBorder: `solid 0.03125rem ${colors.primary.main}`,
-  }
-};
-
-const textarea = {
+const inputs = {
   bgd: colors.greys.grey80,
   border: `0.03125rem solid ${colors.greys.black}`,
-  shadow: `0 0 0 0 ${colors.primary.lightest}`,
-  text: colors.greys.white,
+  borderRadius: defaultTheme.radii.default,
+  fontSize: defaultTheme.type.text,
+  fontColor: colors.greys.white,
+  placeholderColor: colors.greys.grey50,
+  shadow: `0 0.0625rem 0.0625rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.1)}`,
+
   focus: {
     bgd: colors.greys.white,
-    border: `solid 0.03125rem ${colors.primary.lighter}`,
-    shadow: `0 0 0 0.125rem ${colors.primary.lightest}`,
-    text: colors.greys.grey70,
+    border: `solid 0.03125rem ${colors.primary.main}`,
+    shadow: `0 0 0 0.125rem ${colors.primary.lighter}`,
+  },
+
+  error: {
+    border: `0.03125rem solid ${colors.error.primary}`,
+    fontColor: colors.error.primary,
+    shadow: `0 0 0 0.125rem ${colors.error.light}`,
+  },
+
+  checked: {
+    bgd: colors.primary.main,
+    border: `solid 0.03125rem ${colors.primary.dark}`,
+    fontColor: colors.greys.grey80,
+    shadow: `inset 0 0.03125rem 0 0 ${rgbaWithOpacity(colorsRgb.greys.white, 0.1)}`,
   }
 };
 
@@ -255,18 +227,6 @@ const popOver = {
   separator: colors.greys.grey100,
 };
 
-const select = {
-  bgd: colors.greys.white,
-  border: `0.03125rem solid ${colors.greys.grey30}`,
-  shadow: `0 0 0 0 ${colors.primary.lightest}`,
-  text: colors.greys.grey70,
-  focus: {
-    bgd: colors.greys.white,
-    border: `solid 0.03125rem ${colors.primary.lighter}`,
-    shadow: `0 0 0 0.125rem ${colors.primary.lightest}`,
-    text: colors.greys.grey70,
-  }
-};
 const notification = {
   shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
   error: {
@@ -332,13 +292,10 @@ const darkTheme = {
     colors,
     colorsRgb,
     shadows,
-    checkbox,
-    radio,
+    inputs,
     modal,
     popOver,
     overlays,
-    select,
-    textarea,
     notification,
     ...defaultTheme,
 };

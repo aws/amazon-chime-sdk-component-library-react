@@ -1,52 +1,44 @@
 import styled from 'styled-components';
 
 import { visuallyHidden } from '../../utils/style';
-import { CheckboxProps, StyledCheckboxProps } from "./";
+import { StyledCheckboxProps } from "./";
 
-export const HiddenCheckbox = styled.input<CheckboxProps>`
+export const HiddenCheckbox = styled.input`
   ${visuallyHidden};
 
   &[aria-invalid="true"] + .Checkbox {
-    box-shadow: 0 0 0 0.125rem ${props => props.theme.colors.error.light};
-    border-color: ${props => props.theme.colors.error.dark};
+    border: ${props => props.theme.inputs.error.border};
+    box-shadow: ${props => props.theme.inputs.error.shadow};
   }
 `;
 
 export const StyledCheckbox = styled.div<StyledCheckboxProps>`
-  width: 1rem;
-  height: 1rem;
+  background-color: ${props => props.theme.inputs.bgd};
+  border: ${props => props.theme.inputs.border};
+  border-radius: ${props => props.theme.radii.default};
+  box-shadow: ${props => props.theme.inputs.shadow};
+  color: ${props => props.theme.inputs.fontColor};
   display: inline-block;
+  height: 1rem;
   position: relative;
-  border-radius: 0.25rem;
-  box-shadow: ${props =>
-    props.checked ?
-    props.theme.checkbox.checked.checkboxShadow:
-    props.theme.checkbox.default.checkboxShadow
-  };
-  background-color: ${props =>
-    props.checked ?
-    props.theme.checkbox.checked.checkboxBgd:
-    props.theme.checkbox.default.checkboxBgd
-  };
-  border: ${props =>
-    props.checked ?
-    props.theme.checkbox.checked.checkboxBorder:
-    props.theme.checkbox.default.checkboxBorder
-  };
-  color: ${props =>
-    props.checked ?
-    props.theme.checkbox.checked.checkmark:
-    props.theme.checkbox.default.checkmark
-  };
+  width: 1rem;
+  transition: box-shadow .05s ease-in;
 
   > svg {
-    transform: scale(1.5);
-    position: absolute;
     left: -0.03125rem;
+    position: absolute;
+    transform: scale(1.5);
+  }
+
+  ${HiddenCheckbox}:checked ~ & {
+    background-color: ${props => props.theme.inputs.checked.bgd};
+    border: ${props => props.theme.inputs.checked.border};
+    box-shadow: ${props => props.theme.inputs.checked.shadow};
+    color: ${props => props.theme.inputs.checked.fontColor};
   }
 
   ${HiddenCheckbox}:focus ~ & {
-    box-shadow: ${props => props.theme.checkbox.focus.checkboxShadow};
-    border: ${props => props.theme.checkbox.focus.checkboxBorder};
+    border: ${props => props.theme.inputs.focus.border};
+    box-shadow: ${props => props.theme.inputs.focus.shadow};
   }
 `;

@@ -178,25 +178,25 @@ const layoutMap = {
 
 export const StyledFormField = styled.div<LayoutProps>`
   display: flex;
-  margin-bottom: 0.875rem;
+  margin-bottom: 1rem;
   position: relative;
 
-  .helpText {
-    font-size: 0.75rem;
-    margin-top: 0.5rem;
-    color: ${props => !!props.error ? props.theme.colors.error.primary : props.theme.colors.greys.grey60};
-  }
-
   fieldset {
-    margin: 0.875rem 0 0;
+    margin: 0;
     border: none;
     padding: 0;
   }
 
+  .helpText {
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    color: ${props => !!props.error ? props.theme.inputs.error.fontColor : props.theme.inputs.fontColor};
+  }
+
   legend {
     font-size: 0.875rem;
-    color: ${props => props.theme.colors.greys.grey60};
-    margin-bottom: 1rem;
+    color: ${props => props.theme.inputs.fontColor};
+    margin-bottom: 0.5rem;
   }
 
   ${props => !!props.layout && layoutMap[props.layout]}
