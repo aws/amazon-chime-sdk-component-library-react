@@ -1,21 +1,36 @@
 import React, { useContext, useEffect, useState } from 'react';
-// import { faEyeSlash, faPause, faVolumeOff, faVolumeUp, faSignOutAlt, faPowerOff } from '@fortawesome/free-solid-svg-icons'
-import { faCaretDown, faMicrophone, faMicrophoneSlash, faVideo, faVideoSlash, faEye, faPause, faVolumeOff, faSignOutAlt, faPowerOff } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCaretDown,
+  faMicrophone,
+  faMicrophoneSlash,
+  faVideo,
+  faVideoSlash,
+  faEye,
+  faEyeSlash,
+  faPause,
+  faPlay,
+  faVolumeOff,
+  faSignOutAlt,
+  faPowerOff,
+} from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom';
 
 import routes from '../constants/routes';
 import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { useContentShareContext } from '../meeting/ContentShareProvider';
+import { getMeetingStatusContext, MeetingStatus } from '../meeting/MeetingStatusContext';
 import IconButton from '../components/IconButton';
 import ButtonGroup from '../components/ButtonGroup';
 import LocalVideo from '../components/LocalVideo';
-import { getMeetingStatusContext, MeetingStatus } from '../meeting/MeetingStatusContext';
 
 const MeetingControlsContainer: React.FC = () => {
   const meetingManager: MeetingManager | null = useContext(MeetingContext);
   const history = useHistory();
   const [muted, setMuted] = useState(false);
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
+  const [isPauseScreenShare, setIsPauseScreenShare] = useState(false);
   const { updateMeetingStatus } = useContext(getMeetingStatusContext());
+  const { isLocalUserSharing } = useContentShareContext();
 
   const meetingId = meetingManager?.meetingId;
   const region = meetingManager ?.region;
@@ -75,6 +90,26 @@ const MeetingControlsContainer: React.FC = () => {
     });
   }
 
+  const toggleScreenShare = async (): Promise<void> => {
+    if (isLocalUserSharing) {
+      meetingManager?.stopContentShare();
+    } else {
+      await meetingManager?.startContentShare();
+    }
+  }
+
+  const togglePauseScreenShare = (): void => {
+    if (!isLocalUserSharing) {
+      return;
+    }
+    setIsPauseScreenShare(!isPauseScreenShare);
+    if (isPauseScreenShare) {
+      meetingManager?.audioVideo?.unpauseContentShare();
+    } else {
+      meetingManager?.audioVideo?.pauseContentShare();
+    }
+  }
+
   return (
     <>
     <div className="MeetingControlContainer" style={{ display: "flex" }}>
@@ -88,11 +123,10 @@ const MeetingControlsContainer: React.FC = () => {
         <IconButton icon={faCaretDown} />
       </ButtonGroup>
       <ButtonGroup>
-        <IconButton icon={faEye} />
-        <IconButton icon={faCaretDown} />
+        <IconButton icon={isLocalUserSharing ? faEye : faEyeSlash} onClick={toggleScreenShare}/>
       </ButtonGroup>
       <ButtonGroup>
-        <IconButton icon={faPause} />
+        <IconButton disabled={!isLocalUserSharing} icon={isPauseScreenShare ? faPlay : faPause} onClick={togglePauseScreenShare}/>
       </ButtonGroup>
       <ButtonGroup>
         <IconButton icon={faVolumeOff} />
@@ -103,7 +137,8 @@ const MeetingControlsContainer: React.FC = () => {
         <IconButton icon={faPowerOff} onClick={endMeeting} />
       </ButtonGroup>
     </div>
-      <LocalVideo id="meeting-video"/>
+    {/* TODO: need to resize video tile dynamically */}
+    <LocalVideo id="meeting-video" style={{ width: "20rem" }} /> 
     </>
   );
 }
