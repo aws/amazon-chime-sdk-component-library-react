@@ -106,6 +106,7 @@ const PopOver: FC<PopOverProps> = ({
               aria-label={a11yLabel}
               aria-haspopup={true}
               aria-expanded={isOpen}
+              data-testid='popover-toggle'
             >
               {renderButton(isOpen)}
             </StyledPopOverToggle>

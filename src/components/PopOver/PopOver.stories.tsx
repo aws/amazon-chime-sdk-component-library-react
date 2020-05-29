@@ -18,7 +18,6 @@ const StyledContents = styled.span`
   svg {
     fill: white;
     width: 2rem;
-    height: 2rem;
   }
 `;
 
