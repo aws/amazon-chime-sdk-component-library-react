@@ -2,27 +2,27 @@ import defaultTheme, { rgbaWithOpacity } from "./default";
 
 const colors = {
   primary: {
-      lightest: "#9DEFFB",
-      lighter: "#8AEBFA",
-      light: "#62E5F9",
-      main: "#4FE2F8",
-      dark: "#29DCF8",
-      darker: "#22B6CB",
-      darkest: "#1FA1B5",
+    lightest: "#9DEFFB",
+    lighter: "#8AEBFA",
+    light: "#62E5F9",
+    main: "#4FE2F8",
+    dark: "#29DCF8",
+    darker: "#22B6CB",
+    darkest: "#1FA1B5",
   },
   secondary: {
-      light: "#FF8B70",
-      main: "#FF9B83",
-      dark: "#FFB4A1",
+    light: "#FF8B70",
+    main: "#FF9B83",
+    dark: "#FFB4A1",
   },
   error: {
-      lightest: "#FBC1C0",
-      lighter: "#FDA8A6",
-      light: "#FD9B99",
-      primary: "#FF8B8A",
-      dark: "#583A39",
-      darker: "#452F2E",
-      darkest:"#302020",
+    lightest: "#FBC1C0",
+    lighter: "#FDA8A6",
+    light: "#FD9B99",
+    primary: "#FF8B8A",
+    dark: "#583A39",
+    darker: "#452F2E",
+    darkest:"#302020",
   },
   success: {
     lightest: "#F4FBF1",
@@ -53,18 +53,18 @@ const colors = {
   },
 
   greys: {
-      black: "#000000",
-      grey100: "#1b1c20",
-      grey90: "#2e2f34",
-      grey80: "#3f4149",
-      grey70: "#50545e",
-      grey60: "#616672",
-      grey50: "#7d818b",
-      grey40: "#989da5",
-      grey30: "#d4d5d8",
-      grey20: "#e4e9f2",
-      grey10: "#f0f1f2",
-      white: "#ffffff",
+    black: "#000000",
+    grey100: "#1b1c20",
+    grey90: "#2e2f34",
+    grey80: "#3f4149",
+    grey70: "#50545e",
+    grey60: "#616672",
+    grey50: "#7d818b",
+    grey40: "#989da5",
+    grey30: "#d4d5d8",
+    grey20: "#e4e9f2",
+    grey10: "#f0f1f2",
+    white: "#ffffff",
   }
 };
 
@@ -73,11 +73,11 @@ const colorsRgb = {
     dark: "rgb(41,220,248)",
   },
   greys: {
-      black: "rgb(0,0,0)",
-      grey100: "rgb(27,28,32)",
-      grey90: "rgb(46,47,52)",
-      grey60: "rgb(97,102,104)",
-      white: "rgb(255,255,255)",
+    black: "rgb(0,0,0)",
+    grey100: "rgb(27,28,32)",
+    grey90: "rgb(46,47,52)",
+    grey60: "rgb(97,102,104)",
+    white: "rgb(255,255,255)",
   }
 };
 
@@ -298,18 +298,27 @@ const links = {
   fontColorVisited: colors.primary.darkest,
 };
 
+const controlBar = {
+  text: colors.greys.grey20,
+  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  bgd: colors.greys.grey100,
+  border: 'none',
+  opactiy: 1,
+}
+
 const darkTheme = {
-    buttons,
-    colors,
-    colorsRgb,
-    links,
-    shadows,
-    inputs,
-    modal,
-    popOver,
-    overlays,
-    notification,
-    ...defaultTheme,
+  buttons,
+  colors,
+  colorsRgb,
+  links,
+  shadows,
+  inputs,
+  modal,
+  popOver,
+  overlays,
+  notification,
+  controlBar,
+  ...defaultTheme,
 };
 
 export default darkTheme;

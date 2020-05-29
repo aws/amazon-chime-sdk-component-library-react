@@ -72,12 +72,12 @@ const colorsRgb = {
     dark: "rgb(0,77,219)",
   },
   greys: {
-      black: "rgb(0,0,0)",
-      grey100: "rgb(27,28,32)",
-      grey50: "rgb(125, 129, 139)",
-      grey40: "rgb(152,157,165)",
-      grey10: "rgb(240,241,242)",
-      white: "rgb(255,255,255)",
+    black: "rgb(0,0,0)",
+    grey100: "rgb(27,28,32)",
+    grey50: "rgb(125, 129, 139)",
+    grey40: "rgb(152,157,165)",
+    grey10: "rgb(240,241,242)",
+    white: "rgb(255,255,255)",
   }
 };
 
@@ -294,6 +294,14 @@ const links = {
   fontColorVisited: colors.primary.darkest,
 };
 
+const controlBar = {
+  text: colors.greys.grey70,
+  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  bgd: colors.greys.white,
+  border: `0.03125rem solid ${colors.greys.grey20}`,
+  opacity: 0.95,
+}
+
 const lightTheme = {
   buttons,
   colors,
@@ -305,6 +313,7 @@ const lightTheme = {
   modal,
   popOver,
   notification,
+  controlBar,
   ...defaultTheme,
 };
 

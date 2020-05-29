@@ -8,7 +8,6 @@ import lightTheme from '../../../src/theme/light'
 import { renderWithTheme } from '../../test-helpers';
 
 describe('ModalButton', () => {
-
   it('renders a header', () => {
     const component = <ModalHeader title='Test Header' />
     const { getByText } = renderWithTheme(lightTheme, component)
