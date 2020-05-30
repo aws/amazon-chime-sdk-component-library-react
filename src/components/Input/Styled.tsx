@@ -25,17 +25,17 @@ export const StyledInputWrapper = styled.span<InputWrapperProps>`
 `;
 
 export const StyledInput = styled.input`
+  align-items: center;
+  display: flex;
+  letter-spacing: -0.005625rem;
+  transition: box-shadow .05s ease-in;
   background-color: ${props => props.theme.inputs.bgd};
   border: ${props => props.theme.inputs.border};
   border-radius: ${props => props.theme.inputs.borderRadius};
   box-shadow: ${props => props.theme.inputs.shadow};
   color: ${props => props.theme.inputs.fontColor};
-  align-items: center;
-  display: flex;
-  font-size: 0.875rem;
-  letter-spacing: -0.005625rem;
-  line-height: 1.43;
-  transition: box-shadow .05s ease-in;
+  font-size: ${props => props.theme.fontSizes.text.fontSize};
+  line-height: ${props => props.theme.fontSizes.text.lineHeight};
 
   &::placeholder {
     color: ${props => props.theme.inputs.placeholder};

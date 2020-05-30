@@ -31,9 +31,9 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
   .message {
     display: flex;
     flex-flow: column wrap;
-    line-height: 1.43;
+    font-size: ${props => props.theme.fontSizes.text.fontSize};
+    font-size: ${props => props.theme.fontSizes.text.lineHeight};
     letter-spacing: -0.005625rem;
-    font-size: 0.875rem;
     margin: 0.375rem 3.3125rem 0.375rem 0.75rem;
   }
 

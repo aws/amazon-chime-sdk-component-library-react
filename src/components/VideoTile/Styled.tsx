@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import { ellipsis } from '../../utils/style';
 import { VideoTileProps } from './';
 
 export const StyledVideoTile = styled.div<VideoTileProps>`
@@ -63,18 +64,14 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
     position: absolute;
 
     div {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      ${ellipsis};
       display: flex;
       align-items: center;
     }
 
     .text {
-      font-size: 0.875rem;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      font-size: ${props => props.theme.fontSizes.fontSize};
+      ${ellipsis};
       margin: 0;
     }
   }

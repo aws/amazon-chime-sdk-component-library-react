@@ -180,8 +180,10 @@ const inputs = {
   bgd: colors.greys.grey80,
   border: `0.03125rem solid ${colors.greys.black}`,
   borderRadius: defaultTheme.radii.default,
-  fontSize: defaultTheme.type.text,
   fontColor: colors.greys.white,
+  fontSize: defaultTheme.fontSizes.text,
+  helpTextFontSize: defaultTheme.fontSizes.small,
+  legendFontSize: defaultTheme.fontSizes.text,
   placeholderColor: colors.greys.grey50,
   shadow: `0 0.0625rem 0.0625rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.1)}`,
 
@@ -285,12 +287,20 @@ const notification = {
       }
     }
   }
-}
+};
+
+const links = {
+  fontColor: colors.primary.main,
+  fontColorHover: colors.primary.dark,
+  fontColorActive: colors.primary.darker,
+  fontColorVisited: colors.primary.darkest,
+};
 
 const darkTheme = {
     buttons,
     colors,
     colorsRgb,
+    links,
     shadows,
     inputs,
     modal,
