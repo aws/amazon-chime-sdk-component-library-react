@@ -188,13 +188,13 @@ export const StyledFormField = styled.div<LayoutProps>`
   }
 
   .helpText {
-    font-size: 0.75rem;
+    font-size: ${props => props.theme.fontSizes.small.fontSize};
     margin-top: 0.5rem;
     color: ${props => !!props.error ? props.theme.inputs.error.fontColor : props.theme.inputs.fontColor};
   }
 
   legend {
-    font-size: 0.875rem;
+    font-size: ${props => props.theme.fontSizes.text.fontSize};
     color: ${props => props.theme.inputs.fontColor};
     margin-bottom: 0.5rem;
   }

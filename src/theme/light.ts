@@ -1,4 +1,4 @@
-import defaultTheme, { radii, rgbaWithOpacity } from './default';
+import defaultTheme, { rgbaWithOpacity } from './default';
 
 const colors = {
   primary: {
@@ -180,7 +180,6 @@ const inputs = {
   border: `0.03125rem solid ${colors.greys.grey30}`,
   borderRadius: defaultTheme.radii.default,
   fontColor: colors.greys.grey80,
-  fontSize: defaultTheme.type.text,
   placeholderColor: colors.greys.grey40,
   shadow: `0 0.0625rem 0.0625rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.1)}`,
 
@@ -284,12 +283,20 @@ const notification = {
       }
     }
   }
-}
+};
+
+const links = {
+  fontColor: colors.primary.main,
+  fontColorHover: colors.primary.dark,
+  fontColorActive: colors.primary.darker,
+  fontColorVisited: colors.primary.darkest,
+};
 
 const lightTheme = {
   buttons,
   colors,
   colorsRgb,
+  links,
   overlays,
   shadows,
   inputs,

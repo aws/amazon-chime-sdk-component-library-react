@@ -6,10 +6,10 @@ export const StyledSelectInput = styled.select`
   border-radius: ${props => props.theme.inputs.borderRadius};
   box-shadow: ${props => props.theme.inputs.shadow};
   color: ${props => props.theme.inputs.fontColor};
-  font-size: 0.875rem;
+  font-size: ${props => props.theme.fontSizes.text};
+  line-height: ${props => props.theme.fontSizes.lineHeight};
   height: 2rem;
   letter-spacing: -0.005625rem;
-  line-height: 1.43;
   padding: 0.375rem 0.5rem;
   transition: box-shadow .05s ease-in;
 

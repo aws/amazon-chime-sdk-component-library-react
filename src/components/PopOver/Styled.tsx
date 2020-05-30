@@ -39,10 +39,9 @@ export const StyledPopOverItem = styled.li`
     cursor: pointer;
     background-color: ${props => props.theme.popOver.itemBgd};
     color: ${props => props.theme.popOver.itemText};
+    line-height: ${props => props.theme.fontSizes.text.lineHeight};
+    font-size: ${props => props.theme.fontSizes.text.fontSize};
     padding: 0 2.5rem;
-    line-height: 1.43;
-    letter-spacing: -0.09px;
-    font-size: 0.875rem;
     text-decoration: none;
     outline: 0;
 
@@ -112,18 +111,18 @@ export const StyledPopOverHeader = styled.header`
     ${ellipsis};
     padding: 0 2.5rem;
     margin-top: 0.5rem;
-    line-height: 1.27;
-    color: #50545e;
     margin-bottom: 0;
-    font-size: 1.1875rem;
+    color: #50545e;
+    font-size: ${props => props.theme.fontSizes.h5.fontSize};
+    line-height: ${props => props.theme.fontSizes.text.lineHeight};
   }
 
   .subtitle {
     ${ellipsis};
     padding: 0 2.5rem;
     color: #616672;
-    font-size: 0.875rem;
-    letter-spacing: -0.09px;
+    font-size: ${props => props.theme.fontSizes.text.fontSize};
+    line-height: ${props => props.theme.fontSizes.text.lineHeight};
     line-height: 1.43;
     margin: 0 0 1rem;
   }

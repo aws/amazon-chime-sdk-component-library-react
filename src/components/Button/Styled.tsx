@@ -4,9 +4,9 @@ import { visuallyHidden } from '../../utils/style';
 import { ButtonProps } from './';
 
 export const StyledButton = styled.button<ButtonProps>`
-  font-size: 0.85rem;
-  padding: 0.5rem 1rem;
   border-radius: ${props => props.theme.radii.default};
+  font-size: ${props => props.theme.fontSizes.text.fontSize};
+  padding: 0.5rem 1rem;
   border-color: transparent;
   transition: background-color 0.1s ease;
   display: inline-flex;
