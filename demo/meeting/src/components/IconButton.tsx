@@ -7,6 +7,7 @@ interface Props {
   id?: string
   disabled?: boolean;
   onClick?: () => void;
+  ref?: React.Ref<HTMLButtonElement>;
 }
 
 const IconButton: React.FC<Props> = forwardRef(
