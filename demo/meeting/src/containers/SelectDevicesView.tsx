@@ -12,13 +12,14 @@ import Modal from '../components/Modal';
 import Card from '../components/Card';
 import Spinner from '../components/Spinner';
 import { populateDeviceList } from '../utils/DeviceUtils';
+import { VIDEO_INPUT, AUDIO_INPUT } from '../constants';
 
 const SelectDevicesView: React.FC = () => {
   const meetingManager: MeetingManager | null = useContext(MeetingContext)!;
   const history = useHistory();
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
   const meetingId = meetingManager?.meetingId;
-  const attendeeName = meetingManager ?.attendeeName;
+  const attendeeName = meetingManager?.attendeeName;
   const [audioPercent, setAudioPercent] = React.useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -68,7 +69,7 @@ const SelectDevicesView: React.FC = () => {
 
   const populateAudioInputList = async () => {
     const genericName = 'Microphone';
-    const additionalDevices = ['None', '440 Hz'];
+    const additionalDevices = [AUDIO_INPUT.NONE, AUDIO_INPUT[440]];
     populateDeviceList(
       'audio-input',
       genericName,
@@ -79,7 +80,7 @@ const SelectDevicesView: React.FC = () => {
 
   const populateVideoInputList = async () => {
     const genericName = 'Camera';
-    const additionalDevices = ['None', 'Blue', 'SMPTE Color Bars'];
+    const additionalDevices = [VIDEO_INPUT.NONE, VIDEO_INPUT.BLUE, VIDEO_INPUT.SMPTE];
     populateDeviceList(
       'video-input',
       genericName,
@@ -102,7 +103,7 @@ const SelectDevicesView: React.FC = () => {
   let analyserNodeCallback = () => {};
 
   const startAudioPreview = () => {
-    const analyserNode = meetingManager ?.audioVideo ?.createAnalyserNodeForAudioInput();
+    const analyserNode = meetingManager?.audioVideo?.createAnalyserNodeForAudioInput();
     if (!analyserNode || !analyserNode.getByteTimeDomainData) {
       return;
     }

@@ -17,6 +17,7 @@ import {
 
 import { RosterType } from '../types';
 import { DevicePermissionStatus } from '../enums';
+import { VIDEO_INPUT, AUDIO_INPUT } from '../constants';
 
 const BASE_URL: string = [
   location.protocol,
@@ -140,9 +141,9 @@ export class MeetingManager implements DeviceChangeObserver {
   }
 
   async updateDeviceLists(): Promise<void> {
-    this.audioInputDevices = (await this.audioVideo ?.listAudioInputDevices()) || [];
-    this.videoInputDevices = (await this.audioVideo ?.listVideoInputDevices()) || [];
-    this.audioOutputDevices = (await this.audioVideo ?.listAudioOutputDevices()) || [];
+    this.audioInputDevices = (await this.audioVideo?.listAudioInputDevices()) || [];
+    this.videoInputDevices = (await this.audioVideo?.listVideoInputDevices()) || [];
+    this.audioOutputDevices = (await this.audioVideo?.listAudioOutputDevices()) || [];
   }
 
   setupDeviceLabelTrigger(): void {
@@ -178,23 +179,22 @@ export class MeetingManager implements DeviceChangeObserver {
 
   async leaveMeeting(): Promise<void> {
     this.stopContentShare();
-    await this.audioVideo ?.stopLocalVideoTile();
-    await this.audioVideo ?.chooseVideoInputDevice(null);
+    await this.audioVideo?.stopLocalVideoTile();
+    await this.audioVideo?.chooseVideoInputDevice(null);
     
-    this.audioVideo ?.unbindAudioElement();
-    await this.audioVideo ?.chooseAudioInputDevice(null);
-    
-    this.audioVideo ?.stop();
+    this.audioVideo?.unbindAudioElement();
+    await this.audioVideo?.chooseAudioInputDevice(null);
+    this.audioVideo?.stop();
     
     this.initializeMeetingManager();
   }
 
   async startContentShare(): Promise<void> {
-    await this.audioVideo ?.startContentShareFromScreenCapture();
+    await this.audioVideo?.startContentShareFromScreenCapture();
   }
 
   stopContentShare(): void {
-    this.audioVideo ?.stopContentShare();
+    this.audioVideo?.stopContentShare();
   }
 
   async listAndSelectDevices(): Promise<void> {
@@ -205,7 +205,7 @@ export class MeetingManager implements DeviceChangeObserver {
       this.audioInputDevices.length
     ) {
       this.currentAudioInputDevice = this.audioInputDevices[0];
-      await this.audioVideo ?.chooseAudioInputDevice(
+      await this.audioVideo?.chooseAudioInputDevice(
         this.audioInputDevices[0].deviceId
       );
     }
@@ -252,28 +252,26 @@ export class MeetingManager implements DeviceChangeObserver {
     this.audioVideo?.startVideoPreviewForVideoInput(element);
   }
 
-  private audioInputSelectionToDevice(value: string): Device {
-    if (value === '440 Hz') {
+  audioInputSelectionToDevice(value: string): Device {
+    if (value === AUDIO_INPUT[440]) {
       return DefaultDeviceController.synthesizeAudioDevice(440);
-    } else if (value === 'None') {
+    } else {
       return null;
     }
-    return value;
   }
 
-  private videoInputSelectionToDevice(value: string): Device {
-    if (value === 'Blue') {
+  videoInputSelectionToDevice(value: string): Device {
+    if (value === VIDEO_INPUT.BLUE) {
       return DefaultDeviceController.synthesizeVideoDevice('blue');
-    } else if (value === 'SMPTE Color Bars') {
+    } else if (value === VIDEO_INPUT.SMPTE) {
       return DefaultDeviceController.synthesizeVideoDevice('smpte');
-    } else if (value === 'None') {
+    } else {
       return null;
     }
-    return value;
   }
 
   async setAudioOutput(value: string): Promise<void> {
-    await this.audioVideo ?.chooseAudioOutputDevice(value);
+    await this.audioVideo?.chooseAudioOutputDevice(value);
     // const audioMix = document.getElementById('meeting-audio') as HTMLAudioElement;
     // await this.audioVideo?.bindAudioElement(audioMix);
   }
@@ -285,7 +283,7 @@ export class MeetingManager implements DeviceChangeObserver {
   }
 
   async setVideoInput(value: string): Promise<void> {
-    await this.audioVideo ?.chooseVideoInputDevice(
+    await this.audioVideo?.chooseVideoInputDevice(
       this.videoInputSelectionToDevice(value)
     );
   }

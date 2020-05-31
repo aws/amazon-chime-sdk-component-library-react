@@ -25,7 +25,7 @@ export const LocalVideo: React.FC<Props> = ({ id, style }) =>{
       meetingManager?.audioVideo?.bindVideoElement(tileState.tileId, (videoEle.current as unknown as HTMLVideoElement))
     };
 
-    meetingManager ?.audioVideo ?.addObserver({ audioVideoDidStart, videoTileDidUpdate });
+    meetingManager?.audioVideo?.addObserver({ audioVideoDidStart, videoTileDidUpdate });
   }, []);
 
   return (

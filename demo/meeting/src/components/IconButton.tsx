@@ -4,6 +4,7 @@ import { IconProp } from '@fortawesome/fontawesome-svg-core';
 
 interface Props {
   icon: IconProp;
+  id?: string
   disabled?: boolean;
   onClick?: () => void;
 }

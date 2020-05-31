@@ -56,7 +56,7 @@ export default function MeetingStatusProvider(props: Props) {
       if (!tileState.boundAttendeeId) {
         return;
       }
-      if (tileState ?.boundAttendeeId && tileState ?.tileId) {
+      if (tileState?.boundAttendeeId && tileState?.tileId) {
         setMeetingStatus(MeetingStatus.Succeeded);
       }
     };
