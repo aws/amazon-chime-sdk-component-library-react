@@ -1,7 +1,5 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
-// import { faSpinner } from '@fortawesome/free-solid-svg-icons'
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
 import { getErrorContext } from '../providers/ErrorProvider';
