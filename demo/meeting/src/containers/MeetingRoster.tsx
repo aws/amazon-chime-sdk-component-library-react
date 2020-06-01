@@ -9,7 +9,7 @@ const StyledRoster = styled.div`
   border: 1px solid;
   display: inline-flex;
   flex-direction: column;
-  position: fixed;
+  position: absolute;
   right: 1rem;
   top: 3.5rem;
 `;

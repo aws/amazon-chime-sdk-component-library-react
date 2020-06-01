@@ -49,6 +49,7 @@ module.exports = {
     index: `${app}.html`,
     compress: true,
     liveReload: true,
+    hot: false,
     host: '0.0.0.0',
     port: 9000,
     https: true,
