@@ -11,3 +11,4 @@ export const AUDIO_INPUT = {
   440: '440 Hz'
 };
 
+export const MAX_REMOTE_VIDEOS = 16;

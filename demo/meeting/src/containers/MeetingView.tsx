@@ -6,6 +6,7 @@ import ContentShareProvider from '../meeting/ContentShareProvider';
 import ContentShare from '../components/ContentShare';
 import RosterProvider from '../providers/RosterProvider';
 import MeetingRoster from './MeetingRoster';
+import RemoteVideoGrid from './RemoteVideoGrid';
 
 const MeetingView = () => {
   return (
@@ -15,6 +16,7 @@ const MeetingView = () => {
           <MeetingControlsContainer />
           <ContentShare />
           <MeetingRoster />
+          <RemoteVideoGrid />
         </ContentShareProvider>
       </RosterProvider>
     </MeetingStatusProvider>
