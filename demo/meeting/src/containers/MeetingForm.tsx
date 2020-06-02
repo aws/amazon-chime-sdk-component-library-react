@@ -10,6 +10,7 @@ import routes from '../constants/routes';
 import Modal from '../components/Modal';
 import Card from '../components/Card';
 import Spinner from '../components/Spinner';
+import DevicePermissionPrompt from './DevicePermissionPrompt';
 
 const MeetingForm: React.FC = () => {
   const [meetingId, setMeetingId] = useState("");
@@ -89,6 +90,7 @@ const MeetingForm: React.FC = () => {
           />
         </Modal>
       )}
+      <DevicePermissionPrompt />
     </form>
   );
 }
