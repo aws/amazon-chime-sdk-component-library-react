@@ -219,9 +219,11 @@ const modal = {
 
 const popOver = {
   menuBgd: `${rgbaWithOpacity(colorsRgb.greys.grey90, 0.85)}`,
+  menuBorder: colors.greys.grey100,
   shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
   itemBgd: 'transparent',
   itemText: colors.greys.white,
+  titleText: colors.greys.white,
   active: {
     itemBgd: colors.primary.dark,
     itemText: colors.greys.grey80,

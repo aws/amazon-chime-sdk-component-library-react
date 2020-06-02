@@ -3,6 +3,7 @@ import { ellipsis } from '../../utils/style';
 
 export const StyledPopOverMenu = styled.ul`
   background-color: ${props => props.theme.popOver.menuBgd};
+  border: ${props => props.theme.popOver.menuBorder};
   width: 13.75rem;
   margin: 0;
   border-radius: 0.25rem;
@@ -112,8 +113,8 @@ export const StyledPopOverHeader = styled.header`
     padding: 0 2.5rem;
     margin-top: 0.5rem;
     margin-bottom: 0;
-    color: #50545e;
-    font-size: ${props => props.theme.fontSizes.h5.fontSize};
+    color: ${props => props.theme.popOver.titleText};
+    font-size: 1.18125rem;
     line-height: ${props => props.theme.fontSizes.text.lineHeight};
   }
 

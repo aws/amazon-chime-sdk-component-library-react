@@ -215,14 +215,16 @@ const modal = {
 
 const popOver = {
   menuBgd: `${rgbaWithOpacity(colorsRgb.greys.grey10, 0.85)}`,
+  menuBorder: `0.5px solid ${colors.greys.grey20}`,
   shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
   itemBgd: 'transparent',
   itemText: colors.greys.grey70,
+  titleText: colors.greys.grey60,
   active: {
     itemBgd: colors.primary.dark,
     itemText: colors.greys.white,
   },
-  separator: `${rgbaWithOpacity(colorsRgb.greys.grey40, 0.7)}`,
+  separator: `${rgbaWithOpacity(colorsRgb.greys.grey40, 0.3)}`,
 };
 
 const notification = {
