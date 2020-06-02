@@ -16,6 +16,7 @@ import {
 } from 'amazon-chime-sdk-js';
 
 import { RosterType } from '../types';
+import { DevicePermissionStatus } from '../enums';
 
 const BASE_URL: string = [
   location.protocol,
@@ -58,6 +59,10 @@ export class MeetingManager implements DeviceChangeObserver {
   roster: RosterType = {};
 
   rosterUpdateCallbacks: ((roster: RosterType) => void)[] = [];
+
+  devicePermissions = DevicePermissionStatus.UNSET;
+
+  devicePermissionsObservers: ((permission: string) => void)[] = [];
 
   devicesUpdatedCallbacks: ((
     fullDeviceInfo: FullDeviceInfoType
@@ -123,12 +128,10 @@ export class MeetingManager implements DeviceChangeObserver {
     configuration.enableWebAudio = false;
     this.meetingSession = new DefaultMeetingSession(configuration, logger, deviceController);
     this.audioVideo = this.meetingSession.audioVideo;
-
-    await this.listAndSelectDevices();
-    this.publishDevicesUpdated();
-
     this.audioVideo.addDeviceChangeObserver(this);
     this.setupDeviceLabelTrigger();
+    await this.listAndSelectDevices();
+    this.publishDevicesUpdated();
     // this.setupMuteHandler();
     // this.setupCanUnmuteHandler();
     this.setupSubscribeToAttendeeIdPresenceHandler();
@@ -143,10 +146,18 @@ export class MeetingManager implements DeviceChangeObserver {
   }
 
   setupDeviceLabelTrigger(): void {
-    async (): Promise<MediaStream> => {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: true });
+    const callback = async (): Promise<MediaStream> => {
+      this.devicePermissions = DevicePermissionStatus.IN_PROGRESS;
+      this.notifyDevicePermissionChange();
+      const stream = await navigator.mediaDevices.getUserMedia({
+        audio: true,
+        video: true,
+      });
       return stream;
-    }
+    };
+    this.audioVideo?.setDeviceLabelTrigger(callback);
+    this.devicePermissions = DevicePermissionStatus.GRANTED;
+    this.notifyDevicePermissionChange();
   }
 
   // Start meeting view
@@ -422,6 +433,27 @@ export class MeetingManager implements DeviceChangeObserver {
     for (let i = 0; i < this.rosterUpdateCallbacks.length; i += 1) {
       const callback = this.rosterUpdateCallbacks[i];
       callback(this.roster);
+    }
+  };
+
+  subscribeToDevicePermissionUpdate = (
+    callback: (permission: string) => void
+  ): void => {
+    this.devicePermissionsObservers.push(callback);
+  };
+
+  unSubscribeFromDevicePermissionUpdate = (
+    callbackToRemove: (permission: string) => void
+  ): void => {
+    this.devicePermissionsObservers = this.devicePermissionsObservers.filter(
+      callback => callback !== callbackToRemove
+    );
+  };
+
+  private notifyDevicePermissionChange = (): void => {
+    for (let i = 0; i < this.devicePermissionsObservers.length; i += 1) {
+      const callback = this.devicePermissionsObservers[i];
+      callback(this.devicePermissions);
     }
   };
 }
