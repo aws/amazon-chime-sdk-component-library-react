@@ -94,7 +94,7 @@ const shadows = {
 const buttons = {
   primary: {
     static: {
-      bgd: colors.primary.dark,
+      bgd: colors.primary.main,
       border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.4)}`,
       text: colors.greys.grey70,
     },
@@ -104,7 +104,7 @@ const buttons = {
       text: colors.greys.grey70,
     },
     focus: {
-      bgd: colors.primary.dark,
+      bgd: colors.primary.main,
       border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
       text: colors.greys.grey70,
     },
@@ -156,22 +156,22 @@ const buttons = {
     hover: {
       bgd: colors.primary.dark,
       border: "none",
-      text: colors.greys.grey20,
+      text: colors.greys.grey80,
     },
     focus: {
       bgd: colors.primary.dark,
       border: "none",
-      text: colors.greys.grey20,
+      text: colors.greys.grey80,
     },
     active: {
       bgd: colors.primary.darker,
       border: "none",
-      text: colors.greys.grey20,
+      text: colors.greys.grey80,
     },
     selected: {
       bgd: colors.primary.light,
       border: "none",
-      text: colors.greys.grey20,
+      text: colors.greys.grey80,
     },
   },
 };
