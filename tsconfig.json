@@ -23,7 +23,7 @@
     "emitDecoratorMetadata": true,
     "esModuleInterop": true
   },
-  "include": ["src/**/*", "tst/**/*"],
+  "include": ["src/**/*", "tst/**/*", "jest-snapshot.config.js", "jest.config.js"],
   "exclude": [
     "node_modules",
     "build",
@@ -33,5 +33,6 @@
     "src/**/*.test.tsx",
     "src/**/*.stories.tsx",
     "tst/**/*.test.tsx",
+    "coverage",
   ]
 }
