@@ -26,7 +26,7 @@ export const _VideoGrid = () => {
 
   return (
     <div style={{ padding: '1rem', height: '100vh', boxSizing: 'border-box' }}>
-      <VideoGrid>{tiles}</VideoGrid>
+      <VideoGrid size={size}>{tiles}</VideoGrid>
     </div>
   );
 };
