@@ -1,7 +1,7 @@
 module.exports = {
     preset: 'jest-puppeteer',
     testRegex: './*\\.test\\.tsx$',
-    setupFilesAfterEnv: ['./setupTests.js'],
+    setupFilesAfterEnv: ['./tst/setupTests.js'],
     moduleFileExtensions: ["ts", "tsx", "js", "json", "jsx", "node",],
     transform: {
         "\\.tsx?$": "ts-jest",
@@ -14,4 +14,8 @@ module.exports = {
     },
     testPathIgnorePatterns: ['node_modules', '/tst/snapshots/'],
     testEnvironment: 'jsdom',
+    collectCoverage: true,
+    collectCoverageFrom: ["src/**/*.tsx"],
+    coverageReporters: ["text-summary", "lcov", "json", "clover"],
+    coverageDirectory: 'coverage',
 };
