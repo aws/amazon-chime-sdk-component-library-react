@@ -306,7 +306,7 @@ const controlBar = {
   opactiy: 1,
 }
 
-const darkTheme = {
+export const darkTheme = {
   buttons,
   colors,
   colorsRgb,

@@ -1,6 +1,6 @@
 import { useEffect, RefObject } from 'react';
 
-export default function useTabOutside(ref: RefObject<HTMLElement>, onTabOutside: (e: KeyboardEvent) => void) {
+export function useTabOutside(ref: RefObject<HTMLElement>, onTabOutside: (e: KeyboardEvent) => void) {
 
   const isOutside = () => {
     return !!ref.current && !ref.current.contains(document.activeElement as HTMLElement)
@@ -21,3 +21,5 @@ export default function useTabOutside(ref: RefObject<HTMLElement>, onTabOutside:
     }
   ), [onTabOutside];
 }
+
+export default useTabOutside;

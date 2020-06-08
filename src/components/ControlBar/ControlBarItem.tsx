@@ -23,7 +23,7 @@ export const isUndocked = (layout: ControlBarLayout) => {
   return layout === 'undocked-vertical' || layout === 'undocked-horizontal';
 };
 
-const ControlBarButton:FC<ControlBarButtonProps> = ({ icon, onClick, label, popOver = null }) => {
+export const ControlBarButton:FC<ControlBarButtonProps> = ({ icon, onClick, label, popOver = null }) => {
   const context = useControlBarContext();
 
   const renderPopOver = () => (

@@ -1,6 +1,6 @@
 import { createContext, useContext } from 'react';
 
-const ModalContext = createContext({
+export const ModalContext = createContext({
   onClose() {},
   labelID: '',
 });

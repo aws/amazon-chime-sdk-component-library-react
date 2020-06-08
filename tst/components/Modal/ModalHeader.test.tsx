@@ -28,7 +28,7 @@ describe('ModalButton', () => {
     const testContext = { onClose, labelID };
     const component = (
       <ModalContext.Provider value={testContext}>
-        <ModalHeader title='Test Header' />]}/>
+        <ModalHeader title='Test Header' />
       </ModalContext.Provider>
     );
     const { getByTestId } = renderWithTheme(lightTheme, component)

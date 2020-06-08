@@ -1,11 +1,15 @@
 {
-  "name": "example",
+  "name": "amazon-chime-sdk-component-library-react",
   "version": "0.1.0",
-  "description": "",
+  "description": "Amazon Chime SDK Component Library - React",
   "main": "lib/index.js",
+  "module": "lib/index.esm.js",
+  "files": [
+    "lib"
+  ],
   "typings": "lib/src/index.d.ts",
   "scripts": {
-    "build": "webpack",
+    "build": "rollup -c",
     "start": "start-storybook -p 9009",
     "test": "jest -c jest.config.js",
     "deploy-storybook": "storybook-to-ghpages",
@@ -26,6 +30,8 @@
     "uuid": "^8.0.0"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^13.0.0",
+    "@rollup/plugin-node-resolve": "^8.0.1",
     "@storybook/addon-a11y": "^5.3.18",
     "@storybook/addon-docs": "^5.3.18",
     "@storybook/addon-knobs": "^5.3.18",
@@ -33,7 +39,7 @@
     "@storybook/addon-viewport": "^5.3.18",
     "@storybook/addons": "^5.3.18",
     "@storybook/react": "^5.3.18",
-    "@storybook/storybook-deployer": "^2.8.5",
+    "@storybook/storybook-deployer": "^2.8.6",
     "@storybook/theming": "^5.3.18",
     "@testing-library/jest-dom": "^5.5.0",
     "@testing-library/react": "^10.0.2",
@@ -62,6 +68,9 @@
     "react-is": "^16.13.1",
     "resize-observer-polyfill": "^1.5.1",
     "rimraf": "^2.6.3",
+    "rollup": "^2.13.1",
+    "rollup-plugin-peer-deps-external": "^2.2.2",
+    "rollup-plugin-typescript2": "^0.27.1",
     "start-server-and-test": "^1.10.11",
     "storybook": "^1.0.0",
     "style-loader": "^0.23.1",

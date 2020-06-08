@@ -17,7 +17,7 @@ export interface ControlBarProps extends React.HTMLAttributes<HTMLDivElement> {
   layout: ControlBarLayout;
 }
 
-const ControlBar:FC<ControlBarProps> = ({ layout, showLabels = false, children }) => {
+export const ControlBar:FC<ControlBarProps> = ({ layout, showLabels = false, children }) => {
   const controlBarContext = { layout, showLabels }
   return (
     <ControlBarContext.Provider value={controlBarContext}>

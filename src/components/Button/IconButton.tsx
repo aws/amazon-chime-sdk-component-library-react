@@ -3,7 +3,7 @@ import Button, { ButtonProps } from './';
 
 export interface IconButtonProps extends ButtonProps {}
 
-const IconButton = forwardRef((props: IconButtonProps, ref: React.Ref<HTMLButtonElement>) => (
+export const IconButton = forwardRef((props: IconButtonProps, ref: React.Ref<HTMLButtonElement>) => (
   <Button
     ref={ref}
     variant='icon'
