@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import { getErrorContext } from '../providers/ErrorProvider';
 import Input from '../components/Input';
 import routes from '../constants/routes';

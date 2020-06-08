@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, CSSProperties } from 'react';
 import { VideoTileState } from 'amazon-chime-sdk-js';
 
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 
 interface Props {
   id?: string;

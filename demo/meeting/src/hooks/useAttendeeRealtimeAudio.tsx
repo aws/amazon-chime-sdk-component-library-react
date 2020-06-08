@@ -1,6 +1,6 @@
 import { useState, useContext, useEffect } from 'react';
 
-import { MeetingContext, MeetingManager } from '../meeting/MeetingProvider';
+import { MeetingContext, MeetingManager } from '../providers/MeetingProvider';
 
 export default function useAttendeeRealtimeAudio(attendeeId: string) {
   const [volume, setVolume] = useState<number>(0);

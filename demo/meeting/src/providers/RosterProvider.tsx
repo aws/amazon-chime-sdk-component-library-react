@@ -7,8 +7,8 @@ import React, {
 } from 'react';
 
 import { RosterType } from '../types';
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
-import { getMeetingStatusContext } from '../meeting/MeetingStatusContext';
+import { MeetingManager, MeetingContext } from './MeetingProvider';
+import { getMeetingStatusContext } from './MeetingStatusProvider';
 
 type Props = {
   children: ReactNode;

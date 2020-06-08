@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import MeetingView from './containers/MeetingView';
 import MeetingFormSelector from './containers/MeetingFormSelector';
-import MeetingProvider from './meeting/MeetingProvider';
+import MeetingProvider from './providers/MeetingProvider';
 import ErrorProvider from './providers/ErrorProvider';
 import routes from './constants/routes';
 import SelectDevicesView from './containers/SelectDevicesView';

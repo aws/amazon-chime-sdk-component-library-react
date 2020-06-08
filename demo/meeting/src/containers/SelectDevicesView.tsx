@@ -1,17 +1,17 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import { getErrorContext } from '../providers/ErrorProvider';
 import RowItem from '../components/RowItem';
-import LocalVideo from '../components/LocalVideo';
+import LocalVideo from './LocalVideo';
 import ProgressBar from '../components/ProgressBar';
 import routes from '../constants/routes';
-import TestSound from '../meeting/TestSound';
 import Modal from '../components/Modal';
 import Card from '../components/Card';
 import Spinner from '../components/Spinner';
 import { populateDeviceList } from '../utils/DeviceUtils';
+import TestSound from '../utils/TestSound';
 import { VIDEO_INPUT, AUDIO_INPUT } from '../constants';
 
 const SelectDevicesView: React.FC = () => {

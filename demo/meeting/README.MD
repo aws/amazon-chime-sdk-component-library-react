@@ -1,4 +1,4 @@
-This is the SDK react demo app. We are breaking down /browser meeting app to react components here.
+This is the SDK react meeting demo app. It shows how to use the Amazon Chime SDK and Chime SDK UI Component Library to build a react meeting app.
 
 To run the react app:
 1. Navigate to the `demo/meeting` folder
@@ -8,3 +8,5 @@ To run the react app:
 3. Start the webpack server: `npm run start:client`
 
 4. In another terminal in the same directory, start the node server: `npm run start:backend`
+
+5. Open https://0.0.0.0:9000/ in your browser

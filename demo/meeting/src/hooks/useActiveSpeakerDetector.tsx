@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 import { DefaultActiveSpeakerPolicy } from 'amazon-chime-sdk-js';
 
-import { MeetingContext, MeetingManager } from '../meeting/MeetingProvider';
+import { MeetingContext, MeetingManager } from '../providers/MeetingProvider';
 
 export default function useActiveSpeakerDetector() {
   const [activeSpeakerAttendeeId, setActiveSpeakerAttendeeId] = useState<

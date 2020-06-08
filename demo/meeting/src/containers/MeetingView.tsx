@@ -1,10 +1,10 @@
 import React from 'react';
 
-import MeetingControlsContainer from './MeetingControlsContainer';
-import MeetingStatusProvider from '../meeting/MeetingStatusContext';
-import ContentShareProvider from '../meeting/ContentShareProvider';
-import ContentShare from '../components/ContentShare';
+import MeetingStatusProvider from '../providers/MeetingStatusProvider';
+import ContentShareProvider from '../providers/ContentShareProvider';
 import RosterProvider from '../providers/RosterProvider';
+import ContentShare from './ContentShare';
+import MeetingControlsContainer from './MeetingControlsContainer';
 import MeetingRoster from './MeetingRoster';
 import RemoteVideoGrid from './RemoteVideoGrid';
 

@@ -5,7 +5,7 @@ import {
   faVolumeUp,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import IconButton from '../components/IconButton';
 import ButtonGroup from '../components/ButtonGroup';
 import Dropdown, { OptionItem } from '../components/Dropdown';
