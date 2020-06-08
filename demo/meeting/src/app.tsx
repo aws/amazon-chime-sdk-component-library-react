@@ -7,6 +7,7 @@ import MeetingProvider from './providers/MeetingProvider';
 import ErrorProvider from './providers/ErrorProvider';
 import routes from './constants/routes';
 import SelectDevicesView from './containers/SelectDevicesView';
+import Test from './components/Test';
 
 const App: FC = () => (
   <Router>
@@ -17,6 +18,7 @@ const App: FC = () => (
             <Route path={routes.HOME} exact component={MeetingFormSelector} />
             <Route path={routes.DEVICE} component={SelectDevicesView} />
             <Route path={routes.MEETING} component={MeetingView} />
+            <Route path="/test" component={Test} />
           </Route>
         </Switch>
       </MeetingProvider>

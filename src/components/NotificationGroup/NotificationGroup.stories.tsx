@@ -1,14 +1,14 @@
 import React from 'react';
 
 import NotificationGroup from '.';
-import { useNotificationDispatch, NotificationProvider, ActionType, Severity } from '../../providers/NotificationProvider';
+import { useNotificationDispatchContext, NotificationProvider, ActionType, Severity } from '../../providers/NotificationProvider';
 
 export default {
   title: 'NotificationGroup',
 };
 
 const StorybookTestButton = ({ label, payload }: any) => {
-  const dispatch = useNotificationDispatch();
+  const dispatch = useNotificationDispatchContext();
   
   const addNotification = (e: any) => {
     dispatch({ 

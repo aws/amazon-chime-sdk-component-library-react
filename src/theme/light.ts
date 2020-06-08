@@ -302,7 +302,7 @@ const controlBar = {
   opacity: 0.95,
 }
 
-const lightTheme = {
+export const lightTheme = {
   buttons,
   colors,
   colorsRgb,

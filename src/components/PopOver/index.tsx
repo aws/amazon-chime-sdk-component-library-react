@@ -29,7 +29,7 @@ const getFocusableElements = (node: HTMLElement): NodeListOf<HTMLElement> => {
   return node.querySelectorAll('button, [href]');
 }
 
-const PopOver: FC<PopOverProps> = ({
+export const PopOver: FC<PopOverProps> = ({
   renderButton,
   children,
   isSubMenu = false,

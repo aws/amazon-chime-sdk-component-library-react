@@ -22,20 +22,20 @@ const NotificationProvider: React.FC = ({ children }) => {
   );
 }
 
-const useNotificationState = () => {
+const useNotificationStateContext = () => {
   const state = useContext(StateContext);
   return state;
 }
 
-const useNotificationDispatch = () => {
+const useNotificationDispatchContext = () => {
   const dispatch = useContext(DispatchContext);
   return dispatch;
 }
 
 export {
   NotificationProvider,
-  useNotificationState,
-  useNotificationDispatch,
+  useNotificationStateContext,
+  useNotificationDispatchContext,
   Severity, 
   NotificationType,
   ActionType,

@@ -7,7 +7,7 @@ export interface PopOverHeaderProps {
   imgSrc?: string;
 }
 
-const PopOverHeader: FC<PopOverHeaderProps> = ({ title, subtitle, imgSrc }) =>  {
+export const PopOverHeader: FC<PopOverHeaderProps> = ({ title, subtitle, imgSrc }) =>  {
   return (
     <StyledPopOverHeader>
       {imgSrc && <img src={imgSrc} alt={title} />}

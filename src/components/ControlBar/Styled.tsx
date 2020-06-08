@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 import { ControlBarProps } from '.';
 import { isUndocked, isVertical } from './ControlBarItem';
-import { PopOverItemProps } from 'components/PopOver/PopOverItem';
+import { PopOverItemProps } from '../PopOver/PopOverItem';
 
 interface StyledControlBarProps extends ControlBarProps {}
 

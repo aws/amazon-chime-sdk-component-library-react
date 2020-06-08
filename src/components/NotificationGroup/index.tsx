@@ -2,12 +2,12 @@ import React from 'react';
 
 import Notification from '../Notification';
 import Portal from '../Portal';
-import { useNotificationState, useNotificationDispatch, ActionType } from '../../providers/NotificationProvider';
+import { useNotificationStateContext, useNotificationDispatchContext, ActionType } from '../../providers/NotificationProvider';
 import { StyledNotificationGroup } from './Styled';
 
 export const NotificationGroup: React.FC = () => {
-  const { notifications } = useNotificationState();
-  const dispatch = useNotificationDispatch();
+  const { notifications } = useNotificationStateContext();
+  const dispatch = useNotificationDispatchContext();
 
   return (
     <Portal rootId='notification-group-root'>

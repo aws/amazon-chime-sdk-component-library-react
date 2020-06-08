@@ -5,7 +5,7 @@ interface PortalProps {
     rootId?: string;
 }
 
-const Portal:FC<PortalProps> = ({ children, rootId }) => {
+export const Portal:FC<PortalProps> = ({ children, rootId }) => {
     let el: HTMLElement | null;
     let newRoot: HTMLElement | null;
     const [mount, setMount] = useState<any>();
