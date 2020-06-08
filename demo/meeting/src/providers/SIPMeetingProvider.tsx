@@ -1,7 +1,7 @@
 import React, { ReactNode, useContext } from 'react';
 
 import { AMAZON_CHIME_VOICE_CONNECTOR_PHONE_NUMDER } from '../constants';
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { MeetingManager, MeetingContext } from './MeetingProvider';
 
 export class SIPMeetingManager {
   private meetingManager: MeetingManager | null;

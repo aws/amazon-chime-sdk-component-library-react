@@ -1,6 +1,6 @@
 import React, { useContext } from 'react';
 
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import AudioInputControl from './AudioInputControl';
 import VideoInputControl from './VideoInputControl';
 import ContentShareControl from './ContentShareControl';

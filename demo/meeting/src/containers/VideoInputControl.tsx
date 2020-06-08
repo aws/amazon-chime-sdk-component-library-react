@@ -5,11 +5,11 @@ import {
   faVideoSlash,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import IconButton from '../components/IconButton';
 import ButtonGroup from '../components/ButtonGroup';
 import Dropdown, { OptionItem } from '../components/Dropdown';
-import LocalVideo from '../components/LocalVideo';
+import LocalVideo from './LocalVideo';
 import { createOptions } from '../utils/DeviceUtils';
 import { VIDEO_INPUT } from '../constants';
 

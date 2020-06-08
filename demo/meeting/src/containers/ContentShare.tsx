@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef } from 'react';
 
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
-import { useContentShareContext } from '../meeting/ContentShareProvider';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
+import { useContentShareContext } from '../providers/ContentShareProvider';
 
 const ContentShare: React.FC = () => {
   const meetingManager: MeetingManager | null = useContext(MeetingContext);

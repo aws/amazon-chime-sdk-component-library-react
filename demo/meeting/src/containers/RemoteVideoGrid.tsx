@@ -6,7 +6,7 @@ import React, {
 } from 'react';
 import { VideoTileState } from 'amazon-chime-sdk-js';
 
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import { getRosterContext } from '../providers/RosterProvider';
 import VideoGrid from '../components/VideoGrid';
 import RemoteVideo from '../components/RemoteVideo';

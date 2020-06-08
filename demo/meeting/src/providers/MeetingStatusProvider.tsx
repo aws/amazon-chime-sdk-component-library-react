@@ -12,7 +12,7 @@ import {
 } from 'amazon-chime-sdk-js';
 import { useHistory } from 'react-router-dom';
 
-import { MeetingManager, MeetingContext } from './MeetingProvider';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import routes from '../constants/routes';
 
 export enum MeetingStatus {

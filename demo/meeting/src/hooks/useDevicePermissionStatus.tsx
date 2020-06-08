@@ -1,6 +1,6 @@
 import { useEffect, useState, useContext } from 'react';
 
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import { DevicePermissionStatus } from '../enums';
 
 export default function useDevicePermissionStatus() {

@@ -6,8 +6,8 @@ import {
   faPlay,
 } from '@fortawesome/free-solid-svg-icons'
 
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
-import { useContentShareContext } from '../meeting/ContentShareProvider';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
+import { useContentShareContext } from '../providers/ContentShareProvider';
 import IconButton from '../components/IconButton';
 import ButtonGroup from '../components/ButtonGroup';
 

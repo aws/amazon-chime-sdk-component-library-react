@@ -5,8 +5,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom';
 
-import { MeetingManager, MeetingContext } from '../meeting/MeetingProvider';
-import { getMeetingStatusContext, MeetingStatus } from '../meeting/MeetingStatusContext';
+import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
+import { getMeetingStatusContext, MeetingStatus } from '../providers/MeetingStatusProvider';
 import IconButton from '../components/IconButton';
 import ButtonGroup from '../components/ButtonGroup';
 import Card from '../components/Card';
