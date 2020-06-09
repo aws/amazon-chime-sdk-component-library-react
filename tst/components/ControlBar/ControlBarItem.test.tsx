@@ -31,7 +31,7 @@ describe('ControlBarButton', () => {
   it('should render a PopOver if multiple options are available', () => {
     const component = <ControlBarItem {...controlBarItemWithPopOverProps} />;
     const { getByTestId, getByText } = renderWithTheme(lightTheme, component);
-    const button = getByTestId('control-bar-item-caret')
+    const button = getByTestId('control-bar-item-caret');
     fireEvent.click(button);
     const el = getByText('option 1');
     expect(el).toBeInTheDocument();
