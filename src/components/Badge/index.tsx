@@ -8,7 +8,7 @@ export interface BadgeProps {
 
 export const Badge: FC<BadgeProps> = ({ value, status = "default" }) => {
   return (
-    <StyledBadge status={status}>
+    <StyledBadge status={status} data-testid='badge'>
       {value}
     </StyledBadge>
   );
