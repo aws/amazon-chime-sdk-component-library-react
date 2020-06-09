@@ -36,7 +36,11 @@ Run test in watch mode
 ```
 npm run test -- --watch
 ```
-
+Run snapshot image tests
+```
+npm run test:image
+```
+  		  
 A code coverage summary will be printed at the end of each `npm run test` run. Full coverage including coverage for each file is generated in a `lcov-report` html file that can be rendered in the browser. This is generated in a `/coverage` directory on each test run. 
 
 # Usage

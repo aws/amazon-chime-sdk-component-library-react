@@ -26,6 +26,9 @@ export const isVertical = (layout: ControlBarLayout) => {
 export const isUndocked = (layout: ControlBarLayout) => {
   return layout === 'undocked-vertical' || layout === 'undocked-horizontal';
 };
+const unsetPosition = {
+  'top': 'unset;', 'bottom': 'unset;', 'right': 'unset;', 'left': 'unset;', 
+}
 
 export const StyledControlBar = styled.div<StyledControlBarProps>`
   display: inline-flex;
@@ -37,6 +40,25 @@ export const StyledControlBar = styled.div<StyledControlBarProps>`
   border: ${({ theme, layout }) => isUndocked(layout) ?  'none' : theme.controlBar.border};
   box-shadow: ${({ theme, layout }) => isUndocked(layout) ? theme.controlBar.shadow : 'none'};
   ${({ layout }) => layoutMap[`${layout}`]};
+
+@media (max-width: ${props => props.theme.breakpoints.mobileLandscape}) {
+  padding: 1rem;
+  padding-top: ${({ showLabels }) => showLabels ? '1.25rem' : '1rem'};
+  ${unsetPosition}
+  ${({ layout }) => isVertical(layout) ? layoutMap['left'] : layoutMap['bottom']};
+  box-shadow: ${({ theme }) => theme.controlBar.shadow};
+  border: none;
+};
+
+@media (max-width: ${props => props.theme.breakpoints.mobilePortrait}) {
+  padding: 1rem;
+  padding-top: ${({ showLabels }) => showLabels ? '1.25rem' : '1rem'};
+  justify-content: ${({ layout }) => isVertical(layout) ? 'center' : 'space-around'};
+  ${unsetPosition}
+  ${({ layout }) => isVertical(layout) ? layoutMap['left'] : layoutMap['bottom']};
+  box-shadow: ${({ theme }) => theme.controlBar.shadow};
+  border: none;
+};
 `;
 
 interface StyledControlBarItemProps extends StyledControlBarProps {
@@ -79,10 +101,29 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
   }
 
   .controlBarItem__label {
-      grid-row-start: 2;
-      font-size: ${props => props.theme.fontSizes.label.fontSize}; /* TODO: get updated font size from design */
-      padding-top: 0.25rem;
-      justify-self: center;
-      grid-column: ${({ layout, popOver }) => isVertical(layout) && popOver ? '2' : '1'};
+    grid-row-start: 2;
+    font-size: ${props => props.theme.fontSizes.footnote.fontSize}; /* TODO: get updated font size from design */
+    padding-top: 0.25rem;
+    justify-self: center;
+    grid-column: ${({ layout, popOver }) => isVertical(layout) && popOver ? '2' : '1'};
+  }
+
+  @media (max-width: ${props => props.theme.breakpoints.mobileLandscape}) {
+    grid-template-columns: unset;
+    justify-content: space-around;
+
+    button ~ span {
+      display: none;
     }
+  };
+
+  @media (max-width: ${props => props.theme.breakpoints.mobilePortrait}) {
+    grid-template-columns: unset;
+    margin: ${({ layout }) => isVertical(layout) ? '0.75rem 0' : '0'};
+
+    button ~ span {
+      display: none;
+    }
+
+  };
 `;

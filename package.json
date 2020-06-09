@@ -15,15 +15,16 @@
     "deploy-storybook": "storybook-to-ghpages",
     "build-storybook": "build-storybook -s public",
     "jest:integration": "jest -c jest-snapshot.config.js --verbose ./tst/snapshots/*",
-    "test:integration": "start-server-and-test start http-get://localhost:9009 jest:integration"
+    "test:image": "start-server-and-test start http-get://localhost:9009 jest:integration"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@popperjs/core": "^2.2.2",
-    "@types/testing-library__react": "^10.0.1",
+    "@types/jest-image-snapshot": "^3.1.0",
     "@types/puppeteer": "^2.0.1",
+    "@types/testing-library__react": "^10.0.1",
     "@types/uuid": "^7.0.3",
     "react-popper": "^2.2.1",
     "throttle-debounce": "^2.1.0",

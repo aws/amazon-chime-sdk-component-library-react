@@ -91,6 +91,10 @@ const fontSizes = {
     fontSize: "0.75rem",
     lineHeight: "1.43",
   },
+  "footnote": {
+    fontSize: "0.65rem",
+    lineHeight: "1rem",
+  }
 }
 
 export const defaultTheme = {
