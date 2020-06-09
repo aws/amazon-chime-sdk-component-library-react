@@ -41,4 +41,22 @@ describe('ControlBar', () => {
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
   });
+
+  const devices = require('puppeteer/DeviceDescriptors');
+  const iPhonex = devices['iPhone X'];
+
+  it('portrait mobile horizontal', async () => {
+    await page.goto('http://localhost:9009/iframe.html?id=controlbar--control-bar&knob-show%20labels=false&knob-layout=bottom');
+    await page.emulate(iPhonex);
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+  });
+
+
+  it('landscape mobile vertical', async () => {
+    await page.goto('http://localhost:9009/iframe.html?id=controlbar--control-bar&knob-show%20labels=false&knob-layout=left');
+    await page.emulate({...iPhonex, isLandscape: true});
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+  });
 });
