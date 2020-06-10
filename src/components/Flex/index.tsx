@@ -44,7 +44,7 @@ export interface FlexProps {
 }
 
 export const Flex: FC<FlexProps> = ({ children, ...props }) => (
-  <StyledFlex {...props}>
+  <StyledFlex {...props} data-testid='flex'>
     {children}
   </StyledFlex>
 );
