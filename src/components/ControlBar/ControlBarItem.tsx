@@ -1,11 +1,10 @@
 import React, { FC } from 'react';
 
 import Caret from '../icons/Caret';
-import { StyledControlBarItem } from './Styled';
+import { StyledControlBarItem, isVertical } from './Styled';
 import PopOver from '../PopOver';
 import PopOverItem, { PopOverItemProps } from '../PopOver/PopOverItem';
 import { useControlBarContext } from './ControlBarContext';
-import { ControlBarLayout } from '.';
 import IconButton from '../Button/IconButton';
 
 export interface ControlBarButtonProps extends React.HTMLAttributes<HTMLDivElement> {
@@ -14,14 +13,6 @@ export interface ControlBarButtonProps extends React.HTMLAttributes<HTMLDivEleme
   label: string;
   popOver?: PopOverItemProps[] | null;
 }
-
-export const isVertical = (layout: ControlBarLayout) => {
-  return layout === 'right' || layout === 'left' || layout === 'undocked-vertical';
-};
-
-export const isUndocked = (layout: ControlBarLayout) => {
-  return layout === 'undocked-vertical' || layout === 'undocked-horizontal';
-};
 
 export const ControlBarButton:FC<ControlBarButtonProps> = ({ icon, onClick, label, popOver = null }) => {
   const context = useControlBarContext();
