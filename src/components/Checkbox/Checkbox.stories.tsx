@@ -13,7 +13,7 @@ export const _Checkbox = () => {
     <Flex layout="fill-space-centered">
       <Checkbox
         value="test"
-        checked={boolean('Checked', false)}
+        checked={boolean('checked', false)}
         onChange={() => console.log('change')}
         aria-label="checkbox label"
       />
