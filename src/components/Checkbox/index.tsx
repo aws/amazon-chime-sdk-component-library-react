@@ -11,7 +11,7 @@ export interface StyledCheckboxProps {
 }
 
 export const Checkbox: FC<CheckboxProps> = (props: CheckboxProps) => {
-  const { checked, onChange, value, } = props;
+  const { checked, onChange, value } = props;
   const checkboxNode = useRef<HTMLInputElement>(null);
 
   const handleChange = () => {
@@ -23,17 +23,19 @@ export const Checkbox: FC<CheckboxProps> = (props: CheckboxProps) => {
     <>
       <HiddenCheckbox
         {...props}
+        data-testid="hiddenCheckbox"
         ref={checkboxNode}
-        type="Checkbox"
+        type="checkbox"
         value={value}
         onChange={onChange}
       />
       <StyledCheckbox
-        checked={(checked)}
+        data-testid="styledCheckbox"
+        checked={checked}
         className="Checkbox"
         onClick={handleChange}
       >
-        {checked && <Check/>}
+        {checked && <Check data-testid="check" />}
       </StyledCheckbox>
     </>
   );
