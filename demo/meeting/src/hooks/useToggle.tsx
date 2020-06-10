@@ -1,19 +1,19 @@
 import { useState } from 'react';
 
 type UseToggleFunc = {
-  isTrue: boolean;
-  toggleIsTrue: () => void;
+  isActive: boolean;
+  toggle: () => void;
 };
 
 export default function useToggle(initialState: boolean): UseToggleFunc {
-  const [isTrue, setIsTrue] = useState(initialState);
+  const [isActive, setIsActive] = useState(initialState);
 
-  function toggleIsTrue(): void {
-    setIsTrue(!isTrue);
+  function toggle(): void {
+    setIsActive(!isActive);
   }
 
   return {
-    isTrue,
-    toggleIsTrue,
+    isActive,
+    toggle,
   };
 }

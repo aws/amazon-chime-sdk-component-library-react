@@ -1,14 +1,15 @@
 import React, { useState, useContext, FormEvent } from 'react';
 
-import Card from '../components/Card';
-import Modal from '../components/Modal';
-import SIPURI from './SIPURI';
-import SIPMeetingForm from '../components/SIPMeetingForm';
-import { getErrorContext } from '../providers/ErrorProvider';
+import Card from '../../components/Card';
+import Modal from '../../components/Modal';
+import SIPURI from '../SIPURI';
+import SIPMeetingForm from '../../components/SIPMeetingForm';
+import { getErrorContext } from '../../providers/ErrorProvider';
 import {
   SIPMeetingContext,
   SIPMeetingManager,
-} from '../providers/SIPMeetingProvider';
+} from '../../providers/SIPMeetingProvider';
+import { StyledSIPMeetingDiv } from './Styled';
 
 const SIPMeeting: React.FC = () => {
   const [sipURI, setSipURI] = useState('');
@@ -41,7 +42,7 @@ const SIPMeeting: React.FC = () => {
   };
 
   return (
-    <div className="SIPMeeting">
+    <StyledSIPMeetingDiv>
       <SIPMeetingForm
         meetingId={meetingId}
         voiceConnectorId={voiceConnectorId}
@@ -62,7 +63,7 @@ const SIPMeeting: React.FC = () => {
         </Modal>
       )}
       {sipURI && <SIPURI sipURI={sipURI} />}
-    </div>
+    </StyledSIPMeetingDiv>
   );
 };
 
