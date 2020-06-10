@@ -1,4 +1,7 @@
 import React, { useState, useRef } from 'react';
+import { PrimaryButton } from 'amazon-chime-sdk-component-library-react';
+
+import { StyledDiv } from './Styled';
 
 interface SIPProps {
   sipURI: string;
@@ -29,21 +32,19 @@ const SIPURI: React.FC<SIPProps> = ({ sipURI }: SIPProps) => {
   };
 
   return (
-    <div className="sip-uri" style={{ marginBottom: '1rem' }}>
-      <div
-        className="sip-uri-heading"
-        style={{ fontSize: '1.25rem', fontWeight: 'bold' }}
-      >
-        SIP URI
-      </div>
-      <p ref={sipUriEl}>{sipURI}</p>
+    <StyledDiv>
+      <div className="sip-uri-heading">SIP URI</div>
+      <p ref={sipUriEl} className="sip-uri-data">
+        {sipURI}
+      </p>
       {document.queryCommandSupported('copy') && (
-        <button type="button" onClick={copySIPURI}>
-          Copy SIP URI
-        </button>
+        <PrimaryButton
+          className="btn-copy"
+          label={!isCopied ? 'Copy' : 'Copied!'}
+          onClick={copySIPURI}
+        />
       )}
-      {isCopied && <small>Copied!</small>}
-    </div>
+    </StyledDiv>
   );
 };
 
