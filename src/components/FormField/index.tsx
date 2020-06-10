@@ -3,11 +3,25 @@ import React, { FC, forwardRef, Ref, ChangeEvent } from 'react';
 import useUniqueId from '../../hooks/useUniqueId';
 import { StyledFormField } from './Styled';
 import Label from '../Label';
+import { InputProps } from '../Input';
+import { SelectProps } from '../Select';
+import { TextareaProps } from '../Textarea';
+import { CheckboxProps } from '../Checkbox';
+import { RadioGroupProps } from '../RadioGroup';
+import { RadioProps } from '../Radio';
+
+export type FieldType =
+    FC<InputProps>
+  | FC<SelectProps>
+  | FC<TextareaProps>
+  | FC<CheckboxProps>
+  | FC<RadioGroupProps>
+  | FC<RadioProps>;
 
 export interface FieldProps {
   onChange(event: ChangeEvent): void;
   label: string;
-  field: FC;
+  field: FieldType;
   infoText?: string;
   error?: boolean;
   errorText?: string;
