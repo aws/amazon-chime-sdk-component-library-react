@@ -20,6 +20,8 @@ npm start
 npm run build
 ```
 
+Once you build, check and resolve any warnings you may get like unresolved dependencies or circular dependencies. Remove these as it will help in bundling the library warning/error free.
+
 ## Test
 
 Run all unit tests

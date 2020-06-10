@@ -19,6 +19,7 @@ export default {
       sourcemap: true
     }
   ],
+  external: ['crypto'],
   plugins: [
     peerDepsExternal(),
     resolve(),

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
-import { ControlBarProps } from '.';
-import { isUndocked, isVertical } from './ControlBarItem';
+import { ControlBarProps, ControlBarLayout } from '.';
 import { PopOverItemProps } from '../PopOver/PopOverItem';
 
 interface StyledControlBarProps extends ControlBarProps {}
@@ -19,6 +18,14 @@ const gridTemplateColumnMap = {
   'popOver': 'grid-template-columns: 1.5rem 1.5rem',
   'popOver&vertical': 'grid-template-columns: 1.5rem 1.5rem 1.5rem',
 }
+
+export const isVertical = (layout: ControlBarLayout) => {
+  return layout === 'right' || layout === 'left' || layout === 'undocked-vertical';
+};
+
+export const isUndocked = (layout: ControlBarLayout) => {
+  return layout === 'undocked-vertical' || layout === 'undocked-horizontal';
+};
 
 export const StyledControlBar = styled.div<StyledControlBarProps>`
   display: inline-flex;
