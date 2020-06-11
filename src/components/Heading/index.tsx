@@ -1,7 +1,7 @@
 import React, { forwardRef, ReactNode } from 'react';
 import { StyledHeading } from './Styled';
 
-export type HeadingLevel = | "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+export type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 
 export interface HeadingProps  {
   as?: any;
@@ -21,6 +21,7 @@ export const Heading = forwardRef((props: HeadingProps, ref: React.Ref<HTMLEleme
       css={css}
       level={level}
       ref={ref}
+      data-testid='heading'
     >
       {children}
     </StyledHeading>
