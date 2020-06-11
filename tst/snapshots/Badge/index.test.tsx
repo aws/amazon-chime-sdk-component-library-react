@@ -1,4 +1,4 @@
-describe('Badge Snapshots', () => {
+describe('Badge', () => {
     it('default status', async () => {
       await page.goto('http://localhost:9009/iframe.html?id=badge--basic-badge');
       const image = await page.screenshot();

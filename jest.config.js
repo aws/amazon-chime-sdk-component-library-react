@@ -15,7 +15,7 @@ module.exports = {
     testPathIgnorePatterns: ['node_modules', '/tst/snapshots/'],
     testEnvironment: 'jsdom',
     collectCoverage: true,
-    collectCoverageFrom: ["src/**/*.tsx"],
+    collectCoverageFrom: ["src/**/*.tsx", "!src/**/*.stories.tsx"],
     coverageReporters: ["text-summary", "lcov", "json", "clover"],
     coverageDirectory: 'coverage',
 };
