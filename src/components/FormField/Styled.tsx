@@ -14,7 +14,7 @@ export const stack = css`
       margin-bottom: .5rem;
     }
 
-    input {
+    input, select {
       width: 100%;
     }
   }

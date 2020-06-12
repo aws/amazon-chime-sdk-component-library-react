@@ -2,15 +2,20 @@ import React, { ChangeEvent, forwardRef, Ref, InputHTMLAttributes,  } from 'reac
 
 import { StyledSelectInput } from './Styled';
 
+export type SelectOptions = {
+  value: string | number;
+  label: string;
+}
+
 export interface SelectProps extends InputHTMLAttributes<HTMLSelectElement> {
-  options: string[];
+  options: SelectOptions[];
   onChange(event: ChangeEvent): void;
   value: string;
 }
 
-const renderOptions = (options: string[]) => {
+const renderOptions = (options: SelectOptions[]) => {
   return (
-    options.map((option: string) => <option key={option} value={option}>{option}</option>)
+    options.map(({ value, label }) => <option key={value} value={value}>{label}</option>)
   );
 }
 
