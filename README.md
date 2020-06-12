@@ -36,9 +36,17 @@ Run test in watch mode
 ```
 npm run test -- --watch
 ```
-Run snapshot image tests
+Run snapshot image tests, [Docker](https://docs.docker.com/install/) installation is required to run puppeteer in container.
 ```
-npm run test:image
+npm run test-image
+```
+Run snapshot image test for one file, make sure storybook dev server is running locally before running test.
+```
+npm run test-image-path -- <filepath>
+```
+Run snapshot image test for one file and override existing snapshots.
+```
+npm run test-image-path -- <filepath> -u
 ```
   		  
 A code coverage summary will be printed at the end of each `npm run test` run. Full coverage including coverage for each file is generated in a `lcov-report` html file that can be rendered in the browser. This is generated in a `/coverage` directory on each test run. 
