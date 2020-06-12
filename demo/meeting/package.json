@@ -1,5 +1,5 @@
 {
-  "name": "chime-sdk-react-demo",
+  "name": "chime-sdk-meeting-demo",
   "devDependencies": {
     "@babel/core": "^7.5.0",
     "@babel/plugin-transform-regenerator": "^7.4.5",
@@ -52,7 +52,7 @@
     "throttle-debounce": "^2.1.0"
   },
   "scripts": {
-    "start:client": "webpack-dev-server",
-    "start:backend": "cd ../browser && npm install && node ../browser/server.js"
+    "start:client": "npm install && webpack-dev-server",
+    "start:backend": "node server.js"
   }
 }
