@@ -61,10 +61,29 @@ const TestSelect: React.FC<{}> = props => {
   const [value, setValue] = useState('');
   const handleChange = (e: any) => setValue(e.target.value);
 
+  const options = [
+    {
+      value: 'no_framework_selected',
+      label: 'No Framework',
+    },
+    {
+      value: 'react',
+      label: 'React',
+    },
+    {
+      value: 'angular',
+      label: 'Angular',
+    },
+    {
+      value: 'vue',
+      label: 'Vue',
+    }
+  ];
+
   return (
     <FormField
       field={Select}
-      options={['react', 'angular', 'vue', 'no framework',]}
+      options={options}
       onChange={handleChange}
       value={value}
       label="Select a framework"
