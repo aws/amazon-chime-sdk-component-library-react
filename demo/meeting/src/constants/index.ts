@@ -29,3 +29,9 @@ export const AVAILABLE_AWS_REGIONS = {
   'us-west-1': 'United States (N. California)',
   'us-west-2': 'United States (Oregon)',
 };
+
+export const VIDEO_INPUT_QUALITY = {
+  '360p': '360p (nHD) @ 15 fps (600 Kbps max)',
+  '540p': '540p (qHD) @ 15 fps (1.4 Mbps max)',
+  '720p': '720p (HD) @ 15 fps (1.4 Mbps max)',
+};

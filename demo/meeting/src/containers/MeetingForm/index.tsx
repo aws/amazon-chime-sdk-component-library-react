@@ -19,6 +19,7 @@ import Spinner from '../../components/Spinner';
 import DevicePermissionPrompt from '../DevicePermissionPrompt';
 import { AVAILABLE_AWS_REGIONS } from '../../constants';
 import { StyledForm } from './Styled';
+import getFormattedOptionsForSelect from '../../utils/select-options-format';
 
 const MeetingForm: React.FC = () => {
   const [meetingId, setMeetingId] = useState('');
@@ -28,12 +29,6 @@ const MeetingForm: React.FC = () => {
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
   const history = useHistory();
   const meetingManager: MeetingManager | null = useContext(MeetingContext);
-
-  // format of each entry is [key, value]
-  const AWS_REGION_SELECT_OPTIONS_FORMAT = Object.entries(AVAILABLE_AWS_REGIONS).map(entry => ({
-    value: entry[0],
-    label: entry[1],
-  }));
 
   const handleJoinMeeting = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -89,7 +84,7 @@ const MeetingForm: React.FC = () => {
       />
       <FormField
         field={Select}
-        options={AWS_REGION_SELECT_OPTIONS_FORMAT}
+        options={getFormattedOptionsForSelect(AVAILABLE_AWS_REGIONS)}
         onChange={(e: ChangeEvent<HTMLSelectElement>): void =>
           setRegion(e.target.value)
         }
