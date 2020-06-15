@@ -23,24 +23,27 @@ export const Radio: FC<RadioProps> = (props) => {
   }
 
   return (
-    <StyledRadioWrapper className="Radio-wrapper">
+    <StyledRadioWrapper className='Radio-wrapper'>
       <HiddenRadio
         checked={checked}
         id={labelId}
         onChange={onChange}
-        type="radio"
+        type='radio'
         value={value}
         ref={radioNode}
+        data-testid='hiddenRadio'
         {...rest}
       />
       <StyledRadio
         checked={checked}
-        className="Radio"
+        className='Radio'
         onClick={handleChange}
+        data-testid='styledRadio'
       />
       <Label
         htmlFor={labelId}
-        className="Radio-label">
+        className='Radio-label'
+      >
         {label}
       </Label>
     </StyledRadioWrapper>
