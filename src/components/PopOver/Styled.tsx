@@ -28,10 +28,6 @@ export const StyledPopOverItem = styled.li`
   height: 2rem;
   position: relative;
 
-  ul {
-    margin-top: -0.5rem
-  }
-
   button, a {
     width: 100%;
     height: 100%;
@@ -59,7 +55,7 @@ export const StyledPopOverItem = styled.li`
     }
   }
 
-  .content {
+  .content > * {
     ${ellipsis};
   }
 

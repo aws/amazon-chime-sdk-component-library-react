@@ -95,7 +95,7 @@ export const PopOver: FC<PopOverProps> = ({
   useTabOutside(menuRef, () => setIsOpen(false));
 
   return (
-    <span ref={menuRef} onKeyDown={handleKeyUp}>
+    <span ref={menuRef} onKeyDown={handleKeyUp} data-testid='popover'>
       <Manager>
         <Reference>
           {({ ref }) => (
@@ -114,13 +114,14 @@ export const PopOver: FC<PopOverProps> = ({
         </Reference>
         {
           isOpen && (
-            <Popper placement={placement}>
+            <Popper placement={placement} modifiers={[{ name: 'offset', options: { offset: [-8,0]} }]}>
               {({ ref, style, placement }) => (
                 <StyledPopOverMenu
                   data-placement={placement}
                   onClick={(e: any) => closePopover(e)}
                   ref={ref}
                   style={style}
+                  data-testid='menu'
                 >
                   {children}
                 </StyledPopOverMenu>

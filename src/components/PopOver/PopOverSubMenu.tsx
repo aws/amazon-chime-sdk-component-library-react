@@ -14,7 +14,7 @@ export const PopOverSubMenu: FC<PopOverItemProps> = ({ text, children }) => {
     return (
       <>
         {text}
-        <Caret className="caret" direction="right"/>
+        <Caret className="caret" direction="right" data-testid='submenu-caret'/>
       </>
     );
   }
