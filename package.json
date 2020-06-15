@@ -1,15 +1,22 @@
 {
   "name": "amazon-chime-sdk-component-library-react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Amazon Chime SDK Component Library - React",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
   "files": [
     "lib"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/aws/amazon-chime-sdk-component-library"
+  },
   "typings": "lib/src/index.d.ts",
   "scripts": {
     "build": "rollup -c",
+    "prebuild:release": "node scripts/prebuild.js",
+    "prebuild:publish": "node scripts/prebuild.js --publish",
+    "build:release": "npm install && npm run build && npm run test ",
     "start": "start-storybook -p 9009",
     "test": "jest -c jest.config.js",
     "deploy-storybook": "storybook-to-ghpages",
