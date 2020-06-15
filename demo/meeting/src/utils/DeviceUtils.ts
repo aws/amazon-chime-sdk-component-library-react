@@ -1,13 +1,13 @@
 import { OptionItem } from '../components/Dropdown';
 
 export const populateDeviceList = (
-  elementId: string,
+  element: Element,
   genericName: string,
   devices: MediaDeviceInfo[],
   additionalOptions: string[],
   callback?: (name: string) => void
 ): void => {
-  const list = document.getElementById(elementId) as HTMLSelectElement;
+  const list = element as HTMLSelectElement;
   while (list.firstElementChild) {
     list.removeChild(list.firstElementChild);
   }
