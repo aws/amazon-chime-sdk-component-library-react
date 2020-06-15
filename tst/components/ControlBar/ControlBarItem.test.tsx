@@ -17,7 +17,7 @@ export const controlBarItemWithPopOverProps = {
   icon: <Sound/>,
   label: 'test label',
   onClick: () => null,
-  popOver: [{ onClick: () => console.log('popover item clicked'), text: 'option 1'}]
+  popOver: [{ onClick: () => console.log('popover item clicked'), children: <span>option 1</span>}]
 };
 
 describe('ControlBarButton', () => {

@@ -22,8 +22,8 @@ export const _ControlBar = () => {
   const cameraButtonProps = {
     icon: cameraActive ? <Camera /> : <Camera disabled />,
     popOver: [
-      { onClick: () => console.log('camera popover option 1'), text: 'Some option text'},
-      { onClick: () => console.log('camera popover option 2'), text: 'More option text'},
+      { onClick: () => console.log('camera popover option 1'), children: <span>Some option text</span>},
+      { onClick: () => console.log('camera popover option 2'), children: <span>More option text</span>},
     ],
     onClick: () => setCameraActive(!cameraActive),
     label: 'Camera',
@@ -45,8 +45,8 @@ export const _ControlBar = () => {
     icon: <Sound />,
     onClick: () => console.log('Volume button clicked'),
     popOver: [
-      { onClick: () => console.log('volume popover option 1'), text: 'Some option text'},
-      { onClick: () => console.log('volume popover option 2'), text: 'More option text'},
+      { onClick: () => console.log('volume popover option 1'), children: <span>Some option text</span>},
+      { onClick: () => console.log('volume popover option 2'), children: <span>More option text</span>},
     ],
     label: 'Volume',
   }
