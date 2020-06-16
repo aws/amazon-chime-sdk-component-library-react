@@ -19,6 +19,15 @@ const AudioOutputControl: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
+    if (audioRef.current) {
+      meetingManager?.audioVideo?.bindAudioElement(audioRef.current);
+    }
+    return () => {
+      meetingManager?.audioVideo?.unbindAudioElement();
+    };
+  }, [audioRef]);
+
+  useEffect(() => {
     populateAudioOutputList();
   }, []);
     
