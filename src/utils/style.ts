@@ -21,3 +21,18 @@ export const absoluteCenter = css`
   left: 50%;
   transform: translate(-50%, -50%);
 `;
+
+
+export const isValidCSSHex = (hex: string) => {
+  // matches 6 digit characters prefixed with a '#'.
+  return /^#[0-9A-F]{6}$/i.test(hex);
+}
+
+export const hexTorgba =(hex: string, alpha: number = 1) => {
+  if (!isValidCSSHex(hex)) {
+    return false;
+  }
+
+  const [r, g, b]: any = hex.match(/\w\w/g)?.map(h => parseInt(h, 16));
+  return `rgba(${r}, ${g}, ${b}, ${alpha || 1})`;
+};

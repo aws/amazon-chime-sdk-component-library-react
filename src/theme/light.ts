@@ -1,4 +1,5 @@
-import defaultTheme, { rgbaWithOpacity } from './default';
+import defaultTheme from './default';
+import { hexTorgba } from '../utils/style';
 
 const colors = {
   primary: {
@@ -10,11 +11,13 @@ const colors = {
     darker: "#0042bb",
     darkest: "#002f85",
   },
+
   secondary: {
     light: "#ff8e74",
     main: "#ff7654",
     dark: "#e86c4d",
   },
+
   error: {
     lightest: "#FCF7F6",
     lighter: "#F5DDD5",
@@ -24,6 +27,7 @@ const colors = {
     darker: "#89301A",
     darkest: "#791800",
   },
+
   success: {
     lightest: "#EBF1EA",
     lighter: "#CEE0C8",
@@ -33,6 +37,7 @@ const colors = {
     darker: "#2C511D",
     darkest: "#184206",
   },
+
   info: {
     lightest: "#DADFE7",
     lighter: "#C4CCD9",
@@ -42,6 +47,7 @@ const colors = {
     darker: "#243F6B",
     darkest: "#123366",
   },
+
   warning: {
     lightest: "#FAF8EA",
     lighter: "#F7E79E",
@@ -51,6 +57,7 @@ const colors = {
     darker: "#584E26",
     darkest:"#534201",
   },
+
   greys: {
     black: "#000000",
     grey100: "#1b1c20",
@@ -67,31 +74,21 @@ const colors = {
   },
 };
 
-const colorsRgb = {
-  primary: {
-    dark: "rgb(0,77,219)",
-  },
-  greys: {
-    black: "rgb(0,0,0)",
-    grey100: "rgb(27,28,32)",
-    grey50: "rgb(125, 129, 139)",
-    grey40: "rgb(152,157,165)",
-    grey10: "rgb(240,241,242)",
-    white: "rgb(255,255,255)",
-  }
-};
-
-const overlays = {
-  grey100: rgbaWithOpacity(colorsRgb.greys.grey100, .7),
+const global = {
+  bgd: colors.greys.white,
+  text: colors.greys.grey80,
 };
 
 const shadows = {
   none: "none",
-  default: `0 0.09375rem 0.0625rem 0 ${rgbaWithOpacity(colorsRgb.greys.grey100, 0.15)}`,
+  small: `0 0.09375rem 0.0625rem 0 ${hexTorgba(colors.greys.grey100, 0.15)}`,
+  medium: `0 0.5rem 0.85rem 0 ${hexTorgba(colors.greys.black, 0.15)}`,
+  large: `0 0.75rem 1.875rem 0 ${hexTorgba(colors.greys.black, 0.15)}`,
 };
 
 const buttons = {
   primary: {
+    shadow: shadows.small,
     static: {
       bgd: colors.primary.light,
       border: `0.03125rem solid ${colors.primary.dark}`,
@@ -118,7 +115,9 @@ const buttons = {
       text: colors.greys.white,
     },
   },
+
   secondary: {
+    shadow: shadows.small,
     static: {
       bgd: colors.greys.white,
       border: `0.03125rem solid ${colors.greys.grey30}`,
@@ -147,6 +146,7 @@ const buttons = {
   },
 
   icon: {
+    shadow: shadows.none,
     static: {
       bgd: "transparent",
       border: "none",
@@ -180,8 +180,8 @@ const inputs = {
   border: `0.03125rem solid ${colors.greys.grey30}`,
   borderRadius: defaultTheme.radii.default,
   fontColor: colors.greys.grey80,
-  placeholderColor: colors.greys.grey40,
-  shadow: `0 0.0625rem 0.0625rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.1)}`,
+  placeholder: colors.greys.grey40,
+  shadow: `0 0.0625rem 0.0625rem 0 ${hexTorgba(colors.greys.black, 0.1)}`,
 
   focus: {
     bgd: colors.greys.white,
@@ -199,24 +199,24 @@ const inputs = {
     bgd: colors.primary.main,
     border: `solid 0.03125rem ${colors.primary.main}`,
     fontColor: colors.greys.white,
-    shadow: `0 0.03125rem 0.03125rem 0 ${rgbaWithOpacity(colorsRgb.primary.dark, 0.7)}`,
+    shadow: `0 0.03125rem 0.03125rem 0 ${hexTorgba(colors.primary.dark, 0.7)}`,
   }
 };
 
 const modal = {
   bgd: colors.greys.white,
   text: colors.greys.grey80,
-  wrapperBgd: rgbaWithOpacity(colorsRgb.greys.grey50, 0.9),
-  titleSize: '1.5625rem', /* TODO use typography properties */
+  wrapperBgd: hexTorgba(colors.greys.grey50, 0.9),
+  titleSize: defaultTheme.fontSizes.h5.fontSize,
   titleWeight: 'normal',
-  shadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)})`,
+  shadow: shadows.large,
   border: colors.greys.grey30,
-}
+};
 
 const popOver = {
-  menuBgd: `${rgbaWithOpacity(colorsRgb.greys.grey10, 0.85)}`,
+  menuBgd: `${hexTorgba(colors.greys.grey10, 0.85)}`,
   menuBorder: `0.5px solid ${colors.greys.grey20}`,
-  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  shadow: shadows.large,
   itemBgd: 'transparent',
   itemText: colors.greys.grey70,
   titleText: colors.greys.grey60,
@@ -224,11 +224,11 @@ const popOver = {
     itemBgd: colors.primary.dark,
     itemText: colors.greys.white,
   },
-  separator: `${rgbaWithOpacity(colorsRgb.greys.grey40, 0.3)}`,
+  separator: `${hexTorgba(colors.greys.grey40, 0.3)}`,
 };
 
 const notification = {
-  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  shadow: shadows.large,
   error: {
     text: colors.error.lightest,
     closeButton: {
@@ -243,6 +243,7 @@ const notification = {
       }
     }
   },
+
   success: {
     text: colors.success.lightest,
     closeButton: {
@@ -257,6 +258,7 @@ const notification = {
       }
     }
   },
+
   info: {
     text: colors.info.lightest,
     closeButton: {
@@ -271,6 +273,7 @@ const notification = {
       }
     }
   },
+
   warning: {
     text: colors.warning.darker,
     closeButton: {
@@ -296,18 +299,18 @@ const links = {
 
 const controlBar = {
   text: colors.greys.grey70,
-  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  shadow: shadows.large,
   bgd: colors.greys.white,
   border: `0.03125rem solid ${colors.greys.grey20}`,
   opacity: 0.95,
-}
+};
 
 export const lightTheme = {
+  name: "Light Theme",
   buttons,
   colors,
-  colorsRgb,
+  global,
   links,
-  overlays,
   shadows,
   inputs,
   modal,

@@ -6,6 +6,7 @@ module.exports = {
     '@storybook/addon-a11y/register',
     '@storybook/addon-storysource/register',
     '@storybook/addon-viewport/register',
+    'storybook-addon-styled-component-theme/dist/register',
     {
       name: '@storybook/addon-docs',
       options: {

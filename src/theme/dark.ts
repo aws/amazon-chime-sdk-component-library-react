@@ -1,4 +1,5 @@
-import defaultTheme, { rgbaWithOpacity } from "./default";
+import defaultTheme from "./default";
+import { hexTorgba } from '../utils/style';
 
 const colors = {
   primary: {
@@ -10,11 +11,13 @@ const colors = {
     darker: "#22B6CB",
     darkest: "#1FA1B5",
   },
+
   secondary: {
     light: "#FF8B70",
     main: "#FF9B83",
     dark: "#FFB4A1",
   },
+
   error: {
     lightest: "#FBC1C0",
     lighter: "#FDA8A6",
@@ -24,6 +27,7 @@ const colors = {
     darker: "#452F2E",
     darkest:"#302020",
   },
+
   success: {
     lightest: "#F4FBF1",
     lighter: "#D2F1C5",
@@ -33,6 +37,7 @@ const colors = {
     darker: "#46573D",
     darkest:"#324129",
   },
+
   info: {
     lightest: "#F0F5FD",
     lighter: "#D8E6FB",
@@ -42,6 +47,7 @@ const colors = {
     darker: "#494F59",
     darkest:"#343C48",
   },
+
   warning: {
     lightest: "#FDFDF7",
     lighter: "#3F4149",
@@ -68,86 +74,80 @@ const colors = {
   }
 };
 
-const colorsRgb = {
-  primary: {
-    dark: "rgb(41,220,248)",
-  },
-  greys: {
-    black: "rgb(0,0,0)",
-    grey100: "rgb(27,28,32)",
-    grey90: "rgb(46,47,52)",
-    grey60: "rgb(97,102,104)",
-    white: "rgb(255,255,255)",
-  }
-};
-
-const overlays = {
-  grey100: rgbaWithOpacity(colorsRgb.greys.grey100, .7),
+const global = {
+  bgd: colors.greys.grey80,
+  text: colors.greys.white,
+  fontSize: defaultTheme.fontSizes.baseFontSize,
 };
 
 const shadows = {
   none: "none",
-  // TODO pixels to REMs?
-  default: `0 1.5px 1px 0 ${rgbaWithOpacity(colorsRgb.greys.grey100, 0.15)}`,
+  small: "",
+  medium: "",
+  large: `0 0.75rem 1.875rem 0 ${hexTorgba(colors.greys.black, 0.15)}`,
 };
 
 const buttons = {
   primary: {
+    shadow: shadows.none,
     static: {
       bgd: colors.primary.main,
-      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.4)}`,
+      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.4)}`,
       text: colors.greys.grey70,
     },
     hover: {
       bgd: colors.primary.dark,
-      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
+      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.6)}`,
       text: colors.greys.grey70,
     },
     focus: {
       bgd: colors.primary.main,
-      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
+      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.6)}`,
       text: colors.greys.grey70,
     },
     active: {
       bgd: colors.primary.darker,
-      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
+      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.6)}`,
       text: colors.greys.grey70,
     },
     selected: {
       bgd: colors.primary.light,
-      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.4)}`,
+      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.4)}`,
       text: colors.greys.grey70,
     },
   },
+
   secondary: {
+    shadow: shadows.none,
     static: {
       bgd: colors.greys.grey50,
-      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.6)}`,
+      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.6)}`,
       text: colors.greys.white,
     },
     hover: {
       bgd: colors.greys.grey60,
-     border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.7)}`,
+     border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.7)}`,
       text: colors.greys.white,
     },
     focus: {
       bgd: colors.greys.grey60,
-     border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.7)}`,
+     border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.7)}`,
       text: colors.greys.white,
     },
     active: {
       bgd: colors.greys.grey70,
-      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.8)}`,
+      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.8)}`,
       text: colors.greys.white,
     },
     selected: {
       bgd: colors.greys.grey60,
-      border: `0.03125rem solid ${rgbaWithOpacity(colorsRgb.greys.black, 0.7)}`,
+      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.7)}`,
       text: colors.greys.white,
     },
   },
 
   icon: {
+    shadow: shadows.none,
     static: {
       bgd: "transparent",
       border: "none",
@@ -181,11 +181,8 @@ const inputs = {
   border: `0.03125rem solid ${colors.greys.black}`,
   borderRadius: defaultTheme.radii.default,
   fontColor: colors.greys.white,
-  fontSize: defaultTheme.fontSizes.text,
-  helpTextFontSize: defaultTheme.fontSizes.small,
-  legendFontSize: defaultTheme.fontSizes.text,
-  placeholderColor: colors.greys.grey50,
-  shadow: `0 0.0625rem 0.0625rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.1)}`,
+  placeholder: colors.greys.grey50,
+  shadow: `0 0.0625rem 0.0625rem 0 ${hexTorgba(colors.greys.black, 0.1)}`,
 
   focus: {
     bgd: colors.greys.white,
@@ -203,24 +200,24 @@ const inputs = {
     bgd: colors.primary.main,
     border: `solid 0.03125rem ${colors.primary.dark}`,
     fontColor: colors.greys.grey80,
-    shadow: `inset 0 0.03125rem 0 0 ${rgbaWithOpacity(colorsRgb.greys.white, 0.1)}`,
+    shadow: `inset 0 0.03125rem 0 0 ${hexTorgba(colors.greys.white, 0.1)}`,
   }
 };
 
 const modal = {
   bgd: colors.greys.grey80,
   text: colors.greys.white,
-  wrapperBgd: rgbaWithOpacity(colorsRgb.greys.grey60, 0.9),
-  titleSize: '1.5625rem', /* TODO use typography properties */
+  wrapperBgd: hexTorgba(colors.greys.grey60, 0.9),
+  titleSize: defaultTheme.fontSizes.h5.fontSize,
   titleWeight: 'normal',
-  shadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)})`,
+  shadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${hexTorgba(colors.greys.black, 0.15)})`,
   border: colors.greys.black,
-}
+};
 
 const popOver = {
-  menuBgd: `${rgbaWithOpacity(colorsRgb.greys.grey90, 0.85)}`,
+  menuBgd: `${hexTorgba(colors.greys.grey90, 0.85)}`,
   menuBorder: colors.greys.grey100,
-  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  shadow: shadows.large,
   itemBgd: 'transparent',
   itemText: colors.greys.white,
   titleText: colors.greys.white,
@@ -232,7 +229,7 @@ const popOver = {
 };
 
 const notification = {
-  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  shadow: shadows.large,
   error: {
     text: colors.error.darker,
     closeButton: {
@@ -247,6 +244,7 @@ const notification = {
       }
     }
   },
+
   success: {
     text: colors.success.darker,
     closeButton: {
@@ -261,6 +259,7 @@ const notification = {
       }
     }
   },
+
   info: {
     text: colors.info.darker,
     closeButton: {
@@ -275,6 +274,7 @@ const notification = {
       }
     }
   },
+
   warning: {
     text: colors.warning.darker,
     closeButton: {
@@ -300,22 +300,22 @@ const links = {
 
 const controlBar = {
   text: colors.greys.grey20,
-  shadow: `0 0.75rem 1.875rem 0 ${rgbaWithOpacity(colorsRgb.greys.black, 0.15)}`,
+  shadow: shadows.large,
   bgd: colors.greys.grey100,
   border: 'none',
-  opactiy: 1,
+  opacity: 1,
 }
 
 export const darkTheme = {
+  name: "Dark Theme",
   buttons,
   colors,
-  colorsRgb,
+  global,
   links,
   shadows,
   inputs,
   modal,
   popOver,
-  overlays,
   notification,
   controlBar,
   ...defaultTheme,

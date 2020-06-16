@@ -35,9 +35,9 @@ export const StyledButton = styled.button<ButtonProps>`
 
 export const StyledPrimaryButton = css<ButtonProps>`
   background-color: ${props => props.selected ? props.theme.buttons.primary.selected.bgd : props.theme.buttons.primary.static.bgd};
-  color: ${props => props.selected ? props.theme.buttons.primary.selected.color : props.theme.buttons.primary.static.text};
+  color: ${props => props.selected ? props.theme.buttons.primary.selected.text : props.theme.buttons.primary.static.text};
   border: ${props => props.selected ? props.theme.buttons.primary.selected.border : props.theme.buttons.primary.static.border};
-  box-shadow: ${props => props.theme.shadows.default};
+  box-shadow: ${props => props.theme.buttons.primary.shadow};
 
   &:hover {
     background-color: ${props => props.theme.buttons.primary.hover.bgd};
@@ -60,9 +60,9 @@ export const StyledPrimaryButton = css<ButtonProps>`
 
 export const StyledSecondaryButton = css<ButtonProps>`
   background-color: ${props => props.selected ? props.theme.buttons.secondary.selected.bgd : props.theme.buttons.secondary.static.bgd};
-  color: ${props => props.selected ? props.theme.buttons.secondary.selected.color : props.theme.buttons.secondary.static.text};
+  color: ${props => props.selected ? props.theme.buttons.secondary.selected.text : props.theme.buttons.secondary.static.text};
   border: ${props => props.selected ? props.theme.buttons.secondary.selected.border : props.theme.buttons.secondary.static.border};
-  box-shadow: ${props => props.theme.shadows.default};
+  box-shadow: ${props => props.theme.buttons.secondary.shadow};
 
   &:hover {
     background-color: ${props => props.theme.buttons.secondary.hover.bgd};

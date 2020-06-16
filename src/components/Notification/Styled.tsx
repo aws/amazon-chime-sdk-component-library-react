@@ -50,5 +50,5 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
   ${StyledCloseIconButton}:active {
     background-color: ${({ theme, severity }) => theme.notification[severity].closeButton.active.bgd};
     color: ${({ theme, severity }) => theme.notification[severity].closeButton.active.text};
-  }
+  };
 `;

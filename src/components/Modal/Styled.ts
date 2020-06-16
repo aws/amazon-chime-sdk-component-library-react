@@ -7,13 +7,13 @@ const ModalWidths = {
   'medium': '35rem',
   'large': '50rem',
   'fullscreen': '98vw',
-}
+};
 
 const ModalHeights = {
   'medium': '94vh',
   'large': '94vh',
   'fullscreen': '96vh',
-}
+};
 
 export const StyledModal = styled.div<ModalProps>`
   position: fixed;
@@ -25,7 +25,7 @@ export const StyledModal = styled.div<ModalProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
+  z-index:  ${props => props.theme.zIndex.modal};;
   overflow-x: hidden;
   animation: ${fadeAnimation} .25s ease 0s forwards;
   will-change: opacity;
@@ -62,7 +62,6 @@ export const StyledModalHeader = styled.header`
     position: absolute;
     right: 1.55rem;
     top: 1rem;
-    z-index: 3;
   }
 
   .title {
