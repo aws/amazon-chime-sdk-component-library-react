@@ -6,7 +6,7 @@ export const StyledTextarea = styled.textarea`
   border-radius: ${props => props.theme.inputs.borderRadius};
   box-shadow: ${props => props.theme.inputs.shadow};
   color: ${props => props.theme.inputs.fontColor};
-  font-size: ${props => props.theme.fontSizes.text};
+  font-size: ${props => props.theme.fontSizes.text.fontSize};
   padding: 0.5rem;
   position: relative;
   min-height: 4rem;

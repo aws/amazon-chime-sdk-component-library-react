@@ -11,7 +11,7 @@ export const StyledPopOverMenu = styled.ul`
   list-style: none;
   padding: 0.5rem 0;
   box-shadow: ${props => props.theme.popOver.shadow};
-  z-index: 2;
+  z-index: ${props => props.theme.zIndex.popOver};
 `;
 
 export const StyledPopOverToggle = styled.button`

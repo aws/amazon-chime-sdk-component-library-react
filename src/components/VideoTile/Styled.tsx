@@ -70,7 +70,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
     }
 
     .text {
-      font-size: ${props => props.theme.fontSizes.fontSize};
+      font-size: ${props => props.theme.fontSizes.text.fontSize};
       ${ellipsis};
       margin: 0;
     }
