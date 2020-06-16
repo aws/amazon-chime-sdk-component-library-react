@@ -2,9 +2,11 @@ import React, {
   useState,
   useEffect,
   useContext,
+  useRef,
   ReactNode,
   Context,
 } from 'react';
+import { DefaultModality } from 'amazon-chime-sdk-js';
 
 import { RosterType } from '../types';
 import { MeetingManager, MeetingContext } from './MeetingProvider';
@@ -21,19 +23,58 @@ export function getRosterContext(): Context<RosterType> {
 }
 
 export default function RosterProvider({ children }: Props) {
+  const rosterRef = useRef<RosterType>({});
   const [roster, setRoster] = useState<RosterType>({});
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
   const { meetingStatus } = useContext(getMeetingStatusContext());
+  const meetingManager: MeetingManager | null = useContext(MeetingContext);
+
   useEffect(() => {
-    const callback = (updatedRoster: RosterType): void => {
-      setRoster({ ...updatedRoster });
+    const rosterUpdateCallback = async (
+      presentAttendeeId: string,
+      present: boolean
+    ): Promise<void> => {
+      if (!present) {
+        delete rosterRef.current[presentAttendeeId];
+
+        setRoster((currentRoster: RosterType) => {
+          const { [presentAttendeeId]: _, ...rest } = currentRoster;
+          return { ...rest };
+        });
+
+        return;
+      }
+
+      const attendeeId = new DefaultModality(presentAttendeeId).base();
+      if (attendeeId !== presentAttendeeId) {
+        return;
+      }
+
+      const inRoster = rosterRef.current[presentAttendeeId];
+      if (inRoster) {
+        return;
+      }
+
+      const attendee = await meetingManager?.getAttendeeInfo(attendeeId);
+      if (!attendee) {
+        return;
+      }
+
+      rosterRef.current[attendeeId] = attendee;
+
+      setRoster(oldRoster => ({
+        ...oldRoster,
+        [attendeeId]: attendee,
+      }));
     };
 
-    meetingManager?.subscribeToRosterUpdate(callback);
+    meetingManager?.audioVideo?.realtimeSubscribeToAttendeeIdPresence(
+      rosterUpdateCallback
+    );
 
-    return (): void => {
-      meetingManager?.unsubscribeFromRosterUpdate(callback);
-    };
+    return () =>
+      meetingManager?.audioVideo?.realtimeUnsubscribeToAttendeeIdPresence(
+        rosterUpdateCallback
+      );
   }, [meetingStatus]);
 
   return (

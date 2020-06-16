@@ -11,11 +11,9 @@ import {
   Logger,
   LogLevel,
   MeetingSessionConfiguration,
-  MeetingSessionPOSTLogger,
-  DefaultModality,
+  MeetingSessionPOSTLogger
 } from 'amazon-chime-sdk-js';
 
-import { RosterType } from '../types';
 import { DevicePermissionStatus } from '../enums';
 import { VIDEO_INPUT, AUDIO_INPUT } from '../constants';
 
@@ -57,10 +55,6 @@ export class MeetingManager implements DeviceChangeObserver {
   audioOutputDevices: MediaDeviceInfo[] | null = null;
   videoInputDevices: MediaDeviceInfo[] | null = null;
 
-  roster: RosterType = {};
-
-  rosterUpdateCallbacks: ((roster: RosterType) => void)[] = [];
-
   devicePermissions = DevicePermissionStatus.UNSET;
 
   devicePermissionsObservers: ((permission: string) => void)[] = [];
@@ -82,8 +76,6 @@ export class MeetingManager implements DeviceChangeObserver {
     this.audioInputDevices = [];
     this.audioOutputDevices = [];
     this.videoInputDevices = [];
-    this.roster = {};
-    this.rosterUpdateCallbacks = [];
   }
 
   async authenticate(meetingId: string, name: string, region: string): Promise<string> {
@@ -114,7 +106,7 @@ export class MeetingManager implements DeviceChangeObserver {
   async initializeMeetingSession(configuration: MeetingSessionConfiguration): Promise<any> {
     let logger: Logger;
     if (location.hostname === 'localhost' || location.hostname === '127.0.0.1' || location.hostname === '0.0.0.0') {
-      logger = new ConsoleLogger('SDK', LogLevel.INFO);
+      logger = new ConsoleLogger('SDK', LogLevel.WARN);
     } else {
       logger = new MeetingSessionPOSTLogger(
         'SDK',
@@ -135,7 +127,6 @@ export class MeetingManager implements DeviceChangeObserver {
     this.publishDevicesUpdated();
     // this.setupMuteHandler();
     // this.setupCanUnmuteHandler();
-    this.setupSubscribeToAttendeeIdPresenceHandler();
     // this.setupScreenViewing();
     // this.audioVideo.addObserver(this);
   }
@@ -181,11 +172,11 @@ export class MeetingManager implements DeviceChangeObserver {
     this.stopContentShare();
     await this.audioVideo?.stopLocalVideoTile();
     await this.audioVideo?.chooseVideoInputDevice(null);
-    
+
     this.audioVideo?.unbindAudioElement();
     await this.audioVideo?.chooseAudioInputDevice(null);
     this.audioVideo?.stop();
-    
+
     this.initializeMeetingManager();
   }
 
@@ -335,58 +326,30 @@ export class MeetingManager implements DeviceChangeObserver {
     this.audioVideo.removeContentShareObserver(observer);
   }
 
-  private setupSubscribeToAttendeeIdPresenceHandler(): void {
-    const handler = async (
-      presentAttendeeId: string,
-      present: boolean
-    ): Promise<void> => {
-      if (!present) {
-        delete this.roster[presentAttendeeId];
-        this.publishRosterUpdate();
-        return;
-      }
-
-      const baseAttendeeId = new DefaultModality(presentAttendeeId).base();
-      if (baseAttendeeId !== presentAttendeeId) {
-        return;
-      }
-
-      if (!this.roster[presentAttendeeId]) {
-        this.roster[presentAttendeeId] = {
-          name: '',
-          id: presentAttendeeId,
-        };
-      }
-
-      if (
-        this.meetingId &&
-        presentAttendeeId &&
-        !this.roster[presentAttendeeId].name
-      ) {
-        const json = await this.getAttendeeInfo(
-          this.meetingId,
-          presentAttendeeId
-        );
-        this.roster[presentAttendeeId].name = json.AttendeeInfo.Name || '';
-      }
-
-      this.publishRosterUpdate();
-    };
-    this.audioVideo?.realtimeSubscribeToAttendeeIdPresence(handler);
-  }
-
-  async getAttendeeInfo(meetingId: string, presentAttendeeId: string) {
-    const url = `${BASE_URL}attendee?title=${encodeURIComponent(
-      meetingId
-    )}&attendee=${encodeURIComponent(presentAttendeeId)}`;
-    const response = await fetch(url, {
-      method: 'GET',
-    });
-    const json = await response.json();
-    if (json.error) {
-      throw new Error(`Server error: ${json.error}`);
+  async getAttendeeInfo(presentAttendeeId: string) {
+    if (!this.meetingId) {
+      return;
     }
-    return json;
+
+    const url = `${BASE_URL}attendee?title=${encodeURIComponent(
+      this.meetingId
+    )}&attendee=${encodeURIComponent(presentAttendeeId)}`;
+
+    try {
+      const res = await fetch(url, {
+        method: 'GET',
+      });
+
+      if (!res.ok) {
+        throw new Error('Invalid server response');
+      }
+
+      const json = await res.json();
+      const { AttendeeId: id, Name: name } = json.AttendeeInfo;
+      return { id, name };
+    } catch (e) {
+      console.log(`Error fetching attendee: ${e.message}`);
+    }
   }
 
   /**
@@ -414,26 +377,6 @@ export class MeetingManager implements DeviceChangeObserver {
    * Subscribe and unsubscribe from SDK events
    * ====================================================================
    */
-  subscribeToRosterUpdate = (callback: (roster: RosterType) => void): void => {
-    this.rosterUpdateCallbacks.push(callback);
-  };
-
-  unsubscribeFromRosterUpdate = (
-    callback: (roster: RosterType) => void
-  ): void => {
-    const index = this.rosterUpdateCallbacks.indexOf(callback);
-    if (index !== -1) {
-      this.rosterUpdateCallbacks.splice(index, 1);
-    }
-  };
-
-  private publishRosterUpdate = (): void => {
-    for (let i = 0; i < this.rosterUpdateCallbacks.length; i += 1) {
-      const callback = this.rosterUpdateCallbacks[i];
-      callback(this.roster);
-    }
-  };
-
   subscribeToDevicePermissionUpdate = (
     callback: (permission: string) => void
   ): void => {
