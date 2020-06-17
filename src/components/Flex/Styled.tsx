@@ -21,6 +21,7 @@ export const equalColumns = css`
 
   > * {
     flex-grow: 1;
+    flex-basis: 50%;
   }
 `;
 
