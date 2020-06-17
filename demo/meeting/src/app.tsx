@@ -9,8 +9,9 @@ import MeetingFormSelector from './containers/MeetingFormSelector';
 import MeetingProvider from './providers/MeetingProvider';
 import ErrorProvider from './providers/ErrorProvider';
 import routes from './constants/routes';
-import SelectDevicesView from './containers/SelectDevicesView';
 import { AudioVideoProvider } from './providers/AudioVideoProvider';
+import { DevicesProvider } from './providers/DevicesProvider';
+import DeviceSetup from './views/DeviceSetup';
 
 const App: FC = () => (
   <Router>
@@ -18,17 +19,19 @@ const App: FC = () => (
       <ErrorProvider>
         <MeetingProvider>
           <AudioVideoProvider>
-            <Switch>
-              <Route path={routes.HOME}>
-                <Route
-                  path={routes.HOME}
-                  exact
-                  component={MeetingFormSelector}
-                />
-                <Route path={routes.DEVICE} component={SelectDevicesView} />
-                <Route path={routes.MEETING} component={MeetingView} />
-              </Route>
-            </Switch>
+            <DevicesProvider>
+              <Switch>
+                <Route path={routes.HOME}>
+                  <Route
+                    path={routes.HOME}
+                    exact
+                    component={MeetingFormSelector}
+                  />
+                  <Route path={routes.DEVICE} component={DeviceSetup} />
+                  <Route path={routes.MEETING} component={MeetingView} />
+                </Route>
+              </Switch>
+            </DevicesProvider>
           </AudioVideoProvider>
         </MeetingProvider>
       </ErrorProvider>
