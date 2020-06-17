@@ -11,20 +11,20 @@ export default {
   title: 'Form/Buttons',
 };
 
-export const BasicButton = () => <Button className='basic-button' label='Basic button' />;
+export const BasicButton = () => <Button label='Basic button' />;
 
 BasicButton.story = {
   name: 'Basic button',
 };
 
-export const _PrimaryButton = () => <PrimaryButton className='primary-button' label='Primary' />;
+export const _PrimaryButton = () => <PrimaryButton label='Primary' />;
 
 _PrimaryButton.story = {
   name: 'Primary button',
 };
 
 export const _SecondaryButton = () => (
-  <SecondaryButton className='secondary-button' label='This is a secondary button' />
+  <SecondaryButton label='This is a secondary button' />
 );
 
 _SecondaryButton.story = {

@@ -54,7 +54,7 @@ export const Notification: React.FC<NotificationProps> = props => {
         {message}
       </output>
       {onClose && (
-        <StyledCloseIconButton label='close' icon={<Remove />} onClick={onClose} data-testid='closeButton' />
+        <StyledCloseIconButton label='close' icon={<Remove />} onClick={onClose} />
       )}
     </StyledNotification>
   );

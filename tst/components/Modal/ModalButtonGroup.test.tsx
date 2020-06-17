@@ -34,7 +34,7 @@ describe('ModalButtonGroup', () => {
       </ModalContext.Provider>
     );
     const { getByTestId } = renderWithTheme(lightTheme, component)
-    const modalButton = getByTestId('modalButton');
+    const modalButton = getByTestId('button');
     fireEvent.click(modalButton)
     expect(component.props.value.onClose).toHaveBeenCalled();
   });

@@ -10,7 +10,7 @@ describe('ModalButton', () => {
   it('renders a Button', () => {
     const modalButtonComponent = <ModalButton label='close' />
     const { getByTestId } = renderWithTheme(lightTheme, modalButtonComponent)
-    const el = getByTestId('modalButton');
+    const el = getByTestId('button');
     expect(el).toBeInTheDocument();
   });
 });

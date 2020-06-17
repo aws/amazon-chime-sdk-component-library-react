@@ -7,7 +7,7 @@ import ModalContext from '../../../src/components/Modal/ModalContext';
 import lightTheme from '../../../src/theme/light'
 import { renderWithTheme } from '../../test-helpers';
 
-describe('ModalButton', () => {
+describe('ModalHeader', () => {
   it('renders a header', () => {
     const component = <ModalHeader title='Test Header' />
     const { getByText } = renderWithTheme(lightTheme, component)
@@ -18,7 +18,7 @@ describe('ModalButton', () => {
   it('renders a close button is displayClose !== false', () => {
     const component = <ModalHeader title='Test Header' />
     const { getByTestId } = renderWithTheme(lightTheme, component)
-    const closeButton = getByTestId('closeButton');
+    const closeButton = getByTestId('button');
     expect(closeButton).toBeInTheDocument();
   });
 
@@ -32,7 +32,7 @@ describe('ModalButton', () => {
       </ModalContext.Provider>
     );
     const { getByTestId } = renderWithTheme(lightTheme, component)
-    const closeButton = getByTestId('closeButton');
+    const closeButton = getByTestId('button');
     fireEvent.click(closeButton)
     expect(component.props.value.onClose).toHaveBeenCalled();
   });

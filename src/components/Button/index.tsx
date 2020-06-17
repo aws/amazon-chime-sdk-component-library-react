@@ -15,9 +15,14 @@ export const Button = forwardRef((props: ButtonProps, ref: React.Ref<HTMLButtonE
     {...props}
     ref={ref}
     aria-label={props.label}
+    data-testid='button'
   >
-    {props.icon && <span className='icon'>{props.icon}</span>}
-    <span className='label'>{props.label}</span>
+    { props.icon &&
+      <span className='icon' data-testid='button-icon'>
+        {props.icon}
+      </span>
+    }
+    <span className='label' data-testid='button-label'>{props.label}</span>
   </StyledButton>
 
 ));

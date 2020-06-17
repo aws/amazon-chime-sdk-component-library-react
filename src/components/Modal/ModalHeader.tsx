@@ -36,7 +36,6 @@ export const ModalHeader:FC<ModalHeaderProps> = ({
           icon={<Remove/>}
           className="closeButton"
           onClick={handleClick}
-          data-testid="closeButton"
         />
       )}
     </StyledModalHeader>

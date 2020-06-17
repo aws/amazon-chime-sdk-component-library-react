@@ -1,6 +1,6 @@
 describe('Primary Button', () => {
   it('visually looks correct', async () => {
-    await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--primary-button&knob-layout=right&knob-show%20labels=true&knob-Checked=true');
+    await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--primary-button');
 
     const element = await page.$('button');
 
@@ -9,9 +9,11 @@ describe('Primary Button', () => {
   });
 
   it('visually looks correct on hover', async () => {
-    await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--primary-button&knob-layout=right&knob-show%20labels=true&knob-Checked=true');
+    await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--primary-button');
 
-    await page.hover('button')
+    await page.hover('button');
+    // wait for completion of background color transition, which is 100ms
+    await page.waitFor(150);
     const element = await page.$('button');
 
     const image = await element.screenshot();
@@ -19,9 +21,10 @@ describe('Primary Button', () => {
   });
 
   it('visually looks correct on focus', async () => {
-    await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--primary-button&knob-layout=right&knob-show%20labels=true&knob-Checked=true');
+    await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--primary-button');
 
-    await page.focus('button')
+    await page.focus('button');
+    await page.waitFor(150);
     const element = await page.$('button');
 
     const image = await element.screenshot();
@@ -30,10 +33,11 @@ describe('Primary Button', () => {
 
 
   it('visually looks correct on active', async () => {
-    await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--primary-button&knob-layout=right&knob-show%20labels=true&knob-Checked=true');
+    await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--primary-button');
 
     const element = await page.$('button');
-    await page.mouse.down()
+    await page.mouse.down();
+    await page.waitFor(150);
 
     const image = await element.screenshot();
     expect(image).toMatchImageSnapshot();
