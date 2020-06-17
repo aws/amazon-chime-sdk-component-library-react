@@ -1,36 +1,41 @@
-import React, { useContext, useEffect, useRef, CSSProperties } from 'react';
+import React, { useEffect, useRef, CSSProperties } from 'react';
 import { VideoTileState } from 'amazon-chime-sdk-js';
 
-import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
+import { useAudioVideo } from '../providers/AudioVideoProvider';
 
 interface Props {
   id?: string;
   style?: CSSProperties;
 }
 
-export const LocalVideo: React.FC<Props> = ({ id, style }) =>{
-  const meetingManager: MeetingManager | null = useContext(MeetingContext)!;
-  const videoEle = useRef(null);
+export const LocalVideo: React.FC<Props> = ({ id, style }) => {
+  const audioVideo = useAudioVideo();
+  const videoEl = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
-    const audioVideoDidStart = () => {
-      console.log('Observer audioVideoDidStart');
-    };
-  
+    if (!audioVideo) {
+      return;
+    }
+
     const videoTileDidUpdate = (tileState: VideoTileState) => {
-      console.log("Observer videoTileDidUpdate", tileState);
-      if (!tileState.boundAttendeeId || !tileState.localTile || !tileState.tileId || !videoEle.current) {
+      if (
+        !tileState.boundAttendeeId ||
+        !tileState.localTile ||
+        !tileState.tileId ||
+        !videoEl.current
+      ) {
         return;
       }
-      meetingManager?.audioVideo?.bindVideoElement(tileState.tileId, (videoEle.current as unknown as HTMLVideoElement))
+
+      audioVideo.bindVideoElement(tileState.tileId, videoEl.current);
     };
 
-    meetingManager?.audioVideo?.addObserver({ audioVideoDidStart, videoTileDidUpdate });
-  }, []);
+    audioVideo.addObserver({
+      videoTileDidUpdate,
+    });
+  }, [audioVideo]);
 
-  return (
-    <video ref={videoEle} id={id} style={style} />
-  );
+  return <video ref={videoEl} id={id} style={style} />;
 };
 
 export default LocalVideo;
