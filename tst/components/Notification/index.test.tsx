@@ -52,14 +52,14 @@ describe('Notification', () => {
   it('Checks notification close button is an HTML buttom element ', () => {
     const notificationComponent = getNotificationComponent();
     const { getByTestId } = renderWithTheme(lightTheme, notificationComponent);
-    const closeButton = getByTestId('closeButton');
+    const closeButton = getByTestId('button');
     expect(closeButton.nodeName).toEqual('BUTTON');
   });
 
   it('Checks notification close button calls the onClose function', () => {
     const notificationComponent = getNotificationComponent();
     const { getByTestId } = renderWithTheme(lightTheme, notificationComponent);
-    const closeButton = getByTestId('closeButton');
+    const closeButton = getByTestId('button');
     fireEvent.click(closeButton);
     expect(notificationComponent.props.onClose).toHaveBeenCalledTimes(1);
   });

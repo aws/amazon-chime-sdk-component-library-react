@@ -106,7 +106,7 @@ describe('NotificationGroup', () => {
       fireEvent.click(addErrorNotificationButtonEl);
       let notifications = getAllByTestId('notification');
       const infoNotificationEl = notifications[0];
-      let closeButton = within(infoNotificationEl).getByTestId('closeButton');
+      let closeButton = within(infoNotificationEl).getByTestId('button');
       fireEvent.click(closeButton);
       notifications = getAllByTestId('notification');
       expect(infoNotificationEl).not.toBeInTheDocument();
