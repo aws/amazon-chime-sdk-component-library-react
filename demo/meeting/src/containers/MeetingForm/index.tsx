@@ -1,9 +1,11 @@
 import React, { useState, useContext, ChangeEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
-  FormField,
   Input,
+  Flex,
+  Heading,
   Select,
+  FormField,
   PrimaryButton,
 } from 'amazon-chime-sdk-component-library-react';
 
@@ -18,7 +20,6 @@ import Card from '../../components/Card';
 import Spinner from '../../components/Spinner';
 import DevicePermissionPrompt from '../DevicePermissionPrompt';
 import { AVAILABLE_AWS_REGIONS } from '../../constants';
-import { StyledForm } from './Styled';
 import getFormattedOptionsForSelect from '../../utils/select-options-format';
 
 const MeetingForm: React.FC = () => {
@@ -54,12 +55,15 @@ const MeetingForm: React.FC = () => {
   };
 
   return (
-    <StyledForm>
-      <h1>Join a meeting</h1>
+    <form>
+      <Heading as="h1" level="h4" css="margin-bottom: 1rem">
+        Join a meeting
+      </Heading>
       <FormField
         field={Input}
         label="Meeting Id"
         value={meetingId}
+        infoText="Anyone with access to the meeting ID can join"
         fieldProps={{
           name: 'meetingId',
           placeholder: 'Enter Meeting Id',
@@ -67,7 +71,6 @@ const MeetingForm: React.FC = () => {
         onChange={(e: ChangeEvent<HTMLInputElement>): void =>
           setMeetingId(e.target.value)
         }
-        layout="stack"
       />
       <FormField
         field={Input}
@@ -80,7 +83,6 @@ const MeetingForm: React.FC = () => {
         onChange={(e: ChangeEvent<HTMLInputElement>): void =>
           setInputName(e.target.value)
         }
-        layout="stack"
       />
       <FormField
         field={Select}
@@ -90,17 +92,18 @@ const MeetingForm: React.FC = () => {
         }
         value={region}
         label="Select AWS region"
-        layout="stack"
       />
-      {!isLoading && (
-        <PrimaryButton
-          className="btn-submit"
-          label="Continue"
-          onClick={handleJoinMeeting}
-        />
-      )}
-      {isLoading && <Spinner />}
-      <p>Anyone with access to the meeting link can join.</p>
+      <Flex
+        container
+        layout="fill-space-centered"
+        style={{ marginTop: '2.5rem' }}
+      >
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <PrimaryButton label="Continue" onClick={handleJoinMeeting} />
+        )}
+      </Flex>
       {errorMessage && (
         <Modal onClose={closeError}>
           <Card
@@ -112,7 +115,7 @@ const MeetingForm: React.FC = () => {
         </Modal>
       )}
       <DevicePermissionPrompt />
-    </StyledForm>
+    </form>
   );
 };
 

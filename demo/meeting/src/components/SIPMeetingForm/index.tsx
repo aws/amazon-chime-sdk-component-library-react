@@ -1,11 +1,11 @@
 import React, { ChangeEvent, FormEvent } from 'react';
 import {
-  FormField,
+  Flex,
   Input,
+  Heading,
+  FormField,
   PrimaryButton,
 } from 'amazon-chime-sdk-component-library-react';
-
-import { StyledForm } from './Styled';
 
 type SIPMeetingFormProps = {
   meetingId: string;
@@ -23,8 +23,10 @@ export default function SIPMeetingForm({
   handleSubmit,
 }: SIPMeetingFormProps) {
   return (
-    <StyledForm className="SIPMeetingForm">
-      <h1>Join a meeting via SIP</h1>
+    <form>
+      <Heading as="h1" level="h4" css="margin-bottom: 1rem">
+        Join a meeting via SIP
+      </Heading>
       <FormField
         field={Input}
         label="Meeting Id"
@@ -34,7 +36,6 @@ export default function SIPMeetingForm({
           placeholder: 'Enter Meeting Id',
         }}
         onChange={onChangeMeetingId}
-        layout="stack"
       />
 
       <FormField
@@ -45,16 +46,21 @@ export default function SIPMeetingForm({
           name: 'voiceConnectorId',
           placeholder: 'Enter Voice Connector Id',
         }}
+        infoText="You will need a SIP client in order to join the meeting."
         onChange={onChangeVoiceConnectorId}
-        layout="stack"
       />
 
-      <PrimaryButton
-        className="btn-submit"
-        label="Get SIP URI"
-        onClick={handleSubmit}
-      />
-      <p>You will need a SIP client in order to join the meeting.</p>
-    </StyledForm>
+      <Flex
+        container
+        layout="fill-space-centered"
+        style={{ marginTop: '2.5rem' }}
+      >
+        <PrimaryButton
+          className="btn-submit"
+          label="Get SIP URI"
+          onClick={handleSubmit}
+        />
+      </Flex>
+    </form>
   );
 }

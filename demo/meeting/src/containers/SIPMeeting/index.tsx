@@ -9,7 +9,6 @@ import {
   SIPMeetingContext,
   SIPMeetingManager,
 } from '../../providers/SIPMeetingProvider';
-import { StyledSIPMeetingDiv } from './Styled';
 
 const SIPMeeting: React.FC = () => {
   const [sipURI, setSipURI] = useState('');
@@ -42,7 +41,7 @@ const SIPMeeting: React.FC = () => {
   };
 
   return (
-    <StyledSIPMeetingDiv>
+    <>
       <SIPMeetingForm
         meetingId={meetingId}
         voiceConnectorId={voiceConnectorId}
@@ -63,7 +62,7 @@ const SIPMeeting: React.FC = () => {
         </Modal>
       )}
       {sipURI && <SIPURI sipURI={sipURI} />}
-    </StyledSIPMeetingDiv>
+    </>
   );
 };
 

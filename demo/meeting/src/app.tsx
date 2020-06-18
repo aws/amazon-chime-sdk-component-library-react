@@ -5,13 +5,12 @@ import { ThemeProvider } from 'styled-components';
 import { lightTheme } from 'amazon-chime-sdk-component-library-react';
 
 import MeetingView from './containers/MeetingView';
-import MeetingFormSelector from './containers/MeetingFormSelector';
 import MeetingProvider from './providers/MeetingProvider';
 import ErrorProvider from './providers/ErrorProvider';
 import routes from './constants/routes';
 import { AudioVideoProvider } from './providers/AudioVideoProvider';
 import { DevicesProvider } from './providers/DevicesProvider';
-import DeviceSetup from './views/DeviceSetup';
+import { Home, DeviceSetup } from './views';
 
 const App: FC = () => (
   <Router>
@@ -21,15 +20,9 @@ const App: FC = () => (
           <AudioVideoProvider>
             <DevicesProvider>
               <Switch>
-                <Route path={routes.HOME}>
-                  <Route
-                    path={routes.HOME}
-                    exact
-                    component={MeetingFormSelector}
-                  />
-                  <Route path={routes.DEVICE} component={DeviceSetup} />
-                  <Route path={routes.MEETING} component={MeetingView} />
-                </Route>
+                <Route exact path={routes.HOME} component={Home} />
+                <Route path={routes.DEVICE} component={DeviceSetup} />
+                <Route path={routes.MEETING} component={MeetingView} />
               </Switch>
             </DevicesProvider>
           </AudioVideoProvider>
