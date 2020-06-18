@@ -1,4 +1,4 @@
-import React, { FC, ChangeEvent, ReactNode, forwardRef, Ref } from 'react';
+import React, { ChangeEvent, ReactNode, forwardRef, Ref } from 'react';
 import InputWrapper from './InputWrapper';
 import { StyledInput } from './Styled';
 
@@ -25,7 +25,8 @@ export const Input = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>) 
         type={type || "text"}
         ref={ref}
         className="Input"
-        onChange={(e:ChangeEvent) => onChange(e)}
+        onChange={(e: ChangeEvent) => onChange(e)}
+        data-testid='input'
       />
     </InputWrapper>
   );

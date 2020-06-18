@@ -11,7 +11,7 @@ export interface InputWrapperProps {
 export const InputWrapper: FC<InputWrapperProps> = (props) => {
   const { leadingIcon, children } = props;
   return (
-    <StyledInputWrapper {...props}>
+    <StyledInputWrapper {...props} data-testid='input-wrapper'>
       {leadingIcon && <span className="icon">{leadingIcon}</span>}
       {children}
     </StyledInputWrapper>

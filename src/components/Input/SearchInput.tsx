@@ -8,7 +8,7 @@ export const SearchInput: FC<InputProps> = (props) => {
     ...props,
     sizing: 'sm',
     type: "search",
-    leadingIcon: <Search />
+    leadingIcon: <Search data-testid='search-icon' />
   };
 
   return <Input {...searchProps} />
