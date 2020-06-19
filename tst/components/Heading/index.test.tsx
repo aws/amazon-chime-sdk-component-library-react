@@ -10,7 +10,7 @@ describe('Heading', () => {
 
   it('should render a Heading with children', () => {
     const childrenContent = 'children-content';
-    const component = <Heading level={'h1'}>{childrenContent}</Heading>;
+    const component = <Heading level={1}>{childrenContent}</Heading>;
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const heading = getByTestId('heading');
 

@@ -271,6 +271,25 @@ const TestMixedInputs: React.FC<{}> = props => {
     });
   }
 
+  const options = [
+    {
+      value: 'no_fruit_selected',
+      label: 'Select an option',
+    },
+    {
+      value: 'bananas',
+      label: 'Bananas',
+    },
+    {
+      value: 'oranges',
+      label: 'Oranges',
+    },
+    {
+      value: 'grapefruit',
+      label: 'Grapefruit',
+    }
+  ];
+
   return (
     <>
       <FormField
@@ -300,7 +319,7 @@ const TestMixedInputs: React.FC<{}> = props => {
         layout={select('layout', { stack: 'stack', horizontal: 'horizontal', 'input-only': 'input-only' }, 'stack')}
         fieldProps={{ name: "select", }}
         field={Select}
-        options={['react', 'angular', 'vue', 'no framework',]}
+        options={options}
         onChange={handleChange}
         value={state.select}
         label="Select a framework"
