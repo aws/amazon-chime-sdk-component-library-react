@@ -1,5 +1,5 @@
 import React from 'react';
-import { text } from '@storybook/addon-knobs';
+import { select } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 import Flex from '../Flex';
@@ -32,7 +32,7 @@ export const BasicInput = () => {
   return (
     <Flex layout="fill-space-centered">
     <StyledSelect
-      value={text('value', "no_fruit_selected")}
+      value={select('value', options.map(option => option.value), "no_fruit_selected")}
       options={options}
       aria-label="basic select input"
       onChange={(e: any) => { console.log(e.target.value)} }
