@@ -38,11 +38,11 @@ const fontSizes = {
   },
 
   "h2": {
-    fontSize: "3.05rem",
+    fontSize: "3.925rem",
     fontWeight: "normal",
     lineHeight: "3.75rem",
     mobile: {
-      fontSize: "3.925rem",
+      fontSize: "3.05rem",
       fontWeight: "normal",
       lineHeight: "4.5rem",
     }

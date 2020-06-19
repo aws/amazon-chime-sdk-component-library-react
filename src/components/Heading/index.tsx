@@ -1,10 +1,10 @@
 import React, { forwardRef, ReactNode } from 'react';
 import { StyledHeading } from './Styled';
 
-export type HeadingLevel = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface HeadingProps  {
-  as?: any;
+  tag?: any;
   children: ReactNode | ReactNode[];
   className?: string;
   css?: string;
@@ -12,11 +12,11 @@ export interface HeadingProps  {
 }
 
 export const Heading = forwardRef((props: HeadingProps, ref: React.Ref<HTMLElement>) => {
-  const { as, children, className, css, level, } = props;
+  const { tag, children, className, css, level, } = props;
 
   return (
     <StyledHeading
-      as={as || level}
+      as={tag || level}
       className={className || ''}
       css={css}
       level={level}
