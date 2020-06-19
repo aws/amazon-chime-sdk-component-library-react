@@ -54,6 +54,7 @@ interface NotificationType {
 declare module 'styled-components' {
   export interface DefaultTheme {
     name?: string;
+    
     fonts: {
       body: string;
       monospace: string;

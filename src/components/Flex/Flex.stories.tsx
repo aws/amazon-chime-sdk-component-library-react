@@ -5,7 +5,8 @@ import { Flex } from './';
 
 const Child = styled(Flex)`
   background-color: ${props => props.theme.colors.primary.lightest};
-  margin-right: 1rem;
+  height: 90vh;
+  margin: 1rem;
   border-radius: 4px;
 `;
 

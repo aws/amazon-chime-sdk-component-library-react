@@ -77,6 +77,7 @@ const colors = {
 const global = {
   bgd: colors.greys.white,
   text: colors.greys.grey80,
+  fontSize: defaultTheme.fontSizes.baseFontSize,
 };
 
 const shadows = {
