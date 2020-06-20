@@ -18,7 +18,7 @@ const MicSelection = () => {
 
   return (
     <div>
-      <Heading as="h2" level="h6" css={title}>
+      <Heading tag="h2" level={6} css={title}>
         Audio
       </Heading>
       <DeviceInput

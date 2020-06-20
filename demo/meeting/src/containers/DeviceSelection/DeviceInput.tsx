@@ -2,10 +2,11 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 import { FormField, Select } from 'amazon-chime-sdk-component-library-react';
 
 import { StyledInputGroup } from './Styled';
+import { DeviceType } from '../../types';
 
 interface Props {
   label: string;
-  devices: MediaDeviceInfo[];
+  devices: DeviceType[];
   onChange: (deviceId: string) => void;
 }
 

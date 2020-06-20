@@ -15,7 +15,8 @@ import {
 } from 'amazon-chime-sdk-js';
 
 import { DevicePermissionStatus } from '../enums';
-import { VIDEO_INPUT, AUDIO_INPUT } from '../constants';
+import { AUDIO_INPUT } from '../constants';
+import { videoInputSelectionToDevice } from '../utils/DeviceUtils';
 
 const BASE_URL: string = [
   location.protocol,
@@ -27,7 +28,7 @@ const BASE_URL: string = [
 type FullDeviceInfoType = {
   currentAudioInputDevice: MediaDeviceInfo | null;
   currentAudioOutputDevice: MediaDeviceInfo | null;
-  currentVideoInputDevice: MediaDeviceInfo | null;
+  selectedVideoInputDevice: string | null;
   audioInputDevices: MediaDeviceInfo[] | null;
   audioOutputDevices: MediaDeviceInfo[] | null;
   videoInputDevices: MediaDeviceInfo[] | null;
@@ -49,7 +50,10 @@ export class MeetingManager implements DeviceChangeObserver {
 
   currentAudioInputDevice: MediaDeviceInfo | null = null;
   currentAudioOutputDevice: MediaDeviceInfo | null = null;
-  currentVideoInputDevice: MediaDeviceInfo | null = null;
+
+  selectedVideoInputDevice: string | null = null;
+
+  selectedVideoInputDeviceObservers: ((deviceId: string | null) => void)[] = [];
 
   audioInputDevices: MediaDeviceInfo[] | null = null;
   audioOutputDevices: MediaDeviceInfo[] | null = null;
@@ -74,7 +78,8 @@ export class MeetingManager implements DeviceChangeObserver {
     this.region = null;
     this.currentAudioInputDevice = null;
     this.currentAudioOutputDevice = null;
-    this.currentVideoInputDevice = null;
+    this.selectedVideoInputDevice = null;
+    this.selectedVideoInputDeviceObservers = [];
     this.audioInputDevices = [];
     this.audioOutputDevices = [];
     this.videoInputDevices = [];
@@ -241,14 +246,15 @@ export class MeetingManager implements DeviceChangeObserver {
       );
     }
     if (
-      !this.currentVideoInputDevice &&
+      !this.selectedVideoInputDevice &&
       this.videoInputDevices &&
       this.videoInputDevices.length
     ) {
-      this.currentVideoInputDevice = this.videoInputDevices[0];
+      this.selectedVideoInputDevice = this.videoInputDevices[0].deviceId;
       await this.audioVideo?.chooseVideoInputDevice(
         this.videoInputDevices[0].deviceId
       );
+      this.publishSelectedVideoInputDeviceChange();
     }
   }
 
@@ -259,16 +265,6 @@ export class MeetingManager implements DeviceChangeObserver {
   audioInputSelectionToDevice(value: string): Device {
     if (value === AUDIO_INPUT[440]) {
       return DefaultDeviceController.synthesizeAudioDevice(440);
-    } else {
-      return null;
-    }
-  }
-
-  videoInputSelectionToDevice(value: string): Device {
-    if (value === VIDEO_INPUT.BLUE) {
-      return DefaultDeviceController.synthesizeVideoDevice('blue');
-    } else if (value === VIDEO_INPUT.SMPTE) {
-      return DefaultDeviceController.synthesizeVideoDevice('smpte');
     } else {
       return null;
     }
@@ -292,10 +288,17 @@ export class MeetingManager implements DeviceChangeObserver {
     }
   };
 
-  selectVideoInputDevice = async (deviceId: string) => {
+  selectVideoInputDevice = async (deviceId: string): Promise<void> => {
     try {
-      await this.audioVideo?.chooseVideoInputDevice(deviceId);
-      // this.currentVideoInputDevice = device;
+      const receivedDevice = videoInputSelectionToDevice(deviceId);
+      if (receivedDevice === null) {
+        await this.audioVideo?.chooseVideoInputDevice(null);
+        this.selectedVideoInputDevice = null;
+      } else {
+        await this.audioVideo?.chooseVideoInputDevice(receivedDevice);
+        this.selectedVideoInputDevice = deviceId;
+      }
+      this.publishSelectedVideoInputDeviceChange();
     } catch (error) {
       console.error(`Error setting video input - ${error}`);
     }
@@ -423,6 +426,27 @@ export class MeetingManager implements DeviceChangeObserver {
     for (let i = 0; i < this.devicePermissionsObservers.length; i += 1) {
       const callback = this.devicePermissionsObservers[i];
       callback(this.devicePermissions);
+    }
+  };
+
+  subscribeToSelectedVideoInputDeviceChange = (
+    callback: (deviceId: string | null) => void
+  ): void => {
+    this.selectedVideoInputDeviceObservers.push(callback);
+  };
+
+  unsubscribeFromSelectedVideoInputDeviceChange = (
+    callbackToRemove: (deviceId: string | null) => void
+  ): void => {
+    this.selectedVideoInputDeviceObservers = this.selectedVideoInputDeviceObservers.filter(
+      callback => callback !== callbackToRemove
+    );
+  };
+
+  private publishSelectedVideoInputDeviceChange = (): void => {
+    for (let i = 0; i < this.selectedVideoInputDeviceObservers.length; i += 1) {
+      const callback = this.selectedVideoInputDeviceObservers[i];
+      callback(this.selectedVideoInputDevice);
     }
   };
 }

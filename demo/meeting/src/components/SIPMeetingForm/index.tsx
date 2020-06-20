@@ -24,7 +24,7 @@ export default function SIPMeetingForm({
 }: SIPMeetingFormProps) {
   return (
     <form>
-      <Heading as="h1" level="h4" css="margin-bottom: 1rem">
+      <Heading tag="h1" level={4} css="margin-bottom: 1rem">
         Join a meeting via SIP
       </Heading>
       <FormField
