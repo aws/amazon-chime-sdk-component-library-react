@@ -12,6 +12,7 @@ export const Textarea: FC<TextareaProps> = ({ label, ...props }) => {
     <StyledTextarea
       aria-label={label}
       className="Textarea"
+      data-testid='textarea'
       {...props}
     />
   );
