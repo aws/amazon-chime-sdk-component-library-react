@@ -22,6 +22,7 @@ const renderOptions = (options: SelectOptions[]) => {
 export const Select = forwardRef((props: SelectProps, ref: Ref<HTMLSelectElement>) => (
   <StyledSelectInput
     className="Select"
+    data-testid='select'
     ref={ref}
     {...props}
   >
