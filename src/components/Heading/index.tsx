@@ -16,7 +16,7 @@ export const Heading = forwardRef((props: HeadingProps, ref: React.Ref<HTMLEleme
 
   return (
     <StyledHeading
-      as={tag || level}
+      as={tag || `h${level}`}
       className={className || ''}
       css={css}
       level={level}
