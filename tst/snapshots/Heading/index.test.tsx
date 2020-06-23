@@ -1,6 +1,6 @@
 describe('Heading', () => {
   it('css=color: palevioletred, level=1', async () => {
-    await page.goto('http://host.docker.internal:9009/iframe.html?id=headings--basic-heading&knob-css=color: palevioletred;&knob-level=5');
+    await page.goto('http://host.docker.internal:9009/iframe.html?id=headings--basic-heading&knob-css=color: palevioletred;&knob-level=1');
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
   });

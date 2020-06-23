@@ -24,6 +24,7 @@ export const VideoGrid: React.FC<VideoGridProps> = ({ size, children, ...props }
       {...props}
       size={size}
       ratio={ratio}
+      data-testid='video-grid'
     >
       {children}
     </StyledGrid>

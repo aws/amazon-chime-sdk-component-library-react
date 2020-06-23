@@ -3,3 +3,4 @@ node_modules
 lib
 build
 coverage
+tst/snapshots/**/__diff_output__

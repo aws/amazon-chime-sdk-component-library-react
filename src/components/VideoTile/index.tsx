@@ -15,7 +15,7 @@ export const VideoTile: React.SFC<VideoTileProps> = props => {
   }, [bindVideoTile, videoEl]);
 
   return (
-    <StyledVideoTile {...props}>
+    <StyledVideoTile {...props} data-testid='video-tile'>
       <video ref={videoEl} className="video" />
       <header className="nameplate">
         <div>

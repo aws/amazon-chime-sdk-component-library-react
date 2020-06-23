@@ -20,7 +20,7 @@ describe('PopOver', () => {
     mockFunction = jest.fn();
   });
 
-  const popOverButton = (isOpen:boolean) => <div>Test Button</div>;
+  const popOverButton = (isOpen: boolean) => <div>Test Button</div>;
   const testChild = <div>Test Child</div>
 
   it('should render a PopOver component in the document', () => {
