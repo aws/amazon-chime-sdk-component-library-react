@@ -16,4 +16,11 @@ describe('Heading', () => {
 
     expect(heading).toHaveTextContent(childrenContent);
   });
+
+  it('should render as the tag passed', () => {
+    const component = <Heading level={1} tag='span'>Hello World</Heading>;
+    renderWithTheme(lightTheme, component);
+
+    expect(document.querySelectorAll('span')).toHaveLength(1);
+  });
 });

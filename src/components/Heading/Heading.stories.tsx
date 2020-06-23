@@ -14,7 +14,8 @@ export const BasicHeading = () => (
       css={text('css', 'color: palevioletred;')}
       level={select('level', {1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 }, 1)}
       tag={text('tag', 'p')}
-    >Change my <code>level</code> or <code>as</code> prop
+    >
+      Change my <code>level</code> or <code>as</code> prop
     </Heading>
   </Flex>
 );
