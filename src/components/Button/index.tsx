@@ -1,7 +1,9 @@
-import React, { forwardRef } from 'react';
+import React, { forwardRef, HTMLAttributes } from 'react';
+
+import { BaseProps } from '../Base';
 import { StyledButton } from './Styled';
 
-export interface ButtonProps extends React.HTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'css'>, BaseProps {
   icon?: JSX.Element;
   label: string;
   variant?: ButtonVariant;
@@ -13,6 +15,8 @@ export type ButtonVariant = 'default' | 'primary' | 'secondary' | 'icon';
 export const Button = forwardRef((props: ButtonProps, ref: React.Ref<HTMLButtonElement>) => (
   <StyledButton
     {...props}
+    className={props.className || ''}
+    as={props.tag}
     ref={ref}
     aria-label={props.label}
     data-testid='button'

@@ -1,5 +1,7 @@
 import styled, { css } from 'styled-components';
+
 import { FlexProps } from './';
+import { baseStyles, baseSpacing } from '../Base';
 
 export const fillSpace = css`
   display: flex;
@@ -55,4 +57,7 @@ export const StyledFlex = styled.div<FlexProps>`
 
   // layout variants
   ${props => !!props.layout && layoutMap[props.layout]}
+
+  ${baseSpacing}
+  ${baseStyles}
 `;

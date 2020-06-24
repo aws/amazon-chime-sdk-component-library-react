@@ -45,11 +45,11 @@ FillSpaceCentered.story = {
 
 export const EqualColumns = () => {
   return (
-    <Flex as="header" layout="equal-columns">
-      <Child as="article" />
-      <Child as="article" />
-      <Child as="article" />
-      <Child as="article" />
+    <Flex tag="header" layout="equal-columns">
+      <Child tag="article" />
+      <Child tag="article" />
+      <Child tag="article" />
+      <Child tag="article" />
     </Flex>
   );
 };

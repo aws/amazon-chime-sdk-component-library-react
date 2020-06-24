@@ -1,5 +1,7 @@
 import styled from 'styled-components';
+
 import { HeadingProps } from './';
+import { baseStyles, baseSpacing } from '../Base';
 
 export const StyledHeading = styled.h1<HeadingProps>`
   display: block;
@@ -9,10 +11,12 @@ export const StyledHeading = styled.h1<HeadingProps>`
   font-weight: ${props => props.theme.fontSizes[`h${props.level}`].mobile.fontWeight};
   line-height: ${props => props.theme.fontSizes[`h${props.level}`].mobile.lineHeight};
 
-  @media (min-width: ${props => props.theme.breakpoints.tabletPortait}) {
+  ${({theme}) => theme.mediaQueries.min.md} {
     font-size: ${props => props.theme.fontSizes[`h${props.level}`].fontSize};
     font-weight: ${props => props.theme.fontSizes[`h${props.level}`].fontWeight};
     line-height:  ${props => props.theme.fontSizes[`h${props.level}`].lineHeight};
   };
-  ${props => props.css}
+
+  ${baseSpacing}
+  ${baseStyles}
 `;

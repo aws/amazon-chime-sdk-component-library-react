@@ -14,8 +14,8 @@ export const _Notification = () => {
         onClose={() => {console.log('Close notification')}}
         severity={select(
           'severity',
-          { success: Severity.SUCCESS, 
-            warning: Severity.WARNING, 
+          { success: Severity.SUCCESS,
+            warning: Severity.WARNING,
             info: Severity.INFO,
             error: Severity.ERROR,
            },

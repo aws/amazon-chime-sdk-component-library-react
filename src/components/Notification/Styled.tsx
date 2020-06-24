@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { NotificationProps } from '.';
 import { Severity } from '../../providers/NotificationProvider';
 import IconButton from '../Button/IconButton';
+import { baseStyles, baseSpacing } from '../Base';
 
 interface StyledNotificationProps extends NotificationProps {
   severity: Severity;
@@ -51,4 +52,7 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
     background-color: ${({ theme, severity }) => theme.notification[severity].closeButton.active.bgd};
     color: ${({ theme, severity }) => theme.notification[severity].closeButton.active.text};
   };
+
+  ${baseSpacing}
+  ${baseStyles}
 `;

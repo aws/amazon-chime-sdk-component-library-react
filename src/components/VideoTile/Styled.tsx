@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import { ellipsis } from '../../utils/style';
 import { VideoTileProps } from './';
+import { baseStyles, baseSpacing } from '../Base';
 
 export const StyledVideoTile = styled.div<VideoTileProps>`
   width: 100%;
@@ -75,4 +76,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
       margin: 0;
     }
   }
+
+  ${baseSpacing}
+  ${baseStyles}
 `;

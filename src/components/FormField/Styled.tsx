@@ -1,6 +1,7 @@
 import styled, { css } from 'styled-components';
 
-import { LayoutProps } from './';
+import { FieldWrapperProps } from './';
+import { baseStyles, baseSpacing } from '../Base';
 
 export const stack = css`
   &.FormField-Input,
@@ -176,7 +177,7 @@ const layoutMap = {
   "input-only": inputOnly,
 };
 
-export const StyledFormField = styled.div<LayoutProps>`
+export const StyledFormField = styled.div<FieldWrapperProps>`
   display: flex;
   margin-bottom: 1rem;
   position: relative;
@@ -200,4 +201,7 @@ export const StyledFormField = styled.div<LayoutProps>`
   }
 
   ${props => !!props.layout && layoutMap[props.layout]}
+
+  ${baseSpacing}
+  ${baseStyles}
 `;

@@ -1,25 +1,39 @@
-import React, { useEffect, useRef } from 'react';
-import { StyledVideoTile } from './Styled';
+import React, { useEffect, useRef, HTMLAttributes } from 'react';
 
-export interface VideoTileProps extends React.HTMLAttributes<HTMLDivElement>{
+import { StyledVideoTile } from './Styled';
+import { BaseProps } from '../Base';
+
+export interface VideoTileProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseProps {
   nameplate: string;
   bindVideoTile: (arg0: any) => void;
 }
 
-export const VideoTile: React.SFC<VideoTileProps> = props => {
+export const VideoTile: React.SFC<VideoTileProps> = ({
+  tag,
+  className,
+  nameplate,
+  bindVideoTile,
+  ...rest
+}) => {
   const videoEl = useRef(null);
-  const { bindVideoTile } = props;
 
   useEffect(() => {
     !!videoEl && bindVideoTile(videoEl.current);
   }, [bindVideoTile, videoEl]);
 
   return (
-    <StyledVideoTile {...props} data-testid='video-tile'>
+    <StyledVideoTile
+      as={tag}
+      className={className || ''}
+      data-testid="video-tile"
+      {...rest}
+    >
       <video ref={videoEl} className="video" />
       <header className="nameplate">
         <div>
-          <p className="text">{props.nameplate}</p>
+          <p className="text">{nameplate}</p>
         </div>
       </header>
     </StyledVideoTile>
