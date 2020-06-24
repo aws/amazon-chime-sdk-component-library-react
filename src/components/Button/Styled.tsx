@@ -1,5 +1,6 @@
 import styled, { css } from 'styled-components';
 
+import { baseStyles, baseSpacing } from '../Base';
 import { visuallyHidden } from '../../utils/style';
 import { ButtonProps } from './';
 
@@ -31,6 +32,9 @@ export const StyledButton = styled.button<ButtonProps>`
   ${props => props.variant === 'primary' && StyledPrimaryButton}
   ${props => props.variant === 'secondary'&& StyledSecondaryButton}
   ${props => props.variant === 'icon' && StyledIconButton}
+
+  ${baseSpacing}
+  ${baseStyles}
 `;
 
 export const StyledPrimaryButton = css<ButtonProps>`

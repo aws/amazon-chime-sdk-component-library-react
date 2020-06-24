@@ -1,5 +1,7 @@
 import React, { FC } from 'react';
+
 import { StyledFlex } from './Styled';
+import { BaseProps } from '../Base';
 
 type AlignItems =
 | 'baseline'
@@ -28,8 +30,7 @@ type Layout =
 type FlexDirection = 'row' | 'column';
 type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse';
 
-export interface FlexProps {
-  as?: any;
+export interface FlexProps extends BaseProps {
   alignItems?: AlignItems
   container?: boolean;
   flexDirection?: FlexDirection;
@@ -43,8 +44,8 @@ export interface FlexProps {
   style?: {};
 }
 
-export const Flex: FC<FlexProps> = ({ children, ...props }) => (
-  <StyledFlex {...props} data-testid='flex'>
+export const Flex: FC<FlexProps> = ({ children, className, tag, ...props }) => (
+  <StyledFlex {...props} as={tag} data-testid='flex' className={className || ''}>
     {children}
   </StyledFlex>
 );

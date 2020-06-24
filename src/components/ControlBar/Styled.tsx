@@ -2,63 +2,79 @@ import styled from 'styled-components';
 
 import { ControlBarProps, ControlBarLayout } from '.';
 import { PopOverItemProps } from '../PopOver/PopOverItem';
+import { baseStyles, baseSpacing } from '../Base';
 
 interface StyledControlBarProps extends ControlBarProps {}
 
 const layoutMap = {
   'undocked-vertical': 'flex-direction: column; padding: 0.375rem 0; ',
   'undocked-horizontal': 'flex-direction: row; padding: 1.125rem;',
-  'top': 'flex-direction: row; width: 100%; top: 0; position: fixed; padding: 1.125rem;',
-  'bottom': 'flex-direction: row; width: 100%; bottom: 0; position: fixed; padding: 1.125rem;',
-  'right': 'flex-direction: column; height: 100%; right: 0; position: fixed;',
-  'left': 'flex-direction: column; height: 100%; left: 0; position: fixed;',
-}
+  top:
+    'flex-direction: row; width: 100%; top: 0; position: fixed; padding: 1.125rem;',
+  bottom:
+    'flex-direction: row; width: 100%; bottom: 0; position: fixed; padding: 1.125rem;',
+  right: 'flex-direction: column; height: 100%; right: 0; position: fixed;',
+  left: 'flex-direction: column; height: 100%; left: 0; position: fixed;',
+};
 
 const gridTemplateColumnMap = {
-  'popOver': 'grid-template-columns: 1.5rem 1.5rem',
+  popOver: 'grid-template-columns: 1.5rem 1.5rem',
   'popOver&vertical': 'grid-template-columns: 1.5rem 1.5rem 1.5rem',
-}
+};
 
 export const isVertical = (layout: ControlBarLayout) => {
-  return layout === 'right' || layout === 'left' || layout === 'undocked-vertical';
+  return (
+    layout === 'right' || layout === 'left' || layout === 'undocked-vertical'
+  );
 };
 
 export const isUndocked = (layout: ControlBarLayout) => {
   return layout === 'undocked-vertical' || layout === 'undocked-horizontal';
 };
 const unsetPosition = {
-  'top': 'unset;', 'bottom': 'unset;', 'right': 'unset;', 'left': 'unset;', 
-}
+  top: 'unset;',
+  bottom: 'unset;',
+  right: 'unset;',
+  left: 'unset;',
+};
 
 export const StyledControlBar = styled.div<StyledControlBarProps>`
   display: inline-flex;
   justify-content: center;
   align-items: center;
   justify-content: center;
-  background-color: ${props => props.theme.controlBar.bgd};
-  opacity: ${props => props.theme.controlBar.opacity};
-  border: ${({ theme, layout }) => isUndocked(layout) ?  'none' : theme.controlBar.border};
-  box-shadow: ${({ theme, layout }) => isUndocked(layout) ? theme.controlBar.shadow : 'none'};
+  background-color: ${(props) => props.theme.controlBar.bgd};
+  opacity: ${(props) => props.theme.controlBar.opacity};
+  border: ${({ theme, layout }) =>
+    isUndocked(layout) ? 'none' : theme.controlBar.border};
+  box-shadow: ${({ theme, layout }) =>
+    isUndocked(layout) ? theme.controlBar.shadow : 'none'};
   ${({ layout }) => layoutMap[`${layout}`]};
 
-@media (max-width: ${props => props.theme.breakpoints.mobileLandscape}) {
-  padding: 1rem;
-  padding-top: ${({ showLabels }) => showLabels ? '1.25rem' : '1rem'};
-  ${unsetPosition}
-  ${({ layout }) => isVertical(layout) ? layoutMap['left'] : layoutMap['bottom']};
-  box-shadow: ${({ theme }) => theme.controlBar.shadow};
-  border: none;
-};
+  ${({ theme }) => theme.mediaQueries.max.sm} {
+    padding: 1rem;
+    padding-top: ${({ showLabels }) => (showLabels ? '1.25rem' : '1rem')};
+    ${unsetPosition}
+    ${({ layout }) =>
+      isVertical(layout) ? layoutMap['left'] : layoutMap['bottom']};
+    box-shadow: ${({ theme }) => theme.controlBar.shadow};
+    border: none;
+  }
 
-@media (max-width: ${props => props.theme.breakpoints.mobilePortrait}) {
-  padding: 1rem;
-  padding-top: ${({ showLabels }) => showLabels ? '1.25rem' : '1rem'};
-  justify-content: ${({ layout }) => isVertical(layout) ? 'center' : 'space-around'};
-  ${unsetPosition}
-  ${({ layout }) => isVertical(layout) ? layoutMap['left'] : layoutMap['bottom']};
-  box-shadow: ${({ theme }) => theme.controlBar.shadow};
-  border: none;
-};
+  ${({ theme }) => theme.mediaQueries.max.xs} {
+    padding: 1rem;
+    padding-top: ${({ showLabels }) => (showLabels ? '1.25rem' : '1rem')};
+    justify-content: ${({ layout }) =>
+      isVertical(layout) ? 'center' : 'space-around'};
+    ${unsetPosition}
+    ${({ layout }) =>
+      isVertical(layout) ? layoutMap['left'] : layoutMap['bottom']};
+    box-shadow: ${({ theme }) => theme.controlBar.shadow};
+    border: none;
+  }
+
+  ${baseSpacing}
+  ${baseStyles}
 `;
 
 interface StyledControlBarItemProps extends StyledControlBarProps {
@@ -66,14 +82,22 @@ interface StyledControlBarItemProps extends StyledControlBarProps {
 }
 
 export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
-  margin: ${({ layout }) => isVertical(layout) ? '0.625rem 0' : '0 0.625rem'};
+  margin: ${({ layout }) => (isVertical(layout) ? '0.625rem 0' : '0 0.625rem')};
   display: grid;
-  grid-template-rows: ${({ showLabels }) => showLabels ? '1.5rem 1rem' : '1.5rem'};
+  grid-template-rows: ${({ showLabels }) =>
+    showLabels ? '1.5rem 1rem' : '1.5rem'};
   justify-items: center;
   align-items: center;
   ${({ popOver, layout }) => `
-    ${!isVertical(layout) && popOver && gridTemplateColumnMap['popOver'] || ''}
-    ${isVertical(layout) && popOver && gridTemplateColumnMap['popOver&vertical'] || ''}
+    ${
+      (!isVertical(layout) && popOver && gridTemplateColumnMap['popOver']) || ''
+    }
+    ${
+      (isVertical(layout) &&
+        popOver &&
+        gridTemplateColumnMap['popOver&vertical']) ||
+      ''
+    }
   `};
 
   button {
@@ -81,8 +105,9 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
     border: none;
     outline: none;
     background-color: inherit;
-    grid-column-start: ${({ layout, popOver }) => isVertical(layout) && popOver ? '2' : '1'};
-    
+    grid-column-start: ${({ layout, popOver }) =>
+      isVertical(layout) && popOver ? '2' : '1'};
+
     .icon {
       width: 1.5rem;
       height: 1.5rem;
@@ -94,36 +119,38 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
       width: 1.5rem;
       height: 1.5rem;
     }
-    
+
     .isOpen.controlBarItem__caret {
-      color: ${props => props.theme.colors.primary.main};
+      color: ${(props) => props.theme.colors.primary.main};
     }
   }
 
   .controlBarItem__label {
     grid-row-start: 2;
-    font-size: ${props => props.theme.fontSizes.footnote.fontSize}; /* TODO: get updated font size from design */
+    font-size: ${(props) =>
+      props.theme.fontSizes.footnote
+        .fontSize}; /* TODO: get updated font size from design */
     padding-top: 0.25rem;
     justify-self: center;
-    grid-column: ${({ layout, popOver }) => isVertical(layout) && popOver ? '2' : '1'};
+    grid-column: ${({ layout, popOver }) =>
+      isVertical(layout) && popOver ? '2' : '1'};
   }
 
-  @media (max-width: ${props => props.theme.breakpoints.mobileLandscape}) {
+  ${({ theme }) => theme.mediaQueries.max.sm} {
     grid-template-columns: unset;
     justify-content: space-around;
 
     button ~ span {
       display: none;
     }
-  };
+  }
 
-  @media (max-width: ${props => props.theme.breakpoints.mobilePortrait}) {
+  ${({ theme }) => theme.mediaQueries.max.xs} {
     grid-template-columns: unset;
-    margin: ${({ layout }) => isVertical(layout) ? '0.75rem 0' : '0'};
+    margin: ${({ layout }) => (isVertical(layout) ? '0.75rem 0' : '0')};
 
     button ~ span {
       display: none;
     }
-
-  };
+  }
 `;

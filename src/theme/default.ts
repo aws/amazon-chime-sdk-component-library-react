@@ -1,11 +1,14 @@
+import { Breakpoints } from './styled';
+
 export const fonts = {
-  body: "'Ember', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;",
-  monospace: "Menlo, monospace",
+  body:
+    "'Ember', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;",
+  monospace: 'Menlo, monospace',
 };
 
 export const radii = {
-  default: "0.25rem",
-  circle: "50%",
+  default: '0.25rem',
+  circle: '50%',
 };
 
 export const zIndex = {
@@ -14,30 +17,53 @@ export const zIndex = {
   popOver: 30,
 };
 
-export const breakpoints = {
-  mobilePortrait: "20rem",      // 320px
-  mobileLandscape: "35.5rem",   // 568px
-  tabletPortait: "48rem",       // 768px
-  tabletLandscape: "64rem",     // 1024px
-  laptop: "75rem",              // 1200px
+const breakpoints = [
+  '20rem',    // 320px
+  '35.5rem',  // 568px
+  '48rem',    // 768px
+  '64rem',    // 1024px
+  '90rem',    // 1440px
+] as Breakpoints;
+
+breakpoints.xs = breakpoints[0];
+breakpoints.sm = breakpoints[1];
+breakpoints.md = breakpoints[2];
+breakpoints.lg = breakpoints[3];
+breakpoints.xl = breakpoints[4];
+
+const mediaQueries = {
+  min: {
+    xs: `@media screen and (min-width: ${breakpoints.xs})`,
+    sm: `@media screen and (min-width: ${breakpoints.sm})`,
+    md: `@media screen and (min-width: ${breakpoints.md})`,
+    lg: `@media screen and (min-width: ${breakpoints.lg})`,
+    xl: `@media screen and (min-width: ${breakpoints.xl})`,
+  },
+  max: {
+    xs: `@media screen and (max-width: ${breakpoints.xs})`,
+    sm: `@media screen and (max-width: ${breakpoints.sm})`,
+    md: `@media screen and (max-width: ${breakpoints.md})`,
+    lg: `@media screen and (max-width: ${breakpoints.lg})`,
+    xl: `@media screen and (max-width: ${breakpoints.xl})`,
+  },
 };
 
 const fontSizes = {
-  baseFontSize: "16px",
-  fontWeight: "normal",
+  baseFontSize: '16px',
+  fontWeight: 'normal',
 
-  "h1": {
-    fontSize: "5.3rem",
-    fontWeight: "normal",
-    lineHeight: "5.625rem",
+  h1: {
+    fontSize: '5.3rem',
+    fontWeight: 'normal',
+    lineHeight: '5.625rem',
     mobile: {
-      fontSize: "3.8125rem",
-      fontWeight: "normal",
-      lineHeight: "5.625rem",
-    }
+      fontSize: '3.8125rem',
+      fontWeight: 'normal',
+      lineHeight: '5.625rem',
+    },
   },
 
-  "h2": {
+  h2: {
     fontSize: "3.925rem",
     fontWeight: "normal",
     lineHeight: "3.75rem",
@@ -48,72 +74,73 @@ const fontSizes = {
     }
   },
 
-  "h3": {
-    fontSize: "2.44125rem",
-    fontWeight: "normal",
-    lineHeight: "3.75rem",
+  h3: {
+    fontSize: '2.44125rem',
+    fontWeight: 'normal',
+    lineHeight: '3.75rem',
     mobile: {
-      fontSize: "2.90625rem",
-      fontWeight: "normal",
-      lineHeight: "3rem",
-    }
+      fontSize: '2.90625rem',
+      fontWeight: 'normal',
+      lineHeight: '3rem',
+    },
   },
 
-  "h4": {
-    fontSize: "1.953125rem",
-    fontWeight: "normal",
-    lineHeight: "3.75rem",
+  h4: {
+    fontSize: '1.953125rem',
+    fontWeight: 'normal',
+    lineHeight: '3.75rem',
     mobile: {
-      fontSize: "2.15rem",
-      fontWeight: "normal",
-      lineHeight: "3rem",
-    }
+      fontSize: '2.15rem',
+      fontWeight: 'normal',
+      lineHeight: '3rem',
+    },
   },
 
-  "h5": {
-    fontSize: "1.5625rem",
-    fontWeight: "normal",
-    lineHeight: "3rem",
+  h5: {
+    fontSize: '1.5625rem',
+    fontWeight: 'normal',
+    lineHeight: '3rem',
     mobile: {
-      fontSize: "1.59375rem",
-      fontWeight: "normal",
-      lineHeight: "1.875rem",
-    }
+      fontSize: '1.59375rem',
+      fontWeight: 'normal',
+      lineHeight: '1.875rem',
+    },
   },
 
-  "h6": {
-    fontSize: "1.25rem",
-    fontWeight: "normal",
-    lineHeight: "1.875rem",
+  h6: {
+    fontSize: '1.25rem',
+    fontWeight: 'normal',
+    lineHeight: '1.875rem',
     mobile: {
-      fontSize: "1.18125rem",
-      fontWeight: "normal",
-      lineHeight: "1.5rem",
-    }
+      fontSize: '1.18125rem',
+      fontWeight: 'normal',
+      lineHeight: '1.5rem',
+    },
   },
 
-  "text": {
-    fontSize: "0.875rem",
-    lineHeight: "1.43",
+  text: {
+    fontSize: '0.875rem',
+    lineHeight: '1.43',
   },
 
-  "label": {
-    fontSize: "0.875rem",
-    lineHeight: "1.43",
+  label: {
+    fontSize: '0.875rem',
+    lineHeight: '1.43',
   },
 
-  "small": {
-    fontSize: "0.75rem",
-    lineHeight: "1.43",
+  small: {
+    fontSize: '0.75rem',
+    lineHeight: '1.43',
   },
-  "footnote": {
-    fontSize: "0.65rem",
-    lineHeight: "1rem",
-  }
-}
+  footnote: {
+    fontSize: '0.65rem',
+    lineHeight: '1rem',
+  },
+};
 
 export const defaultTheme = {
   breakpoints,
+  mediaQueries,
   fonts,
   fontSizes,
   radii,

@@ -18,7 +18,7 @@ export const _ControlBar = () => {
     onClick: () => setMuted(!muted),
     label: 'Mute',
   }
-  
+
   const cameraButtonProps = {
     icon: cameraActive ? <Camera /> : <Camera disabled />,
     popOver: [
@@ -62,8 +62,8 @@ export const _ControlBar = () => {
       showLabels={boolean('show labels', true)}
       layout={select(
         'layout',{
-          top: 'top', 
-          bottom:'bottom', 
+          top: 'top',
+          bottom:'bottom',
           right: 'right',
           left: 'left',
           undockedVertical: 'undocked-vertical',

@@ -9,6 +9,7 @@ import { TextareaProps } from '../Textarea';
 import { CheckboxProps } from '../Checkbox';
 import { RadioGroupProps } from '../RadioGroup';
 import { RadioProps } from '../Radio';
+import { BaseProps } from '../Base';
 
 export type FieldType =
     FC<InputProps>
@@ -36,7 +37,8 @@ export interface LayoutProps {
   error?: boolean;
 }
 
-export interface FormFieldProps extends FieldProps, LayoutProps {}
+export interface FormFieldProps extends FieldProps, LayoutProps, BaseProps {}
+export interface FieldWrapperProps extends BaseProps, LayoutProps {}
 
 export const FormField = forwardRef((props: FormFieldProps, ref: Ref<HTMLElement>) => {
   const {
@@ -51,6 +53,8 @@ export const FormField = forwardRef((props: FormFieldProps, ref: Ref<HTMLElement
     value,
     checked,
     options,
+    className,
+    ...rest
   } = props;
 
   const { displayName } = Field;
@@ -77,7 +81,8 @@ export const FormField = forwardRef((props: FormFieldProps, ref: Ref<HTMLElement
     <StyledFormField
       layout={layout}
       error={error}
-      className={`FormField-${Field.displayName}`}
+      className={`FormField-${Field.displayName} ${className || ''}`}
+      {...rest}
     >
       {renderLabel()}
       {
