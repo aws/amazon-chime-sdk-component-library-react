@@ -1,0 +1,7 @@
+// To make changes to who gets added as a reviewer, refer to the documentation: https://help.github.com/en/github/creating-cloning-and-archiving-repositories/about-code-owners
+// This will add everyone on this list as a reviewer for every PR that is submitted against master branch
+// To be even more specific, refer to the documentation above
+
+* ziyiz@amazon.com  michhhyun@amazon.com landave@amazon.com pfoucht@amazon.com bradman@amazon.com xixia@amazon.com nikk@amazon.com devalevd@amazon.com hanaharr@amazon.com
+ 
+
