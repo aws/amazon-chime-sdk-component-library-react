@@ -82,6 +82,7 @@ export const FormField = forwardRef((props: FormFieldProps, ref: Ref<HTMLElement
       layout={layout}
       error={error}
       className={`FormField-${Field.displayName} ${className || ''}`}
+      data-testid='form-field'
       {...rest}
     >
       {renderLabel()}
