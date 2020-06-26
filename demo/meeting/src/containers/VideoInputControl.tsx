@@ -1,94 +1,57 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React from 'react';
 import {
-  faCaretDown,
-  faVideo,
-  faVideoSlash,
-} from '@fortawesome/free-solid-svg-icons'
+  ControlBarButton,
+  Camera,
+} from 'amazon-chime-sdk-component-library-react';
 
-import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
-import IconButton from '../components/IconButton';
-import ButtonGroup from '../components/ButtonGroup';
-import Dropdown, { OptionItem } from '../components/Dropdown';
-import LocalVideo from './LocalVideo';
-import { createOptions } from '../utils/DeviceUtils';
-import { VIDEO_INPUT } from '../constants';
+import { LocalVideo } from './LocalVideo';
+import { useVideoInputs } from '../providers/DevicesProvider';
+import { useMeetingManager } from '../providers/MeetingProvider';
+import { isOptionActive } from '../utils/DeviceUtils';
+import { useLocalVideoToggle } from '../providers/LocalVideoToggleProvider';
+import { DeviceConfig } from '../types';
+
+// TODO: import from library when types are exported
+export interface PopOverItemProps {
+  onClick?: () => void;
+  checked?: boolean;
+  children?: React.ReactElement<any> | React.ReactElement<any>[];
+  disabled?: boolean;
+  href?: string;
+  as?: any;
+  text?: string;
+  border?: boolean;
+}
 
 const VideoInputControl: React.FC = () => {
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
-  const [isVideoEnabled, setIsVideoEnabled] = useState(false);
-  const [showCameraDropdown, setShowCameraDropdown] = useState(false);
-  const [videoInputOptions, setVideoInputOptions] = useState(new Array<OptionItem>());
-
-  useEffect(() => {
-    if (meetingManager?.audioVideo?.hasStartedLocalVideoTile()) {
-      setIsVideoEnabled(true);
-    }
-    populateVideoInputList();
-  }, []);
-
-  const populateVideoInputList = async(): Promise<void> => {
-    const genericName = 'Camera';
-    const additionalDevices = [VIDEO_INPUT.NONE, VIDEO_INPUT.BLUE, VIDEO_INPUT.SMPTE];
-    const videoInputOpts = createOptions(
-      genericName,
-      meetingManager?.videoInputDevices!,
-      additionalDevices,
-    );
-    setVideoInputOptions(videoInputOpts);
-  }
-
-  const toggleVideoBtn = async (): Promise<void> => {
-    if (isVideoEnabled) {
-      meetingManager?.audioVideo?.stopLocalVideoTile();
-      setIsVideoEnabled(false);
-    } else {
-      try {
-        if (!meetingManager?.currentVideoInputDevice) {
-          throw new Error('Error, currentVideoInputDevice does not exist');
-        }
-        await meetingManager?.audioVideo?.chooseVideoInputDevice(meetingManager?.currentVideoInputDevice);
-        console.log('Current input:', meetingManager?.currentVideoInputDevice);
-        meetingManager?.audioVideo?.startLocalVideoTile();
-        setIsVideoEnabled(true);
-      } catch (error) {
-        console.log("No video input device selected");
-        setIsVideoEnabled(false);
-      }
-    }
-  }
-
-  const reselectVideoInput = async (name: string): Promise<void> => {
-    try {
-      await openVideoInputFromSelection(name);
-    } catch (err) {
-      console.log('No video input device selected');
-    }
-  }
-
-  const openVideoInputFromSelection = async (selection: string): Promise<void> => {
-    if (!selection) {
-      return;
-    }
-    const device = await meetingManager?.videoInputSelectionToDevice(selection);
-    if (device === null) {
-      meetingManager?.audioVideo?.stopLocalVideoTile();
-      setIsVideoEnabled(false);
-      console.log('No video device selected');
-    }
-    await meetingManager?.audioVideo?.chooseVideoInputDevice(device!);
-  }
+  const meetingManager = useMeetingManager();
+  const videoInputConfig: DeviceConfig = {
+    additionalDevices: true,
+  };
+  const { devices, selectedDevice } = useVideoInputs(videoInputConfig);
+  const { isVideoEnabled, toggleVideo } = useLocalVideoToggle();
+  const dropdownOptions: PopOverItemProps[] = devices.map(device => ({
+    children: <span>{device.label}</span>,
+    checked: isOptionActive(selectedDevice, device.deviceId),
+    onClick: (): Promise<void> =>
+      meetingManager.selectVideoInputDevice(device.deviceId),
+  }));
 
   return (
     <>
-      <ButtonGroup>
-        <IconButton icon={isVideoEnabled ? faVideo : faVideoSlash} onClick={toggleVideoBtn} />
-        <IconButton icon={faCaretDown} onClick={() => setShowCameraDropdown(!showCameraDropdown)}/>
-        {showCameraDropdown && <Dropdown onChange={reselectVideoInput} options={videoInputOptions} />}
-      </ButtonGroup>
+      <ControlBarButton
+        icon={<Camera disabled={!isVideoEnabled} />}
+        onClick={toggleVideo}
+        label={isVideoEnabled ? 'Disable video' : 'Enable video'}
+        popOver={dropdownOptions}
+      />
       {/* TODO: need to resize video tile dynamically */}
-      <LocalVideo id="meeting-video" style={{ width: "20rem", position: "absolute", top: "3.5rem" }} />
+      <LocalVideo
+        id="meeting-video"
+        style={{ width: '20rem', position: 'absolute', top: '3.5rem' }}
+      />
     </>
   );
-}
+};
 
 export default VideoInputControl;

@@ -12,7 +12,7 @@ import { StyledVideoPreview, title } from '../Styled';
 const CameraSelection = () => {
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
-  const videoInputs = useVideoInputs();
+  const { devices } = useVideoInputs();
   const videoEl = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -35,13 +35,13 @@ const CameraSelection = () => {
 
   return (
     <div>
-      <Heading as="h2" level="h6" css={title}>
+      <Heading tag="h2" level={6} css={title}>
         Video
       </Heading>
       <DeviceInput
         label="Camera source"
         onChange={selectVideoInput}
-        devices={videoInputs}
+        devices={devices}
       />
       <QualitySelection />
       <Label style={{ display: 'block', marginBottom: '.5rem' }}>

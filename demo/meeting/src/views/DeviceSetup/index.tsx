@@ -8,7 +8,7 @@ import { StyledLayout } from './Styled';
 
 const DeviceSetup: React.FC = () => (
   <StyledLayout>
-    <Heading as="h1" level="h3" css="align-self: flex-start">
+    <Heading tag="h1" level={3} css="align-self: flex-start">
       Device settings
     </Heading>
     <DeviceSelection />
