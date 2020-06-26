@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add sound disabled to `AudioOutputControl`
 - Add `LocalAudioOutputProvider` to `MeetingView`
 - Add `ContentShareControlProvider` for content share control methods
+- Add `device-utils` needed in audio, video providers in library connected components
+- Add audio, video device types to types in library
+- Add `useToggleLocalMute` to demo
 
 ### Changed
 - Added delay for more consistent animation snapshotting with playwright.
@@ -24,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed relative imports and `MeetingView` to accomodate imports of connected components from library
 - Updated the `ContentShareControl` with SDK components
 - Changed `ScreenShare` to `ContentShare` in library and demo
+- Update `AudioInputControl` to use hooks and SDK components
 
 ### Removed
 - Removed active state button tests.

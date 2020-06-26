@@ -1,13 +1,39 @@
-import React, { createContext, useEffect, useState, useContext } from 'react';
+import React, {
+  createContext,
+  useEffect,
+  useState,
+  useContext,
+  useMemo,
+} from 'react';
 import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useMeetingManager } from '../MeetingProvider';
+import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
+import { DeviceTypeContext, DeviceConfig } from '../../types';
+import { AUDIO_INPUT } from '../../constants/additional-audio-video-devices';
 
-const Context = createContext<MediaDeviceInfo[] | null>(null);
+const Context = createContext<DeviceTypeContext | null>(null);
 
 const AudioInputProvider: React.FC = ({ children }) => {
+  const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
+  const [selectedAudioInputDevice, setSelectedAudioInputDevice] = useState(
+    meetingManager.selectedAudioInputDevice
+  );
+
+  useEffect(() => {
+    const callback = (updatedAudioInputDevice: string | null): void => {
+      setSelectedAudioInputDevice(updatedAudioInputDevice);
+    };
+
+    meetingManager.subscribeToSelectedAudioInputDeviceChange(callback);
+
+    return (): void => {
+      meetingManager.unsubscribeFromSelectedAudioInputDeviceChange(callback);
+    };
+  }, [meetingManager]);
 
   useEffect(() => {
     let isMounted = true;
@@ -40,17 +66,39 @@ const AudioInputProvider: React.FC = ({ children }) => {
     };
   }, [audioVideo]);
 
-  return <Context.Provider value={audioInputs}>{children}</Context.Provider>;
+  const contextValue: DeviceTypeContext = useMemo(
+    () => ({
+      devices: audioInputs,
+      selectedDevice: selectedAudioInputDevice,
+    }),
+    [audioInputs, selectedAudioInputDevice]
+  );
+
+  return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
-const useAudioInputs = (): MediaDeviceInfo[] => {
-  const audioInputs = useContext(Context);
+const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
+  const needAdditionalIO = props && props.additionalDevices;
+  const additionalIOJSON = props && AUDIO_INPUT;
+  const context = useContext(Context);
 
-  if (!audioInputs) {
+  if (!context) {
     throw new Error('useAudioInputs must be used within AudioInputProvider');
   }
 
-  return audioInputs;
+  let { devices } = context;
+  const { selectedDevice } = context;
+
+  if (needAdditionalIO) {
+    const additionalAudioInputs = getFormattedDropdownDeviceOptions(
+      additionalIOJSON
+    );
+    if (additionalAudioInputs !== null) {
+      devices = [...devices, ...additionalAudioInputs];
+    }
+  }
+
+  return { devices, selectedDevice };
 };
 
 export { AudioInputProvider, useAudioInputs };

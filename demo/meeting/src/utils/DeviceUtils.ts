@@ -95,6 +95,16 @@ export const videoInputSelectionToDevice = (deviceId: string): Device => {
   return deviceId;
 };
 
+export const audioInputSelectionToDevice = (deviceId: string): Device => {
+  if (deviceId === '440') {
+    return DefaultDeviceController.synthesizeAudioDevice(440);
+  }
+  if (deviceId === 'none') {
+    return null;
+  }
+  return deviceId;
+};
+
 export const isOptionActive = (
   meetingManagerDeviceId: string | null,
   currentDeviceId: string

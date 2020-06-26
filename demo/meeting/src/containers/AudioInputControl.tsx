@@ -1,68 +1,49 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
-  faCaretDown,
-  faMicrophone,
-  faMicrophoneSlash,
-} from '@fortawesome/free-solid-svg-icons'
-import { useMeetingManager } from '../../../../src';
+  ControlBarButton,
+  Microphone,
+} from 'amazon-chime-sdk-component-library-react';
 
-import IconButton from '../components/IconButton';
-import ButtonGroup from '../components/ButtonGroup';
-import Dropdown, { OptionItem } from '../components/Dropdown';
-import { createOptions } from '../utils/DeviceUtils';
-import { AUDIO_INPUT } from '../constants';
+import { useMeetingManager, useAudioInputs } from '../../../../src';
+import useToggleLocalMute from '../hooks/useToggleLocalMute';
+import { DeviceConfig } from '../types';
+import { isOptionActive } from '../utils/DeviceUtils';
+
+// TODO: import from library when types are exported
+export interface PopOverItemProps {
+  onClick?: () => void;
+  checked?: boolean;
+  children?: React.ReactElement<any> | React.ReactElement<any>[];
+  disabled?: boolean;
+  href?: string;
+  as?: any;
+  text?: string;
+  border?: boolean;
+}
 
 const AudioInputControl: React.FC = () => {
   const meetingManager = useMeetingManager();
-  const [muted, setMuted] = useState(false);
-  const [showMicDropdown, setShowMicDropdown] = useState(false);
-  const [audioInputOptions, setAudioInputOptions] = useState(new Array<OptionItem>());
-
-  useEffect(() => {
-    const handler = (isMuted: boolean): void => {
-      setMuted(isMuted);
-    };
-    meetingManager?.audioVideo?.realtimeSubscribeToMuteAndUnmuteLocalAudio(handler);
-
-    return () => {
-      meetingManager?.audioVideo?.realtimeUnsubscribeToMuteAndUnmuteLocalAudio(handler);
-    };
-  }, []);
-
-  useEffect(() => {
-    populateAudioInputList();
-  }, []);
-
-  const populateAudioInputList = async (): Promise<void> => {
-    const genericName = 'Microphone';
-    const additionalDevices = [AUDIO_INPUT.NONE, AUDIO_INPUT[440]];
-    const audioInputOpts = createOptions(
-      genericName,
-      meetingManager?.audioInputDevices!,
-      additionalDevices,
-    );
-    setAudioInputOptions(audioInputOpts);
-  }
-
-  const toggleMicBtn = async (): Promise<void> => {
-    if (muted) {
-      meetingManager?.audioVideo?.realtimeUnmuteLocalAudio();
-    } else {
-      meetingManager?.audioVideo?.realtimeMuteLocalAudio();
-    }
+  const { muted, toggleMute } = useToggleLocalMute();
+  const audioInputConfig: DeviceConfig = {
+    additionalDevices: true,
   };
+  const { devices, selectedDevice } = useAudioInputs(audioInputConfig);
 
-  const reselectAudioInput = async (name: string): Promise<void> => {
-    await meetingManager?.audioVideo?.chooseAudioInputDevice(meetingManager?.audioInputSelectionToDevice(name));
-  }
+  const dropdownOptions: PopOverItemProps[] = devices.map(device => ({
+    children: <span>{device.label}</span>,
+    checked: isOptionActive(selectedDevice, device.deviceId),
+    onClick: (): Promise<void> =>
+      meetingManager.selectAudioInputDevice(device.deviceId),
+  }));
 
   return (
-    <ButtonGroup>
-      <IconButton icon={muted ? faMicrophoneSlash : faMicrophone } onClick={toggleMicBtn} />
-      <IconButton icon={faCaretDown} onClick={() => setShowMicDropdown(!showMicDropdown)} />
-      {showMicDropdown && <Dropdown onChange={reselectAudioInput} options={audioInputOptions} />}
-    </ButtonGroup>
-  )
-}
+    <ControlBarButton
+      icon={<Microphone disabled={muted} />}
+      onClick={toggleMute}
+      label={muted ? 'Unmute' : 'Mute'}
+      popOver={dropdownOptions}
+    />
+  );
+};
 
 export default AudioInputControl;
