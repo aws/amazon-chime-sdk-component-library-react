@@ -13,3 +13,7 @@ export type DeviceTypeContext = {
   devices: DeviceType[];
   selectedDevice: SelectedDeviceType;
 };
+
+export type DeviceConfig = {
+  additionalDevices?: boolean;
+};

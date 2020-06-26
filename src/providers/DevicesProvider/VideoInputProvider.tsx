@@ -9,45 +9,15 @@ import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useMeetingManager } from '../MeetingProvider';
-
-export const getFormattedDropdownDeviceOptions = (
-  jsonObject: any
-): FormattedDeviceType[] => {
-  const formattedJSONObject = Object.entries(jsonObject).map(entry => ({
-    deviceId: entry[0].toLowerCase(),
-    label: entry[1] as string
-  }));
-  return formattedJSONObject;
-};
-
-export const VIDEO_INPUT = {
-  NONE: 'None',
-  BLUE: 'Blue',
-  SMPTE: 'SMPTE Color Bars'
-};
-
-export type FormattedDeviceType = {
-  deviceId: string;
-  label: string;
-};
-
-export type DeviceType = MediaDeviceInfo | FormattedDeviceType;
-
-export type SelectedDeviceType = string | null;
-
-export type DeviceTypeContext = {
-  devices: DeviceType[];
-  selectedDevice: SelectedDeviceType;
-};
+import { DeviceTypeContext, DeviceConfig } from '../../types';
+import { VIDEO_INPUT } from '../../constants/additional-audio-video-devices';
+import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
 
 export type LocalVideoToggleContextType = {
   isVideoEnabled: boolean;
   toggleVideo: () => Promise<void>;
 };
 
-export type DeviceConfig = {
-  additionalDevices?: boolean;
-};
 
 const Context = createContext<DeviceTypeContext | null>(null);
 
@@ -126,11 +96,11 @@ const useVideoInputs = (props?: DeviceConfig): DeviceTypeContext => {
   const { selectedDevice } = context;
 
   if (needAdditionalIO) {
-    const additionalAudioInputs = getFormattedDropdownDeviceOptions(
+    const additionalVideoInputs = getFormattedDropdownDeviceOptions(
       additionalIOJSON
     );
-    if (additionalAudioInputs !== null) {
-      devices = [...devices, ...additionalAudioInputs];
+    if (additionalVideoInputs !== null) {
+      devices = [...devices, ...additionalVideoInputs];
     }
   }
   return { devices, selectedDevice };

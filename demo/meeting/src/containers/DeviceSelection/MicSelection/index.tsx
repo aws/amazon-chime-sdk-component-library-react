@@ -9,7 +9,7 @@ import { title } from '../Styled';
 
 const MicSelection = () => {
   const meetingManager = useMeetingManager();
-  const audioInputs = useAudioInputs();
+  const { devices } = useAudioInputs();
 
   async function selectAudioInput(deviceId: string) {
     meetingManager.selectAudioInputDevice(deviceId);
@@ -23,7 +23,7 @@ const MicSelection = () => {
       <DeviceInput
         label="Microphone source"
         onChange={selectAudioInput}
-        devices={audioInputs}
+        devices={devices}
       />
       <AudioActivityPreview />
     </div>
