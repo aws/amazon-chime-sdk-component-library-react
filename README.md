@@ -23,6 +23,10 @@ npm run build
 Once you build, check and resolve any warnings you may get like unresolved dependencies or circular dependencies. Remove these as it will help in bundling the library warning/error free.
 
 ## Test
+#### For developer, before CI workflow works appropriately, you need to run these commands before submitting a PR:
+1. npm run build
+2. npm run test
+3. npm run test:snapshots
 
 Run all unit tests
 ```
