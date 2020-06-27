@@ -29,3 +29,8 @@ export type LocalVideoToggleContextType = {
 export type DeviceConfig = {
   additionalDevices?: boolean;
 };
+
+export type LocalAudioOutputContextType = {
+  isAudioOn: boolean;
+  toggleAudio: () => void;
+};

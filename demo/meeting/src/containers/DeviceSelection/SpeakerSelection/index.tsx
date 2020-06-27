@@ -7,16 +7,16 @@ import DeviceInput from '../DeviceInput';
 
 const SpeakerSelection = () => {
   const meetingManager = useMeetingManager();
-  const audioOutputs = useAudioOutputs();
+  const { devices } = useAudioOutputs();
   const [selectedOutput, setSelectedOutput] = useState('');
 
   useEffect(() => {
-    if (!audioOutputs.length || selectedOutput) {
+    if (!devices.length || selectedOutput) {
       return;
     }
 
-    setSelectedOutput(audioOutputs[0].deviceId);
-  }, [selectedOutput, audioOutputs]);
+    setSelectedOutput(devices[0].deviceId);
+  }, [selectedOutput, devices]);
 
   const handleTestSpeaker = () => {
     new TestSound(selectedOutput);
@@ -24,14 +24,14 @@ const SpeakerSelection = () => {
 
   async function selectAudioOutput(deviceId: string) {
     setSelectedOutput(deviceId);
-    meetingManager.selectAudioInputDevice(deviceId);
+    meetingManager.selectAudioOutputDevice(deviceId);
   }
 
   return (
     <div>
       <DeviceInput
         label="Speaker source"
-        devices={audioOutputs}
+        devices={devices}
         onChange={selectAudioOutput}
       />
       <SecondaryButton label="Test speakers" onClick={handleTestSpeaker} />

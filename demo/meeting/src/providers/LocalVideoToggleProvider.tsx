@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useContext,
   useCallback,
-  useMemo
+  useMemo,
 } from 'react';
 import { useMeetingManager, useAudioVideo } from '../../../../src';
 
