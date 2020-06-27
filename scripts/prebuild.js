@@ -17,6 +17,9 @@ function verbose(command) {
 
 const base = fs.readFileSync(path.join(process.cwd(), '.base-branch'), 'utf8').trim();
 const commits = exec(`git rev-list ${base}..`).toString().trim().split(`\n`);
+
+console.log('base', base);
+console.log('commits', commits);
 let commit_files = [];
 
 if (!commits) {
@@ -41,7 +44,7 @@ if (!commits) {
     return process.exit(1);
   }
 
-    if (process.argv.includes('--publish')) {
+  if (process.argv.includes('--publish')) {
     const version_file = 'src/versioning/Versioning.ts';
 
     // Reset to the base version
