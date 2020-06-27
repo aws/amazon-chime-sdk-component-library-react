@@ -47,7 +47,7 @@ const BASE_URL: string = [
 
 type FullDeviceInfoType = {
   currentAudioInputDevice: MediaDeviceInfo | null;
-  currentAudioOutputDevice: MediaDeviceInfo | null;
+  selectedAudioOutputDevice: string | null;
   selectedVideoInputDevice: string | null;
   audioInputDevices: MediaDeviceInfo[] | null;
   audioOutputDevices: MediaDeviceInfo[] | null;
@@ -56,27 +56,41 @@ type FullDeviceInfoType = {
 
 class MeetingManager implements DeviceChangeObserver {
   private static readonly LOGGER_BATCH_SIZE: number = 85;
+
   private static readonly LOGGER_INTERVAL_MS: number = 1150;
 
   meetingSession: DefaultMeetingSession | null = null;
+
   audioVideo: AudioVideoFacade | null = null;
+
   selfVideo: HTMLVideoElement | null = null;
+
   attendeeVideo: HTMLVideoElement | null = null;
+
   configuration: MeetingSessionConfiguration | null = null;
 
   meetingId: string | null = null;
+
   attendeeName: string | null = null;
+
   region: string | null = null;
 
   currentAudioInputDevice: MediaDeviceInfo | null = null;
-  currentAudioOutputDevice: MediaDeviceInfo | null = null;
+
+  selectedAudioOutputDevice: string | null = null;
+
+  selectedAudioOutputDeviceObservers: ((
+    deviceId: string | null
+  ) => void)[] = [];
 
   selectedVideoInputDevice: string | null = null;
 
   selectedVideoInputDeviceObservers: ((deviceId: string | null) => void)[] = [];
 
   audioInputDevices: MediaDeviceInfo[] | null = null;
+
   audioOutputDevices: MediaDeviceInfo[] | null = null;
+
   videoInputDevices: MediaDeviceInfo[] | null = null;
 
   devicePermissions = DevicePermissionStatus.UNSET;
@@ -89,7 +103,7 @@ class MeetingManager implements DeviceChangeObserver {
     fullDeviceInfo: FullDeviceInfoType
   ) => void)[] = [];
 
-  initializeMeetingManager() {
+  initializeMeetingManager(): void {
     this.meetingSession = null;
     this.audioVideo = null;
     this.configuration = null;
@@ -97,7 +111,8 @@ class MeetingManager implements DeviceChangeObserver {
     this.attendeeName = null;
     this.region = null;
     this.currentAudioInputDevice = null;
-    this.currentAudioOutputDevice = null;
+    this.selectedAudioOutputDevice = null;
+    this.selectedAudioOutputDeviceObservers = [];
     this.selectedVideoInputDevice = null;
     this.selectedVideoInputDeviceObservers = [];
     this.audioInputDevices = [];
@@ -252,14 +267,15 @@ class MeetingManager implements DeviceChangeObserver {
       );
     }
     if (
-      !this.currentAudioOutputDevice &&
+      !this.selectedAudioOutputDevice &&
       this.audioOutputDevices &&
       this.audioOutputDevices.length
     ) {
-      this.currentAudioOutputDevice = this.audioOutputDevices[0];
+      this.selectedAudioOutputDevice = this.audioOutputDevices[0].deviceId;
       await this.audioVideo?.chooseAudioOutputDevice(
         this.audioOutputDevices[0].deviceId
       );
+      this.publishSelectedAudioOutputDeviceChange();
     }
     if (
       !this.selectedVideoInputDevice &&
@@ -295,10 +311,11 @@ class MeetingManager implements DeviceChangeObserver {
     }
   };
 
-  selectAudioOutputDevice = async (deviceId: string) => {
+  selectAudioOutputDevice = async (deviceId: string): Promise<void> => {
     try {
       await this.audioVideo?.chooseAudioOutputDevice(deviceId);
-      // this.currentAudioOutputDevice = device;
+      this.selectedAudioOutputDevice = deviceId;
+      this.publishSelectedAudioOutputDeviceChange();
     } catch (error) {
       console.error(`Error setting audio output - ${error}`);
     }
@@ -464,6 +481,31 @@ class MeetingManager implements DeviceChangeObserver {
     for (let i = 0; i < this.selectedVideoInputDeviceObservers.length; i += 1) {
       const callback = this.selectedVideoInputDeviceObservers[i];
       callback(this.selectedVideoInputDevice);
+    }
+  };
+
+  subscribeToSelectedAudioOutputDeviceChange = (
+    callback: (deviceId: string | null) => void
+  ): void => {
+    this.selectedAudioOutputDeviceObservers.push(callback);
+  };
+
+  unsubscribeFromSelectedAudioOutputDeviceChange = (
+    callbackToRemove: (deviceId: string | null) => void
+  ): void => {
+    this.selectedAudioOutputDeviceObservers = this.selectedAudioOutputDeviceObservers.filter(
+      callback => callback !== callbackToRemove
+    );
+  };
+
+  private publishSelectedAudioOutputDeviceChange = (): void => {
+    for (
+      let i = 0;
+      i < this.selectedAudioOutputDeviceObservers.length;
+      i += 1
+    ) {
+      const callback = this.selectedAudioOutputDeviceObservers[i];
+      callback(this.selectedAudioOutputDevice);
     }
   };
 }

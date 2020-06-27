@@ -1,83 +1,48 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import {
-  faCaretDown,
-  faVolumeMute,
-  faVolumeUp
-} from '@fortawesome/free-solid-svg-icons';
-import { useMeetingManager } from '../../../../src';
+  ControlBarButton,
+  Sound,
+} from 'amazon-chime-sdk-component-library-react';
 
-import IconButton from '../components/IconButton';
-import ButtonGroup from '../components/ButtonGroup';
-import Dropdown, { OptionItem } from '../components/Dropdown';
-import { createOptions } from '../utils/DeviceUtils';
+import { useMeetingManager, useAudioOutputs } from '../../../../src';
+import { isOptionActive } from '../utils/DeviceUtils';
+import { useLocalAudioOutput } from '../providers/LocalAudioOutputProvider';
+import { FormattedDeviceType } from '../types';
+
+// TODO: import from library when types are exported
+export interface PopOverItemProps {
+  onClick?: () => void;
+  checked?: boolean;
+  children?: React.ReactElement<any> | React.ReactElement<any>[];
+  disabled?: boolean;
+  href?: string;
+  as?: any;
+  text?: string;
+  border?: boolean;
+}
 
 const AudioOutputControl: React.FC = () => {
   const meetingManager = useMeetingManager();
-  const [isAudioOn, setIsAudioOn] = useState(true);
-  const [showAudioDropdown, setShowAudioDropdown] = useState(false);
-  const [audioOutputOptions, setAudioOutputOptions] = useState(
-    new Array<OptionItem>()
+  const { devices, selectedDevice } = useAudioOutputs();
+  const { isAudioOn, toggleAudio } = useLocalAudioOutput();
+
+  const dropdownOptions: PopOverItemProps[] = devices.map(
+    (device: FormattedDeviceType) => ({
+      children: <span>{device.label}</span>,
+      checked: isOptionActive(selectedDevice, device.deviceId),
+      onClick: (): Promise<void> =>
+        meetingManager.selectAudioOutputDevice(device.deviceId),
+    })
   );
-  const audioRef = useRef<HTMLAudioElement>(null);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      meetingManager?.audioVideo?.bindAudioElement(audioRef.current);
-    }
-    return () => {
-      meetingManager?.audioVideo?.unbindAudioElement();
-    };
-  }, [audioRef]);
-
-  useEffect(() => {
-    populateAudioOutputList();
-  }, []);
-
-  const populateAudioOutputList = async (): Promise<void> => {
-    const genericName = 'Speaker';
-    const audioOutputOpts = createOptions(
-      genericName,
-      meetingManager?.audioOutputDevices!,
-      []
-    );
-    setAudioOutputOptions(audioOutputOpts);
-  };
-
-  const toggleAudio = (): void => {
-    if (!audioRef.current) {
-      return;
-    }
-    setIsAudioOn(!isAudioOn);
-    if (isAudioOn) {
-      meetingManager?.audioVideo?.unbindAudioElement();
-    } else {
-      meetingManager?.audioVideo?.bindAudioElement(audioRef.current);
-    }
-  };
-
-  const reselectAudioOutput = async (name: string): Promise<void> => {
-    await meetingManager?.audioVideo?.chooseAudioOutputDevice(name);
-  };
 
   return (
     <>
-      <ButtonGroup>
-        <IconButton
-          icon={isAudioOn ? faVolumeUp : faVolumeMute}
-          onClick={toggleAudio}
-        />
-        <IconButton
-          icon={faCaretDown}
-          onClick={() => setShowAudioDropdown(!showAudioDropdown)}
-        />
-        {showAudioDropdown && (
-          <Dropdown
-            onChange={reselectAudioOutput}
-            options={audioOutputOptions}
-          />
-        )}
-      </ButtonGroup>
-      <audio ref={audioRef} style={{ display: 'none' }} />
+      <ControlBarButton
+        icon={<Sound disabled={!isAudioOn} />}
+        onClick={toggleAudio}
+        label={isAudioOn ? 'Disable audio' : 'Enable audio'}
+        popOver={dropdownOptions}
+      />
     </>
   );
 };

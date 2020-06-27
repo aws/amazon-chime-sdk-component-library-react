@@ -12,11 +12,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Play, Pause and Sound disabled SVG icons
 - Add initial roster components
 - Add connected components to lib directory
+- Add types required in `AudioOutputProvider`
+- Add sound disabled to `AudioOutputControl`
+- Add `LocalAudioOutputProvider` to `MeetingView`
 
 ### Changed
 - Added delay for more consistent animation snapshotting with playwright.
 - `npm run test` script changed to only include /components and /utils
-Update prebuild script to trigger git actions on git push event
+- Update prebuild script to trigger git actions on git push event
+- Changed relative imports and `MeetingView` to accomodate imports of connected components from library
 
 ### Removed
 - Removed active state button tests.

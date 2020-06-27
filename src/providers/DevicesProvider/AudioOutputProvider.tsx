@@ -1,13 +1,37 @@
-import React, { createContext, useEffect, useState, useContext } from 'react';
+import React, {
+  createContext,
+  useEffect,
+  useState,
+  useContext,
+  useMemo,
+} from 'react';
 import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useMeetingManager } from '../MeetingProvider';
+import { DeviceTypeContext } from '../../types';
 
-const AudioOutputContext = createContext<MediaDeviceInfo[]>([]);
+const AudioOutputContext = createContext<DeviceTypeContext | null>(null);
 
 const AudioOutputProvider: React.FC = ({ children }) => {
   const audioVideo = useAudioVideo();
   const [audioOutputs, setAudioOutputs] = useState<MediaDeviceInfo[]>([]);
+  const meetingManager = useMeetingManager();
+  const [selectedAudioOutputDevice, setSelectedAudioOutputDevice] = useState(
+    meetingManager.selectedAudioOutputDevice
+  );
+
+  useEffect(() => {
+    const callback = (updatedAudioOutputDevice: string | null): void => {
+      setSelectedAudioOutputDevice(updatedAudioOutputDevice);
+    };
+
+    meetingManager.subscribeToSelectedAudioOutputDeviceChange(callback);
+
+    return (): void => {
+      meetingManager.unsubscribeFromSelectedAudioOutputDeviceChange(callback);
+    };
+  }, [meetingManager]);
 
   useEffect(() => {
     let isMounted = true;
@@ -40,21 +64,29 @@ const AudioOutputProvider: React.FC = ({ children }) => {
     };
   }, [audioVideo]);
 
+  const contextValue: DeviceTypeContext = useMemo(
+    () => ({
+      devices: audioOutputs,
+      selectedDevice: selectedAudioOutputDevice,
+    }),
+    [audioOutputs, selectedAudioOutputDevice]
+  );
+
   return (
-    <AudioOutputContext.Provider value={audioOutputs}>
+    <AudioOutputContext.Provider value={contextValue}>
       {children}
     </AudioOutputContext.Provider>
   );
 };
 
-const useAudioOutputs = (): MediaDeviceInfo[] => {
-  const audioOutputs = useContext(AudioOutputContext);
+const useAudioOutputs = (): DeviceTypeContext => {
+  const context = useContext(AudioOutputContext);
 
-  if (!audioOutputs) {
+  if (!context) {
     throw new Error('useAudioOutputs must be used within AudioOutputProvider');
   }
 
-  return audioOutputs;
+  return context;
 };
 
 export { AudioOutputProvider, useAudioOutputs };
