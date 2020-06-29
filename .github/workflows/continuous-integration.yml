@@ -7,6 +7,8 @@ on:
   push:
     branches: [ master ]
   pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -23,10 +25,5 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    # TODO: make sure prebuild scripot works in Github environment
-    # - run: npm run build:release --if-present
-    - run: npm install
-    - run: npm run build
-    - run: npm test
+    - run: npm run build:release --if-present
     - run: npm run test:snapshots

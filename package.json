@@ -100,5 +100,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "styled-components": "^5.0.0"
+  },
+  "prettier": {
+     "singleQuote": true
   }
 }
