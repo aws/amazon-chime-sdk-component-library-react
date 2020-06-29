@@ -3,7 +3,7 @@
 const fs = require('fs');
 const process = require('process');
 const path = require('path');
-const exec = require('child_process').execSync;
+const exec = require('child_process').spawnSync;
 
 function verbose(command) {
   exec(command, function (error, stdout, stderr) {
