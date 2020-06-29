@@ -17,8 +17,8 @@ function verbose(command) {
 
 const base = fs.readFileSync(path.join(process.cwd(), '.base-branch'), 'utf8').trim();
 
-console.log(`Is GITHUB_ACTIONS: ${GITHUB_ACTIONS}`);
-const commits = exec(`git rev-list ${base}..`).toString().trim().split(`\n`);
+// console.log(`Is GITHUB_ACTIONS: ${GITHUB_ACTIONS}`);
+const commits = exec(`git rev-list HEAD ^${base}`).toString().trim().split(`\n`);
 console.log(`Commits: ${commits}`);
 let commit_files = [];
 
