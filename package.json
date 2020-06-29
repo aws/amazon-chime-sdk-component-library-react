@@ -16,7 +16,7 @@
     "build": "rollup -c",
     "prebuild:release": "node scripts/prebuild.js",
     "prebuild:publish": "node scripts/prebuild.js --publish",
-    "build:release": "npm install && npm run build && npm run test ",
+    "build:release": "npm install && npm run build && npm run test",
     "start": "start-storybook -p 9009",
     "test": "jest -c jest.config.js",
     "deploy-storybook": "storybook-to-ghpages",
