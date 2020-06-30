@@ -7,5 +7,5 @@ export interface BaseProps extends SpaceProps {
   className?: string;
 }
 
-export const baseStyles = (props: BaseProps) => `${props.css};` || '';
+export const baseStyles = ({ css }: BaseProps) => (css ? `${css};` : '');
 export const baseSpacing = (props: BaseProps) => space(props);

@@ -14,6 +14,7 @@ import {
   Crown,
   DeskPhone,
   Dialer,
+  Dots,
   Information,
   Laptop,
   Meeting,
@@ -71,8 +72,12 @@ export const _Cog = () => <Cog width={text('width', '2rem')} />;
 export const _Crown = () => <Crown width={text('width', '2rem')} />;
 
 export const _DeskPhone = () => (
-  <DeskPhone disabled={boolean('disabled', false)} width={text('width', '2rem')} />
+  <DeskPhone
+    disabled={boolean('disabled', false)}
+    width={text('width', '2rem')}
+  />
 );
+export const _Dots = () => <Dots width={text('width', '2rem')} />;
 
 _DeskPhone.story = {
   name: 'DeskPhone',
@@ -83,7 +88,11 @@ export const _Laptop = () => <Laptop width={text('width', '2rem')} />;
 export const _Meeting = () => <Meeting width={text('width', '2rem')} />;
 
 export const _Microphone = () => (
-  <Microphone disabled={boolean('disabled', false)} width={text('width', '2rem')} />
+  <Microphone
+    disabled={boolean('disabled', false)}
+    poorConnection={boolean('poorConnection', false)}
+    width={text('width', '2rem')}
+  />
 );
 
 export const _Pause = () => <Pause width={text('width', '2rem')} />;

@@ -1,34 +1,38 @@
 import React, { useContext } from 'react';
 import styled from 'styled-components';
+import {
+  Roster,
+  RosterHeader,
+  RosterGroup,
+} from 'amazon-chime-sdk-component-library-react';
 
 import { getRosterContext } from '../providers/RosterProvider';
-import RosterItem from './RosterItem';
-import useActiveSpeakerDetector from '../hooks/useActiveSpeakerDetector';
+import RosterAttendee from './RosterAttendee';
 
 const StyledRoster = styled.div`
-  border: 1px solid;
-  display: inline-flex;
-  flex-direction: column;
-  position: absolute;
-  right: 1rem;
-  top: 3.5rem;
+  position: fixed;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 18.5rem;
 `;
 
 const MeetingRoster = () => {
   const roster = useContext(getRosterContext());
-  const activeSpeakerAttendee = useActiveSpeakerDetector();
+
   const attendees = Object.values(roster).map(item => {
     const { id, name } = item;
-    return (
-      <RosterItem
-        key={id}
-        id={id}
-        name={name}
-        isActiveSpeaker={activeSpeakerAttendee === id}
-      />
-    );
+    return <RosterAttendee key={id} attendeeId={id} name={name} />;
   });
-  return <StyledRoster>{attendees}</StyledRoster>;
+
+  return (
+    <StyledRoster>
+      <Roster>
+        <RosterHeader title="Present" badge={attendees.length} />
+        <RosterGroup>{attendees}</RosterGroup>
+      </Roster>
+    </StyledRoster>
+  );
 };
 
 export default MeetingRoster;

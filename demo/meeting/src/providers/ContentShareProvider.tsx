@@ -8,25 +8,25 @@ type ContentShareState = {
   isRemoteUserSharing: boolean;
   isLocalUserSharing: boolean;
   isSomeoneSharing: boolean;
-}
+  sharingAttendeeId: string | null;
+};
 
 const initialState: ContentShareState = {
   activeContentTileId: null,
   isRemoteUserSharing: false,
   isLocalUserSharing: false,
   isSomeoneSharing: false,
+  sharingAttendeeId: null,
 };
 
-export const ContentShareContext = createContext<ContentShareState>(initialState);
-  
+export const ContentShareContext = createContext<ContentShareState>(
+  initialState
+);
+
 const ContentShareProvider: React.FC = ({ children }) => {
   const meetingManager: MeetingManager | null = useContext(MeetingContext);
   const [contentShareState, setContentShareState] = useState(initialState);
-  
-  const {
-    isLocalUserSharing,
-    activeContentTileId,
-  } = contentShareState;
+  const { isLocalUserSharing, activeContentTileId } = contentShareState;
 
   useEffect(() => {
     const videoObserver = {
@@ -41,7 +41,8 @@ const ContentShareProvider: React.FC = ({ children }) => {
 
         const { boundAttendeeId } = tileState;
         const baseAttendeeId = new DefaultModality(boundAttendeeId).base();
-        const localAttendeeId = meetingManager?.configuration?.credentials?.attendeeId;
+        const localAttendeeId =
+          meetingManager?.configuration?.credentials?.attendeeId;
         const isLocalUser = baseAttendeeId === localAttendeeId;
 
         if (!isLocalUser && isLocalUserSharing) {
@@ -54,6 +55,7 @@ const ContentShareProvider: React.FC = ({ children }) => {
             activeContentTileId: tileState.tileId,
             isLocalUserSharing: true,
             isSomeoneSharing: true,
+            sharingAttendeeId: baseAttendeeId,
           }));
         } else {
           setContentShareState((localState: ContentShareState) => ({
@@ -61,6 +63,7 @@ const ContentShareProvider: React.FC = ({ children }) => {
             activeContentTileId: tileState.tileId,
             isRemoteUserSharing: true,
             isSomeoneSharing: true,
+            sharingAttendeeId: baseAttendeeId,
           }));
         }
       },
@@ -87,24 +90,28 @@ const ContentShareProvider: React.FC = ({ children }) => {
     };
     meetingManager?.addObserver(videoObserver);
     meetingManager?.audioVideo?.addContentShareObserver(screenShareObserver);
-    
+
     return () => {
       meetingManager?.removeObserver(videoObserver);
-      meetingManager?.audioVideo?.removeContentShareObserver(screenShareObserver);
+      meetingManager?.audioVideo?.removeContentShareObserver(
+        screenShareObserver
+      );
     };
-  }, [activeContentTileId]);
+  }, [activeContentTileId, isLocalUserSharing]);
 
   return (
     <ContentShareContext.Provider value={contentShareState}>
       {children}
     </ContentShareContext.Provider>
   );
-}
+};
 
 export function useContentShareContext(): ContentShareState {
   const contentShareContext = useContext(ContentShareContext);
   if (!contentShareContext) {
-    throw new Error('useContentShareContext must be used within ContentShareProvider');
+    throw new Error(
+      'useContentShareContext must be used within ContentShareProvider'
+    );
   }
   return contentShareContext;
 }

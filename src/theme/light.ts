@@ -306,6 +306,16 @@ const controlBar = {
   opacity: 0.95,
 };
 
+const roster = {
+  title: colors.greys.grey100,
+  primaryText: colors.greys.grey80,
+  secondaryText: colors.greys.grey50,
+  bgd: colors.greys.grey10,
+  fgd: colors.greys.white,
+  shadow: shadows.large,
+  maxWidth: '18.5rem',
+}
+
 export const lightTheme = {
   name: "Light Theme",
   buttons,
@@ -318,6 +328,7 @@ export const lightTheme = {
   popOver,
   notification,
   controlBar,
+  roster,
   ...defaultTheme,
 };
 
