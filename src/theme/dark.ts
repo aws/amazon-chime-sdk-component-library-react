@@ -306,6 +306,16 @@ const controlBar = {
   opacity: 1,
 }
 
+const roster = {
+  title: colors.greys.white,
+  primaryText: colors.greys.white,
+  secondaryText: colors.greys.grey30,
+  bgd: colors.greys.grey90,
+  fgd: colors.greys.grey60,
+  shadow: shadows.large,
+  maxWidth: '18.5rem',
+}
+
 export const darkTheme = {
   name: "Dark Theme",
   buttons,
@@ -318,6 +328,7 @@ export const darkTheme = {
   popOver,
   notification,
   controlBar,
+  roster,
   ...defaultTheme,
 };
 

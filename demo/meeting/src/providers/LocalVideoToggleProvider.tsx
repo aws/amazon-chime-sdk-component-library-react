@@ -17,7 +17,7 @@ const Context = createContext<LocalVideoToggleContextType | null>(null);
 const LocalVideoToggleProvider: React.FC = ({ children }) => {
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
-  const [isVideoEnabled, setIsVideoEnabled] = useState<boolean>(false);
+  const [isVideoEnabled, setIsVideoEnabled] = useState(false);
 
   useEffect(() => {
     if (audioVideo?.hasStartedLocalVideoTile()) {

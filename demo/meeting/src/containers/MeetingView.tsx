@@ -9,21 +9,19 @@ import MeetingControlsContainer from './MeetingControlsContainer';
 import MeetingRoster from './MeetingRoster';
 import RemoteVideoGrid from './RemoteVideoGrid';
 
-const MeetingView = () => {
-  return (
-    <MeetingStatusProvider>
-      <LocalVideoToggleProvider>
-        <RosterProvider>
-          <ContentShareProvider>
-            <MeetingControlsContainer />
-            <ContentShare />
-            <MeetingRoster />
-            <RemoteVideoGrid />
-          </ContentShareProvider>
-        </RosterProvider>
-      </LocalVideoToggleProvider>
-    </MeetingStatusProvider>
-  );
-};
+const MeetingView = () => (
+  <MeetingStatusProvider>
+    <LocalVideoToggleProvider>
+      <RosterProvider>
+        <ContentShareProvider>
+          <MeetingControlsContainer />
+          <ContentShare />
+          <MeetingRoster />
+          <RemoteVideoGrid />
+        </ContentShareProvider>
+      </RosterProvider>
+    </LocalVideoToggleProvider>
+  </MeetingStatusProvider>
+);
 
 export default MeetingView;

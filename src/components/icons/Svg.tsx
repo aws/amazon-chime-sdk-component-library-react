@@ -1,19 +1,21 @@
 import React from 'react';
 
-export interface SvgProps {
+export interface SvgProps extends React.SVGAttributes<HTMLOrSVGElement> {
   className?: string;
   viewBox?: string;
   width?: string;
   height?: string;
+  title?: string;
 }
 
-const Svg: React.SFC<React.SVGAttributes<HTMLOrSVGElement>> = ({
+const Svg: React.FC<SvgProps> = ({
   className,
   children,
   viewBox = '0 0 24 24',
   xmlns = 'http://www.w3.org/2000/svg',
   width,
   height,
+  title,
   ...otherProps
 }) => {
   // This is necessary because some versions of Firefox would not use rems as values
@@ -33,7 +35,8 @@ const Svg: React.SFC<React.SVGAttributes<HTMLOrSVGElement>> = ({
       width={width}
       {...otherProps}
     >
-      <g fillRule='evenodd' fill='currentColor'>
+      {title && <title>{title}</title>}
+      <g fillRule="evenodd" fill="currentColor">
         {children}
       </g>
     </svg>

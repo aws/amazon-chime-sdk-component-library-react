@@ -218,5 +218,16 @@ declare module 'styled-components' {
       border: string;
       opacity: string | number;
     };
+
+    roster: {
+      title: string;
+      primaryText: string;
+      secondaryText: string;
+      bgd: string;
+      fgd: string;
+      shadow: string;
+      maxWidth: string;
+    }
+
   }
 }

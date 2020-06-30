@@ -3,7 +3,7 @@ export { Badge } from './components/Badge';
 export { Button } from './components/Button/';
 export { PrimaryButton } from './components/Button/PrimaryButton';
 export { SecondaryButton } from './components/Button/SecondaryButton';
-export { IconButton} from './components/Button/IconButton';
+export { IconButton } from './components/Button/IconButton';
 export { Checkbox } from './components/Checkbox';
 export { ControlBar } from './components/ControlBar';
 export { ControlBarButton } from './components/ControlBar/ControlBarItem';
@@ -32,12 +32,20 @@ export { Select } from './components/Select';
 export { Textarea } from './components/Textarea';
 export { VideoGrid } from './components/VideoGrid';
 export { VideoTile } from './components/VideoTile/';
+export { Grid } from './components/Grid';
+export { Roster } from './components/Roster';
+export { RosterHeader } from './components/Roster/RosterHeader';
+export { RosterGroup } from './components/Roster/RosterGroup';
+export { RosterCell } from './components/Roster/RosterCell';
 
 // Constants
 export { KEY_CODES } from './constants';
 
 // Contexts
-export { ControlBarContext, useControlBarContext } from './components/ControlBar/ControlBarContext';
+export {
+  ControlBarContext,
+  useControlBarContext,
+} from './components/ControlBar/ControlBarContext';
 export { ModalContext, useModalContext } from './components/Modal/ModalContext';
 export {
   useNotificationStateContext,
@@ -53,4 +61,4 @@ export { useUniqueId } from './hooks/useUniqueId';
 export { NotificationProvider } from './providers/NotificationProvider';
 
 // Themes
-export { lightTheme, darkTheme } from "./theme";
+export { lightTheme, darkTheme } from './theme';
