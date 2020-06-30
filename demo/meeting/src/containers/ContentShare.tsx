@@ -1,25 +1,22 @@
 import React, { useEffect, useRef } from 'react';
-import { useMeetingManager } from '../../../../src';
 
-import { useContentShareContext } from '../providers/ContentShareProvider';
+import { useContentShare } from '../providers/ContentShareProvider';
+import { useAudioVideo } from '../../../../src';
 
 const ContentShare: React.FC = () => {
-  const meetingManager = useMeetingManager();
-  const { activeContentTileId, isSomeoneSharing } = useContentShareContext();
+  const audioVideo = useAudioVideo();
+  const { activeContentTileId, isSomeoneSharing } = useContentShare();
   const videoEle = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     if (!videoEle.current || !activeContentTileId) {
       return;
     }
-    meetingManager?.audioVideo?.bindVideoElement(
-      activeContentTileId!,
-      videoEle.current
-    );
+    audioVideo?.bindVideoElement(activeContentTileId, videoEle.current);
   }, [activeContentTileId]);
 
   return isSomeoneSharing ? (
-    //TODO: auto-resize the screen share tile
+    // TODO: auto-resize the screen share tile
     <video ref={videoEle} style={{ display: 'block', width: '50rem' }} />
   ) : null;
 };

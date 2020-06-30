@@ -26,7 +26,7 @@ import {
   Presenter,
   Record,
   Remove,
-  ScreenShare,
+  ContentShare,
   Search,
   Share,
   Sound,
@@ -102,10 +102,10 @@ export const _Plus = () => <Plus width={text('width', '2rem')} />;
 export const _Presenter = () => <Presenter width={text('width', '2rem')} />;
 export const _Record = () => <Record width={text('width', '2rem')} />;
 export const _Remove = () => <Remove width={text('width', '2rem')} />;
-export const _ScreenShare = () => <ScreenShare width={text('width', '2rem')} />;
+export const _ContentShare = () => <ContentShare width={text('width', '2rem')} />;
 
-_ScreenShare.story = {
-  name: 'ScreenShare',
+_ContentShare.story = {
+  name: 'ContentShare',
 };
 
 export const _Search = () => <Search width={text('width', '2rem')} />;

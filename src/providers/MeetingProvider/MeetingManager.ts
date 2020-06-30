@@ -2,7 +2,6 @@ import {
   AudioVideoFacade,
   AudioVideoObserver,
   ConsoleLogger,
-  ContentShareObserver,
   DefaultDeviceController,
   DefaultMeetingSession,
   Device,
@@ -351,22 +350,6 @@ class MeetingManager implements DeviceChangeObserver {
       return;
     }
     this.audioVideo.removeObserver(observer);
-  }
-
-  addContentShareObserver(observer: ContentShareObserver): void {
-    if (!this.audioVideo) {
-      console.log('AudioVideo not initialized. Cannot add observer');
-      return;
-    }
-    this.audioVideo.addContentShareObserver(observer);
-  }
-
-  removeContentShareObserver(observer: ContentShareObserver): void {
-    if (!this.audioVideo) {
-      console.log('AudioVideo not initialized. Cannot remove observer');
-      return;
-    }
-    this.audioVideo.removeContentShareObserver(observer);
   }
 
   async getAttendeeInfo(presentAttendeeId: string) {
