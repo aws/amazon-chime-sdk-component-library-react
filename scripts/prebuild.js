@@ -40,11 +40,13 @@ const gitActionsProps = {
   eventName: process.env.GITHUB_EVENT_NAME // pull_request or push
 };
 
+const GithubEvents = ['pull_request', 'push'];
+
 const base = fs
   .readFileSync(path.join(process.cwd(), '.base-branch'), 'utf8')
   .trim();
 // We need to setup first within GitActions env.
-if (gitActionsProps.eventName === 'pull_request') {
+if (GithubEvents.includes(gitActionsProps.eventName)) {
   spawnOrFail('git', ['fetch']);
   spawnOrFail('git', ['checkout', `origin/${gitActionsProps.refBranch}`]);
 }
