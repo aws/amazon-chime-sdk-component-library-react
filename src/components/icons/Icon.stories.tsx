@@ -18,7 +18,9 @@ import {
   Laptop,
   Meeting,
   Microphone,
+  Pause,
   Phone,
+  Play,
   Plus,
   Presenter,
   Record,
@@ -84,7 +86,9 @@ export const _Microphone = () => (
   <Microphone disabled={boolean('disabled', false)} width={text('width', '2rem')} />
 );
 
+export const _Pause = () => <Pause width={text('width', '2rem')} />;
 export const _Phone = () => <Phone width={text('width', '2rem')} />;
+export const _Play = () => <Play width={text('width', '2rem')} />;
 export const _Plus = () => <Plus width={text('width', '2rem')} />;
 export const _Presenter = () => <Presenter width={text('width', '2rem')} />;
 export const _Record = () => <Record width={text('width', '2rem')} />;
@@ -97,4 +101,7 @@ _ScreenShare.story = {
 
 export const _Search = () => <Search width={text('width', '2rem')} />;
 export const _Share = () => <Share width={text('width', '2rem')} />;
-export const _Sound = () => <Sound width={text('width', '2rem')} />;
+
+export const _Sound = () => (
+  <Sound disabled={boolean('disabled', false)} width={text('width', '2rem')} />
+);
