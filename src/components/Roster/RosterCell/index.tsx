@@ -5,7 +5,7 @@ import LateMessage from './LateMessage';
 import Popover from '../../PopOver';
 import IconButton from '../../Button/IconButton';
 import { BaseProps } from '../../Base';
-import { Microphone, Camera, ScreenShare, Dots } from '../../icons';
+import { Microphone, Camera, ContentShare, Dots } from '../../icons';
 import { StyledCell } from './Styled';
 
 type MicPosition = 'leading' | 'grouped';
@@ -28,7 +28,7 @@ function getVideoIcon(
   isSharingContent: boolean | null | undefined
 ) {
   if (isSharingContent) {
-    return <ScreenShare />;
+    return <ContentShare />;
   }
 
   if (typeof isVideoEnabled === 'boolean') {

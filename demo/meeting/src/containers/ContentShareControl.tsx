@@ -1,54 +1,36 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  faEye,
-  faEyeSlash,
-  faPause,
-  faPlay
-} from '@fortawesome/free-solid-svg-icons';
-import { useMeetingManager } from '../../../../src';
+  ControlBarButton,
+  Pause,
+  Play,
+  ContentShare,
+} from 'amazon-chime-sdk-component-library-react';
 
-import { useContentShareContext } from '../providers/ContentShareProvider';
-import IconButton from '../components/IconButton';
-import ButtonGroup from '../components/ButtonGroup';
+import { useContentShare } from '../providers/ContentShareProvider';
+import { useContentShareControls } from '../providers/ContentShareControlProvider';
 
 const ContentShareControl: React.FC = () => {
-  const meetingManager = useMeetingManager();
-  const [isScreenSharePaused, setIsScreenSharePaused] = useState(false);
-  const { isLocalUserSharing } = useContentShareContext();
-
-  const toggleScreenShare = async (): Promise<void> => {
-    if (isLocalUserSharing) {
-      meetingManager?.stopContentShare();
-    } else {
-      await meetingManager?.startContentShare();
-    }
-  };
-
-  const togglePauseScreenShare = (): void => {
-    if (!isLocalUserSharing) {
-      return;
-    }
-    setIsScreenSharePaused(!isScreenSharePaused);
-    if (isScreenSharePaused) {
-      meetingManager?.audioVideo?.unpauseContentShare();
-    } else {
-      meetingManager?.audioVideo?.pauseContentShare();
-    }
-  };
+  const { isLocalUserSharing } = useContentShare();
+  const {
+    isContentSharePaused,
+    toggleContentShare,
+    togglePauseContentShare,
+  } = useContentShareControls();
 
   return (
     <>
-      <ButtonGroup>
-        <IconButton
-          icon={isLocalUserSharing ? faEye : faEyeSlash}
-          onClick={toggleScreenShare}
+      <ControlBarButton
+        icon={<ContentShare />}
+        onClick={toggleContentShare}
+        label={isLocalUserSharing ? 'Stop Screen Share' : 'Start Screen Share'}
+      />
+      {isLocalUserSharing && (
+        <ControlBarButton
+          icon={isContentSharePaused ? <Play /> : <Pause />}
+          onClick={togglePauseContentShare}
+          label={isContentSharePaused ? 'Play' : 'Pause'}
         />
-        <IconButton
-          disabled={!isLocalUserSharing}
-          icon={isScreenSharePaused ? faPlay : faPause}
-          onClick={togglePauseScreenShare}
-        />
-      </ButtonGroup>
+      )}
     </>
   );
 };

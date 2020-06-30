@@ -8,14 +8,17 @@ import MeetingControlsContainer from './MeetingControlsContainer';
 import MeetingRoster from './MeetingRoster';
 import RemoteVideoGrid from './RemoteVideoGrid';
 import { LocalAudioOutputProvider } from '../providers/LocalAudioOutputProvider';
+import { ContentShareControlProvider } from '../providers/ContentShareControlProvider';
 
 const MeetingView = () => (
   <MeetingStatusProvider>
     <LocalAudioOutputProvider>
       <LocalVideoToggleProvider>
         <ContentShareProvider>
-          <MeetingControlsContainer />
-          <ContentShare />
+          <ContentShareControlProvider>
+            <MeetingControlsContainer />
+            <ContentShare />
+          </ContentShareControlProvider>
           <MeetingRoster />
           <RemoteVideoGrid />
         </ContentShareProvider>

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { DefaultModality, VideoTileState } from 'amazon-chime-sdk-js';
-import { useMeetingManager } from '../../../../src';
+import { useMeetingManager, useAudioVideo } from '../../../../src';
 
 type ContentShareState = {
   activeContentTileId: number | null;
@@ -15,7 +15,7 @@ const initialState: ContentShareState = {
   isRemoteUserSharing: false,
   isLocalUserSharing: false,
   isSomeoneSharing: false,
-  sharingAttendeeId: null
+  sharingAttendeeId: null,
 };
 
 export const ContentShareContext = createContext<ContentShareState>(
@@ -24,6 +24,7 @@ export const ContentShareContext = createContext<ContentShareState>(
 
 const ContentShareProvider: React.FC = ({ children }) => {
   const meetingManager = useMeetingManager();
+  const audioVideo = useAudioVideo();
   const [contentShareState, setContentShareState] = useState(initialState);
   const { isLocalUserSharing, activeContentTileId } = contentShareState;
 
@@ -45,7 +46,7 @@ const ContentShareProvider: React.FC = ({ children }) => {
         const isLocalUser = baseAttendeeId === localAttendeeId;
 
         if (!isLocalUser && isLocalUserSharing) {
-          meetingManager?.audioVideo?.stopContentShare();
+          audioVideo?.stopContentShare();
         }
 
         if (isLocalUser) {
@@ -73,7 +74,7 @@ const ContentShareProvider: React.FC = ({ children }) => {
       }
     };
 
-    const screenShareObserver = {
+    const contentShareObserver = {
       contentShareDidStart: () => {
         setContentShareState((localState: ContentShareState) => ({
           ...localState,
@@ -87,14 +88,12 @@ const ContentShareProvider: React.FC = ({ children }) => {
         }));
       }
     };
-    meetingManager?.addObserver(videoObserver);
-    meetingManager?.audioVideo?.addContentShareObserver(screenShareObserver);
+    audioVideo?.addObserver(videoObserver);
+    audioVideo?.addContentShareObserver(contentShareObserver);
 
     return () => {
-      meetingManager?.removeObserver(videoObserver);
-      meetingManager?.audioVideo?.removeContentShareObserver(
-        screenShareObserver
-      );
+      audioVideo?.removeObserver(videoObserver);
+      audioVideo?.removeContentShareObserver(contentShareObserver);
     };
   }, [activeContentTileId, isLocalUserSharing]);
 
@@ -105,13 +104,8 @@ const ContentShareProvider: React.FC = ({ children }) => {
   );
 };
 
-export function useContentShareContext(): ContentShareState {
+export function useContentShare(): ContentShareState {
   const contentShareContext = useContext(ContentShareContext);
-  if (!contentShareContext) {
-    throw new Error(
-      'useContentShareContext must be used within ContentShareProvider'
-    );
-  }
   return contentShareContext;
 }
 
