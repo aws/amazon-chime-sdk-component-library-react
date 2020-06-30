@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 Fixed prebuild.
 
 ### Added
+Add Play, Pause and Sound disabled SVG icons
 
 ### Changed
 
