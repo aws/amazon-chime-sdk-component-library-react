@@ -35,26 +35,10 @@ function spawnOrFail(command, args, options) {
   return output;
 }
 
-const gitActionsProps = {
-  refBranch: process.env.GITHUB_HEAD_REF, // your branch
-  eventName: process.env.GITHUB_EVENT_NAME // pull_request or push
-};
-
-const GithubEvents = ['pull_request', 'push'];
-
 const base = fs
   .readFileSync(path.join(process.cwd(), '.base-branch'), 'utf8')
   .trim();
-// We need to setup first within GitActions env.
-if (GithubEvents.includes(gitActionsProps.eventName)) {
-  const branchName =
-    gitActionsProps.eventName === 'push'
-      ? base
-      : `origin/${gitActionsProps.refBranch}`;
 
-  spawnOrFail('git', ['fetch']);
-  spawnOrFail('git', ['checkout', branchName]);
-}
 const commits = spawnOrFail('git', ['rev-list', `${base}..`])
   .toString()
   .trim()
