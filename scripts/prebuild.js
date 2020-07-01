@@ -47,8 +47,13 @@ const base = fs
   .trim();
 // We need to setup first within GitActions env.
 if (GithubEvents.includes(gitActionsProps.eventName)) {
+  const branchName =
+    gitActionsProps.eventName === 'push'
+      ? base
+      : `origin/${gitActionsProps.refBranch}`;
+
   spawnOrFail('git', ['fetch']);
-  spawnOrFail('git', ['checkout', `origin/${gitActionsProps.refBranch}`]);
+  spawnOrFail('git', ['checkout', branchName]);
 }
 const commits = spawnOrFail('git', ['rev-list', `${base}..`])
   .toString()
