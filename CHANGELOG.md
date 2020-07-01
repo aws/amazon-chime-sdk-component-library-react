@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `device-utils` needed in audio, video providers in library connected components
 - Add audio, video device types to types in library
 - Add `useToggleLocalMute` to demo
+- Add `Modal`, `ModalButtonGroup` to library `src/index`
 
 ### Changed
 - Added delay for more consistent animation snapshotting with playwright.
@@ -28,6 +29,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated the `ContentShareControl` with SDK components
 - Changed `ScreenShare` to `ContentShare` in library and demo
 - Update `AudioInputControl` to use hooks and SDK components
+- Updated end meeting control, meeting controls container in demo app with SDK components
+- Changed `Modal` to `ModalButtonGroup` in ModalButtonGroup component
+- Changed `endMeeting` to call `leaveMeeting` and avoid cleanups with both calls in demo `MeetingManager`
 
 ### Removed
 - Removed active state button tests.

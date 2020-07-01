@@ -1,6 +1,7 @@
 import React from 'react';
-import { useMeetingManager } from '../../../../src';
+import { ControlBar } from 'amazon-chime-sdk-component-library-react';
 
+import { useMeetingManager } from '../../../../src';
 import AudioInputControl from './AudioInputControl';
 import VideoInputControl from './VideoInputControl';
 import ContentShareControl from './ContentShareControl';
@@ -13,15 +14,17 @@ const MeetingControlsContainer: React.FC = () => {
   const region = meetingManager?.region;
 
   return (
-    <div className="MeetingControlContainer" style={{ display: "flex" }}>
+    <div className="MeetingControlContainer" style={{ display: 'flex' }}>
       <p>{`${meetingId} (${region})`}</p>
-      <AudioInputControl />
-      <VideoInputControl />
-      <ContentShareControl />
-      <AudioOutputControl />
-      <EndMeetingControl />
+      <ControlBar layout="top" showLabels>
+        <AudioInputControl />
+        <VideoInputControl />
+        <ContentShareControl />
+        <AudioOutputControl />
+        <EndMeetingControl />
+      </ControlBar>
     </div>
   );
-}
+};
 
 export default MeetingControlsContainer;

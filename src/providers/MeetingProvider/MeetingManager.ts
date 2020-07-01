@@ -210,12 +210,16 @@ class MeetingManager implements DeviceChangeObserver {
     await this.meetingSession?.screenShareView.open();
   }
 
-  async endMeeting(meetingId: string): Promise<any> {
-    await fetch(`${BASE_URL}end?title=${encodeURIComponent(meetingId)}`, {
-      method: 'POST'
-    });
-    this.initializeMeetingManager();
-    this.publishAudioVideoUpdate();
+  async endMeeting(): Promise<any> {
+    this.leaveMeeting();
+    if (this.meetingId) {
+      await fetch(
+        `${BASE_URL}end?title=${encodeURIComponent(this.meetingId)}`,
+        {
+          method: 'POST',
+        }
+      );
+    }
   }
 
   async leaveMeeting(): Promise<void> {
