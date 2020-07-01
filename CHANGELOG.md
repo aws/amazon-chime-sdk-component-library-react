@@ -16,6 +16,6 @@ Update prebuild script to trigger git actions on git push event
 ### Removed
 
 ### Fixed
-Fixed prebuild.
+Fixed prebuild for PR and Push.
 
 ## [0.1.1] - 2020-06-16
