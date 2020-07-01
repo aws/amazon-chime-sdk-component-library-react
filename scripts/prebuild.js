@@ -42,10 +42,10 @@ const base = fs
 const commits = spawnOrFail('git', ['rev-list', `${base}..`])
   .toString()
   .trim()
-  .split(`\n`);
+  .split(`\n`).filter(commit => commit !== '');
 
 let commit_files = [];
-if (!commits) {
+if (!commits || !commits[0]) {
   console.log(logColorRef.log, `OK: branch is equal with ${base}`);
 } else if (commits.length === 1) {
   console.log(
