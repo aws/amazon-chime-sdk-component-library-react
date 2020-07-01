@@ -8,7 +8,7 @@ export interface ModalButtonGroupProps extends React.HTMLAttributes<HTMLDivEleme
   secondaryButtons?: ReactElement | ReactElement[];
 }
 
-export const Modal:FC<ModalButtonGroupProps> = ({ primaryButtons, secondaryButtons  }) => {
+export const ModalButtonGroup:FC<ModalButtonGroupProps> = ({ primaryButtons, secondaryButtons  }) => {
   const context = useModalContext();
 
   const addCloseBehaviorToButton = (button: any) => {
@@ -41,4 +41,4 @@ export const Modal:FC<ModalButtonGroupProps> = ({ primaryButtons, secondaryButto
   );
 };
 
-export default Modal;
+export default ModalButtonGroup;
