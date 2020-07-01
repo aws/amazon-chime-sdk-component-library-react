@@ -13,10 +13,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add initial roster components
 
 ### Changed
+- Added delay for more consistent animation snapshotting with playwright.
 - `npm run test` script changed to only include /components and /utils
 Update prebuild script to trigger git actions on git push event
 
 ### Removed
+- Removed active state button tests.
 
 ### Fixed
 Fixed prebuild for PR and Push.
