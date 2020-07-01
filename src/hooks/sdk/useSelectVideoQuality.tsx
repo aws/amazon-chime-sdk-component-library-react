@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 
-import { useAudioVideo } from '../providers/AudioVideoProvider';
+import { useAudioVideo } from '../../providers/AudioVideoProvider';
 
 export type VideoQuality = '360p' | '540p' | '720p';
 
-const useSelectVideoQuality = () => {
+export function useSelectVideoQuality() {
   const audioVideo = useAudioVideo();
 
   const selectVideoQuality = useCallback(
@@ -33,6 +33,6 @@ const useSelectVideoQuality = () => {
   );
 
   return selectVideoQuality;
-};
+}
 
 export default useSelectVideoQuality;

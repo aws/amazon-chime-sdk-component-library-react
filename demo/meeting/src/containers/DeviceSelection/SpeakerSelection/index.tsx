@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SecondaryButton } from 'amazon-chime-sdk-component-library-react';
+import { useMeetingManager, useAudioOutputs } from '../../../../../../src';
 
-import { useMeetingManager } from '../../../providers/MeetingProvider';
-import { useAudioOutputs } from '../../../providers/DevicesProvider';
 import TestSound from '../../../utils/TestSound';
 import DeviceInput from '../DeviceInput';
 

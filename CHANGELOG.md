@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Test script to run /Modal/index.test.tsx and /Button/PrimaryButton/index.test.tsx in playwright across 3 browsers
 - Add Play, Pause and Sound disabled SVG icons
 - Add initial roster components
+- Add connected components to lib directory
 
 ### Changed
 - `npm run test` script changed to only include /components and /utils

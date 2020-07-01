@@ -1,7 +1,6 @@
 import React, {
   useEffect,
   useLayoutEffect,
-  createRef,
   useState,
   RefObject
 } from 'react';
@@ -77,7 +76,7 @@ const useElementAspectRatio = (ref: RefObject<HTMLElement>): AspectRatio | null 
       return;
     }
 
-    const handleResize = debounce(50, (entries: ResizeObserverEntry[]) => {
+    const handleResize = debounce(50, (entries: any) => {
       const { height, width } = entries[0].contentRect;
       setRatio(getAspectRatio(height, width));
     });

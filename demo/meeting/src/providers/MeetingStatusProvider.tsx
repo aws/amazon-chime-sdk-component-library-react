@@ -1,46 +1,43 @@
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  ReactNode,
-} from 'react';
+import React, { createContext, useEffect, useState, ReactNode } from 'react';
+import { useHistory } from 'react-router-dom';
 import {
   MeetingSessionStatus,
   MeetingSessionStatusCode,
-  VideoTileState,
+  VideoTileState
 } from 'amazon-chime-sdk-js';
-import { useHistory } from 'react-router-dom';
+import { useMeetingManager } from '../../../../src';
 
-import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import routes from '../constants/routes';
 
 export enum MeetingStatus {
   Loading,
   Succeeded,
   Failed,
-  Ended,
+  Ended
 }
 
 type MeetingContext = {
   meetingStatus: MeetingStatus;
   updateMeetingStatus: (s: MeetingStatus) => void;
-}
+};
 
 type Props = {
   children: ReactNode;
   joinMuted?: boolean;
   joinWithVideo?: boolean;
-}
+};
 
-const MeetingStatusContext = createContext<MeetingContext>({ meetingStatus: MeetingStatus.Loading, updateMeetingStatus: (s: MeetingStatus) => {} });
+const MeetingStatusContext = createContext<MeetingContext>({
+  meetingStatus: MeetingStatus.Loading,
+  updateMeetingStatus: (s: MeetingStatus) => {}
+});
 
 export function getMeetingStatusContext() {
   return MeetingStatusContext;
 }
 
 export default function MeetingStatusProvider(props: Props) {
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
+  const meetingManager = useMeetingManager();
   const [meetingStatus, setMeetingStatus] = useState(MeetingStatus.Loading);
   const meetingId = meetingManager?.meetingId;
   const { children } = props;
@@ -52,7 +49,7 @@ export default function MeetingStatusProvider(props: Props) {
     };
 
     const videoTileDidUpdate = (tileState: VideoTileState) => {
-      console.log("Observer videoTileDidUpdate", tileState);
+      console.log('Observer videoTileDidUpdate', tileState);
       if (!tileState.boundAttendeeId) {
         return;
       }
@@ -60,14 +57,14 @@ export default function MeetingStatusProvider(props: Props) {
         setMeetingStatus(MeetingStatus.Succeeded);
       }
     };
-    
+
     const videoTileWasRemoved = (tileId: number) => {
-      console.log("Observer videoTileWasRemoved", tileId);
+      console.log('Observer videoTileWasRemoved', tileId);
       setMeetingStatus(MeetingStatus.Succeeded);
     };
 
     const audioVideoDidStop = (sessionStatus: MeetingSessionStatus) => {
-      console.log("Observer audioVideoDidStop");
+      console.log('Observer audioVideoDidStop');
       const sessionStatusCode = sessionStatus.statusCode();
       if (sessionStatusCode === MeetingSessionStatusCode.Left) {
         /*
@@ -76,16 +73,26 @@ export default function MeetingStatusProvider(props: Props) {
         */
         console.log('You left the session');
         setMeetingStatus(MeetingStatus.Ended);
-      } else if (sessionStatusCode === MeetingSessionStatusCode.AudioCallEnded) {
+      } else if (
+        sessionStatusCode === MeetingSessionStatusCode.AudioCallEnded
+      ) {
         console.log('The session has ended');
         history.push(`${routes.HOME}`);
         setMeetingStatus(MeetingStatus.Ended);
       } else {
-        console.log('Observer audioVideoDidStop, Stopped with a session status code: ', sessionStatusCode);
+        console.log(
+          'Observer audioVideoDidStop, Stopped with a session status code: ',
+          sessionStatusCode
+        );
       }
-    }
+    };
 
-    const observers = { videoTileDidUpdate, audioVideoDidStart, videoTileWasRemoved, audioVideoDidStop };
+    const observers: any = {
+      videoTileDidUpdate,
+      audioVideoDidStart,
+      videoTileWasRemoved,
+      audioVideoDidStop
+    };
     setMeetingStatus(MeetingStatus.Succeeded);
 
     if (!meetingManager || !meetingManager.audioVideo) {
@@ -105,8 +112,8 @@ export default function MeetingStatusProvider(props: Props) {
 
   const value = {
     meetingStatus,
-    updateMeetingStatus,
-  }
+    updateMeetingStatus
+  };
 
   return (
     <MeetingStatusContext.Provider value={value}>

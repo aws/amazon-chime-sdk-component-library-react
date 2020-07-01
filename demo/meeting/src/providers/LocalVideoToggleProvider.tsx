@@ -4,12 +4,11 @@ import React, {
   useEffect,
   useContext,
   useCallback,
-  useMemo,
+  useMemo
 } from 'react';
+import { useMeetingManager, useAudioVideo } from '../../../../src';
 
-import { useAudioVideo } from './AudioVideoProvider';
 import { videoInputSelectionToDevice } from '../utils/DeviceUtils';
-import { useMeetingManager } from './MeetingProvider';
 import { LocalVideoToggleContextType } from '../types';
 
 const Context = createContext<LocalVideoToggleContextType | null>(null);
@@ -40,7 +39,7 @@ const LocalVideoToggleProvider: React.FC = ({ children }) => {
 
   const value = useMemo(() => ({ isVideoEnabled, toggleVideo }), [
     isVideoEnabled,
-    toggleVideo,
+    toggleVideo
   ]);
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

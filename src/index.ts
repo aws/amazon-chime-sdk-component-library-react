@@ -44,12 +44,12 @@ export { KEY_CODES } from './constants';
 // Contexts
 export {
   ControlBarContext,
-  useControlBarContext,
+  useControlBarContext
 } from './components/ControlBar/ControlBarContext';
 export { ModalContext, useModalContext } from './components/Modal/ModalContext';
 export {
   useNotificationStateContext,
-  useNotificationDispatchContext,
+  useNotificationDispatchContext
 } from './providers/NotificationProvider';
 
 // Hooks
@@ -57,8 +57,23 @@ export { useClickOutside } from './hooks/useClickOutside';
 export { useTabOutside } from './hooks/useTabOutside';
 export { useUniqueId } from './hooks/useUniqueId';
 
+export { useAttendeeStatus } from './hooks/sdk/useAttendeeStatus';
+export { useAttendeeAudioStatus } from './hooks/sdk/useAttendeeAudioStatus';
+export { useActiveSpeaker } from './hooks/sdk/useActiveSpeaker';
+export { useSelectVideoQuality } from './hooks/sdk/useSelectVideoQuality';
+
+export { useMeetingManager } from './providers/MeetingProvider';
+export { useAudioVideo } from './providers/AudioVideoProvider';
+export { useRoster } from './providers/RosterProvider';
+export { useAudioInputs, useVideoInputs, useAudioOutputs } from './providers/DevicesProvider';
+
+
 // Providers
 export { NotificationProvider } from './providers/NotificationProvider';
+export { MeetingProvider } from './providers/MeetingProvider';
 
 // Themes
 export { lightTheme, darkTheme } from './theme';
+
+// Types
+export { VideoQuality } from './hooks/sdk/useSelectVideoQuality';

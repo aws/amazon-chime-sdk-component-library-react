@@ -1,7 +1,7 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { AudioVideoFacade } from 'amazon-chime-sdk-js';
 
-import { useMeetingManager } from './MeetingProvider';
+import { useMeetingManager } from '../../providers/MeetingProvider';
 
 type AudioVideoValue = AudioVideoFacade | null;
 
@@ -12,7 +12,7 @@ const AudioVideoProvider: React.FC = ({ children }) => {
   const [audioVideo, setAudioVideo] = useState<AudioVideoValue>(null);
 
   useEffect(() => {
-    function audioVideoUpdateCb (av: AudioVideoValue) {
+    function audioVideoUpdateCb(av: AudioVideoValue) {
       setAudioVideo(av);
     }
 

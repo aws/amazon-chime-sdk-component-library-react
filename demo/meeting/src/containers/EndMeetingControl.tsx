@@ -4,8 +4,8 @@ import {
   faPowerOff,
 } from '@fortawesome/free-solid-svg-icons'
 import { useHistory } from 'react-router-dom';
+import { useMeetingManager } from '../../../../src';
 
-import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import { getMeetingStatusContext, MeetingStatus } from '../providers/MeetingStatusProvider';
 import IconButton from '../components/IconButton';
 import ButtonGroup from '../components/ButtonGroup';
@@ -14,7 +14,7 @@ import Modal from '../components/Modal';
 import routes from '../constants/routes';
 
 const EndMeetingControl: React.FC = () => {
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
+  const meetingManager = useMeetingManager();
   const history = useHistory();
   const [showEndModal, setShowEndModal] = useState(false);
   const { updateMeetingStatus } = useContext(getMeetingStatusContext());

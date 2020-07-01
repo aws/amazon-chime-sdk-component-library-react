@@ -1,20 +1,20 @@
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState } from 'react';
+import { useMeetingManager } from '../../../../src';
 
-import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import { DevicePermissionStatus } from '../enums';
 
 export default function useDevicePermissionStatus() {
   const [permission, setPermission] = useState<string>(
     DevicePermissionStatus.UNSET
   );
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
+  const meetingManager = useMeetingManager();
   useEffect(() => {
     const callback = (updatedPermission: string): void => {
       setPermission(updatedPermission);
     };
-    meetingManager?.subscribeToDevicePermissionUpdate(callback);
+    meetingManager.subscribeToDevicePermissionUpdate(callback);
     return () => {
-      meetingManager?.unSubscribeFromDevicePermissionUpdate(callback);
+      meetingManager.unSubscribeFromDevicePermissionUpdate(callback);
     };
   }, []);
 

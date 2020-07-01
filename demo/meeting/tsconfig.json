@@ -21,7 +21,7 @@
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "isolatedModules": true
+    "suppressImplicitAnyIndexErrors": true,
   },
   "include": ["src/**/*", "server.js"],
   "exclude": [

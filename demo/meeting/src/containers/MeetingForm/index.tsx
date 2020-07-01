@@ -6,13 +6,10 @@ import {
   Heading,
   Select,
   FormField,
-  PrimaryButton,
+  PrimaryButton
 } from 'amazon-chime-sdk-component-library-react';
+import { useMeetingManager } from '../../../../../src';
 
-import {
-  MeetingManager,
-  MeetingContext,
-} from '../../providers/MeetingProvider';
 import { getErrorContext } from '../../providers/ErrorProvider';
 import routes from '../../constants/routes';
 import Modal from '../../components/Modal';
@@ -23,13 +20,13 @@ import { AVAILABLE_AWS_REGIONS } from '../../constants';
 import getFormattedOptionsForSelect from '../../utils/select-options-format';
 
 const MeetingForm: React.FC = () => {
+  const meetingManager = useMeetingManager();
   const [meetingId, setMeetingId] = useState('');
   const [inputName, setInputName] = useState('');
   const [region, setRegion] = useState('us-east-1');
   const [isLoading, setIsLoading] = useState(false);
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
   const history = useHistory();
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
 
   const handleJoinMeeting = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,7 +63,7 @@ const MeetingForm: React.FC = () => {
         infoText="Anyone with access to the meeting ID can join"
         fieldProps={{
           name: 'meetingId',
-          placeholder: 'Enter Meeting Id',
+          placeholder: 'Enter Meeting Id'
         }}
         onChange={(e: ChangeEvent<HTMLInputElement>): void =>
           setMeetingId(e.target.value)
@@ -78,7 +75,7 @@ const MeetingForm: React.FC = () => {
         value={inputName}
         fieldProps={{
           name: 'inputName',
-          placeholder: 'Enter Your Name',
+          placeholder: 'Enter Your Name'
         }}
         onChange={(e: ChangeEvent<HTMLInputElement>): void =>
           setInputName(e.target.value)

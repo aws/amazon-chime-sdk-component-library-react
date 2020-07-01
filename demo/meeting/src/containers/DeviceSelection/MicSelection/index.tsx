@@ -1,8 +1,7 @@
 import React from 'react';
 import { Heading } from 'amazon-chime-sdk-component-library-react';
+import { useMeetingManager, useAudioInputs } from '../../../../../../src';
 
-import { useAudioInputs } from '../../../providers/DevicesProvider';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
 import DeviceInput from '../DeviceInput';
 import AudioActivityPreview from './AudioActivityPreview';
 

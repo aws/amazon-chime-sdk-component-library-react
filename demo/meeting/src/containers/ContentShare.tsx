@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useMeetingManager } from '../../../../src';
 
-import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import { useContentShareContext } from '../providers/ContentShareProvider';
 
 const ContentShare: React.FC = () => {
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
+  const meetingManager = useMeetingManager();
   const { activeContentTileId, isSomeoneSharing } = useContentShareContext();
   const videoEle = useRef<HTMLVideoElement | null>(null);
 
@@ -12,14 +12,16 @@ const ContentShare: React.FC = () => {
     if (!videoEle.current || !activeContentTileId) {
       return;
     }
-    meetingManager?.audioVideo?.bindVideoElement(activeContentTileId!, videoEle.current)
+    meetingManager?.audioVideo?.bindVideoElement(
+      activeContentTileId!,
+      videoEle.current
+    );
   }, [activeContentTileId]);
 
-  return (
-    isSomeoneSharing ? 
+  return isSomeoneSharing ? (
     //TODO: auto-resize the screen share tile
-    <video ref={videoEle} style={{ display: "block", width: "50rem" }} /> : null
-  );
-}
+    <video ref={videoEle} style={{ display: 'block', width: '50rem' }} />
+  ) : null;
+};
 
 export default ContentShare;
