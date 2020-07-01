@@ -5,8 +5,8 @@ describe('Primary Button', () => {
       const page = await browser.newPage({ viewport: { width: 800, height: 600 }});
       await page.goto('http://localhost:9009/iframe.html?id=form-buttons--primary-button');
       const image = await page.screenshot();
-      expect(image).toMatchImageSnapshot();
       await browser.close();
+      expect(image).toMatchImageSnapshot();
     });
 
     it(`hover state in ${browserType}`, async () => {
@@ -14,31 +14,25 @@ describe('Primary Button', () => {
       const page = await browser.newPage({ viewport: { width: 800, height: 600 }});
       await page.goto('http://localhost:9009/iframe.html?id=form-buttons--primary-button');
       await page.hover('text=Primary');
-
+      await new Promise(res => setTimeout(() => {
+        res()
+      }, 200))
       const image = await page.screenshot();
-      expect(image).toMatchImageSnapshot();
       await browser.close();
+      expect(image).toMatchImageSnapshot();
     });
 
     it(`focus state in ${browserType}`, async () => {
       const browser = await playwright[browserType].launch();
       const page = await browser.newPage({ viewport: { width: 800, height: 600 }});
       await page.goto('http://localhost:9009/iframe.html?id=form-buttons--primary-button');
-      await page.press('text=Primary', 'Tab');        
+      await page.press('text=Primary', 'Tab');
+      await new Promise(res => setTimeout(() => {
+        res()
+      }, 200))
       const image = await page.screenshot();
-      expect(image).toMatchImageSnapshot();
       await browser.close();
-      });
-
-    it(`active state in ${browserType}`, async () => {
-      const browser = await playwright[browserType].launch();
-      const page = await browser.newPage({ viewport: { width: 800, height: 600 }});
-      await page.goto('http://localhost:9009/iframe.html?id=form-buttons--primary-button');
-      await page.click('text=Primary');
-
-      const image = await page.screenshot();
       expect(image).toMatchImageSnapshot();
-      await browser.close();
     });
   };
 });
