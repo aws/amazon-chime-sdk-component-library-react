@@ -1,7 +1,7 @@
 import React from 'react';
 import { RosterCell } from 'amazon-chime-sdk-component-library-react';
 
-import useAttendeeStatus from '../hooks/useAttendeeStatus';
+import { useAttendeeStatus } from '../../../../src';
 
 interface Props {
   attendeeId: string;

@@ -3,15 +3,51 @@ import React, {
   useEffect,
   useState,
   useContext,
-  useMemo,
+  useMemo
 } from 'react';
 import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
 import { useAudioVideo } from '../AudioVideoProvider';
-import { DeviceTypeContext, DeviceConfig } from '../../types';
-import { getFormattedDropdownDeviceOptions } from '../../utils/DeviceUtils';
 import { useMeetingManager } from '../MeetingProvider';
-import { VIDEO_INPUT } from '../../constants';
+
+export const getFormattedDropdownDeviceOptions = (
+  jsonObject: any
+): FormattedDeviceType[] => {
+  const formattedJSONObject = Object.entries(jsonObject).map(entry => ({
+    deviceId: entry[0].toLowerCase(),
+    label: entry[1] as string
+  }));
+  return formattedJSONObject;
+};
+
+export const VIDEO_INPUT = {
+  NONE: 'None',
+  BLUE: 'Blue',
+  SMPTE: 'SMPTE Color Bars'
+};
+
+export type FormattedDeviceType = {
+  deviceId: string;
+  label: string;
+};
+
+export type DeviceType = MediaDeviceInfo | FormattedDeviceType;
+
+export type SelectedDeviceType = string | null;
+
+export type DeviceTypeContext = {
+  devices: DeviceType[];
+  selectedDevice: SelectedDeviceType;
+};
+
+export type LocalVideoToggleContextType = {
+  isVideoEnabled: boolean;
+  toggleVideo: () => Promise<void>;
+};
+
+export type DeviceConfig = {
+  additionalDevices?: boolean;
+};
 
 const Context = createContext<DeviceTypeContext | null>(null);
 
@@ -42,7 +78,7 @@ const VideoInputProvider: React.FC = ({ children }) => {
       videoInputsChanged: (newvideoInputs: MediaDeviceInfo[]) => {
         console.log('VideoInputProvider - video inputs updated');
         setVideoInputs(newvideoInputs);
-      },
+      }
     };
 
     async function initVideoInput() {
@@ -69,7 +105,7 @@ const VideoInputProvider: React.FC = ({ children }) => {
   const contextValue: DeviceTypeContext = useMemo(
     () => ({
       devices: videoInputs,
-      selectedDevice: selectedVideoInputDevice,
+      selectedDevice: selectedVideoInputDevice
     }),
     [videoInputs, selectedVideoInputDevice]
   );

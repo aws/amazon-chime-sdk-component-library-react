@@ -1,4 +1,3 @@
-import React, { useContext, useState, ReactNode, createContext } from 'react';
 import {
   AudioVideoFacade,
   AudioVideoObserver,
@@ -11,18 +10,39 @@ import {
   Logger,
   LogLevel,
   MeetingSessionConfiguration,
-  MeetingSessionPOSTLogger,
+  MeetingSessionPOSTLogger
 } from 'amazon-chime-sdk-js';
 
-import { DevicePermissionStatus } from '../enums';
-import { AUDIO_INPUT } from '../constants';
-import { videoInputSelectionToDevice } from '../utils/DeviceUtils';
+enum DevicePermissionStatus {
+  UNSET = 'UNSET',
+  IN_PROGRESS = 'IN_PROGRESS',
+  GRANTED = 'GRANTED',
+  DENIED = 'DENIED'
+}
+
+const AUDIO_INPUT = {
+  NONE: 'None',
+  440: '440 Hz'
+};
+
+const videoInputSelectionToDevice = (deviceId: string): Device => {
+  if (deviceId === 'blue') {
+    return DefaultDeviceController.synthesizeVideoDevice('blue');
+  }
+  if (deviceId === 'smpte') {
+    return DefaultDeviceController.synthesizeVideoDevice('smpte');
+  }
+  if (deviceId === 'none') {
+    return null;
+  }
+  return deviceId;
+};
 
 const BASE_URL: string = [
   location.protocol,
   '//',
   location.host,
-  location.pathname.replace(/\/*$/, '/'),
+  location.pathname.replace(/\/*$/, '/')
 ].join('');
 
 type FullDeviceInfoType = {
@@ -34,7 +54,7 @@ type FullDeviceInfoType = {
   videoInputDevices: MediaDeviceInfo[] | null;
 };
 
-export class MeetingManager implements DeviceChangeObserver {
+class MeetingManager implements DeviceChangeObserver {
   private static readonly LOGGER_BATCH_SIZE: number = 85;
   private static readonly LOGGER_INTERVAL_MS: number = 1150;
 
@@ -113,7 +133,7 @@ export class MeetingManager implements DeviceChangeObserver {
         meetingId
       )}&name=${encodeURIComponent(name)}&region=${encodeURIComponent(region)}`,
       {
-        method: 'POST',
+        method: 'POST'
       }
     );
     const json = await response.json();
@@ -155,10 +175,6 @@ export class MeetingManager implements DeviceChangeObserver {
     this.setupDeviceLabelTrigger();
     await this.listAndSelectDevices();
     this.publishAudioVideoUpdate();
-    // this.setupMuteHandler();
-    // this.setupCanUnmuteHandler();
-    // this.setupScreenViewing();
-    // this.audioVideo.addObserver(this);
   }
 
   async updateDeviceLists(): Promise<void> {
@@ -176,7 +192,7 @@ export class MeetingManager implements DeviceChangeObserver {
       this.notifyDevicePermissionChange();
       const stream = await navigator.mediaDevices.getUserMedia({
         audio: true,
-        video: true,
+        video: true
       });
       return stream;
     };
@@ -196,7 +212,7 @@ export class MeetingManager implements DeviceChangeObserver {
 
   async endMeeting(meetingId: string): Promise<any> {
     await fetch(`${BASE_URL}end?title=${encodeURIComponent(meetingId)}`, {
-      method: 'POST',
+      method: 'POST'
     });
     this.initializeMeetingManager();
     this.publishAudioVideoUpdate();
@@ -347,7 +363,7 @@ export class MeetingManager implements DeviceChangeObserver {
 
     try {
       const res = await fetch(url, {
-        method: 'GET',
+        method: 'GET'
       });
 
       if (!res.ok) {
@@ -359,6 +375,7 @@ export class MeetingManager implements DeviceChangeObserver {
       return { id, name };
     } catch (e) {
       console.log(`Error fetching attendee: ${e.message}`);
+      return null;
     }
   }
 
@@ -398,12 +415,12 @@ export class MeetingManager implements DeviceChangeObserver {
     callbackToRemove: (av: AudioVideoFacade | null) => void
   ): void => {
     this.audioVideoCallbacks = this.audioVideoCallbacks.filter(
-      (callback) => callback !== callbackToRemove
+      callback => callback !== callbackToRemove
     );
   };
 
   publishAudioVideoUpdate = () => {
-    this.audioVideoCallbacks.forEach((callback) => {
+    this.audioVideoCallbacks.forEach(callback => {
       callback(this.audioVideo);
     });
   };
@@ -418,7 +435,7 @@ export class MeetingManager implements DeviceChangeObserver {
     callbackToRemove: (permission: string) => void
   ): void => {
     this.devicePermissionsObservers = this.devicePermissionsObservers.filter(
-      (callback) => callback !== callbackToRemove
+      callback => callback !== callbackToRemove
     );
   };
 
@@ -451,28 +468,4 @@ export class MeetingManager implements DeviceChangeObserver {
   };
 }
 
-export const MeetingContext = createContext<MeetingManager | null>(null);
-
-export const useMeetingManager = (): MeetingManager => {
-  const meetingManager = useContext(MeetingContext);
-
-  if (!meetingManager) {
-    throw new Error('useMeetingManager must be used within MeetingProvider');
-  }
-
-  return meetingManager;
-};
-
-type Props = {
-  children: ReactNode;
-};
-
-export default function MeetingProvider(props: Props) {
-  const [meetingManager] = useState(() => new MeetingManager());
-
-  return (
-    <MeetingContext.Provider value={meetingManager}>
-      {props.children}
-    </MeetingContext.Provider>
-  );
-}
+export default MeetingManager;

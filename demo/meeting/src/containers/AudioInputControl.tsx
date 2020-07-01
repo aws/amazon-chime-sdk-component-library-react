@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   faCaretDown,
   faMicrophone,
   faMicrophoneSlash,
 } from '@fortawesome/free-solid-svg-icons'
+import { useMeetingManager } from '../../../../src';
 
-import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import IconButton from '../components/IconButton';
 import ButtonGroup from '../components/ButtonGroup';
 import Dropdown, { OptionItem } from '../components/Dropdown';
@@ -13,7 +13,7 @@ import { createOptions } from '../utils/DeviceUtils';
 import { AUDIO_INPUT } from '../constants';
 
 const AudioInputControl: React.FC = () => {
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
+  const meetingManager = useMeetingManager();
   const [muted, setMuted] = useState(false);
   const [showMicDropdown, setShowMicDropdown] = useState(false);
   const [audioInputOptions, setAudioInputOptions] = useState(new Array<OptionItem>());

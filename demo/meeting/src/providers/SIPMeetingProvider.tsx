@@ -1,7 +1,8 @@
-import React, { ReactNode, useContext } from 'react';
+import React, { ReactNode } from 'react';
+import { useMeetingManager } from '../../../../src';
+import MeetingManager from '../../../../src/providers/MeetingProvider/MeetingManager';
 
 import { AMAZON_CHIME_VOICE_CONNECTOR_PHONE_NUMDER } from '../constants';
-import { MeetingManager, MeetingContext } from './MeetingProvider';
 
 export class SIPMeetingManager {
   private meetingManager: MeetingManager | null;
@@ -40,7 +41,7 @@ type Props = {
 };
 
 export default function SIPMeetingProvider({ children }: Props) {
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
+  const meetingManager = useMeetingManager();
   const sipMeeting = new SIPMeetingManager(meetingManager);
 
   return (

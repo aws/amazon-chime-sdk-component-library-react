@@ -1,21 +1,23 @@
-import React, { useContext, useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   faCaretDown,
   faVolumeMute,
-  faVolumeUp,
-} from '@fortawesome/free-solid-svg-icons'
+  faVolumeUp
+} from '@fortawesome/free-solid-svg-icons';
+import { useMeetingManager } from '../../../../src';
 
-import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import IconButton from '../components/IconButton';
 import ButtonGroup from '../components/ButtonGroup';
 import Dropdown, { OptionItem } from '../components/Dropdown';
 import { createOptions } from '../utils/DeviceUtils';
 
 const AudioOutputControl: React.FC = () => {
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
+  const meetingManager = useMeetingManager();
   const [isAudioOn, setIsAudioOn] = useState(true);
   const [showAudioDropdown, setShowAudioDropdown] = useState(false);
-  const [audioOutputOptions, setAudioOutputOptions] = useState(new Array<OptionItem>());
+  const [audioOutputOptions, setAudioOutputOptions] = useState(
+    new Array<OptionItem>()
+  );
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -30,17 +32,17 @@ const AudioOutputControl: React.FC = () => {
   useEffect(() => {
     populateAudioOutputList();
   }, []);
-    
+
   const populateAudioOutputList = async (): Promise<void> => {
     const genericName = 'Speaker';
     const audioOutputOpts = createOptions(
       genericName,
       meetingManager?.audioOutputDevices!,
-      [],
+      []
     );
     setAudioOutputOptions(audioOutputOpts);
-  } 
-  
+  };
+
   const toggleAudio = (): void => {
     if (!audioRef.current) {
       return;
@@ -51,22 +53,33 @@ const AudioOutputControl: React.FC = () => {
     } else {
       meetingManager?.audioVideo?.bindAudioElement(audioRef.current);
     }
-  }
+  };
 
   const reselectAudioOutput = async (name: string): Promise<void> => {
     await meetingManager?.audioVideo?.chooseAudioOutputDevice(name);
-  }
+  };
 
   return (
     <>
       <ButtonGroup>
-        <IconButton icon={isAudioOn ? faVolumeUp : faVolumeMute} onClick={toggleAudio} />
-        <IconButton icon={faCaretDown} onClick={() => setShowAudioDropdown(!showAudioDropdown)}/>
-          {showAudioDropdown && <Dropdown onChange={reselectAudioOutput} options={audioOutputOptions} />}
+        <IconButton
+          icon={isAudioOn ? faVolumeUp : faVolumeMute}
+          onClick={toggleAudio}
+        />
+        <IconButton
+          icon={faCaretDown}
+          onClick={() => setShowAudioDropdown(!showAudioDropdown)}
+        />
+        {showAudioDropdown && (
+          <Dropdown
+            onChange={reselectAudioOutput}
+            options={audioOutputOptions}
+          />
+        )}
       </ButtonGroup>
       <audio ref={audioRef} style={{ display: 'none' }} />
     </>
   );
-}
+};
 
 export default AudioOutputControl;

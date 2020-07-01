@@ -1,9 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { Heading, Label } from 'amazon-chime-sdk-component-library-react';
+import { useMeetingManager, useVideoInputs, useAudioVideo } from '../../../../../../src';
 
-import { useVideoInputs } from '../../../providers/DevicesProvider';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
-import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import QualitySelection from './QualitySelection';
 import DeviceInput from '../DeviceInput';
 

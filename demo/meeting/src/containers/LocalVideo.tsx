@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, CSSProperties } from 'react';
 import { VideoTileState } from 'amazon-chime-sdk-js';
-
-import { useAudioVideo } from '../providers/AudioVideoProvider';
+import { useAudioVideo } from '../../../../src';
 
 interface Props {
   id?: string;
@@ -31,7 +30,7 @@ export const LocalVideo: React.FC<Props> = ({ id, style }) => {
     };
 
     audioVideo.addObserver({
-      videoTileDidUpdate,
+      videoTileDidUpdate
     });
   }, [audioVideo]);
 

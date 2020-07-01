@@ -1,12 +1,12 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import {
   Roster,
   RosterHeader,
-  RosterGroup,
+  RosterGroup
 } from 'amazon-chime-sdk-component-library-react';
+import { useRoster } from '../../../../src';
 
-import { getRosterContext } from '../providers/RosterProvider';
 import RosterAttendee from './RosterAttendee';
 
 const StyledRoster = styled.div`
@@ -18,7 +18,7 @@ const StyledRoster = styled.div`
 `;
 
 const MeetingRoster = () => {
-  const roster = useContext(getRosterContext());
+  const roster = useRoster();
 
   const attendees = Object.values(roster).map(item => {
     const { id, name } = item;

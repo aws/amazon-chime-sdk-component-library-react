@@ -1,12 +1,12 @@
 import React from 'react';
 import {
   ControlBarButton,
-  Camera,
+  Camera
 } from 'amazon-chime-sdk-component-library-react';
+import { useMeetingManager } from '../../../../src';
 
 import { LocalVideo } from './LocalVideo';
-import { useVideoInputs } from '../providers/DevicesProvider';
-import { useMeetingManager } from '../providers/MeetingProvider';
+import { useVideoInputs } from '../../../../src/providers/DevicesProvider';
 import { isOptionActive } from '../utils/DeviceUtils';
 import { useLocalVideoToggle } from '../providers/LocalVideoToggleProvider';
 import { DeviceConfig } from '../types';
@@ -26,15 +26,15 @@ export interface PopOverItemProps {
 const VideoInputControl: React.FC = () => {
   const meetingManager = useMeetingManager();
   const videoInputConfig: DeviceConfig = {
-    additionalDevices: true,
+    additionalDevices: true
   };
   const { devices, selectedDevice } = useVideoInputs(videoInputConfig);
   const { isVideoEnabled, toggleVideo } = useLocalVideoToggle();
-  const dropdownOptions: PopOverItemProps[] = devices.map(device => ({
+  const dropdownOptions: PopOverItemProps[] = devices.map((device: any) => ({
     children: <span>{device.label}</span>,
     checked: isOptionActive(selectedDevice, device.deviceId),
     onClick: (): Promise<void> =>
-      meetingManager.selectVideoInputDevice(device.deviceId),
+      meetingManager.selectVideoInputDevice(device.deviceId)
   }));
 
   return (

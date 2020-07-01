@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useLayoutEffect,
-  createRef,
-  useState
-} from 'react';
-import ResizeObserver from 'resize-observer-polyfill';
-import { debounce } from 'throttle-debounce';
+import React, { createRef } from 'react';
 
 import { StyledGrid } from './Styled';
 import useElementAspectRatio from '../../hooks/useElementAspectRatio';

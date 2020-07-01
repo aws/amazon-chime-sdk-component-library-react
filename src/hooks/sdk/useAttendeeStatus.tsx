@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { AudioVideoObserver, DefaultModality } from 'amazon-chime-sdk-js';
 
-import { useAudioVideo } from '../providers/AudioVideoProvider';
-import useAttendeeRealtimeAudio from './useAttendeeRealtimeAudio';
+import { useAudioVideo } from '../../providers/AudioVideoProvider';
+import useAttendeeAudioStatus from './useAttendeeAudioStatus';
 
 interface RosterAttendeeStatus {
   muted: boolean;
@@ -11,9 +11,9 @@ interface RosterAttendeeStatus {
   signalStrength: number;
 }
 
-const useAttendeeStatus = (attendeeId: string): RosterAttendeeStatus => {
+export function useAttendeeStatus(attendeeId: string): RosterAttendeeStatus {
   const audioVideo = useAudioVideo();
-  const audioState = useAttendeeRealtimeAudio(attendeeId);
+  const audioState = useAttendeeAudioStatus(attendeeId);
 
   const [videoTileId, setVideoTileId] = useState<number | null>(() => {
     if (!audioVideo) {
@@ -121,6 +121,6 @@ const useAttendeeStatus = (attendeeId: string): RosterAttendeeStatus => {
     videoEnabled,
     sharingContent
   };
-};
+}
 
 export default useAttendeeStatus;

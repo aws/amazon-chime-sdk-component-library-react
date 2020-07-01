@@ -1,20 +1,14 @@
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { VideoTileState } from 'amazon-chime-sdk-js';
+import { useMeetingManager, useRoster } from '../../../../src';
 
-import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
-import { getRosterContext } from '../providers/RosterProvider';
 import VideoGrid from '../components/VideoGrid';
 import RemoteVideo from '../components/RemoteVideo';
 import { MAX_REMOTE_VIDEOS } from '../constants';
 
 const RemoteVideoGrid: React.FC = () => {
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
-  const roster = useContext(getRosterContext());
+  const meetingManager = useMeetingManager();
+  const roster = useRoster();
   const tiles: { [index: number]: number } = {};
   const videoElements: HTMLVideoElement[] = []; // an array of 16 HTMLVideoElement objects
   const [visibleIndices, setVisibleIndices] = useState<{
@@ -53,23 +47,26 @@ const RemoteVideoGrid: React.FC = () => {
         return;
       }
       const index = acquireTileIndex(tileId);
-      meetingManager?.audioVideo?.bindVideoElement(tileId, videoElements[index]);
-      setVisibleIndices((previousVisibleIndices) => ({
+      meetingManager?.audioVideo?.bindVideoElement(
+        tileId,
+        videoElements[index]
+      );
+      setVisibleIndices(previousVisibleIndices => ({
         ...previousVisibleIndices,
-        [index]: { boundAttendeeId: boundAttendeeId },
+        [index]: { boundAttendeeId: boundAttendeeId }
       }));
     };
-    
+
     const videoTileWasRemoved = (tileId: number) => {
       const index = releaseTileIndex(tileId);
-      setVisibleIndices((previousVisibleIndices) => ({
+      setVisibleIndices(previousVisibleIndices => ({
         ...previousVisibleIndices,
-        [index]: null,
+        [index]: null
       }));
     };
     const observers = { videoTileDidUpdate, videoTileWasRemoved };
     meetingManager?.addObserver(observers);
-    
+
     return () => {
       meetingManager?.removeObserver(observers);
     };
@@ -99,10 +96,10 @@ const RemoteVideoGrid: React.FC = () => {
               }
             }, [])}
           />
-        )
+        );
       })}
     </VideoGrid>
   );
-}
+};
 
 export default RemoteVideoGrid;

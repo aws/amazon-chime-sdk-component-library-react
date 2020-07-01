@@ -3,10 +3,10 @@ import { useHistory } from 'react-router-dom';
 import {
   PrimaryButton,
   Flex,
-  Label,
+  Label
 } from 'amazon-chime-sdk-component-library-react';
+import { useMeetingManager } from '../../../../src';
 
-import { useMeetingManager } from '../providers/MeetingProvider';
 import routes from '../constants/routes';
 import Card from '../components/Card';
 import Modal from '../components/Modal';

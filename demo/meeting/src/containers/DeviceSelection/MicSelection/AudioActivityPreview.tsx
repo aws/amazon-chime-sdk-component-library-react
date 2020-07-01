@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import { Label } from 'amazon-chime-sdk-component-library-react';
+import { useAudioVideo } from '../../../../../../src';
 
-import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import ActivityBar from '../../../components/ActivityBar';
 
 import { StyledPreviewGroup } from '../Styled';

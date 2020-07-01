@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { DefaultModality, VideoTileState } from 'amazon-chime-sdk-js';
-
-import { MeetingManager, MeetingContext } from './MeetingProvider';
+import { useMeetingManager } from '../../../../src';
 
 type ContentShareState = {
   activeContentTileId: number | null;
@@ -16,7 +15,7 @@ const initialState: ContentShareState = {
   isRemoteUserSharing: false,
   isLocalUserSharing: false,
   isSomeoneSharing: false,
-  sharingAttendeeId: null,
+  sharingAttendeeId: null
 };
 
 export const ContentShareContext = createContext<ContentShareState>(
@@ -24,7 +23,7 @@ export const ContentShareContext = createContext<ContentShareState>(
 );
 
 const ContentShareProvider: React.FC = ({ children }) => {
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
+  const meetingManager = useMeetingManager();
   const [contentShareState, setContentShareState] = useState(initialState);
   const { isLocalUserSharing, activeContentTileId } = contentShareState;
 
@@ -55,7 +54,7 @@ const ContentShareProvider: React.FC = ({ children }) => {
             activeContentTileId: tileState.tileId,
             isLocalUserSharing: true,
             isSomeoneSharing: true,
-            sharingAttendeeId: baseAttendeeId,
+            sharingAttendeeId: baseAttendeeId
           }));
         } else {
           setContentShareState((localState: ContentShareState) => ({
@@ -63,7 +62,7 @@ const ContentShareProvider: React.FC = ({ children }) => {
             activeContentTileId: tileState.tileId,
             isRemoteUserSharing: true,
             isSomeoneSharing: true,
-            sharingAttendeeId: baseAttendeeId,
+            sharingAttendeeId: baseAttendeeId
           }));
         }
       },
@@ -71,22 +70,22 @@ const ContentShareProvider: React.FC = ({ children }) => {
         if (tileId === activeContentTileId) {
           setContentShareState(initialState);
         }
-      },
+      }
     };
 
     const screenShareObserver = {
       contentShareDidStart: () => {
         setContentShareState((localState: ContentShareState) => ({
           ...localState,
-          isLocalUserSharing: true,
+          isLocalUserSharing: true
         }));
       },
       contentShareDidStop: () => {
         setContentShareState((localState: ContentShareState) => ({
           ...localState,
-          isLocalUserSharing: false,
+          isLocalUserSharing: false
         }));
-      },
+      }
     };
     meetingManager?.addObserver(videoObserver);
     meetingManager?.audioVideo?.addContentShareObserver(screenShareObserver);

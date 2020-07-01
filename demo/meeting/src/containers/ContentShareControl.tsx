@@ -1,18 +1,18 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   faEye,
   faEyeSlash,
   faPause,
-  faPlay,
-} from '@fortawesome/free-solid-svg-icons'
+  faPlay
+} from '@fortawesome/free-solid-svg-icons';
+import { useMeetingManager } from '../../../../src';
 
-import { MeetingManager, MeetingContext } from '../providers/MeetingProvider';
 import { useContentShareContext } from '../providers/ContentShareProvider';
 import IconButton from '../components/IconButton';
 import ButtonGroup from '../components/ButtonGroup';
 
 const ContentShareControl: React.FC = () => {
-  const meetingManager: MeetingManager | null = useContext(MeetingContext);
+  const meetingManager = useMeetingManager();
   const [isScreenSharePaused, setIsScreenSharePaused] = useState(false);
   const { isLocalUserSharing } = useContentShareContext();
 
@@ -22,7 +22,7 @@ const ContentShareControl: React.FC = () => {
     } else {
       await meetingManager?.startContentShare();
     }
-  }
+  };
 
   const togglePauseScreenShare = (): void => {
     if (!isLocalUserSharing) {
@@ -34,16 +34,23 @@ const ContentShareControl: React.FC = () => {
     } else {
       meetingManager?.audioVideo?.pauseContentShare();
     }
-  }
+  };
 
   return (
     <>
       <ButtonGroup>
-        <IconButton icon={isLocalUserSharing ? faEye : faEyeSlash} onClick={toggleScreenShare} />
-        <IconButton disabled={!isLocalUserSharing} icon={isScreenSharePaused ? faPlay : faPause} onClick={togglePauseScreenShare}/>
+        <IconButton
+          icon={isLocalUserSharing ? faEye : faEyeSlash}
+          onClick={toggleScreenShare}
+        />
+        <IconButton
+          disabled={!isLocalUserSharing}
+          icon={isScreenSharePaused ? faPlay : faPause}
+          onClick={togglePauseScreenShare}
+        />
       </ButtonGroup>
     </>
   );
-}
+};
 
 export default ContentShareControl;
