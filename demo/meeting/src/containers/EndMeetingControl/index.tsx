@@ -65,7 +65,7 @@ const EndMeetingControl: React.FC = () => {
                 label="Leave Meeting"
                 closesModal
               />,
-              <ModalButton variant="secondary" label="cancel" closesModal />
+              <ModalButton variant="secondary" label="Cancel" closesModal />
             ]}
           />
         </Modal>

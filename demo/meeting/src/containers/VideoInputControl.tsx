@@ -45,7 +45,7 @@ const VideoInputControl: React.FC = () => {
       <ControlBarButton
         icon={<Camera disabled={!isVideoEnabled} />}
         onClick={toggleVideo}
-        label={isVideoEnabled ? 'Disable video' : 'Enable video'}
+        label="Video"
         popOver={dropdownOptions}
       />
       {/* TODO: need to resize video tile dynamically */}

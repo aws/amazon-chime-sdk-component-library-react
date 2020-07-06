@@ -25,7 +25,7 @@ const ContentShareControl: React.FC = () => {
       <ControlBarButton
         icon={<ContentShare />}
         onClick={toggleContentShare}
-        label={isLocalUserSharing ? 'Stop Screen Share' : 'Start Screen Share'}
+        label="Content"
       />
       {isLocalUserSharing && (
         <ControlBarButton
