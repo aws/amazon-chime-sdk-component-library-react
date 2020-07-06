@@ -5,9 +5,10 @@ import React from 'react';
 import {
   ControlBarButton,
   Sound,
+  useMeetingManager,
+  useAudioOutputs
 } from 'amazon-chime-sdk-component-library-react';
 
-import { useMeetingManager, useAudioOutputs } from '../../../../src';
 import { isOptionActive } from '../utils/DeviceUtils';
 import { useLocalAudioOutput } from '../providers/LocalAudioOutputProvider';
 import { FormattedDeviceType } from '../types';
@@ -34,7 +35,7 @@ const AudioOutputControl: React.FC = () => {
       children: <span>{device.label}</span>,
       checked: isOptionActive(selectedDevice, device.deviceId),
       onClick: (): Promise<void> =>
-        meetingManager.selectAudioOutputDevice(device.deviceId),
+        meetingManager.selectAudioOutputDevice(device.deviceId)
     })
   );
 

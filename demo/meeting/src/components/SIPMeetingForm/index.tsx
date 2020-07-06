@@ -7,7 +7,7 @@ import {
   Input,
   Heading,
   FormField,
-  PrimaryButton,
+  PrimaryButton
 } from 'amazon-chime-sdk-component-library-react';
 
 type SIPMeetingFormProps = {
@@ -23,7 +23,7 @@ export default function SIPMeetingForm({
   voiceConnectorId,
   onChangeMeetingId,
   onChangeVoiceConnectorId,
-  handleSubmit,
+  handleSubmit
 }: SIPMeetingFormProps) {
   return (
     <form>
@@ -36,7 +36,7 @@ export default function SIPMeetingForm({
         value={meetingId}
         fieldProps={{
           name: 'meetingId',
-          placeholder: 'Enter Meeting Id',
+          placeholder: 'Enter Meeting Id'
         }}
         onChange={onChangeMeetingId}
       />
@@ -47,7 +47,7 @@ export default function SIPMeetingForm({
         value={voiceConnectorId}
         fieldProps={{
           name: 'voiceConnectorId',
-          placeholder: 'Enter Voice Connector Id',
+          placeholder: 'Enter Voice Connector Id'
         }}
         infoText="You will need a SIP client in order to join the meeting."
         onChange={onChangeVoiceConnectorId}

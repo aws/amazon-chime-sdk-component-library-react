@@ -45,7 +45,8 @@ export const StyledGroup = styled.div`
   ${baseStyles}
 `;
 
-export const StyledHeader = styled.div`
+export const StyledHeader = styled.div<any>`
+  position: relative;
   display: flex;
   align-items: center;
   padding: 0.75rem 1rem;
@@ -55,15 +56,37 @@ export const StyledHeader = styled.div`
   .title {
     font-size: 0.875rem;
     color: ${props => props.theme.roster.primaryText};
+    ${props => (props.isSearching ? 'opacity: 0;' : '')}
     ${ellipsis};
   }
 
   .badge {
     margin-left: 0.5rem;
+    ${props => (props.isSearching ? 'opacity: 0;' : '')}
   }
 
-  .content {
+  .buttons {
     margin-left: auto;
+    ${props => (props.isSearching ? 'opacity: 0;' : '')}
+  }
+
+  .search-wrapper {
+    position: absolute !important;
+    bottom: 0.75rem;
+    left: 0.5rem;
+    right: 0.5rem;
+
+    .search-input {
+      flex: 1;
+
+      input {
+        width: 100%;
+      }
+    }
+
+    .search-close {
+      margin-left: 0.5rem;
+    }
   }
 
   ${baseSpacing}

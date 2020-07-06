@@ -2,9 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { ControlBar } from 'amazon-chime-sdk-component-library-react';
+import {
+  ControlBar,
+  useMeetingManager
+} from 'amazon-chime-sdk-component-library-react';
 
-import { useMeetingManager } from '../../../../src';
 import AudioInputControl from './AudioInputControl';
 import VideoInputControl from './VideoInputControl';
 import ContentShareControl from './ContentShareControl';

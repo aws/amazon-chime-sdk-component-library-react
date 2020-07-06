@@ -34,6 +34,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed `Modal` to `ModalButtonGroup` in ModalButtonGroup component
 - Changed `endMeeting` to call `leaveMeeting` and avoid cleanups with both calls in demo `MeetingManager`
 - `npm run build:release` will run code style check as part of the build.
+- Update `RosterHeader` for filtering
+- Import components relatively using alias
 
 ### Removed
 - Removed active state button tests.

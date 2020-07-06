@@ -11,12 +11,12 @@ import {
   ModalHeader,
   ModalButton,
   ModalButtonGroup,
+  useMeetingManager
 } from 'amazon-chime-sdk-component-library-react';
 
-import { useMeetingManager } from '../../../../../src';
 import {
   getMeetingStatusContext,
-  MeetingStatus,
+  MeetingStatus
 } from '../../providers/MeetingStatusProvider';
 import routes from '../../constants/routes';
 import { StyledP } from './Styled';
@@ -65,7 +65,7 @@ const EndMeetingControl: React.FC = () => {
                 label="Leave Meeting"
                 closesModal
               />,
-              <ModalButton variant="secondary" label="cancel" closesModal />,
+              <ModalButton variant="secondary" label="cancel" closesModal />
             ]}
           />
         </Modal>

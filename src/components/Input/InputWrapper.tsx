@@ -11,14 +11,14 @@ export interface InputWrapperProps {
   className?: string;
 }
 
-export const InputWrapper: FC<InputWrapperProps> = (props) => {
+export const InputWrapper: FC<InputWrapperProps> = props => {
   const { leadingIcon, children } = props;
   return (
-    <StyledInputWrapper {...props} data-testid='input-wrapper'>
+    <StyledInputWrapper {...props} data-testid="input-wrapper">
       {leadingIcon && <span className="icon">{leadingIcon}</span>}
       {children}
     </StyledInputWrapper>
   );
-}
+};
 
 export default InputWrapper;

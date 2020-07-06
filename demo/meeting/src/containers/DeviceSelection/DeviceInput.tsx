@@ -16,9 +16,9 @@ interface Props {
 const DeviceInput: React.FC<Props> = ({ onChange, label, devices }) => {
   const [selectedDevice, setSelectedDevice] = useState('');
 
-  const selectOptions = devices.map((device) => ({
+  const selectOptions = devices.map(device => ({
     value: device.deviceId,
-    label: device.label,
+    label: device.label
   }));
 
   useEffect(() => {
