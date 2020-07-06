@@ -18,6 +18,7 @@
     "prebuild:release": "node scripts/prebuild.js",
     "prebuild:publish": "node scripts/prebuild.js --publish",
     "build:release": "npm install && npm run check && npm run build && npm run test ",
+    "postbuild:release": "node scripts/postbuild.js",
     "start": "start-storybook -p 9009",
     "test": "jest -c jest.config.js --verbose \"./tst/(components|utils)/*\"",
     "deploy-storybook": "storybook-to-ghpages",
