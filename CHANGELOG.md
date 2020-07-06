@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `useToggleLocalMute` to demo
 - Add `Modal`, `ModalButtonGroup` to library `src/index`
 - Add code style checking script
+- Add postbuild script
 
 ### Changed
 - Added delay for more consistent animation snapshotting with playwright.
