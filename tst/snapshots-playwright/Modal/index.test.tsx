@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 describe('Modal', () => {
   for (const browserType of ['chromium', 'firefox', 'webkit']) {
     it(`visually looks correct at size medium in ${browserType}`, async () => {

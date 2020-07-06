@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import { Device, DefaultDeviceController } from 'amazon-chime-sdk-js';
 import { OptionItem } from '../components/Dropdown';
 import { FormattedDeviceType } from '../types';

@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 export { default as Arrow } from './Arrow';
 export { default as Attendees } from './Attendees';
 export { default as Camera } from './Camera';

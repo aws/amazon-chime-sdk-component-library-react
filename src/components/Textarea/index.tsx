@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import React, { FC, ChangeEvent, InputHTMLAttributes } from 'react';
 import { StyledTextarea } from './Styled';
 

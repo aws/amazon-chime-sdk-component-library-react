@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 describe('VideoGrid', () => {
   for(let i = 1; i <= 16; i++) {
     it(`size ${i}`, async () => {

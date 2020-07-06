@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import React, { useState, useEffect } from 'react';
 import { SecondaryButton } from 'amazon-chime-sdk-component-library-react';
 import { useMeetingManager, useAudioOutputs } from '../../../../../../src';

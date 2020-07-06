@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 export const AMAZON_CHIME_VOICE_CONNECTOR_PHONE_NUMDER = '+17035550122';
 
 export const VIDEO_INPUT = {

@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 describe('Modal', () => {
     it('visually looks correct at size medium', async () => {
       await page.goto('http://host.docker.internal:9009/iframe.html?id=modal--basic-example&knob-size=medium');

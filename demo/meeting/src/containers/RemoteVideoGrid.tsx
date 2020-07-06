@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import React, { useCallback, useEffect, useState } from 'react';
 import { VideoTileState } from 'amazon-chime-sdk-js';
 import { useMeetingManager, useRoster } from '../../../../src';
