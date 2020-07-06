@@ -6,7 +6,7 @@ import {
   ControlBarButton,
   Pause,
   Play,
-  ContentShare,
+  ContentShare
 } from 'amazon-chime-sdk-component-library-react';
 
 import { useContentShare } from '../providers/ContentShareProvider';
@@ -17,7 +17,7 @@ const ContentShareControl: React.FC = () => {
   const {
     isContentSharePaused,
     toggleContentShare,
-    togglePauseContentShare,
+    togglePauseContentShare
   } = useContentShareControls();
 
   return (

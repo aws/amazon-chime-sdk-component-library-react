@@ -3,10 +3,10 @@
 
 import React from 'react';
 import {
+  Camera,
   ControlBarButton,
-  Camera
+  useMeetingManager
 } from 'amazon-chime-sdk-component-library-react';
-import { useMeetingManager } from '../../../../src';
 
 import { LocalVideo } from './LocalVideo';
 import { useVideoInputs } from '../../../../src/providers/DevicesProvider';

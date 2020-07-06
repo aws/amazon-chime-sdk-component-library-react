@@ -44,7 +44,6 @@
     "@types/webpack-env": "^1.15.1",
     "@typescript-eslint/eslint-plugin": "^2.19.2",
     "@typescript-eslint/parser": "^2.19.2",
-    "amazon-chime-sdk-component-library-react": "file:../..",
     "amazon-chime-sdk-js": "^1.1.0",
     "aws-sdk": "^2.642.0",
     "react": "^16.12.0",

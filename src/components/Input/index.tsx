@@ -21,7 +21,7 @@ export const Input = forwardRef((props: InputProps, ref: Ref<HTMLInputElement>) 
     <InputWrapper
       leadingIcon={leadingIcon}
       sizing={sizing}
-      className="InputWrapper"
+      className={`InputWrapper ${className || ''}`}
     >
       <StyledInput
         {...rest}

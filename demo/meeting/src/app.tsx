@@ -4,8 +4,10 @@
 import React, { FC } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme } from 'amazon-chime-sdk-component-library-react';
-import { MeetingProvider } from '../../../src';
+import {
+  lightTheme,
+  MeetingProvider
+} from 'amazon-chime-sdk-component-library-react';
 
 import MeetingView from './containers/MeetingView';
 import ErrorProvider from './providers/ErrorProvider';

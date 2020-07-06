@@ -1,7 +1,7 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useState } from 'react';
 import { text, select, boolean, number } from '@storybook/addon-knobs';
 
 import Flex from '../Flex';
@@ -22,6 +22,9 @@ const Menu = () => (
 );
 
 export const _Roster = () => {
+  const [search, setSearch] = useState('');
+  const handleSearch = e => setSearch(e.target.value);
+
   return (
     <Flex
       container
@@ -29,7 +32,13 @@ export const _Roster = () => {
       css="height: 100vh; background: #f6f9fc"
     >
       <Roster>
-        <RosterHeader title="Present" badge={2} />
+        <RosterHeader
+          title="Present"
+          badge={2}
+          onClose={() => alert('Closing')}
+          searchValue={search}
+          onSearch={handleSearch}
+        />
 
         <RosterGroup>
           <RosterCell
@@ -81,13 +90,23 @@ export const _RosterHeader = () => {
   const title = text('title', 'Present');
   const badge = number('badge', 4);
   const children = text('children', '');
+  const [search, setSearch] = useState('');
+
+  const handleSearch = e => setSearch(e.target.value);
 
   return (
     <Flex container layout="fill-space-centered" css="height: 100vh;">
       <Flex css="width: 100%; max-width: 280px;">
-        <RosterHeader title={title} badge={badge}>
+        <RosterHeader
+          title={title}
+          badge={badge}
+          onClose={() => alert('Closing')}
+          searchValue={search}
+          onSearch={handleSearch}
+        >
           {children}
         </RosterHeader>
+
         <RosterGroup>
           <RosterCell name="Michael Scarn" subtitle="FBI agent" />
           <RosterCell name="Prison Mike" subtitle="Inmate" />

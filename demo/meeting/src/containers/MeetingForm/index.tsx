@@ -9,9 +9,9 @@ import {
   Heading,
   Select,
   FormField,
-  PrimaryButton
+  PrimaryButton,
+  useMeetingManager
 } from 'amazon-chime-sdk-component-library-react';
-import { useMeetingManager } from '../../../../../src';
 
 import { getErrorContext } from '../../providers/ErrorProvider';
 import routes from '../../constants/routes';

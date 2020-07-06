@@ -6,9 +6,9 @@ import { useHistory } from 'react-router-dom';
 import {
   PrimaryButton,
   Flex,
-  Label
+  Label,
+  useMeetingManager
 } from 'amazon-chime-sdk-component-library-react';
-import { useMeetingManager } from '../../../../src';
 
 import routes from '../constants/routes';
 import Card from '../components/Card';

@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, useRef } from 'react';
-import { Label } from 'amazon-chime-sdk-component-library-react';
-import { useAudioVideo } from '../../../../../../src';
+import { Label, useAudioVideo } from 'amazon-chime-sdk-component-library-react';
 
 import ActivityBar from '../../../components/ActivityBar';
 

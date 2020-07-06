@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { RosterCell } from 'amazon-chime-sdk-component-library-react';
-
-import { useAttendeeStatus } from '../../../../src';
+import {
+  RosterCell,
+  useAttendeeStatus
+} from 'amazon-chime-sdk-component-library-react';
 
 interface Props {
   attendeeId: string;
