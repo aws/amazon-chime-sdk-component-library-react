@@ -2,9 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useContext, FormEvent } from 'react';
+import {
+  Modal,
+  ModalBody,
+  ModalHeader,
+} from 'amazon-chime-sdk-component-library-react';
 
 import Card from '../../components/Card';
-import Modal from '../../components/Modal';
 import SIPURI from '../SIPURI';
 import SIPMeetingForm from '../../components/SIPMeetingForm';
 import { getErrorContext } from '../../providers/ErrorProvider';
@@ -55,13 +59,15 @@ const SIPMeeting: React.FC = () => {
         handleSubmit={handleSIPMeetingFormSubmit}
       />
       {errorMessage && (
-        <Modal onClose={closeError}>
-          <Card
-            header={`Meeting ID: ${meetingId}`}
-            title="Unable to find meeting"
-            description="There was an issue finding that meeting. The meeting may have already ended, or your authorization may have expired."
-            smallText={errorMessage}
-          />
+        <Modal size="medium" onClose={closeError}>
+          <ModalHeader title={`Meeting ID: ${meetingId}`} />
+          <ModalBody>
+            <Card
+              title="Unable to find meeting"
+              description="There was an issue finding that meeting. The meeting may have already ended, or your authorization may have expired."
+              smallText={errorMessage}
+            />
+          </ModalBody>
         </Modal>
       )}
       {sipURI && <SIPURI sipURI={sipURI} />}

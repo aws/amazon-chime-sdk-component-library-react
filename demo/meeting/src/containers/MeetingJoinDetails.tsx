@@ -7,12 +7,14 @@ import {
   PrimaryButton,
   Flex,
   Label,
-  useMeetingManager
+  useMeetingManager,
+  Modal,
+  ModalBody,
+  ModalHeader,
 } from 'amazon-chime-sdk-component-library-react';
 
 import routes from '../constants/routes';
 import Card from '../components/Card';
-import Modal from '../components/Modal';
 
 const MeetingJoinDetails = () => {
   const meetingManager = useMeetingManager();
@@ -48,13 +50,15 @@ const MeetingJoinDetails = () => {
         </Label>
       </Flex>
       {error && (
-        <Modal onClose={() => setError('')}>
-          <Card
-            header={`Meeting ID: ${meetingId}`}
-            title="Unable to join meeting"
-            description="There was an issue in joining this meeting. Check your connectivity and try again."
-            smallText={error}
-          />
+        <Modal size="medium" onClose={(): void => setError('')}>
+          <ModalHeader title={`Meeting ID: ${meetingId}`} />
+          <ModalBody>
+            <Card
+              title="Unable to join meeting"
+              description="There was an issue in joining this meeting. Check your connectivity and try again."
+              smallText={error}
+            />
+          </ModalBody>
         </Modal>
       )}
     </>

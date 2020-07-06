@@ -10,12 +10,14 @@ import {
   Select,
   FormField,
   PrimaryButton,
-  useMeetingManager
+  useMeetingManager,
+  Modal,
+  ModalBody,
+  ModalHeader,
 } from 'amazon-chime-sdk-component-library-react';
 
 import { getErrorContext } from '../../providers/ErrorProvider';
 import routes from '../../constants/routes';
-import Modal from '../../components/Modal';
 import Card from '../../components/Card';
 import Spinner from '../../components/Spinner';
 import DevicePermissionPrompt from '../DevicePermissionPrompt';
@@ -105,13 +107,15 @@ const MeetingForm: React.FC = () => {
         )}
       </Flex>
       {errorMessage && (
-        <Modal onClose={closeError}>
-          <Card
-            header={`Meeting ID: ${meetingId}`}
-            title="Unable to find meeting"
-            description="There was an issue finding that meeting. The meeting may have already ended, or your authorization may have expired."
-            smallText={errorMessage}
-          />
+        <Modal size="medium" onClose={closeError}>
+          <ModalHeader title={`Meeting ID: ${meetingId}`} />
+          <ModalBody>
+            <Card
+              title="Unable to join meeting"
+              description="There was an issue finding that meeting. The meeting may have already ended, or your authorization may have expired."
+              smallText={errorMessage}
+            />
+          </ModalBody>
         </Modal>
       )}
       <DevicePermissionPrompt />

@@ -44,7 +44,7 @@ const AudioOutputControl: React.FC = () => {
       <ControlBarButton
         icon={<Sound disabled={!isAudioOn} />}
         onClick={toggleAudio}
-        label={isAudioOn ? 'Disable audio' : 'Enable audio'}
+        label="Audio"
         popOver={dropdownOptions}
       />
     </>

@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update `RosterHeader` for filtering
 - Import components relatively using alias
 - Update demo app README
+- Update `Modal` to SDK Modal component and minor change to `Card` component in the demo
 
 ### Removed
 - Removed active state button tests.
