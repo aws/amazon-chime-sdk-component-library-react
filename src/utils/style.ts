@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import{ css } from 'styled-components';
 
 // use for elements that contain text for screen readers, but need no visual representation

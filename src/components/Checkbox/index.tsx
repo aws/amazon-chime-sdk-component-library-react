@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import React, { FC, ChangeEvent, useRef } from 'react';
 import { StyledCheckbox, HiddenCheckbox } from './Styled';
 import { Check } from '../icons';

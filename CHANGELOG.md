@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add audio, video device types to types in library
 - Add `useToggleLocalMute` to demo
 - Add `Modal`, `ModalButtonGroup` to library `src/index`
+- Add code style checking script
 
 ### Changed
 - Added delay for more consistent animation snapshotting with playwright.
@@ -32,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated end meeting control, meeting controls container in demo app with SDK components
 - Changed `Modal` to `ModalButtonGroup` in ModalButtonGroup component
 - Changed `endMeeting` to call `leaveMeeting` and avoid cleanups with both calls in demo `MeetingManager`
+- `npm run build:release` will run code style check as part of the build.
 
 ### Removed
 - Removed active state button tests.

@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 describe('Input', () => {
   it('basic input sizing = md', async () => {
     await page.goto('http://host.docker.internal:9009/iframe.html?id=form-textinputs--basic-input&knob-value=&knob-size=md');

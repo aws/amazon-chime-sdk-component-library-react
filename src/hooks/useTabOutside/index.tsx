@@ -1,3 +1,6 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
 import { useEffect, RefObject } from 'react';
 
 export function useTabOutside(ref: RefObject<HTMLElement>, onTabOutside: (e: KeyboardEvent) => void) {
