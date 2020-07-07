@@ -75,13 +75,11 @@ export default function MeetingStatusProvider(props: Props) {
           - When closing a browser window or page, Chime SDK attempts to leave the session.
         */
         console.log('You left the session');
-        setMeetingStatus(MeetingStatus.Ended);
       } else if (
         sessionStatusCode === MeetingSessionStatusCode.AudioCallEnded
       ) {
         console.log('The session has ended');
         history.push(`${routes.HOME}`);
-        setMeetingStatus(MeetingStatus.Ended);
       } else {
         console.log(
           'Observer audioVideoDidStop, Stopped with a session status code: ',
