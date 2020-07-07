@@ -37,6 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `npm run build:release` will run code style check as part of the build.
 - Update `RosterHeader` for filtering
 - Import components relatively using alias
+- Update demo app README
 
 ### Removed
 - Removed active state button tests.
