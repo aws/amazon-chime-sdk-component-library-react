@@ -5,11 +5,11 @@ import React from 'react';
 import {
   Camera,
   ControlBarButton,
-  useMeetingManager
+  useMeetingManager,
+  useVideoInputs
 } from 'amazon-chime-sdk-component-library-react';
 
 import { LocalVideo } from './LocalVideo';
-import { useVideoInputs } from '../../../../src/providers/DevicesProvider';
 import { isOptionActive } from '../utils/DeviceUtils';
 import { useLocalVideoToggle } from '../providers/LocalVideoToggleProvider';
 import { DeviceConfig } from '../types';
