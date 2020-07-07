@@ -1,5 +1,11 @@
 #!/usr/bin/env node
-
+/* 
+  This scripts validates files for:
+    Correct copyright and licencing message presents in files
+    Each test file has corresponding source file.
+    Checks for use of console.log() within source files.
+    README.MD and NOTICE have valid footer copyright.
+*/
 const fs = require('fs');
 const exec = require('child_process').execSync;
 const logColorRef = {
@@ -46,7 +52,7 @@ let allFiles = function() {
     file => file.endsWith('.ts') || file.endsWith('.tsx')
   );
 
-  const demosMeetingFiles = walk('demo/meeting').filter(
+  const demosMeetingFiles = walk('demo/meeting/src').filter(
     file =>
       file.endsWith('.ts') || file.endsWith('.tsx') || file.endsWith('.js')
   );
