@@ -44,6 +44,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed active state button tests.
 
 ### Fixed
-Fixed prebuild for PR and Push.
+- Fixed prebuild for PR and Push.
+- Fix react state update errors for `MeetingStatusProvider`, `MeetingRoster` and `MeetingJoinDetails`
+- Fix roster showing stale attendees
 
 ## [0.1.1] - 2020-06-16
