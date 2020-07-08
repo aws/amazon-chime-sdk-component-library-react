@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update demo app README
 - Update `Modal` to SDK Modal component and minor change to `Card` component in the demo
 - Updating demo with basic video grid
+- Add enforcement of passing test coverage thresholds.
 
 ### Removed
 - Removed active state button tests.
