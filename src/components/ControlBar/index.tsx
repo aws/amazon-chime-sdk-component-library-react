@@ -22,8 +22,15 @@ export interface ControlBarProps
   layout: ControlBarLayout;
 }
 
-export const ControlBar: FC<ControlBarProps> = (props) => {
-  const { layout, showLabels = false, tag, className, children, ...rest } = props;
+export const ControlBar: FC<ControlBarProps> = props => {
+  const {
+    tag,
+    layout,
+    showLabels = false,
+    className,
+    children,
+    ...rest
+  } = props;
   const controlBarContext = { layout, showLabels };
 
   return (

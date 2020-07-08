@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { Device, DefaultDeviceController } from 'amazon-chime-sdk-js';
-import { OptionItem } from '../components/Dropdown';
 import { FormattedDeviceType } from '../types';
 
 export const populateDeviceList = (
@@ -41,46 +40,14 @@ export const populateDeviceList = (
     option.text = 'Device selection unavailable';
     list.appendChild(option);
   }
-}
+};
 
-export const createOptions = (
-  genericName: string,
-  devices: MediaDeviceInfo[] | null,
-  additionalOptions: string[]
-): OptionItem[] => {
-  let options: OptionItem[] = [];
-  if (!devices || !devices.length || !additionalOptions.length) {
-    options.push({ name: "noChoice", label: 'Device selection unavailable' });
-    return options;
-  }
-  for (let i = 0; i < devices.length; i++) {
-    const label = devices[i].label || `${genericName} ${i + 1}`;
-    const option = {
-      name: label,
-      label: label,
-      // onClick: () => callback(devices[i].deviceId)
-    }
-    options.push(option);
-  }
-  if (additionalOptions.length > 0) {
-    const divid = { name: "divid", label: '──────────' };
-    options.push(divid);
-    for (const additionalOption of additionalOptions) {
-      const opt = {
-        name: additionalOption,
-        label: additionalOption,
-        // onClick: () => callback(additionalOption)
-      }
-      options.push(opt);
-    }
-  }
-  return options;
-}
-
-export const getFormattedDropdownDeviceOptions = (jsonObject: any): FormattedDeviceType[] => {
+export const getFormattedDropdownDeviceOptions = (
+  jsonObject: any
+): FormattedDeviceType[] => {
   const formattedJSONObject = Object.entries(jsonObject).map(entry => ({
     deviceId: entry[0].toLowerCase(),
-    label: entry[1] as string,
+    label: entry[1] as string
   }));
   return formattedJSONObject;
 };

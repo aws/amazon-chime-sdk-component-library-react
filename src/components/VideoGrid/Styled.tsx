@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { VideoGridProps } from './';
 import { AspectRatio } from '../../hooks/useElementAspectRatio';
 
-interface StyledNotificationProps extends VideoGridProps {
+interface StyledGridProps extends VideoGridProps {
   ratio?: AspectRatio | null;
   size: number;
 }
@@ -27,7 +27,7 @@ const sizeRatioMap = {
   '2.r4by3' : 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
   '2.r3by2' : 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
   '2.r16by9': 'grid-template: 4fr 3fr / repeat(2,1fr);',
-  '2.r21by9': 'grid-template: 5fr 1fr / repeat(2,1fr)',
+  '2.r21by9': 'grid-template: 1fr / repeat(2,1fr)',
   '2.r29by9': 'grid-template: 1fr / repeat(2,1fr)',
   '2.r36by9': 'grid-template: 1fr / repeat(2,2fr) 1fr;',
 
@@ -37,8 +37,8 @@ const sizeRatioMap = {
   '3.r2by3' : 'grid-template: repeat(3,1fr) / 1fr;',
   '3.r4by3' : 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
   '3.r21by9': 'grid-template: 2fr 1fr / repeat(3,1fr);',
-  '3.r29by9': 'grid-template: 4fr 1fr / repeat(3,1fr);',
-  '3.r36by9': 'grid-template: 4fr 1fr / repeat(3,1fr);',
+  '3.r29by9': 'grid-template: 1fr / repeat(3,1fr);',
+  '3.r36by9': 'grid-template: 1fr / repeat(3,1fr);',
 
   '4'       : 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
   '4.slim'  : 'grid-template: repeat(4,1fr) / 1fr;',
@@ -47,8 +47,8 @@ const sizeRatioMap = {
   '4.r1by1' : 'grid-template: repeat(2,2fr) 1fr / repeat(2,1fr);',
   '4.r4by3' : 'grid-template: repeat(2,4fr) 1fr / repeat(2,1fr);',
   '4.r21by9': 'grid-template: repeat(2,1fr) / repeat(3,1fr);',
-  '4.r29by9': 'grid-template: 2fr 2fr / repeat(3,1fr);',
-  '4.r36by9': 'grid-template: 2fr 1fr / repeat(4,1fr);',
+  '4.r29by9': 'grid-template: 1fr / repeat(4,1fr);',
+  '4.r36by9': 'grid-template: 1fr / repeat(4,1fr);',
 
   '5'       : 'grid-template: repeat(2,1fr) / repeat(3,1fr);',
   '5.slim'  : 'grid-template: repeat(5,1fr) / 1fr;',
@@ -57,10 +57,10 @@ const sizeRatioMap = {
   '5.r1by1' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
   '5.r4by3' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
   '5.r3by2' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
-  '5.r16by9': 'grid-template: repeat(2,6fr) 1fr / repeat(3,1fr);',
+  '5.r16by9': 'grid-template: repeat(2,6fr) / repeat(3,1fr);',
   '5.r21by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
   '5.r29by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
-  '5.r36by9': 'grid-template: 2fr 1fr / repeat(5,1fr);',
+  '5.r36by9': 'grid-template: 1fr / repeat(5,1fr);',
 
   '6'       : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
   '6.slim'  : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
@@ -69,7 +69,7 @@ const sizeRatioMap = {
   '6.r1by1' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
   '6.r4by3' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
   '6.r21by9': 'grid-template: repeat(2,1fr) / repeat(3,1fr);',
-  '6.r16by9': 'grid-template: repeat(2,7fr) 1fr / repeat(3,1fr);',
+  '6.r16by9': 'grid-template: repeat(2,7fr) / repeat(3,1fr);',
   '6.r29by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
   '6.r36by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
 
@@ -79,18 +79,18 @@ const sizeRatioMap = {
   '7.r2by3' : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
   '7.r1by1' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
   '7.r4by3' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '7.r16by9': 'grid-template: repeat(2,4fr) 1fr/ repeat(4,1fr);',
+  '7.r16by9': 'grid-template: repeat(2,4fr) / repeat(4,1fr);',
   '7.r21by9': 'grid-template: repeat(2,3fr) / repeat(4,1fr);',
   '7.r29by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
   '7.r36by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
 
   '8'       : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '8.slim'  : 'grid-template: repeat(5,10fr) 1fr / repeat(2,1fr);',
+  '8.slim'  : 'grid-template: repeat(5,1fr) / repeat(2,1fr);',
   '8.r1by2' : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
   '8.r2by3' : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
   '8.r1by1' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
   '8.r4by3' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '8.r16by9' : 'grid-template: repeat(2,3fr) 1fr / repeat(4,1fr);',
+  '8.r16by9' : 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
   '8.r21by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
   '8.r29by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
   '8.r36by9': 'grid-template: repeat(2,4fr) / repeat(5,1fr);',
@@ -102,7 +102,7 @@ const sizeRatioMap = {
   '9.r1by1' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
   '9.r4by3' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
   '9.r16by9' : 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
-  '9.r21by9': 'grid-template: repeat(2,6fr) 1fr / repeat(5,1fr);',
+  '9.r21by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
   '9.r29by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
   '9.r36by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
 
@@ -112,22 +112,22 @@ const sizeRatioMap = {
   '10.r2by3' : 'grid-template: repeat(5,1fr) / repeat(2,1fr);',
   '10.r1by1' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
   '10.r4by3' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '10.r3by2' : 'grid-template: repeat(3,6fr) 1fr / repeat(4,1fr);',
+  '10.r3by2' : 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
   '10.r16by9': 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
-  '10.r21by9': 'grid-template: repeat(2,6fr) 1fr / repeat(5,1fr);',
+  '10.r21by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
   '10.r29by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
   '10.r36by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
 
   '11'       : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
   '11.slim'  : 'grid-template: repeat(6,1fr) / repeat(2,1fr);',
   '11.r1by2' : 'grid-template: repeat(6,1fr) / repeat(2,1fr);',
-  '11.r2by3' : 'grid-template: repeat(4,5fr) 1fr / repeat(3,1fr);',
+  '11.r2by3' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
   '11.r1by1' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
   '11.r4by3' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '11.r3by2' : 'grid-template: repeat(3,5fr) 1fr / repeat(4,1fr);',
+  '11.r3by2' : 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
   '11.r16by9': 'grid-template: repeat(3,7fr) / repeat(4,1fr);',
   '11.r21by9': 'grid-template: repeat(3,1fr) / repeat(5,1fr);',
-  '11.r29by9': 'grid-template: repeat(2,10fr) 1fr / repeat(6,1fr);',
+  '11.r29by9': 'grid-template: repeat(2,1fr) / repeat(6,1fr);',
   '11.r36by9': 'grid-template: repeat(2,1fr) / repeat(6,1fr);',
 
   '12'       : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
@@ -187,7 +187,7 @@ const sizeRatioMap = {
   '16.r36by9': 'grid-template: repeat(3,1fr) / repeat(7,1fr);',
 };
 
-export const StyledGrid = styled.div<StyledNotificationProps>`
+export const StyledGrid = styled.div<StyledGridProps>`
   display: grid;
   height: 100%;
   width: 100%;

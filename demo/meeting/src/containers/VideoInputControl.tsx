@@ -9,7 +9,6 @@ import {
   useVideoInputs
 } from 'amazon-chime-sdk-component-library-react';
 
-import { LocalVideo } from './LocalVideo';
 import { isOptionActive } from '../utils/DeviceUtils';
 import { useLocalVideoToggle } from '../providers/LocalVideoToggleProvider';
 import { DeviceConfig } from '../types';
@@ -41,19 +40,12 @@ const VideoInputControl: React.FC = () => {
   }));
 
   return (
-    <>
-      <ControlBarButton
-        icon={<Camera disabled={!isVideoEnabled} />}
-        onClick={toggleVideo}
-        label="Video"
-        popOver={dropdownOptions}
-      />
-      {/* TODO: need to resize video tile dynamically */}
-      <LocalVideo
-        id="meeting-video"
-        style={{ width: '20rem', position: 'absolute', top: '3.5rem' }}
-      />
-    </>
+    <ControlBarButton
+      icon={<Camera disabled={!isVideoEnabled} />}
+      onClick={toggleVideo}
+      label="Video"
+      popOver={dropdownOptions}
+    />
   );
 };
 

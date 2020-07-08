@@ -3,14 +3,15 @@
 
 import React, { useEffect, useRef, CSSProperties } from 'react';
 import { VideoTileState } from 'amazon-chime-sdk-js';
-import { useAudioVideo } from '../../../../src';
+import { useAudioVideo } from 'amazon-chime-sdk-component-library-react';
 
 interface Props {
   id?: string;
   style?: CSSProperties;
+  className?: string;
 }
 
-export const LocalVideo: React.FC<Props> = ({ id, style }) => {
+export const LocalVideo: React.FC<Props> = ({ id, style, className }) => {
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);
 
@@ -37,7 +38,14 @@ export const LocalVideo: React.FC<Props> = ({ id, style }) => {
     });
   }, [audioVideo]);
 
-  return <video ref={videoEl} id={id} style={style} />;
+  return (
+    <video
+      className={className || ''}
+      ref={videoEl}
+      id={id || ''}
+      style={style}
+    />
+  );
 };
 
 export default LocalVideo;

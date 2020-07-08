@@ -9,10 +9,9 @@ import {
   MeetingProvider
 } from 'amazon-chime-sdk-component-library-react';
 
-import MeetingView from './containers/MeetingView';
 import ErrorProvider from './providers/ErrorProvider';
 import routes from './constants/routes';
-import { Home, DeviceSetup } from './views';
+import { Meeting, Home, DeviceSetup } from './views';
 
 const App: FC = () => (
   <Router>
@@ -22,7 +21,7 @@ const App: FC = () => (
           <Switch>
             <Route exact path={routes.HOME} component={Home} />
             <Route path={routes.DEVICE} component={DeviceSetup} />
-            <Route path={routes.MEETING} component={MeetingView} />
+            <Route path={routes.MEETING} component={Meeting} />
           </Switch>
         </MeetingProvider>
       </ErrorProvider>

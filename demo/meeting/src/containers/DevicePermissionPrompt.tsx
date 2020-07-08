@@ -6,7 +6,7 @@ import React from 'react';
 import {
   Modal,
   ModalBody,
-  ModalHeader,
+  ModalHeader
 } from 'amazon-chime-sdk-component-library-react';
 
 import useDevicePermissionStatus from '../hooks/useDevicePermissionStatus';
@@ -38,7 +38,7 @@ const DevicePermissionPrompt = () => {
                 permissions check of your mic and camera.
               </p>
               <p>
-                When the pop-up appears, choose <strong> Allow</strong>.
+                When the pop-up appears, choose <strong>Allow</strong>.
               </p>
             </>
           }

@@ -20,7 +20,7 @@ const ContentShare: React.FC = () => {
 
   return isSomeoneSharing ? (
     // TODO: auto-resize the screen share tile
-    <video ref={videoEle} style={{ display: 'block', width: '50rem' }} />
+    <video ref={videoEle} />
   ) : null;
 };
 

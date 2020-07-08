@@ -38,6 +38,7 @@ export { Textarea } from './components/Textarea';
 export { VideoGrid } from './components/VideoGrid';
 export { VideoTile } from './components/VideoTile/';
 export { Grid } from './components/Grid';
+export { Cell } from './components/Grid/Cell';
 export { Roster } from './components/Roster';
 export { RosterHeader } from './components/Roster/RosterHeader';
 export { RosterGroup } from './components/Roster/RosterGroup';
@@ -70,8 +71,11 @@ export { useSelectVideoQuality } from './hooks/sdk/useSelectVideoQuality';
 export { useMeetingManager } from './providers/MeetingProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRoster } from './providers/RosterProvider';
-export { useAudioInputs, useVideoInputs, useAudioOutputs } from './providers/DevicesProvider';
-
+export {
+  useAudioInputs,
+  useVideoInputs,
+  useAudioOutputs
+} from './providers/DevicesProvider';
 
 // Providers
 export { NotificationProvider } from './providers/NotificationProvider';

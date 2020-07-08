@@ -223,11 +223,11 @@ declare module 'styled-components' {
       title: string;
       primaryText: string;
       secondaryText: string;
+      headerBorder: string;
       bgd: string;
       fgd: string;
       shadow: string;
       maxWidth: string;
-    }
-
+    };
   }
 }

@@ -10,7 +10,11 @@ export interface VideoGridProps extends React.HTMLAttributes<HTMLDivElement> {
   size: number;
 }
 
-export const VideoGrid: React.FC<VideoGridProps> = ({ size, children, ...props }) => {
+export const VideoGrid: React.FC<VideoGridProps> = ({
+  size,
+  children,
+  ...props
+}) => {
   const gridEl = createRef<HTMLDivElement>();
   const ratio = useElementAspectRatio(gridEl);
 
@@ -20,7 +24,7 @@ export const VideoGrid: React.FC<VideoGridProps> = ({ size, children, ...props }
       {...props}
       size={size}
       ratio={ratio}
-      data-testid='video-grid'
+      data-testid="video-grid"
     >
       {children}
     </StyledGrid>

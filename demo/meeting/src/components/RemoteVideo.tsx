@@ -4,19 +4,21 @@
 import React from 'react';
 
 type Props = {
-  enabled: boolean
+  enabled: boolean;
   attendeeName?: string;
-  videoEleRef: ((instance: HTMLVideoElement | null) => void);
-}
+  videoEleRef: (instance: HTMLVideoElement | null) => void;
+};
 
-const RemoteVideo: React.FC<Props> = ({ videoEleRef, attendeeName, enabled }) => {
-
-  return (
-    <div style={enabled? {display: "block"} : {display: "none"}}>
-      <video ref={videoEleRef} />
-      {attendeeName && <span>{attendeeName}</span>}
-    </div>
-  );
-}
+const RemoteVideo: React.FC<Props> = ({ videoEleRef, enabled }) => (
+  <video
+    style={{
+      display: enabled ? 'block' : 'none',
+      objectFit: 'cover',
+      height: '100%',
+      width: '100%'
+    }}
+    ref={videoEleRef}
+  />
+);
 
 export default RemoteVideo;
