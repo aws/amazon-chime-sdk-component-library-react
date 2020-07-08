@@ -2,28 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import {
-  ControlBarButton,
-  Microphone,
-  useMeetingManager,
-  useAudioInputs
-} from 'amazon-chime-sdk-component-library-react';
 
-import useToggleLocalMute from '../hooks/useToggleLocalMute';
-import { DeviceConfig } from '../types';
-import { isOptionActive } from '../utils/DeviceUtils';
-
-// TODO: import from library when types are exported
-export interface PopOverItemProps {
-  onClick?: () => void;
-  checked?: boolean;
-  children?: React.ReactElement<any> | React.ReactElement<any>[];
-  disabled?: boolean;
-  href?: string;
-  as?: any;
-  text?: string;
-  border?: boolean;
-}
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
+import { Microphone } from '../../ui/icons';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
+import { useAudioInputs } from '../../../providers/DevicesProvider';
+import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
+import { DeviceConfig } from '../../../types';
+import { isOptionActive } from '../../../utils/device-utils';
+import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
 const AudioInputControl: React.FC = () => {
   const meetingManager = useMeetingManager();

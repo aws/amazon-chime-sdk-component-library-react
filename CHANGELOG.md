@@ -45,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update codestyle script to ignore non-source files within `demo/meeting` app.
 - Moved components into /ui directory
 - Change license from ISC to Apache-2.0
+- Move provider, hooks and connected components from demo to library
 
 ### Removed
 - Removed active state button tests.

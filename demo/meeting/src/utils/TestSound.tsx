@@ -9,10 +9,10 @@ import {
 class TestSound {
   constructor(
     sinkId: string | null,
-    frequency: number = 440,
-    durationSec: number = 1,
-    rampSec: number = 0.1,
-    maxGainValue: number = 0.1
+    frequency = 440,
+    durationSec = 1,
+    rampSec = 0.1,
+    maxGainValue = 0.1
   ) {
     // @ts-ignore
     const audioContext: AudioContext = new (window.AudioContext || window.webkitAudioContext)();
@@ -23,12 +23,18 @@ class TestSound {
     oscillatorNode.connect(gainNode);
     const destinationStream = audioContext.createMediaStreamDestination();
     gainNode.connect(destinationStream);
-    const currentTime = audioContext.currentTime;
+    const { currentTime } = audioContext;
     const startTime = currentTime + 0.1;
     gainNode.gain.linearRampToValueAtTime(0, startTime);
     gainNode.gain.linearRampToValueAtTime(maxGainValue, startTime + rampSec);
-    gainNode.gain.linearRampToValueAtTime(maxGainValue, startTime + rampSec + durationSec);
-    gainNode.gain.linearRampToValueAtTime(0, startTime + rampSec * 2 + durationSec);
+    gainNode.gain.linearRampToValueAtTime(
+      maxGainValue,
+      startTime + rampSec + durationSec
+    );
+    gainNode.gain.linearRampToValueAtTime(
+      0,
+      startTime + rampSec * 2 + durationSec
+    );
     oscillatorNode.start();
     const audioMixController = new DefaultAudioMixController();
     // @ts-ignore

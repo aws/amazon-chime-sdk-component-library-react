@@ -3,10 +3,10 @@
 
 import React, { useEffect, useRef } from 'react';
 
-import { useContentShare } from '../providers/ContentShareProvider';
-import { useAudioVideo } from '../../../../src';
+import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { useContentShare } from '../../../providers/ContentShareProvider';
 
-const ContentShare: React.FC = () => {
+export const ContentShare: React.FC = () => {
   const audioVideo = useAudioVideo();
   const { activeContentTileId, isSomeoneSharing } = useContentShare();
   const videoEle = useRef<HTMLVideoElement | null>(null);

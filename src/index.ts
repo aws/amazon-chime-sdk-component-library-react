@@ -46,6 +46,15 @@ export { RosterCell } from './components/ui/Roster/RosterCell';
 
 // SDK components
 export { RemoteVideos } from './components/sdk/RemoteVideos';
+export { DeviceSelection } from './components/sdk/DeviceSelection';
+export { 
+  AudioInputControl, 
+  AudioOutputControl, 
+  ContentShareControl, 
+  VideoInputControl 
+} from './components/sdk/MeetingControlsContainer';
+export { ContentShare } from './components/sdk/ContentShare';
+export { LocalVideo } from './components/sdk/LocalVideo';
 
 // Constants
 export { KEY_CODES } from './constants';
@@ -83,13 +92,27 @@ export {
   useVideoInputs,
   useAudioOutputs
 } from './providers/DevicesProvider';
+export { useToggleLocalMute } from './hooks/sdk/useToggleLocalMute';
+export { useLocalAudioOutput } from './providers/LocalAudioOutputProvider';
+export { useLocalVideoToggle } from './providers/LocalVideoToggleProvider';
+export { useContentShare } from './providers/ContentShareProvider';
+export { useContentShareControls } from './providers/ContentShareControlProvider';
+export { useMeetingStatus } from './providers/MeetingStatusProvider';
 
 // Providers
 export { NotificationProvider } from './providers/NotificationProvider';
 export { MeetingProvider } from './providers/MeetingProvider';
+export { LocalAudioOutputProvider } from './providers/LocalAudioOutputProvider';
+export { LocalVideoToggleProvider } from './providers/LocalVideoToggleProvider';
+export { ContentShareProvider } from './providers/ContentShareProvider';
+export { ContentShareControlProvider } from './providers/ContentShareControlProvider';
+export { MeetingStatusProvider } from './providers/MeetingStatusProvider';
 
 // Themes
 export { lightTheme, darkTheme } from './theme';
 
 // Types
 export { VideoQuality } from './hooks/sdk/useSelectVideoQuality';
+
+// enums
+export { MeetingStatus } from './providers/MeetingStatusProvider';

@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, useRef } from 'react';
-import { Label, useAudioVideo } from 'amazon-chime-sdk-component-library-react';
 
-import ActivityBar from '../../../components/ActivityBar';
+import { Label } from '../../../ui/Label';
+import { useAudioVideo } from '../../../../providers/AudioVideoProvider';
+import ActivityBar from '../../../ui/ActivityBar';
 
 import { StyledPreviewGroup } from '../Styled';
 
@@ -32,7 +33,7 @@ const AudioActivityPreview = () => {
         analyserNode.getByteTimeDomainData(data);
         const lowest = 0.01;
         let max = lowest;
-        for (const f of data) {
+        for (const f of data as any) {
           max = Math.max(max, (f - 128) / 128);
         }
         const decimal = (Math.log(lowest) - Math.log(max)) / Math.log(lowest);

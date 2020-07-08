@@ -3,29 +3,29 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { ControlBar } from 'amazon-chime-sdk-component-library-react';
+import {
+  ControlBar,
+  AudioInputControl,
+  VideoInputControl,
+  ContentShareControl,
+  AudioOutputControl
+} from 'amazon-chime-sdk-component-library-react';
+
+import EndMeetingControl from './EndMeetingControl';
 
 const StyledControlBar = styled(ControlBar)`
   grid-area: nav;
   position: static;
 `;
 
-import AudioInputControl from './AudioInputControl';
-import VideoInputControl from './VideoInputControl';
-import ContentShareControl from './ContentShareControl';
-import AudioOutputControl from './AudioOutputControl';
-import EndMeetingControl from './EndMeetingControl';
-
-const MeetingControlsContainer: React.FC = () => {
-  return (
-    <StyledControlBar layout="undocked-horizontal" showLabels>
-      <AudioInputControl />
-      <VideoInputControl />
-      <ContentShareControl />
-      <AudioOutputControl />
-      <EndMeetingControl />
-    </StyledControlBar>
-  );
-};
+const MeetingControlsContainer: React.FC = () => (
+  <StyledControlBar layout="undocked-horizontal" showLabels>
+    <AudioInputControl />
+    <VideoInputControl />
+    <ContentShareControl />
+    <AudioOutputControl />
+    <EndMeetingControl />
+  </StyledControlBar>
+);
 
 export default MeetingControlsContainer;

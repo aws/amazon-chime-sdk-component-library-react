@@ -3,7 +3,7 @@
 
 import React, { useEffect, useRef, CSSProperties } from 'react';
 import { VideoTileState } from 'amazon-chime-sdk-js';
-import { useAudioVideo } from 'amazon-chime-sdk-component-library-react';
+import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 
 interface Props {
   id?: string;

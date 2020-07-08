@@ -3,9 +3,9 @@
 
 import { useEffect, useState, useCallback } from 'react';
 
-import { useAudioVideo } from '../../../../src';
+import { useAudioVideo } from '../../providers/AudioVideoProvider';
 
-export default function useToggleLocalMute() {
+export function useToggleLocalMute() {
   const audioVideo = useAudioVideo();
   const [muted, setMuted] = useState<boolean>(
     () => audioVideo?.realtimeIsLocalAudioMuted() || false
@@ -33,3 +33,5 @@ export default function useToggleLocalMute() {
 
   return { muted, toggleMute };
 }
+
+export default useToggleLocalMute;

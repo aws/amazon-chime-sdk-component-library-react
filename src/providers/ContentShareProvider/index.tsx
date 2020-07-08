@@ -3,15 +3,11 @@
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { DefaultModality, VideoTileState } from 'amazon-chime-sdk-js';
-import { useMeetingManager, useAudioVideo } from '../../../../src';
 
-type ContentShareState = {
-  activeContentTileId: number | null;
-  isRemoteUserSharing: boolean;
-  isLocalUserSharing: boolean;
-  isSomeoneSharing: boolean;
-  sharingAttendeeId: string | null;
-};
+import { useMeetingManager } from '../MeetingProvider';
+import { useAudioVideo } from '../AudioVideoProvider';
+
+import { ContentShareState } from '../../types';
 
 const initialState: ContentShareState = {
   activeContentTileId: null,
@@ -21,7 +17,7 @@ const initialState: ContentShareState = {
   sharingAttendeeId: null,
 };
 
-export const ContentShareContext = createContext<ContentShareState>(
+const ContentShareContext = createContext<ContentShareState>(
   initialState
 );
 
@@ -107,9 +103,9 @@ const ContentShareProvider: React.FC = ({ children }) => {
   );
 };
 
-export function useContentShare(): ContentShareState {
+const useContentShare = (): ContentShareState => {
   const contentShareContext = useContext(ContentShareContext);
   return contentShareContext;
 }
 
-export default ContentShareProvider;
+export { ContentShareProvider, useContentShare };

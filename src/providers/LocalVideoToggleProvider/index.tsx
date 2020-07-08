@@ -9,10 +9,12 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
-import { useMeetingManager, useAudioVideo } from '../../../../src';
 
-import { videoInputSelectionToDevice } from '../utils/DeviceUtils';
-import { LocalVideoToggleContextType } from '../types';
+import { useMeetingManager } from '../MeetingProvider';
+import { useAudioVideo } from '../AudioVideoProvider';
+
+import { videoInputSelectionToDevice } from '../../utils/device-utils';
+import { LocalVideoToggleContextType } from '../../types';
 
 const Context = createContext<LocalVideoToggleContextType | null>(null);
 

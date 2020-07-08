@@ -1,28 +1,29 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { createContext, useEffect, useState, ReactNode } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, {
+  createContext,
+  useEffect,
+  useState,
+  ReactNode,
+  useContext
+} from 'react';
+
 import {
   MeetingSessionStatus,
   MeetingSessionStatusCode,
   VideoTileState
 } from 'amazon-chime-sdk-js';
-import { useMeetingManager } from '../../../../src';
 
-import routes from '../constants/routes';
+import { useMeetingManager } from '../MeetingProvider';
+import { MeetingContextType } from '../../types';
 
-export enum MeetingStatus {
+enum MeetingStatus {
   Loading,
   Succeeded,
   Failed,
   Ended
 }
-
-type MeetingContext = {
-  meetingStatus: MeetingStatus;
-  updateMeetingStatus: (s: MeetingStatus) => void;
-};
 
 type Props = {
   children: ReactNode;
@@ -30,21 +31,16 @@ type Props = {
   joinWithVideo?: boolean;
 };
 
-const MeetingStatusContext = createContext<MeetingContext>({
+const MeetingStatusContext = createContext<MeetingContextType>({
   meetingStatus: MeetingStatus.Loading,
   updateMeetingStatus: (s: MeetingStatus) => {}
 });
 
-export function getMeetingStatusContext() {
-  return MeetingStatusContext;
-}
-
-export default function MeetingStatusProvider(props: Props) {
+function MeetingStatusProvider(props: Props) {
   const meetingManager = useMeetingManager();
   const [meetingStatus, setMeetingStatus] = useState(MeetingStatus.Loading);
   const meetingId = meetingManager?.meetingId;
   const { children } = props;
-  const history = useHistory();
 
   useEffect(() => {
     const audioVideoDidStart = () => {
@@ -79,7 +75,6 @@ export default function MeetingStatusProvider(props: Props) {
         sessionStatusCode === MeetingSessionStatusCode.AudioCallEnded
       ) {
         console.log('The session has ended');
-        history.push(`${routes.HOME}`);
       } else {
         console.log(
           'Observer audioVideoDidStop, Stopped with a session status code: ',
@@ -94,11 +89,13 @@ export default function MeetingStatusProvider(props: Props) {
       videoTileWasRemoved,
       audioVideoDidStop
     };
-    setMeetingStatus(MeetingStatus.Succeeded);
+    
 
     if (!meetingManager || !meetingManager.audioVideo) {
       return;
     }
+    
+    setMeetingStatus(MeetingStatus.Succeeded);
     meetingManager.addObserver(observers);
 
     return () => {
@@ -122,3 +119,10 @@ export default function MeetingStatusProvider(props: Props) {
     </MeetingStatusContext.Provider>
   );
 }
+
+function useMeetingStatus(): MeetingContextType {
+  const context = useContext(MeetingStatusContext);
+  return context;
+}
+
+export { MeetingStatusProvider, useMeetingStatus, MeetingStatus };

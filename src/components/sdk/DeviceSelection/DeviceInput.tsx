@@ -2,10 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect, ChangeEvent } from 'react';
-import { FormField, Select } from 'amazon-chime-sdk-component-library-react';
 
+import { FormField } from '../../ui/FormField';
+import { Select } from '../../ui/Select';
 import { StyledInputGroup } from './Styled';
-import { DeviceType } from '../../types';
+import { DeviceType } from '../../../types';
 
 interface Props {
   label: string;

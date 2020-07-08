@@ -9,7 +9,7 @@ import CameraSelection from './CameraSelection';
 
 import { StyledWrapper, StyledAudioGroup, StyledVideoGroup } from './Styled';
 
-const DeviceSelection = () => (
+export const DeviceSelection = () => (
   <StyledWrapper>
     <StyledAudioGroup>
       <MicSelection />
