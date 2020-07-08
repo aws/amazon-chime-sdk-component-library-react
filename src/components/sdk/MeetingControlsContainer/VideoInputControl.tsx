@@ -2,28 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import {
-  Camera,
-  ControlBarButton,
-  useMeetingManager,
-  useVideoInputs
-} from 'amazon-chime-sdk-component-library-react';
 
-import { isOptionActive } from '../utils/DeviceUtils';
-import { useLocalVideoToggle } from '../providers/LocalVideoToggleProvider';
-import { DeviceConfig } from '../types';
-
-// TODO: import from library when types are exported
-export interface PopOverItemProps {
-  onClick?: () => void;
-  checked?: boolean;
-  children?: React.ReactElement<any> | React.ReactElement<any>[];
-  disabled?: boolean;
-  href?: string;
-  as?: any;
-  text?: string;
-  border?: boolean;
-}
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
+import { Camera } from '../../ui/icons';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
+import { useVideoInputs } from '../../../providers/DevicesProvider';
+import { useLocalVideoToggle } from '../../../providers/LocalVideoToggleProvider';
+import { DeviceConfig } from '../../../types';
+import { isOptionActive } from '../../../utils/device-utils';
+import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
 const VideoInputControl: React.FC = () => {
   const meetingManager = useMeetingManager();

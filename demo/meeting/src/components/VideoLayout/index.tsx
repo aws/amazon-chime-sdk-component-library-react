@@ -2,11 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+import {
+  useContentShare,
+  ContentShare,
+  LocalVideo
+} from 'amazon-chime-sdk-component-library-react';
 
 import RemoteVideoGrid from '../../containers/RemoteVideoGrid';
-import ContentShare from '../../containers/ContentShare';
-import { LocalVideo } from '../../containers/LocalVideo';
-import { useContentShare } from '../../providers/ContentShareProvider';
 import { StyledLayout } from './Styled';
 
 const VideoLayout: React.FC = () => {

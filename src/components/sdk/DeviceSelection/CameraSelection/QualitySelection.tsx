@@ -2,14 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, ChangeEvent } from 'react';
-import {
-  FormField,
-  Select,
-  useSelectVideoQuality,
-  VideoQuality
-} from 'amazon-chime-sdk-component-library-react';
 
-import { VIDEO_INPUT_QUALITY } from '../../../constants';
+import { FormField } from '../../../ui/FormField';
+import { Select } from '../../../ui/Select';
+import { useSelectVideoQuality, VideoQuality } from '../../../../hooks/sdk/useSelectVideoQuality';
+
+import { VIDEO_INPUT_QUALITY } from '../../../../constants';
 
 import { StyledInputGroup } from '../Styled';
 

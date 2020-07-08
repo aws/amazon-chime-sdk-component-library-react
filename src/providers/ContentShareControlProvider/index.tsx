@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, createContext, useCallback, useContext } from 'react';
-import { ContentShareControlContextType } from '../types';
-import { useAudioVideo } from '../../../../src';
-import { useContentShare } from './ContentShareProvider';
+
+import { useAudioVideo } from '../AudioVideoProvider';
+import { useContentShare } from '../ContentShareProvider';
+import { ContentShareControlContextType } from '../../types';
 
 const ContentShareControlContext = createContext<ContentShareControlContextType | null>(
   null

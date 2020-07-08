@@ -2,14 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+import {
+  LocalAudioOutputProvider,
+  LocalVideoToggleProvider,
+  ContentShareProvider,
+  ContentShareControlProvider,
+  MeetingStatusProvider
+} from 'amazon-chime-sdk-component-library-react';
 
-import MeetingStatusProvider from '../../providers/MeetingStatusProvider';
-import ContentShareProvider from '../../providers/ContentShareProvider';
-import { LocalVideoToggleProvider } from '../../providers/LocalVideoToggleProvider';
 import MeetingControlsContainer from '../../containers/MeetingControlsContainer';
 import MeetingRoster from '../../containers/MeetingRoster';
-import { LocalAudioOutputProvider } from '../../providers/LocalAudioOutputProvider';
-import { ContentShareControlProvider } from '../../providers/ContentShareControlProvider';
 import VideoLayout from '../../components/VideoLayout';
 
 import { StyledLayout } from './Styled';

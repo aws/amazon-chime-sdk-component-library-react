@@ -10,8 +10,8 @@ import React, {
   useCallback,
   useContext,
 } from 'react';
-import { LocalAudioOutputContextType } from '../types';
-import { useAudioVideo } from '../../../../src';
+import { LocalAudioOutputContextType } from '../../types';
+import { useAudioVideo } from '../AudioVideoProvider';
 
 const Context = createContext<LocalAudioOutputContextType | null>(null);
 

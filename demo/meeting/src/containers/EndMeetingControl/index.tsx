@@ -1,7 +1,7 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   ControlBarButton,
@@ -11,13 +11,11 @@ import {
   ModalHeader,
   ModalButton,
   ModalButtonGroup,
-  useMeetingManager
+  useMeetingManager,
+  useMeetingStatus,
+  MeetingStatus
 } from 'amazon-chime-sdk-component-library-react';
 
-import {
-  getMeetingStatusContext,
-  MeetingStatus
-} from '../../providers/MeetingStatusProvider';
 import routes from '../../constants/routes';
 import { StyledP } from './Styled';
 
@@ -26,7 +24,7 @@ const EndMeetingControl: React.FC = () => {
   const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const toggleModal = (): void => setShowModal(!showModal);
-  const { updateMeetingStatus } = useContext(getMeetingStatusContext());
+  const { updateMeetingStatus } = useMeetingStatus();
 
   const endMeeting = async (): Promise<void> => {
     await meetingManager?.endMeeting();

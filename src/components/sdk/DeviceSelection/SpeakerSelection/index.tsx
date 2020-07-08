@@ -2,13 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
-import {
-  SecondaryButton,
-  useMeetingManager,
-  useAudioOutputs
-} from 'amazon-chime-sdk-component-library-react';
 
-import TestSound from '../../../utils/TestSound';
+import { SecondaryButton } from '../../../ui/Button/SecondaryButton';
+import { useMeetingManager } from '../../../../providers/MeetingProvider';
+import { useAudioOutputs } from '../../../../providers/DevicesProvider';
+import TestSound from '../../../../../demo/meeting/src/utils/TestSound';
 import DeviceInput from '../DeviceInput';
 
 const SpeakerSelection = () => {

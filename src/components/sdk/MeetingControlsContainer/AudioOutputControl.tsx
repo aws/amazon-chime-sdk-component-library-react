@@ -2,28 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import {
-  ControlBarButton,
-  Sound,
-  useMeetingManager,
-  useAudioOutputs
-} from 'amazon-chime-sdk-component-library-react';
 
-import { isOptionActive } from '../utils/DeviceUtils';
-import { useLocalAudioOutput } from '../providers/LocalAudioOutputProvider';
-import { FormattedDeviceType } from '../types';
-
-// TODO: import from library when types are exported
-export interface PopOverItemProps {
-  onClick?: () => void;
-  checked?: boolean;
-  children?: React.ReactElement<any> | React.ReactElement<any>[];
-  disabled?: boolean;
-  href?: string;
-  as?: any;
-  text?: string;
-  border?: boolean;
-}
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
+import { Sound } from '../../ui/icons';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
+import { useAudioOutputs } from '../../../providers/DevicesProvider';
+import { useLocalAudioOutput } from '../../../providers/LocalAudioOutputProvider';
+import { isOptionActive } from '../../../utils/device-utils';
+import { FormattedDeviceType } from '../../../types';
+import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
 const AudioOutputControl: React.FC = () => {
   const meetingManager = useMeetingManager();

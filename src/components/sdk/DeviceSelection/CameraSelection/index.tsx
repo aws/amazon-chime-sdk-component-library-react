@@ -2,13 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useRef, useEffect } from 'react';
-import {
-  Heading,
-  Label,
-  useMeetingManager,
-  useVideoInputs,
-  useAudioVideo
-} from 'amazon-chime-sdk-component-library-react';
+
+import { Heading } from '../../../ui/Heading';
+import { Label } from '../../../ui/Label';
+import { useMeetingManager } from '../../../../providers/MeetingProvider';
+import { useVideoInputs } from '../../../../providers/DevicesProvider';
+import { useAudioVideo } from '../../../../providers/AudioVideoProvider';
 
 import QualitySelection from './QualitySelection';
 import DeviceInput from '../DeviceInput';

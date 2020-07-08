@@ -2,15 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import {
-  ControlBarButton,
-  Pause,
-  Play,
-  ContentShare
-} from 'amazon-chime-sdk-component-library-react';
 
-import { useContentShare } from '../providers/ContentShareProvider';
-import { useContentShareControls } from '../providers/ContentShareControlProvider';
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
+import { Pause, Play, ContentShare } from '../../ui/icons';
+import { useContentShare } from '../../../providers/ContentShareProvider';
+import { useContentShareControls } from '../../../providers/ContentShareControlProvider';
 
 const ContentShareControl: React.FC = () => {
   const { isLocalUserSharing } = useContentShare();
