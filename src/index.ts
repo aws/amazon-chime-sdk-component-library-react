@@ -2,47 +2,50 @@
 // SPDX-License-Identifier: Apache-2.0
 
 // Components
-export { Badge } from './components/Badge';
-export { Button } from './components/Button/';
-export { PrimaryButton } from './components/Button/PrimaryButton';
-export { SecondaryButton } from './components/Button/SecondaryButton';
-export { IconButton } from './components/Button/IconButton';
-export { Checkbox } from './components/Checkbox';
-export { ControlBar } from './components/ControlBar';
-export { ControlBarButton } from './components/ControlBar/ControlBarItem';
-export { Flex } from './components/Flex';
-export { FormField } from './components/FormField';
-export { Heading } from './components/Heading';
-export * from './components/icons';
-export { Input } from './components/Input';
-export { SearchInput } from './components/Input/SearchInput';
-export { InputWrapper } from './components/Input/InputWrapper';
-export { Label } from './components/Label';
-export { Modal } from './components/Modal';
-export { ModalBody } from './components/Modal/ModalBody';
-export { ModalButton } from './components/Modal/ModalButton';
-export { ModalButtonGroup } from './components/Modal/ModalButtonGroup';
-export { ModalHeader } from './components/Modal/ModalHeader';
-export { Notification } from './components/Notification';
-export { NotificationGroup } from './components/NotificationGroup';
-export { PopOver } from './components/PopOver';
-export { PopOverHeader } from './components/PopOver/PopOverHeader';
-export { PopOverItem } from './components/PopOver/PopOverItem';
-export { PopOverSeparator } from './components/PopOver/PopOverSeparator';
-export { PopOverSubMenu } from './components/PopOver/PopOverSubMenu';
-export { Portal } from './components/Portal';
-export { Radio } from './components/Radio';
-export { RadioGroup } from './components/RadioGroup';
-export { Select } from './components/Select';
-export { Textarea } from './components/Textarea';
-export { VideoGrid } from './components/VideoGrid';
-export { VideoTile } from './components/VideoTile/';
-export { Grid } from './components/Grid';
-export { Cell } from './components/Grid/Cell';
-export { Roster } from './components/Roster';
-export { RosterHeader } from './components/Roster/RosterHeader';
-export { RosterGroup } from './components/Roster/RosterGroup';
-export { RosterCell } from './components/Roster/RosterCell';
+export { Badge } from './components/ui/Badge';
+export { Button } from './components/ui/Button/';
+export { PrimaryButton } from './components/ui/Button/PrimaryButton';
+export { SecondaryButton } from './components/ui/Button/SecondaryButton';
+export { IconButton } from './components/ui/Button/IconButton';
+export { Checkbox } from './components/ui/Checkbox';
+export { ControlBar } from './components/ui/ControlBar';
+export { ControlBarButton } from './components/ui/ControlBar/ControlBarItem';
+export { Flex } from './components/ui/Flex';
+export { FormField } from './components/ui/FormField';
+export { Heading } from './components/ui/Heading';
+export * from './components/ui/icons';
+export { Input } from './components/ui/Input';
+export { SearchInput } from './components/ui/Input/SearchInput';
+export { InputWrapper } from './components/ui/Input/InputWrapper';
+export { Label } from './components/ui/Label';
+export { Modal } from './components/ui/Modal';
+export { ModalBody } from './components/ui/Modal/ModalBody';
+export { ModalButton } from './components/ui/Modal/ModalButton';
+export { ModalButtonGroup } from './components/ui/Modal/ModalButtonGroup';
+export { ModalHeader } from './components/ui/Modal/ModalHeader';
+export { Notification } from './components/ui/Notification';
+export { NotificationGroup } from './components/ui/NotificationGroup';
+export { PopOver } from './components/ui/PopOver';
+export { PopOverHeader } from './components/ui/PopOver/PopOverHeader';
+export { PopOverItem } from './components/ui/PopOver/PopOverItem';
+export { PopOverSeparator } from './components/ui/PopOver/PopOverSeparator';
+export { PopOverSubMenu } from './components/ui/PopOver/PopOverSubMenu';
+export { Portal } from './components/ui/Portal';
+export { Radio } from './components/ui/Radio';
+export { RadioGroup } from './components/ui/RadioGroup';
+export { Select } from './components/ui/Select';
+export { Textarea } from './components/ui/Textarea';
+export { VideoGrid } from './components/ui/VideoGrid';
+export { VideoTile } from './components/ui/VideoTile/';
+export { Grid } from './components/ui/Grid';
+export { Cell } from './components/ui/Grid/Cell';
+export { Roster } from './components/ui/Roster';
+export { RosterHeader } from './components/ui/Roster/RosterHeader';
+export { RosterGroup } from './components/ui/Roster/RosterGroup';
+export { RosterCell } from './components/ui/Roster/RosterCell';
+
+// SDK components
+export { RemoteVideos } from './components/sdk/RemoteVideos';
 
 // Constants
 export { KEY_CODES } from './constants';
@@ -51,8 +54,11 @@ export { KEY_CODES } from './constants';
 export {
   ControlBarContext,
   useControlBarContext
-} from './components/ControlBar/ControlBarContext';
-export { ModalContext, useModalContext } from './components/Modal/ModalContext';
+} from './components/ui/ControlBar/ControlBarContext';
+export {
+  ModalContext,
+  useModalContext
+} from './components/ui/Modal/ModalContext';
 export {
   useNotificationStateContext,
   useNotificationDispatchContext
@@ -71,6 +77,7 @@ export { useSelectVideoQuality } from './hooks/sdk/useSelectVideoQuality';
 export { useMeetingManager } from './providers/MeetingProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRoster } from './providers/RosterProvider';
+export { useVideoTileState } from './providers/VideoTileProvider';
 export {
   useAudioInputs,
   useVideoInputs,
