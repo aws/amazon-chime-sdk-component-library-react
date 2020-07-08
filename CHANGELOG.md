@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - RemoteVideos, RemoteVideo components
 - CSS reset, public domain version
 - Set up customized MDX documentation and add docs for Badge component
+- Add patch version bump for each merge
 
 ### Changed
 

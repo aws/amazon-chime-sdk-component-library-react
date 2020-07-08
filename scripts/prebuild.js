@@ -42,7 +42,8 @@ const base = fs
 const commits = spawnOrFail('git', ['rev-list', `${base}..`])
   .toString()
   .trim()
-  .split(`\n`).filter(commit => commit !== '');
+  .split(`\n`)
+  .filter(commit => commit !== '');
 
 let commit_files = [];
 if (!commits || !commits[0]) {
@@ -85,7 +86,8 @@ if (!commits || !commits[0]) {
     return process.exit(1);
   }
 
-  if (process.argv.includes('--publish')) {
+  // On every PR do a minor version bump and only run this once (on local) before PR
+  if (!process.argv.includes('--publish') && !process.env.GITHUB_ACTIONS) {
     const version_file = 'src/versioning/Versioning.ts';
 
     // Reset to the base version
@@ -114,7 +116,7 @@ if (!commits || !commits[0]) {
     );
     // Pull in npm audit fixes automatically
     spawnOrFail('npm', ['audit', 'fix']);
-    spawnOrFail('git', ['add'`${version_file}`]);
+    spawnOrFail('git', ['add', `${version_file}`]);
     spawnOrFail('git', ['add', 'package.json']);
     spawnOrFail('git', ['add', 'package-lock.json']);
     spawnOrFail('git', ['commit', '--amend', '--no-edit']);
