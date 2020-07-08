@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `Modal`, `ModalButtonGroup` to library `src/index`
 - Add code style checking script
 - Add postbuild script
+- RemoteVideos, RemoteVideo components
 
 ### Changed
 - Added delay for more consistent animation snapshotting with playwright.
@@ -42,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updating demo with basic video grid
 - Add enforcement of passing test coverage thresholds.
 - Update codestyle script to ignore non-source files within `demo/meeting` app.
+- Moved components into /ui directory
 
 ### Removed
 - Removed active state button tests.
