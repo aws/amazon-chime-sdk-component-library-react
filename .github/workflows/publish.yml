@@ -1,0 +1,22 @@
+name: Test, Publish, & Release
+# When a new Github Release is created via our npm script, publish to NPM
+on:
+  release:
+    types: [published]
+
+jobs:  
+  publish-npm:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Package
+        uses: actions/checkout@master
+      - name: Setup Node environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12
+          registry-url: https://registry.npmjs.org/
+      - name: Publish to NPM
+      # TODO: Remove the dryrun option when we actually release
+        run: npm publish --dry-run
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
