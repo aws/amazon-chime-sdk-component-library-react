@@ -6,7 +6,7 @@ import React, { useState, useRef, useEffect, ChangeEvent } from 'react';
 import Flex from '../Flex';
 import Badge from '../Badge';
 import SearchInput from '../Input/SearchInput';
-import { Search, Remove } from '../icons';
+import { Search, Arrow, Remove } from '../icons';
 import IconButton from '../Button/IconButton';
 import { StyledHeader } from './Styled';
 import { BaseProps } from '../Base';
@@ -38,7 +38,7 @@ const SearchBar: any = ({ onChange, close, value }: any) => {
       <IconButton
         className="search-close"
         label="Close search"
-        icon={<Remove />}
+        icon={<Arrow direction="right" />}
         onClick={close}
       />
     </Flex>

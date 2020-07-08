@@ -81,7 +81,7 @@ const RosterProvider: React.FC = ({ children }) => {
   );
 };
 
-function useRoster() {
+function useRoster(): RosterType {
   const roster = useContext(RosterContext);
 
   return roster;

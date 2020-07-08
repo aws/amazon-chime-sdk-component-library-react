@@ -10,10 +10,12 @@ import {
   Camera,
   Caret,
   Caution,
+  Chat,
   Check,
   CheckRound,
   Clock,
   Cog,
+  ContentShare,
   Crown,
   DeskPhone,
   Dialer,
@@ -29,14 +31,14 @@ import {
   Presenter,
   Record,
   Remove,
-  ContentShare,
+  Rooms,
   Search,
   Share,
-  Sound,
+  Sound
 } from './';
 
 export default {
-  title: 'Icons',
+  title: 'Icons'
 };
 
 export const _Arrow = () => (
@@ -68,6 +70,7 @@ export const _Caret = () => (
 );
 
 export const _Caution = () => <Caution width={text('width', '2rem')} />;
+export const _Chat = () => <Chat width={text('width', '2rem')} />;
 export const _Check = () => <Check width={text('width', '2rem')} />;
 export const _CheckRound = () => <CheckRound width={text('width', '2rem')} />;
 export const _Clock = () => <Clock width={text('width', '2rem')} />;
@@ -83,7 +86,7 @@ export const _DeskPhone = () => (
 export const _Dots = () => <Dots width={text('width', '2rem')} />;
 
 _DeskPhone.story = {
-  name: 'DeskPhone',
+  name: 'DeskPhone'
 };
 
 export const _Information = () => <Information width={text('width', '2rem')} />;
@@ -105,10 +108,14 @@ export const _Plus = () => <Plus width={text('width', '2rem')} />;
 export const _Presenter = () => <Presenter width={text('width', '2rem')} />;
 export const _Record = () => <Record width={text('width', '2rem')} />;
 export const _Remove = () => <Remove width={text('width', '2rem')} />;
-export const _ContentShare = () => <ContentShare width={text('width', '2rem')} />;
+export const _Rooms = () => <Rooms width={text('width', '2rem')} />;
+
+export const _ContentShare = () => (
+  <ContentShare width={text('width', '2rem')} />
+);
 
 _ContentShare.story = {
-  name: 'ContentShare',
+  name: 'ContentShare'
 };
 
 export const _Search = () => <Search width={text('width', '2rem')} />;

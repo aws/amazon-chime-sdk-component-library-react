@@ -2,10 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import {
-  ControlBar,
-  useMeetingManager
-} from 'amazon-chime-sdk-component-library-react';
+import styled from 'styled-components';
+import { ControlBar } from 'amazon-chime-sdk-component-library-react';
+
+const StyledControlBar = styled(ControlBar)`
+  grid-area: nav;
+  position: static;
+`;
 
 import AudioInputControl from './AudioInputControl';
 import VideoInputControl from './VideoInputControl';
@@ -14,21 +17,14 @@ import AudioOutputControl from './AudioOutputControl';
 import EndMeetingControl from './EndMeetingControl';
 
 const MeetingControlsContainer: React.FC = () => {
-  const meetingManager = useMeetingManager();
-  const meetingId = meetingManager?.meetingId;
-  const region = meetingManager?.region;
-
   return (
-    <div className="MeetingControlContainer" style={{ display: 'flex' }}>
-      <p>{`${meetingId} (${region})`}</p>
-      <ControlBar layout="top" showLabels>
-        <AudioInputControl />
-        <VideoInputControl />
-        <ContentShareControl />
-        <AudioOutputControl />
-        <EndMeetingControl />
-      </ControlBar>
-    </div>
+    <StyledControlBar layout="undocked-horizontal" showLabels>
+      <AudioInputControl />
+      <VideoInputControl />
+      <ContentShareControl />
+      <AudioOutputControl />
+      <EndMeetingControl />
+    </StyledControlBar>
   );
 };
 

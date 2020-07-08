@@ -3,9 +3,12 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import { VideoTileState } from 'amazon-chime-sdk-js';
-import { useMeetingManager, useRoster } from '../../../../src';
+import {
+  useMeetingManager,
+  useRoster,
+  VideoGrid
+} from 'amazon-chime-sdk-component-library-react';
 
-import VideoGrid from '../components/VideoGrid';
 import RemoteVideo from '../components/RemoteVideo';
 import { MAX_REMOTE_VIDEOS } from '../constants';
 
@@ -84,15 +87,17 @@ const RemoteVideoGrid: React.FC = () => {
     <VideoGrid size={numberOfVisibleIndices}>
       {Array.from(Array(MAX_REMOTE_VIDEOS).keys()).map((key, index) => {
         const visibleIndex = visibleIndices && visibleIndices[index];
-        let rosterAttendee;
-        if (visibleIndex && roster) {
-          rosterAttendee = roster[visibleIndex.boundAttendeeId];
+        let name;
+
+        if (visibleIndex) {
+          name = roster[visibleIndex.boundAttendeeId]?.name;
         }
+
         return (
           <RemoteVideo
             key={key}
             enabled={!!visibleIndex}
-            attendeeName={rosterAttendee?.name}
+            attendeeName={name}
             videoEleRef={useCallback((element: HTMLVideoElement | null) => {
               if (element) {
                 videoElements[index] = element;

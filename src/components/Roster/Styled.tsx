@@ -51,7 +51,7 @@ export const StyledHeader = styled.div<any>`
   align-items: center;
   padding: 0.75rem 1rem;
   margin-bottom: 0.5rem;
-  border-bottom: 0.0625rem solid ${props => props.theme.colors.greys.grey100};
+  border-bottom: 0.0625rem solid ${props => props.theme.roster.headerBorder};
 
   .title {
     font-size: 0.875rem;
