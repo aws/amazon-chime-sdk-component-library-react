@@ -1,6 +1,6 @@
 {
   "name": "amazon-chime-sdk-component-library-react",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Amazon Chime SDK Component Library - React",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -15,6 +15,8 @@
   "scripts": {
     "build": "rollup -c",
     "check": "node scripts/check-codestyle.js",
+    "prerelease": "node scripts/verdaccio.js",
+    "release": "node scripts/release.js",
     "prebuild:release": "node scripts/prebuild.js",
     "prebuild:publish": "node scripts/prebuild.js --publish",
     "build:release": "npm install && npm run check && npm run build && npm run test ",
@@ -82,6 +84,7 @@
     "playwright": "^1.1.1",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.6.0",
+    "prompt-sync": "^4.2.0",
     "puppeteer": "^2.1.1",
     "react": "^16.8.6",
     "react-docgen-typescript-loader": "^3.7.2",

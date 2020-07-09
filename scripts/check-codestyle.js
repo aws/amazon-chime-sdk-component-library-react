@@ -7,12 +7,8 @@
     README.MD and NOTICE have valid footer copyright.
 */
 const fs = require('fs');
+const { logger, process } = require('./utilities');
 const exec = require('child_process').execSync;
-const logColorRef = {
-  error: '\x1b[31m%s\x1b[0m',
-  log: '\x1b[36m%s\x1b[0m'
-};
-
 let exitCode = 0;
 
 let walk = function(dir) {
@@ -34,9 +30,9 @@ let walk = function(dir) {
 };
 
 let failed = function(file, reason, description) {
-  console.error(logColorRef.error, file, reason);
+  logger.error(file, reason);
   if (description) {
-    console.error(logColorRef.log, description);
+    logger.warn(description);
   }
   exitCode = 1;
 };
