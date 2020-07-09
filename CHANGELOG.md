@@ -44,6 +44,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add enforcement of passing test coverage thresholds.
 - Update codestyle script to ignore non-source files within `demo/meeting` app.
 - Moved components into /ui directory
+- Change license from ISC to Apache-2.0
 
 ### Removed
 - Removed active state button tests.
