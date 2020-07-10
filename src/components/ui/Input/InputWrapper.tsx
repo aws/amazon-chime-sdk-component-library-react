@@ -1,7 +1,7 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, ReactNode } from 'react';
+import React, { forwardRef, ReactNode, Ref } from 'react';
 import { StyledInputWrapper } from './Styled';
 import { Size } from './';
 
@@ -9,16 +9,20 @@ export interface InputWrapperProps {
   leadingIcon?: ReactNode;
   sizing?: Size;
   className?: string;
+  children?: ReactNode | ReactNode[];
 }
 
-export const InputWrapper: FC<InputWrapperProps> = props => {
-  const { leadingIcon, children } = props;
-  return (
-    <StyledInputWrapper {...props} data-testid="input-wrapper">
-      {leadingIcon && <span className="icon">{leadingIcon}</span>}
-      {children}
-    </StyledInputWrapper>
-  );
-};
+export const InputWrapper = forwardRef(
+  (props: InputWrapperProps, ref: Ref<HTMLSpanElement>) => {
+    const { leadingIcon, children } = props;
+
+    return (
+      <StyledInputWrapper ref={ref} {...props} data-testid="input-wrapper">
+        {leadingIcon && <span className="icon">{leadingIcon}</span>}
+        {children}
+      </StyledInputWrapper>
+    );
+  }
+);
 
 export default InputWrapper;

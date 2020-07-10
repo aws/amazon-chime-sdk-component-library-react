@@ -1,8 +1,8 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
-import { select, text } from '@storybook/addon-knobs';
+import React, { useState } from 'react';
+import { select, boolean } from '@storybook/addon-knobs';
 
 import Crown from '../icons/Crown';
 import Input from './';
@@ -10,17 +10,20 @@ import SearchInput from './SearchInput';
 import Flex from '../Flex';
 
 export default {
-  title: 'Form/TextInputs',
+  title: 'Form/TextInputs'
 };
 
 export const BasicInput = () => {
+  const [input, setInput] = useState('');
+
   return (
-    <Flex layout="fill-space-centered">
+    <Flex layout="fill-space-centered" css="height: 100vh">
       <Input
-        onChange={() => console.log('changed')}
+        showClear={boolean('showClear', true)}
+        onChange={e => setInput(e.target.value)}
         sizing={select('size', { sm: 'sm', md: 'md' }, 'md')}
-        value={text('value', '')}
-        placeholder="this is a basic input"
+        value={input}
+        placeholder="a basic input"
         type="text"
       />
     </Flex>
@@ -28,31 +31,37 @@ export const BasicInput = () => {
 };
 
 export const InputWithIcon = () => {
+  const [input, setInput] = useState('');
+
   return (
-    <Flex layout="fill-space-centered">
+    <Flex layout="fill-space-centered" css="height: 100vh">
       <Input
-        onChange={() => console.log('changed')}
-        value={text('value', '')}
-        placeholder="this is an input with an icon"
+        showClear={boolean('showClear', true)}
+        onChange={e => setInput(e.target.value)}
+        value={input}
+        placeholder="input with an icon"
         sizing={select('size', { sm: 'sm', md: 'md' }, 'md')}
         type="text"
         leadingIcon={<Crown />}
       />
-     </Flex>
+    </Flex>
   );
 };
 
 InputWithIcon.story = {
-  name: 'Input with icon',
+  name: 'Input with icon'
 };
 
 export const _SearchInput = () => {
+  const [search, setSearch] = useState('');
+
   return (
-    <Flex layout="fill-space-centered">
+    <Flex layout="fill-space-centered" css="height: 100vh">
       <SearchInput
-        onChange={() => console.log('changed')}
-        value={text('value', '')}
-        placeholder="this is a search input"
+        showClear={boolean('showClear', true)}
+        value={search}
+        onChange={e => setSearch(e.target.value)}
+        placeholder="a search input"
       />
     </Flex>
   );
