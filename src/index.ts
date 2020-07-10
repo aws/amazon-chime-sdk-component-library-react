@@ -89,7 +89,7 @@ export { NotificationProvider } from './providers/NotificationProvider';
 export { MeetingProvider } from './providers/MeetingProvider';
 
 // Themes
-export { lightTheme, darkTheme } from './theme';
+export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';
 
 // Types
 export { VideoQuality } from './hooks/sdk/useSelectVideoQuality';

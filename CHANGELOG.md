@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add code style checking script
 - Add postbuild script
 - RemoteVideos, RemoteVideo components
+- CSS reset, public domain version
 
 ### Changed
 - Added delay for more consistent animation snapshotting with playwright.
@@ -48,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 - Removed active state button tests.
+- 'styled-reset' package due to license incompatibility
 
 ### Fixed
 - Fixed prebuild for PR and Push.
