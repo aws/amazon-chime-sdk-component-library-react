@@ -26,8 +26,8 @@ export const StyledButton = styled.button<ButtonProps>`
   }
 
   .icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: ${props => props.theme.iconButtonSizes[props.iconSize || 'sm']};
+    height: ${props => props.theme.iconButtonSizes[props.iconSize || 'sm']};
     margin-right: 0.25rem;
   }
 
@@ -96,14 +96,15 @@ export const StyledIconButton = css<ButtonProps>`
   border: ${props => props.selected ? props.theme.buttons.icon.selected.border : props.theme.buttons.icon.static.border};
   border-radius: ${props => props.theme.radii.circle};
   padding: 0.1875rem;
+  position: relative;
 
   > .label {
     ${visuallyHidden};
   }
 
   > .icon {
-    width: 1.5rem;
-    height: 1.5rem;
+    width: ${props => props.theme.iconButtonSizes[props.iconSize || 'sm']};
+    height: ${props => props.theme.iconButtonSizes[props.iconSize || 'sm']};
     margin: 0;
   }
 

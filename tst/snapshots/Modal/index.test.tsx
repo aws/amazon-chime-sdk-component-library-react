@@ -3,7 +3,7 @@
 
 describe('Modal', () => {
     it('visually looks correct at size medium', async () => {
-      await page.goto('http://host.docker.internal:9009/iframe.html?id=ui-components-modal--basic-example&knob-size=medium');
+      await page.goto('http://host.docker.internal:9009/iframe.html?id=ui-components-modal--basic-example&knob-size=md');
   
       await page.click('button');
       // waiting for the underlying Portal component to render into the DOM
@@ -14,7 +14,7 @@ describe('Modal', () => {
     });
   
     it('visually looks correct at size large', async () => {
-      await page.goto('http://host.docker.internal:9009/iframe.html?id=ui-components-modal--basic-example&knob-size=large');
+      await page.goto('http://host.docker.internal:9009/iframe.html?id=ui-components-modal--basic-example&knob-size=lg');
   
       await page.click('button');
       await page.waitFor(500);

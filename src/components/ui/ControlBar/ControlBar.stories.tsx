@@ -17,7 +17,7 @@ export const _ControlBar = () => {
   const [cameraActive, setCameraActive] = useState(false);
 
   const microphoneButtonProps = {
-    icon: muted ? <Microphone disabled /> : <Microphone /> ,
+    icon: muted ? <Microphone muted /> : <Microphone /> ,
     onClick: () => setMuted(!muted),
     label: 'Mute',
   }

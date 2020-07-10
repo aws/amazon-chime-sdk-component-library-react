@@ -141,6 +141,27 @@ const fontSizes = {
   },
 };
 
+const modalSizes = {
+  md: {
+    width: '35rem',
+    height: '94vh',
+  },
+  lg: {
+    width: '50rem',
+    height: '94vh',
+  },
+  fullscreen: {
+    width: '98vw',
+    height: '96vh',
+  },
+};
+
+const iconButtonSizes = {
+  sm: '1.5rem',
+  md: '2.5rem',
+  lg: '4rem',
+}
+
 export const defaultTheme = {
   breakpoints,
   mediaQueries,
@@ -148,6 +169,8 @@ export const defaultTheme = {
   fontSizes,
   radii,
   zIndex,
+  modalSizes,
+  iconButtonSizes,
 };
 
 export default defaultTheme;

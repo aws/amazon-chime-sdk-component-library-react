@@ -230,5 +230,26 @@ declare module 'styled-components' {
       shadow: string;
       maxWidth: string;
     };
+
+    modalSizes: {
+      md: {
+        width: string;
+        height: string;
+      },
+      lg: {
+        width: string;
+        height:string;
+      },
+      fullscreen: {
+        width: string;
+        height: string;
+      },
+    };
+
+    iconButtonSizes: {
+      sm: string;
+      md: string;
+      lg: string;
+    };
   }
 }

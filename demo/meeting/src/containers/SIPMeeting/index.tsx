@@ -56,7 +56,7 @@ const SIPMeeting: React.FC = () => {
         handleSubmit={handleSIPMeetingFormSubmit}
       />
       {errorMessage && (
-        <Modal size="medium" onClose={closeError}>
+        <Modal size="md" onClose={closeError}>
           <ModalHeader title={`Meeting ID: ${meetingId}`} />
           <ModalBody>
             <Card

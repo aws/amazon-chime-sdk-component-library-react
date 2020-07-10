@@ -1,14 +1,15 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC } from 'react';
+import React, { FC, HTMLAttributes } from 'react';
 
 import IconButton from '../Button/IconButton';
 import Remove from '../icons/Remove';
 import { useModalContext } from './ModalContext';
 import { StyledModalHeader } from './Styled';
+import { BaseProps } from '../Base';
 
-export interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ModalHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>, BaseProps {
   title: string;
   displayClose?: boolean;
   as?: any;

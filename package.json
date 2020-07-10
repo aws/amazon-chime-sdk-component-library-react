@@ -1,6 +1,6 @@
 {
   "name": "amazon-chime-sdk-component-library-react",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "Amazon Chime SDK Component Library - React",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -20,7 +20,7 @@
     "build:release": "npm install && npm run check && npm run build && npm run test ",
     "postbuild:release": "node scripts/postbuild.js",
     "start": "start-storybook -p 9009",
-    "test": "jest -c jest.config.js --verbose \"./tst/(components|utils)/*\"",
+    "test": "jest -c jest.config.js",
     "deploy-storybook": "storybook-to-ghpages",
     "build-storybook": "build-storybook -s public",
     "jest:integration": "jest -c jest-snapshot.config.js --verbose ./tst/snapshots/*",

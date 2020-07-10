@@ -72,7 +72,7 @@ export const RosterCell: React.FC<RosterCellProps> = props => {
         <>
           {typeof muted === 'boolean' && (
             <Microphone
-              disabled={muted}
+              muted={muted}
               className="mic"
               poorConnection={poorConnection}
             />

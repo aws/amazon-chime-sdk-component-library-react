@@ -29,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add patch version bump for each merge
 - Add docs for Button component, re-organize docs
 - Add docs for all Form components
+- Add mic volume indicator component
 
 ### Changed
 
@@ -58,6 +59,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update import in `useDevicePermissionStatus` hook
 - Renamed `MeetingControlsContainer` to `MeetingControls`
 - Changed play, pause icons in `ContentShareControl` to popover actions
+- Changed IconButton props to accept dynamic width and height
+- Changed test script so you can properly test one file
+- Changed jest exclude config to exclude playwright tests
+- Changed disabled microphone icon prop to muted
+- Changed modal size properties to theme object
 
 ### Removed
 

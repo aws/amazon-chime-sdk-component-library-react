@@ -97,7 +97,7 @@ export const _Meeting = () => <Meeting width={text('width', '2rem')} />;
 
 export const _Microphone = () => (
   <Microphone
-    disabled={boolean('disabled', false)}
+    muted={boolean('muted', false)}
     poorConnection={boolean('poorConnection', false)}
     width={text('width', '2rem')}
   />

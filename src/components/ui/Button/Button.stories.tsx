@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { boolean } from '@storybook/addon-knobs';
+import { boolean, select } from '@storybook/addon-knobs';
 import { Button } from './';
 import PrimaryButton from './PrimaryButton';
 import SecondaryButton from './SecondaryButton';
@@ -47,6 +47,7 @@ export const _IconButton = () => {
       selected={boolean('Selected', false)}
       label="click me"
       icon={<Meeting />}
+      iconSize={select('iconSize', ['sm', 'md', 'lg'], 'sm')}
     />
   );
 };
