@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+- 12
+git:
+  depth: false
+jobs:
+  include:
+    #Build and unit tests
+    - stage: Build, unit test, and snapshot test
+      if: (type = pull_request) OR (type = push AND branch != master)
+      name: "Build and run Unit Tests"
+      script: npm run build:release
+      name: "Run Snaptshot testing"
+      script: npm run test:snapshots
+      addons: skip
+    

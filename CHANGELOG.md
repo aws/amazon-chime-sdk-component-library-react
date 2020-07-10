@@ -22,7 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `Modal`, `ModalButtonGroup` to library `src/index`
 - Add code style checking script
 - Add postbuild script
-- RemoteVideos, RemoteVideo components
+- RemoteVideos, RemoteVideo 
+- Added travis CI workflow to build and test on pull requests
 
 ### Changed
 - Added delay for more consistent animation snapshotting with playwright.
