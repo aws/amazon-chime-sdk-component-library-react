@@ -7,7 +7,7 @@ import { withThemesProvider } from 'themeprovider-storybook';
 
 import lightTheme from '../src/theme/light';
 import darkTheme from '../src/theme/dark';
-import { GlobalStyles } from '../src/theme/globalStyles';
+import { GlobalStyles } from '../src/theme/GlobalStyles';
 
 const themes = [lightTheme, darkTheme];
 

@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { createGlobalStyle } from 'styled-components';
-import reset from 'styled-reset';
+import { StyledReset } from './StyledReset';
 
 export const GlobalStyles = createGlobalStyle`
-  ${reset};
+  ${StyledReset};
 
   *,
   *::before,
@@ -14,8 +14,8 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   html {
-    font-size: 16px;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-size: ${props => props.theme.fontSizes.baseFontSize};
+    font-family: ${props => props.theme.fonts.body};;
     background-color: ${props => props.theme.global.bgd};
     color: ${props => props.theme.global.text};
     min-height: 100%;

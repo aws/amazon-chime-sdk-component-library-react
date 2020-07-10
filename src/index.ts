@@ -109,7 +109,7 @@ export { ContentShareControlProvider } from './providers/ContentShareControlProv
 export { MeetingStatusProvider } from './providers/MeetingStatusProvider';
 
 // Themes
-export { lightTheme, darkTheme } from './theme';
+export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';
 
 // Types
 export { VideoQuality } from './hooks/sdk/useSelectVideoQuality';
