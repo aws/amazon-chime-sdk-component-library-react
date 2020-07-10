@@ -54,5 +54,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed prebuild for PR and Push.
 - Fix react state update errors for `MeetingStatusProvider`, `MeetingRoster` and `MeetingJoinDetails`
 - Fix roster showing stale attendees
+- `AudioActivityPreview` to show mic progress track on audio input device change
 
 ## [0.1.1] - 2020-06-16

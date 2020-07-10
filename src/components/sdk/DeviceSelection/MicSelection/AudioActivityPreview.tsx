@@ -8,10 +8,12 @@ import { useAudioVideo } from '../../../../providers/AudioVideoProvider';
 import ActivityBar from '../../../ui/ActivityBar';
 
 import { StyledPreviewGroup } from '../Styled';
+import { useAudioInputs } from '../../../../providers/DevicesProvider';
 
 const AudioActivityPreview = () => {
   const audioVideo = useAudioVideo();
   const activityBarRef = useRef<HTMLDivElement>();
+  const { selectedDevice } = useAudioInputs();
 
   useEffect(() => {
     const analyserNode = audioVideo?.createAnalyserNodeForAudioInput();
@@ -54,7 +56,7 @@ const AudioActivityPreview = () => {
     return () => {
       isMounted = false;
     };
-  }, []);
+  }, [selectedDevice]);
 
   return (
     <StyledPreviewGroup>
