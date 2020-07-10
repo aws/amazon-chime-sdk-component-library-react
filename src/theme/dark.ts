@@ -186,6 +186,7 @@ const inputs = {
   fontColor: colors.greys.white,
   placeholder: colors.greys.grey50,
   shadow: `0 0.0625rem 0.0625rem 0 ${hexTorgba(colors.greys.black, 0.1)}`,
+  clearBg: colors.greys.white,
 
   focus: {
     bgd: colors.greys.white,

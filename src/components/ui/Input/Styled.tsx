@@ -2,14 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+
 import { InputWrapperProps } from './InputWrapper';
 
-const getPadding = (props: InputWrapperProps)  => {
+const getPadding = (props: InputWrapperProps) => {
   const { sizing, leadingIcon } = props;
   return sizing === 'sm'
-  ? `0.125rem .5rem 0.125rem ${leadingIcon ? '1.25rem' : '0.125rem'}`
-  : `0.375rem .5rem 0.375rem ${leadingIcon ? '1.25rem' : '0.375rem'}`
-}
+    ? `0.125rem 1.75rem 0.125rem ${leadingIcon ? '1.25rem' : '0.125rem'}`
+    : `0.375rem 1.75rem 0.375rem ${leadingIcon ? '1.25rem' : '0.375rem'}`;
+};
 
 export const StyledInputWrapper = styled.span<InputWrapperProps>`
   position: relative;
@@ -19,7 +20,7 @@ export const StyledInputWrapper = styled.span<InputWrapperProps>`
     width: 1rem;
     left: 0.1875rem;
     position: absolute;
-    top: ${props => props.sizing === 'sm' ? '0.25rem': '0.5rem'};
+    top: ${props => (props.sizing === 'sm' ? '0.25rem' : '0.5rem')};
   }
 
   > input {
@@ -31,7 +32,7 @@ export const StyledInput = styled.input`
   align-items: center;
   display: flex;
   letter-spacing: -0.005625rem;
-  transition: box-shadow .05s ease-in;
+  transition: box-shadow 0.05s ease-in;
   background-color: ${props => props.theme.inputs.bgd};
   border: ${props => props.theme.inputs.border};
   border-radius: ${props => props.theme.inputs.borderRadius};
@@ -45,14 +46,59 @@ export const StyledInput = styled.input`
   }
 
   &:focus,
-  &[aria-invalid="true"]:focus {
+  &[aria-invalid='true']:focus {
     border: ${props => props.theme.inputs.focus.border};
     box-shadow: ${props => props.theme.inputs.focus.shadow};
     outline: none;
   }
 
-  &[aria-invalid="true"] {
+  &[aria-invalid='true'] {
     border: ${props => props.theme.inputs.error.border};
     box-shadow: ${props => props.theme.inputs.error.shadow};
+  }
+
+  // Hides native clear button
+  &::-webkit-search-decoration,
+  ::-webkit-search-cancel-button,
+  ::-webkit-search-results-button,
+  ::-webkit-search-results-decoration {
+    display: none;
+  }
+
+  &::-ms-clear,
+  &::-ms-reveal {
+    display: none;
+    width: 0;
+    height: 0;
+  }
+`;
+
+interface ClearProps {
+  active: boolean;
+}
+
+export const StyledClear = styled.button<ClearProps>`
+  position: absolute;
+  top: 50%;
+  right: 0.125rem;
+  transform: translateY(-44%);
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: ${props => (props.active ? 'block' : 'none')};
+
+  path {
+    fill: ${props => props.theme.inputs.clearBg};
+  }
+
+  input:focus + &,
+  input:hover + &,
+  &:hover {
+    display: block;
+  }
+
+  &:active,
+  &:focus {
+    outline: none;
   }
 `;

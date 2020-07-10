@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+
 - Test script to run /Modal/index.test.tsx and /Button/PrimaryButton/index.test.tsx in playwright across 3 browsers
 - Add Play, Pause and Sound disabled SVG icons
 - Add initial roster components
@@ -25,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - RemoteVideos, RemoteVideo components
 
 ### Changed
+
 - Added delay for more consistent animation snapshotting with playwright.
 - `npm run test` script changed to only include /components and /utils
 - Update prebuild script to trigger git actions on git push event
@@ -46,11 +48,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Moved components into /ui directory
 - Change license from ISC to Apache-2.0
 - Move provider, hooks and connected components from demo to library
+- Add clear button to input component
 
 ### Removed
+
 - Removed active state button tests.
 
 ### Fixed
+
 - Fixed prebuild for PR and Push.
 - Fix react state update errors for `MeetingStatusProvider`, `MeetingRoster` and `MeetingJoinDetails`
 - Fix roster showing stale attendees

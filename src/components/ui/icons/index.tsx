@@ -9,6 +9,7 @@ export { default as Caution } from './Caution';
 export { default as Chat } from './Chat';
 export { default as Check } from './Check';
 export { default as CheckRound } from './CheckRound';
+export { default as Clear } from './Clear';
 export { default as Clock } from './Clock';
 export { default as Cog } from './Cog';
 export { default as ContentShare } from './ContentShare';

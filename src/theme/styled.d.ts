@@ -151,6 +151,7 @@ declare module 'styled-components' {
       fontColor: string;
       placeholder: string;
       shadow: string;
+      clearBg: string;
 
       focus: {
         bgd: string;

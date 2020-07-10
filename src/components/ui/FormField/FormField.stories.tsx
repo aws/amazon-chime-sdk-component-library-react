@@ -13,52 +13,52 @@ import RadioGroup from '../RadioGroup';
 import Flex from '../Flex';
 
 export default {
-  title: 'Form/FormField',
+  title: 'Form/FormField'
 };
 
 const TestInput: React.FC<{}> = props => {
-  const [state, setState] = useState({
-      firstName: "",
-      lastName: ""
-  });
+  const [name, setName] = useState('');
 
   function handleChange(evt: any) {
     const value = evt.target.value;
-    setState({
-      ...state,
-      [evt.target.name]: value
-    });
+    setName(value);
   }
 
   return (
-    <>
-      <FormField
-        field={Input}
-        label="First Name"
-        value={state.firstName}
-        fieldProps={{
-          name: "firstName",
-          placeholder: "Enter your first name",
-        }}
-        onChange={handleChange}
-        layout={select('layout', { stack: 'stack', horizontal: 'horizontal', 'input-only': 'input-only' }, 'stack')}
-        errorText={text('errorText', 'This is some error text')}
-        error={boolean('Toggle Error', false)}
-        infoText={text('infoText', 'This is some informational text')}
-      />
-    </>
+    <FormField
+      field={Input}
+      label="First Name"
+      value={name}
+      fieldProps={{
+        name: 'firstName',
+        placeholder: 'Enter your first name'
+      }}
+      onChange={handleChange}
+      layout={select(
+        'layout',
+        {
+          stack: 'stack',
+          horizontal: 'horizontal',
+          'input-only': 'input-only'
+        },
+        'stack'
+      )}
+      errorText={text('errorText', 'This is some error text')}
+      error={boolean('Toggle Error', false)}
+      infoText={text('infoText', 'This is some informational text')}
+    />
   );
-}
+};
 
 export const BasicInputFormField = () => {
   return (
     <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem'}}>
-        <TestInput/>
+      <div style={{ width: '20rem' }}>
+        <TestInput />
       </div>
     </Flex>
   );
-}
+};
 
 const TestSelect: React.FC<{}> = props => {
   const [value, setValue] = useState('');
@@ -67,19 +67,19 @@ const TestSelect: React.FC<{}> = props => {
   const options = [
     {
       value: 'no_framework_selected',
-      label: 'No Framework',
+      label: 'No Framework'
     },
     {
       value: 'react',
-      label: 'React',
+      label: 'React'
     },
     {
       value: 'angular',
-      label: 'Angular',
+      label: 'Angular'
     },
     {
       value: 'vue',
-      label: 'Vue',
+      label: 'Vue'
     }
   ];
 
@@ -90,73 +90,89 @@ const TestSelect: React.FC<{}> = props => {
       onChange={handleChange}
       value={value}
       label="Select a framework"
-      layout={select('layout', { stack: 'stack', horizontal: 'horizontal', 'input-only': 'input-only' }, 'stack')}
+      layout={select(
+        'layout',
+        {
+          stack: 'stack',
+          horizontal: 'horizontal',
+          'input-only': 'input-only'
+        },
+        'stack'
+      )}
       errorText={text('errorText', 'This is some error text')}
       error={boolean('Toggle Error', false)}
       infoText={text('infoText', 'This is some informational text')}
     />
   );
-}
+};
 
 export const SelectFormField = () => {
   return (
     <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem'}}>
-        <TestSelect/>
+      <div style={{ width: '20rem' }}>
+        <TestSelect />
       </div>
     </Flex>
   );
-}
+};
 
 const TestTextarea: React.FC<{}> = props => {
   const [value, setValue] = useState('');
 
   const handleChange = (e: any) => {
     setValue(e.target.value);
-  }
+  };
 
   return (
     <FormField
       field={Textarea}
       label="I'm a label"
       value={value}
-      fieldProps={{ placeholder: "Text goes here" }}
+      fieldProps={{ placeholder: 'Text goes here' }}
       onChange={handleChange}
-      layout={select('layout', { stack: 'stack', horizontal: 'horizontal', 'input-only': 'input-only' }, 'stack')}
+      layout={select(
+        'layout',
+        {
+          stack: 'stack',
+          horizontal: 'horizontal',
+          'input-only': 'input-only'
+        },
+        'stack'
+      )}
       errorText={text('errorText', 'This is some error text')}
       error={boolean('Toggle Error', false)}
       infoText={text('infoText', 'This is some informational text')}
     />
   );
-}
+};
 
 export const TextareaFormField = () => {
   return (
     <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem'}}>
-        <TestTextarea/>
+      <div style={{ width: '20rem' }}>
+        <TestTextarea />
       </div>
     </Flex>
   );
-}
+};
 
 const options = [
   {
     value: 'react',
-    label: 'React',
+    label: 'React'
   },
   {
     value: 'angular',
-    label: 'Angular',
+    label: 'Angular'
   },
   {
     value: 'vue',
-    label: 'Vue',
+    label: 'Vue'
   },
   {
     value: 'none',
-    label: 'None',
-  },
+    label: 'None'
+  }
 ];
 
 const TestRadioGroup: React.FC<{}> = props => {
@@ -164,7 +180,7 @@ const TestRadioGroup: React.FC<{}> = props => {
 
   const handleChange = (evt: any) => {
     setValue(evt.target.value);
-  }
+  };
 
   return (
     <FormField
@@ -178,13 +194,13 @@ const TestRadioGroup: React.FC<{}> = props => {
       infoText={text('infoText', 'This is some informational text')}
     />
   );
-}
+};
 
 const TestCheckbox: React.FC<{}> = props => {
   const [state, setState] = React.useState({
     react: false,
     angular: false,
-    vue: false,
+    vue: false
   });
 
   function handleChange(evt: any) {
@@ -220,53 +236,54 @@ const TestCheckbox: React.FC<{}> = props => {
       />
     </>
   );
-}
+};
 
 export const CheckboxFormField = () => {
   return (
     <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem'}}>
-        <TestCheckbox/>
+      <div style={{ width: '20rem' }}>
+        <TestCheckbox />
       </div>
     </Flex>
   );
-}
+};
 
 export const RadioGroupFormField = () => {
   return (
     <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem'}}>
-        <TestRadioGroup/>
+      <div style={{ width: '20rem' }}>
+        <TestRadioGroup />
       </div>
     </Flex>
   );
-}
+};
 
 const radioOptions = [
   {
     value: 'tabs',
     label: 'Tabs',
-    name: 'tabs',
+    name: 'tabs'
   },
   {
     value: 'spaces',
     label: 'Spaces',
-    name: 'tabs',
-  },
+    name: 'tabs'
+  }
 ];
 
 const TestMixedInputs: React.FC<{}> = props => {
   const [state, setState] = useState({
-    firstName: "",
-    lastName: "",
+    firstName: '',
+    lastName: '',
     acknowledge: false,
     select: '',
-    textarea: "",
-    tabs: "spaces"
+    textarea: '',
+    tabs: 'spaces'
   });
 
   function handleChange(evt: any) {
-    const value = evt.target.type === 'checkbox' ? evt.target.checked : evt.target.value;
+    const value =
+      evt.target.type === 'checkbox' ? evt.target.checked : evt.target.value;
 
     setState({
       ...state,
@@ -277,19 +294,19 @@ const TestMixedInputs: React.FC<{}> = props => {
   const options = [
     {
       value: 'no_fruit_selected',
-      label: 'Select an option',
+      label: 'Select an option'
     },
     {
       value: 'bananas',
-      label: 'Bananas',
+      label: 'Bananas'
     },
     {
       value: 'oranges',
-      label: 'Oranges',
+      label: 'Oranges'
     },
     {
       value: 'grapefruit',
-      label: 'Grapefruit',
+      label: 'Grapefruit'
     }
   ];
 
@@ -300,16 +317,32 @@ const TestMixedInputs: React.FC<{}> = props => {
         label="First Name"
         value={state.firstName}
         fieldProps={{
-          name: "firstName",
-          placeholder: "Enter your first name",
+          name: 'firstName',
+          placeholder: 'Enter your first name'
         }}
         onChange={handleChange}
-        layout={select('layout', { stack: 'stack', horizontal: 'horizontal', 'input-only': 'input-only' }, 'stack')}
+        layout={select(
+          'layout',
+          {
+            stack: 'stack',
+            horizontal: 'horizontal',
+            'input-only': 'input-only'
+          },
+          'stack'
+        )}
         errorText="This is invalid"
         error={boolean('Toggle Error', false)}
       />
       <FormField
-        layout={select('layout', { stack: 'stack', horizontal: 'horizontal', 'input-only': 'input-only' }, 'stack')}
+        layout={select(
+          'layout',
+          {
+            stack: 'stack',
+            horizontal: 'horizontal',
+            'input-only': 'input-only'
+          },
+          'stack'
+        )}
         options={radioOptions}
         field={RadioGroup}
         onChange={handleChange}
@@ -319,8 +352,16 @@ const TestMixedInputs: React.FC<{}> = props => {
         error={boolean('Toggle Error', false)}
       />
       <FormField
-        layout={select('layout', { stack: 'stack', horizontal: 'horizontal', 'input-only': 'input-only' }, 'stack')}
-        fieldProps={{ name: "select", }}
+        layout={select(
+          'layout',
+          {
+            stack: 'stack',
+            horizontal: 'horizontal',
+            'input-only': 'input-only'
+          },
+          'stack'
+        )}
+        fieldProps={{ name: 'select' }}
         field={Select}
         options={options}
         onChange={handleChange}
@@ -330,22 +371,38 @@ const TestMixedInputs: React.FC<{}> = props => {
         error={boolean('Toggle Error', false)}
       />
       <FormField
-        layout={select('layout', { stack: 'stack', horizontal: 'horizontal', 'input-only': 'input-only' }, 'stack')}
+        layout={select(
+          'layout',
+          {
+            stack: 'stack',
+            horizontal: 'horizontal',
+            'input-only': 'input-only'
+          },
+          'stack'
+        )}
         field={Textarea}
         label="Additional comments"
         value={state.textarea}
         fieldProps={{
-          placeholder: "Enter any additional comments",
-          name: "textarea"
+          placeholder: 'Enter any additional comments',
+          name: 'textarea'
         }}
         onChange={handleChange}
         errorText="This is invalid"
         error={boolean('Toggle Error', false)}
       />
       <FormField
-        layout={select('layout', { stack: 'stack', horizontal: 'horizontal', 'input-only': 'input-only' }, 'stack')}
+        layout={select(
+          'layout',
+          {
+            stack: 'stack',
+            horizontal: 'horizontal',
+            'input-only': 'input-only'
+          },
+          'stack'
+        )}
         field={Checkbox}
-        fieldProps={{ name: "acknowledge", }}
+        fieldProps={{ name: 'acknowledge' }}
         label="Acknowledge"
         value="acknowledge"
         checked={state.acknowledge}
@@ -355,14 +412,14 @@ const TestMixedInputs: React.FC<{}> = props => {
       />
     </>
   );
-}
+};
 
 export const MixedInputsFormField = () => {
   return (
     <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem'}}>
-        <TestMixedInputs/>
+      <div style={{ width: '20rem' }}>
+        <TestMixedInputs />
       </div>
     </Flex>
   );
-}
+};
