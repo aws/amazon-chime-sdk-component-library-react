@@ -294,7 +294,7 @@ class MeetingManager implements DeviceChangeObserver {
         await this.audioVideo?.chooseAudioInputDevice(null);
         this.selectedAudioInputDevice = null;
       } else {
-        await this.audioVideo?.chooseAudioInputDevice(deviceId);
+        await this.audioVideo?.chooseAudioInputDevice(receivedDevice);
         this.selectedAudioInputDevice = deviceId;
       }
       this.publishSelectedAudioInputDeviceChange();
