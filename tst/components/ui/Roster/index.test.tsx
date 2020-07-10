@@ -27,10 +27,10 @@ describe('RosterCell', () => {
     expect(getByTitle('Microphone')).toBeInTheDocument();
   });
 
-  it('should show disabled microphone if muted', () => {
+  it('should show muted microphone if muted', () => {
     const component = <RosterCell name="James" muted />;
     const { getByTitle } = renderWithTheme(lightTheme, component);
-    expect(getByTitle('Disabled microphone')).toBeInTheDocument();
+    expect(getByTitle('Muted microphone')).toBeInTheDocument();
   });
 
   it('should show screen share icon if user is content sharing and video sharing', () => {

@@ -17,8 +17,11 @@ export interface ButtonProps
   variant?: ButtonVariant;
   /** If true, the button is selected. */
   selected?: boolean;
+  /** Defines the size of the icon in the button */
+  iconSize?: IconSize;
 }
 
+export type IconSize = 'sm' | 'md' | 'lg';
 export type ButtonVariant = 'default' | 'primary' | 'secondary' | 'icon';
 
 export const Button = forwardRef(

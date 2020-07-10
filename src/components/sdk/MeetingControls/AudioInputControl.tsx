@@ -29,7 +29,7 @@ const AudioInputControl: React.FC = () => {
 
   return (
     <ControlBarButton
-      icon={<Microphone disabled={muted} />}
+      icon={<Microphone muted={muted} />}
       onClick={toggleMute}
       label={muted ? 'Unmute' : 'Mute'}
       popOver={dropdownOptions}

@@ -20,7 +20,7 @@ const DevicePermissionPrompt = () => {
 
   return permission === DevicePermissionStatus.IN_PROGRESS ? (
     <Modal
-      size="medium"
+      size="md"
       onClose={(): void => console.log('Permission prompt closed')}
       rootId="device-permission-modal-root"
     >

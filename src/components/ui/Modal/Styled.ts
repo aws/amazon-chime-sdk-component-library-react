@@ -6,18 +6,6 @@ import styled from 'styled-components';
 import { fadeAnimation, slideDownAndScaleUp } from '../../../utils/animations';
 import { ModalProps } from './';
 
-const ModalWidths = {
-  'medium': '35rem',
-  'large': '50rem',
-  'fullscreen': '98vw',
-};
-
-const ModalHeights = {
-  'medium': '94vh',
-  'large': '94vh',
-  'fullscreen': '96vh',
-};
-
 export const StyledModal = styled.div<ModalProps>`
   position: fixed;
   top: 0;
@@ -41,11 +29,11 @@ export const StyledModal = styled.div<ModalProps>`
     border-radius: ${props => props.theme.radii.default};
     color: ${props => props.theme.modal.text};
     background-color: ${props => props.theme.modal.bgd};
-    width: ${props => ModalWidths[props.size || 'medium']};
+    width: ${props => props.theme.modalSizes[props.size || 'md'].width};
     box-shadow: ${props => props.theme.modal.shadow};
-    max-width: ${props => props.size === 'fullscreen' ? ModalWidths[props.size] : '90vw'};
-    height: ${props => props.size === 'fullscreen' ? ModalHeights[props.size] : 'auto'};
-    max-height: ${props => ModalHeights[props.size || 'medium']};
+    max-width: ${props => props.size === 'fullscreen' ? props.theme.modalSizes[props.size].width : '90vw'};
+    height: ${props => props.size === 'fullscreen' ? props.theme.modalSizes[props.size].height : 'auto'};
+    max-height: ${props => props.theme.modalSizes[props.size || 'md'].height};
     will-change: transform, opacity;
     animation: ${slideDownAndScaleUp} .15s ease 0s forwards;
 

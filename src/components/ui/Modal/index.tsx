@@ -12,7 +12,7 @@ import ModalContext from './ModalContext';
 import useClickOutside from '../../../hooks/useClickOutside';
 import useUniqueId from '../../../hooks/useUniqueId';
 
-export type ModalSize = 'medium' | 'large' | 'fullscreen'
+export type ModalSize = 'md' | 'lg' | 'fullscreen'
 
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
   onClose: () => void;
@@ -22,7 +22,7 @@ export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
 
 export const Modal:FC<ModalProps> = props => {
   const {
-    size = 'medium',
+    size = 'md',
     onClose,
     children,
     rootId,

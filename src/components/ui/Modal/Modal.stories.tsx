@@ -62,7 +62,7 @@ export const BasicExample = () => {
             />
           {showModal && (
             <Modal
-              size={select('size', { medium: 'medium', large: 'large', fullscreen: 'fullscreen' }, 'medium')}
+              size={select('size', ['md', 'lg', 'fullscreen'], 'md')}
               onClose={toggleModal}
               rootId='modal-root'
             >
@@ -107,7 +107,7 @@ export const largeContent = () => {
 
           {showModal && (
             <Modal
-              size={select('size', { medium: 'medium', large: 'large', fullscreen: 'fullscreen' }, 'medium')}
+              size={select('size', ['md', 'lg', 'fullscreen'], 'md')}
               onClose={toggleModal}
               rootId='modal-root'
             >

@@ -107,7 +107,7 @@ const MeetingForm: React.FC = () => {
         )}
       </Flex>
       {errorMessage && (
-        <Modal size="medium" onClose={closeError}>
+        <Modal size="md" onClose={closeError}>
           <ModalHeader title={`Meeting ID: ${meetingId}`} />
           <ModalBody>
             <Card

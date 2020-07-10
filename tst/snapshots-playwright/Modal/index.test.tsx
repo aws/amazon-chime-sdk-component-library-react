@@ -3,7 +3,7 @@
 
 describe('Modal', () => {
   for (const browserType of ['chromium', 'firefox', 'webkit']) {
-    it(`visually looks correct at size medium in ${browserType}`, async () => {
+    it(`basic content in ${browserType}`, async () => {
       const browser = await playwright[browserType].launch();
       const page = await browser.newPage({ viewport: { width: 800, height: 600 }});
       await page.goto('http://localhost:9009/iframe.html?id=modal--basic-example');
@@ -17,7 +17,7 @@ describe('Modal', () => {
       await browser.close();
     });
 
-    it(`visually looks correct at size large in ${browserType}`, async () => {
+    it(`large content in ${browserType}`, async () => {
       const browser = await playwright[browserType].launch();
       const page = await browser.newPage({ viewport: { width: 800, height: 600 }});
       await page.goto('http://localhost:9009/iframe.html?id=modal--large-content');

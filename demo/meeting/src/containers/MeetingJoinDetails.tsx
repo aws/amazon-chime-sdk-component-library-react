@@ -50,7 +50,7 @@ const MeetingJoinDetails = () => {
         </Label>
       </Flex>
       {error && (
-        <Modal size="medium" onClose={(): void => setError('')}>
+        <Modal size="md" onClose={(): void => setError('')}>
           <ModalHeader title={`Meeting ID: ${meetingId}`} />
           <ModalBody>
             <Card
