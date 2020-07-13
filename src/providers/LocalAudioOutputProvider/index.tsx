@@ -8,7 +8,7 @@ import React, {
   createContext,
   useMemo,
   useCallback,
-  useContext,
+  useContext
 } from 'react';
 import { LocalAudioOutputContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
@@ -47,7 +47,7 @@ const LocalAudioOutputProvider: React.FC = ({ children }) => {
 
   const value = useMemo(() => ({ isAudioOn, toggleAudio }), [
     isAudioOn,
-    toggleAudio,
+    toggleAudio
   ]);
 
   return (

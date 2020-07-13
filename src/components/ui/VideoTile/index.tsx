@@ -11,7 +11,7 @@ type ObjectFit = 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 export interface VideoTileProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
     BaseProps {
-  nameplate?: string;
+  nameplate?: string | null;
   objectFit?: ObjectFit;
 }
 

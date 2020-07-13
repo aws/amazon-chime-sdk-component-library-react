@@ -11,25 +11,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
   height: 100%;
   width: 100%;
   position: relative;
-  display: inline-block;
-  vertical-align: top;
   background: ${props => props.theme.colors.greys.grey100};
-
-  &:after {
-    content: '';
-    position: absolute;
-    box-shadow: 0 1rem 2.5rem 0 ${props => props.theme.colors.greys.black};
-    opacity: 0;
-    transition: opacity 0.2s ease-in;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-  }
-
-  &:hover:after {
-    opacity: 0.3;
-  }
 
   video {
     position: absolute;

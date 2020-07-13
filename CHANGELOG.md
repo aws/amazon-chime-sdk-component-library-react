@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add mic volume indicator component
 - Add serverless setup for the meeting demo
 - Add publish script.
+- ActiveSpeaker, ActiveTile providers and hooks
 
 ### Changed
 
@@ -66,6 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed jest exclude config to exclude playwright tests
 - Changed disabled microphone icon prop to muted
 - Changed modal size properties to theme object
+- Update grid to support active speaker
 
 ### Removed
 

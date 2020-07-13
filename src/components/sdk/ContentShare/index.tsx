@@ -5,22 +5,30 @@ import React, { useEffect, useRef } from 'react';
 
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { useContentShare } from '../../../providers/ContentShareProvider';
+import { ContentTile } from '../../ui/ContentTile';
+import { BaseProps } from '../../ui/Base';
 
-export const ContentShare: React.FC = () => {
+interface Props extends BaseProps {}
+
+export const ContentShare: React.FC<Props> = ({ className, ...rest }) => {
   const audioVideo = useAudioVideo();
   const { activeContentTileId, isSomeoneSharing } = useContentShare();
-  const videoEle = useRef<HTMLVideoElement | null>(null);
+  const videoEl = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    if (!videoEle.current || !activeContentTileId) {
+    if (!videoEl.current || !activeContentTileId) {
       return;
     }
-    audioVideo?.bindVideoElement(activeContentTileId, videoEle.current);
+    audioVideo?.bindVideoElement(activeContentTileId, videoEl.current);
   }, [activeContentTileId]);
 
   return isSomeoneSharing ? (
-    // TODO: auto-resize the screen share tile
-    <video ref={videoEle} />
+    <ContentTile
+      objectFit="contain"
+      className={className || ''}
+      {...rest}
+      ref={videoEl}
+    />
   ) : null;
 };
 

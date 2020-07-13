@@ -1,49 +1,78 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, useRef, CSSProperties } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import styled from 'styled-components';
 import { VideoTileState } from 'amazon-chime-sdk-js';
+
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { useLocalVideo } from '../../../providers/LocalVideoProvider';
+import VideoTile from '../../ui/VideoTile';
+import { BaseProps } from '../../ui/Base';
 
-interface Props {
+interface Props extends BaseProps {
   id?: string;
-  style?: CSSProperties;
-  className?: string;
+  nameplate?: string;
 }
+const StyledLocalVideo = styled(VideoTile)`
+  background: unset;
+`;
 
-export const LocalVideo: React.FC<Props> = ({ id, style, className }) => {
+export const LocalVideo: React.FC<Props> = ({
+  className,
+  nameplate,
+  ...rest
+}) => {
+  const { tileId, isVideoEnabled } = useLocalVideo();
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);
+  const [active, setActive] = useState(() =>
+    audioVideo?.hasStartedLocalVideoTile()
+  );
+
+  useEffect(() => {
+    if (!audioVideo || !tileId || !videoEl.current || !isVideoEnabled) {
+      return;
+    }
+
+    audioVideo.bindVideoElement(tileId, videoEl.current);
+
+    return () => audioVideo.unbindVideoElement(tileId);
+  }, [audioVideo, tileId, isVideoEnabled]);
 
   useEffect(() => {
     if (!audioVideo) {
       return;
     }
 
-    const videoTileDidUpdate = (tileState: VideoTileState) => {
-      if (
-        !tileState.boundAttendeeId ||
-        !tileState.localTile ||
-        !tileState.tileId ||
-        !videoEl.current
-      ) {
-        return;
-      }
+    const observer = {
+      videoTileDidUpdate: (tileState: VideoTileState) => {
+        if (
+          !tileState.boundAttendeeId ||
+          !tileState.localTile ||
+          !tileState.tileId ||
+          !videoEl.current
+        ) {
+          return;
+        }
 
-      audioVideo.bindVideoElement(tileState.tileId, videoEl.current);
+        if (tileState.active !== active) {
+          setActive(tileState.active);
+        }
+      }
     };
 
-    audioVideo.addObserver({
-      videoTileDidUpdate
-    });
-  }, [audioVideo]);
+    audioVideo.addObserver(observer);
+
+    return () => audioVideo.removeObserver(observer);
+  }, [audioVideo, active]);
 
   return (
-    <video
+    <StyledLocalVideo
+      nameplate={active ? nameplate : null}
       className={className || ''}
       ref={videoEl}
-      id={id || ''}
-      style={style}
+      {...rest}
     />
   );
 };

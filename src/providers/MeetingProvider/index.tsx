@@ -8,6 +8,12 @@ import { AudioVideoProvider } from '../AudioVideoProvider';
 import { RosterProvider } from '../RosterProvider';
 import { DevicesProvider } from '../DevicesProvider';
 import { VideoTileProvider } from '../VideoTileProvider';
+import { LocalVideoProvider } from '../LocalVideoProvider';
+import { ActiveSpeakersProvider } from '../ActiveSpeakersProvider';
+import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
+import { MeetingStatusProvider } from '../MeetingStatusProvider';
+import { LocalAudioOutputProvider } from '../LocalAudioOutputProvider';
+import { ContentShareProvider } from '../ContentShareProvider';
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
 
@@ -19,7 +25,21 @@ export const MeetingProvider: React.FC = ({ children }) => {
       <AudioVideoProvider>
         <DevicesProvider>
           <RosterProvider>
-            <VideoTileProvider>{children}</VideoTileProvider>
+            <VideoTileProvider>
+              <LocalVideoProvider>
+                <MeetingStatusProvider>
+                  <LocalAudioOutputProvider>
+                    <ContentShareProvider>
+                      <ActiveSpeakersProvider>
+                        <FeaturedVideoTileProvider>
+                          {children}
+                        </FeaturedVideoTileProvider>
+                      </ActiveSpeakersProvider>
+                    </ContentShareProvider>
+                  </LocalAudioOutputProvider>
+                </MeetingStatusProvider>
+              </LocalVideoProvider>
+            </VideoTileProvider>
           </RosterProvider>
         </DevicesProvider>
       </AudioVideoProvider>

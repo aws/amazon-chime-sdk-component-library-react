@@ -9,191 +9,337 @@ import { AspectRatio } from '../../../hooks/useElementAspectRatio';
 interface StyledGridProps extends VideoGridProps {
   ratio?: AspectRatio | null;
   size: number;
+  featured: boolean;
 }
 
-const sizeRatioMap = {
-  '1'       : 'grid-template: 1fr / 1fr;',
-  '1.slim'  : 'grid-template: repeat(3,1fr) / 1fr;',
-  '1.r1by2' : 'grid-template: repeat(3,1fr) / 1fr;',
-  '1.r21by9': 'grid-template: 1fr / 3fr 1fr;',
-  '1.r29by9': 'grid-template: 1fr / 2fr 1fr;',
-  '1.r36by9': 'grid-template: 1fr / 1fr 1fr;',
+const sortedRatios: AspectRatio[] = [
+  'slim',
+  'r1by2',
+  'r2by3',
+  'r1by1',
+  'r4by3',
+  'r3by2',
+  'r16by9'
+];
 
-  '2'       : 'grid-template: 1fr / repeat(2,1fr);',
-  '2.slim'  : 'grid-template: repeat(3,1fr) / 1fr;',
-  '2.r1by2' : 'grid-template: repeat(3,1fr) / 1fr;',
-  '2.r2by3' : 'grid-template: repeat(2,1fr) / 1fr;',
-  '2.r1by1' : 'grid-template: repeat(2,1fr) / 1fr;',
-  '2.r4by3' : 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
-  '2.r3by2' : 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
-  '2.r16by9': 'grid-template: 4fr 3fr / repeat(2,1fr);',
-  '2.r21by9': 'grid-template: 1fr / repeat(2,1fr)',
-  '2.r29by9': 'grid-template: 1fr / repeat(2,1fr)',
-  '2.r36by9': 'grid-template: 1fr / repeat(2,2fr) 1fr;',
+const ratioStyles = {
+  '1': 'grid-template: 1fr / 1fr;',
+  '1.slim': 'grid-template: repeat(2, 1fr) / 1fr;',
+  '1.r2by3': 'grid-template: 1fr / 1fr;',
 
-  '3'       : 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
-  '3.slim'  : 'grid-template: repeat(3,1fr) / 1fr;',
-  '3.r1by2' : 'grid-template: repeat(3,1fr) / 1fr;',
-  '3.r2by3' : 'grid-template: repeat(3,1fr) / 1fr;',
-  '3.r4by3' : 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
-  '3.r21by9': 'grid-template: 2fr 1fr / repeat(3,1fr);',
-  '3.r29by9': 'grid-template: 1fr / repeat(3,1fr);',
-  '3.r36by9': 'grid-template: 1fr / repeat(3,1fr);',
+  '1.featured': `grid-template: "ft" 1fr / 1fr;`,
 
-  '4'       : 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
-  '4.slim'  : 'grid-template: repeat(4,1fr) / 1fr;',
-  '4.r1by2' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
-  '4.r2by3' : 'grid-template: repeat(2,3fr) 2fr / repeat(2,1fr);',
-  '4.r1by1' : 'grid-template: repeat(2,2fr) 1fr / repeat(2,1fr);',
-  '4.r4by3' : 'grid-template: repeat(2,4fr) 1fr / repeat(2,1fr);',
-  '4.r21by9': 'grid-template: repeat(2,1fr) / repeat(3,1fr);',
-  '4.r29by9': 'grid-template: 1fr / repeat(4,1fr);',
-  '4.r36by9': 'grid-template: 1fr / repeat(4,1fr);',
+  '2': 'grid-template: 1fr / repeat(2,1fr);',
+  '2.slim': `grid-template: repeat(3,1fr) / 1fr;`,
+  '2.r1by2': 'grid-template: repeat(2,1fr) / 1fr;',
+  '2.r2by3': 'grid-template: repeat(2,1fr) / 1fr;',
+  '2.r4by3': 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
+  '2.r16by9': `grid-template: 1fr / repeat(2,1fr);`,
 
-  '5'       : 'grid-template: repeat(2,1fr) / repeat(3,1fr);',
-  '5.slim'  : 'grid-template: repeat(5,1fr) / 1fr;',
-  '5.r1by2' : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
-  '5.r2by3' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
-  '5.r1by1' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
-  '5.r4by3' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
-  '5.r3by2' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
-  '5.r16by9': 'grid-template: repeat(2,6fr) / repeat(3,1fr);',
-  '5.r21by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
-  '5.r29by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
-  '5.r36by9': 'grid-template: 1fr / repeat(5,1fr);',
+  '2.featured': `grid-template: repeat(3,1fr) / repeat(2,1fr);
+  grid-template-areas: 'ft ft' 'ft ft';`,
+  '2.r16by9.featured': `grid-template: repeat(2,1fr) / repeat(3,1fr);
+    grid-template-areas: 'ft ft v' 'ft ft v' 'ft ft v';`,
 
-  '6'       : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '6.slim'  : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
-  '6.r1by2' : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
-  '6.r2by3' : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
-  '6.r1by1' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
-  '6.r4by3' : 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
-  '6.r21by9': 'grid-template: repeat(2,1fr) / repeat(3,1fr);',
-  '6.r16by9': 'grid-template: repeat(2,7fr) / repeat(3,1fr);',
-  '6.r29by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
-  '6.r36by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
+  '3': 'grid-template: repeat(3,1fr) / 1fr;',
+  '3.r2by3': 'grid-template: repeat(3,1fr) / repeat(1,1fr);',
+  '3.r1by1': 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
 
-  '7'       : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '7.slim'  : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
-  '7.r1by2' : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
-  '7.r2by3' : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
-  '7.r1by1' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '7.r4by3' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '7.r16by9': 'grid-template: repeat(2,4fr) / repeat(4,1fr);',
-  '7.r21by9': 'grid-template: repeat(2,3fr) / repeat(4,1fr);',
-  '7.r29by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
-  '7.r36by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
+  '3.featured': `grid-template: repeat(3,1fr) / repeat(2,1fr);
+    grid-template-areas: 'ft ft' 'ft ft';
+  `,
+  '3.r16by9.featured': `grid-template: repeat(2,1fr) / repeat(3,1fr);
+    grid-template-areas: 'ft ft v' 'ft ft v';`,
 
-  '8'       : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '8.slim'  : 'grid-template: repeat(5,1fr) / repeat(2,1fr);',
-  '8.r1by2' : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
-  '8.r2by3' : 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
-  '8.r1by1' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '8.r4by3' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '8.r16by9' : 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
-  '8.r21by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
-  '8.r29by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
-  '8.r36by9': 'grid-template: repeat(2,4fr) / repeat(5,1fr);',
+  '4': 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
+  '4.slim': 'grid-template: repeat(4,1fr) / 1fr;',
+  '4.r2by3': 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
 
-  '9'       : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '9.slim'  : 'grid-template: repeat(5,1fr) / repeat(2,1fr);',
-  '9.r1by2' : 'grid-template: repeat(5,1fr) / repeat(2,1fr);',
-  '9.r2by3' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '9.r1by1' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '9.r4by3' : 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
-  '9.r16by9' : 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
-  '9.r21by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
-  '9.r29by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
-  '9.r36by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
+  '4.featured': `grid-template: repeat(3,1fr) / repeat(3,1fr);
+    grid-template-areas: 'ft ft ft' 'ft ft ft';`,
+  '4.r16by9.featured': `grid-template-areas: 'ft ft v' 'ft ft v' 'ft ft v';`,
 
-  '10'       : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '10.slim'  : 'grid-template: repeat(5,1fr) / repeat(2,1fr);',
-  '10.r1by2' : 'grid-template: repeat(5,1fr) / repeat(2,1fr);',
-  '10.r2by3' : 'grid-template: repeat(5,1fr) / repeat(2,1fr);',
-  '10.r1by1' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '10.r4by3' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '10.r3by2' : 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
-  '10.r16by9': 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
-  '10.r21by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
-  '10.r29by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
-  '10.r36by9': 'grid-template: repeat(2,1fr) / repeat(5,1fr);',
+  '5': 'grid-template: repeat(2,1fr) / repeat(3,1fr);',
+  '5.slim': 'grid-template: repeat(5,1fr) / 1fr;',
+  '5.r1by2': 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
+  '5.r2by3': 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
+  '5.r3by2': 'grid-template: repeat(2,1fr) / repeat(3,1fr);',
+  '5.r16by9': `grid-template: repeat(2,1fr) / repeat(3,1fr);`,
 
-  '11'       : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '11.slim'  : 'grid-template: repeat(6,1fr) / repeat(2,1fr);',
-  '11.r1by2' : 'grid-template: repeat(6,1fr) / repeat(2,1fr);',
-  '11.r2by3' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '11.r1by1' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '11.r4by3' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '11.r3by2' : 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
-  '11.r16by9': 'grid-template: repeat(3,7fr) / repeat(4,1fr);',
-  '11.r21by9': 'grid-template: repeat(3,1fr) / repeat(5,1fr);',
-  '11.r29by9': 'grid-template: repeat(2,1fr) / repeat(6,1fr);',
-  '11.r36by9': 'grid-template: repeat(2,1fr) / repeat(6,1fr);',
+  '5.featured': `grid-template: repeat(4,1fr) / repeat(2,1fr);
+    grid-template-areas: 'ft ft' 'ft ft';`,
+  '5.r1by1.featured': `grid-template: repeat(3,1fr) / repeat(3,1fr);
+    grid-template-areas: 'ft ft v' 'ft ft v';`,
 
-  '12'       : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '12.slim'  : 'grid-template: repeat(6,1fr) / repeat(2,1fr);',
-  '12.r1by2' : 'grid-template: repeat(6,1fr) / repeat(2,1fr);',
-  '12.r2by3' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '12.r1by1' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '12.r4by3' : 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
-  '12.r3by2' : 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
-  '12.r16by9': 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
-  '12.r21by9': 'grid-template: repeat(3,1fr) / repeat(5,1fr);',
-  '12.r29by9': 'grid-template: repeat(2,4fr) 2fr / repeat(6,1fr);',
-  '12.r36by9': 'grid-template: repeat(2,4fr) / repeat(6,1fr);',
+  '6': 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
+  '6.slim': 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
+  '6.r1by2': 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
+  '6.r1by1': 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
+  '6.r2by3': 'grid-template: repeat(3,1fr) / repeat(2,1fr);',
+  '6.r3by2': 'grid-template: repeat(2,1fr) / repeat(3,1fr);',
+  '6.r16by9': `grid-template: repeat(2,1fr) / repeat(3,1fr);`,
 
-  '13'       : 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
-  '13.slim'  : 'grid-template: repeat(7,1fr) / repeat(2,1fr);',
-  '13.r1by2' : 'grid-template: repeat(7,1fr) / repeat(2,1fr);',
-  '13.r2by3' : 'grid-template: repeat(5,6fr) / repeat(3,6fr);',
-  '13.r1by1' : 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
-  '13.r4by3' : 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
-  '13.r21by9': 'grid-template: repeat(3,1fr) / repeat(5,1fr);',
-  '13.r29by9': 'grid-template: repeat(3,1fr) / repeat(6,1fr);',
-  '13.r36by9': 'grid-template: repeat(2,1fr) / repeat(7,1fr);',
+  '6.featured': `grid-template: repeat(4,1fr) / repeat(3,1fr);
+    grid-template-areas: 'ft ft ft' 'ft ft ft';`,
+  '6.r1by1.featured': `grid-template: repeat(3,1fr) / repeat(3,1fr);
+    grid-template-areas: 'ft ft v' 'ft ft v';`,
 
-  '14'       : 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
-  '14.slim'  : 'grid-template: repeat(7,1fr) / repeat(2,1fr);',
-  '14.r1by2' : 'grid-template: repeat(7,1fr) / repeat(2,1fr);',
-  '14.r2by3' : 'grid-template: repeat(5,1fr) / repeat(3,1fr);',
-  '14.r1by1' : 'grid-template: repeat(5,1fr) / repeat(3,1fr);',
-  '14.r4by3' : 'grid-template: repeat(2,1fr) / repeat(2,1fr);',
-  '14.r16by9': 'grid-template: repeat(3,1fr) / repeat(5,1fr);',
-  '14.r21by9': 'grid-template: repeat(3,1fr) / repeat(5,1fr);',
-  '14.r29by9': 'grid-template: repeat(3,1fr) / repeat(6,1fr);',
-  '14.r36by9': 'grid-template: repeat(2,1fr) / repeat(7,1fr);',
+  '7': 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
+  '7.slim': 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
+  '7.r4by3': 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
+  '7.r16by9': `grid-template: repeat(2,1fr) / repeat(4,1fr);`,
 
-  '15'       : 'grid-template: repeat(5,1fr) / repeat(3,1fr);',
-  '15.slim'  : 'grid-template: repeat(8,1fr) / repeat(2,1fr);',
-  '15.r1by2' : 'grid-template: repeat(5,1fr) / repeat(3,1fr);',
-  '15.r2by3' : 'grid-template: repeat(5,1fr) / repeat(3,1fr);',
-  '15.r1by1' : 'grid-template: repeat(5,1fr) / repeat(3,1fr);',
-  '15.r3by2' : 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
-  '15.r4by3' : 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
-  '15.r16by9' : 'grid-template: repeat(3,1fr) / repeat(5,1fr);',
-  '15.r21by9': 'grid-template: repeat(3,1fr) / repeat(5,1fr);',
-  '15.r29by9': 'grid-template: repeat(3,1fr) / repeat(6,1fr);',
-  '15.r36by9': 'grid-template: repeat(2,1fr) / repeat(8,1fr);',
+  '7.featured': `grid-template: repeat(4,1fr) / repeat(3,1fr);
+    grid-template-areas: 'ft ft ft' 'ft ft ft';`,
+  '7.r1by1.featured': `grid-template: repeat(4,1fr) / repeat(4,1fr);
+    grid-template-areas: 'ft ft ft v' 'ft ft ft v' 'ft ft ft v';`,
 
-  '16'       : 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
-  '16.slim'  : 'grid-template: repeat(8,1fr) / repeat(2,1fr);',
-  '16.r1by2' : 'grid-template: repeat(6,1fr) / repeat(3,1fr);',
-  '16.r2by3' : 'grid-template: repeat(6,1fr) / repeat(3,1fr);',
-  '16.r1by1' : 'grid-template: repeat(4,5fr) 1fr / repeat(4,1fr);',
-  '16.r4by3' : 'grid-template: repeat(4,2fr) 1fr / repeat(4,1fr);',
-  '16.r16by9' : 'grid-template: repeat(4,1fr) / repeat(5,1fr);',
-  '16.r21by9': 'grid-template: repeat(3,1fr) / repeat(6,1fr);',
-  '16.r29by9': 'grid-template: repeat(3,1fr) / repeat(7,1fr);',
-  '16.r36by9': 'grid-template: repeat(3,1fr) / repeat(7,1fr);',
+  '8': 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
+  '8.slim': 'grid-template: repeat(4,1fr) / repeat(2,1fr);',
+  '8.r4by3': 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
+  '8.r16by9': 'grid-template: repeat(2,1fr) / repeat(4,1fr);',
+
+  '8.featured': `grid-template: repeat(5,1fr) / repeat(4,1fr);
+    grid-template-areas: 'ft ft ft ft ft' 'ft ft ft ft ft' 'ft ft ft ft ft';`,
+  '8.r1by1.featured': `grid-template: repeat(4,1fr) / repeat(4,1fr);
+    grid-template-areas: 'ft ft ft v' 'ft ft ft v' 'ft ft ft x';`,
+  '8.r16by9.featured': `grid-template-areas: 'ft ft ft v' 'ft ft ft v' 'ft ft ft x';`,
+
+  '9': 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
+  '9.slim': `grid-template: repeat(5,1fr) / repeat(2,1fr);`,
+  '9.r1by1': 'grid-template: repeat(3,1fr) / repeat(3,1fr);',
+  '9.r16by9': `grid-template: repeat(3,1fr) / repeat(4,1fr);`,
+
+  '9.featured': `grid-template: repeat(5,1fr) / repeat(4,1fr);
+    grid-template-areas: 'ft ft ft ft ft' 'ft ft ft ft ft' 'ft ft ft ft ft';`,
+  '9.r1by1.featured': `grid-template: repeat(5,1fr) / repeat(5,1fr);
+    grid-template-areas: 'ft ft ft ft v' 'ft ft ft ft v' 'ft ft ft ft v' 'ft ft ft ft v';`,
+
+  '10': 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
+  '10.slim': `grid-template: repeat(5,1fr) / repeat(2,1fr);`,
+  '10.r1by1': 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
+  '10.r3by2': 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
+
+  '10.featured': `grid-template: repeat(5,1fr) / repeat(4,1fr);
+    grid-template-areas: 'ft ft ft ft ft' 'ft ft ft ft ft' 'ft ft ft ft ft';`,
+  '10.r1by1.featured': `grid-template: repeat(5,1fr) / repeat(5,1fr);
+    grid-template-areas: 'ft ft ft ft v' 'ft ft ft ft v' 'ft ft ft ft v' 'ft ft ft ft v';`,
+
+  '11': 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
+  '11.slim': 'grid-template: repeat(6,1fr) / repeat(2,1fr);',
+  '11.r1by1': 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
+  '11.r3by2': 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
+  '11.r16by9': `grid-template: repeat(3,1fr) / repeat(4,1fr);`,
+
+  '11.featured': `grid-template: repeat(6,1fr) / repeat(6,1fr);
+    grid-template-areas: 'ft ft ft ft ft ft' 'ft ft ft ft ft ft' 'ft ft ft ft ft ft' 'ft ft ft ft ft ft';`,
+  '11.r1by1.featured': `grid-template-areas:
+      'ft ft ft ft ft v' 'ft ft ft ft ft v' 'ft ft ft ft ft v'
+      'ft ft ft ft ft v' 'ft ft ft ft ft x';`,
+
+  '12': 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
+  '12.slim': 'grid-template: repeat(6,1fr) / repeat(2,1fr);',
+  '12.r2by3': 'grid-template: repeat(4,1fr) / repeat(3,1fr);',
+  '12.r3by2': 'grid-template: repeat(3,1fr) / repeat(4,1fr);',
+
+  '12.featured': `grid-template: repeat(6,1fr) / repeat(6,1fr);
+    grid-template-areas:
+      'ft ft ft ft ft ft' 'ft ft ft ft ft ft' 'ft ft ft ft ft ft'
+      'ft ft ft ft ft ft';`,
+  '12.r1by1.featured': `grid-template-areas:
+    'ft ft ft ft ft v' 'ft ft ft ft ft v' 'ft ft ft ft ft v'
+    'ft ft ft ft ft v' 'ft ft ft ft ft x';`,
+
+  '13': 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
+  '13.slim': 'grid-template: repeat(7,1fr) / repeat(2,1fr);',
+  '13.r2by3': 'grid-template: repeat(5,1fr) / repeat(3,1fr);',
+  '13.r1by1': 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
+  '13.r3by2': 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
+  '13.r16by9': `grid-template: repeat(3,1fr) / repeat(5,1fr);`,
+
+  '13.featured': `grid-template: repeat(7,1fr) / repeat(6,1fr);
+    grid-template-areas:
+      'ft ft ft ft ft ft' 'ft ft ft ft ft ft' 'ft ft ft ft ft ft' 'ft ft ft ft ft ft'
+      'ft ft ft ft ft ft';`,
+  '13.r1by1.featured': `grid-template-areas:
+      'ft ft ft ft ft v' 'ft ft ft ft ft v' 'ft ft ft ft ft v' 'ft ft ft ft ft v'
+      'ft ft ft ft ft v' 'ft ft ft ft ft x';`,
+
+  '14': 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
+  '14.slim': 'grid-template: repeat(7,1fr) / repeat(2,1fr);',
+  '14.r2by3': 'grid-template: repeat(5,1fr) / repeat(3,1fr);',
+  '14.r3by2': 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
+  '14.r16by9': `grid-template: repeat(3,1fr) / repeat(5,1fr);`,
+
+  '14.featured': `grid-template: repeat(7,1fr) / repeat(7,1fr);
+    grid-template-areas:
+      'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft'
+      'ft ft ft ft ft ft ft';`,
+  '14.r1by1.featured': `grid-template-areas:
+      'ft ft ft ft ft ft v' 'ft ft ft ft ft ft v' 'ft ft ft ft ft ft v' 'ft ft ft ft ft ft v'
+      'ft ft ft ft ft ft v' 'ft ft ft ft ft ft x';`,
+
+  '15': 'grid-template: repeat(5,1fr) / repeat(3,1fr);',
+  '15.slim': 'grid-template: repeat(8,1fr) / repeat(2,1fr);',
+  '15.r1by2': 'grid-template: repeat(5,1fr) / repeat(3,1fr);',
+  '15.r3by2': 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
+  '15.r16by9': `grid-template: repeat(3,1fr) / repeat(5,1fr);`,
+
+  '15.featured': `grid-template: repeat(8,1fr) / repeat(8,1fr);
+    grid-template-areas:
+     'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft'
+     'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft';`,
+  '15.r1by1.featured': `grid-template-areas:
+     'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v'
+     'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft x';`,
+
+  '16': 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
+  '16.slim': 'grid-template: repeat(8,1fr) / repeat(2,1fr);',
+  '16.r1by2': 'grid-template: repeat(6,1fr) / repeat(3,1fr);',
+  '16.r1by1': 'grid-template: repeat(4,1fr) / repeat(4,1fr);',
+
+  '16.featured': `grid-template: repeat(8,1fr) / repeat(8,1fr);
+    grid-template-areas:
+      'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft'
+      'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft';`,
+  '16.r1by1.featured': `grid-template-areas:
+      'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v'
+      'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft x';`,
+
+  '17': 'grid-template: repeat(5,1fr) / repeat(4,1fr);',
+  '17.slim': 'grid-template: repeat(8,1fr) / repeat(3,1fr);',
+  '17.r1by2': 'grid-template: repeat(6,1fr) / repeat(4,1fr);',
+  '17.r1by1': 'grid-template: repeat(4,1fr) / repeat(5,1fr);',
+
+  '17.featured': `grid-template: repeat(8,1fr) / repeat(9,1fr);
+    grid-template-areas:
+      'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft'
+      'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft';`,
+  '17.r1by1.featured': `grid-template-areas:
+      'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v'
+      'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft x';`
 };
 
+const responsiveStyles = {
+  '2.featured': `
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+      grid-template-rows: unset;
+      grid-auto-rows: calc(100% / 3);
+    }
+  `,
+
+  '3.r16by9': `
+    @media (max-height: 600px) {
+      grid-template-rows: repeat(2,1fr);
+      grid-template-columns: unset;
+      grid-auto-columns: 50%;
+      grid-auto-flow: column;
+    }
+  `,
+
+  '3.featured': `
+    @media (max-width: 600px) {
+      grid-template-areas: 'ft' 'ft';
+      grid-template-columns: 1fr;
+      grid-template-rows: unset;
+      grid-auto-rows: 25%;
+    }
+  `,
+
+  '4.r16by9': `
+    @media (max-height: 600px) {
+      grid-template-rows: repeat(2,1fr);
+      grid-template-columns: unset;
+      grid-auto-columns: 50%;
+      grid-auto-flow: column;
+    }
+  `,
+
+  '5.r16by9': `grid-template: repeat(2,1fr) / repeat(3,1fr);
+    @media (max-height: 600px) {
+      grid-template-rows: repeat(2,1fr);
+      grid-template-columns: unset;
+      grid-auto-columns: calc(100% / 3);
+      grid-auto-flow: column;
+    }
+  `,
+
+  '6.r16by9': `grid-template: repeat(2,1fr) / repeat(3,1fr);
+    @media (max-height: 600px) {
+      grid-template-rows: repeat(2,1fr);
+      grid-template-columns: unset;
+      grid-auto-columns: calc(100% / 3);
+      grid-auto-flow: column;
+    }
+  `,
+
+  '7.r16by9': `
+    @media (max-height: 600px) {
+      grid-template-rows: repeat(2,1fr);
+      grid-template-columns: unset;
+      grid-auto-columns: 25%;
+      grid-auto-flow: column;
+    }
+  `
+};
+
+const portraitStyles = `
+  @media (max-width: 600px) {
+    grid-template-areas: 'ft ft' 'ft ft';
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: unset;
+    grid-auto-rows: 25%;
+  }
+`;
+
+const landscapeStyles = `
+  @media (max-height: 600px) {
+    grid-template-areas: 'ft ft' 'ft ft';
+    grid-template-rows: repeat(2,1fr);
+    grid-template-columns: unset;
+    grid-auto-columns: 25%;
+    grid-auto-flow: column;
+  }
+`;
+
 export const StyledGrid = styled.div<StyledGridProps>`
+  position: relative;
   display: grid;
   height: 100%;
   width: 100%;
+  overflow: auto;
 
-  ${({ size, ratio }) => `
-    ${sizeRatioMap[size]}
-    ${(sizeRatioMap[`${size}.${ratio}`]) || ''}
-  `}
+  ${({ size, featured }) =>
+    ratioStyles[`${size}${featured ? '.featured' : ''}`] || ''}
+
+  ${({ size, featured, ratio }) => {
+    if (!ratio) {
+      return;
+    }
+
+    let styles = '';
+    const index = sortedRatios.indexOf(ratio);
+
+    for (let i = 0; i <= index; i++) {
+      const currentRatio = sortedRatios[i];
+      const baseStyles =
+        ratioStyles[`${size}.${currentRatio}${featured ? '.featured' : ''}`];
+      styles += baseStyles || '';
+    }
+
+    let mobileStyles =
+      responsiveStyles[`${size}.${ratio}${featured ? '.featured' : ''}`] ||
+      responsiveStyles[`${size}${featured ? '.featured' : ''}`];
+
+    if (mobileStyles) {
+      styles += mobileStyles;
+    } else if (ratio === 'r16by9' && (size > 7 || featured)) {
+      styles += landscapeStyles;
+    } else if (size > 7 || featured) {
+      styles += portraitStyles;
+    }
+
+    return styles;
+  }}
 `;
