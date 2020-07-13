@@ -5,9 +5,16 @@ import React from 'react';
 import { select } from '@storybook/addon-knobs';
 import Flex from '../Flex';
 import { Badge } from './';
+import mdx from './Badge.mdx';
 
 export default {
   title: 'Badge',
+  parameters: {
+    docs: {
+      page: mdx.parameters.docs.page().props.children.type,
+    },
+  },
+  component: Badge,
 };
 
 export const BasicBadge = () => {

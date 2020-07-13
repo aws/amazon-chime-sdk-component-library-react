@@ -25,8 +25,24 @@ module.exports = ({ config }) => {
       ]
     },
     {
-      test: /\.tsx?$/,
-      use: ['ts-loader']
+      test: /\.(ts|tsx)$/,
+      use: [
+        require.resolve("ts-loader"),
+        {
+          loader: require.resolve('react-docgen-typescript-loader'),
+          options: {
+            tsconfigPath: resolve(__dirname, '../tsconfig.json'),
+            // omit props extended from styled-system
+            propFilter: (prop) => {
+              if (prop.parent) {
+                return !prop.parent.fileName.includes("node_modules");
+              }
+          
+              return true;
+            },
+          }
+        }
+      ]
     },
     {
       test: /\.(woff|woff2|eot|ttf|otf)$/,
@@ -71,7 +87,7 @@ module.exports = ({ config }) => {
       enforce: 'pre',
     },
     { // add loader for mdx file
-      test: /\.stories\.mdx$/,
+      test: /(\.stories)?\.mdx$/,
       use: [
         {
           loader: 'babel-loader',
