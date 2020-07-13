@@ -12,7 +12,7 @@ import {
 } from '../../../providers/NotificationProvider';
 
 export default {
-  title: 'NotificationGroup',
+  title: 'UI Components/NotificationGroup',
 };
 
 const StorybookTestButton = ({ label, payload }: any) => {

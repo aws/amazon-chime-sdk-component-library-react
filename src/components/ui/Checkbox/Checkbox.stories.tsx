@@ -8,7 +8,7 @@ import Flex from '../Flex';
 import { Checkbox } from './';
 
 export default {
-  title: 'Form/Checkbox',
+  title: 'UI Components/Form/Checkbox',
 };
 
 export const _Checkbox = () => {

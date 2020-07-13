@@ -15,7 +15,7 @@ import ModalButtonGroup from './ModalButtonGroup';
 import PrimaryButton from '../Button/PrimaryButton';
 
 export default {
-  title: 'Modal'
+  title: 'UI Components/Modal'
 };
 
 const options = [

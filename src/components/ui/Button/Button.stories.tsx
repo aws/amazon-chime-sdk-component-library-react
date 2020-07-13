@@ -9,9 +9,16 @@ import PrimaryButton from './PrimaryButton';
 import SecondaryButton from './SecondaryButton';
 import IconButton from './IconButton';
 import Meeting from '../icons/Meeting';
+import mdx from './Button.mdx';
 
 export default {
-  title: 'Form/Buttons',
+  title: 'UI Components/Form/Buttons',
+  parameters: {
+    docs: {
+      page: mdx.parameters.docs.page().props.children.type,
+    },
+  },
+  component: Button,
 };
 
 export const BasicButton = () => <Button label='Basic button' />;

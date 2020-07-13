@@ -13,7 +13,7 @@ import RadioGroup from '../RadioGroup';
 import Flex from '../Flex';
 
 export default {
-  title: 'Form/FormField'
+  title: 'UI Components/Form/FormField'
 };
 
 const TestInput: React.FC<{}> = props => {

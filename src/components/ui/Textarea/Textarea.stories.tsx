@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 `;
 
 export default {
-  title: 'Form/Textarea',
+  title: 'UI Components/Form/Textarea',
 };
 
 export const _Textarea = () => (

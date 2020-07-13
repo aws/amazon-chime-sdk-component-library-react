@@ -20,7 +20,7 @@ const Tile = () => (
 );
 
 export default {
-  title: 'Video/VideoGrid',
+  title: 'UI Components/Video/VideoGrid',
 };
 
 export const _VideoGrid = () => {

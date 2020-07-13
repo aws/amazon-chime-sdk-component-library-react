@@ -31,7 +31,7 @@ const Title = styled.h1`
 `;
 
 export default {
-  title: 'Flex',
+  title: 'UI Components/Flex',
 };
 
 export const FillSpaceCentered = () => {

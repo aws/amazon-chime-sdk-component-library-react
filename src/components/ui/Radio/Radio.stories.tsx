@@ -9,7 +9,7 @@ import { Radio } from '.';
 import Flex from '../Flex';
 
 export default {
-  title: 'Form/Radio',
+  title: 'UI Components/Form/Radio',
 };
 
 export const _Radio = () => (

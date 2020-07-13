@@ -6,7 +6,7 @@ import React from 'react';
 import { RadioGroup } from './';
 
 export default {
-  title: 'Form/RadioGroup',
+  title: 'UI Components/Form/RadioGroup',
 };
 
 const options = [

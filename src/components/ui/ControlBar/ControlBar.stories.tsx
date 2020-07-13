@@ -9,7 +9,7 @@ import ControlBar from '.';
 import ControlBarItem from './ControlBarItem';
 
 export default {
-  title: 'ControlBar',
+  title: 'UI Components/ControlBar',
 };
 
 export const _ControlBar = () => {

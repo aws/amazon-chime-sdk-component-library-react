@@ -8,7 +8,7 @@ import { Notification } from '.';
 import { Severity } from '../../../providers/NotificationProvider';
 
 export default {
-  title: 'Notification',
+  title: 'UI Components/Notification',
 };
 
 export const _Notification = () => {

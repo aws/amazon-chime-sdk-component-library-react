@@ -34,7 +34,7 @@ const getButtonContents = (isOpen: boolean) => {
 }
 
 export default {
-  title: 'PopOver',
+  title: 'UI Components/PopOver',
 };
 
 export const BasicPopOverMenu = () => (

@@ -8,7 +8,7 @@ import Flex from '../Flex';
 import Heading from './';
 
 export default {
-  title: 'Headings',
+  title: 'UI Components/Headings',
 };
 
 export const BasicHeading = () => (
