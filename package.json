@@ -44,6 +44,7 @@
     "uuid": "^8.0.0"
   },
   "devDependencies": {
+    "@mdx-js/loader": "^1.6.6",
     "@rollup/plugin-commonjs": "^13.0.0",
     "@rollup/plugin-node-resolve": "^8.0.1",
     "@storybook/addon-a11y": "^5.3.18",
@@ -83,6 +84,7 @@
     "postcss-preset-env": "^6.6.0",
     "puppeteer": "^2.1.1",
     "react": "^16.8.6",
+    "react-docgen-typescript-loader": "^3.7.2",
     "react-dom": "^16.13.1",
     "react-is": "^16.13.1",
     "resize-observer-polyfill": "^1.5.1",

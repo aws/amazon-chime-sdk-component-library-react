@@ -7,7 +7,9 @@ import { BaseProps } from '../Base';
 import { StyledBadge } from './Styled';
 
 export interface BadgeProps extends BaseProps {
+  /** The value shows in the badge*/
   value: string | number;
+  /** The status of the badge */
   status?: "default" | "alert";
 }
 

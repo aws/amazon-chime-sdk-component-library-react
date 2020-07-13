@@ -1,0 +1,55 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Badge } from './';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme } from '../../../theme/';
+
+# Badge
+Badge contains numeric values and indicate a running tally, such as the number of unread messages in a room.
+
+## Importing
+```javascript
+import { Badge } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <div style={{ 'alignItems': 'center', 'display': 'flex'}}>
+      <span style={{ 'marginRight': '0.5rem' }}>Number of new messages</span>
+      <Badge
+        value="50+"
+        status="default"
+      />
+    </div>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Badge
+  value="50+"
+  status="default"
+/>
+```
+
+### Using Alert Status
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <div style={{ 'alignItems': 'center', 'display': 'flex'}}>
+      <span style={{ 'marginRight': '0.5rem' }}>Number of new messages</span>
+      <Badge
+        value="50+"
+        status="alert"
+      />
+    </div>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Badge
+  value="50+"
+  status="alert"
+/>
+```
+
+## Props
+<Props of={Badge} />
