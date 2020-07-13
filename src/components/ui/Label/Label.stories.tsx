@@ -6,7 +6,7 @@ import Flex from '../Flex';
 import { Label } from './';
 
 export default {
-  title: 'Label',
+  title: 'UI Components/Label',
 };
 
 export const BasicLabel = () => {

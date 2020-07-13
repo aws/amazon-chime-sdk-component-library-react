@@ -10,7 +10,7 @@ import SearchInput from './SearchInput';
 import Flex from '../Flex';
 
 export default {
-  title: 'Form/TextInputs'
+  title: 'UI Components/Form/TextInputs'
 };
 
 export const BasicInput = () => {

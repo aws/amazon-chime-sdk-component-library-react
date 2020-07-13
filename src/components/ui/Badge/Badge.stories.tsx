@@ -8,7 +8,7 @@ import { Badge } from './';
 import mdx from './Badge.mdx';
 
 export default {
-  title: 'Badge',
+  title: 'UI Components/Badge',
   parameters: {
     docs: {
       page: mdx.parameters.docs.page().props.children.type,

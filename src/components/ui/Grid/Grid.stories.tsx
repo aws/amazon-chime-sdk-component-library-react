@@ -9,7 +9,7 @@ import { Grid } from './';
 import { Cell } from './Cell';
 
 export default {
-  title: 'Grid',
+  title: 'UI Components/Grid',
 };
 
 const Child = () => (

@@ -11,7 +11,7 @@ import RosterCell from './RosterCell';
 import RosterHeader from './RosterHeader';
 
 export default {
-  title: 'Roster'
+  title: 'UI Components/Roster'
 };
 
 const Menu = () => (

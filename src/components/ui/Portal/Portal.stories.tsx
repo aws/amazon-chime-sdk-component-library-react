@@ -7,7 +7,7 @@ import Portal from '.';
 import Flex from '../Flex';
 
 export default {
-  title: 'Portal',
+  title: 'UI Components/Portal',
 };
 
 // Simple story for Portal element

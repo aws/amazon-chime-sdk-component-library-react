@@ -3,7 +3,7 @@
 
 describe('Basic Button', () => {
     it('visually looks correct', async () => {
-      await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--basic-button');
+      await page.goto('http://host.docker.internal:9009/iframe.html?id=ui-components-form-buttons--basic-button');
   
       const element = await page.$('button');
   
@@ -12,7 +12,7 @@ describe('Basic Button', () => {
     });
   
     it('visually looks correct on hover', async () => {
-      await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--basic-button');
+      await page.goto('http://host.docker.internal:9009/iframe.html?id=ui-components-form-buttons--basic-button');
   
       await page.hover('button');
       // wait for completion of background color transition, which is 100ms
@@ -24,7 +24,7 @@ describe('Basic Button', () => {
     });
   
     it('visually looks correct on focus', async () => {
-      await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--basic-button');
+      await page.goto('http://host.docker.internal:9009/iframe.html?id=ui-components-form-buttons--basic-button');
   
       await page.focus('button');
       await page.waitFor(150);
@@ -36,7 +36,7 @@ describe('Basic Button', () => {
   
   
     it('visually looks correct on active', async () => {
-      await page.goto('http://host.docker.internal:9009/iframe.html?id=form-buttons--basic-button');
+      await page.goto('http://host.docker.internal:9009/iframe.html?id=ui-components-form-buttons--basic-button');
   
       const element = await page.$('button');
       await page.mouse.down();

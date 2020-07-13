@@ -7,9 +7,13 @@ import { BaseProps } from '../Base';
 import { StyledButton } from './Styled';
 
 export interface ButtonProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'css'>, BaseProps {
+  /** The icon element to be shown */
   icon?: JSX.Element;
+  /** The text to be shown */
   label: string;
+  /** The style of button to be shown */
   variant?: ButtonVariant;
+  /** Determines if the button is selected */
   selected?: boolean;
 }
 

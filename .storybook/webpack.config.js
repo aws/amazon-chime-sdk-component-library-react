@@ -37,7 +37,6 @@ module.exports = ({ config }) => {
               if (prop.parent) {
                 return !prop.parent.fileName.includes("node_modules");
               }
-          
               return true;
             },
           }

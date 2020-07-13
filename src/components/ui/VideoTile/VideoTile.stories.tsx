@@ -7,7 +7,7 @@ import { VideoTile } from './';
 import { Flex } from '../Flex';
 
 export default {
-  title: 'Video/VideoTile',
+  title: 'UI Components/Video/VideoTile',
 };
 
 export const _VideoTile = () => {
