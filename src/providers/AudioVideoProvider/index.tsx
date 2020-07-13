@@ -8,7 +8,7 @@ import { useMeetingManager } from '../../providers/MeetingProvider';
 
 type AudioVideoValue = AudioVideoFacade | null;
 
-const AudioVideoContext = createContext<AudioVideoValue>(null);
+export const AudioVideoContext = createContext<AudioVideoValue>(null);
 
 const AudioVideoProvider: React.FC = ({ children }) => {
   const meetingManager = useMeetingManager();

@@ -1,18 +1,11 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, {
-  useEffect,
-  useLayoutEffect,
-  useState,
-  RefObject
-} from 'react';
+import React, { useEffect, useLayoutEffect, useState, RefObject } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import { debounce } from 'throttle-debounce';
 
 export type AspectRatio =
-  | 'r36by9'
-  | 'r29by9'
   | 'r21by9'
   | 'r16by9'
   | 'r3by2'
@@ -26,32 +19,22 @@ export type AspectRatio =
 function getAspectRatio(height: number, width: number): AspectRatio {
   const aspectRatio = width / height;
 
-  if (aspectRatio > 36 / 9) {
-    return 'r36by9';
-  }
-  if (aspectRatio > 29 / 9) {
-    return 'r29by9';
-  }
-  if (aspectRatio > 21 / 9) {
-    return 'r21by9';
-  }
-  if (aspectRatio > 16 / 9) {
+  if (aspectRatio > 1.6) {
     return 'r16by9';
   }
-  if (aspectRatio > 3 / 2) {
+  if (aspectRatio > 1.4) {
     return 'r3by2';
   }
-  if (aspectRatio > 4 / 3) {
+  if (aspectRatio > 1.25) {
     return 'r4by3';
   }
-  if (aspectRatio > 1) {
+  if (aspectRatio > 0.9) {
     return 'r1by1';
   }
-  if (aspectRatio > 2 / 3) {
+  if (aspectRatio > 0.7) {
     return 'r2by3';
   }
-
-  if (aspectRatio > 1 / 2) {
+  if (aspectRatio > 0.4) {
     return 'r1by2';
   }
 
@@ -62,7 +45,9 @@ export interface VideoGridProps extends React.HTMLAttributes<HTMLDivElement> {
   size: number;
 }
 
-const useElementAspectRatio = (ref: RefObject<HTMLElement>): AspectRatio | null => {
+const useElementAspectRatio = (
+  ref: RefObject<HTMLElement>
+): AspectRatio | null => {
   const [ratio, setRatio] = useState<AspectRatio | null>(null);
 
   useLayoutEffect(() => {

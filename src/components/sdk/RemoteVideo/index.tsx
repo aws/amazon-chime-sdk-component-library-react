@@ -1,18 +1,23 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, HTMLAttributes } from 'react';
 
 import { VideoTile } from '../../ui/VideoTile';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { BaseProps } from '../../ui/Base';
 
-interface Props {
+interface Props extends BaseProps, Omit<HTMLAttributes<HTMLDivElement>, 'css'> {
   tileId: number;
   name?: string;
-  className?: string;
 }
 
-export const RemoteVideo: React.FC<Props> = ({ name, className, tileId }) => {
+export const RemoteVideo: React.FC<Props> = ({
+  name,
+  className,
+  tileId,
+  ...rest
+}) => {
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);
 
@@ -24,13 +29,14 @@ export const RemoteVideo: React.FC<Props> = ({ name, className, tileId }) => {
     audioVideo.bindVideoElement(tileId, videoEl.current);
 
     return () => audioVideo.unbindVideoElement(tileId);
-  }, [tileId]);
+  }, [audioVideo, tileId]);
 
   return (
     <VideoTile
-      className={`remote-video--${tileId} ${className || ''}`}
+      {...rest}
       ref={videoEl}
       nameplate={name}
+      className={`remote-video--${tileId} ${className || ''}`}
     />
   );
 };

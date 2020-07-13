@@ -17,10 +17,14 @@ const ContentShareControlProvider: React.FC = ({ children }) => {
   const { isLocalUserSharing } = useContentShare();
 
   const toggleContentShare = useCallback(async (): Promise<void> => {
+    if (!audioVideo) {
+      return;
+    }
+
     if (isLocalUserSharing) {
-      audioVideo?.stopContentShare();
+      audioVideo.stopContentShare();
     } else {
-      await audioVideo?.startContentShareFromScreenCapture();
+      await audioVideo.startContentShareFromScreenCapture();
     }
   }, [isLocalUserSharing, audioVideo]);
 
@@ -39,7 +43,7 @@ const ContentShareControlProvider: React.FC = ({ children }) => {
   const contextValue: ContentShareControlContextType = {
     isContentSharePaused,
     toggleContentShare,
-    togglePauseContentShare,
+    togglePauseContentShare
   };
 
   return (

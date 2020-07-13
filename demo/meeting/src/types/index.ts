@@ -24,7 +24,7 @@ export type DeviceTypeContext = {
   selectedDevice: SelectedDeviceType;
 };
 
-export type LocalVideoToggleContextType = {
+export type LocalVideoContextType = {
   isVideoEnabled: boolean;
   toggleVideo: () => Promise<void>;
 };

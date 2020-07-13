@@ -45,16 +45,19 @@ export { RosterGroup } from './components/ui/Roster/RosterGroup';
 export { RosterCell } from './components/ui/Roster/RosterCell';
 
 // SDK components
-export { RemoteVideos } from './components/sdk/RemoteVideos';
 export { DeviceSelection } from './components/sdk/DeviceSelection';
-export { 
-  AudioInputControl, 
-  AudioOutputControl, 
-  ContentShareControl, 
-  VideoInputControl 
+export {
+  AudioInputControl,
+  AudioOutputControl,
+  ContentShareControl,
+  VideoInputControl
 } from './components/sdk/MeetingControls';
 export { ContentShare } from './components/sdk/ContentShare';
 export { LocalVideo } from './components/sdk/LocalVideo';
+export { RemoteVideo } from './components/sdk/RemoteVideo';
+export { RemoteVideos } from './components/sdk/RemoteVideos';
+export { FeaturedRemoteVideos } from './components/sdk/FeaturedRemoteVideos';
+export { VideoTileGrid } from './components/sdk/VideoTileGrid';
 
 // Constants
 export { KEY_CODES } from './constants';
@@ -72,6 +75,7 @@ export {
   useNotificationStateContext,
   useNotificationDispatchContext
 } from './providers/NotificationProvider';
+export { AudioVideoContext } from './providers/AudioVideoProvider';
 
 // Hooks
 export { useClickOutside } from './hooks/useClickOutside';
@@ -87,6 +91,8 @@ export { useMeetingManager } from './providers/MeetingProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRoster } from './providers/RosterProvider';
 export { useVideoTileState } from './providers/VideoTileProvider';
+export { useActiveSpeakers } from './providers/ActiveSpeakersProvider';
+export { useFeaturedTile } from './providers/FeaturedVideoTileProvider';
 export {
   useAudioInputs,
   useVideoInputs,
@@ -94,7 +100,7 @@ export {
 } from './providers/DevicesProvider';
 export { useToggleLocalMute } from './hooks/sdk/useToggleLocalMute';
 export { useLocalAudioOutput } from './providers/LocalAudioOutputProvider';
-export { useLocalVideoToggle } from './providers/LocalVideoToggleProvider';
+export { useLocalVideo } from './providers/LocalVideoProvider';
 export { useContentShare } from './providers/ContentShareProvider';
 export { useContentShareControls } from './providers/ContentShareControlProvider';
 export { useMeetingStatus } from './providers/MeetingStatusProvider';
@@ -103,10 +109,16 @@ export { useMeetingStatus } from './providers/MeetingStatusProvider';
 export { NotificationProvider } from './providers/NotificationProvider';
 export { MeetingProvider } from './providers/MeetingProvider';
 export { LocalAudioOutputProvider } from './providers/LocalAudioOutputProvider';
-export { LocalVideoToggleProvider } from './providers/LocalVideoToggleProvider';
+export { LocalVideoProvider } from './providers/LocalVideoProvider';
 export { ContentShareProvider } from './providers/ContentShareProvider';
 export { ContentShareControlProvider } from './providers/ContentShareControlProvider';
 export { MeetingStatusProvider } from './providers/MeetingStatusProvider';
+export { AudioVideoProvider } from './providers/AudioVideoProvider';
+export { RosterProvider } from './providers/RosterProvider';
+export { DevicesProvider } from './providers/DevicesProvider';
+export { VideoTileProvider } from './providers/VideoTileProvider';
+export { ActiveSpeakersProvider } from './providers/ActiveSpeakersProvider';
+export { FeaturedVideoTileProvider } from './providers/FeaturedVideoTileProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';

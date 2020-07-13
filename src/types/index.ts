@@ -28,7 +28,8 @@ export type LocalAudioOutputContextType = {
   toggleAudio: () => void;
 };
 
-export type LocalVideoToggleContextType = {
+export type LocalVideoContextType = {
+  tileId: null | number;
   isVideoEnabled: boolean;
   toggleVideo: () => Promise<void>;
 };

@@ -15,7 +15,11 @@ module.exports = {
   testEnvironment: 'jsdom',
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.tsx', '!src/**/*.stories.tsx'],
-  coveragePathIgnorePatterns: ['/src/providers/*', '/src/hooks/sdk/*'],
+  coveragePathIgnorePatterns: [
+    '/src/providers/*',
+    '/src/components/sdk/*',
+    '/src/hooks/sdk/*'
+  ],
   coverageReporters: ['text-summary', 'lcov', 'json', 'clover'],
   coverageDirectory: 'coverage',
   coverageThreshold: {

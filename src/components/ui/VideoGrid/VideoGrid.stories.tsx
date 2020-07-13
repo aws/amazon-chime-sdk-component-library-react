@@ -2,38 +2,39 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { number } from '@storybook/addon-knobs';
+import { number, select } from '@storybook/addon-knobs';
 
 import VideoGrid from './';
-
-const Tile = () => (
-  <div
-    style={{
-      padding: '1rem',
-      border: '1px solid #212020',
-      backgroundColor: '#424242',
-      color: 'white',
-    }}
-  >
-    Tile
-  </div>
-);
+import VideoTile from '../VideoTile';
 
 export default {
-  title: 'UI Components/Video/VideoGrid',
+  title: 'UI Components/Video/VideoGrid'
 };
 
 export const _VideoGrid = () => {
-  const size = number('Size', 3);
-  const tiles = new Array(size).fill(0).map((x, index) => <Tile key={index} />);
+  const size = number('size', 3);
+  const layout = select('layout', ['standard', 'featured'], 'standard');
+  const tiles = new Array(size).fill(0).map((_, index) => {
+    const isFeatured = layout === 'featured' && index === 0;
+    return (
+      <VideoTile
+        style={{
+          border: '1px solid grey',
+          gridArea: isFeatured ? 'ft' : ''
+        }}
+        nameplate={isFeatured ? 'Featured tile' : `Tile ${index + 1}`}
+        key={index}
+      />
+    );
+  });
 
   return (
     <div style={{ padding: '1rem', height: '100vh', boxSizing: 'border-box' }}>
-      <VideoGrid size={size}>{tiles}</VideoGrid>
+      <VideoGrid layout={layout}>{tiles}</VideoGrid>
     </div>
   );
 };
 
 _VideoGrid.story = {
-  name: 'VideoGrid',
+  name: 'VideoGrid'
 };

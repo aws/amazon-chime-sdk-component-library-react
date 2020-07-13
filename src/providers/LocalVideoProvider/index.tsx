@@ -7,21 +7,23 @@ import React, {
   useEffect,
   useContext,
   useCallback,
-  useMemo,
+  useMemo
 } from 'react';
+import { VideoTileState } from 'amazon-chime-sdk-js';
 
 import { useMeetingManager } from '../MeetingProvider';
 import { useAudioVideo } from '../AudioVideoProvider';
 
 import { videoInputSelectionToDevice } from '../../utils/device-utils';
-import { LocalVideoToggleContextType } from '../../types';
+import { LocalVideoContextType } from '../../types';
 
-const Context = createContext<LocalVideoToggleContextType | null>(null);
+const Context = createContext<LocalVideoContextType | null>(null);
 
-const LocalVideoToggleProvider: React.FC = ({ children }) => {
+const LocalVideoProvider: React.FC = ({ children }) => {
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
+  const [tileId, setTileId] = useState<number | null>(null);
 
   useEffect(() => {
     if (audioVideo?.hasStartedLocalVideoTile()) {
@@ -42,21 +44,45 @@ const LocalVideoToggleProvider: React.FC = ({ children }) => {
     }
   }, [audioVideo, isVideoEnabled, meetingManager.selectedVideoInputDevice]);
 
-  const value = useMemo(() => ({ isVideoEnabled, toggleVideo }), [
+  useEffect(() => {
+    if (!audioVideo) {
+      return;
+    }
+
+    const videoTileDidUpdate = (tileState: VideoTileState) => {
+      if (
+        !tileState.localTile ||
+        !tileState.tileId ||
+        tileId === tileState.tileId
+      ) {
+        return;
+      }
+
+      setTileId(tileState.tileId);
+    };
+
+    audioVideo.addObserver({
+      videoTileDidUpdate
+    });
+  }, [audioVideo, tileId]);
+
+  const value = useMemo(() => ({ isVideoEnabled, toggleVideo, tileId }), [
     isVideoEnabled,
-    toggleVideo
+    toggleVideo,
+    tileId
   ]);
+
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
 
-const useLocalVideoToggle = (): LocalVideoToggleContextType => {
+const useLocalVideo = (): LocalVideoContextType => {
   const context = useContext(Context);
+
   if (!context) {
-    throw new Error(
-      'useLocalVideoToggle must be used within LocalVideoToggleProvider'
-    );
+    throw new Error('useLocalVideo must be used within LocalVideoProvider');
   }
+
   return context;
 };
 
-export { LocalVideoToggleProvider, useLocalVideoToggle };
+export { LocalVideoProvider, useLocalVideo };
