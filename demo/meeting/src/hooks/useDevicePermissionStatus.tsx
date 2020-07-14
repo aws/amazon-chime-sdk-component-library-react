@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect, useState } from 'react';
-import { useMeetingManager } from '../../../../src';
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 
 import { DevicePermissionStatus } from '../enums';
 
@@ -19,7 +19,7 @@ export default function useDevicePermissionStatus() {
     return () => {
       meetingManager.unSubscribeFromDevicePermissionUpdate(callback);
     };
-  }, []);
+  }, [meetingManager]);
 
   return permission;
 }

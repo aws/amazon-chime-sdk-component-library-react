@@ -39,7 +39,7 @@ type FullDeviceInfoType = {
   videoInputDevices: MediaDeviceInfo[] | null;
 };
 
-class MeetingManager implements DeviceChangeObserver {
+export class MeetingManager implements DeviceChangeObserver {
   private static readonly LOGGER_BATCH_SIZE: number = 85;
 
   private static readonly LOGGER_INTERVAL_MS: number = 1150;

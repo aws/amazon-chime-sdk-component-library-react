@@ -13,8 +13,7 @@ import SIPURI from '../SIPURI';
 import SIPMeetingForm from '../../components/SIPMeetingForm';
 import { getErrorContext } from '../../providers/ErrorProvider';
 import {
-  SIPMeetingContext,
-  SIPMeetingManager,
+  useSIPMeetingManager
 } from '../../providers/SIPMeetingProvider';
 
 const SIPMeeting: React.FC = () => {
@@ -22,9 +21,7 @@ const SIPMeeting: React.FC = () => {
   const [meetingId, setMeetingId] = useState('');
   const [voiceConnectorId, setVoiceConnectorId] = useState('');
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
-  const sipMeetingManager: SIPMeetingManager | null = useContext(
-    SIPMeetingContext
-  );
+  const sipMeetingManager = useSIPMeetingManager();
 
   const handleSIPMeetingFormSubmit = async (e: FormEvent): Promise<void> => {
     e.preventDefault();

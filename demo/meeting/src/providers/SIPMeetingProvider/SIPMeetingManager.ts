@@ -1,11 +1,9 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { ReactNode } from 'react';
-import { useMeetingManager } from '../../../../src';
-import MeetingManager from '../../../../src/providers/MeetingProvider/MeetingManager';
+import { MeetingManager } from 'amazon-chime-sdk-component-library-react';
 
-import { AMAZON_CHIME_VOICE_CONNECTOR_PHONE_NUMDER } from '../constants';
+import { AMAZON_CHIME_VOICE_CONNECTOR_PHONE_NUMDER } from '../../constants';
 
 export class SIPMeetingManager {
   private meetingManager: MeetingManager | null;
@@ -33,23 +31,4 @@ export class SIPMeetingManager {
       throw new Error(error);
     }
   };
-}
-
-export const SIPMeetingContext = React.createContext<SIPMeetingManager | null>(
-  null
-);
-
-type Props = {
-  children: ReactNode;
-};
-
-export default function SIPMeetingProvider({ children }: Props) {
-  const meetingManager = useMeetingManager();
-  const sipMeeting = new SIPMeetingManager(meetingManager);
-
-  return (
-    <SIPMeetingContext.Provider value={sipMeeting}>
-      {children}
-    </SIPMeetingContext.Provider>
-  );
 }
