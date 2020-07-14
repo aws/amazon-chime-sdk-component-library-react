@@ -116,3 +116,6 @@ export { VideoQuality } from './hooks/sdk/useSelectVideoQuality';
 
 // enums
 export { MeetingStatus } from './providers/MeetingStatusProvider';
+
+// Class
+export { MeetingManager } from './providers/MeetingProvider/MeetingManager';

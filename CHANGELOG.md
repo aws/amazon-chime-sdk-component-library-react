@@ -53,6 +53,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change license from ISC to Apache-2.0
 - Move provider, hooks and connected components from demo to library
 - Add clear button to input component
+- SIP Meeting implementation and related imports
+- Update import in `useDevicePermissionStatus` hook
 
 ### Removed
 
