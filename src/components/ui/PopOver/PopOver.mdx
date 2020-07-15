@@ -1,0 +1,116 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import PopOver from './';
+import PopOverHeader from './PopOverHeader';
+import PopOverSeparator from './PopOverSeparator';
+import PopOverItem from './PopOverItem';
+import PopOverSubMenu from './PopOverSubMenu';
+import { lightTheme } from '../../../theme/';
+import Meeting from '../icons/Meeting';
+import PrimaryButton from '../Button/PrimaryButton';
+
+# PopOver
+
+The PopOver component displays a pop-up with a list of clickable options, including buttons and links.
+
+## Importing
+
+```javascript
+import {
+  PopOver,
+  PopOverHeader,
+  PopOverSeparator,
+  PopOverItem,
+  PopOverSubMenu,
+} from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+### PopOver Component
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <PopOver
+      a11yLabel='Click me'
+      renderButton={
+        isOpen => <PrimaryButton style={{ backgroundColor: `${isOpen ? `#0042bb` : '#075fff'}`}} label='Open PopOver'/>
+      }
+    >
+      <PopOverHeader
+        title='Title text'
+        subtitle='Subtitle text'
+      />
+      <PopOverItem
+        as='a'
+        href='https://www.amazon.com'
+        children={<span>Visit amazon.com</span>}
+      />
+      <PopOverItem
+        as='button'
+        onClick={() => {}}
+        children={<span>Option 1</span>}
+      />
+      <PopOverSubMenu text='This is a submenu'>
+        <PopOverItem
+          as='button'
+          onClick={() => {}}
+          children={<span>Option 2</span>}
+        />
+        <PopOverItem
+          as='button'
+          onClick={() => {}}
+          children={<span>Option 3</span>}
+        />
+      </PopOverSubMenu>
+    </PopOver>
+    <div style={{ height: '15rem' }} /> {/* Just to force some more space in the preview window */}
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<PopOver
+  a11yLabel='Click me'
+  renderButton={isOpen => <PrimaryButton style={{ backgroundColor: `${isOpen ? `#0042bb` : '#075fff'}`}} label='Open PopOver'/>}
+>
+  <PopOverHeader
+    title='Title text'
+    subtitle='Subtitle text'
+  />
+  <PopOverItem
+    as='a'
+    href='https://www.amazon.com'
+    children={<span>Visit amazon.com</span>}
+  />
+  <PopOverItem
+    as='button'
+    onClick={() => {}}
+    children={<span>Option 1</span>}
+  />
+  <PopOverSubMenu text='This is a submenu'>
+    <PopOverItem
+        as='button'
+        onClick={() => {}}
+        children={<span>Option 2</span>}
+    />
+    <PopOverItem
+        as='button'
+        onClick={() => {}}
+        children={<span>Option 3</span>}
+    />
+  </PopOverSubMenu>
+</PopOver>
+```
+
+## Props
+### PopOver Props
+<Props of={PopOver} />
+
+### PopOverHeader Props
+<Props of={PopOverHeader} />
+
+### PopOverItem Props
+<Props of={PopOverItem} />
+
+### PopOverSubMenu Props
+<Props of={PopOverSubMenu} />

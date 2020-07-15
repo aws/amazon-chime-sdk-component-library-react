@@ -58,6 +58,10 @@ export const StyledPopOverItem = styled.li`
     }
   }
 
+  a {
+    width: unset;
+  }
+
   .content > * {
     ${ellipsis};
   }

@@ -7,7 +7,7 @@ import { space } from 'styled-system';
 export interface BaseProps extends SpaceProps {
   /** Optional tag to render the component as a different HTML tag */
   tag?: any;
-  /** Optioanal css */
+  /** Optional css */
   css?: string;
   /** Optional class names to appear on the container */
   className?: string;

@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add serverless setup for the meeting demo
 - Add publish script.
 - ActiveSpeaker, ActiveTile providers and hooks
+- Add docs for PopOver component
 
 ### Changed
 
