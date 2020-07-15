@@ -5,6 +5,7 @@ import React from 'react';
 import { withKnobs, text, boolean, select } from '@storybook/addon-knobs';
 
 import {
+  Add,
   Arrow,
   Attendees,
   Camera,
@@ -21,8 +22,10 @@ import {
   DeskPhone,
   Dialer,
   Dots,
+  Hamburger,
   Information,
   Laptop,
+  LeaveMeeting,
   Meeting,
   Microphone,
   Pause,
@@ -35,12 +38,15 @@ import {
   Rooms,
   Search,
   Share,
+  SignalStrength,
   Sound
 } from './';
 
 export default {
   title: 'Icons'
 };
+
+export const _Add = () => <Add width={text('width', '2rem')} />;
 
 export const _Arrow = () => (
   <Arrow
@@ -91,8 +97,10 @@ _DeskPhone.story = {
   name: 'DeskPhone'
 };
 
+export const _Hamburger = () => <Hamburger width={text('width', '2rem')} />;
 export const _Information = () => <Information width={text('width', '2rem')} />;
 export const _Laptop = () => <Laptop width={text('width', '2rem')} />;
+export const _LeaveMeeting = () => <LeaveMeeting width={text('width', '2rem')} />;
 export const _Meeting = () => <Meeting width={text('width', '2rem')} />;
 
 export const _Microphone = () => (
@@ -122,7 +130,7 @@ _ContentShare.story = {
 
 export const _Search = () => <Search width={text('width', '2rem')} />;
 export const _Share = () => <Share width={text('width', '2rem')} />;
-
+export const _SignalStrength = () => <SignalStrength width={text('width', '2rem')} />;
 export const _Sound = () => (
   <Sound disabled={boolean('disabled', false)} width={text('width', '2rem')} />
 );

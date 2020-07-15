@@ -321,6 +321,13 @@ const roster = {
   maxWidth: '18.5rem'
 };
 
+const navbar = {
+  text: colors.greys.white,
+  bgd: colors.greys.grey100,
+  headerBorder: colors.greys.black,
+  containerBgd: colors.greys.grey60
+};
+
 export const darkTheme = {
   name: 'Dark Theme',
   buttons,
@@ -334,6 +341,7 @@ export const darkTheme = {
   notification,
   controlBar,
   roster,
+  navbar,
   ...defaultTheme
 };
 

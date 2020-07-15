@@ -8,11 +8,18 @@ import { ellipsis } from '../../../utils/style';
 
 export const StyledRoster = styled.div`
   width: 100%;
-  max-width: ${props => props.theme.roster.maxWidth};
   height: 100%;
   padding-bottom: 1rem;
   overflow-y: auto;
   background-color: ${props => props.theme.roster.bgd};
+  box-shadow: 1rem 1rem 3.75rem 0 rgba(0, 0, 0, 0.1);
+  border-radius: 0.375rem;
+  /* TODO: Get updated color from UX */
+  border: solid 0.03125rem #dedede;
+  
+  ${({ theme }) => theme.mediaQueries.min.md} {
+    max-width: ${props => props.theme.roster.maxWidth};
+  }
 
   ${baseSpacing}
   ${baseStyles}
@@ -89,6 +96,15 @@ export const StyledHeader = styled.div<any>`
     }
   }
 
+  .navigation-icon {
+    margin-right: 0.5rem;
+    margin-left: -0.5rem;
+
+    ${({ theme }) => theme.mediaQueries.min.md} {
+      display: none;
+    }    
+  }
+
   ${baseSpacing}
   ${baseStyles}
 `;
@@ -100,7 +116,7 @@ export const StyledName = styled.div`
 
   .name {
     ${ellipsis};
-    font-size: 0.875;
+    font-size: 0.875rem;
     color: ${props => props.theme.roster.primaryText};
   }
 

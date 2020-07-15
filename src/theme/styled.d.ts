@@ -251,5 +251,12 @@ declare module 'styled-components' {
       md: string;
       lg: string;
     };
+
+    navbar: {
+      text: string;
+      bgd: string;
+      headerBorder: string;
+      containerBgd: string;
+    }
   }
 }

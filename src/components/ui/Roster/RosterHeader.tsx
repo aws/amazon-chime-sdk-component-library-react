@@ -6,10 +6,11 @@ import React, { useState, useRef, useEffect, ChangeEvent } from 'react';
 import Flex from '../Flex';
 import Badge from '../Badge';
 import SearchInput from '../Input/SearchInput';
-import { Search, Arrow, Remove } from '../icons';
+import { Search, Arrow, Remove, Hamburger } from '../icons';
 import IconButton from '../Button/IconButton';
 import { StyledHeader } from './Styled';
 import { BaseProps } from '../Base';
+import { PopOverMenu } from './PopOverMenu';
 
 interface RosterHeaderProps extends BaseProps {
   title: string;
@@ -17,6 +18,9 @@ interface RosterHeaderProps extends BaseProps {
   searchValue?: string;
   onSearch?: (e: ChangeEvent<HTMLInputElement>) => void;
   onClose?: () => void;
+  menu?: React.ReactNode;
+  a11yMenuLabel?: string;
+  onMobileToggleClick?: () => void;
 }
 
 const SearchBar: any = ({ onChange, close, value }: any) => {
@@ -53,6 +57,9 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
   onClose,
   onSearch,
   className,
+  menu,
+  a11yMenuLabel = '',
+  onMobileToggleClick,
   ...rest
 }) => {
   const [isSearching, setIsSearching] = useState(false);
@@ -76,6 +83,14 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
       className={className || ''}
       {...rest}
     >
+      {onMobileToggleClick &&
+        <IconButton
+          className='navigation-icon'
+          label="Open navigation"
+          onClick={onMobileToggleClick}
+          icon={<Hamburger />}
+        />
+      }
       <div className="title">{title}</div>
       {typeof badge === 'number' && badge > -1 && (
         <Badge className="badge" value={badge} />
@@ -90,6 +105,8 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
             icon={<Search />}
           />
         )}
+
+        {menu && <PopOverMenu menu={menu} a11yMenuLabel={a11yMenuLabel} />}
 
         {onClose && (
           <IconButton label="Close" onClick={onClose} icon={<Remove />} />
