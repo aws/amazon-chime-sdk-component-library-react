@@ -8,14 +8,19 @@ import useUniqueId from '../../../hooks/useUniqueId';
 import { StyledRadio, HiddenRadio, StyledRadioWrapper } from './Styled';
 
 export interface RadioProps {
+  /** If true, the radio is selected. */
   checked?: boolean;
+  /** The label of the radio. */
   label: string;
+  /** The value of the radio. */
   value: string;
+  /** Callback fired when the state is changed. */
   onChange: (event: any) => void;
+  /** Other props of the radio. */
   radioProps?: InputHTMLAttributes<HTMLButtonElement>;
 }
 
-export const Radio: FC<RadioProps> = (props) => {
+export const Radio: FC<RadioProps> = props => {
   const { value, checked, label, onChange, ...rest } = props;
   const radioNode = useRef<HTMLInputElement>(null);
   const labelId = useUniqueId();
@@ -23,35 +28,32 @@ export const Radio: FC<RadioProps> = (props) => {
   const handleChange = () => {
     radioNode.current?.click(); // simulate click the native checkbox
     radioNode.current?.focus();
-  }
+  };
 
   return (
-    <StyledRadioWrapper className='Radio-wrapper'>
+    <StyledRadioWrapper className="Radio-wrapper">
       <HiddenRadio
         checked={checked}
         id={labelId}
         onChange={onChange}
-        type='radio'
+        type="radio"
         value={value}
         ref={radioNode}
-        data-testid='hiddenRadio'
+        data-testid="hiddenRadio"
         {...rest}
       />
       <StyledRadio
         checked={checked}
-        className='Radio'
+        className="Radio"
         onClick={handleChange}
-        data-testid='styledRadio'
+        data-testid="styledRadio"
       />
-      <Label
-        htmlFor={labelId}
-        className='Radio-label'
-      >
+      <Label htmlFor={labelId} className="Radio-label">
         {label}
       </Label>
     </StyledRadioWrapper>
   );
-}
+};
 
 Radio.displayName = 'Radio';
 

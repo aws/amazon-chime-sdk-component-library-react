@@ -1,0 +1,251 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Checkbox from '../Checkbox';
+import Flex from '../Flex';
+import FormField from './';
+import Input from '../Input';
+import RadioGroup from '../RadioGroup';
+import Select from '../Select';
+import Textarea from '../Textarea';
+import { lightTheme } from '../../../theme/';
+
+# FormField
+
+The FormField component displays a single field in a form.
+
+## Importing
+
+```javascript
+import { FormField } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+### Input Field
+
+With layout `stack` and `informational` text shown.
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex layout="fill-space-centered">
+      <FormField
+        field={Input}
+        label="First Name"
+        value="Sample input value"
+        fieldProps={{ name: 'firstName', placeholder: 'Enter your first name' }}
+        onChange={() => {}}
+        layout="stack"
+        errorText="This is some error text"
+        error={false}
+        infoText="This is some informational text"
+      />
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<FormField
+  field={Input}
+  label="First Name"
+  value="Sample input value"
+  fieldProps={{ name: 'firstName', placeholder: 'Enter your first name' }}
+  onChange={() => {}}
+  layout="stack"
+  errorText="This is some error text"
+  error={false}
+  infoText="This is some informational text"
+/>
+```
+
+With layout `horizontal` and `error` text shown.
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex layout="fill-space-centered">
+      <FormField
+        field={Input}
+        label="First Name"
+        value=""
+        fieldProps={{ name: 'firstName', placeholder: 'Enter your first name' }}
+        onChange={() => {}}
+        layout="horizontal"
+        errorText="This is some error text"
+        error={true}
+        infoText="This is some informational text"
+      />
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<FormField
+  field={Input}
+  label="First Name"
+  value=""
+  fieldProps={{ name: 'firstName', placeholder: 'Enter your first name' }}
+  onChange={() => {}}
+  layout="horizontal"
+  errorText="This is some error text"
+  error={true}
+  infoText="This is some informational text"
+/>
+```
+
+### Select Field
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex layout="fill-space-centered">
+      <FormField
+        field={Select}
+        options={[
+          { value: 'react', label: 'React' },
+          { value: 'angular', label: 'Angular' }
+        ]}
+        onChange={() => {}}
+        value="react"
+        label="Select a framework"
+        layout="stack"
+        errorText="This is some error text"
+        error={false}
+        infoText="This is some informational text"
+      />
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<FormField
+  field={Select}
+  options={[
+    { value: 'react', label: 'React' },
+    { value: 'angular', label: 'Angular' }
+  ]}
+  onChange={() => {}}
+  value="react"
+  label="Select a framework"
+  layout="stack"
+  errorText="This is some error text"
+  error={false}
+  infoText="This is some informational text"
+/>
+```
+
+### Textarea Field
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex layout="fill-space-centered">
+      <FormField
+        field={Textarea}
+        label="I'm a label"
+        value="test value"
+        fieldProps={{ placeholder: 'Text goes here' }}
+        onChange={() => {}}
+        layout="horizontal"
+        errorText="This is some error text"
+        error={false}
+        infoText="This is some informational text"
+      />
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<FormField
+  field={Textarea}
+  label="I'm a label"
+  value="test value"
+  fieldProps={{ placeholder: 'Text goes here' }}
+  onChange={() => {}}
+  layout="horizontal"
+  errorText="This is some error text"
+  error={false}
+  infoText="This is some informational text"
+/>
+```
+
+### Checkbox Field
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex layout="fill-space-centered">
+      <FormField
+        field={Checkbox}
+        label="React"
+        value="react"
+        checked
+        onChange={() => {}}
+      />
+      <FormField
+        field={Checkbox}
+        label="Angular"
+        value="angular"
+        checked={false}
+        onChange={() => {}}
+      />
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<FormField
+  field={Checkbox}
+  label="React"
+  value="react"
+  checked
+  onChange={() => {}}
+/>
+<FormField
+  field={Checkbox}
+  label="Angular"
+  value="angular"
+  checked={false}
+  onChange={() => {}}
+/>
+```
+
+### Radio Group Field
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex layout="fill-space-centered">
+      <FormField
+        options={[
+          { value: 'react', label: 'React' },
+          { value: 'angular', label: 'Angular' },
+          { value: 'vue', label: 'Vue' }
+        ]}
+        field={RadioGroup}
+        onChange={() => {}}
+        value="vue"
+        label="Select from the following"
+        errorText="This is some error text"
+        error
+        infoText="This is some informational text"
+      />
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<FormField
+  options={[
+    { value: 'react', label: 'React' },
+    { value: 'angular', label: 'Angular' },
+    { value: 'vue', label: 'Vue' }
+  ]}
+  field={RadioGroup}
+  onChange={() => {}}
+  value="vue"
+  label="Select from the following"
+  errorText="This is some error text"
+  error
+  infoText="This is some informational text"
+/>
+```
+
+## Props
+
+<Props of={FormField} />

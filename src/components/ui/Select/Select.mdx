@@ -1,0 +1,51 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Select from './';
+import { lightTheme } from '../../../theme/';
+
+# Select
+
+The Select component allows the user to select one from a drop-down list with options.
+
+## Importing
+
+```javascript
+import { Select } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Select
+      value="no_fruit_selected"
+      options={[
+        { value: 'no_fruit_selected', label: 'Select an option' },
+        { value: 'bananas', label: 'Bananas' },
+        { value: 'oranges', label: 'Oranges' },
+        { value: 'grapefruit', label: 'Grapefruit' }
+      ]}
+      aria-label="basic select input"
+      onChange={e => {}}
+    />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Select
+  value="no_fruit_selected"
+  options={[
+    { value: 'no_fruit_selected', label: 'Select an option' },
+    { value: 'bananas', label: 'Bananas' },
+    { value: 'oranges', label: 'Oranges' },
+    { value: 'grapefruit', label: 'Grapefruit' }
+  ]}
+  aria-label="basic select input"
+  onChange={e => {}}
+/>
+```
+
+## Props
+
+<Props of={Select} />

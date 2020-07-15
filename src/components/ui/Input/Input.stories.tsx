@@ -8,9 +8,16 @@ import Crown from '../icons/Crown';
 import Input from './';
 import SearchInput from './SearchInput';
 import Flex from '../Flex';
+import InputDocs from './Input.mdx';
 
 export default {
-  title: 'UI Components/Form/TextInputs'
+  title: 'UI Components/Form/TextInputs',
+  parameters: {
+    docs: {
+      page: InputDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: Input
 };
 
 export const BasicInput = () => {

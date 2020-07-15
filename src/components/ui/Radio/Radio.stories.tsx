@@ -7,9 +7,16 @@ import { boolean } from '@storybook/addon-knobs';
 
 import { Radio } from '.';
 import Flex from '../Flex';
+import RadioDocs from './Radio.mdx';
 
 export default {
   title: 'UI Components/Form/Radio',
+  parameters: {
+    docs: {
+      page: RadioDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: Radio
 };
 
 export const _Radio = () => (
@@ -18,11 +25,11 @@ export const _Radio = () => (
       value="bananas"
       label="Radio Input"
       checked={boolean('Checked', false)}
-      onChange={(e:any) => console.log(e)}
+      onChange={(e: any) => console.log(e)}
     />
   </Flex>
 );
 
 _Radio.story = {
-  name: 'Radio',
+  name: 'Radio'
 };

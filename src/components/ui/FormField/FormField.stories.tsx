@@ -4,16 +4,23 @@
 import React, { useState } from 'react';
 import { select, text, boolean } from '@storybook/addon-knobs';
 
-import { FormField } from '.';
-import { Input } from '../Input';
-import { Checkbox } from '../Checkbox';
-import { Textarea } from '../Textarea';
+import FormField from '.';
+import Input from '../Input';
+import Checkbox from '../Checkbox';
+import Textarea from '../Textarea';
 import Select from '../Select';
 import RadioGroup from '../RadioGroup';
 import Flex from '../Flex';
+import FormFieldDocs from './FormField.mdx';
 
 export default {
-  title: 'UI Components/Form/FormField'
+  title: 'UI Components/Form/FormField',
+  parameters: {
+    docs: {
+      page: FormFieldDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: FormField
 };
 
 const TestInput: React.FC<{}> = props => {
