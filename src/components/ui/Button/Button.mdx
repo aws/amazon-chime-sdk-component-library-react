@@ -1,7 +1,7 @@
 import { Preview, Props } from '@storybook/addon-docs/blocks';
 import { ThemeProvider } from 'styled-components';
 
-import { Button } from './';
+import Button from './';
 import PrimaryButton from './PrimaryButton';
 import SecondaryButton from './SecondaryButton';
 import IconButton from './IconButton';
@@ -9,30 +9,40 @@ import Meeting from '../icons/Meeting';
 import { lightTheme } from '../../../theme/';
 
 # Button
+
 The Button component displays a HTML button.
 
 ## Importing
+
 ```javascript
-import { Button, PrimaryButton, SecondaryButton, IconButton } from 'amazon-chime-sdk-component-library-react';
+import {
+  Button,
+  PrimaryButton,
+  SecondaryButton,
+  IconButton
+} from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Example
+
 ### Standard Button
+
 <ThemeProvider theme={lightTheme}>
   <Preview>
-    <Button label='Basic button' />
+    <Button label="Basic button" />
   </Preview>
 </ThemeProvider>
 
 ```jsx
-<Button label='Basic button' />
+<Button label="Basic button" />
 ```
 
 ### PrimaryButton
+
 <ThemeProvider theme={lightTheme}>
   <Preview>
-    <PrimaryButton label='Primary' />
-    <PrimaryButton label='Primary' icon={<Meeting />} />
+    <PrimaryButton label="Primary" />
+    <PrimaryButton label="Primary" icon={<Meeting />} />
   </Preview>
 </ThemeProvider>
 
@@ -42,17 +52,19 @@ import { Button, PrimaryButton, SecondaryButton, IconButton } from 'amazon-chime
 ```
 
 ### SecondaryButton
+
 <ThemeProvider theme={lightTheme}>
   <Preview>
-    <SecondaryButton label='This is a secondary button' />
+    <SecondaryButton label="This is a secondary button" />
   </Preview>
 </ThemeProvider>
 
 ```jsx
-<SecondaryButton label='This is a secondary button' />
+<SecondaryButton label="This is a secondary button" />
 ```
 
 ### IconButton
+
 <ThemeProvider theme={lightTheme}>
   <Preview>
     <IconButton icon={<Meeting />} />
@@ -66,4 +78,5 @@ import { Button, PrimaryButton, SecondaryButton, IconButton } from 'amazon-chime
 ```
 
 ## Props
+
 <Props of={Button} />

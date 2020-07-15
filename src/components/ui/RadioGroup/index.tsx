@@ -8,16 +8,19 @@ import Radio from '../Radio';
 export interface RadioProps {
   label: string;
   value: string;
-  inputProps?: InputHTMLAttributes<HTMLButtonElement>
+  inputProps?: InputHTMLAttributes<HTMLButtonElement>;
 }
 
 export interface RadioGroupProps {
+  /** Callback fired when the state is changed. */
   onChange(event: ChangeEvent): void;
+  /** Options of radio group. */
   options: RadioProps[];
+  /** The selected option. */
   value: string;
 }
 
-export const RadioGroup: FC<RadioGroupProps> = (props) => {
+export const RadioGroup: FC<RadioGroupProps> = props => {
   const { options, value, onChange } = props;
   return (
     <>
@@ -31,11 +34,11 @@ export const RadioGroup: FC<RadioGroupProps> = (props) => {
             onChange={onChange}
             {...option.inputProps}
           />
-        )
+        );
       })}
     </>
   );
-}
+};
 
 RadioGroup.displayName = 'RadioGroup';
 

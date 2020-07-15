@@ -1,0 +1,33 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Checkbox from './';
+import { lightTheme } from '../../../theme/';
+
+# Checkbox
+
+The Checkbox component permits the user to make a binary choice.
+
+## Importing
+
+```javascript
+import { Checkbox } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Checkbox value="" checked onChange={() => console.log('change')} />
+    <Checkbox value="" checked={false} onChange={() => console.log('change')} />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Checkbox value="" checked onChange={() => console.log('change')} />
+<Checkbox value="" checked={false} onChange={() => console.log('change')} />
+```
+
+## Props
+
+<Props of={Checkbox} />

@@ -1,0 +1,114 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Crown from '../icons/Crown';
+import Flex from '../Flex';
+import Input from './';
+import SearchInput from './SearchInput';
+import { lightTheme } from '../../../theme/';
+
+# Input/SearchInput
+
+The Input component specifies an input field where the user can enter data.
+
+## Importing
+
+```javascript
+import { Input, SearchInput } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+### Basic Input
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex layout="fill-space-centered">
+      <Input
+        showClear
+        onChange={e => {}}
+        sizing="md"
+        value="input value"
+        placeholder="input"
+        type="text"
+      />
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Flex layout="fill-space-centered">
+  <Input
+    showClear
+    onChange={e => {}}
+    sizing="md"
+    value="input value"
+    placeholder="input"
+    type="text"
+  />
+</Flex>
+```
+
+### Input with Icon
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex layout="fill-space-centered">
+      <Input
+        showClear={false}
+        onChange={e => {}}
+        value="icon input value"
+        placeholder="input with an icon"
+        sizing="sm"
+        type="text"
+        leadingIcon={<Crown />}
+      />
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Flex layout="fill-space-centered">
+  <Input
+    showClear={false}
+    onChange={e => {}}
+    value="icon input value"
+    placeholder="input with an icon"
+    sizing="sm"
+    type="text"
+    leadingIcon={<Crown />}
+  />
+</Flex>
+```
+
+### Search Input Component
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex layout="fill-space-centered">
+      <SearchInput
+        showClear
+        value="search input value"
+        onChange={e => {}}
+        placeholder="a search input"
+      />
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Flex layout="fill-space-centered">
+  <Flex layout="fill-space-centered">
+    <SearchInput
+      showClear
+      value="search input value"
+      onChange={e => {}}
+      placeholder="a search input"
+    />
+  </Flex>
+</Flex>
+```
+
+## Props
+
+<Props of={Input} />

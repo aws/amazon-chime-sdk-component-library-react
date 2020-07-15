@@ -4,24 +4,31 @@
 import React from 'react';
 
 import { RadioGroup } from './';
+import RadioGroupDocs from './RadioGroup.mdx';
 
 export default {
   title: 'UI Components/Form/RadioGroup',
+  parameters: {
+    docs: {
+      page: RadioGroupDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: RadioGroup
 };
 
 const options = [
   {
     value: 'bananas',
-    label: 'Bananas',
+    label: 'Bananas'
   },
   {
     value: 'monkeynuts',
-    label: 'Monkeynuts',
+    label: 'Monkeynuts'
   },
   {
     value: 'grapes',
-    label: 'Grapes',
-  },
+    label: 'Grapes'
+  }
 ];
 
 export const _RadioGroup = () => (
@@ -33,5 +40,5 @@ export const _RadioGroup = () => (
 );
 
 _RadioGroup.story = {
-  name: 'RadioGroup',
+  name: 'RadioGroup'
 };

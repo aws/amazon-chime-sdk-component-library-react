@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Set up customized MDX documentation and add docs for Badge component
 - Add patch version bump for each merge
 - Add docs for Button component, re-organize docs
+- Add docs for all Form components
 
 ### Changed
 

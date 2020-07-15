@@ -5,9 +5,17 @@ import React, { FC, ChangeEvent, useRef } from 'react';
 import { StyledCheckbox, HiddenCheckbox } from './Styled';
 import { Check } from '../icons';
 
-export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputElement>,'onChange' | 'value'>  {
+export interface CheckboxProps
+  extends Omit<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    'onChange' | 'value'
+  > {
+  /** Callback fired when the state is changed. */
   onChange: (event?: ChangeEvent | string) => void;
+  /** The value of the checkbox. */
   value: string;
+  /** If true, the checkbox is checked. */
+  checked?: boolean;
 }
 export interface StyledCheckboxProps {
   checked?: boolean;
@@ -20,7 +28,7 @@ export const Checkbox: FC<CheckboxProps> = (props: CheckboxProps) => {
   const handleChange = () => {
     checkboxNode.current?.click(); // simulate click the native checkbox
     checkboxNode.current?.focus();
-  }
+  };
 
   return (
     <>
@@ -43,7 +51,5 @@ export const Checkbox: FC<CheckboxProps> = (props: CheckboxProps) => {
     </>
   );
 };
-
-Checkbox.displayName = 'Checkbox';
 
 export default Checkbox;

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { text } from '@storybook/addon-knobs';
 
 import Textarea from './';
+import TextareaDocs from './Textarea.mdx';
 
 const Wrapper = styled.div`
   width: 30rem;
@@ -14,6 +15,12 @@ const Wrapper = styled.div`
 
 export default {
   title: 'UI Components/Form/Textarea',
+  parameters: {
+    docs: {
+      page: TextareaDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: Textarea
 };
 
 export const _Textarea = () => (
@@ -21,7 +28,7 @@ export const _Textarea = () => (
     <Textarea
       placeholder="text goes here"
       label="my test label"
-      value={text("value", "some sample text")}
+      value={text('value', 'some sample text')}
       onChange={() => console.log('changed')}
     />
   </Wrapper>

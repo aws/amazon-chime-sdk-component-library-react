@@ -6,36 +6,41 @@ import React, { forwardRef, HTMLAttributes } from 'react';
 import { BaseProps } from '../Base';
 import { StyledButton } from './Styled';
 
-export interface ButtonProps extends Omit<HTMLAttributes<HTMLButtonElement>, 'css'>, BaseProps {
-  /** The icon element to be shown */
+export interface ButtonProps
+  extends Omit<HTMLAttributes<HTMLButtonElement>, 'css'>,
+    BaseProps {
+  /** The icon element to be shown in the button. */
   icon?: JSX.Element;
-  /** The text to be shown */
+  /** The text of the button. */
   label: string;
-  /** The style of button to be shown */
+  /** The variant of button. */
   variant?: ButtonVariant;
-  /** Determines if the button is selected */
+  /** If true, the button is selected. */
   selected?: boolean;
 }
 
 export type ButtonVariant = 'default' | 'primary' | 'secondary' | 'icon';
 
-export const Button = forwardRef((props: ButtonProps, ref: React.Ref<HTMLButtonElement>) => (
-  <StyledButton
-    {...props}
-    className={props.className || ''}
-    as={props.tag}
-    ref={ref}
-    aria-label={props.label}
-    data-testid='button'
-  >
-    { props.icon &&
-      <span className='icon' data-testid='button-icon'>
-        {props.icon}
+export const Button = forwardRef(
+  (props: ButtonProps, ref: React.Ref<HTMLButtonElement>) => (
+    <StyledButton
+      {...props}
+      className={props.className || ''}
+      as={props.tag}
+      ref={ref}
+      aria-label={props.label}
+      data-testid="button"
+    >
+      {props.icon && (
+        <span className="icon" data-testid="button-icon">
+          {props.icon}
+        </span>
+      )}
+      <span className="label" data-testid="button-label">
+        {props.label}
       </span>
-    }
-    <span className='label' data-testid='button-label'>{props.label}</span>
-  </StyledButton>
-
-));
+    </StyledButton>
+  )
+);
 
 export default Button;

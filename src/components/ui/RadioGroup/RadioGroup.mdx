@@ -1,0 +1,52 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Flex from '../Flex';
+import RadioGroup from './';
+import { lightTheme } from '../../../theme/';
+
+# RadioGroup
+
+The Radio component allows the user to choose only one of a predefined set of mutually exclusive options.
+
+## Importing
+
+```javascript
+import { RadioGroup } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex layout="fill-space-centered">
+      <RadioGroup
+        options={[
+          { value: 'bananas', label: 'Bananas' },
+          { value: 'monkeynuts', label: 'Monkeynuts' },
+          { value: 'grapes', label: 'Grapes' }
+        ]}
+        value="monkeynuts"
+        onChange={() => {}}
+      />
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Flex layout="fill-space-centered">
+  <RadioGroup
+    options={[
+      { value: 'bananas', label: 'Bananas' },
+      { value: 'monkeynuts', label: 'Monkeynuts' },
+      { value: 'grapes', label: 'Grapes' }
+    ]}
+    value="monkeynuts"
+    onChange={() => {}}
+  />
+</Flex>
+```
+
+## Props
+
+<Props of={RadioGroup} />

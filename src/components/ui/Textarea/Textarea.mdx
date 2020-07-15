@@ -1,0 +1,41 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Textarea from './';
+import { lightTheme } from '../../../theme/';
+
+# Textarea
+
+The Textarea component defines a multi-line text input control.
+
+## Importing
+
+```javascript
+import { Textarea } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Textarea
+      placeholder="text goes here"
+      label="my test label"
+      value="some sample text"
+      onChange={() => {}}
+    />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Textarea
+  placeholder="textarea placeholder"
+  label="my test label"
+  value="some sample text"
+  onChange={() => {}}
+/>
+```
+
+## Props
+
+<Props of={Textarea} />

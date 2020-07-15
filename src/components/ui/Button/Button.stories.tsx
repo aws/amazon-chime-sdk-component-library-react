@@ -9,42 +9,48 @@ import PrimaryButton from './PrimaryButton';
 import SecondaryButton from './SecondaryButton';
 import IconButton from './IconButton';
 import Meeting from '../icons/Meeting';
-import mdx from './Button.mdx';
+import ButtonDocs from './Button.mdx';
 
 export default {
   title: 'UI Components/Form/Buttons',
   parameters: {
     docs: {
-      page: mdx.parameters.docs.page().props.children.type,
-    },
+      page: ButtonDocs.parameters.docs.page().props.children.type
+    }
   },
-  component: Button,
+  component: Button
 };
 
-export const BasicButton = () => <Button label='Basic button' />;
+export const BasicButton = () => <Button label="Basic button" />;
 
 BasicButton.story = {
-  name: 'Basic button',
+  name: 'Basic button'
 };
 
-export const _PrimaryButton = () => <PrimaryButton label='Primary' />;
+export const _PrimaryButton = () => <PrimaryButton label="Primary" />;
 
 _PrimaryButton.story = {
-  name: 'Primary button',
+  name: 'Primary button'
 };
 
 export const _SecondaryButton = () => (
-  <SecondaryButton label='This is a secondary button' />
+  <SecondaryButton label="This is a secondary button" />
 );
 
 _SecondaryButton.story = {
-  name: 'Secondary button',
+  name: 'Secondary button'
 };
 
 export const _IconButton = () => {
-  return <IconButton selected={boolean('Selected', false)} label='click me' icon={<Meeting />} />;
+  return (
+    <IconButton
+      selected={boolean('Selected', false)}
+      label="click me"
+      icon={<Meeting />}
+    />
+  );
 };
 
 _IconButton.story = {
-  name: 'Icon button',
+  name: 'Icon button'
 };
