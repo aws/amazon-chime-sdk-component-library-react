@@ -55,6 +55,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add clear button to input component
 - SIP Meeting implementation and related imports
 - Update import in `useDevicePermissionStatus` hook
+- Renamed `MeetingControlsContainer` to `MeetingControls`
+- Changed play, pause icons in `ContentShareControl` to popover actions
 
 ### Removed
 
