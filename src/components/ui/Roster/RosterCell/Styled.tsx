@@ -51,7 +51,7 @@ export const StyledLateMessage = styled.div`
   display: flex;
   align-items: center;
   white-space: nowrap;
-  font-size: 0.875rem;
+  font-size: 0.65rem;
   color: ${({ theme }) => theme.roster.secondaryText};
 
   > svg {

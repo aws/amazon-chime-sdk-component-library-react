@@ -321,6 +321,13 @@ const roster = {
   maxWidth: '18.5rem'
 };
 
+const navbar = {
+  text: colors.greys.grey80,
+  bgd: colors.greys.grey10,
+  headerBorder: colors.greys.grey40,
+  containerBgd: colors.greys.grey50
+};
+
 export const lightTheme = {
   name: 'Light Theme',
   buttons,
@@ -334,6 +341,7 @@ export const lightTheme = {
   notification,
   controlBar,
   roster,
+  navbar,
   ...defaultTheme
 };
 

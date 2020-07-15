@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add docs for Heading and ControlBar components
 - Add SDK components documentation
 - Add docs for Flex component
+- Add Navbar component
 
 ### Changed
 
@@ -76,9 +77,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed modal size properties to theme object
 - Update grid to support active speaker
 - Updated prebuild script to ignore CHANGELOG verification for BOT submitted PR's
-- Fixed release execution bug
 - Added `npm run build:publish` script
 - Changed `prebuild:publish' to run npm install prior to running scripts to make sure all dependencies are available
+- Update roster with mobile design
 
 ### Removed
 
@@ -88,9 +89,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- Fixed prebuild for PR and Push.
+- Fixed prebuild for PR and Push
 - Fix react state update errors for `MeetingStatusProvider`, `MeetingRoster` and `MeetingJoinDetails`
 - Fix roster showing stale attendees
 - `AudioActivityPreview` to show mic progress track on audio input device change
+- Fixed release execution bug
 
 ## [0.1.1] - 2020-06-16

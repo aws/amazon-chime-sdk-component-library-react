@@ -5,11 +5,10 @@ import React from 'react';
 
 import RosterName from '../RosterName';
 import LateMessage from './LateMessage';
-import Popover from '../../PopOver';
-import IconButton from '../../Button/IconButton';
 import { BaseProps } from '../../Base';
-import { Microphone, Camera, ContentShare, Dots } from '../../icons';
+import { Microphone, Camera, ContentShare } from '../../icons';
 import { StyledCell } from './Styled';
+import { PopOverMenu } from '../PopOverMenu';
 
 type MicPosition = 'leading' | 'grouped';
 
@@ -78,21 +77,7 @@ export const RosterCell: React.FC<RosterCellProps> = props => {
             />
           )}
           {videoIcon}
-          {menu && (
-            <Popover
-              className="menu"
-              a11yLabel={a11yMenuLabel}
-              renderButton={() => (
-                <IconButton
-                  className="menu"
-                  icon={<Dots />}
-                  label={a11yMenuLabel}
-                />
-              )}
-            >
-              {menu}
-            </Popover>
-          )}
+          {menu && <PopOverMenu menu={menu} a11yMenuLabel={a11yMenuLabel} />}
         </>
       )}
     </StyledCell>

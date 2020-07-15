@@ -38,6 +38,8 @@ export const _Roster = () => {
           onClose={() => alert('Closing')}
           searchValue={search}
           onSearch={handleSearch}
+          menu={<Menu />}
+          onMobileToggleClick={() => alert('Open Navigation')}
         />
 
         <RosterGroup>
@@ -103,6 +105,7 @@ export const _RosterHeader = () => {
           onClose={() => alert('Closing')}
           searchValue={search}
           onSearch={handleSearch}
+          menu={<Menu />}
         >
           {children}
         </RosterHeader>
@@ -119,6 +122,42 @@ export const _RosterHeader = () => {
 };
 
 _RosterHeader.story = 'RosterHeader';
+
+export const _RosterHeaderWithNavigationIcon = () => {
+  const title = text('title', 'Present');
+  const badge = number('badge', 4);
+  const children = text('children', '');
+  const [search, setSearch] = useState('');
+
+  const handleSearch = e => setSearch(e.target.value);
+
+  return (
+    <Flex container layout="fill-space-centered" css="height: 100vh;">
+      <Flex css="width: 100%; max-width: 280px;">
+        <RosterHeader
+          title={title}
+          badge={badge}
+          onClose={() => alert('Closing')}
+          searchValue={search}
+          onSearch={handleSearch}
+          menu={<Menu />}
+          onMobileToggleClick={() => alert('Open Navigation')}
+        >
+          {children}
+        </RosterHeader>
+
+        <RosterGroup>
+          <RosterCell name="Michael Scarn" subtitle="FBI agent" />
+          <RosterCell name="Prison Mike" subtitle="Inmate" />
+          <RosterCell name="Date Mike" subtitle="Bachelor" />
+          <RosterCell name="Dwight" subtitle="Assistant regional manager" />
+        </RosterGroup>
+      </Flex>
+    </Flex>
+  );
+};
+
+_RosterHeaderWithNavigationIcon.story = 'RosterHeaderWithNavigationIcon';
 
 export const _RosterCell = () => {
   const name = text('name', 'Stanley Hudson');
