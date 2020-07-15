@@ -52,7 +52,7 @@ export {
   AudioOutputControl, 
   ContentShareControl, 
   VideoInputControl 
-} from './components/sdk/MeetingControlsContainer';
+} from './components/sdk/MeetingControls';
 export { ContentShare } from './components/sdk/ContentShare';
 export { LocalVideo } from './components/sdk/LocalVideo';
 
