@@ -9,8 +9,18 @@ import PopOverItem from './PopOverItem';
 import PopOverSubMenu from './PopOverSubMenu';
 import PopOverSeparator from './PopOverSeparator';
 import PopOverHeader from './PopOverHeader';
-
 import Meeting from '../icons/Meeting';
+import PopOverDocs from './PopOver.mdx';
+
+export default {
+  title: 'UI Components/PopOver',
+  parameters: {
+    docs: {
+      page: PopOverDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: PopOver
+};
 
 const StyledContents = styled.span`
   background-color: #0042bb;
@@ -32,10 +42,6 @@ const getButtonContents = (isOpen: boolean) => {
     </StyledContents>
   );
 }
-
-export default {
-  title: 'UI Components/PopOver',
-};
 
 export const BasicPopOverMenu = () => (
   <PopOver
@@ -123,18 +129,18 @@ export const PopOverMenuWithSubmenu = () => (
       onClick={() => console.log('clicked')}
       children={<span>This is more test content</span>}
     />
-      <PopOverSubMenu text="This is a submenu">
-        <PopOverItem
-          as="button"
-          onClick={() => console.log('clicked')}
-          children={<span>This is also a submenu component</span>}
-        />
-        <PopOverItem
-          as="button"
-          onClick={() => console.log('clicked')}
-          children={<span>This is also a submenu component</span>}
-        />
-      </PopOverSubMenu>
+    <PopOverSubMenu text="This is a submenu">
+      <PopOverItem
+        as="button"
+        onClick={() => console.log('clicked')}
+        children={<span>This is also a submenu component</span>}
+      />
+      <PopOverItem
+        as="button"
+        onClick={() => console.log('clicked')}
+        children={<span>This is also a submenu component</span>}
+      />
+    </PopOverSubMenu>
     <PopOverItem
       as="button"
       onClick={() => console.log('clicked')}
