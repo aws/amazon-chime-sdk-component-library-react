@@ -58,6 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update import in `useDevicePermissionStatus` hook
 - Renamed `MeetingControlsContainer` to `MeetingControls`
 - Changed play, pause icons in `ContentShareControl` to popover actions
+- Add serverless setup for the meeting demo
 
 ### Removed
 

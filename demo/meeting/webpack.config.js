@@ -3,12 +3,12 @@
 
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackInlineSourcePlugin = require('html-webpack-inline-source-plugin');
 
 const app = 'meeting';
 
 module.exports = {
   mode: 'development',
-  watch: true,
   entry: ['./src/index.tsx'],
   devtool: 'inline-source-map',
   module: {
@@ -39,7 +39,13 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'dist'),
     filename: `${app}-bundle.js`,
-    publicPath: '/'
+    publicPath: '/',
+    libraryTarget: 'var',
+    library: `app_${app}`,
+  },
+  node: {
+    fs: 'empty',
+    tls: 'empty'
   },
   plugins: [
     new HtmlWebpackPlugin({
@@ -47,7 +53,8 @@ module.exports = {
       template: __dirname + `/app/${app}.html`,
       filename: __dirname + `/dist/${app}.html`,
       inject: 'head'
-    })
+    }),
+    new HtmlWebpackInlineSourcePlugin(),
   ],
   devServer: {
     proxy: {
