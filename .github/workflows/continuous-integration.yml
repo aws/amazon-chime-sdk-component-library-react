@@ -38,3 +38,5 @@ jobs:
     - run: npm ci
     - run: npm run build:release --if-present
     - run: npm run test:snapshots
+      env:
+        GITHUB_CONTEXT: ${{ toJson(github) }}
