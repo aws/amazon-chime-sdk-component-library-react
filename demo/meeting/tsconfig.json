@@ -12,6 +12,7 @@
     "allowJs": true,
     "checkJs": false,
     "jsx": "react",
+    "types": ["react"],
     "pretty": true,
     "skipLibCheck": true,
     "strict": true,
@@ -23,7 +24,7 @@
     "resolveJsonModule": true,
     "suppressImplicitAnyIndexErrors": true,
   },
-  "include": ["src/**/*", "server.js"],
+  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
     "build"
