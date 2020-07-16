@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add docs for Button component, re-organize docs
 - Add docs for all Form components
 - Add mic volume indicator component
+- Add serverless setup for the meeting demo
 
 ### Changed
 
