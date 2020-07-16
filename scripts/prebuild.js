@@ -5,6 +5,9 @@ const path = require('path');
 const exec = require('child_process').spawnSync;
 const { logger, spawnOrFail, process } = require('./utilities');
 
+const { labels = [], actor = '' } = process.env.GITHUB_CONTEXT || {};
+const botName = 'dependabot';
+
 const base = fs
   .readFileSync(path.join(process.cwd(), '.base-branch'), 'utf8')
   .trim();
@@ -44,13 +47,25 @@ if (!commits || !commits[0]) {
 
   if (commit_files.includes('CHANGELOG.md')) {
     logger.log(`OK: branch contains CHANGELOG.md`);
+  } else if (
+    /* 
+  In case where GitActions dependabot initiates the PR for dependencies update
+  we can skip CHANGELOG verification.
+  When bot submits PR two git context parameters are set.
+    1) actor: name of the commit author (dependabot)
+    2) labels: list of labels for the commit with name parameters (dependencies)
+  */
+    actor === botName &&
+    labels.filter(lbl => lbl.name === 'dependencies').length === 1
+  ) {
+    logger.log('Skipping CHANGELOG.md verification.');
   } else {
     logger.error(
       `Error: Does not contain CHANGELOG.md in the commit ${commits[0]}`
     );
     return process.exit(1);
   }
-
+  
   // On every PR do a minor version bump and only run this once (on local) before PR
   if (!process.argv.includes('--publish') && !process.env.GITHUB_ACTIONS) {
     const version_file = 'src/versioning/Versioning.ts';
