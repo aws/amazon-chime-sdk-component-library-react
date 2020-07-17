@@ -35,6 +35,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - ActiveSpeaker, ActiveTile providers and hooks
 - Add docs for PopOver component
 - Add github action workflow that automates publishing to npm
+- Add docs for Grid component
 
 ### Changed
 

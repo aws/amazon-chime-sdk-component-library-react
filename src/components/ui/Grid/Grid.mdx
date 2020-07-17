@@ -1,0 +1,128 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Grid from './';
+import Cell from './Cell';
+import { Child } from './Grid.stories';
+import { lightTheme } from '../../../theme/';
+
+# Grid
+
+The Grid component adapts to screen size and orientation, ensuring consistency across layouts.
+
+## Importing
+
+```javascript
+import { Grid } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+### With Grid Props and `responsive`.
+
+All children components are placed based on grid props,
+like `gridGap`, `gridTemplateRows`, `gridTemplateColumns`, etc.
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Grid
+      style={{ height: '30vh' }}
+      responsive
+      gridGap=".5rem"
+      gridTemplateColumns="1fr 1fr 4fr"
+      gridTemplateRows="auto"
+      gridAutoFlow=""
+    >
+      <Child>Child</Child>
+      <Child>Child</Child>
+      <Child>Child</Child>
+      <Child>Child</Child>
+      <Child>Child</Child>
+      <Child>Child</Child>
+    </Grid>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Grid
+  style={{ height: '30vh' }}
+  responsive
+  gridGap=".5rem"
+  gridTemplateColumns="1fr 1fr 4fr"
+  gridTemplateRows="auto"
+  gridAutoFlow=""
+>
+  <Child>Child</Child>
+  <Child>Child</Child>
+  <Child>Child</Child>
+  <Child>Child</Child>
+  <Child>Child</Child>
+  <Child>Child</Child>
+</Grid>
+```
+
+### Named Area Grid
+
+First, you define names of your choice on grid items with the `gridArea` property.
+
+Then, on the grid container, you use the `gridTemplateAreas` property to define how the named areas get applied.
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Grid
+      style={{ height: '30vh' }}
+      gridGap=".25rem"
+      gridAutoFlow=""
+      gridTemplateColumns="1fr 1fr 1fr"
+      gridTemplateRows="50px 100px 50px"
+      gridTemplateAreas='
+        "sidebar main other"
+        "sidebar main other"
+        "footer footer footer"
+      '
+    >
+      <Cell gridArea="footer">
+        <Child >footer</Child>
+      </Cell>
+      <Cell gridArea="sidebar">
+        <Child>SideBar</Child>
+      </Cell>
+      <Cell gridArea="main">
+        <Child>Main</Child>
+      </Cell>
+      <Child>Other</Child>
+      <Child>Other</Child>
+    </Grid>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Grid
+  style={{ height: '30vh' }}
+  gridGap=".25rem"
+  gridAutoFlow=""
+  gridTemplateColumns="1fr 1fr 1fr"
+  gridTemplateRows="50px 100px 50px"
+  gridTemplateAreas='
+    "sidebar main other"
+    "sidebar main other"
+    "footer footer footer"
+  '
+>
+  <Cell gridArea="footer">
+    <Child >footer</Child>
+  </Cell>
+  <Cell gridArea="sidebar">
+    <Child>SideBar</Child>
+  </Cell>
+  <Cell gridArea="main">
+    <Child>Main</Child>
+  </Cell>
+  <Child>Other</Child>
+  <Child>Other</Child>
+</Grid>
+```
+
+## Props
+
+<Props of={Grid} />
