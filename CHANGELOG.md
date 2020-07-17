@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add docs for PopOver component
 - Add github action workflow that automates publishing to npm
 - Add docs for Grid component
+- Add docs for the Modal component
 
 ### Changed
 
@@ -84,5 +85,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix react state update errors for `MeetingStatusProvider`, `MeetingRoster` and `MeetingJoinDetails`
 - Fix roster showing stale attendees
 - `AudioActivityPreview` to show mic progress track on audio input device change
+- Fixed typo in IconButton unit test
 
 ## [0.1.1] - 2020-06-16

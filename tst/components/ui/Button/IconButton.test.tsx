@@ -34,7 +34,7 @@ describe('Icon Button', () => {
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const labelSpan = getByTestId('button-label');
 
-    expect(labelSpan).toHaveStyle({ hight: '1px', width: '1px' });
+    expect(labelSpan).toHaveStyle({ height: '1px', width: '1px' });
   });
 
 });
