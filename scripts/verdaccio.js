@@ -26,11 +26,12 @@ const cleanupBeforeExit = () => {
   applicationProcesses.map(prs => {
     spawnOrFail('kill', [`kill -9`, `${prs.pid}`]);
   });
-  spawnOrFail('ps', [
-    `-ef | grep verdaccio | grep -v grep | awk '{ print $2 }' | xargs kill -9`
-  ]);
-  process.exit(1);
+  cleanup();
+  process.exit(0);
 };
+
+process.on('SIGTERM', cleanupBeforeExit);
+process.on('SIGINT', cleanupBeforeExit);
 
 // Create verdaccio testing directory and cd in to it
 if (!fs.existsSync(verdaccioAppDir)) {
@@ -72,7 +73,7 @@ process.chdir(comonentsTestDir);
 logger.log(`Cloning ${COMPONENTS_APP_NAME} in to testing direcotry.`);
 
 //Clean up
-spawnOrFail('rm', ['-rf', `${COMPONENTS_APP_NAME}`]);
+spawnOrFail('rm', ['-rf', `${COMPONENTS_APP_NAME}`, '--force']);
 spawnOrFail('git', [
   'clone',
   'git@github.com:aws/amazon-chime-sdk-component-library-react.git'
@@ -120,7 +121,8 @@ logger.log(`
 logger.warn(
   `Have you verified demo application and ready to continue with RELEASE?`
 );
-shouldContinuePrompt(cleanupBeforeExit);
+shouldContinuePrompt();
+process.exit(0)
 
 function startVerdaccioApp() {
   // Start verdaccio with config from above.
@@ -174,4 +176,10 @@ packages:
       logger.log('config file is generated successfully.');
     }
   );
+}
+
+function cleanup() {
+    spawnOrFail('ps', [
+        `-ef | grep -E '(webpack|verdaccio)' | grep -v grep | awk '{ print $2 }' | xargs kill -9`
+    ]);
 }
