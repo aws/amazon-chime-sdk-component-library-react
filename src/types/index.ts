@@ -5,21 +5,20 @@ import { MeetingStatus } from '../providers/MeetingStatusProvider';
 
 export type Direction = 'up' | 'right' | 'down' | 'left';
 
-export type FormattedDeviceType = {
+export type DeviceType = {
   deviceId: string;
   label: string;
 };
 
-export type DeviceType = MediaDeviceInfo | FormattedDeviceType;
-
-export type SelectedDeviceType = string | null;
+export type SelectedDeviceId = string | null;
 
 export type DeviceTypeContext = {
   devices: DeviceType[];
-  selectedDevice: SelectedDeviceType;
+  selectedDevice: SelectedDeviceId;
 };
 
 export type DeviceConfig = {
+  /** Whether to include additional devices (such as "Color bars" for video, "440Hz" for audio) in the available devices list */
   additionalDevices?: boolean;
 };
 
@@ -36,6 +35,7 @@ export type LocalVideoContextType = {
 
 export type ContentShareState = {
   activeContentTileId: number | null;
+  isLocalShareLoading: boolean;
   isRemoteUserSharing: boolean;
   isLocalUserSharing: boolean;
   isSomeoneSharing: boolean;

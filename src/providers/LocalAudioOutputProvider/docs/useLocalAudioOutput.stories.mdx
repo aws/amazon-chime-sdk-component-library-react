@@ -1,0 +1,54 @@
+<Meta title="SDK Hooks/useLocalAudioOutput" />
+
+# useLocalAudioOutput
+
+Returns the status of the user's output audio, and a function to mute/unmute the audio output. 
+
+** Note ** - This hook is for speaker volume, not the microphone/audio input volume.
+
+### Return value
+
+```javascript
+{
+  // Whether or not the user's speakers are playing output audio
+  isAudioOn: boolean;
+
+  // A function to mute or unmute the audio output
+  toggleAudio: () => void;
+}
+```
+
+## Importing
+
+```javascript
+import { useLocalAudioOutput } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook depends on the `LocalAudioOutputProvider`. If you are using `MeetingProvider`, it is rendered by default.
+
+```jsx
+import React from 'react';
+import { MeetingProvider, useLocalAudioOutput } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+      <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const { isAudioOn } = useLocalAudioOutput();
+
+  return (
+    <div>
+      { isAudioOn ? 'Meeting audio playing' : 'Meeting audio is muted'}
+    </div>
+  );
+}
+```
+
+### Dependencies
+
+- `LocalAudioOutputProvider`

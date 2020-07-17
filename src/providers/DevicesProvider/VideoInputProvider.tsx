@@ -16,11 +16,6 @@ import { DeviceTypeContext, DeviceConfig } from '../../types';
 import { VIDEO_INPUT } from '../../constants/additional-audio-video-devices';
 import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
 
-export type LocalVideoContextType = {
-  isVideoEnabled: boolean;
-  toggleVideo: () => Promise<void>;
-};
-
 const Context = createContext<DeviceTypeContext | null>(null);
 
 const VideoInputProvider: React.FC = ({ children }) => {

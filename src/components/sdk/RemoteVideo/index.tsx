@@ -5,10 +5,14 @@ import React, { useRef, useEffect, HTMLAttributes } from 'react';
 
 import { VideoTile } from '../../ui/VideoTile';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
-import { BaseProps } from '../../ui/Base';
+import { BaseSdkProps } from '../Base';
 
-interface Props extends BaseProps, Omit<HTMLAttributes<HTMLDivElement>, 'css'> {
+interface Props
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseSdkProps {
+  /** The tile ID to bind the video element to */
   tileId: number;
+  /** The name to show on the video's nameplate */
   name?: string;
 }
 

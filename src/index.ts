@@ -84,15 +84,14 @@ export { useUniqueId } from './hooks/useUniqueId';
 
 export { useAttendeeStatus } from './hooks/sdk/useAttendeeStatus';
 export { useAttendeeAudioStatus } from './hooks/sdk/useAttendeeAudioStatus';
-export { useActiveSpeaker } from './hooks/sdk/useActiveSpeaker';
 export { useSelectVideoQuality } from './hooks/sdk/useSelectVideoQuality';
 
 export { useMeetingManager } from './providers/MeetingProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
-export { useRoster } from './providers/RosterProvider';
-export { useVideoTileState } from './providers/VideoTileProvider';
-export { useActiveSpeakers } from './providers/ActiveSpeakersProvider';
-export { useFeaturedTile } from './providers/FeaturedVideoTileProvider';
+export { useRosterState } from './providers/RosterProvider';
+export { useRemoteVideoTileState } from './providers/RemoteVideoTileProvider';
+export { useActiveSpeakersState } from './providers/ActiveSpeakersProvider';
+export { useFeaturedTileState } from './providers/FeaturedVideoTileProvider';
 export {
   useAudioInputs,
   useVideoInputs,
@@ -101,8 +100,10 @@ export {
 export { useToggleLocalMute } from './hooks/sdk/useToggleLocalMute';
 export { useLocalAudioOutput } from './providers/LocalAudioOutputProvider';
 export { useLocalVideo } from './providers/LocalVideoProvider';
-export { useContentShare } from './providers/ContentShareProvider';
-export { useContentShareControls } from './providers/ContentShareControlProvider';
+export {
+  useContentShareState,
+  useContentShareControls
+} from './providers/ContentShareProvider';
 export { useMeetingStatus } from './providers/MeetingStatusProvider';
 
 // Providers
@@ -111,12 +112,11 @@ export { MeetingProvider } from './providers/MeetingProvider';
 export { LocalAudioOutputProvider } from './providers/LocalAudioOutputProvider';
 export { LocalVideoProvider } from './providers/LocalVideoProvider';
 export { ContentShareProvider } from './providers/ContentShareProvider';
-export { ContentShareControlProvider } from './providers/ContentShareControlProvider';
 export { MeetingStatusProvider } from './providers/MeetingStatusProvider';
 export { AudioVideoProvider } from './providers/AudioVideoProvider';
 export { RosterProvider } from './providers/RosterProvider';
 export { DevicesProvider } from './providers/DevicesProvider';
-export { VideoTileProvider } from './providers/VideoTileProvider';
+export { RemoteVideoTileProvider } from './providers/RemoteVideoTileProvider';
 export { ActiveSpeakersProvider } from './providers/ActiveSpeakersProvider';
 export { FeaturedVideoTileProvider } from './providers/FeaturedVideoTileProvider';
 

@@ -7,10 +7,11 @@ import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 import { DevicePermissionStatus } from '../enums';
 
 export default function useDevicePermissionStatus() {
+  const meetingManager = useMeetingManager();
   const [permission, setPermission] = useState<string>(
     DevicePermissionStatus.UNSET
   );
-  const meetingManager = useMeetingManager();
+
   useEffect(() => {
     const callback = (updatedPermission: string): void => {
       setPermission(updatedPermission);

@@ -4,23 +4,24 @@
 import React, { useEffect, useRef } from 'react';
 
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
-import { useContentShare } from '../../../providers/ContentShareProvider';
 import { ContentTile } from '../../ui/ContentTile';
-import { BaseProps } from '../../ui/Base';
+import { useContentShareState } from '../../../providers/ContentShareProvider';
+import { BaseSdkProps } from '../Base';
 
-interface Props extends BaseProps {}
+interface Props extends BaseSdkProps {}
 
 export const ContentShare: React.FC<Props> = ({ className, ...rest }) => {
   const audioVideo = useAudioVideo();
-  const { activeContentTileId, isSomeoneSharing } = useContentShare();
+  const { activeContentTileId, isSomeoneSharing } = useContentShareState();
   const videoEl = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    if (!videoEl.current || !activeContentTileId) {
+    if (!audioVideo || !videoEl.current || !activeContentTileId) {
       return;
     }
-    audioVideo?.bindVideoElement(activeContentTileId, videoEl.current);
-  }, [activeContentTileId]);
+
+    audioVideo.bindVideoElement(activeContentTileId, videoEl.current);
+  }, [audioVideo, activeContentTileId]);
 
   return isSomeoneSharing ? (
     <ContentTile

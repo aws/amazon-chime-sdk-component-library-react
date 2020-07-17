@@ -3,14 +3,15 @@
 
 import React from 'react';
 
-import { useVideoTileState } from '../../../providers/VideoTileProvider';
-import { useContentShare } from '../../../providers/ContentShareProvider';
-import { useFeaturedTile } from '../../../providers/FeaturedVideoTileProvider';
+import { useRemoteVideoTileState } from '../../../providers/RemoteVideoTileProvider';
+import { useContentShareState } from '../../../providers/ContentShareProvider';
+import { useFeaturedTileState } from '../../../providers/FeaturedVideoTileProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { ContentShare } from '../ContentShare';
 import { LocalVideo } from '../LocalVideo';
 import { FeaturedRemoteVideos } from '../FeaturedRemoteVideos';
 import { VideoGrid } from '../../ui/VideoGrid';
+import { BaseProps } from '../../ui/Base';
 
 const fluidStyles = `
   height: 100%;
@@ -30,18 +31,18 @@ const staticStyles = `
   }
 `;
 
-export const VideoTileGrid: React.FC = () => {
-  const featuredTile = useFeaturedTile();
-  const { tiles } = useVideoTileState();
-  const { isSomeoneSharing } = useContentShare();
+export const VideoTileGrid: React.FC<BaseProps> = props => {
+  const { tileId: featureTileId } = useFeaturedTileState();
+  const { tiles } = useRemoteVideoTileState();
+  const { isSomeoneSharing } = useContentShareState();
   const { isVideoEnabled } = useLocalVideo();
-  const featured = !!featuredTile || isSomeoneSharing;
+  const featured = !!featureTileId || isSomeoneSharing;
   const remoteSize = tiles.length + (isSomeoneSharing ? 1 : 0);
   const gridSize =
     remoteSize > 1 && isVideoEnabled ? remoteSize + 1 : remoteSize;
 
   return (
-    <VideoGrid size={gridSize} layout={featured ? 'featured' : null}>
+    <VideoGrid {...props} size={gridSize} layout={featured ? 'featured' : null}>
       <FeaturedRemoteVideos />
       <ContentShare css="grid-area: ft;" />
       <LocalVideo

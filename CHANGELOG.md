@@ -38,6 +38,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add docs for Grid component
 - Add docs for the Modal component
 - Add docs for Heading and ControlBar components
+- Add SDK components documentation
 
 ### Changed
 

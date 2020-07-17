@@ -1,7 +1,7 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useMemo, useContext } from 'react';
 import { DefaultModality } from 'amazon-chime-sdk-js';
 
 import { useMeetingManager } from '../MeetingProvider';
@@ -9,14 +9,18 @@ import { useAudioVideo } from '../AudioVideoProvider';
 
 type RosterAttendeeType = {
   id: string;
-  name: string;
+  name?: string;
 };
 
 type RosterType = {
   [attendeeId: string]: RosterAttendeeType;
 };
 
-const RosterContext = React.createContext<RosterType>({});
+interface RosterContextValue {
+  roster: RosterType;
+}
+
+const RosterContext = React.createContext<RosterContextValue | null>(null);
 
 const RosterProvider: React.FC = ({ children }) => {
   const meetingManager = useMeetingManager();
@@ -73,18 +77,28 @@ const RosterProvider: React.FC = ({ children }) => {
       setRoster({});
       audioVideo.realtimeUnsubscribeToAttendeeIdPresence(rosterUpdateCallback);
     };
-
   }, [audioVideo]);
 
+  const value = useMemo(
+    () => ({
+      roster
+    }),
+    [roster]
+  );
+
   return (
-    <RosterContext.Provider value={roster}>{children}</RosterContext.Provider>
+    <RosterContext.Provider value={value}>{children}</RosterContext.Provider>
   );
 };
 
-function useRoster(): RosterType {
-  const roster = useContext(RosterContext);
+function useRosterState(): RosterContextValue {
+  const state = useContext(RosterContext);
 
-  return roster;
+  if (!state) {
+    throw new Error('userRosterState must be used within RosterProvider');
+  }
+
+  return state;
 }
 
-export { RosterProvider, useRoster };
+export { RosterProvider, useRosterState };

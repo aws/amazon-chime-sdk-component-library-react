@@ -5,22 +5,24 @@ import React from 'react';
 
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
 import { ContentShare } from '../../ui/icons';
-import { useContentShare } from '../../../providers/ContentShareProvider';
-import { useContentShareControls } from '../../../providers/ContentShareControlProvider';
+import { useContentShareState } from '../../../providers/ContentShareProvider';
+import { useContentShareControls } from '../../../providers/ContentShareProvider';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
 const ContentShareControl: React.FC = () => {
-  const { isLocalUserSharing } = useContentShare();
+  const { isLocalUserSharing } = useContentShareState();
   const {
     isContentSharePaused,
     toggleContentShare,
     togglePauseContentShare
   } = useContentShareControls();
 
-  const dropdownOptions: PopOverItemProps[] = [{
-    children: <span>{isContentSharePaused ? 'Play' : 'Pause'}</span>,
-    onClick: togglePauseContentShare
-  }];
+  const dropdownOptions: PopOverItemProps[] = [
+    {
+      children: <span>{isContentSharePaused ? 'Play' : 'Pause'}</span>,
+      onClick: togglePauseContentShare
+    }
+  ];
 
   return (
     <>

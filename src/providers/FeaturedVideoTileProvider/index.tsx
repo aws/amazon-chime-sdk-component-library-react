@@ -6,17 +6,22 @@ import React, {
   createContext,
   useState,
   useContext,
-  useRef
+  useRef,
+  useMemo
 } from 'react';
 
-import { useActiveSpeakers } from '../ActiveSpeakersProvider';
-import { useVideoTileState } from '../VideoTileProvider';
+import { useActiveSpeakersState } from '../ActiveSpeakersProvider';
+import { useRemoteVideoTileState } from '../RemoteVideoTileProvider';
 
-const FeaturedTileContext = createContext<number | null>(null);
+interface FeaturedTileState {
+  tileId: number | null;
+}
+
+const FeaturedTileContext = createContext<FeaturedTileState | null>(null);
 
 const FeaturedVideoTileProvider: React.FC = ({ children }) => {
-  const { attendeeIdToTileId } = useVideoTileState();
-  const activeAttendees = useActiveSpeakers();
+  const { attendeeIdToTileId } = useRemoteVideoTileState();
+  const activeAttendees = useActiveSpeakersState();
   const activeTileRef = useRef<number | null>(null);
   const [activeTile, setActiveTile] = useState<number | null>(null);
   const timeout = useRef<number | null>(null);
@@ -41,7 +46,7 @@ const FeaturedVideoTileProvider: React.FC = ({ children }) => {
         timeout.current = setTimeout(() => {
           activeTileRef.current = null;
           setActiveTile(null);
-        }, 2500);
+        }, 2000);
       }
 
       return;
@@ -55,23 +60,30 @@ const FeaturedVideoTileProvider: React.FC = ({ children }) => {
     setActiveTile(tileId);
   }, [attendeeIdToTileId, activeAttendees]);
 
+  const value = useMemo(
+    () => ({
+      tileId: activeTile
+    }),
+    [activeTile]
+  );
+
   return (
-    <FeaturedTileContext.Provider value={activeTile}>
+    <FeaturedTileContext.Provider value={value}>
       {children}
     </FeaturedTileContext.Provider>
   );
 };
 
-function useFeaturedTile(): number | null {
-  const featuredTile = useContext(FeaturedTileContext);
+function useFeaturedTileState(): FeaturedTileState {
+  const state = useContext(FeaturedTileContext);
 
-  if (featuredTile === undefined) {
+  if (!state) {
     throw new Error(
-      'useFeaturedTile must be used within an FeaturedVideoTileProvider'
+      'useFeaturedTileState must be used within an FeaturedVideoTileProvider'
     );
   }
 
-  return featuredTile;
+  return state;
 }
 
-export { FeaturedVideoTileProvider, useFeaturedTile };
+export { FeaturedVideoTileProvider, useFeaturedTileState };

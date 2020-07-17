@@ -1,0 +1,34 @@
+<Meta title="Providers/MeetingProvider" />
+
+# MeetingProvider
+
+The **root provider** for building a realtime meeting application. It is responsible for rendering out a series of providers and providing a `MeetingManager` class that helps integrate with the Chime JavaScript SDK.
+
+## Usage
+
+@@ THIS IS A TODO SECTION @@
+
+MeetingProvider requires you to configure how to fetch the meeting data and attendee data. 
+
+@@ END TODO SECTION @@
+
+The MeetingProvider should be placed near or at the root of your application.
+
+```jsx
+import React from 'react';
+import { MeetingProvider } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyApp>
+      <MyChild />
+    </MyApp>
+  </MeetingProvider>
+);
+```
+
+Once you have placed the MeetingProvider, you can use any of our hooks or components within your application.
+
+@@ TODO - MeetingManager interface @@
+
+@@ TODO - Minimal meeting example for joining/ending @@

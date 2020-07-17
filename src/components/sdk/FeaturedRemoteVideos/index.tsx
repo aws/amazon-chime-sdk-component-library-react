@@ -4,23 +4,23 @@
 import React, { memo, FC, HTMLAttributes } from 'react';
 
 import { RemoteVideo } from '../RemoteVideo';
-import { useVideoTileState } from '../../../providers/VideoTileProvider';
-import { useFeaturedTile } from '../../../providers/FeaturedVideoTileProvider';
-import { useContentShare } from '../../../providers/ContentShareProvider';
-import { useRoster } from '../../../providers/RosterProvider';
+import { useRemoteVideoTileState } from '../../../providers/RemoteVideoTileProvider';
+import { useFeaturedTileState } from '../../../providers/FeaturedVideoTileProvider';
+import { useContentShareState } from '../../../providers/ContentShareProvider';
+import { useRosterState } from '../../../providers/RosterProvider';
 import { useGridData } from '../../ui/VideoGrid';
-import { BaseProps } from '../../ui/Base';
+import { BaseSdkProps } from '../Base';
 
 interface Props
-  extends BaseProps,
+  extends BaseSdkProps,
     Omit<HTMLAttributes<HTMLDivElement>, 'css'> {}
 
 export const FeaturedRemoteVideos: FC<Props> = props => {
   const gridData = useGridData();
-  const roster = useRoster();
-  const featuredTileId = useFeaturedTile();
-  const { isSomeoneSharing } = useContentShare();
-  const { tiles, tileIdToAttendeeId } = useVideoTileState();
+  const { roster } = useRosterState();
+  const { tileId: featuredTileId } = useFeaturedTileState();
+  const { isSomeoneSharing } = useContentShareState();
+  const { tiles, tileIdToAttendeeId } = useRemoteVideoTileState();
 
   return (
     <>
