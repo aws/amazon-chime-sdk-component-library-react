@@ -4,25 +4,32 @@ This is the SDK react meeting demo app. It shows how to use the Amazon Chime SDK
 
 ## To run the demo app locally:
 
-1. Install root dependencies within the root directory: `npm install`
+1. If you haven't already, [configure your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html).
 
-2. Navigate to the demo folder: `cd demo/meeting`
+2. Install root dependencies within the root directory: `npm install`
 
-3. Install dependencies: `npm install`
+3. Navigate to the meeting demo folder: `cd demo/meeting`
 
-4. Start the webpack server: `npm run start:client`
+4. Install dependencies: `npm install`
 
-5. Open a second terminal. Within the same directory, start the server: `npm run start:backend`
+5. Start the webpack server: `npm run start:client`
 
-6. Open https://0.0.0.0:9000/ in your browser
+6. Open a second terminal. Within the same directory, start the server: `npm run start:backend`
 
+7. Open https://0.0.0.0:9000/ in your browser
+
+### Troubleshooting
+
+- `UnrecognizedClientException: The security token included in the request is invalid.` when trying to join a meeting
+
+This likely means that your AWS credentials are invalid. Refer to the [AWS Configuration docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) for setting up your credentials.
 
 ## To deploy the serverless device demo
 
 ### Install aws and sam command line tools
 
-* [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html)
-* [Install the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
+- [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html)
+- [Install the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
 
 ### Run deployment script
 

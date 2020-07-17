@@ -1,0 +1,74 @@
+<Meta title="Providers/ContentShareProvider" />
+
+# ContentShareProvider
+
+Provides state and functionality for content sharing.
+
+### State
+
+```javascript
+{
+  // The tile ID of the active content share
+  activeContentTileId: number | null;
+
+  // Whether or not a remote user is screen sharing
+  isRemoteUserSharing: boolean;
+
+  // Whether or not the local user is screen sharing
+  isLocalUserSharing: boolean;
+
+  // Whether or not the local user's content share is loading
+  isLocalShareLoading: boolean;
+
+  // Whether or not someone in the session (remote, or local) is sharing
+  isSomeoneSharing: boolean;
+  
+  // The chime attendee ID of the user sharing
+  sharingAttendeeId: string | null;
+}
+```
+
+You can access the state with the `useContentShareState` hook.
+
+## Usage
+
+If you are using `MeetingProvider`, the `ContentShareProvider` is rendered by default.
+
+```jsx
+import React from 'react';
+import { MeetingProvider, useContentShareState } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+
+const MyChild = () => {
+  const { isLocalUserSharing } = useContentShareState();
+
+  return isLocalUserSharing ? <div>Sharing</div> : <div>Not sharing</div>
+}
+```
+
+## Usage without MeetingProvider
+
+If you opt out of using MeetingProvider, you can drop in a ContentShareProvider and use its state. Make sure that its dependencies are rendered higher in the tree.
+
+```jsx
+import React from 'react';
+import { ContentShareProvider } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <CustomAudioVideoProvider>
+    <ContentShareProvider>
+      <MyComponent />
+    </ContentShareProvider>
+  </CustomAudioVideoProvider>
+);
+```
+
+### Dependencies
+
+- `AudioVideoProvider`

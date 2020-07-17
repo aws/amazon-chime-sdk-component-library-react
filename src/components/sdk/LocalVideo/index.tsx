@@ -8,12 +8,13 @@ import { VideoTileState } from 'amazon-chime-sdk-js';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import VideoTile from '../../ui/VideoTile';
-import { BaseProps } from '../../ui/Base';
+import { BaseSdkProps } from '../Base';
 
-interface Props extends BaseProps {
+interface Props extends BaseSdkProps {
   id?: string;
   nameplate?: string;
 }
+
 const StyledLocalVideo = styled(VideoTile)`
   background: unset;
 `;

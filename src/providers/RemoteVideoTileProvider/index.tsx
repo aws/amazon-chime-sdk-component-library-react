@@ -9,7 +9,7 @@ import { State, initialState, reducer, VideoTileActionType } from './state';
 
 const Context = createContext<State | null>(null);
 
-const VideoTileProvider: React.FC = ({ children }) => {
+const RemoteVideoTileProvider: React.FC = ({ children }) => {
   const audioVideo = useAudioVideo();
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -61,16 +61,16 @@ const VideoTileProvider: React.FC = ({ children }) => {
   return <Context.Provider value={state}>{children}</Context.Provider>;
 };
 
-const useVideoTileState = (): State => {
+const useRemoteVideoTileState = (): State => {
   const state = useContext(Context);
 
   if (!state) {
     throw new Error(
-      'useVideoTileState must be used within a VideoTileProvider'
+      'useRemoteVideoTileState must be used within a RemoteVideoTileProvider'
     );
   }
 
   return state;
 };
 
-export { VideoTileProvider, useVideoTileState };
+export { RemoteVideoTileProvider, useRemoteVideoTileState };

@@ -26,10 +26,10 @@ const LocalAudioOutputProvider: React.FC = ({ children }) => {
     }
 
     if (audioRef.current) {
-      audioVideo?.bindAudioElement(audioRef.current);
+      audioVideo.bindAudioElement(audioRef.current);
     }
     return (): void => {
-      audioVideo?.unbindAudioElement();
+      audioVideo.unbindAudioElement();
     };
   }, [audioVideo]);
 

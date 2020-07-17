@@ -7,7 +7,7 @@ import MeetingManager from './MeetingManager';
 import { AudioVideoProvider } from '../AudioVideoProvider';
 import { RosterProvider } from '../RosterProvider';
 import { DevicesProvider } from '../DevicesProvider';
-import { VideoTileProvider } from '../VideoTileProvider';
+import { RemoteVideoTileProvider } from '../RemoteVideoTileProvider';
 import { LocalVideoProvider } from '../LocalVideoProvider';
 import { ActiveSpeakersProvider } from '../ActiveSpeakersProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
@@ -25,7 +25,7 @@ export const MeetingProvider: React.FC = ({ children }) => {
       <AudioVideoProvider>
         <DevicesProvider>
           <RosterProvider>
-            <VideoTileProvider>
+            <RemoteVideoTileProvider>
               <LocalVideoProvider>
                 <MeetingStatusProvider>
                   <LocalAudioOutputProvider>
@@ -39,7 +39,7 @@ export const MeetingProvider: React.FC = ({ children }) => {
                   </LocalAudioOutputProvider>
                 </MeetingStatusProvider>
               </LocalVideoProvider>
-            </VideoTileProvider>
+            </RemoteVideoTileProvider>
           </RosterProvider>
         </DevicesProvider>
       </AudioVideoProvider>

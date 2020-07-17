@@ -1,0 +1,46 @@
+<Meta title="SDK Hooks/useActiveSpeakersState" />
+
+# useActiveSpeakersState
+
+Returns a list of active speaker attendee IDs. The list is sorted from most 'active' to least. See the [Chime SDK's ActiveSpeakerDetector](https://aws.github.io/amazon-chime-sdk-js/interfaces/activespeakerdetector.html) for more details.
+
+### Return value
+
+```javascript
+// An array of attendee IDs, from most active to least active.
+string[]
+```
+
+## Importing
+
+```javascript
+import { useActiveSpeakersState } from 'amazon-chime-sdk-component-library-react';
+
+```
+
+## Usage
+
+The hook depends on the `ActiveSpeakerProvider`. If you are using `MeetingProvider`, it is rendered by default.
+
+```jsx
+import React from 'react';
+import { MeetingProvider, useActiveSpeakersState } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+      <MyChild />
+  </MeetingProvider>
+);
+
+
+const MyChild = () => {
+  const activeSpeakers = useActiveSpeakersState();
+  const list = activeSpeakers.map(id => <li>Attendee {id} is an active speaker</li>)
+
+  return <ul>{list}</ul>
+}
+```
+
+### Dependencies
+
+- `ActiveSpeakerProvider`

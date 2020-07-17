@@ -9,7 +9,7 @@ import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { useAudioOutputs } from '../../../providers/DevicesProvider';
 import { useLocalAudioOutput } from '../../../providers/LocalAudioOutputProvider';
 import { isOptionActive } from '../../../utils/device-utils';
-import { FormattedDeviceType } from '../../../types';
+import { DeviceType } from '../../../types';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
 const AudioOutputControl: React.FC = () => {
@@ -18,7 +18,7 @@ const AudioOutputControl: React.FC = () => {
   const { isAudioOn, toggleAudio } = useLocalAudioOutput();
 
   const dropdownOptions: PopOverItemProps[] = devices.map(
-    (device: FormattedDeviceType) => ({
+    (device: DeviceType) => ({
       children: <span>{device.label}</span>,
       checked: isOptionActive(selectedDevice, device.deviceId),
       onClick: (): Promise<void> =>

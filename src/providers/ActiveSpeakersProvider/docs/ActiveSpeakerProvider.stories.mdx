@@ -1,0 +1,58 @@
+<Meta title="Providers/ActiveSpeakersProvider" />
+
+# ActiveSpeakersProvider
+
+Provides active speaker state. See the [Chime SDK's ActiveSpeakerDetector](https://aws.github.io/amazon-chime-sdk-js/interfaces/activespeakerdetector.html) for more details.
+
+### State
+
+```javascript
+// An array of attendee IDs, from most active to least active.
+string[]
+```
+
+You can access the state with the `useActiveSpeakersState` hook.
+
+## Usage
+
+If you are using `MeetingProvider`, the `ActiveSpeakersProvider` is rendered by default.
+
+```jsx
+import React from 'react';
+import { MeetingProvider, useActiveSpeakersState } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+      <MyChild />
+  </MeetingProvider>
+);
+
+
+const MyChild = () => {
+  const activeSpeakers = useActiveSpeakersState();
+  const list = activeSpeakers.map(id => <li>Attendee {id} is an active speaker</li>)
+
+  return <ul>{list}</ul>
+}
+```
+
+## Usage without MeetingProvider
+
+If you opt out of using MeetingProvider, you can drop in the ActiveSpeakersProvider and use its state. Make sure that its dependencies are rendered higher in the tree.
+
+```jsx
+import React from 'react';
+import { ActiveSpeakersProvider } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <CustomAudioVideoProvider>
+    <ActiveSpeakersProvider>
+      <MyComponent />
+    </ActiveSpeakersProvider>
+  </CustomAudioVideoProvider>
+);
+```
+
+### Dependencies
+
+- `AudioVideoProvider`

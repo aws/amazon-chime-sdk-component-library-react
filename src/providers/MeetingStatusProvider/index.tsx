@@ -8,13 +8,13 @@ import React, {
   ReactNode,
   useContext
 } from 'react';
-
 import {
   MeetingSessionStatus,
   MeetingSessionStatusCode,
   VideoTileState
 } from 'amazon-chime-sdk-js';
 
+import { useAudioVideo } from '../AudioVideoProvider';
 import { useMeetingManager } from '../MeetingProvider';
 import { MeetingContextType } from '../../types';
 
@@ -38,11 +38,14 @@ const MeetingStatusContext = createContext<MeetingContextType>({
 
 function MeetingStatusProvider(props: Props) {
   const meetingManager = useMeetingManager();
+  const audioVideo = useAudioVideo();
   const [meetingStatus, setMeetingStatus] = useState(MeetingStatus.Loading);
-  const meetingId = meetingManager?.meetingId;
-  const { children } = props;
 
   useEffect(() => {
+    if (!audioVideo) {
+      return;
+    }
+
     const audioVideoDidStart = () => {
       console.log('Observer audioVideoDidStart');
     };
@@ -89,20 +92,19 @@ function MeetingStatusProvider(props: Props) {
       videoTileWasRemoved,
       audioVideoDidStop
     };
-    
 
     if (!meetingManager || !meetingManager.audioVideo) {
       return;
     }
-    
+
     setMeetingStatus(MeetingStatus.Succeeded);
-    meetingManager.addObserver(observers);
+    audioVideo.addObserver(observers);
 
     return () => {
       setMeetingStatus(MeetingStatus.Ended);
-      meetingManager.removeObserver(observers);
+      audioVideo.removeObserver(observers);
     };
-  }, [meetingId]);
+  }, [audioVideo]);
 
   const updateMeetingStatus = (status: MeetingStatus): void => {
     setMeetingStatus(status);
@@ -115,7 +117,7 @@ function MeetingStatusProvider(props: Props) {
 
   return (
     <MeetingStatusContext.Provider value={value}>
-      {children}
+      {props.children}
     </MeetingStatusContext.Provider>
   );
 }

@@ -1,0 +1,60 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import { useVideoInputs } from '../';
+
+<Meta title="SDK Hooks/useVideoInputs" />
+
+# useVideoInputs
+
+Returns a list of the user's available `video-input` devices and the currently selected device.
+
+## Return value
+
+```javascript
+{
+  devices: [{
+    deviceId: string;
+    label: string;
+  }],
+
+  // The device ID of the currently selected device
+  selectedDevice: string | null
+}
+
+```
+
+## Importing
+
+```javascript
+import { useVideoInputs } from 'amazon-chime-sdk-component-library-react';
+
+```
+
+## Usage
+
+The hook depends on the `DevicesProvider`. If you are using `MeetingProvider`, it is rendered by default.
+
+```jsx
+import React from 'react';
+import { MeetingProvider, useVideoInputs } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+
+const myChild = () => {
+  const { devices } = useVideoInputs();
+  const items = devices.map((device) => <li>{device.label}</li>)
+
+  return (
+    <ul>
+      {items}
+    </ul>
+  );
+}
+```
+
+## Props
+<Props of={useVideoInputs} />

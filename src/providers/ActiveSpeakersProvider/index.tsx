@@ -36,7 +36,7 @@ const ActiveSpeakersProvider: React.FC = ({ children }) => {
   );
 };
 
-function useActiveSpeakers(): string[] {
+function useActiveSpeakersState(): string[] {
   const activeSpeakers = useContext(ActiveSpeakersContext);
 
   if (!activeSpeakers) {
@@ -48,4 +48,4 @@ function useActiveSpeakers(): string[] {
   return activeSpeakers;
 }
 
-export { ActiveSpeakersProvider, useActiveSpeakers };
+export { ActiveSpeakersProvider, useActiveSpeakersState };

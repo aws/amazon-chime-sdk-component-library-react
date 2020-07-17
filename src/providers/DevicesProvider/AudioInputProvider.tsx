@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useState,
   useContext,
-  useMemo,
+  useMemo
 } from 'react';
 import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
@@ -45,7 +45,7 @@ const AudioInputProvider: React.FC = ({ children }) => {
       audioInputsChanged: (newAudioInputs: MediaDeviceInfo[]) => {
         console.log('AudioInputProvider - audio inputs updated');
         setAudioInputs(newAudioInputs);
-      },
+      }
     };
 
     async function initAudioInput() {
@@ -72,7 +72,7 @@ const AudioInputProvider: React.FC = ({ children }) => {
   const contextValue: DeviceTypeContext = useMemo(
     () => ({
       devices: audioInputs,
-      selectedDevice: selectedAudioInputDevice,
+      selectedDevice: selectedAudioInputDevice
     }),
     [audioInputs, selectedAudioInputDevice]
   );
@@ -82,7 +82,6 @@ const AudioInputProvider: React.FC = ({ children }) => {
 
 const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
   const needAdditionalIO = props && props.additionalDevices;
-  const additionalIOJSON = props && AUDIO_INPUT;
   const context = useContext(Context);
 
   if (!context) {
@@ -94,7 +93,7 @@ const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
 
   if (needAdditionalIO) {
     const additionalAudioInputs = getFormattedDropdownDeviceOptions(
-      additionalIOJSON
+      AUDIO_INPUT
     );
     if (additionalAudioInputs !== null) {
       devices = [...devices, ...additionalAudioInputs];

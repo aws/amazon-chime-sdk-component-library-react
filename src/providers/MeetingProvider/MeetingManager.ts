@@ -3,18 +3,18 @@
 
 import {
   AudioVideoFacade,
-  AudioVideoObserver,
   ConsoleLogger,
   DefaultDeviceController,
   DefaultMeetingSession,
   DeviceChangeObserver,
-  Logger,
   LogLevel,
-  MeetingSessionConfiguration,
-  MeetingSessionPOSTLogger
+  MeetingSessionConfiguration
 } from 'amazon-chime-sdk-js';
 
-import { audioInputSelectionToDevice, videoInputSelectionToDevice } from '../../utils/device-utils';
+import {
+  audioInputSelectionToDevice,
+  videoInputSelectionToDevice
+} from '../../utils/device-utils';
 
 enum DevicePermissionStatus {
   UNSET = 'UNSET',
@@ -40,17 +40,9 @@ type FullDeviceInfoType = {
 };
 
 export class MeetingManager implements DeviceChangeObserver {
-  private static readonly LOGGER_BATCH_SIZE: number = 85;
-
-  private static readonly LOGGER_INTERVAL_MS: number = 1150;
-
   meetingSession: DefaultMeetingSession | null = null;
 
   audioVideo: AudioVideoFacade | null = null;
-
-  selfVideo: HTMLVideoElement | null = null;
-
-  attendeeVideo: HTMLVideoElement | null = null;
 
   configuration: MeetingSessionConfiguration | null = null;
 
@@ -149,23 +141,7 @@ export class MeetingManager implements DeviceChangeObserver {
   async initializeMeetingSession(
     configuration: MeetingSessionConfiguration
   ): Promise<any> {
-    let logger: Logger;
-    if (
-      location.hostname === 'localhost' ||
-      location.hostname === '127.0.0.1' ||
-      location.hostname === '0.0.0.0'
-    ) {
-      logger = new ConsoleLogger('SDK', LogLevel.WARN);
-    } else {
-      logger = new MeetingSessionPOSTLogger(
-        'SDK',
-        configuration,
-        MeetingManager.LOGGER_BATCH_SIZE,
-        MeetingManager.LOGGER_INTERVAL_MS,
-        `${BASE_URL}logs`,
-        LogLevel.INFO
-      );
-    }
+    const logger = new ConsoleLogger('SDK', LogLevel.WARN);
     const deviceController = new DefaultDeviceController(logger);
     configuration.enableWebAudio = false;
     this.meetingSession = new DefaultMeetingSession(
@@ -173,6 +149,7 @@ export class MeetingManager implements DeviceChangeObserver {
       logger,
       deviceController
     );
+
     this.audioVideo = this.meetingSession.audioVideo;
     this.audioVideo.addDeviceChangeObserver(this);
     this.setupDeviceLabelTrigger();
@@ -219,31 +196,26 @@ export class MeetingManager implements DeviceChangeObserver {
       await fetch(
         `${BASE_URL}end?title=${encodeURIComponent(this.meetingId)}`,
         {
-          method: 'POST',
+          method: 'POST'
         }
       );
     }
   }
 
   async leaveMeeting(): Promise<void> {
-    this.stopContentShare();
-    await this.audioVideo?.stopLocalVideoTile();
-    await this.audioVideo?.chooseVideoInputDevice(null);
+    if (this.audioVideo) {
+      this.audioVideo.stopContentShare();
 
-    this.audioVideo?.unbindAudioElement();
-    await this.audioVideo?.chooseAudioInputDevice(null);
-    this.audioVideo?.stop();
+      await this.audioVideo.stopLocalVideoTile();
+      await this.audioVideo.chooseVideoInputDevice(null);
+
+      this.audioVideo.unbindAudioElement();
+      await this.audioVideo.chooseAudioInputDevice(null);
+      this.audioVideo.stop();
+    }
 
     this.initializeMeetingManager();
     this.publishAudioVideoUpdate();
-  }
-
-  async startContentShare(): Promise<void> {
-    await this.audioVideo?.startContentShareFromScreenCapture();
-  }
-
-  stopContentShare(): void {
-    this.audioVideo?.stopContentShare();
   }
 
   async listAndSelectDevices(): Promise<void> {
@@ -281,10 +253,6 @@ export class MeetingManager implements DeviceChangeObserver {
       );
       this.publishSelectedVideoInputDeviceChange();
     }
-  }
-
-  startVideoPreview(element: HTMLVideoElement): void {
-    this.audioVideo?.startVideoPreviewForVideoInput(element);
   }
 
   selectAudioInputDevice = async (deviceId: string): Promise<void> => {
@@ -328,22 +296,6 @@ export class MeetingManager implements DeviceChangeObserver {
       console.error(`Error setting video input - ${error}`);
     }
   };
-
-  addObserver(observer: AudioVideoObserver): void {
-    if (!this.audioVideo) {
-      console.log('AudioVideo not initialized. Cannot add observer');
-      return;
-    }
-    this.audioVideo.addObserver(observer);
-  }
-
-  removeObserver(observer: AudioVideoObserver): void {
-    if (!this.audioVideo) {
-      console.log('AudioVideo not initialized. Cannot remove observer');
-      return;
-    }
-    this.audioVideo.removeObserver(observer);
-  }
 
   async getAttendeeInfo(presentAttendeeId: string) {
     if (!this.meetingId) {

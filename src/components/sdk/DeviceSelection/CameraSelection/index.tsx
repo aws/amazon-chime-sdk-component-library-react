@@ -1,38 +1,22 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useRef, useEffect } from 'react';
+import React from 'react';
 
 import { Heading } from '../../../ui/Heading';
 import { Label } from '../../../ui/Label';
 import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { useVideoInputs } from '../../../../providers/DevicesProvider';
-import { useAudioVideo } from '../../../../providers/AudioVideoProvider';
+import PreviewVideo from '../../PreviewVideo';
 
 import QualitySelection from './QualitySelection';
 import DeviceInput from '../DeviceInput';
 
-import { StyledVideoPreview, title } from '../Styled';
+import { title } from '../Styled';
 
 const CameraSelection = () => {
   const meetingManager = useMeetingManager();
-  const audioVideo = useAudioVideo();
   const { devices } = useVideoInputs();
-  const videoEl = useRef<HTMLVideoElement>(null);
-
-  useEffect(() => {
-    if (!audioVideo) {
-      return;
-    }
-
-    videoEl.current &&
-      audioVideo?.startVideoPreviewForVideoInput(videoEl.current);
-
-    return () => {
-      videoEl.current &&
-        audioVideo?.stopVideoPreviewForVideoInput(videoEl.current);
-    };
-  }, [audioVideo]);
 
   async function selectVideoInput(deviceId: string) {
     meetingManager.selectVideoInputDevice(deviceId);
@@ -52,7 +36,7 @@ const CameraSelection = () => {
       <Label style={{ display: 'block', marginBottom: '.5rem' }}>
         Video preview
       </Label>
-      <StyledVideoPreview ref={videoEl} />
+      <PreviewVideo />
     </div>
   );
 };

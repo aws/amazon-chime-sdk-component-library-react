@@ -1,0 +1,30 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import { VideoTileGrid } from './';
+
+<Meta title="SDK Components/VideoTileGrid" />
+
+# VideoTileGrid
+
+Renders all meeting session video tiles in a responsive grid layout. This includes the local tile, remote tiles, and content share tile.
+
+## Importing
+
+```javascript
+import { VideoTileGrid } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+```jsx
+import React from 'react';
+import { MeetingProvider, VideoTileGrid } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+      <VideoTileGrid />
+  </MeetingProvider>
+);
+```
+
+## Props
+<Props of={VideoTileGrid} />

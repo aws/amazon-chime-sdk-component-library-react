@@ -3,24 +3,24 @@
 
 import React, { useState, ChangeEvent } from 'react';
 import {
+  Cell,
   Roster,
   RosterHeader,
   RosterGroup,
-  Cell,
-  useRoster
+  useRosterState
 } from 'amazon-chime-sdk-component-library-react';
 
 import RosterAttendee from './RosterAttendee';
 
 const MeetingRoster = () => {
-  const roster = useRoster();
+  const { roster } = useRosterState();
   const [filter, setFilter] = useState('');
 
   let attendees = Object.values(roster);
 
   if (filter) {
-    attendees = attendees.filter(attendee =>
-      attendee.name.toLowerCase().includes(filter.toLowerCase())
+    attendees = attendees.filter((attendee: any) =>
+      attendee?.name.toLowerCase().includes(filter.toLowerCase())
     );
   }
 
@@ -28,8 +28,8 @@ const MeetingRoster = () => {
     setFilter(e.target.value);
   };
 
-  const attendeeItems = attendees.map(item => {
-    const { id, name } = item;
+  const attendeeItems = attendees.map((attendee: any) => {
+    const { id, name } = attendee || {};
     return <RosterAttendee key={id} attendeeId={id} name={name} />;
   });
 

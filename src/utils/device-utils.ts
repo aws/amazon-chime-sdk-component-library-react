@@ -1,13 +1,15 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { FormattedDeviceType } from "../types";
-import { Device, DefaultDeviceController } from "amazon-chime-sdk-js";
+import { DeviceType } from '../types';
+import { Device, DefaultDeviceController } from 'amazon-chime-sdk-js';
 
-export const getFormattedDropdownDeviceOptions = (jsonObject: any): FormattedDeviceType[] => {
+export const getFormattedDropdownDeviceOptions = (
+  jsonObject: any
+): DeviceType[] => {
   const formattedJSONObject = Object.entries(jsonObject).map(entry => ({
     deviceId: entry[0].toLowerCase(),
-    label: entry[1] as string,
+    label: entry[1] as string
   }));
   return formattedJSONObject;
 };

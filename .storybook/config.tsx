@@ -12,11 +12,15 @@ import { GlobalStyles } from '../src/theme/GlobalStyles';
 const themes = [lightTheme, darkTheme];
 
 // automatically import all files ending in *.stories.tsx in src/components
-const requiredStories = require.context('../src/components', true, /\.stories\.(tsx|mdx)$/);
+const requiredStories = require.context(
+  '../src',
+  true,
+  /\.stories\.(tsx|mdx)$/
+);
 
 const withGlobalStyles = (cb: Function) => (
   <>
-    <GlobalStyles/>
+    <GlobalStyles />
     {cb()}
   </>
 );
@@ -25,6 +29,4 @@ addDecorator(withGlobalStyles);
 addDecorator(withKnobs);
 addDecorator(withA11y);
 addDecorator(withThemesProvider(themes));
-addDecorator((story) => story());
-
 configure(requiredStories, module);
