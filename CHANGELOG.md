@@ -75,7 +75,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed modal size properties to theme object
 - Update grid to support active speaker
 - Updated prebuild script to ignore CHANGELOG verification for BOT submitted PR's
-- Fixed release execution bug.
+- Fixed release execution bug
+- Added `npm run build:publish` script
 
 ### Removed
 
