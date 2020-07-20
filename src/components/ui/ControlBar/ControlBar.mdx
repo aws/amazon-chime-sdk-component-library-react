@@ -1,0 +1,116 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import ControlBar from '.';
+import ControlBarItem from './ControlBarItem';
+import { ControlBarForDocs } from './ControlBar.stories';
+import { lightTheme } from '../../../theme/';
+
+# ControlBar
+
+The ControlBar component displays a section of all controls with icons and labels.
+
+The component can be placed within the parent element according to the `layout` prop, 
+e.g. `top`, `bottom`, `right`, `left`, `undocked-horizontal` and `undocked-vertical`.
+
+The ControlBar component contains one or more `ControlBarItem` components, which can show a label and icon. 
+A dropdown list can be added to each ControlBarItem by setting the [popOver props](/?path=/docs/ui-components-popover--basic-pop-over-menu).
+
+## Importing
+
+```javascript
+import {
+  ControlBar,
+  ControlBarItem
+} from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <div style={{height: '50vh'}}>
+      <ControlBarForDocs />
+    </div>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+const [muted, setMuted] = useState(false);
+const [cameraActive, setCameraActive] = useState(false);
+
+const microphoneButtonProps = {
+  icon: muted ? <Microphone muted /> : <Microphone />,
+  onClick: () => setMuted(!muted),
+  label: 'Mute'
+};
+
+const cameraButtonProps = {
+  icon: cameraActive ? <Camera /> : <Camera disabled />,
+  popOver: [
+    {
+      onClick: () => console.log('camera popover option 1'),
+      children: <span>Some option text</span>
+    },
+    {
+      onClick: () => console.log('camera popover option 2'),
+      children: <span>More option text</span>
+    }
+  ],
+  onClick: () => setCameraActive(!cameraActive),
+  label: 'Camera'
+};
+
+const dialButtonProps = {
+  icon: <Dialer />,
+  onClick: () => console.log('Toggle dial pad'),
+  label: 'Dial'
+};
+
+const hangUpButtonProps = {
+  icon: <Phone />,
+  onClick: () => console.log('End meeting'),
+  label: 'End'
+};
+
+const volumeButtonProps = {
+  icon: <Sound />,
+  onClick: () => console.log('Volume button clicked'),
+  popOver: [
+    {
+      onClick: () => console.log('volume popover option 1'),
+      children: <span>Some option text</span>
+    },
+    {
+      onClick: () => console.log('volume popover option 2'),
+      children: <span>More option text</span>
+    }
+  ],
+  label: 'Volume'
+};
+
+const laptopButtonProps = {
+  icon: <Laptop />,
+  onClick: () => console.log('Screen button clicked'),
+  label: 'Screen'
+};
+
+return (
+  <ControlBar showLabels layout="left">
+    <ControlBarItem {...microphoneButtonProps} />
+    <ControlBarItem {...volumeButtonProps} />
+    <ControlBarItem {...cameraButtonProps} />
+    <ControlBarItem {...dialButtonProps} />
+    <ControlBarItem {...laptopButtonProps} />
+    <ControlBarItem {...hangUpButtonProps} />
+  </ControlBar>
+);
+```
+
+## Props
+
+#### ControlBar Component
+<Props of={ControlBar} />
+
+#### ControlBarItem Component
+<Props of={ControlBarItem} />
