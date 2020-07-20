@@ -5,10 +5,18 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Flex } from './';
+import FlexDocs from './Flex.mdx';
 
 const Child = styled(Flex)`
   background-color: ${props => props.theme.colors.primary.lightest};
   height: 90vh;
+  margin: 1rem;
+  border-radius: 4px;
+`;
+
+export const Block = styled(Flex)`
+  background-color: ${props => props.theme.colors.primary.lightest};
+  height: 5vh;
   margin: 1rem;
   border-radius: 4px;
 `;
@@ -23,7 +31,7 @@ const StackChild = styled.div`
   background-color: ${props => props.theme.colors.primary.lightest};
 `;
 
-const Title = styled.h1`
+export const Title = styled.h1`
   background-color: ${props => props.theme.colors.primary.lightest};
   color: ${props => props.theme.colors.primary.darkest};
   padding: 2rem;
@@ -32,6 +40,13 @@ const Title = styled.h1`
 
 export default {
   title: 'UI Components/Flex',
+  parameters: {
+    docs: {
+      page: FlexDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: Flex,
+  excludeStories: ['Block', 'Title']
 };
 
 export const FillSpaceCentered = () => {
@@ -43,7 +58,7 @@ export const FillSpaceCentered = () => {
 };
 
 FillSpaceCentered.story = {
-  name: 'fill space centered',
+  name: 'fill space centered'
 };
 
 export const EqualColumns = () => {
@@ -58,7 +73,7 @@ export const EqualColumns = () => {
 };
 
 EqualColumns.story = {
-  name: 'equal columns',
+  name: 'equal columns'
 };
 
 export const _Stack = () => {
@@ -73,5 +88,5 @@ export const _Stack = () => {
 };
 
 _Stack.story = {
-  name: 'stack',
+  name: 'stack'
 };
