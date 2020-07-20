@@ -81,6 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed active state button tests.
 - 'styled-reset' package due to license incompatibility
+- Reverted `Add docs for the Modal component` commit to fix CSSProperties compatibility error
 
 ### Fixed
 
@@ -88,6 +89,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix react state update errors for `MeetingStatusProvider`, `MeetingRoster` and `MeetingJoinDetails`
 - Fix roster showing stale attendees
 - `AudioActivityPreview` to show mic progress track on audio input device change
-- Fixed typo in IconButton unit test
 
 ## [0.1.1] - 2020-06-16
