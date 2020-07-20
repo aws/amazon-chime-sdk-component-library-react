@@ -44,19 +44,19 @@ const layoutMap = {
   'fill-space': fillSpace,
   'fill-space-centered': fillSpaceCentered,
   'equal-columns': equalColumns,
-  stack,
+  stack
 };
 
 export const StyledFlex = styled.div<FlexProps>`
-  align-items: ${props => props.alignItems || 'stretch'};
-  display: ${props => props.container ? 'flex' : 'block'};
+  align-items: ${props => props.alignItems};
+  display: ${props => (props.container ? 'flex' : 'block')};
   flex: ${props => props.flex || ''};
-  flex-basis: ${props => props.flexBasis || 'auto'};
-  flex-direction: ${props => props.flexDirection || 'row'};
+  flex-basis: ${props => props.flexBasis};
+  flex-direction: ${props => props.flexDirection};
   flex-grow: ${props => props.flexGrow || ''};
-  flex-shrink: ${props => props.flexShrink || 1};
-  flex-wrap: ${props => props.flexWrap || 'nowrap'};
-  justify-content: ${props => props.justifyContent || 'flex-start'};
+  flex-shrink: ${props => props.flexShrink};
+  flex-wrap: ${props => props.flexWrap};
+  justify-content: ${props => props.justifyContent};
 
   // layout variants
   ${props => !!props.layout && layoutMap[props.layout]}
