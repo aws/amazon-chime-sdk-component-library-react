@@ -7,9 +7,89 @@ import { select, boolean } from '@storybook/addon-knobs';
 import { Microphone, Camera, Dialer, Sound, Phone, Laptop } from '../icons';
 import ControlBar from '.';
 import ControlBarItem from './ControlBarItem';
+import ControlBarDocs from './ControlBar.mdx';
 
 export default {
   title: 'UI Components/ControlBar',
+  parameters: {
+    docs: {
+      page: ControlBarDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: ControlBar,
+  excludeStories: ['ControlBarForDocs']
+};
+
+export const ControlBarForDocs = () => {
+  const [muted, setMuted] = useState(false);
+  const [cameraActive, setCameraActive] = useState(false);
+
+  const microphoneButtonProps = {
+    icon: muted ? <Microphone muted /> : <Microphone />,
+    onClick: () => setMuted(!muted),
+    label: 'Mute'
+  };
+
+  const cameraButtonProps = {
+    icon: cameraActive ? <Camera /> : <Camera disabled />,
+    popOver: [
+      {
+        onClick: () => console.log('camera popover option 1'),
+        children: <span>Some option text</span>
+      },
+      {
+        onClick: () => console.log('camera popover option 2'),
+        children: <span>More option text</span>
+      }
+    ],
+    onClick: () => setCameraActive(!cameraActive),
+    label: 'Camera'
+  };
+
+  const dialButtonProps = {
+    icon: <Dialer />,
+    onClick: () => console.log('Toggle dial pad'),
+    label: 'Dial'
+  };
+
+  const hangUpButtonProps = {
+    icon: <Phone />,
+    onClick: () => console.log('End meeting'),
+    label: 'End'
+  };
+
+  const volumeButtonProps = {
+    icon: <Sound />,
+    onClick: () => console.log('Volume button clicked'),
+    popOver: [
+      {
+        onClick: () => console.log('volume popover option 1'),
+        children: <span>Some option text</span>
+      },
+      {
+        onClick: () => console.log('volume popover option 2'),
+        children: <span>More option text</span>
+      }
+    ],
+    label: 'Volume'
+  };
+
+  const laptopButtonProps = {
+    icon: <Laptop />,
+    onClick: () => console.log('Screen button clicked'),
+    label: 'Screen'
+  };
+
+  return (
+    <ControlBar showLabels layout="left">
+      <ControlBarItem {...microphoneButtonProps} />
+      <ControlBarItem {...volumeButtonProps} />
+      <ControlBarItem {...cameraButtonProps} />
+      <ControlBarItem {...dialButtonProps} />
+      <ControlBarItem {...laptopButtonProps} />
+      <ControlBarItem {...hangUpButtonProps} />
+    </ControlBar>
+  );
 };
 
 export const _ControlBar = () => {
@@ -17,70 +97,83 @@ export const _ControlBar = () => {
   const [cameraActive, setCameraActive] = useState(false);
 
   const microphoneButtonProps = {
-    icon: muted ? <Microphone muted /> : <Microphone /> ,
+    icon: muted ? <Microphone muted /> : <Microphone />,
     onClick: () => setMuted(!muted),
-    label: 'Mute',
-  }
+    label: 'Mute'
+  };
 
   const cameraButtonProps = {
     icon: cameraActive ? <Camera /> : <Camera disabled />,
     popOver: [
-      { onClick: () => console.log('camera popover option 1'), children: <span>Some option text</span>},
-      { onClick: () => console.log('camera popover option 2'), children: <span>More option text</span>},
+      {
+        onClick: () => console.log('camera popover option 1'),
+        children: <span>Some option text</span>
+      },
+      {
+        onClick: () => console.log('camera popover option 2'),
+        children: <span>More option text</span>
+      }
     ],
     onClick: () => setCameraActive(!cameraActive),
-    label: 'Camera',
-  }
+    label: 'Camera'
+  };
 
   const dialButtonProps = {
     icon: <Dialer />,
     onClick: () => console.log('Toggle dial pad'),
-    label: 'Dial',
-  }
+    label: 'Dial'
+  };
 
   const hangUpButtonProps = {
     icon: <Phone />,
     onClick: () => console.log('End meeting'),
-    label: 'End',
-  }
+    label: 'End'
+  };
 
   const volumeButtonProps = {
     icon: <Sound />,
     onClick: () => console.log('Volume button clicked'),
     popOver: [
-      { onClick: () => console.log('volume popover option 1'), children: <span>Some option text</span>},
-      { onClick: () => console.log('volume popover option 2'), children: <span>More option text</span>},
+      {
+        onClick: () => console.log('volume popover option 1'),
+        children: <span>Some option text</span>
+      },
+      {
+        onClick: () => console.log('volume popover option 2'),
+        children: <span>More option text</span>
+      }
     ],
-    label: 'Volume',
-  }
+    label: 'Volume'
+  };
 
   const laptopButtonProps = {
     icon: <Laptop />,
     onClick: () => console.log('Screen button clicked'),
     label: 'Screen'
-  }
+  };
 
-  return(
+  return (
     <ControlBar
       showLabels={boolean('show labels', true)}
       layout={select(
-        'layout',{
+        'layout',
+        {
           top: 'top',
-          bottom:'bottom',
+          bottom: 'bottom',
           right: 'right',
           left: 'left',
           undockedVertical: 'undocked-vertical',
-          undockedHorizontal: 'undocked-horizontal',
-         },
+          undockedHorizontal: 'undocked-horizontal'
+        },
         'top'
       )}
     >
-        <ControlBarItem {...microphoneButtonProps} />
-        <ControlBarItem {...volumeButtonProps} />
-        <ControlBarItem {...cameraButtonProps} />
-        <ControlBarItem {...dialButtonProps} />
-        <ControlBarItem {...laptopButtonProps} />
-        <ControlBarItem {...hangUpButtonProps} />
+      <ControlBarItem {...microphoneButtonProps} />
+      <ControlBarItem {...volumeButtonProps} />
+      <ControlBarItem {...cameraButtonProps} />
+      <ControlBarItem {...dialButtonProps} />
+      <ControlBarItem {...laptopButtonProps} />
+      <ControlBarItem {...hangUpButtonProps} />
     </ControlBar>
-    )
+  );
 };

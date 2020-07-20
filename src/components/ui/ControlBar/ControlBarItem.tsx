@@ -10,35 +10,57 @@ import PopOverItem, { PopOverItemProps } from '../PopOver/PopOverItem';
 import { useControlBarContext } from './ControlBarContext';
 import IconButton from '../Button/IconButton';
 
-export interface ControlBarButtonProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ControlBarButtonProps
+  extends React.HTMLAttributes<HTMLDivElement> {
+  /** The icon of the control bar item. */
   icon: JSX.Element;
+  /** Callback fired when the item is clicked. */
   onClick: () => void;
+  /** The label of an control bar item. */
   label: string;
+  /** The items to render in a popover menu. When passed, the button will render an arrow to open/close a popover menu. Refer to: [PopOverItem](/?path=/docs/ui-components-popover--basic-pop-over-menu) */
   popOver?: PopOverItemProps[] | null;
 }
 
-export const ControlBarButton:FC<ControlBarButtonProps> = ({ icon, onClick, label, popOver = null }) => {
+export const ControlBarButton: FC<ControlBarButtonProps> = ({
+  icon,
+  onClick,
+  label,
+  popOver = null
+}) => {
   const context = useControlBarContext();
 
   const renderPopOver = () => (
     <PopOver
-      renderButton={(isOpen) => getButtonContents(isOpen)}
+      renderButton={isOpen => getButtonContents(isOpen)}
       a11yLabel={label}
-      children={popOver?.map((option: PopOverItemProps, index: number) => <PopOverItem {...option} key={index} />)}
+      children={popOver?.map((option: PopOverItemProps, index: number) => (
+        <PopOverItem {...option} key={index} />
+      ))}
     />
-  )
+  );
 
   const getButtonContents = (isOpen: boolean) => (
-    <Caret direction={isVertical(context.layout) ? 'right' : 'up'} className={`controlBarItem__caret ${isOpen ? 'isOpen' : ''}`} data-testid='control-bar-item-caret'/>
-  )
+    <Caret
+      direction={isVertical(context.layout) ? 'right' : 'up'}
+      className={`controlBarItem__caret ${isOpen ? 'isOpen' : ''}`}
+      data-testid="control-bar-item-caret"
+    />
+  );
 
   return (
-    <StyledControlBarItem data-testid='control-bar-item' {...context} popOver={popOver}>
+    <StyledControlBarItem
+      data-testid="control-bar-item"
+      {...context}
+      popOver={popOver}
+    >
       <IconButton onClick={onClick} label={label} icon={icon} />
       {!!popOver && renderPopOver()}
-      {context.showLabels && <div className='controlBarItem__label'>{label}</div>}
+      {context.showLabels && (
+        <div className="controlBarItem__label">{label}</div>
+      )}
     </StyledControlBarItem>
-  )
-}
+  );
+};
 
 export default ControlBarButton;
