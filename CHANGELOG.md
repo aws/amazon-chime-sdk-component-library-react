@@ -94,5 +94,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix roster showing stale attendees
 - `AudioActivityPreview` to show mic progress track on audio input device change
 - Fixed release execution bug
+- Fixed bug in verdaccio clean up 
 
 ## [0.1.1] - 2020-06-16

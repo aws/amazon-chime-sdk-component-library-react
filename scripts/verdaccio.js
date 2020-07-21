@@ -73,7 +73,7 @@ process.chdir(comonentsTestDir);
 logger.log(`Cloning ${COMPONENTS_APP_NAME} in to testing direcotry.`);
 
 //Clean up
-spawnOrFail('rm', ['-rf', `${COMPONENTS_APP_NAME}`, '--force']);
+spawnOrFail('rm', ['-rf', `${COMPONENTS_APP_NAME}`]);
 spawnOrFail('git', [
   'clone',
   'git@github.com:aws/amazon-chime-sdk-component-library-react.git'
