@@ -41,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add SDK components documentation
 - Add docs for Flex component
 - Add Navbar component
+- Add github actions workflow check for changes to workflows with 'push' or 'pull_request' trigger types
 
 ### Changed
 
