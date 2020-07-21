@@ -52,3 +52,13 @@ export type MeetingContextType = {
   meetingStatus: MeetingStatus;
   updateMeetingStatus: (s: MeetingStatus) => void;
 };
+
+export type RosterAttendeeType = {
+  chimeAttendeeId: string;
+  externalUserId?: string;
+  name?: string;
+};
+
+export type RosterType = {
+  [attendeeId: string]: RosterAttendeeType;
+};

@@ -9,7 +9,8 @@ Returns state around the meeting's roster.
 ```javascript
 {
  [AttendeeId: string]: {
-   id: string;
+   chimeAttendeeId: string;
+   externalUserId?: string;
    name?: string;
  }
 }

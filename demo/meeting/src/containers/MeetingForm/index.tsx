@@ -13,7 +13,7 @@ import {
   useMeetingManager,
   Modal,
   ModalBody,
-  ModalHeader,
+  ModalHeader
 } from 'amazon-chime-sdk-component-library-react';
 
 import { getErrorContext } from '../../providers/ErrorProvider';
@@ -23,11 +23,14 @@ import Spinner from '../../components/Spinner';
 import DevicePermissionPrompt from '../DevicePermissionPrompt';
 import { AVAILABLE_AWS_REGIONS } from '../../constants';
 import getFormattedOptionsForSelect from '../../utils/select-options-format';
+import { fetchMeeting, createGetAttendeeCallback } from '../../utils/api';
+import { useAppState } from '../../providers/AppStateProvider';
 
 const MeetingForm: React.FC = () => {
   const meetingManager = useMeetingManager();
+  const { setMeeting, setLocalName } = useAppState();
   const [meetingId, setMeetingId] = useState('');
-  const [inputName, setInputName] = useState('');
+  const [name, setName] = useState('');
   const [region, setRegion] = useState('us-east-1');
   const [isLoading, setIsLoading] = useState(false);
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
@@ -35,14 +38,24 @@ const MeetingForm: React.FC = () => {
 
   const handleJoinMeeting = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!meetingId) {
+      return;
+    }
+
     setIsLoading(true);
+    meetingManager.getAttendee = createGetAttendeeCallback(meetingId);
+
     try {
-      const meeting = await meetingManager?.authenticate(
-        meetingId,
-        inputName,
-        region
-      );
-      console.log('Join meeting info ', meeting);
+      const { JoinInfo } = await fetchMeeting(meetingId, name, region);
+
+      await meetingManager.join({
+        meetingInfo: JoinInfo.Meeting,
+        attendeeInfo: JoinInfo.Attendee
+      });
+
+      setMeeting(meetingId);
+      setLocalName(name);
       history.push(routes.DEVICE);
     } catch (error) {
       updateErrorMessage(error.message);
@@ -52,7 +65,7 @@ const MeetingForm: React.FC = () => {
   const closeError = (): void => {
     updateErrorMessage('');
     setMeetingId('');
-    setInputName('');
+    setName('');
     setIsLoading(false);
   };
 
@@ -77,13 +90,13 @@ const MeetingForm: React.FC = () => {
       <FormField
         field={Input}
         label="Name"
-        value={inputName}
+        value={name}
         fieldProps={{
-          name: 'inputName',
+          name: 'name',
           placeholder: 'Enter Your Name'
         }}
         onChange={(e: ChangeEvent<HTMLInputElement>): void =>
-          setInputName(e.target.value)
+          setName(e.target.value)
         }
       />
       <FormField

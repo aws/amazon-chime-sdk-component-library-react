@@ -16,8 +16,10 @@ import {
   MeetingStatus
 } from 'amazon-chime-sdk-component-library-react';
 
+import { endMeeting } from '../../utils/api';
 import routes from '../../constants/routes';
 import { StyledP } from './Styled';
+import { useAppState } from '../../providers/AppStateProvider';
 
 const EndMeetingControl: React.FC = () => {
   const meetingManager = useMeetingManager();
@@ -25,15 +27,24 @@ const EndMeetingControl: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
   const toggleModal = (): void => setShowModal(!showModal);
   const { updateMeetingStatus } = useMeetingStatus();
+  const { meetingId } = useAppState();
 
-  const endMeeting = async (): Promise<void> => {
-    await meetingManager?.endMeeting();
+  const endMeetingForAll = async (): Promise<void> => {
+    try {
+      await meetingManager.leave();
+      if (meetingId) {
+        await endMeeting(meetingId);
+      }
+    } catch (e) {
+      console.log('Could not end meeting');
+    }
+
     updateMeetingStatus(MeetingStatus.Ended);
     history.push(routes.HOME);
   };
 
   const leaveMeeting = async (): Promise<void> => {
-    await meetingManager?.leaveMeeting();
+    await meetingManager.leave();
     history.push(routes.HOME);
   };
 
@@ -52,7 +63,7 @@ const EndMeetingControl: React.FC = () => {
           <ModalButtonGroup
             primaryButtons={[
               <ModalButton
-                onClick={endMeeting}
+                onClick={endMeetingForAll}
                 variant="primary"
                 label="End meeting for all"
                 closesModal

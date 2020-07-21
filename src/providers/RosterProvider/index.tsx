@@ -6,15 +6,7 @@ import { DefaultModality } from 'amazon-chime-sdk-js';
 
 import { useMeetingManager } from '../MeetingProvider';
 import { useAudioVideo } from '../AudioVideoProvider';
-
-type RosterAttendeeType = {
-  id: string;
-  name?: string;
-};
-
-type RosterType = {
-  [attendeeId: string]: RosterAttendeeType;
-};
+import { RosterType, RosterAttendeeType } from '../../types';
 
 interface RosterContextValue {
   roster: RosterType;
@@ -28,39 +20,54 @@ const RosterProvider: React.FC = ({ children }) => {
   const rosterRef = useRef<RosterType>({});
   const [roster, setRoster] = useState<RosterType>({});
 
+  meetingManager.getAttendee;
+
   useEffect(() => {
     if (!audioVideo) {
       return;
     }
 
     const rosterUpdateCallback = async (
-      presentAttendeeId: string,
-      present: boolean
+      chimeAttendeeId: string,
+      present: boolean,
+      externalUserId?: string
     ): Promise<void> => {
       if (!present) {
-        delete rosterRef.current[presentAttendeeId];
+        delete rosterRef.current[chimeAttendeeId];
 
         setRoster((currentRoster: RosterType) => {
-          const { [presentAttendeeId]: _, ...rest } = currentRoster;
+          const { [chimeAttendeeId]: _, ...rest } = currentRoster;
           return { ...rest };
         });
 
         return;
       }
 
-      const attendeeId = new DefaultModality(presentAttendeeId).base();
-      if (attendeeId !== presentAttendeeId) {
+      const attendeeId = new DefaultModality(chimeAttendeeId).base();
+      if (attendeeId !== chimeAttendeeId) {
         return;
       }
 
-      const inRoster = rosterRef.current[presentAttendeeId];
+      const inRoster = rosterRef.current[chimeAttendeeId];
       if (inRoster) {
         return;
       }
 
-      const attendee = await meetingManager.getAttendeeInfo(attendeeId);
-      if (!attendee) {
-        return;
+      let attendee: RosterAttendeeType = { chimeAttendeeId };
+
+      if (externalUserId) {
+        attendee.externalUserId = externalUserId;
+      }
+
+      if (meetingManager.getAttendee) {
+        const externalData = await meetingManager.getAttendee(
+          attendeeId,
+          externalUserId
+        );
+
+        if (externalData.name) {
+          attendee.name = externalData.name;
+        }
       }
 
       rosterRef.current[attendeeId] = attendee;
