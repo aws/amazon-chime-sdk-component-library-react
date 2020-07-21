@@ -3,7 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const exec = require('child_process').spawnSync;
-const { logger, spawnOrFail, process } = require('./utilities');
+const { logger, spawnOrFail, process, shouldContinuePrompt } = require('./utilities');
 
 const { labels = [], actor = '' } = process.env.GITHUB_CONTEXT || {};
 const botName = 'dependabot';
@@ -43,6 +43,13 @@ if (!commits || !commits[0]) {
       `Error: there are uncommitted changes:\n ${uncommitted_files}`
     );
     return process.exit(1);
+  }
+
+  if (commit_files.includes('.github/workflows') && !process.env.GITHUB_ACTIONS) {
+    logger.warn(
+      "If your github action workflow uses a 'push' or 'pull_request' trigger, have you verified that the github workflow change is safe to execute when the PR is created? Or type yes if this does not apply to you."
+    );
+    shouldContinuePrompt();
   }
 
   if (commit_files.includes('CHANGELOG.md')) {
