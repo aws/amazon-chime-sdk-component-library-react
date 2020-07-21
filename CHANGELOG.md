@@ -40,6 +40,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add docs for Heading and ControlBar components
 - Add SDK components documentation
 - Add docs for Flex component
+- Add storybook-deploy to CI
 
 ### Changed
 
