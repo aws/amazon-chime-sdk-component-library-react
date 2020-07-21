@@ -31,8 +31,14 @@ const MeetingRoster = () => {
   };
 
   const attendeeItems = attendees.map((attendee: any) => {
-    const { id, name } = attendee || {};
-    return <RosterAttendee key={id} attendeeId={id} name={name} />;
+    const { chimeAttendeeId, name } = attendee || {};
+    return (
+      <RosterAttendee
+        key={chimeAttendeeId}
+        attendeeId={chimeAttendeeId}
+        name={name}
+      />
+    );
   });
 
   return (

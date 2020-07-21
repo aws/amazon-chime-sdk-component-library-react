@@ -1,0 +1,40 @@
+<Meta title="SDK Hooks/useMeetingManager" />
+
+# useMeetingManager
+
+Returns the MeetingManager instance.
+
+### Return value
+
+```javascript
+MeetingManager
+```
+
+## Importing
+
+```javascript
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+```
+
+## Usage
+
+The hook depends on the `MeetingProvider`.
+
+```jsx
+import React from 'react';
+import { MeetingProvider, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+
+const MyChild = () => {
+  const meetingManager = useMeetingManager();
+
+  ...
+}
+```

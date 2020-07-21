@@ -10,26 +10,25 @@ import {
   useMeetingManager,
   Modal,
   ModalBody,
-  ModalHeader,
+  ModalHeader
 } from 'amazon-chime-sdk-component-library-react';
 
 import routes from '../constants/routes';
 import Card from '../components/Card';
+import { useAppState } from '../providers/AppStateProvider';
 
 const MeetingJoinDetails = () => {
   const meetingManager = useMeetingManager();
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-
-  const meetingId = meetingManager?.meetingId || '';
-  const attendeeName = meetingManager?.attendeeName;
+  const { meetingId, localUserName } = useAppState();
 
   const handleJoinMeeting = async () => {
     setIsLoading(true);
 
     try {
-      await meetingManager.join();
+      await meetingManager.start();
       setIsLoading(false);
       history.push(`${routes.MEETING}/${meetingId}`);
     } catch (error) {
@@ -46,7 +45,7 @@ const MeetingJoinDetails = () => {
           onClick={handleJoinMeeting}
         />
         <Label style={{ margin: '.75rem 0 0 0' }}>
-          Joining meeting <b>{meetingId}</b> as <b>{attendeeName}</b>
+          Joining meeting <b>{meetingId}</b> as <b>{localUserName}</b>
         </Label>
       </Flex>
       {error && (

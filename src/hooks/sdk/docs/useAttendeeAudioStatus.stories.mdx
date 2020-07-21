@@ -1,0 +1,53 @@
+<Meta title="SDK Hooks/useAttendeeAudioStatus" />
+
+# useAttendeeAudioStatus
+
+Returns the mute and signal strength state for a given chime attendee ID.
+
+### Return value
+
+```javascript
+{
+  muted: boolean;
+
+  // Either 0 (no signal), 50 (weak signal), or 100 (good signal)
+  signalStrength: number;
+}
+```
+
+## Importing
+
+```javascript
+import { useAttendeeAudioStatus } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook depends on the `AudioVideoProvider`. If you are using `MeetingProvider`, it is rendered by default.
+
+```jsx
+import React from 'react';
+import { MeetingProvider, useAttendeeAudioStatus } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+      <MyChild />
+  </MeetingProvider>
+);
+
+
+const MyChild = () => {
+  const { muted, signalStrength } = useAttendeeAudioStatus('chime-attendee-id-1234');
+
+  return (
+    <> 
+      <p> chime-attendee-id-1234 is {muted ? 'muted' : 'unmuted'} </p>
+      <p> signal strength: {signalStrength} </p>
+    </>
+  )
+}
+```
+
+### Dependencies
+
+- `AudioVideoProvider`

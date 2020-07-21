@@ -6,7 +6,6 @@ import {
   ConsoleLogger,
   DefaultDeviceController,
   DefaultMeetingSession,
-  DeviceChangeObserver,
   LogLevel,
   MeetingSessionConfiguration
 } from 'amazon-chime-sdk-js';
@@ -23,12 +22,14 @@ enum DevicePermissionStatus {
   DENIED = 'DENIED'
 }
 
-const BASE_URL: string = [
-  location.protocol,
-  '//',
-  location.host,
-  location.pathname.replace(/\/*$/, '/')
-].join('');
+interface MeetingJoinData {
+  meetingInfo: any;
+  attendeeInfo: any;
+}
+
+interface AttendeeResponse {
+  name?: string;
+}
 
 type FullDeviceInfoType = {
   selectedAudioOutputDevice: string | null;
@@ -39,7 +40,7 @@ type FullDeviceInfoType = {
   videoInputDevices: MediaDeviceInfo[] | null;
 };
 
-export class MeetingManager implements DeviceChangeObserver {
+export class MeetingManager {
   meetingSession: DefaultMeetingSession | null = null;
 
   audioVideo: AudioVideoFacade | null = null;
@@ -48,9 +49,10 @@ export class MeetingManager implements DeviceChangeObserver {
 
   meetingId: string | null = null;
 
-  attendeeName: string | null = null;
-
-  region: string | null = null;
+  getAttendee?: (
+    chimeAttendeeId: string,
+    externalUserId?: string
+  ) => Promise<AttendeeResponse>;
 
   selectedAudioOutputDevice: string | null = null;
 
@@ -87,8 +89,6 @@ export class MeetingManager implements DeviceChangeObserver {
     this.audioVideo = null;
     this.configuration = null;
     this.meetingId = null;
-    this.attendeeName = null;
-    this.region = null;
     this.selectedAudioOutputDevice = null;
     this.selectedAudioOutputDeviceObservers = [];
     this.selectedAudioInputDevice = null;
@@ -100,42 +100,35 @@ export class MeetingManager implements DeviceChangeObserver {
     this.videoInputDevices = [];
   }
 
-  async authenticate(
-    meetingId: string,
-    name: string,
-    region: string
-  ): Promise<string> {
-    this.meetingId = meetingId;
-    this.attendeeName = name;
-    this.region = region;
-    const joinInfo = (await this.joinMeeting(meetingId, name, region)).JoinInfo;
+  async join({ meetingInfo, attendeeInfo }: MeetingJoinData) {
     this.configuration = new MeetingSessionConfiguration(
-      joinInfo.Meeting,
-      joinInfo.Attendee
+      meetingInfo,
+      attendeeInfo
     );
-
+    this.meetingId = this.configuration.meetingId;
     await this.initializeMeetingSession(this.configuration);
-    return joinInfo.Meeting;
   }
 
-  async joinMeeting(
-    meetingId: string,
-    name: string,
-    region: string
-  ): Promise<any> {
-    const response = await fetch(
-      `${BASE_URL}join?title=${encodeURIComponent(
-        meetingId
-      )}&name=${encodeURIComponent(name)}&region=${encodeURIComponent(region)}`,
-      {
-        method: 'POST'
-      }
-    );
-    const json = await response.json();
-    if (json.error) {
-      throw new Error(`Server error: ${json.error}`);
+  async start(): Promise<void> {
+    this.audioVideo?.start();
+    await this.meetingSession?.screenShare.open();
+    await this.meetingSession?.screenShareView.open();
+  }
+
+  async leave(): Promise<void> {
+    if (this.audioVideo) {
+      this.audioVideo.stopContentShare();
+
+      await this.audioVideo.stopLocalVideoTile();
+      await this.audioVideo.chooseVideoInputDevice(null);
+
+      this.audioVideo.unbindAudioElement();
+      await this.audioVideo.chooseAudioInputDevice(null);
+      this.audioVideo.stop();
     }
-    return json;
+
+    this.initializeMeetingManager();
+    this.publishAudioVideoUpdate();
   }
 
   async initializeMeetingSession(
@@ -151,7 +144,6 @@ export class MeetingManager implements DeviceChangeObserver {
     );
 
     this.audioVideo = this.meetingSession.audioVideo;
-    this.audioVideo.addDeviceChangeObserver(this);
     this.setupDeviceLabelTrigger();
     await this.listAndSelectDevices();
     this.publishAudioVideoUpdate();
@@ -179,43 +171,6 @@ export class MeetingManager implements DeviceChangeObserver {
     this.audioVideo?.setDeviceLabelTrigger(callback);
     this.devicePermissions = DevicePermissionStatus.GRANTED;
     this.notifyDevicePermissionChange();
-  }
-
-  // Start meeting view
-  async join(): Promise<void> {
-    await this.listAndSelectDevices();
-
-    this.audioVideo?.start();
-    await this.meetingSession?.screenShare.open();
-    await this.meetingSession?.screenShareView.open();
-  }
-
-  async endMeeting(): Promise<any> {
-    this.leaveMeeting();
-    if (this.meetingId) {
-      await fetch(
-        `${BASE_URL}end?title=${encodeURIComponent(this.meetingId)}`,
-        {
-          method: 'POST'
-        }
-      );
-    }
-  }
-
-  async leaveMeeting(): Promise<void> {
-    if (this.audioVideo) {
-      this.audioVideo.stopContentShare();
-
-      await this.audioVideo.stopLocalVideoTile();
-      await this.audioVideo.chooseVideoInputDevice(null);
-
-      this.audioVideo.unbindAudioElement();
-      await this.audioVideo.chooseAudioInputDevice(null);
-      this.audioVideo.stop();
-    }
-
-    this.initializeMeetingManager();
-    this.publishAudioVideoUpdate();
   }
 
   async listAndSelectDevices(): Promise<void> {
@@ -297,56 +252,9 @@ export class MeetingManager implements DeviceChangeObserver {
     }
   };
 
-  async getAttendeeInfo(presentAttendeeId: string) {
-    if (!this.meetingId) {
-      return;
-    }
-
-    const url = `${BASE_URL}attendee?title=${encodeURIComponent(
-      this.meetingId
-    )}&attendee=${encodeURIComponent(presentAttendeeId)}`;
-
-    try {
-      const res = await fetch(url, {
-        method: 'GET'
-      });
-
-      if (!res.ok) {
-        throw new Error('Invalid server response');
-      }
-
-      const json = await res.json();
-      const { AttendeeId: id, Name: name } = json.AttendeeInfo;
-      return { id, name };
-    } catch (e) {
-      console.log(`Error fetching attendee: ${e.message}`);
-      return null;
-    }
-  }
-
   /**
    * ====================================================================
-   * Observer methods
-   * ====================================================================
-   */
-  audioInputsChanged(freshAudioInputDeviceList: MediaDeviceInfo[]): void {
-    console.log('DeviceChangeObserver audioInputsChanged');
-    freshAudioInputDeviceList.forEach((mediaDeviceInfo: MediaDeviceInfo) => {
-      console.log('audioInputsChanged mediaDeviceInfo', mediaDeviceInfo);
-    });
-  }
-
-  audioOutputsChanged(freshAudioOutputDeviceList: MediaDeviceInfo[]): void {
-    console.log('DeviceChangeObserver audioOutputsChanged');
-  }
-
-  videoInputsChanged(freshVideoInputDeviceList: MediaDeviceInfo[]): void {
-    console.log('DeviceChangeObserver videoInputsChanged');
-  }
-
-  /**
-   * ====================================================================
-   * Subscribe and unsubscribe from SDK events
+   * Subscriptions
    * ====================================================================
    */
 

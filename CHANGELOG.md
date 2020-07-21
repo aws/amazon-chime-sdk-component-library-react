@@ -42,6 +42,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add docs for Flex component
 - Add Navbar component
 - Add github actions workflow check for changes to workflows with 'push' or 'pull_request' trigger types
+- Add docs for MeetingProvider and hooks
 
 ### Changed
 
@@ -82,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed `prebuild:publish' to run npm install prior to running scripts to make sure all dependencies are available
 - Update roster with mobile design
 - [Deskptop only] Integrate navbar, roster toggle in demo
+- Take callback for fetching attendees. Take in meeting/attendee info for joining meeting
 
 ### Removed
 
@@ -96,6 +98,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix roster showing stale attendees
 - `AudioActivityPreview` to show mic progress track on audio input device change
 - Fixed release execution bug
-- Fixed bug in verdaccio clean up 
+- Fixed bug in verdaccio clean up
 
 ## [0.1.1] - 2020-06-16

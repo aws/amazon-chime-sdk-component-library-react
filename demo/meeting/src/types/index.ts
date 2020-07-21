@@ -1,15 +1,6 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-export type RosterAttendeeType = {
-  id: string;
-  name: string;
-};
-
-export type RosterType = {
-  [attendeeId: string]: RosterAttendeeType;
-};
-
 export type FormattedDeviceType = {
   deviceId: string;
   label: string;
