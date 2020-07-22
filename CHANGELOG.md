@@ -43,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Navbar component
 - Add github actions workflow check for changes to workflows with 'push' or 'pull_request' trigger types
 - Add docs for MeetingProvider and hooks
+- Add docs or Label and Portal components
 
 ### Changed
 

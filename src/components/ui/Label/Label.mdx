@@ -1,0 +1,35 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Label from './';
+import { lightTheme } from '../../../theme/';
+
+# Label
+
+The Label component displays a caption for an item in a user interface.
+
+## Importing
+
+```javascript
+import { Label } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex layout="fill-space-centered">
+      <Label>Hello World</Label>
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Flex layout="fill-space-centered">
+    <Label>Hello World</Label>
+</Flex>
+```
+
+## Props
+
+<Props of={Label} />
