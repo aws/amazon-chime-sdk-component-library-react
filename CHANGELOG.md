@@ -81,6 +81,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added `npm run build:publish` script
 - Changed `prebuild:publish' to run npm install prior to running scripts to make sure all dependencies are available
 - Update roster with mobile design
+- [Deskptop only] Integrate navbar, roster toggle in demo
 
 ### Removed
 

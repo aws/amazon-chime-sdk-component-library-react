@@ -18,7 +18,7 @@ export const StyledRoster = styled.div`
   border: solid 0.03125rem #dedede;
   
   ${({ theme }) => theme.mediaQueries.min.md} {
-    max-width: ${props => props.theme.roster.maxWidth};
+    width: ${props => props.theme.roster.maxWidth};
   }
 
   ${baseSpacing}

@@ -2,18 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { VideoTileGrid } from 'amazon-chime-sdk-component-library-react';
-
-import MeetingControlsContainer from '../../containers/MeetingControlsContainer';
-import MeetingRoster from '../../containers/MeetingRoster';
-
-import { StyledLayout } from './Styled';
+import { StyledLayout, StyledVideoTileGrid } from './Styled';
+import NavigationControl from '../../containers/Navigation/NavigationControl';
+import { NavigationProvider } from '../../providers/NavigationProvider';
 
 const MeetingView = () => (
   <StyledLayout>
-    <VideoTileGrid />
-    <MeetingRoster />
-    <MeetingControlsContainer />
+    <NavigationProvider>
+      <NavigationControl />
+    </NavigationProvider>
+    <StyledVideoTileGrid />
   </StyledLayout>
 );
 
