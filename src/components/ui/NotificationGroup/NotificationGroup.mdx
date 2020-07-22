@@ -1,0 +1,29 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme } from '../../../theme/';
+import { NotificationGroup } from '.';
+
+# NotificationGroup
+
+The NotificationGroup component renders any current notifications to the top of the screen.
+
+Check `NotificationProvider` [documentation](/?path=/docs/ui-providers-notificationprovider--page) for more information.
+
+## Importing
+
+```javascript
+import { NotificationGroup } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+```jsx
+<NotificationProvider>
+  <NotificationGroup />
+</NotificationProvider>
+```
+
+Note: Check for working under the `Canvas` section for this component.
+
+## Dependencies
+- `NotificationProvider`

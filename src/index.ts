@@ -75,8 +75,8 @@ export {
   useModalContext
 } from './components/ui/Modal/ModalContext';
 export {
-  useNotificationStateContext,
-  useNotificationDispatchContext
+  useNotificationState,
+  useNotificationDispatch
 } from './providers/NotificationProvider';
 export { AudioVideoContext } from './providers/AudioVideoProvider';
 
@@ -131,6 +131,10 @@ export { VideoQuality } from './hooks/sdk/useSelectVideoQuality';
 
 // enums
 export { MeetingStatus } from './providers/MeetingStatusProvider';
+export { Severity, ActionType } from './providers/NotificationProvider';
 
 // Class
 export { MeetingManager } from './providers/MeetingProvider/MeetingManager';
+
+// Interface
+export { NotificationType, Action } from './providers/NotificationProvider';

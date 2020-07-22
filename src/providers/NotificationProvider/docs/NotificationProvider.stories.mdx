@@ -1,0 +1,80 @@
+<Meta title="UI Providers/NotificationProvider" />
+
+# NotificationProvider
+
+Provides state and react dispatch method for building NotificationGroup like component.
+
+## Provides
+
+Internally uses `useReducer` hook from React to provide a state and a dispatch method to update this state.
+
+### State
+```javascript
+[{
+  // uuid generated while adding the notification to state array
+  id?: string;
+
+  // Notification Severity controlled by Seveirty enum
+  severity?: Severity;
+
+  // Message to show in notification
+  message?: string;
+
+  // Whether or not the notification should autoclose
+  autoClose?: boolean;
+
+  // Auto close delay in milliseconds, default delay is 6000 (6s)
+  autoCloseDelay?: number;
+
+  // Whether or not the current notification array (state) be emptied
+  replaceAll?: boolean;
+}]
+```
+
+You can access the state using `useNotificationState` hook.
+
+### Dispatch Method
+```javascript
+dispatch: React.Dispatch<Action>
+```
+You can access the dispatch method using `useNotificationDispatch` hook.
+
+## Usage
+
+```jsx
+import React from 'react';
+import { 
+  NotificationProvider, 
+  useNotificationState,
+  useNotificationDispatch,
+  Notification
+ } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <NotificationProvider>
+    <NotificationGroup />
+  </NotificationProvider>
+);
+
+const NotificationGroup = () => {
+
+  const { notifications } = useNotificationState();
+  const dispatch = useNotificationDispatch();
+
+  const notificationItems = {notifications.map(({ id, ...rest }): any => (
+    <Notification
+      key={id}
+      {...rest}
+      onClose={() => dispatch({ type: ActionType.REMOVE, payload: id })}
+    />
+  ))};
+
+  return (
+    <>
+      {notificationItems}
+    </>
+  )
+}
+```
+
+**Note**: Check [useNotificationState](/?path=/docs/ui-hooks-notification-usenotificationstate--page) and [useNotificationDispatch](/?path=/docs/ui-hooks-notification-usenotificationdispatch--page) for more information.

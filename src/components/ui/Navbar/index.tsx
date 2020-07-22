@@ -7,7 +7,9 @@ import { StyledNavbar } from './Styled';
 import { FlexProps } from '../Flex';
 
 export interface NavbarProps extends FlexProps {
+  /** Classname to apply custom CSS styles */
   className?: string;
+  /** Any react components or HTML elements */
   children?: any;
 }
 

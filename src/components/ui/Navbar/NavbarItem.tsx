@@ -8,9 +8,13 @@ import { PopOverItemProps } from '../PopOver/PopOverItem';
 import ControlBarButton from '../ControlBar/ControlBarItem';
 
 export interface NavbarItemProps {
+  /** Any icon from the library for button in navbar item */
   icon: JSX.Element;
+  /** Callback fired when icon is clicked */
   onClick: () => void;
+  /** Label for navbar item */
   label: string;
+  /** PopOver menu if needed in navbar item */
   popOver?: PopOverItemProps[] | null;
 }
 

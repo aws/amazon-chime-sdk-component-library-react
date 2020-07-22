@@ -5,17 +5,30 @@ import React, { useEffect, HTMLAttributes } from 'react';
 
 import { StyledNotification, StyledCloseIconButton } from './Styled';
 import { Caution, CheckRound, Information, Remove, Clock } from '../icons';
-import { Severity } from '../../../providers/NotificationProvider';
 import { BaseProps } from '../Base';
 
-export const DEFAULT_DELAY: number = 8000;
+export const DEFAULT_DELAY: number = 6000;
+
+enum Severity {
+  ERROR = 'error',
+  SUCCESS = 'success',
+  INFO = 'info',
+  WARNING = 'warning',
+};
 
 export interface NotificationProps extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>, BaseProps {
+  /** Notification Severity */
   severity?: Severity;
+  /** Message to show in notification */
   message?: string;
+  /** Callback fired when notification is closed */
   onClose: () => void;
+  /** Whether or not the notification should get autoclosed */
   autoClose?: boolean;
+  /** Auto-closing delay in milliseconds, default delay is 6000 (6s) */
   autoCloseDelay?: number;
+  /** CSS classname to apply custom styles */
+  className?: string;
 }
 
 const iconMapping = {

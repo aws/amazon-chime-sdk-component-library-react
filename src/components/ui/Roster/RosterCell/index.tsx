@@ -13,15 +13,25 @@ import { PopOverMenu } from '../PopOverMenu';
 type MicPosition = 'leading' | 'grouped';
 
 export interface RosterCellProps extends BaseProps {
+  /** Primary name in roster cell */
   name: string;
+  /** Subtitle for the primary name */
   subtitle?: string;
+  /** Late message */
   runningLate?: string;
+  /** Mic's position defined by type MicPosition either 'leading' or 'grouped' */
   micPosition?: MicPosition;
+  /** Whether or not the user is muted */
   muted?: boolean;
+  /** Whether or not the user has enabled the local video */
   videoEnabled?: boolean;
+  /** Whether or not the user is sharing content */
   sharingContent?: boolean;
+  /** Whether or not the user is having poor connection*/
   poorConnection?: boolean;
+  /** PopOver menu for more options */
   menu?: React.ReactNode;
+  /** Label for PopOverMenu, by default it is an empty string */
   a11yMenuLabel?: string;
 }
 
