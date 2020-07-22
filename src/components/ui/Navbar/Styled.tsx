@@ -10,11 +10,11 @@ import { NavbarProps } from '.';
 export const StyledNavbar = styled(Flex)<NavbarProps>`
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100%;
   width: 20rem;
+  max-width: 100%;
   color: ${props => props.theme.navbar.text};
   background-color: ${({ theme }) => theme.navbar.bgd};
-  z-index: ${({ theme }) => theme.zIndex.navigation};
 
   ${({ theme }) => theme.mediaQueries.min.md} {
     width: 4.25rem;
@@ -60,15 +60,5 @@ export const StyledHeader = styled.div`
 
   ${({ theme }) => theme.mediaQueries.min.md} {
     display: none;
-  }
-`;
-
-export const StyledContainer = styled.div`
-  z-index: ${({ theme }) => theme.zIndex.navigation};
-  ${({ theme }) => theme.mediaQueries.max.md} {
-    background-color: ${({ theme }) => theme.navbar.containerBgd};
-    opacity: 0.9;
-    width: 100vw;
-    height: 100vh;
   }
 `;

@@ -12,6 +12,7 @@ import {
 import { AppStateProvider } from './providers/AppStateProvider';
 import ErrorProvider from './providers/ErrorProvider';
 import routes from './constants/routes';
+import { NavigationProvider } from './providers/NavigationProvider';
 import { Meeting, Home, DeviceSetup } from './views';
 
 const App: FC = () => (
@@ -19,13 +20,15 @@ const App: FC = () => (
     <ThemeProvider theme={lightTheme}>
       <ErrorProvider>
         <MeetingProvider>
-          <AppStateProvider>
-            <Switch>
-              <Route exact path={routes.HOME} component={Home} />
-              <Route path={routes.DEVICE} component={DeviceSetup} />
-              <Route path={routes.MEETING} component={Meeting} />
-            </Switch>
-          </AppStateProvider>
+          <NavigationProvider>
+            <AppStateProvider>
+              <Switch>
+                <Route exact path={routes.HOME} component={Home} />
+                <Route path={routes.DEVICE} component={DeviceSetup} />
+                <Route path={routes.MEETING} component={Meeting} />
+              </Switch>
+            </AppStateProvider>
+          </NavigationProvider>
         </MeetingProvider>
       </ErrorProvider>
     </ThemeProvider>

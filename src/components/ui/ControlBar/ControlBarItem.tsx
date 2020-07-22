@@ -9,9 +9,11 @@ import PopOver from '../PopOver';
 import PopOverItem, { PopOverItemProps } from '../PopOver/PopOverItem';
 import { useControlBarContext } from './ControlBarContext';
 import IconButton from '../Button/IconButton';
+import { BaseProps } from '../Base';
 
 export interface ControlBarButtonProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseProps {
   /** The icon of the control bar item. */
   icon: JSX.Element;
   /** Callback fired when the item is clicked. */
@@ -26,7 +28,8 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
   icon,
   onClick,
   label,
-  popOver = null
+  popOver = null,
+  ...rest
 }) => {
   const context = useControlBarContext();
 
@@ -51,6 +54,7 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
   return (
     <StyledControlBarItem
       data-testid="control-bar-item"
+      {...rest}
       {...context}
       popOver={popOver}
     >

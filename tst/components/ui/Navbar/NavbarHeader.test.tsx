@@ -16,20 +16,14 @@ describe('NavbarHeader', () => {
     expect(getByText('Navigation')).toBeInTheDocument();
   });
 
-  it('should render title as Navigation by default', () => {
-    const component = <NavbarHeader />;
-    const { getByText } = renderWithTheme(lightTheme, component);
-    expect(getByText('Navigation')).toBeInTheDocument();
-  });
-
   it('should render a close button when onClose is passed', () => {
-    const component = <NavbarHeader title="Navigation" onClose={() => {}}/>;
+    const component = <NavbarHeader title="Navigation" onClose={() => {}} />;
     const { getByLabelText } = renderWithTheme(lightTheme, component);
     expect(getByLabelText('Close')).toBeInTheDocument();
   });
 
   it('should call onClose once if clicked on close button', () => {
-    const component = <NavbarHeader title="Navigation" onClose={jest.fn()}/>;
+    const component = <NavbarHeader title="Navigation" onClose={jest.fn()} />;
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const closeButton = getByTestId('button');
     fireEvent.click(closeButton);

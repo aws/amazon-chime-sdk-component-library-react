@@ -5,7 +5,6 @@ import React from 'react';
 
 import MeetingRoster from '../MeetingRoster';
 import Navigation from '.';
-import MeetingControlsContainer from '../MeetingControlsContainer';
 import { useNavigation } from '../../providers/NavigationProvider';
 
 const NavigationControl = () => {
@@ -15,7 +14,6 @@ const NavigationControl = () => {
     <>
       {showNavbar ? <Navigation /> : null}
       {showRoster ? <MeetingRoster /> : null}
-      <MeetingControlsContainer />
     </>
   );
 };

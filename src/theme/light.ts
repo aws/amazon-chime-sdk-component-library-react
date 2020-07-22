@@ -325,7 +325,7 @@ const navbar = {
   text: colors.greys.grey80,
   bgd: colors.greys.grey10,
   headerBorder: colors.greys.grey40,
-  containerBgd: colors.greys.grey50
+  wrapperBgd: hexTorgba(colors.greys.grey50, 0.9)
 };
 
 export const lightTheme = {

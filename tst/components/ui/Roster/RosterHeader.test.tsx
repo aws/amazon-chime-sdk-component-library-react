@@ -41,31 +41,9 @@ describe('RosterCell', () => {
       getByLabelText('Open search'),
       new MouseEvent('click', {
         bubbles: true,
-        cancelable: true,
+        cancelable: true
       })
-    )
+    );
     expect(getByLabelText('Search')).toBeInTheDocument();
-  });
-
-  it('should render a navigation button when navigation icon and function is passed', () => {
-    const component = <RosterHeader 
-      title="Present" 
-      onSearch={() => {}}
-      onMobileToggleClick={() => {}}
-    />;
-    const { getByLabelText } = renderWithTheme(lightTheme, component);
-    expect(getByLabelText('Open navigation')).toBeInTheDocument();
-  });
-
-  it('should call openNavigation once if clicked on button', () => {
-    const component = <RosterHeader
-      title="Present"
-      onSearch={() => {}}
-      onMobileToggleClick={jest.fn()}
-    />;
-    const { getByLabelText } = renderWithTheme(lightTheme, component);
-    const navigationIconButton = getByLabelText('Open navigation');
-    fireEvent.click(navigationIconButton);
-    expect(component.props.onMobileToggleClick).toHaveBeenCalledTimes(1);
   });
 });

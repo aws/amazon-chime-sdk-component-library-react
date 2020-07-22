@@ -235,15 +235,15 @@ declare module 'styled-components' {
       md: {
         width: string;
         height: string;
-      },
+      };
       lg: {
         width: string;
-        height:string;
-      },
+        height: string;
+      };
       fullscreen: {
         width: string;
         height: string;
-      },
+      };
     };
 
     iconButtonSizes: {
@@ -256,7 +256,7 @@ declare module 'styled-components' {
       text: string;
       bgd: string;
       headerBorder: string;
-      containerBgd: string;
-    }
+      wrapperBgd: string;
+    };
   }
 }

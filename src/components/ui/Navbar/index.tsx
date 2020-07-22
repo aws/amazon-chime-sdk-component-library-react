@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { StyledNavbar, StyledContainer } from './Styled';
+import { StyledNavbar } from './Styled';
 import { FlexProps } from '../Flex';
 
 export interface NavbarProps extends FlexProps {
@@ -11,12 +11,18 @@ export interface NavbarProps extends FlexProps {
   children?: any;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ children, className, ...rest}: NavbarProps) => (
-    <StyledContainer>
-      <StyledNavbar data-testid='navigation-bar' {...rest} className={className || ''}>
-        {children}
-      </StyledNavbar>
-    </StyledContainer>
+export const Navbar: React.FC<NavbarProps> = ({
+  children,
+  className,
+  ...rest
+}: NavbarProps) => (
+  <StyledNavbar
+    data-testid="navigation-bar"
+    {...rest}
+    className={className || ''}
+  >
+    {children}
+  </StyledNavbar>
 );
 
 export default Navbar;

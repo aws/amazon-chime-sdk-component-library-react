@@ -4,32 +4,29 @@
 import React from 'react';
 
 import {
-  Cell,
   Navbar,
   NavbarHeader,
   Flex,
   NavbarItem,
-  Attendees,
+  Attendees
 } from 'amazon-chime-sdk-component-library-react';
 import { useNavigation } from '../../providers/NavigationProvider';
 
 const Navigation = () => {
   const { toggleRoster, closeNavbar } = useNavigation();
   return (
-    <Cell gridArea="nav">
-      <Navbar flexDirection="column" container>
-        <NavbarHeader onClose={closeNavbar} />
-        <Flex>
-          {toggleRoster && (
-            <NavbarItem
-              icon={<Attendees />}
-              onClick={toggleRoster}
-              label="Attendees"
-            />
-          )}
-        </Flex>
-      </Navbar>
-    </Cell>
+    <Navbar className="nav" flexDirection="column" container>
+      <NavbarHeader title="Navigation" onClose={closeNavbar} />
+      <Flex>
+        {toggleRoster && (
+          <NavbarItem
+            icon={<Attendees />}
+            onClick={toggleRoster}
+            label="Attendees"
+          />
+        )}
+      </Flex>
+    </Navbar>
   );
 };
 

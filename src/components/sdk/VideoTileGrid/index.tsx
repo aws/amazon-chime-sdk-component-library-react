@@ -21,9 +21,10 @@ const fluidStyles = `
 const staticStyles = `
   display: flex;
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: 1rem;
+  right: 1rem;
   width: 18vw;
+  min-width: 200px;
   height: auto;
 
   video {

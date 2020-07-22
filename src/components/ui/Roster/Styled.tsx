@@ -13,10 +13,9 @@ export const StyledRoster = styled.div`
   overflow-y: auto;
   background-color: ${props => props.theme.roster.bgd};
   box-shadow: 1rem 1rem 3.75rem 0 rgba(0, 0, 0, 0.1);
-  border-radius: 0.375rem;
   /* TODO: Get updated color from UX */
   border: solid 0.03125rem #dedede;
-  
+
   ${({ theme }) => theme.mediaQueries.min.md} {
     width: ${props => props.theme.roster.maxWidth};
   }
@@ -45,7 +44,6 @@ export const StyledGroupWrapper = styled.div`
 `;
 
 export const StyledGroup = styled.div`
-  border-radius: ${props => props.theme.radii.default};
   background-color: ${props => props.theme.roster.fgd};
 
   ${baseSpacing}
@@ -102,7 +100,7 @@ export const StyledHeader = styled.div<any>`
 
     ${({ theme }) => theme.mediaQueries.min.md} {
       display: none;
-    }    
+    }
   }
 
   ${baseSpacing}
