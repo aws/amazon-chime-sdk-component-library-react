@@ -19,6 +19,7 @@ import { useNavigation } from '../providers/NavigationProvider';
 const StyledControlBar = styled(ControlBar)`
   grid-area: meetingcontrols;
   position: static;
+  z-index: 99;
 `;
 
 const MeetingControlsContainer = () => {
