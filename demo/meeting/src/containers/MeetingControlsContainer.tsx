@@ -8,24 +8,35 @@ import {
   AudioInputControl,
   VideoInputControl,
   ContentShareControl,
-  AudioOutputControl
+  AudioOutputControl,
+  ControlBarButton,
+  Dots,
 } from 'amazon-chime-sdk-component-library-react';
 
 import EndMeetingControl from './EndMeetingControl';
+import { useNavigation } from '../providers/NavigationProvider';
 
 const StyledControlBar = styled(ControlBar)`
-  grid-area: nav;
+  grid-area: meetingcontrols;
   position: static;
 `;
 
-const MeetingControlsContainer: React.FC = () => (
-  <StyledControlBar layout="undocked-horizontal" showLabels>
-    <AudioInputControl />
-    <VideoInputControl />
-    <ContentShareControl />
-    <AudioOutputControl />
-    <EndMeetingControl />
-  </StyledControlBar>
-);
+const MeetingControlsContainer = () => {
+  const { toggleNavbar } = useNavigation();
+  return (
+    <StyledControlBar layout="undocked-horizontal" showLabels>
+      <ControlBarButton
+        icon={<Dots />}
+        onClick={toggleNavbar}
+        label="Navigation"
+      />
+      <AudioInputControl />
+      <VideoInputControl />
+      <ContentShareControl />
+      <AudioOutputControl />
+      <EndMeetingControl />
+    </StyledControlBar>
+  );
+};
 
 export default MeetingControlsContainer;

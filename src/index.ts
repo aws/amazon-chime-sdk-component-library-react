@@ -24,6 +24,7 @@ export { ModalButton } from './components/ui/Modal/ModalButton';
 export { ModalButtonGroup } from './components/ui/Modal/ModalButtonGroup';
 export { ModalHeader } from './components/ui/Modal/ModalHeader';
 export { Navbar } from './components/ui/Navbar';
+export { NavbarHeader } from './components/ui/Navbar/NavbarHeader';
 export { NavbarItem } from './components/ui/Navbar/NavbarItem';
 export { Notification } from './components/ui/Notification';
 export { NotificationGroup } from './components/ui/NotificationGroup';

@@ -11,10 +11,12 @@ import {
 } from 'amazon-chime-sdk-component-library-react';
 
 import RosterAttendee from './RosterAttendee';
+import { useNavigation } from '../providers/NavigationProvider';
 
 const MeetingRoster = () => {
   const { roster } = useRosterState();
   const [filter, setFilter] = useState('');
+  const { closeRoster, openNavbar } = useNavigation();
 
   let attendees = Object.values(roster);
 
@@ -39,9 +41,10 @@ const MeetingRoster = () => {
         <RosterHeader
           searchValue={filter}
           onSearch={handleSearch}
-          onClose={() => alert('Closing')}
+          onClose={closeRoster}
           title="Present"
           badge={attendees.length}
+          onMobileToggleClick={openNavbar}
         />
         <RosterGroup>{attendeeItems}</RosterGroup>
       </Roster>
