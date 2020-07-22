@@ -38,7 +38,7 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
     font-size: ${props => props.theme.fontSizes.text.fontSize};
     font-size: ${props => props.theme.fontSizes.text.lineHeight};
     letter-spacing: -0.005625rem;
-    margin: 0.375rem 3.3125rem 0.375rem 0.75rem;
+    margin: 0.5rem 3.3125rem 0.375rem 0.75rem;
   }
 
   ${StyledCloseIconButton} {

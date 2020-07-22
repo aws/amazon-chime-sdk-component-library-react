@@ -13,12 +13,19 @@ import { BaseProps } from '../Base';
 import { PopOverMenu } from './PopOverMenu';
 
 interface RosterHeaderProps extends BaseProps {
+  /** Title of the Roster header */
   title: string;
+  /** Number of attendees */
   badge?: number;
+  /** String value to search in Roster */
   searchValue?: string;
+  /** Callback fired on search value change */
   onSearch?: (e: ChangeEvent<HTMLInputElement>) => void;
+  /** Callback fired when Roster is closed */
   onClose?: () => void;
+  /** PopOver menu for more options*/
   menu?: React.ReactNode;
+  /** PopOver menu label */
   a11yMenuLabel?: string;
 }
 

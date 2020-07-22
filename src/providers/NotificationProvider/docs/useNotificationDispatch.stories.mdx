@@ -1,0 +1,81 @@
+<Meta title="UI Hooks/Notification/useNotificationDispatch" />
+
+# useNotificationDispatch
+
+Returns the Dispatch method from React to handle updates to `NotificationProvider` state.
+
+The action type that can be dispatched using the returned dispatch method is controlled by `Action` interface.
+
+### Action interface
+```javascript
+interface Action {
+  type: ActionType;
+  payload?: any;
+};
+
+enum ActionType {
+  ADD,
+  REMOVE,
+  REMOVE_ALL,
+};
+```
+
+
+
+### Return value
+
+```javascript
+React.Dispatch<Action>
+```
+
+## Importing
+
+```javascript
+import { useNotificationDispatch } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook depends on the `NotificationProvider` being rendered.
+
+```jsx
+import React from 'react';
+import {
+  NotificationProvider,
+  useNotificationDispatch,
+  NotificationGroup
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <NotificationProvider>
+    <NotificationGroup />
+    <AddNotificationButton />
+  </NotificationProvider>
+);
+
+const AddNotificationButton = () => {
+  const dispatch = useNotificationDispatch();
+
+  const payload: any = {
+    severity: Severity.INFO,
+    message:'Information'
+  };
+
+  const addNotification = (e: any) => {
+    dispatch({
+      type: ActionType.ADD,
+      payload: payload
+    });
+  }
+
+  return (
+    <button  onClick={addNotification}>
+      {label}
+    </button>
+  );
+};
+```
+
+### Dependencies
+
+- `NotificationProvider`

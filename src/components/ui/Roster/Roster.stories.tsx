@@ -9,9 +9,16 @@ import Roster from './';
 import RosterGroup from './RosterGroup';
 import RosterCell from './RosterCell';
 import RosterHeader from './RosterHeader';
+import RosterDocs from './Roster.mdx';
 
 export default {
-  title: 'UI Components/Roster'
+  title: 'UI Components/Roster',
+  parameters: {
+    docs: {
+      page: RosterDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: Roster
 };
 
 const Menu = () => (

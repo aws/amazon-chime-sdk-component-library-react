@@ -44,6 +44,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add github actions workflow check for changes to workflows with 'push' or 'pull_request' trigger types
 - Add docs for MeetingProvider and hooks
 - Add docs or Label and Portal components
+- Add docs for Navbar, Roster and Notification components
+- Add notification `Severity`, `ActionType` enums to index exports
+- Add notification `NotificationType`, `Action` interfaces to index exports
 
 ### Changed
 
@@ -87,6 +90,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Take callback for fetching attendees. Take in meeting/attendee info for joining meeting
 - Update Home view index file name
 - Provide fallback message when no devices are found
+- Rename `NotificationProvider` hooks
 
 ### Removed
 

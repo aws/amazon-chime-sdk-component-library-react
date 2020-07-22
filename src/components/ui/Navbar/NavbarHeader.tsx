@@ -9,7 +9,9 @@ import { StyledHeader } from './Styled';
 import { Remove } from '../icons';
 
 export interface NavbarHeaderProps extends BaseProps {
+  /** Title of Navbar menu */
   title: string;
+  /** Callback fired when Navbar is closed */
   onClose?: () => void;
 }
 

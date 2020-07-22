@@ -1,0 +1,124 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme } from '../../../theme/';
+import Navbar from '.';
+import NavbarHeader from './NavbarHeader';
+import NavbarItem from './NavbarItem';
+import { Attendees, LeaveMeeting, Information } from '../icons';
+import Flex from '../Flex';
+
+# Navbar
+
+The Navbar component displays a vertical menu with navigation icon buttons and labels. Navbar is constructed using the NavbarHeader and NavbarItem components.
+
+## Importing
+
+```javascript
+import {
+  Navbar,
+  NavbarHeader,
+  NavbarItem
+} from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+### Navbar Component
+<ThemeProvider theme={lightTheme}>
+  <Navbar flexDirection="column" container>
+    <NavbarHeader onClose={() => {}}/>
+    <Flex>
+      <NavbarItem
+        icon={<Information />}
+        onClick={() => {}}
+        label="Bridge Information"
+      />
+      <NavbarItem
+        icon={<Attendees />}
+        onClick={() => {}}
+        label="Attendees"
+      />
+    </Flex>
+    <Flex marginTop='auto'>
+      <NavbarItem
+        icon={<LeaveMeeting />}
+        onClick={() => {}}
+        label="Leave Meeting"
+      />
+    </Flex>
+  </Navbar>
+</ThemeProvider>
+
+```jsx
+<Navbar flexDirection="column" container height='10%'>
+  <NavbarHeader onClose={() => {}}/>
+  <Flex>
+    <NavbarItem
+      icon={<Information />}
+      onClick={() => {}}
+      label="Bridge Information"
+    />
+    <NavbarItem
+      icon={<Attendees />}
+      onClick={() => {}}
+      label="Attendees"
+    />
+  </Flex>
+  <Flex marginTop='auto'>
+    <NavbarItem
+      icon={<LeaveMeeting />}
+      onClick={() => {}}
+      label="Leave Meeting"
+    />
+  </Flex>
+</Navbar>
+```
+
+## Props
+
+### Navbar Props
+<Props of={Navbar} />
+
+# NavbarHeader
+
+NavbarHeader component is displayed only in the mobile view with screen size less than `theme.mediaQueries.min.md` value defined in your theme (defaults to 768px).
+
+It gives a title to Navbar and also a close icon button to close the Navbar in mobile view.
+
+# Example
+
+```javascript
+<NavbarHeader title="Menu" onClose={() => {}}/>
+```
+
+### NavbarHeader Props
+<Props of={NavbarHeader} />
+
+# NavbarItem
+
+The NavbarItem component displays a single row in the Navbar. It is made up of `ControlBarItem` which acts as a button and a label. 
+
+The label is displayed only on smaller screens with width defined by `theme.mediaQueries.min.md` value in your theme (defaults to 768px), else only icon button is shown.
+
+# Example
+
+### NavbarItem component
+
+<ThemeProvider theme={lightTheme}>
+  <NavbarItem
+    icon={<Information />}
+    onClick={() => {}}
+    label="Bridge Information"
+  />
+</ThemeProvider>
+
+```javascript
+<NavbarItem
+  icon={<Information />}
+  onClick={() => {}}
+  label="Bridge Information"
+/>
+```
+
+### NavbarItem Props
+<Props of={NavbarItem} />

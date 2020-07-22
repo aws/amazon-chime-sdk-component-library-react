@@ -8,10 +8,10 @@ import { render, cleanup, fireEvent, within, waitFor } from '@testing-library/re
 import { renderWithTheme } from '../../../test-helpers';
 import lightTheme from '../../../../src/theme/light';
 import NotificationGroup from '../../../../src/components/ui/NotificationGroup'
-import { NotificationProvider, Severity, useNotificationDispatchContext, ActionType } from '../../../../src/providers/NotificationProvider';
+import { NotificationProvider, Severity, useNotificationDispatch, ActionType } from '../../../../src/providers/NotificationProvider';
 
 const StorybookTestButton = ({ label, payload }: any) => {
-  const dispatch = useNotificationDispatchContext();
+  const dispatch = useNotificationDispatch();
   const addNotification = (e: any) => {
     dispatch({
       type: ActionType.ADD,

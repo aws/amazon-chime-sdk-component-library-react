@@ -1,0 +1,250 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+import { lightTheme } from '../../../theme/';
+import RosterCell from './RosterCell';
+import RosterGroup from './RosterGroup';
+import RosterHeader from './RosterHeader';
+import Roster from './';
+import Flex from '../Flex';
+
+# Roster
+
+The Roster component displays all the attendees in a meeting including their local statuses for audio, video, content share and if running late.
+It is made up of one RosterHeader component and multiple RosterGroup components.
+
+## Importing
+
+```javascript
+import { 
+  Roster,
+  RosterGroup,
+  RosterHeader,
+  RosterCell
+} from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+### Roster Component
+
+<ThemeProvider theme={lightTheme}>
+  <Flex 
+    container
+    css="height: 10%; background: #f6f9fc;"
+  >
+    <Roster>
+      <RosterHeader
+        title="Present"
+        badge={2}
+        onClose={() => {}}
+        searchValue="Michael"
+        onSearch={() => {}}
+      />
+      <RosterGroup>
+        <RosterCell
+          name="Michael Scott"
+          subtitle="Regional Manager"
+          muted={false}
+          videoEnabled={true}
+        />
+        <RosterCell
+          name="Michael Scarn"
+          subtitle="FBI agent"
+          muted={true}
+          videoEnabled={false}
+        />
+      </RosterGroup>
+      <RosterGroup title="Left" badge={2}>
+        <RosterCell name="Dwight" subtitle="Assistant regional manager" />
+        <RosterCell name="Mike the Magic" subtitle="Magician" />
+      </RosterGroup>
+    </Roster>
+  </Flex>
+</ThemeProvider>
+
+```jsx
+<Roster>
+  <RosterHeader
+    title="Present"
+    badge={2}
+    onClose={() => {}}
+    searchValue="Michael"
+    onSearch={() => {}}
+  />
+  <RosterGroup>
+    <RosterCell
+      name="Michael Scott"
+      subtitle="Regional Manager"
+      muted={false}
+      videoEnabled={true}
+    />
+    <RosterCell
+      name="Michael Scarn"
+      subtitle="FBI agent"
+      muted={true}
+      videoEnabled={false}
+    />
+  </RosterGroup>
+  <RosterGroup title="Left" badge={2}>
+    <RosterCell name="Dwight" subtitle="Assistant regional manager" />
+    <RosterCell name="Mike the Magic" subtitle="Magician" />
+  </RosterGroup>
+</Roster>
+```
+
+# RosterHeader
+
+The RosterHeader component displays the title of the Roster's header and number of attendees.
+It is also equipped with the search functionality and close icon button to close the roster itself.
+
+## Example
+
+### RosterHeader Component
+
+<ThemeProvider theme={lightTheme}>
+  <RosterHeader
+    title="Present"
+    badge={2}
+    onClose={() => {}}
+    searchValue="Michael"
+    onSearch={() => {}}
+  />
+</ThemeProvider>
+
+```jsx
+<RosterHeader
+  title="Present"
+  badge={2}
+  onClose={() => {}}
+  searchValue="Michael"
+  onSearch={() => {}}
+/>
+```
+
+### RosterHeader Props
+<Props of={RosterHeader} />
+
+# RosterGroup
+
+The RosterGroup component displays multiple RosterCell components grouped by a category. The title distinguishes the RosterGroup category.
+
+## Example
+
+### RosterGroup Component
+
+<ThemeProvider theme={lightTheme}>
+  <Flex container layout="fill-space-centered" css="height: 5%;">
+    <Flex css="width: 100%; max-width: 280px;">
+      <RosterGroup title={"Left"} badge={4}>
+        <RosterCell name="Michael Scarn" subtitle="FBI agent" />
+        <RosterCell name="Prison Mike" subtitle="Inmate" />
+        <RosterCell name="Date Mike" subtitle="Bachelor" />
+        <RosterCell name="Dwight" subtitle="Assistant regional manager" />
+      </RosterGroup>
+    </Flex>
+  </Flex>
+</ThemeProvider>
+
+```jsx
+<RosterGroup title={"Left"} badge={4}>
+  <RosterCell name="Michael Scarn" subtitle="FBI agent" />
+  <RosterCell name="Prison Mike" subtitle="Inmate" />
+  <RosterCell name="Date Mike" subtitle="Bachelor" />
+  <RosterCell name="Dwight" subtitle="Assistant regional manager" />
+</RosterGroup>
+```
+### RosterGroup Props
+<Props of={RosterGroup} />
+
+# RosterCell
+
+The RosterCell component displays a single row in the Roster component providing various statuses for an attendee in a meeting. In a meeting, the RosterCell shows the current status of audio, video and presence of an attendee with the attendee name. One can also show running late messages as well as a subtitle for the attendee.
+
+## Example
+
+### RosterCell Component with late message
+
+<ThemeProvider theme={lightTheme}>
+  <Flex container layout="fill-space-centered" css="height: 5%;">
+    <Flex css="width: 100%; max-width: 280px;">
+      <RosterCell
+        name="Stanley Hudson"
+        subtitle="Manager"
+        muted={true}
+        videoEnabled={false}
+        sharingContent={false}
+        runningLate={"10 minutes"}
+      />
+    </Flex>
+  </Flex>
+</ThemeProvider>
+
+```jsx
+<RosterCell
+  name="Stanley Hudson"
+  subtitle="Manager"
+  muted={true}
+  videoEnabled={false}
+  sharingContent={false}
+  runningLate={"10 minutes"}
+/>
+```
+
+### RosterCell Component with micPosition leading
+
+<ThemeProvider theme={lightTheme}>
+  <Flex container layout="fill-space-centered" css="height: 5%;">
+    <Flex css="width: 100%; max-width: 280px;">
+      <RosterCell
+        name="Stanley Hudson"
+        subtitle="Manager"
+        muted={true}
+        videoEnabled={false}
+        sharingContent={false}
+        micPosition={"leading"}
+      />
+    </Flex>
+  </Flex>
+</ThemeProvider>
+
+```jsx
+<RosterCell
+  name="Stanley Hudson"
+  subtitle="Manager"
+  muted={true}
+  videoEnabled={true}
+  sharingContent={false}
+  micPosition={"leading"}
+/>
+```
+
+### RosterCell Component with micPosition grouped
+
+<ThemeProvider theme={lightTheme}>
+  <Flex container layout="fill-space-centered" css="height: 5%;">
+    <Flex css="width: 100%; max-width: 280px;">
+      <RosterCell
+        name="Stanley Hudson"
+        subtitle="Manager"
+        muted={true}
+        videoEnabled={false}
+        sharingContent={false}
+        micPosition={"grouped"}
+      />
+    </Flex>
+  </Flex>
+</ThemeProvider>
+
+```jsx
+<RosterCell
+  name="Stanley Hudson"
+  subtitle="Manager"
+  muted={true}
+  videoEnabled={true}
+  sharingContent={false}
+  micPosition={"grouped"}
+/>
+```
+
+### RosterCell Props
+<Props of={RosterCell} />

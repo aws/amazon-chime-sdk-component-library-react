@@ -8,9 +8,16 @@ import NavbarHeader from './NavbarHeader';
 import NavbarItem from './NavbarItem';
 import { Attendees, LeaveMeeting, Information } from '../icons';
 import Flex from '../Flex';
+import NavbarDocs from "./Navbar.mdx";
 
 export default {
   title: 'UI Components/Navbar',
+  parameters: {
+    docs: {
+      page: NavbarDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: Navbar
 };
 
 export const _Navbar = () => {

@@ -6,9 +6,16 @@ import { select } from '@storybook/addon-knobs';
 
 import { Notification } from '.';
 import { Severity } from '../../../providers/NotificationProvider';
+import NotificationDocs from './Notification.mdx';
 
 export default {
   title: 'UI Components/Notification',
+  parameters: {
+    docs: {
+      page: NotificationDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: Notification
 };
 
 export const _Notification = () => {
@@ -24,7 +31,7 @@ export const _Notification = () => {
            },
           Severity.ERROR
         )}
-        message='Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.'
+        message='This is the notification message'
       />
   );
 };
