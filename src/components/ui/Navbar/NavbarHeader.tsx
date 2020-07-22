@@ -9,14 +9,24 @@ import { StyledHeader } from './Styled';
 import { Remove } from '../icons';
 
 export interface NavbarHeaderProps extends BaseProps {
-  title?: string;
+  title: string;
   onClose?: () => void;
 }
 
-export const NavbarHeader: React.FC<NavbarHeaderProps> = ({ title = 'Navigation', onClose }: NavbarHeaderProps) => (
+export const NavbarHeader: React.FC<NavbarHeaderProps> = ({
+  title,
+  onClose
+}: NavbarHeaderProps) => (
   <StyledHeader>
-    <span className='title'>{title}</span>
-    {onClose && <IconButton className="btn-close" label="Close" onClick={onClose} icon={<Remove />} />}
+    <span className="title">{title}</span>
+    {onClose && (
+      <IconButton
+        className="btn-close"
+        label="Close"
+        onClick={onClose}
+        icon={<Remove />}
+      />
+    )}
   </StyledHeader>
 );
 

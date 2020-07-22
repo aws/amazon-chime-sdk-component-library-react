@@ -1,7 +1,13 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useContext, ReactNode } from 'react';
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  useRef,
+  ReactNode
+} from 'react';
 
 export type NavigationContextType = {
   showNavbar: boolean;
@@ -22,9 +28,33 @@ const NavigationContext = React.createContext<NavigationContextType | null>(
   null
 );
 
+const isDesktop = () => window.innerWidth > 768;
+
 const NavigationProvider = ({ children }: Props) => {
-  const [showNavbar, setShowNavbar] = useState(true);
-  const [showRoster, setShowRoster] = useState(true);
+  const [showNavbar, setShowNavbar] = useState(() => isDesktop());
+  const [showRoster, setShowRoster] = useState(() => isDesktop());
+  const isDesktopView = useRef(isDesktop());
+
+  useEffect(() => {
+    const handler = () => {
+      const isResizeDesktop = isDesktop();
+      if (isDesktopView.current === isResizeDesktop) {
+        return;
+      }
+
+      isDesktopView.current = isResizeDesktop;
+
+      if (!isResizeDesktop) {
+        setShowNavbar(false);
+        setShowRoster(false);
+      } else {
+        setShowNavbar(true);
+      }
+    };
+
+    window.addEventListener('resize', handler);
+    return () => window.removeEventListener('resize', handler);
+  }, []);
 
   const toggleRoster = (): void => {
     setShowRoster(!showRoster);
@@ -58,7 +88,7 @@ const NavigationProvider = ({ children }: Props) => {
     openRoster,
     closeRoster,
     openNavbar,
-    closeNavbar,
+    closeNavbar
   };
   return (
     <NavigationContext.Provider value={providerValue}>

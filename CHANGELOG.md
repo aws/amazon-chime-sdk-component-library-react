@@ -102,5 +102,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed release execution bug
 - Fixed bug in verdaccio clean up
 - Fix demo application not allowing to select video / audio via popover
+- Fixed some demo layout issues
 
 ## [0.1.1] - 2020-06-16

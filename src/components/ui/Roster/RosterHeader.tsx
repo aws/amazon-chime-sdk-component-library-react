@@ -6,7 +6,7 @@ import React, { useState, useRef, useEffect, ChangeEvent } from 'react';
 import Flex from '../Flex';
 import Badge from '../Badge';
 import SearchInput from '../Input/SearchInput';
-import { Search, Arrow, Remove, Hamburger } from '../icons';
+import { Search, Remove } from '../icons';
 import IconButton from '../Button/IconButton';
 import { StyledHeader } from './Styled';
 import { BaseProps } from '../Base';
@@ -20,11 +20,25 @@ interface RosterHeaderProps extends BaseProps {
   onClose?: () => void;
   menu?: React.ReactNode;
   a11yMenuLabel?: string;
-  onMobileToggleClick?: () => void;
 }
 
-const SearchBar: any = ({ onChange, close, value }: any) => {
+const SearchBar: any = ({ onChange, onClose, value }: any) => {
   const inputEl = useRef<HTMLInputElement>(null);
+
+  const handleClear = () => {
+    const input = inputEl.current;
+    const nativeSetter = Object.getOwnPropertyDescriptor(
+      window.HTMLInputElement.prototype,
+      'value'
+    )?.set;
+
+    if (nativeSetter && input) {
+      nativeSetter.call(input, '');
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+
+    onClose();
+  };
 
   useEffect(() => {
     inputEl.current?.focus();
@@ -38,12 +52,7 @@ const SearchBar: any = ({ onChange, close, value }: any) => {
         ref={inputEl}
         onChange={onChange}
         value={value}
-      />
-      <IconButton
-        className="search-close"
-        label="Close search"
-        icon={<Arrow direction="right" />}
-        onClick={close}
+        onClear={handleClear}
       />
     </Flex>
   );
@@ -59,16 +68,13 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
   className,
   menu,
   a11yMenuLabel = '',
-  onMobileToggleClick,
   ...rest
 }) => {
   const [isSearching, setIsSearching] = useState(false);
-  const inputEl = useRef<HTMLInputElement>(null);
   const searchBtn = useRef<HTMLButtonElement>(null);
 
   const openSearch = () => {
     setIsSearching(true);
-    inputEl.current?.focus();
   };
 
   const closeSearch = () => {
@@ -83,14 +89,6 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
       className={className || ''}
       {...rest}
     >
-      {onMobileToggleClick &&
-        <IconButton
-          className='navigation-icon'
-          label="Open navigation"
-          onClick={onMobileToggleClick}
-          icon={<Hamburger />}
-        />
-      }
       <div className="title">{title}</div>
       {typeof badge === 'number' && badge > -1 && (
         <Badge className="badge" value={badge} />
@@ -116,7 +114,7 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
       {isSearching && (
         <SearchBar
           value={searchValue}
-          close={closeSearch}
+          onClose={closeSearch}
           onChange={onSearch}
         />
       )}

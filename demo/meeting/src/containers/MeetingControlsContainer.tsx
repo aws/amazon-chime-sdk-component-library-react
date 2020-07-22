@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import styled from 'styled-components';
 import {
   ControlBar,
   AudioInputControl,
@@ -10,33 +9,37 @@ import {
   ContentShareControl,
   AudioOutputControl,
   ControlBarButton,
-  Dots,
+  Dots
 } from 'amazon-chime-sdk-component-library-react';
 
 import EndMeetingControl from './EndMeetingControl';
 import { useNavigation } from '../providers/NavigationProvider';
 
-const StyledControlBar = styled(ControlBar)`
-  grid-area: meetingcontrols;
-  position: static;
-  z-index: 99;
-`;
-
 const MeetingControlsContainer = () => {
-  const { toggleNavbar } = useNavigation();
+  const { toggleNavbar, closeRoster, showRoster } = useNavigation();
+
+  const handleToggle = () => {
+    if (showRoster) {
+      closeRoster();
+    }
+
+    toggleNavbar();
+  };
+
   return (
-    <StyledControlBar layout="undocked-horizontal" showLabels>
+    <ControlBar className="controls" layout="undocked-horizontal" showLabels>
       <ControlBarButton
+        className="mobile-toggle"
         icon={<Dots />}
-        onClick={toggleNavbar}
-        label="Navigation"
+        onClick={handleToggle}
+        label="Menu"
       />
       <AudioInputControl />
       <VideoInputControl />
       <ContentShareControl />
       <AudioOutputControl />
       <EndMeetingControl />
-    </StyledControlBar>
+    </ControlBar>
   );
 };
 

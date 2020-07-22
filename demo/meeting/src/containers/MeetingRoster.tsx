@@ -3,7 +3,6 @@
 
 import React, { useState, ChangeEvent } from 'react';
 import {
-  Cell,
   Roster,
   RosterHeader,
   RosterGroup,
@@ -16,13 +15,13 @@ import { useNavigation } from '../providers/NavigationProvider';
 const MeetingRoster = () => {
   const { roster } = useRosterState();
   const [filter, setFilter] = useState('');
-  const { closeRoster, openNavbar } = useNavigation();
+  const { closeRoster } = useNavigation();
 
   let attendees = Object.values(roster);
 
   if (filter) {
     attendees = attendees.filter((attendee: any) =>
-      attendee?.name.toLowerCase().includes(filter.toLowerCase())
+      attendee?.name.toLowerCase().includes(filter.trim().toLowerCase())
     );
   }
 
@@ -42,19 +41,16 @@ const MeetingRoster = () => {
   });
 
   return (
-    <Cell gridArea="roster">
-      <Roster>
-        <RosterHeader
-          searchValue={filter}
-          onSearch={handleSearch}
-          onClose={closeRoster}
-          title="Present"
-          badge={attendees.length}
-          onMobileToggleClick={openNavbar}
-        />
-        <RosterGroup>{attendeeItems}</RosterGroup>
-      </Roster>
-    </Cell>
+    <Roster className="roster">
+      <RosterHeader
+        searchValue={filter}
+        onSearch={handleSearch}
+        onClose={closeRoster}
+        title="Present"
+        badge={attendees.length}
+      />
+      <RosterGroup>{attendeeItems}</RosterGroup>
+    </Roster>
   );
 };
 
