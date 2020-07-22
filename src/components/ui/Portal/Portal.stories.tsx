@@ -5,9 +5,16 @@ import React from 'react';
 
 import Portal from '.';
 import Flex from '../Flex';
+import PortalDocs from './Portal.mdx';
 
 export default {
   title: 'UI Components/Portal',
+  parameters: {
+    docs: {
+      page: PortalDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: Portal
 };
 
 // Simple story for Portal element

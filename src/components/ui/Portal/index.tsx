@@ -5,6 +5,7 @@ import { FC, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 interface PortalProps {
+    /** Specifies the DOM node that the children of the portal will be render into. */
     rootId?: string;
 }
 
