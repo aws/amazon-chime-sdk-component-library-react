@@ -6,7 +6,6 @@ import React from 'react';
 import {
   Navbar,
   NavbarHeader,
-  Flex,
   NavbarItem,
   Attendees
 } from 'amazon-chime-sdk-component-library-react';
@@ -17,15 +16,13 @@ const Navigation = () => {
   return (
     <Navbar className="nav" flexDirection="column" container>
       <NavbarHeader title="Navigation" onClose={closeNavbar} />
-      <Flex>
-        {toggleRoster && (
-          <NavbarItem
-            icon={<Attendees />}
-            onClick={toggleRoster}
-            label="Attendees"
-          />
-        )}
-      </Flex>
+      {toggleRoster && (
+        <NavbarItem
+          icon={<Attendees />}
+          onClick={toggleRoster}
+          label="Attendees"
+        />
+      )}
     </Navbar>
   );
 };

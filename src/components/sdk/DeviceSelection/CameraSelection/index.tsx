@@ -14,7 +14,13 @@ import DeviceInput from '../DeviceInput';
 
 import { title } from '../Styled';
 
-const CameraSelection = () => {
+interface Props {
+  notFoundMsg?: string;
+}
+
+const CameraSelection: React.FC<Props> = ({
+  notFoundMsg = 'No camera devices found'
+}) => {
   const meetingManager = useMeetingManager();
   const { devices } = useVideoInputs();
 
@@ -31,6 +37,7 @@ const CameraSelection = () => {
         label="Camera source"
         onChange={selectVideoInput}
         devices={devices}
+        notFoundMsg={notFoundMsg}
       />
       <QualitySelection />
       <Label style={{ display: 'block', marginBottom: '.5rem' }}>

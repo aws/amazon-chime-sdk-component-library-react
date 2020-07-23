@@ -10,17 +10,32 @@ import { DeviceType } from '../../../types';
 
 interface Props {
   label: string;
+  notFoundMsg: string;
   devices: DeviceType[];
   onChange: (deviceId: string) => void;
 }
 
-const DeviceInput: React.FC<Props> = ({ onChange, label, devices }) => {
+const DeviceInput: React.FC<Props> = ({
+  onChange,
+  label,
+  devices,
+  notFoundMsg
+}) => {
   const [selectedDevice, setSelectedDevice] = useState('');
 
-  const selectOptions = devices.map(device => ({
+  const outputOptions = devices.map(device => ({
     value: device.deviceId,
     label: device.label
   }));
+
+  const options = outputOptions.length
+    ? outputOptions
+    : [
+        {
+          value: 'not-available',
+          label: notFoundMsg
+        }
+      ];
 
   useEffect(() => {
     if (!devices.length || selectedDevice) {
@@ -32,6 +47,11 @@ const DeviceInput: React.FC<Props> = ({ onChange, label, devices }) => {
 
   async function selectDevice(e: ChangeEvent<HTMLSelectElement>) {
     const deviceId = e.target.value;
+
+    if (deviceId === 'not-available') {
+      return;
+    }
+
     setSelectedDevice(deviceId);
     onChange(deviceId);
   }
@@ -40,7 +60,7 @@ const DeviceInput: React.FC<Props> = ({ onChange, label, devices }) => {
     <StyledInputGroup>
       <FormField
         field={Select}
-        options={selectOptions}
+        options={options}
         onChange={selectDevice}
         value={selectedDevice}
         label={label}
