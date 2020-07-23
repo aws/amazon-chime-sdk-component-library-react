@@ -1,0 +1,41 @@
+<Meta title="SDK Components/MeetingControls/AudioOutputControl" />
+
+# AudioOutputControl
+Renders a `ControlBarButton` with pop over menu options for selecting through multiple audio output options.
+These audio output options are provided by the `useAudioOutputs` hook. 
+
+On clicking this button, the local audio output toggles between on/off state.
+
+You can use it in `ControlBar` [component](/?path=/docs/ui-components-controlbar--control-bar) to build the meeting controls bar.
+
+## Importing
+```javascript
+import { AudioOutputControl } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+```jsx
+import React from 'react';
+import { 
+  MeetingProvider,
+  AudioOutputControl
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+
+  return (
+    <MeetingProvider>
+      <AudioOutputControl />
+    </MeetingProvider>
+  );
+}
+
+```
+
+### Dependencies
+
+- `MeetingProvider`
+- `useAudioOutputs`
+- `useLocalAudioOutput`
+
