@@ -1,3 +1,122 @@
 <Meta title="Introduction" />
 
-### INTRO PAGE PLACEHOLDER
+# amazon-chime-sdk-component-library-react
+
+React components for building realtime meeting applications with Amazon Chime.
+
+## Getting started
+
+1. Add `StyledComponents` and `amazon-chime-sdk-component-library-react` dependencies to your project
+
+`npm install --save styled-components amazon-chime-sdk-component-library-react`
+
+2. Render a `ThemeProvider` and a `MeetingProvider` in the root of your application.
+
+You can pass in the default theme, or you can customize it to match your app's design.
+
+```jsx
+import { ThemeProvider } from 'styled-components';
+import { MeetingProvider, lightTheme } from 'amazon-chime-sdk-component-library-react';
+
+const Root = () => (
+  <ThemeProvider theme={lightTheme}>
+    <MeetingProvider>
+      <MyApp />
+    </MeetingProvider>
+  </ThemeProvider>
+);
+```
+
+3. Join a meeting
+
+To join a meeting, you will need to pass the meeting and attendee data from Chime's [CreateAttendee](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateAttendee.html) and [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) APIs. [Read this for more details](https://aws.github.io/amazon-chime-sdk-js/modules/gettingstarted.html#meeting-service).
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+
+  const joinMeeting = async () => {
+    // Fetch the meeting and attendee data from your server
+    const response = await fetch('/my-server');
+    const data = await response.json();
+
+    const joinData = {
+      meetingInfo: data.Meeting,
+      attendeeInfo: data.Attendee
+    }
+
+    // Use the join API to create a meeting session
+    await meetingManager.join(joinData);
+
+    // At this point you can let users setup their devices, or start the session immediately
+    await meetingManager.start();
+  }
+
+  return (
+    <button onClick={joinMeeting}>
+      Join
+    </button>
+  );
+}
+```
+
+4. Use the SDK components to build out your app
+
+After joining the meeting, you can use the SDK components to render video tiles, meeting controls (such as mute buttons), content share, and more.
+
+For example, the VideoTileGrid will render out all attendee's videos and content share videos of the meeting session into a responsive grid.
+
+```jsx
+import { VideoTileGrid } from 'amazon-chime-sdk-component-library-react';
+
+const MyMeetingView = () => {
+  <VideoTileGrid />
+}
+```
+
+5. Optional - adding attendee names
+
+Chime does not manage the names of your attendees. If you want nameplates or a realtime roster, you need to provide a function to `meetingManager.getAttendee` that returns the name of the attendee for a given chime attendee ID and external user ID.
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+
+  useEffect(() => {
+    meetingManager.getAttendee = async (chimeAttendeeId: string, externalUserId?: string) => {
+      const response = await fetch('/my-attendees-endpoint);
+      const user = await response.json();
+
+      return {
+        name: user.name
+      }
+    }
+  }, [])
+}
+```
+
+### FAQ 
+
+#### How do I build out my own UI using the existing providers?
+
+We provide a set of hooks that you can use that help make building the UI simple.
+
+For example, if you want to build your own mute button, use the `useToggleLocalMute` hook which returns a function to toggle the mute status, and the current mute state.
+
+```jsx
+import { useToggleLocalMute  } from 'amazon-chime-sdk-component-library-react';
+
+const MyMuteButton = () => {
+  const { muted, toggleMute } = useToggleLocalMute();
+
+  return (
+    <button onClick={toggleMute}>
+      { muted ? "Unmute myself" : "Mute myself" }
+    </button>
+  )
+}
+```
