@@ -21,6 +21,8 @@ export const ContentShare: React.FC<Props> = ({ className, ...rest }) => {
     }
 
     audioVideo.bindVideoElement(activeContentTileId, videoEl.current);
+
+    return () => audioVideo.unbindVideoElement(activeContentTileId);
   }, [audioVideo, activeContentTileId]);
 
   return isSomeoneSharing ? (

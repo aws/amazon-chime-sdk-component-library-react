@@ -48,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add notification `Severity`, `ActionType` enums to index exports
 - Add notification `NotificationType`, `Action` interfaces to index exports
 - Add docs for `MeetingControls`
+- Add introduction documentation
 
 ### Changed
 
