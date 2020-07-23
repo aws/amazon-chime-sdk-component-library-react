@@ -86,6 +86,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Desktop only] Integrate navbar, roster toggle in demo
 - Take callback for fetching attendees. Take in meeting/attendee info for joining meeting
 - Update Home view index file name
+- Provide fallback message when no devices are found
 
 ### Removed
 

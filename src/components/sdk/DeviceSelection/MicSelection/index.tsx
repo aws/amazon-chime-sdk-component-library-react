@@ -11,7 +11,13 @@ import AudioActivityPreview from './AudioActivityPreview';
 
 import { title } from '../Styled';
 
-const MicSelection = () => {
+interface Props {
+  notFoundMsg?: string;
+}
+
+const MicSelection: React.FC<Props> = ({
+  notFoundMsg = 'No microphone devices found'
+}) => {
   const meetingManager = useMeetingManager();
   const { devices } = useAudioInputs();
 
@@ -28,6 +34,7 @@ const MicSelection = () => {
         label="Microphone source"
         onChange={selectAudioInput}
         devices={devices}
+        notFoundMsg={notFoundMsg}
       />
       <AudioActivityPreview />
     </div>

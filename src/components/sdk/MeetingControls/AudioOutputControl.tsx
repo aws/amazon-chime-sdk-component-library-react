@@ -32,7 +32,7 @@ const AudioOutputControl: React.FC = () => {
         icon={<Sound disabled={!isAudioOn} />}
         onClick={toggleAudio}
         label="Audio"
-        popOver={dropdownOptions}
+        popOver={dropdownOptions.length ? dropdownOptions : null}
       />
     </>
   );

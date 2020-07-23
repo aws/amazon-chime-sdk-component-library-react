@@ -9,7 +9,13 @@ import { useAudioOutputs } from '../../../../providers/DevicesProvider';
 import TestSound from '../../../../../demo/meeting/src/utils/TestSound';
 import DeviceInput from '../DeviceInput';
 
-const SpeakerSelection = () => {
+interface Props {
+  notFoundMsg?: string;
+}
+
+const SpeakerSelection: React.FC<Props> = ({
+  notFoundMsg = 'No speaker devices found'
+}) => {
   const meetingManager = useMeetingManager();
   const { devices } = useAudioOutputs();
   const [selectedOutput, setSelectedOutput] = useState('');
@@ -37,6 +43,7 @@ const SpeakerSelection = () => {
         label="Speaker source"
         devices={devices}
         onChange={selectAudioOutput}
+        notFoundMsg={notFoundMsg}
       />
       <SecondaryButton label="Test speakers" onClick={handleTestSpeaker} />
     </div>
