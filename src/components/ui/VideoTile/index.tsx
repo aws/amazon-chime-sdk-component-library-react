@@ -11,7 +11,9 @@ type ObjectFit = 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 export interface VideoTileProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
     BaseProps {
+  /** The name to show on the video tile */
   nameplate?: string | null;
+  /** Used to specify how an VideoTile should be resized to fit its container.  */
   objectFit?: ObjectFit;
 }
 

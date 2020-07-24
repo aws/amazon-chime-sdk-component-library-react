@@ -1,0 +1,37 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import VideoTile from '.';
+import { VideoTileDocs } from './VideoTile.stories';
+import { lightTheme } from '../../../theme/';
+
+# VideoTile
+
+VideoTile component is used to render video content like local, remote, and content share stream.
+
+## Importing
+
+```javascript
+import { VideoTile } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Flex css="height: 100vh" layout="fill-space-centered">
+      <div style={{ height: "15rem", width: '25rem', margin: '2rem auto' }}>
+        <VideoTile nameplate="Test name" />
+      </div>
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+  <VideoTile  nameplate="Test name"/>
+```
+
+## Props
+
+#### VideoTile component
+<Props of={VideoTile} />

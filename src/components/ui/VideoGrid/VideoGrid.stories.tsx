@@ -6,13 +6,20 @@ import { number, select } from '@storybook/addon-knobs';
 
 import VideoGrid from './';
 import VideoTile from '../VideoTile';
+import VideoGridDocs from './VideoGrid.mdx';
 
 export default {
-  title: 'UI Components/Video/VideoGrid'
+  title: 'UI Components/Video/VideoGrid',
+  parameters: {
+    docs: {
+      page: VideoGridDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: VideoGrid
 };
 
 export const _VideoGrid = () => {
-  const size = number('size', 3);
+  const size = number('size', 4);
   const layout = select('layout', ['standard', 'featured'], 'standard');
   const tiles = new Array(size).fill(0).map((_, index) => {
     const isFeatured = layout === 'featured' && index === 0;

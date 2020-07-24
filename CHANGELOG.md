@@ -51,6 +51,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add introduction documentation
 - Add styles around `DeviceSelection` in demo
 - Add documentation around `DeviceSelection` and `useAudioInputActivityPreview` hook
+- Add docs for VideoGrid and VideoTile components
+- Add `Grid` component unit test
 
 ### Changed
 

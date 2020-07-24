@@ -5,9 +5,16 @@ import React from 'react';
 
 import { VideoTile } from './';
 import { Flex } from '../Flex';
+import VideoTileDocs from './VideoTile.mdx'
 
 export default {
   title: 'UI Components/Video/VideoTile',
+  parameters: {
+    docs: {
+      page: VideoTileDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: VideoTile
 };
 
 export const _VideoTile = () => {

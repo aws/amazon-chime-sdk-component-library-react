@@ -1,0 +1,87 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import VideoGrid from '.';
+import VideoTile from '../VideoTile';
+import { lightTheme } from '../../../theme/';
+
+# VideoGrid
+
+The VideoGrid component adapts to screen size and orientation, ensuring consistency of [VideoTile](/?path=/docs/ui-components-video-videotile--video-tile)'s across layouts.
+
+
+## Importing
+
+```javascript
+import { VideoGrid, VideoTile } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+     <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
+      <VideoGrid layout="featured">
+        <VideoTile
+          style={{
+            border: '1px solid grey',
+            gridArea: 'ft'
+          }}
+          nameplate="Featured Tile"
+        />
+        <VideoTile
+          style={{
+            border: '1px solid grey',
+            gridArea: ''
+          }}
+          nameplate="Tile 2"
+        />
+        <VideoTile
+          style={{
+            border: '1px solid grey',
+            gridArea: ''
+          }}
+          nameplate="Tile 3"
+        />
+      </VideoGrid>
+    </div>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+  <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
+    <VideoGrid layout="featured">
+      <VideoTile
+        style={{
+          border: '1px solid grey',
+          gridArea: 'ft'
+        }}
+        nameplate="Featured Tile"
+      />
+      <VideoTile
+        style={{
+          border: '1px solid grey',
+          gridArea: ''
+        }}
+        nameplate="Tile 2"
+      />
+      <VideoTile
+        style={{
+          border: '1px solid grey',
+          gridArea: ''
+        }}
+        nameplate="Tile 3"
+      />
+    </VideoGrid>
+  </div>
+```
+
+## Props
+
+#### VideoGrid component
+
+<Props of={VideoGrid} />
+
+#### VideTile component
+
+<Props of={VideoTile} />
