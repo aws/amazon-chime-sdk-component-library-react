@@ -5,7 +5,6 @@ import React, { useState, useEffect, ChangeEvent } from 'react';
 
 import { FormField } from '../../ui/FormField';
 import { Select } from '../../ui/Select';
-import { StyledInputGroup } from './Styled';
 import { DeviceType } from '../../../types';
 
 interface Props {
@@ -57,15 +56,13 @@ const DeviceInput: React.FC<Props> = ({
   }
 
   return (
-    <StyledInputGroup>
-      <FormField
-        field={Select}
-        options={options}
-        onChange={selectDevice}
-        value={selectedDevice}
-        label={label}
-      />
-    </StyledInputGroup>
+    <FormField
+      field={Select}
+      options={options}
+      onChange={selectDevice}
+      value={selectedDevice}
+      label={label}
+    />
   );
 };
 

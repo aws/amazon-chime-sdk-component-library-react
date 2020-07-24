@@ -3,6 +3,16 @@
 
 import styled from 'styled-components';
 
+export const title = `
+  text-transform: uppercase;
+  font-size: 1rem !important;
+  margin-bottom: 1.75rem;
+`;
+
+export const StyledPreviewGroup = styled.div`
+  margin-bottom: 2.5rem;
+`;
+
 export const StyledWrapper = styled.div`
   position: relative;
   display: flex;
@@ -50,25 +60,4 @@ export const StyledVideoGroup = styled.div`
 
 export const StyledInputGroup = styled.div`
   margin-bottom: 1.5rem;
-`;
-
-export const StyledVideoPreview = styled.video`
-  width: 100%;
-  height: auto;
-  border-radius: 0.1875rem;
-  background-color: #1c1c1c;
-`;
-
-export const StyledPreviewGroup = styled.div`
-  margin-bottom: 2.5rem;
-`;
-
-export const title = `
-  text-transform: uppercase;
-  font-size: 1rem !important;
-  margin-bottom: 1.75rem;
-`;
-
-export const inputGroup = `
-  margin-bottom: 1.25rem;
 `;

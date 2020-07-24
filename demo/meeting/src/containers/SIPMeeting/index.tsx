@@ -12,9 +12,7 @@ import Card from '../../components/Card';
 import SIPURI from '../SIPURI';
 import SIPMeetingForm from '../../components/SIPMeetingForm';
 import { getErrorContext } from '../../providers/ErrorProvider';
-import {
-  useSIPMeetingManager
-} from '../../providers/SIPMeetingProvider';
+import { useSIPMeetingManager } from '../../providers/SIPMeetingProvider';
 
 const SIPMeeting: React.FC = () => {
   const [sipURI, setSipURI] = useState('');

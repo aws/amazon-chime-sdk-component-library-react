@@ -6,10 +6,7 @@ import React, { useState, ChangeEvent } from 'react';
 import { FormField } from '../../../ui/FormField';
 import { Select } from '../../../ui/Select';
 import { useSelectVideoQuality, VideoQuality } from '../../../../hooks/sdk/useSelectVideoQuality';
-
 import { VIDEO_INPUT_QUALITY } from '../../../../constants';
-
-import { StyledInputGroup } from '../Styled';
 
 const qualityOptions = [
   {
@@ -30,7 +27,7 @@ const qualityOptions = [
   }
 ];
 
-const QualitySelection = () => {
+export const QualitySelection = () => {
   const selectVideoQuality = useSelectVideoQuality();
   const [videoQuality, setVideoQuality] = useState('unselected');
 
@@ -41,15 +38,13 @@ const QualitySelection = () => {
   }
 
   return (
-    <StyledInputGroup>
-      <FormField
-        field={Select}
-        options={qualityOptions}
-        onChange={selectQuality}
-        value={videoQuality}
-        label="Video quality"
-      />
-    </StyledInputGroup>
+    <FormField
+      field={Select}
+      options={qualityOptions}
+      onChange={selectQuality}
+      value={videoQuality}
+      label="Video quality"
+    />
   );
 };
 

@@ -9,6 +9,7 @@ import {
   NavbarItem,
   Attendees
 } from 'amazon-chime-sdk-component-library-react';
+
 import { useNavigation } from '../../providers/NavigationProvider';
 
 const Navigation = () => {

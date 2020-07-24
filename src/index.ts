@@ -48,7 +48,12 @@ export { RosterGroup } from './components/ui/Roster/RosterGroup';
 export { RosterCell } from './components/ui/Roster/RosterCell';
 
 // SDK components
-export { DeviceSelection } from './components/sdk/DeviceSelection';
+export { 
+  CameraSelection,
+  MicSelection,
+  SpeakerSelection,
+  QualitySelection
+} from './components/sdk/DeviceSelection';
 export {
   AudioInputControl,
   AudioOutputControl,
@@ -57,6 +62,7 @@ export {
 } from './components/sdk/MeetingControls';
 export { ContentShare } from './components/sdk/ContentShare';
 export { LocalVideo } from './components/sdk/LocalVideo';
+export { PreviewVideo } from './components/sdk/PreviewVideo';
 export { RemoteVideo } from './components/sdk/RemoteVideo';
 export { RemoteVideos } from './components/sdk/RemoteVideos';
 export { FeaturedRemoteVideos } from './components/sdk/FeaturedRemoteVideos';
@@ -108,6 +114,7 @@ export {
   useContentShareControls
 } from './providers/ContentShareProvider';
 export { useMeetingStatus } from './providers/MeetingStatusProvider';
+export { useLocalAudioInputActivityPreview } from './hooks/sdk/useLocalAudioInputActivityPreview';
 
 // Providers
 export { NotificationProvider } from './providers/NotificationProvider';
