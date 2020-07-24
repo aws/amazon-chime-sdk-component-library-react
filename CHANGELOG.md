@@ -57,6 +57,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add docs for Themes
 - Add theme switcher to demo nav
 - Add docs for local devices and meeting status providers
+- Add docs for VideoGrid and VideoTile components
 
 ### Changed
 
