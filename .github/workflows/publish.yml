@@ -1,5 +1,5 @@
-name: Test, Publish, & Release
-# When a new Github Release is created via our npm script, publish to NPM
+name: Publish and Deploy Documentation
+# When a new Github Release is created via our npm script, publish to NPM and then deploy our storybook documentation to github pages
 on:
   release:
     types: [published]
@@ -15,8 +15,13 @@ jobs:
         with:
           node-version: 12
           registry-url: https://registry.npmjs.org/
+      - name: NPM Install
+        run: npm install
       - name: Publish to NPM
-      # TODO: Remove the dryrun option when we actually release
-        run: npm publish --dry-run
+        run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
+      - name: Publish Storybook Documentation
+        run: npm run deploy-storybook -- --ci 
+        env:
+          GH_TOKEN: chime-sdk-component-bot:${{ secrets.GITHUBPAGES}}

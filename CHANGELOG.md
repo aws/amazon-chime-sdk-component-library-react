@@ -93,6 +93,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update Home view index file name
 - Provide fallback message when no devices are found
 - Rename `NotificationProvider` hooks
+- Update publish github action to deploy storybook documentation
 
 ### Removed
 
