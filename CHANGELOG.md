@@ -49,6 +49,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add notification `NotificationType`, `Action` interfaces to index exports
 - Add docs for `MeetingControls`
 - Add introduction documentation
+- Add styles around `DeviceSelection` in demo
+- Add documentation around `DeviceSelection` and `useAudioInputActivityPreview` hook
 
 ### Changed
 
@@ -94,6 +96,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Provide fallback message when no devices are found
 - Rename `NotificationProvider` hooks
 - Update publish github action to deploy storybook documentation
+- Remake `AudioActivityPreview` into `useLocalAudioInputActivityPreview` hook
+- Refactor styles from SDK Component `DeviceSelection` and move them to demo
+- Moved `ActivityBar` from library to demo, since it seemed more tightly related our demo
 
 ### Removed
 

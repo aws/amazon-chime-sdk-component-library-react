@@ -1,0 +1,43 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import MicSelection from '../MicSelection';
+
+<Meta title="SDK Components/DeviceSelection/MicSelection" />
+
+# MicSelection
+Renders a `Select FormField` component with audio input source options provided by the `useAudioInputs` hook.
+
+By default, the first device is selected from the devices returned by `useAudioInputs` hook, otherwise a single option with not found message is shown.
+
+The component depends on the `DevicesProvider`. If you are using `MeetingProvider`, `DevicesProvider` is rendered by default.
+
+## Importing
+```javascript
+import { MicSelection } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+```jsx
+import React from 'react';
+import { 
+  MeetingProvider,
+  MicSelection
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  return (
+    <MeetingProvider>
+      <MicSelection />
+    </MeetingProvider>
+  );
+}
+```
+
+## Props
+<Props of={MicSelection} />
+
+### Dependencies
+
+- `MeetingProvider`
+- `DevicesProvider`, If you are using `MeetingProvider`, `DevicesProvider` is rendered by default
+- `useAudioInputs`

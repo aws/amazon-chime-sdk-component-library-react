@@ -1,0 +1,31 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import React, { useState } from 'react';
+import {
+  SpeakerSelection,
+  SecondaryButton
+} from 'amazon-chime-sdk-component-library-react';
+
+import TestSound from '../../../utils/TestSound';
+
+const SpeakerDevices = () => {
+  const [selectedOutput, setSelectedOutput] = useState('');
+
+  const handleChange = (deviceId: string): void => {
+    setSelectedOutput(deviceId);
+  };
+
+  const handleTestSpeaker = () => {
+    new TestSound(selectedOutput);
+  };
+
+  return (
+    <div>
+      <SpeakerSelection onChange={handleChange} />
+      <SecondaryButton label="Test speakers" onClick={handleTestSpeaker} />
+    </div>
+  );
+};
+
+export default SpeakerDevices;

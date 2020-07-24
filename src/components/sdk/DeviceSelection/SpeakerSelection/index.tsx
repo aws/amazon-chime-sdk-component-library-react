@@ -3,18 +3,20 @@
 
 import React, { useState, useEffect } from 'react';
 
-import { SecondaryButton } from '../../../ui/Button/SecondaryButton';
 import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { useAudioOutputs } from '../../../../providers/DevicesProvider';
-import TestSound from '../../../../../demo/meeting/src/utils/TestSound';
 import DeviceInput from '../DeviceInput';
 
 interface Props {
+  /** Message shown when no audio output speaker devices are found */
   notFoundMsg?: string;
+  /** Callback fired on selection change, needed if you want to add testing functionality around speaker selection  */
+  onChange?: (selectedAudioOutputDeviceId: string) => void;
 }
 
-const SpeakerSelection: React.FC<Props> = ({
-  notFoundMsg = 'No speaker devices found'
+export const SpeakerSelection: React.FC<Props> = ({
+  notFoundMsg = 'No speaker devices found',
+  onChange
 }) => {
   const meetingManager = useMeetingManager();
   const { devices } = useAudioOutputs();
@@ -28,25 +30,19 @@ const SpeakerSelection: React.FC<Props> = ({
     setSelectedOutput(devices[0].deviceId);
   }, [selectedOutput, devices]);
 
-  const handleTestSpeaker = () => {
-    new TestSound(selectedOutput);
-  };
-
   async function selectAudioOutput(deviceId: string) {
     setSelectedOutput(deviceId);
     meetingManager.selectAudioOutputDevice(deviceId);
+    onChange && onChange(deviceId);
   }
 
   return (
-    <div>
-      <DeviceInput
-        label="Speaker source"
-        devices={devices}
-        onChange={selectAudioOutput}
-        notFoundMsg={notFoundMsg}
-      />
-      <SecondaryButton label="Test speakers" onClick={handleTestSpeaker} />
-    </div>
+    <DeviceInput
+      label="Speaker source"
+      devices={devices}
+      onChange={selectAudioOutput}
+      notFoundMsg={notFoundMsg}
+    />
   );
 };
 

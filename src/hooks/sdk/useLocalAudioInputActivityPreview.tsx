@@ -1,22 +1,20 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
-import { Label } from '../../../ui/Label';
-import { useAudioVideo } from '../../../../providers/AudioVideoProvider';
-import ActivityBar from '../../../ui/ActivityBar';
+import { useAudioVideo } from '../../providers/AudioVideoProvider';
+import { useAudioInputs } from '../../providers/DevicesProvider';
 
-import { StyledPreviewGroup } from '../Styled';
-import { useAudioInputs } from '../../../../providers/DevicesProvider';
+type TransformScaleDirection = 'horizontal' | 'vertical';
 
-const AudioActivityPreview = () => {
+export const useLocalAudioInputActivityPreview = (elementRef: any, scaleDirection: TransformScaleDirection = 'horizontal') => {
   const audioVideo = useAudioVideo();
-  const activityBarRef = useRef<HTMLDivElement>();
   const { selectedDevice } = useAudioInputs();
 
   useEffect(() => {
     const analyserNode = audioVideo?.createAnalyserNodeForAudioInput();
+    console.log('useLocalAudioInputActivityPreview', analyserNode)
 
     if (!analyserNode?.getByteTimeDomainData) {
       return;
@@ -40,8 +38,10 @@ const AudioActivityPreview = () => {
         }
         const decimal = (Math.log(lowest) - Math.log(max)) / Math.log(lowest);
 
-        if (activityBarRef.current && decimal >= 0) {
-          activityBarRef.current.style.transform = `scaleX(${decimal})`;
+        if (elementRef.current && decimal >= 0) {
+          elementRef.current.style.transform = scaleDirection === 'horizontal' 
+            ? `scaleX(${decimal})`
+            : `scaleY(${decimal})`;
         }
       }
       frameIndex = (frameIndex + 1) % 2;
@@ -57,15 +57,6 @@ const AudioActivityPreview = () => {
       isMounted = false;
     };
   }, [selectedDevice]);
-
-  return (
-    <StyledPreviewGroup>
-      <Label style={{ display: 'block', marginBottom: '.5rem' }}>
-        Microphone activity
-      </Label>
-      <ActivityBar ref={activityBarRef} />
-    </StyledPreviewGroup>
-  );
 };
 
-export default AudioActivityPreview;
+export default useLocalAudioInputActivityPreview;

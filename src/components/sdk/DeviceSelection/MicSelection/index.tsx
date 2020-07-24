@@ -3,19 +3,16 @@
 
 import React from 'react';
 
-import { Heading } from '../../../ui/Heading';
 import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { useAudioInputs } from '../../../../providers/DevicesProvider';
 import DeviceInput from '../DeviceInput';
-import AudioActivityPreview from './AudioActivityPreview';
-
-import { title } from '../Styled';
 
 interface Props {
+  /** Message shown when no microphone devices are found */
   notFoundMsg?: string;
 }
 
-const MicSelection: React.FC<Props> = ({
+export const MicSelection: React.FC<Props> = ({
   notFoundMsg = 'No microphone devices found'
 }) => {
   const meetingManager = useMeetingManager();
@@ -26,18 +23,12 @@ const MicSelection: React.FC<Props> = ({
   }
 
   return (
-    <div>
-      <Heading tag="h2" level={6} css={title}>
-        Audio
-      </Heading>
-      <DeviceInput
-        label="Microphone source"
-        onChange={selectAudioInput}
-        devices={devices}
-        notFoundMsg={notFoundMsg}
-      />
-      <AudioActivityPreview />
-    </div>
+    <DeviceInput
+      label="Microphone source"
+      onChange={selectAudioInput}
+      devices={devices}
+      notFoundMsg={notFoundMsg}
+    />
   );
 };
 
