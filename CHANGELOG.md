@@ -99,6 +99,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remake `AudioActivityPreview` into `useLocalAudioInputActivityPreview` hook
 - Refactor styles from SDK Component `DeviceSelection` and move them to demo
 - Moved `ActivityBar` from library to demo, since it seemed more tightly related our demo
+- Updated package.json to state sdk as peer dependency
 
 ### Removed
 
