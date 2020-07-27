@@ -1,0 +1,47 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Caret from './';
+import { lightTheme } from '../../../../theme/';
+
+# Caret Icon
+
+The Caret component creates an arrow icon using inline SVG. This icon is typically used to indicate that some content can be expanded.
+
+You can define the direction of the caret, e.g. up, right, down and left.
+
+## Importing
+
+```javascript
+import { Caret } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Caret width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Caret width="2rem" />
+```
+
+Change the direction
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Caret width="2rem" direction="down" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Caret width="2rem" direction="down" />
+```
+
+## Props
+
+<Props of={Caret} />

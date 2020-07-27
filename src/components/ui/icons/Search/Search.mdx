@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Search from './';
+import { lightTheme } from '../../../../theme/';
+
+# Search Icon
+
+The Search component creates an amplifier icon using inline SVG. This icon is typically used to represent a search action.
+
+## Importing
+
+```javascript
+import { Search } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Search width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Search width="2rem" />
+```
+
+## Props
+
+<Props of={Search} />

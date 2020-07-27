@@ -1,0 +1,29 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import React from 'react';
+
+import { text, select } from '@storybook/addon-knobs';
+import Arrow from './';
+import ArrowIconDocs from './Arrow.mdx';
+
+export default {
+  title: 'Icons/Arrow',
+  parameters: {
+    docs: {
+      page: ArrowIconDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: Arrow
+};
+
+export const _Arrow = () => (
+  <Arrow
+    direction={select(
+      'direction',
+      { up: 'up', right: 'right', down: 'down', left: 'left' },
+      'down'
+    )}
+    width={text('width', '2rem')}
+  />
+);

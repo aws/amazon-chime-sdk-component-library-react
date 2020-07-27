@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Check from './';
+import { lightTheme } from '../../../../theme/';
+
+# Check Icon
+
+The Check component creates a checkmark icon using inline SVG.
+
+## Importing
+
+```javascript
+import { Check } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Check width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Check width="2rem" />
+```
+
+## Props
+
+<Props of={Check} />

@@ -1,0 +1,45 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Sound from './';
+import { lightTheme } from '../../../../theme/';
+
+# Sound Icon
+
+The Sound component creates a speaker icon using inline SVG. This icon is typically used to indicate volume or status of audio output.
+
+## Importing
+
+```javascript
+import { Sound } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width and height
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Sound width="2rem" height="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Sound width="2rem" height="2rem" />
+```
+
+Disabled sound icon
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Sound width="2rem" height="2rem" disabled title="Sound off" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Sound width="2rem" height="2rem" disabled title="Sound off" />
+```
+
+## Props
+
+<Props of={Sound} />

@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Share from './';
+import { lightTheme } from '../../../../theme/';
+
+# Share Icon
+
+The Share component creates an icon, which is typically used to represent a share action.
+
+## Importing
+
+```javascript
+import { Share } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Share width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Share width="2rem" />
+```
+
+## Props
+
+<Props of={Share} />

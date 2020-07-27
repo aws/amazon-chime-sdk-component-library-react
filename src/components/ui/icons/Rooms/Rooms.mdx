@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Rooms from './';
+import { lightTheme } from '../../../../theme/';
+
+# Rooms Icon
+
+The Rooms component creates an icon of messages using inline SVG. This icon is typically used to indicate a chat room or group.
+
+## Importing
+
+```javascript
+import { Rooms } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Rooms width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Rooms width="2rem" />
+```
+
+## Props
+
+<Props of={Rooms} />

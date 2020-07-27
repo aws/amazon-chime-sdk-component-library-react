@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Presenter from './';
+import { lightTheme } from '../../../../theme/';
+
+# Presenter Icon
+
+The Presenter component creates an icon using inline SVG, which is typically used to indicate a presenter role.
+
+## Importing
+
+```javascript
+import { Presenter } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Presenter width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Presenter width="2rem" />
+```
+
+## Props
+
+<Props of={Presenter} />

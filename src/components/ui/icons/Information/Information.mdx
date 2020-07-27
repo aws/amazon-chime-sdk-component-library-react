@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Information from './';
+import { lightTheme } from '../../../../theme/';
+
+# Information Icon
+
+The Information component creates an exclamation icon using inline SVG. This icon is typically used to show hint or informational text.
+
+## Importing
+
+```javascript
+import { Information } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Information width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Information width="2rem" />
+```
+
+## Props
+
+<Props of={Information} />

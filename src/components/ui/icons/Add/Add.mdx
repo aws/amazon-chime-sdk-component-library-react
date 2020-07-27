@@ -1,0 +1,45 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Add from './';
+import { lightTheme } from '../../../../theme/';
+
+# Add Icon
+
+The Add component creates a plus icon using inline SVG. This icon is typically used to represent an add action.
+
+## Importing
+
+```javascript
+import { Add } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width and height
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Add width="2rem" height="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Add width="2rem" height="2rem" />
+```
+
+With title on hover
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Add width="2rem" height="2rem" title="Add" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Add width="2rem" height="2rem" title="Add" />
+```
+
+## Props
+
+<Props of={Add} />

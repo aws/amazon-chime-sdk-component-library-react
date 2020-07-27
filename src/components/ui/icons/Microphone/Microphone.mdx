@@ -1,0 +1,59 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Microphone from './';
+import { lightTheme } from '../../../../theme/';
+
+# Microphone Icon
+
+The Microphone component creates an microphone icon using inline SVG. This icon is typically used to indicate status of audio input.
+
+You can define status of muted or poor connection.
+
+## Importing
+
+```javascript
+import { Microphone } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Microphone width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Microphone width="2rem" />
+```
+
+With muted status
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Microphone muted width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Microphone muted width="2rem" />
+```
+
+With poor connection status
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Microphone poorConnection width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Microphone poorConnection width="2rem" />
+```
+
+## Props
+
+<Props of={Microphone} />

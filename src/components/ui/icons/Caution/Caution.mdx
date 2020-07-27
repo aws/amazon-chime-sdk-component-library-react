@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Caution from './';
+import { lightTheme } from '../../../../theme/';
+
+# Caution Icon
+
+The Caution component creates a caution icon using inline SVG. This icon is typically used to indicate warnings.
+
+## Importing
+
+```javascript
+import { Caution } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Caution width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Caution width="2rem" />
+```
+
+## Props
+
+<Props of={Caution} />

@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Chat from './';
+import { lightTheme } from '../../../../theme/';
+
+# Chat Icon
+
+The Chat component creates a message icon using inline SVG. This icon is typically used to represent a chat message.
+
+## Importing
+
+```javascript
+import { Chat } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Chat width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Chat width="2rem" />
+```
+
+## Props
+
+<Props of={Chat} />

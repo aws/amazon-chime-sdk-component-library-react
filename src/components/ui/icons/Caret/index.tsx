@@ -8,19 +8,21 @@ import Svg, { SvgProps } from '../Svg';
 import { Direction } from '../../../../types';
 
 const dirTransform = {
-   'up': '0',
-   'right': '90',
-   'down': '180',
-   'left': '270',
+  up: '0',
+  right: '90',
+  down: '180',
+  left: '270'
 };
 
 interface CaretProps extends SvgProps {
+  /** Defines the direction of the caret. */
   direction?: Direction;
   className?: string;
 }
 
 const StyledCaret = styled(Svg)<CaretProps>`
-  transform: ${({ direction }) => `rotate(${dirTransform[direction || 'up']}deg)`};
+  transform: ${({ direction }) =>
+    `rotate(${dirTransform[direction || 'up']}deg)`};
 `;
 
 const Caret: React.FC<CaretProps> = ({ direction = 'up', ...rest }) => {

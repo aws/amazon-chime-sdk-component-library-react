@@ -1,0 +1,45 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import DeskPhone from './';
+import { lightTheme } from '../../../../theme/';
+
+# DeskPhone Icon
+
+The DeskPhone component creates a phone icon using inline SVG. This icon is typically used in meeting roster to indicate status of attendees who join meeting via phone.
+
+## Importing
+
+```javascript
+import { DeskPhone } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <DeskPhone width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<DeskPhone width="2rem" />
+```
+
+Disabled DeskPhone icon
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <DeskPhone width="2rem" disabled />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<DeskPhone width="2rem" disabled />
+```
+
+## Props
+
+<Props of={DeskPhone} />
