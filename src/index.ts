@@ -48,7 +48,7 @@ export { RosterGroup } from './components/ui/Roster/RosterGroup';
 export { RosterCell } from './components/ui/Roster/RosterCell';
 
 // SDK components
-export { 
+export {
   CameraSelection,
   MicSelection,
   SpeakerSelection,
@@ -67,6 +67,8 @@ export { RemoteVideo } from './components/sdk/RemoteVideo';
 export { RemoteVideos } from './components/sdk/RemoteVideos';
 export { FeaturedRemoteVideos } from './components/sdk/FeaturedRemoteVideos';
 export { VideoTileGrid } from './components/sdk/VideoTileGrid';
+export { MicVolumeIndicator } from './components/sdk/MicVolumeIndicator';
+export { RosterAttendee } from './components/sdk/RosterAttendee';
 
 // Constants
 export { KEY_CODES } from './constants';

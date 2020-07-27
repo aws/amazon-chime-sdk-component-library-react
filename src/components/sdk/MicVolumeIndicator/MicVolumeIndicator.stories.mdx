@@ -1,0 +1,30 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import { MicVolumeIndicator } from './';
+
+<Meta title="SDK Components/MicVolumeIndicator" />
+
+# MicVolumeIndicator
+Renders a `Microphone` icon that displays the audio activity for a given attendee. It will update to match the attendee's mute and signal strength status.
+
+## Importing
+```javascript
+import { MicVolumeIndicator } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+```jsx
+import React from 'react';
+import { MeetingProvider, MicVolumeIndicator } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  return (
+    <MeetingProvider>
+      <MicVolumeIndicator attendeeId="some-chime-attendee-id" />
+    </MeetingProvider>
+  );
+}
+```
+
+## Props
+<Props of={MicVolumeIndicator} />

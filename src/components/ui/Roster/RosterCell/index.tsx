@@ -21,14 +21,16 @@ export interface RosterCellProps extends BaseProps {
   runningLate?: string;
   /** Mic's position defined by type MicPosition either 'leading' or 'grouped' */
   micPosition?: MicPosition;
-  /** Whether or not the user is muted */
+  /** Whether or not the user is muted. This is ignored if you pass a custom microphone via the microphone prop */
   muted?: boolean;
   /** Whether or not the user has enabled the local video */
   videoEnabled?: boolean;
   /** Whether or not the user is sharing content */
   sharingContent?: boolean;
-  /** Whether or not the user is having poor connection*/
+  /** Whether or not the user is having poor connection. This is ignored if you pass a custom microphone via the microphone prop */
   poorConnection?: boolean;
+  /** A replacement for the default volume icon, such as the MicVolumeIndicator component */
+  microphone?: React.ReactNode;
   /** PopOver menu for more options */
   menu?: React.ReactNode;
   /** Label for PopOverMenu, by default it is an empty string */
@@ -62,10 +64,15 @@ export const RosterCell: React.FC<RosterCellProps> = props => {
     videoEnabled,
     sharingContent,
     poorConnection = false,
+    microphone,
     a11yMenuLabel = ''
   } = props;
 
   const videoIcon = getVideoIcon(videoEnabled, sharingContent);
+  const showMic = typeof muted === 'boolean';
+  const mic = microphone || (
+    <Microphone muted={muted} poorConnection={poorConnection} />
+  );
 
   return (
     <StyledCell
@@ -79,13 +86,7 @@ export const RosterCell: React.FC<RosterCellProps> = props => {
         <LateMessage>{runningLate}</LateMessage>
       ) : (
         <>
-          {typeof muted === 'boolean' && (
-            <Microphone
-              muted={muted}
-              className="mic"
-              poorConnection={poorConnection}
-            />
-          )}
+          {showMic && <div className="mic">{mic}</div>}
           {videoIcon}
           {menu && <PopOverMenu menu={menu} a11yMenuLabel={a11yMenuLabel} />}
         </>

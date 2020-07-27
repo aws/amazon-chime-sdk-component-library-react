@@ -42,7 +42,7 @@ const MyChild = () => {
 
   const attendeeItems = attendees.map((attendee) => {
     const { id, name } = attendee;
-    return <RosterAttendee key={id} attendeeId={id} name={name} />;
+    return <RosterAttendee key={id} attendeeId={id} />;
   });
 
   return (
