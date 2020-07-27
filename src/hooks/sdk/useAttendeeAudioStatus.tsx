@@ -8,7 +8,7 @@ import { useAudioVideo } from '../../providers/AudioVideoProvider';
 export function useAttendeeAudioStatus(attendeeId: string) {
   const audioVideo = useAudioVideo();
   const [muted, setMuted] = useState(false);
-  const [signalStrength, setSignalStrength] = useState(0);
+  const [signalStrength, setSignalStrength] = useState(1);
 
   useEffect(() => {
     if (!audioVideo) {
@@ -25,7 +25,7 @@ export function useAttendeeAudioStatus(attendeeId: string) {
         setMuted(muted);
       }
       if (signalStrength !== null) {
-        setSignalStrength(Math.round(signalStrength * 100));
+        setSignalStrength(signalStrength);
       }
     };
 

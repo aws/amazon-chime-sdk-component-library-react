@@ -9,36 +9,30 @@ import { baseStyles } from '../Base';
 export const StyledMicVolumeIndicator = styled.div<MicVolumeIndicatorProps>`
   position: relative;
   height: inherit;
+  line-height: 0;
+
   ${baseStyles}
 
   .mic-icon {
-    position: absolute;
+    position: relative;
     z-index: 2;
     width: 100%;
-    left: 0;
   }
 
-  .volume-fill-container {
-    position: relative;
-    top: 19%;
-    left: 41.5%;
-    height: 41%;
-    width: 20%;
-    border-radius: 5px;
-    overflow: hidden;
-
-    .volume-fill {
-      background-color: ${props => props.signalStrength && props.signalStrength <= .5 ? props.theme.colors.error.light : props.theme.colors.primary.light};
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 100%;
-      left: 0;
-      will-change: transform;
-      transform: ${props => props.volume !== undefined ? `translateY(-${props.volume * 100}%)` : ''};
-    }
+  .bg-volume-fill {
+    position: absolute;
+    bottom: 41.5%;
+    left: 41%;
+    height: 38%;
+    width: 18%;
+    border-radius: 0.25rem;
+    transform-origin: bottom;
+    will-change: transform;
+    background-color: ${props =>
+      props.signalStrength && props.signalStrength <= 0.5
+        ? props.theme.colors.error.light
+        : props.theme.colors.primary.light};
   }
 `;
 
 export default StyledMicVolumeIndicator;
-

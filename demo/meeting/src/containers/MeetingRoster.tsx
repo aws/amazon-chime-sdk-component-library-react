@@ -6,10 +6,10 @@ import {
   Roster,
   RosterHeader,
   RosterGroup,
-  useRosterState
+  useRosterState,
+  RosterAttendee
 } from 'amazon-chime-sdk-component-library-react';
 
-import RosterAttendee from './RosterAttendee';
 import { useNavigation } from '../providers/NavigationProvider';
 
 const MeetingRoster = () => {
@@ -30,13 +30,9 @@ const MeetingRoster = () => {
   };
 
   const attendeeItems = attendees.map((attendee: any) => {
-    const { chimeAttendeeId, name } = attendee || {};
+    const { chimeAttendeeId } = attendee || {};
     return (
-      <RosterAttendee
-        key={chimeAttendeeId}
-        attendeeId={chimeAttendeeId}
-        name={name}
-      />
+      <RosterAttendee key={chimeAttendeeId} attendeeId={chimeAttendeeId} />
     );
   });
 

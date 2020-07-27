@@ -2,7 +2,9 @@
 
 # useRosterState
 
-Returns state around the meeting's roster. 
+Returns state around the meeting's present attendees, also referred to as Roster. 
+
+You must provide the `MeetingManager` with a `getAttendee` function in order to get names in your roster. See the [MeetingManager docs](?path=/docs/providers-meetingmanager--page) for more information.
 
 ### Return value
 
@@ -41,8 +43,8 @@ const MyChild = () => {
   const rosterArray = Object.values(roster);
 
   const attendeeItems = attendees.map((attendee) => {
-    const { id, name } = attendee;
-    return <RosterAttendee key={id} attendeeId={id} name={name} />;
+    const { chimeAttendeeId, name } = attendee;
+    return <RosterAttendee key={chimeAttendeeId} attendeeId={chimeAttendeeId} />;
   });
 
   return (
