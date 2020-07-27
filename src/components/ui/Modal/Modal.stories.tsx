@@ -13,9 +13,17 @@ import ModalBody from './ModalBody';
 import ModalButton from './ModalButton'
 import ModalButtonGroup from './ModalButtonGroup';
 import PrimaryButton from '../Button/PrimaryButton';
+import ModalDocs from './Modal.mdx';
 
 export default {
-  title: 'UI Components/Modal'
+  title: 'UI Components/Modal',
+  parameters: {
+    docs: {
+      page: ModalDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: Modal,
+  excludeStories: ['ModalDemo']
 };
 
 const options = [
@@ -141,4 +149,23 @@ export const largeContent = () => {
 
 largeContent.story = {
   name: 'Large content example',
+};
+
+export const ModalDemo = () => {
+  const [isOpen, setIsOpen] = useState(false);
+  return (
+    <>
+      <PrimaryButton label='Open Modal' onClick={() => setIsOpen(true)} />
+      {isOpen && <Modal size='md' onClose={() => setIsOpen(false)} rootId='modal-root'>
+        <ModalHeader title='Modal header' displayClose={true} />
+        <ModalBody>
+          <p>This is information presented in a modal</p>
+          <ModalButtonGroup
+            primaryButtons={[<ModalButton onClick={() => {}} label='submit' variant='primary' />]}
+            secondaryButtons={[<ModalButton onClick={() => {}} label='More info' variant='secondary' />]}
+          />
+        </ModalBody>
+      </Modal>}
+    </>
+  );
 };
