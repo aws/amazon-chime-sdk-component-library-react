@@ -5,7 +5,9 @@ import React from 'react';
 import Svg, { SvgProps } from '../Svg';
 
 interface MicrophoneProps extends SvgProps {
+  /** Whether or not shows muted status. */
   muted?: boolean;
+  /** Whether or not shows poor connected status. */
   poorConnection?: boolean;
 }
 
@@ -25,14 +27,20 @@ function getPath(
 }
 
 const Microphone: React.SFC<MicrophoneProps> = ({
-  muted,
-  poorConnection,
+  muted = false,
+  poorConnection = false,
   ...rest
 }) => {
   const iconPath = getPath(muted, poorConnection);
 
   return (
-    <Svg {...rest} title={muted ? 'Muted microphone' : 'Microphone'} data-testid={poorConnection ? 'poor-connection-mic' : 'good-connection-mic'}>
+    <Svg
+      {...rest}
+      title={muted ? 'Muted microphone' : 'Microphone'}
+      data-testid={
+        poorConnection ? 'poor-connection-mic' : 'good-connection-mic'
+      }
+    >
       <path d={iconPath} />
     </Svg>
   );

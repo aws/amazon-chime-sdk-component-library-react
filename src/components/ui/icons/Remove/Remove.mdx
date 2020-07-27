@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Remove from './';
+import { lightTheme } from '../../../../theme/';
+
+# Remove Icon
+
+The Remove component creates an icon with `X` using inline SVG. This icon is typically used to represent a remove or close action.
+
+## Importing
+
+```javascript
+import { Remove } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Remove width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Remove width="2rem" />
+```
+
+## Props
+
+<Props of={Remove} />

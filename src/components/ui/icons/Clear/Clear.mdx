@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Clear from './';
+import { lightTheme } from '../../../../theme/';
+
+# Clear Icon
+
+The Clear component creates an icon with `X` using inline SVG. This icon is typically used to represent that content can be closed/suppressed.
+
+## Importing
+
+```javascript
+import { Clear } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Clear width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Clear width="2rem" />
+```
+
+## Props
+
+<Props of={Clear} />

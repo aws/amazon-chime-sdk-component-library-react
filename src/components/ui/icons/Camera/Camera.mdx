@@ -1,0 +1,45 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Camera from './';
+import { lightTheme } from '../../../../theme/';
+
+# Camera Icon
+
+The Camera component creates a camera icon using inline SVG. This icon is typically used to indicate the status of attendee's video input.
+
+## Importing
+
+```javascript
+import { Camera } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width, height and title
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Camera width="2rem" height="2rem" title="Camera on" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Camera width="2rem" height="2rem" title="Camera on" />
+```
+
+Disabled camera icon
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Camera width="2rem" height="2rem" disabled title="Camera off" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Camera width="2rem" height="2rem" disabled title="Camera off" />
+```
+
+## Props
+
+<Props of={Camera} />

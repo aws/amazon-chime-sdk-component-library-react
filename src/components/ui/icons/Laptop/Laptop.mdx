@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Laptop from './';
+import { lightTheme } from '../../../../theme/';
+
+# Laptop Icon
+
+The Laptop component creates a laptop icon using inline SVG. This icon is typically used in meeting roster to indicate status of attendees who join meeting via a laptop.
+
+## Importing
+
+```javascript
+import { Laptop } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Laptop width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Laptop width="2rem" />
+```
+
+## Props
+
+<Props of={Laptop} />

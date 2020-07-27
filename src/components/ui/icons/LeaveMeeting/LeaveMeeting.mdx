@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import LeaveMeeting from './';
+import { lightTheme } from '../../../../theme/';
+
+# LeaveMeeting Icon
+
+The LeaveMeeting component creates an exit icon using inline SVG. This icon is typically used to represent a leave or end meeting action.
+
+## Importing
+
+```javascript
+import { LeaveMeeting } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <LeaveMeeting width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<LeaveMeeting width="2rem" />
+```
+
+## Props
+
+<Props of={LeaveMeeting} />

@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Dialer from './';
+import { lightTheme } from '../../../../theme/';
+
+# Dialer Icon
+
+The Dialer component creates a phone pad icon using inline SVG. This icon is typically used to represent a dial action.
+
+## Importing
+
+```javascript
+import { Dialer } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Dialer width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Dialer width="2rem" />
+```
+
+## Props
+
+<Props of={Dialer} />

@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Dots from './';
+import { lightTheme } from '../../../../theme/';
+
+# Dots Icon
+
+The Dots component creates an icon with three dots using inline SVG. This icon is typically used to indicate there are more options.
+
+## Importing
+
+```javascript
+import { Dots } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Dots width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Dots width="2rem" />
+```
+
+## Props
+
+<Props of={Dots} />

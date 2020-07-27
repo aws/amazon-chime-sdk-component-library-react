@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import CheckRound from './';
+import { lightTheme } from '../../../../theme/';
+
+# CheckRound Icon
+
+The CheckRound component creates a checkmark within circle using inline SVG.
+
+## Importing
+
+```javascript
+import { CheckRound } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <CheckRound width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<CheckRound width="2rem" />
+```
+
+## Props
+
+<Props of={CheckRound} />

@@ -1,0 +1,20 @@
+// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// SPDX-License-Identifier: Apache-2.0
+
+import React from 'react';
+
+import { text } from '@storybook/addon-knobs';
+import Laptop from '.';
+import LaptopIconDocs from './Laptop.mdx';
+
+export default {
+  title: 'Icons/Laptop',
+  parameters: {
+    docs: {
+      page: LaptopIconDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: Laptop
+};
+
+export const _Laptop = () => <Laptop width={text('width', '2rem')} />;

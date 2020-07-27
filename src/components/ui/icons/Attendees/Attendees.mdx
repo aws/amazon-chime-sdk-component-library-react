@@ -1,0 +1,33 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Attendees from './';
+import { lightTheme } from '../../../../theme/';
+
+# Attendees Icon
+
+The Attendees component creates an icon using inline SVG. This icon is typically used to represent meeting Attendees.
+
+## Importing
+
+```javascript
+import { Attendees } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width and height
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Attendees width="2rem" height="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Attendees width="2rem" height="2rem" />
+```
+
+## Props
+
+<Props of={Attendees} />

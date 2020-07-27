@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import SignalStrength from './';
+import { lightTheme } from '../../../../theme/';
+
+# SignalStrength Icon
+
+The SignalStrength component creates an icon with bars using inline SVG. This icon is typically used to indicate the strength of connection or signal.
+
+## Importing
+
+```javascript
+import { SignalStrength } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <SignalStrength width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<SignalStrength width="2rem" />
+```
+
+## Props
+
+<Props of={SignalStrength} />

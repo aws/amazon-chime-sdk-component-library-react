@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Crown from './';
+import { lightTheme } from '../../../../theme/';
+
+# Crown Icon
+
+The Crown component creates a crown icon using inline SVG.
+
+## Importing
+
+```javascript
+import { Crown } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Crown width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Crown width="2rem" />
+```
+
+## Props
+
+<Props of={Crown} />

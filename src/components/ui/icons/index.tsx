@@ -26,7 +26,6 @@ export { default as Microphone } from './Microphone';
 export { default as Pause } from './Pause';
 export { default as Phone } from './Phone';
 export { default as Play } from './Play';
-export { default as Plus } from './Plus';
 export { default as Presenter } from './Presenter';
 export { default as Record } from './Record';
 export { default as Remove } from './Remove';

@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Play from './';
+import { lightTheme } from '../../../../theme/';
+
+# Play Icon
+
+The Play component creates a play icon using inline SVG. This icon is typically used to represent a play or resume action.
+
+## Importing
+
+```javascript
+import { Play } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Play width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Play width="2rem" />
+```
+
+## Props
+
+<Props of={Play} />

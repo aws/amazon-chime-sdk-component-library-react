@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Record from './';
+import { lightTheme } from '../../../../theme/';
+
+# Record Icon
+
+The Record component creates an icon with `REC` using inline SVG, which is typically used to represent a record action.
+
+## Importing
+
+```javascript
+import { Record } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Record width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Record width="2rem" />
+```
+
+## Props
+
+<Props of={Record} />

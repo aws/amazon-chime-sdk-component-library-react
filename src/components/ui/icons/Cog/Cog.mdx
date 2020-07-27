@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Cog from './';
+import { lightTheme } from '../../../../theme/';
+
+# Cog Icon
+
+The Cog component creates a gear icon using inline SVG. This icon is typically used for settings.
+
+## Importing
+
+```javascript
+import { Cog } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Cog width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Cog width="2rem" />
+```
+
+## Props
+
+<Props of={Cog} />
