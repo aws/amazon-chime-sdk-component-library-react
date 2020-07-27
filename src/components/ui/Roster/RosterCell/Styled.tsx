@@ -12,6 +12,8 @@ export const StyledCell = styled.div<RosterCellProps>`
   padding: 0.625rem 1rem;
 
   .mic {
+    width: 1.5rem;
+
     ${({ micPosition }) =>
       micPosition === 'leading'
         ? `

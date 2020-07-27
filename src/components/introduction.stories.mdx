@@ -76,9 +76,9 @@ const MyMeetingView = () => {
 }
 ```
 
-5. Optional - adding attendee names
+5. Optional - adding attendee names to build a roster
 
-Chime does not manage the names of your attendees. If you want nameplates or a realtime roster, you need to provide a function to `meetingManager.getAttendee` that returns the name of the attendee for a given chime attendee ID and external user ID.
+Chime does not manage the names of your attendees. If you want video nameplates or a realtime roster, you need to provide a function to `meetingManager.getAttendee` that returns the name of the attendee for a given chime attendee ID and external user ID.
 
 ```jsx
 import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
