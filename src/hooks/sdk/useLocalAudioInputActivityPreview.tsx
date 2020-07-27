@@ -14,7 +14,6 @@ export const useLocalAudioInputActivityPreview = (elementRef: any, scaleDirectio
 
   useEffect(() => {
     const analyserNode = audioVideo?.createAnalyserNodeForAudioInput();
-    console.log('useLocalAudioInputActivityPreview', analyserNode)
 
     if (!analyserNode?.getByteTimeDomainData) {
       return;

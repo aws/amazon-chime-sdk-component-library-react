@@ -6,9 +6,10 @@ import styled from 'styled-components';
 export const StyledNotificationGroup = styled.div`
   position: fixed;
   top: 2rem;
-  width: 100%;
-  height: 100%;
+  left: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: ${props => props.theme.zIndex.notificationGroup};
 `;

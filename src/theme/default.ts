@@ -18,6 +18,7 @@ export const zIndex = {
   navigation: 10,
   modal: 20,
   popOver: 30,
+  notificationGroup: 40,
 };
 
 const breakpoints = [

@@ -57,13 +57,13 @@ describe('NotificationGroup', () => {
 
   describe('Without NotificationProvider', () => {
     test('Renders a NotificationGroup', () => {
-      const { getByTestId } = render(<NotificationGroup />);
+      const { getByTestId } = renderWithTheme(lightTheme, <NotificationGroup />);
       const notifGroupEl = getByTestId('notification-group');
       expect(notifGroupEl).toBeInTheDocument();
     });
 
     test('NotificationGroup should show no notifications by default', () => {
-      const { getByTestId } = render(<NotificationGroup />);
+      const { getByTestId } = renderWithTheme(lightTheme, <NotificationGroup />);
       const notifGroupEl = getByTestId('notification-group');
       expect(notifGroupEl).toContainHTML('');
     });
