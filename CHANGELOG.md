@@ -52,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add styles around `DeviceSelection` in demo
 - Add documentation around `DeviceSelection` and `useAudioInputActivityPreview` hook
 - Add docs for all icon components
+- Added documentation for Modal component again, after being reverted
 
 ### Changed
 
