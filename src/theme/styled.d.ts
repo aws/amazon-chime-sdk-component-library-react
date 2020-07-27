@@ -142,6 +142,7 @@ declare module 'styled-components' {
       navigation: string | number;
       modal: string | number;
       popOver: string | number;
+      notificationGroup: string | number;
     };
 
     inputs: {
