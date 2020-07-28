@@ -13,7 +13,7 @@ Returns the status of the user's output audio, and a function to mute/unmute the
   // Whether or not the user's speakers are playing output audio
   isAudioOn: boolean;
 
-  // A function to mute or unmute the audio output
+  // A function to on/off the audio output
   toggleAudio: () => void;
 }
 ```
@@ -43,7 +43,7 @@ const MyChild = () => {
 
   return (
     <div>
-      { isAudioOn ? 'Meeting audio playing' : 'Meeting audio is muted'}
+      { isAudioOn ? 'Meeting audio output is on' : 'Meeting audio output is off'}
     </div>
   );
 }

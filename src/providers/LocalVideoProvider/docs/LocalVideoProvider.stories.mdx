@@ -1,10 +1,10 @@
-<Meta title="SDK Hooks/useLocalVideo" />
+<Meta title="SDK Providers/LocalVideoProvider" />
 
-# useLocalVideo
+# LocalVideoProvider
 
-Returns state around the local user's video status, and a function to toggle their video.
+Provides the local video status, video tile id associated with the local user's video and a function to toggle their video.
 
-### Return value
+## State
 
 ```javascript
 {
@@ -19,15 +19,11 @@ Returns state around the local user's video status, and a function to toggle the
 }
 ```
 
-## Importing
-
-```javascript
-import { useLocalVideo } from 'amazon-chime-sdk-component-library-react';
-```
+You can access the provided values using [useLocalVideo](/?path=/docs/sdk-hooks-uselocalvideo--page) hook.
 
 ## Usage
 
-The hook depends on the `MeetingProvider` being rendered.
+If you are using `MeetingProvider`, `LocalVideoProvider` is rendered by default.
 
 ```jsx
 import React from 'react';
@@ -51,5 +47,4 @@ const MyChild = () => {
 ```
 
 ### Dependencies
-
 - `MeetingProvider`
