@@ -30,13 +30,12 @@ const AudioInputProvider: React.FC = ({ children }) => {
     const callback = (updatedAudioInputDevice: string | null): void => {
       setSelectedAudioInputDevice(updatedAudioInputDevice);
     };
-
     meetingManager.subscribeToSelectedAudioInputDeviceChange(callback);
 
     return (): void => {
       meetingManager.unsubscribeFromSelectedAudioInputDeviceChange(callback);
     };
-  }, [meetingManager]);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;

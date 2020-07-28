@@ -90,11 +90,8 @@ export class MeetingManager {
     this.configuration = null;
     this.meetingId = null;
     this.selectedAudioOutputDevice = null;
-    this.selectedAudioOutputDeviceObservers = [];
     this.selectedAudioInputDevice = null;
-    this.selectedAudioInputDeviceObservers = [];
     this.selectedVideoInputDevice = null;
-    this.selectedVideoInputDeviceObservers = [];
     this.audioInputDevices = [];
     this.audioOutputDevices = [];
     this.videoInputDevices = [];
