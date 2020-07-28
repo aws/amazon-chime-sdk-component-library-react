@@ -44,9 +44,9 @@ const App = () => (
 );
 
 
-const myChild = () => {
+const MyChild = () => {
   const { devices } = useVideoInputs();
-  const items = devices.map((device) => <li>{device.label}</li>)
+  const items = devices.map((device) => <li key={device.deviceId}>{device.label}</li>)
 
   return (
     <ul>

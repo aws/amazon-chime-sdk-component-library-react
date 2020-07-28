@@ -1,0 +1,61 @@
+<Meta title="SDK Providers/VideoInputProvider" />
+
+# VideoInputProvider
+
+Provides a list of the user's available `video-input` devices and the currently selected device.
+
+## State
+
+```javascript
+{
+  devices: [{
+    deviceId: string;
+    label: string;
+  }],
+
+  // The device ID of the currently selected device
+  selectedDevice: string | null
+}
+
+```
+
+You can access the provided values using [useVideoInputs](/?path=/docs/sdk-hooks-usevideoinputs--page) hook.
+
+## Importing
+
+```javascript
+import { VideoInputProvider } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+If you are using `MeetingProvider`, `VideoInputProvider` is rendered by default.
+
+```jsx
+import React from 'react';
+import { MeetingProvider, useVideoInputs } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const { devices, selectedDevice } = useVideoInputs();
+  const items = devices.map((device) => <li key={device.deviceId}>{device.label}</li>)
+
+  return (
+    <div>
+      <p>Current Selected DeviceId: {selectedDevice}</p>
+      <p>Devices</p>
+      <ul>
+        {items}
+      </ul>
+    </div>
+  );
+}
+```
+
+### Dependencies
+- `MeetingProvider`
