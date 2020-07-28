@@ -13,8 +13,8 @@ export const StyledRoster = styled.div`
   overflow-y: auto;
   background-color: ${props => props.theme.roster.bgd};
   box-shadow: 1rem 1rem 3.75rem 0 rgba(0, 0, 0, 0.1);
-  /* TODO: Get updated color from UX */
-  border: solid 0.03125rem #dedede;
+  border-left: 0.0625rem solid ${props => props.theme.roster.containerBorder};
+  border-right: 0.0625rem solid ${props => props.theme.roster.containerBorder};
 
   ${({ theme }) => theme.mediaQueries.min.md} {
     width: ${props => props.theme.roster.maxWidth};

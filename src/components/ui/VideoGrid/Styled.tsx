@@ -309,10 +309,10 @@ export const StyledGrid = styled.div<StyledGridProps>`
   height: 100%;
   width: 100%;
   overflow: auto;
+  background-color: ${props => props.theme.videoGrid.bgd};
 
   ${({ size, featured }) =>
     ratioStyles[`${size}${featured ? '.featured' : ''}`] || ''}
-
   ${({ size, featured, ratio }) => {
     if (!ratio) {
       return;
@@ -341,5 +341,5 @@ export const StyledGrid = styled.div<StyledGridProps>`
     }
 
     return styles;
-  }}
+  }};
 `;

@@ -226,10 +226,15 @@ declare module 'styled-components' {
       primaryText: string;
       secondaryText: string;
       headerBorder: string;
+      containerBorder: string;
       bgd: string;
       fgd: string;
       shadow: string;
       maxWidth: string;
+    };
+
+    videoGrid: {
+      bgd: string;
     };
 
     modalSizes: {

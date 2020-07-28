@@ -30,7 +30,8 @@ export const VideoGrid: React.FC<VideoGridProps> = ({
   const layout = props.layout || 'standard';
   const gridEl = createRef<HTMLDivElement>();
   const ratio = useElementAspectRatio(gridEl);
-  const gridSize = size || React.Children.count(children);
+  const gridSize =
+    typeof size === 'number' ? size : React.Children.count(children);
 
   return (
     <GridContext.Provider value={gridData}>

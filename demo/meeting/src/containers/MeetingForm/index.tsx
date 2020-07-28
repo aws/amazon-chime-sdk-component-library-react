@@ -28,7 +28,7 @@ import { useAppState } from '../../providers/AppStateProvider';
 
 const MeetingForm: React.FC = () => {
   const meetingManager = useMeetingManager();
-  const { setMeeting, setLocalName } = useAppState();
+  const { setMeeting, setLocalName, setRegion: setAppRegion } = useAppState();
   const [meetingId, setMeetingId] = useState('');
   const [name, setName] = useState('');
   const [region, setRegion] = useState('us-east-1');
@@ -102,9 +102,10 @@ const MeetingForm: React.FC = () => {
       <FormField
         field={Select}
         options={getFormattedOptionsForSelect(AVAILABLE_AWS_REGIONS)}
-        onChange={(e: ChangeEvent<HTMLSelectElement>): void =>
-          setRegion(e.target.value)
-        }
+        onChange={(e: ChangeEvent<HTMLSelectElement>): void => {
+          setRegion(e.target.value);
+          setAppRegion(e.target.value);
+        }}
         value={region}
         label="Select AWS region"
       />

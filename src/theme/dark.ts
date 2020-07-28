@@ -314,8 +314,9 @@ const roster = {
   title: colors.greys.white,
   primaryText: colors.greys.white,
   secondaryText: colors.greys.grey20,
-  headerBorder: colors.greys.grey100,
-  bgd: colors.greys.grey90,
+  headerBorder: colors.greys.black,
+  containerBorder: colors.greys.black,
+  bgd: colors.greys.grey100,
   fgd: colors.greys.grey60,
   shadow: shadows.large,
   maxWidth: '18.5rem'
@@ -326,6 +327,10 @@ const navbar = {
   bgd: colors.greys.grey100,
   headerBorder: colors.greys.black,
   wrapperBgd: hexTorgba(colors.greys.grey60, 0.9)
+};
+
+const videoGrid = {
+  bgd: colors.greys.grey90
 };
 
 export const darkTheme = {
@@ -342,6 +347,7 @@ export const darkTheme = {
   controlBar,
   roster,
   navbar,
+  videoGrid,
   ...defaultTheme
 };
 
