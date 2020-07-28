@@ -110,6 +110,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed `NotificationGroup` minor styles
 - Updated VideoTileGrid to take in prop for fallback view. Updated demo meeting view with meeting info
 - Use route HOME constant as BASE_URL to replace runtime BASE_URL generation
+- Make Microphone red when connection is poor. Adjust MicActivity %s
 
 ### Removed
 
