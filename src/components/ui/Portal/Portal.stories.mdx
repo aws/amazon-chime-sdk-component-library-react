@@ -5,6 +5,8 @@ import Portal from './';
 import { lightTheme } from '../../../theme/';
 import Flex from '../Flex';
 
+<Meta title="UI Components/Portal" />
+
 # Portal
 
 The Portal component is used to render children into any DOM node that exists outside the DOM hierarchy of the portal's container. 
@@ -16,15 +18,6 @@ import { Portal } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Example
-
-<ThemeProvider theme={lightTheme}>
-  <Preview>
-    <Flex layout="fill-space-centered">
-      <div id='root-div'>Root Div</div>
-      <Portal rootId='root-div'><div>Portal content</div></Portal>
-    </Flex>
-  </Preview>
-</ThemeProvider>
 
 ```jsx
 <Flex layout="fill-space-centered">
