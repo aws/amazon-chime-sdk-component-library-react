@@ -2,9 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import Svg, { SvgProps } from '../Svg';
+import { SvgProps } from '../Svg';
 
-interface MicrophoneProps extends SvgProps {
+import { StyledSvg } from './Styled';
+
+export interface MicrophoneProps extends SvgProps {
   /** Whether or not shows muted status. */
   muted?: boolean;
   /** Whether or not shows poor connected status. */
@@ -34,15 +36,17 @@ const Microphone: React.SFC<MicrophoneProps> = ({
   const iconPath = getPath(muted, poorConnection);
 
   return (
-    <Svg
+    <StyledSvg
       {...rest}
+      muted={muted}
+      poorConnection={poorConnection}
       title={muted ? 'Muted microphone' : 'Microphone'}
       data-testid={
         poorConnection ? 'poor-connection-mic' : 'good-connection-mic'
       }
     >
       <path d={iconPath} />
-    </Svg>
+    </StyledSvg>
   );
 };
 

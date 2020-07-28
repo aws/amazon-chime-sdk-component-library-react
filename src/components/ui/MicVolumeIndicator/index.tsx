@@ -37,7 +37,13 @@ export const MicVolumeIndicator = forwardRef(
           className="mic-icon"
           poorConnection={poorConnection}
         />
-        <div ref={bgRef} className="bg-volume-fill" data-testid="volume-fill" />
+        <div className="ch-bg-volume-wrapper">
+          <div
+            ref={bgRef}
+            className="ch-bg-volume-fill"
+            data-testid="volume-fill"
+          />
+        </div>
       </StyledMicVolumeIndicator>
     );
   }
