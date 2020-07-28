@@ -34,7 +34,7 @@ const AudioOutputProvider: React.FC = ({ children }) => {
     return (): void => {
       meetingManager.unsubscribeFromSelectedAudioOutputDeviceChange(callback);
     };
-  }, [meetingManager]);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;

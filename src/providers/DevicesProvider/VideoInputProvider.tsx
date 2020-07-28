@@ -36,7 +36,7 @@ const VideoInputProvider: React.FC = ({ children }) => {
     return (): void => {
       meetingManager.unsubscribeFromSelectedVideoInputDeviceChange(callback);
     };
-  }, [meetingManager]);
+  }, []);
 
   useEffect(() => {
     let isMounted = true;
