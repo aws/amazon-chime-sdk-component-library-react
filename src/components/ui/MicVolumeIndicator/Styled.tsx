@@ -19,13 +19,22 @@ export const StyledMicVolumeIndicator = styled.div<MicVolumeIndicatorProps>`
     width: 100%;
   }
 
-  .bg-volume-fill {
+  .ch-bg-volume-wrapper {
     position: absolute;
-    bottom: 41.5%;
-    left: 41%;
+    bottom: 41%;
+    left: 40%;
     height: 38%;
-    width: 18%;
-    border-radius: 0.25rem;
+    width: 21%;
+    border-radius: 20%;
+    overflow: hidden;
+  }
+
+  .ch-bg-volume-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     transform-origin: bottom;
     will-change: transform;
     background-color: ${props =>

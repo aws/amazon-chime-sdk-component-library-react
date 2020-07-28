@@ -107,6 +107,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add volume indicator, stop local video when selecting none as video source
 - Add redirection to home on page refresh in demo
 - Changed `NotificationGroup` minor styles
+- Updated VideoTileGrid to take in prop for fallback view. Updated demo meeting view with meeting info
+- Make Microphone red when connection is poor. Adjust MicActivity %'s
 
 ### Removed
 
