@@ -1,12 +1,9 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-export const BASE_URL: string = [
-  location.protocol,
-  '//',
-  location.host,
-  location.pathname.replace(/.*/, '/')
-].join('');
+import routes from '../constants/routes';
+
+export const BASE_URL = routes.HOME;
 
 interface MeetingResponse {
   JoinInfo: {
