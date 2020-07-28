@@ -52,6 +52,7 @@ export const StyledLayout = styled.main<Props>`
 
   .roster {
     grid-area: roster;
+    z-index: 2;
   }
 
   @media screen and (min-width: 769px) {

@@ -315,6 +315,7 @@ const roster = {
   primaryText: colors.greys.grey80,
   secondaryText: colors.greys.grey50,
   headerBorder: colors.greys.grey50,
+  containerBorder: colors.greys.grey30,
   bgd: colors.greys.grey10,
   fgd: colors.greys.white,
   shadow: shadows.large,
@@ -326,6 +327,10 @@ const navbar = {
   bgd: colors.greys.grey10,
   headerBorder: colors.greys.grey40,
   wrapperBgd: hexTorgba(colors.greys.grey50, 0.9)
+};
+
+const videoGrid = {
+  bgd: colors.greys.white
 };
 
 export const lightTheme = {
@@ -342,6 +347,7 @@ export const lightTheme = {
   controlBar,
   roster,
   navbar,
+  videoGrid,
   ...defaultTheme
 };
 

@@ -8,9 +8,11 @@ import {
   lightTheme,
   MeetingProvider,
   NotificationProvider,
+  darkTheme,
+  GlobalStyles
 } from 'amazon-chime-sdk-component-library-react';
 
-import { AppStateProvider } from './providers/AppStateProvider';
+import { AppStateProvider, useAppState } from './providers/AppStateProvider';
 import ErrorProvider from './providers/ErrorProvider';
 import routes from './constants/routes';
 import { NavigationProvider } from './providers/NavigationProvider';
@@ -20,13 +22,13 @@ import NoMeetingRedirect from './containers/NoMeetingRedirect';
 
 const App: FC = () => (
   <Router>
-    <ThemeProvider theme={lightTheme}>
-      <NotificationProvider>
-        <Notifications />
-        <ErrorProvider>
-          <MeetingProvider>
-            <NavigationProvider>
-              <AppStateProvider>
+    <AppStateProvider>
+      <Theme>
+        <NotificationProvider>
+          <Notifications />
+          <ErrorProvider>
+            <MeetingProvider>
+              <NavigationProvider>
                 <Switch>
                   <Route exact path={routes.HOME} component={Home} />
                   <Route path={routes.DEVICE}>
@@ -40,13 +42,24 @@ const App: FC = () => (
                     </NoMeetingRedirect>
                   </Route>
                 </Switch>
-              </AppStateProvider>
-            </NavigationProvider>
-          </MeetingProvider>
-        </ErrorProvider>
-      </NotificationProvider>
-    </ThemeProvider>
+              </NavigationProvider>
+            </MeetingProvider>
+          </ErrorProvider>
+        </NotificationProvider>
+      </Theme>
+    </AppStateProvider>
   </Router>
 );
+
+const Theme: React.FC = ({ children }) => {
+  const { theme } = useAppState();
+
+  return (
+    <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+      <GlobalStyles />
+      {children}
+    </ThemeProvider>
+  );
+};
 
 export default App;

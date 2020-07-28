@@ -7,6 +7,7 @@ import { VideoTileGrid } from 'amazon-chime-sdk-component-library-react';
 import { StyledLayout, StyledContent } from './Styled';
 import NavigationControl from '../../containers/Navigation/NavigationControl';
 import { useNavigation } from '../../providers/NavigationProvider';
+import MeetingDetails from '../../containers/MeetingDetails';
 import MeetingControlsContainer from '../../containers/MeetingControlsContainer';
 
 const MeetingView = () => {
@@ -15,7 +16,7 @@ const MeetingView = () => {
   return (
     <StyledLayout showNav={showNavbar} showRoster={showRoster}>
       <StyledContent>
-        <VideoTileGrid />
+        <VideoTileGrid noRemoteVideoView={<MeetingDetails />} />
         <MeetingControlsContainer />
       </StyledContent>
       <NavigationControl />

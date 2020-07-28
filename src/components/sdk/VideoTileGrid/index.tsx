@@ -32,7 +32,15 @@ const staticStyles = `
   }
 `;
 
-export const VideoTileGrid: React.FC<BaseProps> = props => {
+interface Props extends BaseProps {
+  /** A component to render when there are no remote videos present */
+  noRemoteVideoView?: React.ReactNode;
+}
+
+export const VideoTileGrid: React.FC<Props> = ({
+  noRemoteVideoView,
+  ...rest
+}) => {
   const { tileId: featureTileId } = useFeaturedTileState();
   const { tiles } = useRemoteVideoTileState();
   const { isSomeoneSharing } = useContentShareState();
@@ -43,13 +51,14 @@ export const VideoTileGrid: React.FC<BaseProps> = props => {
     remoteSize > 1 && isVideoEnabled ? remoteSize + 1 : remoteSize;
 
   return (
-    <VideoGrid {...props} size={gridSize} layout={featured ? 'featured' : null}>
+    <VideoGrid {...rest} size={gridSize} layout={featured ? 'featured' : null}>
       <FeaturedRemoteVideos />
       <ContentShare css="grid-area: ft;" />
       <LocalVideo
         nameplate="Me"
         css={gridSize > 1 ? fluidStyles : staticStyles}
       />
+      {remoteSize === 0 && noRemoteVideoView}
     </VideoGrid>
   );
 };

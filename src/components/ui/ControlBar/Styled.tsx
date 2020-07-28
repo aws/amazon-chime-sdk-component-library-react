@@ -17,12 +17,12 @@ const layoutMap = {
   bottom:
     'flex-direction: row; width: 100%; bottom: 0; position: fixed; padding: 1.125rem;',
   right: 'flex-direction: column; height: 100%; right: 0; position: fixed;',
-  left: 'flex-direction: column; height: 100%; left: 0; position: fixed;',
+  left: 'flex-direction: column; height: 100%; left: 0; position: fixed;'
 };
 
 const gridTemplateColumnMap = {
   popOver: 'grid-template-columns: 1.5rem 1.5rem',
-  'popOver&vertical': 'grid-template-columns: 1.5rem 1.5rem 1.5rem',
+  'popOver&vertical': 'grid-template-columns: 1.5rem 1.5rem 1.5rem'
 };
 
 export const isVertical = (layout: ControlBarLayout) => {
@@ -38,7 +38,7 @@ const unsetPosition = {
   top: 'unset;',
   bottom: 'unset;',
   right: 'unset;',
-  left: 'unset;',
+  left: 'unset;'
 };
 
 export const StyledControlBar = styled.div<StyledControlBarProps>`
@@ -46,8 +46,8 @@ export const StyledControlBar = styled.div<StyledControlBarProps>`
   justify-content: center;
   align-items: center;
   justify-content: center;
-  background-color: ${(props) => props.theme.controlBar.bgd};
-  opacity: ${(props) => props.theme.controlBar.opacity};
+  background-color: ${props => props.theme.controlBar.bgd};
+  opacity: ${props => props.theme.controlBar.opacity};
   border: ${({ theme, layout }) =>
     isUndocked(layout) ? 'none' : theme.controlBar.border};
   box-shadow: ${({ theme, layout }) =>
@@ -92,15 +92,12 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
   justify-items: center;
   align-items: center;
   ${({ popOver, layout }) => `
-    ${
-      (!isVertical(layout) && popOver && gridTemplateColumnMap['popOver']) || ''
-    }
-    ${
-      (isVertical(layout) &&
-        popOver &&
-        gridTemplateColumnMap['popOver&vertical']) ||
-      ''
-    }
+    ${(!isVertical(layout) && popOver && gridTemplateColumnMap['popOver']) ||
+      ''}
+    ${(isVertical(layout) &&
+      popOver &&
+      gridTemplateColumnMap['popOver&vertical']) ||
+      ''}
   `};
 
   button {
@@ -124,13 +121,14 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
     }
 
     .isOpen.controlBarItem__caret {
-      color: ${(props) => props.theme.colors.primary.main};
+      color: ${props => props.theme.colors.primary.main};
     }
   }
 
   .controlBarItem__label {
+    color: ${({ theme }) => theme.controlBar.text};
     grid-row-start: 2;
-    font-size: ${(props) =>
+    font-size: ${props =>
       props.theme.fontSizes.footnote
         .fontSize}; /* TODO: get updated font size from design */
     padding-top: 0.25rem;

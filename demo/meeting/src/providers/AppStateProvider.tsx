@@ -10,8 +10,12 @@ type Props = {
 interface AppStateValue {
   meetingId: string;
   localUserName: string;
+  theme: string;
+  region: string;
+  toggleTheme: () => void;
   setMeeting: (meetingId: string) => void;
   setLocalName: (name: string) => void;
+  setRegion: (region: string) => void;
 }
 
 const AppStateContext = React.createContext<AppStateValue | null>(null);
@@ -27,22 +31,28 @@ export function useAppState(): AppStateValue {
 }
 
 export function AppStateProvider({ children }: Props) {
-  const [meetingId, setMeetingId] = useState('');
-  const [localUserName, setLocalUserName] = useState('');
+  const [meetingId, setMeeting] = useState('');
+  const [region, setRegion] = useState('us-east-1');
+  const [localUserName, setLocalName] = useState('');
+  const [theme, setTheme] = useState('light');
 
-  const setMeeting = (meetingId: string): void => {
-    setMeetingId(meetingId);
-  };
-
-  const setLocalName = (name: string): void => {
-    setLocalUserName(name);
+  const toggleTheme = (): void => {
+    if (theme === 'light') {
+      setTheme('dark');
+    } else {
+      setTheme('light');
+    }
   };
 
   const providerValue = {
     meetingId,
     localUserName,
+    theme,
+    region,
+    toggleTheme,
     setLocalName,
-    setMeeting
+    setMeeting,
+    setRegion
   };
 
   return (
