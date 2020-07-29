@@ -55,4 +55,6 @@ export const Radio: FC<RadioProps> = props => {
   );
 };
 
+Radio.displayName = 'Radio';
+
 export default Radio;

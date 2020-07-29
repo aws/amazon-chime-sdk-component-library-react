@@ -72,7 +72,7 @@ export const FormField = forwardRef(
       ...rest
     } = props;
 
-    const displayName = Field.displayName?.toLowerCase();
+    const displayName = Field.displayName?.toLowerCase() || '';
     const labelId = useUniqueId();
     const descriptionId = useUniqueId();
     let helpText = (error && errorText) || infoText;
