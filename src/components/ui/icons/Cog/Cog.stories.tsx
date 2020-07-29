@@ -6,9 +6,10 @@ import React from 'react';
 import { text } from '@storybook/addon-knobs';
 import Cog from '.';
 import CogIconDocs from './Cog.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Cog',
+  title: 'UI Components/Icons/Cog',
   parameters: {
     docs: {
       page: CogIconDocs.parameters.docs.page().props.children.type
@@ -17,4 +18,4 @@ export default {
   component: Cog
 };
 
-export const _Cog = () => <Cog width={text('width', '2rem')} />;
+export const _Cog = () => <Flex layout="fill-space-centered"><Cog width={text('width', '2rem')} /></Flex>;

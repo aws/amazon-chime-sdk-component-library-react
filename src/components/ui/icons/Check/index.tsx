@@ -10,4 +10,6 @@ const Check: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Check.displayName = "Check";
+
 export default Check;

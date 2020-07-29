@@ -10,4 +10,6 @@ const Search: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Search.displayName = "Search";
+
 export default Search;

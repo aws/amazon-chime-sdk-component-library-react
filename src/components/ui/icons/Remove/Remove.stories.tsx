@@ -6,9 +6,10 @@ import React from 'react';
 import { text } from '@storybook/addon-knobs';
 import Remove from '.';
 import RemoveIconDocs from './Remove.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Remove',
+  title: 'UI Components/Icons/Remove',
   parameters: {
     docs: {
       page: RemoveIconDocs.parameters.docs.page().props.children.type
@@ -17,4 +18,4 @@ export default {
   component: Remove
 };
 
-export const _Remove = () => <Remove width={text('width', '2rem')} />;
+export const _Remove = () => <Flex layout="fill-space-centered"><Remove width={text('width', '2rem')} /></Flex>;

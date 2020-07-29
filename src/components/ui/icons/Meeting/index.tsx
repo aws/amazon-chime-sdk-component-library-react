@@ -10,4 +10,6 @@ const Meeting: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Meeting.displayName = "Meeting";
+
 export default Meeting;

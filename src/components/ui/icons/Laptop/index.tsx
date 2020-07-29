@@ -10,4 +10,6 @@ const Laptop: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Laptop.displayName = "Laptop";
+
 export default Laptop;

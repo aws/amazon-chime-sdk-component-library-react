@@ -6,9 +6,10 @@ import React from 'react';
 import { text } from '@storybook/addon-knobs';
 import Eye from '.';
 import EyeIconDocs from './Eye.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Eye',
+  title: 'UI Components/Icons/Eye',
   parameters: {
     docs: {
       page: EyeIconDocs.parameters.docs.page().props.children.type
@@ -17,4 +18,4 @@ export default {
   component: Eye
 };
 
-export const _Eye = () => <Eye width={text('width', '2rem')} />;
+export const _Eye = () => <Flex layout="fill-space-centered"><Eye width={text('width', '2rem')} /></Flex>;

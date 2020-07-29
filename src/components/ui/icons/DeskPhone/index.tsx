@@ -22,4 +22,6 @@ const DeskPhone: React.SFC<DeskPhoneProps> = ({
   </Svg>
 );
 
+DeskPhone.displayName = "DeskPhone";
+
 export default DeskPhone;

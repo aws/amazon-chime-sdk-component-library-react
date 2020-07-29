@@ -6,9 +6,10 @@ import React from 'react';
 import { text } from '@storybook/addon-knobs';
 import Search from '.';
 import SearchIconDocs from './Search.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Search',
+  title: 'UI Components/Icons/Search',
   parameters: {
     docs: {
       page: SearchIconDocs.parameters.docs.page().props.children.type
@@ -17,4 +18,4 @@ export default {
   component: Search
 };
 
-export const _Search = () => <Search width={text('width', '2rem')} />;
+export const _Search = () => <Flex layout="fill-space-centered"><Search width={text('width', '2rem')} /></Flex>;

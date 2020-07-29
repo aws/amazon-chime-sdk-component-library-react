@@ -10,4 +10,6 @@ const Attendees: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Attendees.displayName = "Attendees";
+
 export default Attendees;

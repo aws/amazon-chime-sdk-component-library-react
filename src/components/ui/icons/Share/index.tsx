@@ -10,4 +10,6 @@ const Share: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Share.displayName = "Share";
+
 export default Share;

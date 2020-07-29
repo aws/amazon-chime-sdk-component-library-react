@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+import styled from 'styled-components';
 
 import NotificationGroup from '.';
 import {
@@ -11,6 +12,9 @@ import {
   Severity
 } from '../../../providers/NotificationProvider';
 import NotificationGroupDocs from './NotificationGroup.mdx';
+
+import Button from '../Button';
+import Flex from '../Flex';
 
 export default {
   title: 'UI Components/NotificationGroup',
@@ -22,7 +26,16 @@ export default {
   component: NotificationGroup
 };
 
-const StorybookTestButton = ({ label, payload }: any) => {
+const StyledWrapper = styled.div`
+  position: absolute;
+  bottom: 2rem;
+  margin: 0 auto;
+  width: 100%;
+  text-align: center;
+  z-index: 50;
+`;
+
+const StorybookTestButton = ({ label, payload, variant }: any) => {
   const dispatch = useNotificationDispatch();
 
   const addNotification = (e: any) => {
@@ -33,9 +46,7 @@ const StorybookTestButton = ({ label, payload }: any) => {
   }
 
   return (
-    <button  onClick={addNotification}>
-      {label}
-    </button>
+    <Button onClick={addNotification} variant={variant} label={label}/>
   );
 };
 
@@ -50,10 +61,10 @@ const AddNotificationButtonGroup = () => {
     autoClose: true
   };
   return (
-    <div>
-      <StorybookTestButton label='Add simple notification' payload={payloadForSimpleNotification}/>
-      <StorybookTestButton label='Add autoclosing notification' payload={payloadForAutoclosingNotification}/>
-    </div>
+    <StyledWrapper>
+      <StorybookTestButton label='Add simple notification' payload={payloadForSimpleNotification} variant="primary"/>
+      <StorybookTestButton label='Add autoclosing notification' payload={payloadForAutoclosingNotification} variant="secondary"/>
+    </StyledWrapper>
   );
 };
 

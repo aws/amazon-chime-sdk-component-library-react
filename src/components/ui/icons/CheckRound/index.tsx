@@ -10,4 +10,6 @@ const CheckRound: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+CheckRound.displayName = "CheckRound";
+
 export default CheckRound;

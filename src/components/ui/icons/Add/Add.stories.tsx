@@ -6,9 +6,10 @@ import React from 'react';
 import { text } from '@storybook/addon-knobs';
 import Add from './';
 import AddIconDocs from './Add.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Add',
+  title: 'UI Components/Icons/Add',
   parameters: {
     docs: {
       page: AddIconDocs.parameters.docs.page().props.children.type
@@ -17,4 +18,4 @@ export default {
   component: Add
 };
 
-export const _Add = () => <Add width={text('width', '2rem')} />;
+export const _Add = () => <Flex layout="fill-space-centered"><Add width={text('width', '2rem')} /></Flex>;

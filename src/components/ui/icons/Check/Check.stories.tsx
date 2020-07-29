@@ -6,9 +6,10 @@ import React from 'react';
 import { text } from '@storybook/addon-knobs';
 import Check from '.';
 import CheckIconDocs from './Check.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Check',
+  title: 'UI Components/Icons/Check',
   parameters: {
     docs: {
       page: CheckIconDocs.parameters.docs.page().props.children.type
@@ -17,4 +18,4 @@ export default {
   component: Check
 };
 
-export const _Check = () => <Check width={text('width', '2rem')} />;
+export const _Check = () => <Flex layout="fill-space-centered"><Check width={text('width', '2rem')} /></Flex>;

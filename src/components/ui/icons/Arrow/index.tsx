@@ -33,4 +33,6 @@ const Arrow: React.SFC<ArrowProps> = ({ direction = 'up', ...rest }) => (
   </StyledArrow>
 );
 
+Arrow.displayName = "Arrow";
+
 export default Arrow;

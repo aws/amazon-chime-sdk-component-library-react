@@ -10,4 +10,6 @@ const Dialer: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Dialer.displayName = "Dialer";
+
 export default Dialer;

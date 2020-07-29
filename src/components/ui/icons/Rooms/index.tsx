@@ -10,4 +10,6 @@ const Rooms: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Rooms.displayName = "Rooms";
+
 export default Rooms;

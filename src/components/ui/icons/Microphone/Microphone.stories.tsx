@@ -6,9 +6,10 @@ import React from 'react';
 import { boolean, text } from '@storybook/addon-knobs';
 import Microphone from '.';
 import MicrophoneIconDocs from './Microphone.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Microphone',
+  title: 'UI Components/Icons/Microphone',
   parameters: {
     docs: {
       page: MicrophoneIconDocs.parameters.docs.page().props.children.type
@@ -18,9 +19,11 @@ export default {
 };
 
 export const _Microphone = () => (
-  <Microphone
-    muted={boolean('muted', false)}
-    poorConnection={boolean('poorConnection', false)}
-    width={text('width', '2rem')}
-  />
+  <Flex layout="fill-space-centered">
+    <Microphone
+      muted={boolean('muted', false)}
+      poorConnection={boolean('poorConnection', false)}
+      width={text('width', '2rem')}
+    />
+  </Flex>
 );

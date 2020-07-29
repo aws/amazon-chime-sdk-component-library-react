@@ -6,9 +6,10 @@ import React from 'react';
 import { boolean, text } from '@storybook/addon-knobs';
 import DeskPhone from '.';
 import DeskPhoneIconDocs from './DeskPhone.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/DeskPhone',
+  title: 'UI Components/Icons/DeskPhone',
   parameters: {
     docs: {
       page: DeskPhoneIconDocs.parameters.docs.page().props.children.type
@@ -18,8 +19,10 @@ export default {
 };
 
 export const _DeskPhone = () => (
-  <DeskPhone
-    disabled={boolean('disabled', false)}
-    width={text('width', '2rem')}
-  />
+  <Flex layout="fill-space-centered">
+    <DeskPhone
+      disabled={boolean('disabled', false)}
+      width={text('width', '2rem')}
+    />
+  </Flex>
 );

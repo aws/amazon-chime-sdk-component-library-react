@@ -59,6 +59,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add docs for local devices and meeting status providers
 - Add docs for VideoGrid and VideoTile components
 - Add  `Grid` unit test.
+- Add a story to display all icons in one place for reference
 
 ### Changed
 
@@ -119,6 +120,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change className to include `ch-` prefix for all UI components
 - Change `data-testid` in some components to maintain consistency
 - Use MeetingManager to maintain active speakers
+- Change storybook layouts so that there's a more consistent look
 
 ### Removed
 

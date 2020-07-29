@@ -7,6 +7,7 @@ import { select } from '@storybook/addon-knobs';
 import { Notification } from '.';
 import { Severity } from '../../../providers/NotificationProvider';
 import NotificationDocs from './Notification.mdx';
+import Flex from '../Flex';
 
 export default {
   title: 'UI Components/Notification',
@@ -20,6 +21,7 @@ export default {
 
 export const _Notification = () => {
   return (
+    <Flex layout="fill-space-centered">
       <Notification
         onClose={() => {console.log('Close notification')}}
         severity={select(
@@ -33,5 +35,6 @@ export const _Notification = () => {
         )}
         message='This is the notification message'
       />
+    </Flex>
   );
 };

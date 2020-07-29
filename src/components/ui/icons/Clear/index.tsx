@@ -10,4 +10,6 @@ const Clear: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Clear.displayName = "Clear";
+
 export default Clear;

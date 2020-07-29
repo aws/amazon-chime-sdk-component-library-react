@@ -1,6 +1,8 @@
 import React from 'react';
 import { addDecorator, configure } from '@storybook/react';
 
+import { createGlobalStyle } from 'styled-components';
+
 import { withKnobs } from '@storybook/addon-knobs';
 import { withA11y } from '@storybook/addon-a11y';
 import { withThemesProvider } from 'themeprovider-storybook';
@@ -18,9 +20,16 @@ const requiredStories = require.context(
   /\.stories\.(tsx|mdx)$/
 );
 
+const StorybookStyle = createGlobalStyle`
+  #root {
+    height: 100vh;
+  }
+`
+
 const withGlobalStyles = (cb: Function) => (
   <>
     <GlobalStyles />
+    <StorybookStyle />
     {cb()}
   </>
 );

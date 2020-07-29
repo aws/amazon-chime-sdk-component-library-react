@@ -10,4 +10,6 @@ const ContentShare: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+ContentShare.displayName = "ContentShare";
+
 export default ContentShare;

@@ -12,4 +12,6 @@ const Presenter: React.SFC<SvgProps> = props => {
   );
 };
 
+Presenter.displayName = "Presenter";
+
 export default Presenter;

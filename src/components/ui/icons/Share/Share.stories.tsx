@@ -6,9 +6,10 @@ import React from 'react';
 import { text } from '@storybook/addon-knobs';
 import Share from '.';
 import ShareIconDocs from './Share.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Share',
+  title: 'UI Components/Icons/Share',
   parameters: {
     docs: {
       page: ShareIconDocs.parameters.docs.page().props.children.type
@@ -17,4 +18,4 @@ export default {
   component: Share
 };
 
-export const _Share = () => <Share width={text('width', '2rem')} />;
+export const _Share = () => <Flex layout="fill-space-centered"><Share width={text('width', '2rem')} /></Flex>;

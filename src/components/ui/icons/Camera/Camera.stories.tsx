@@ -6,9 +6,10 @@ import React from 'react';
 import { boolean, text } from '@storybook/addon-knobs';
 import Camera from './';
 import CameraIconDocs from './Camera.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Camera',
+  title: 'UI Components/Icons/Camera',
   parameters: {
     docs: {
       page: CameraIconDocs.parameters.docs.page().props.children.type
@@ -18,5 +19,7 @@ export default {
 };
 
 export const _Camera = () => (
-  <Camera disabled={boolean('disabled', false)} width={text('width', '2rem')} />
+  <Flex layout="fill-space-centered">
+    <Camera disabled={boolean('disabled', false)} width={text('width', '2rem')} />
+  </Flex>
 );

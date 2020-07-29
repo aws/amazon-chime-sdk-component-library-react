@@ -10,4 +10,6 @@ const Pause: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Pause.displayName = "Pause";
+
 export default Pause;

@@ -10,4 +10,6 @@ const Crown: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Crown.displayName = "Crown";
+
 export default Crown;

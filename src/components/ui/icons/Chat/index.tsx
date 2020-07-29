@@ -10,4 +10,6 @@ const Chat: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Chat.displayName = "Chat";
+
 export default Chat;

@@ -6,9 +6,10 @@ import React from 'react';
 import { text } from '@storybook/addon-knobs';
 import SignalStrength from '.';
 import SignalStrengthIconDocs from './SignalStrength.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/SignalStrength',
+  title: 'UI Components/Icons/SignalStrength',
   parameters: {
     docs: {
       page: SignalStrengthIconDocs.parameters.docs.page().props.children.type
@@ -18,5 +19,5 @@ export default {
 };
 
 export const _SignalStrength = () => (
-  <SignalStrength width={text('width', '2rem')} />
+  <Flex layout="fill-space-centered"><SignalStrength width={text('width', '2rem')} /></Flex>
 );

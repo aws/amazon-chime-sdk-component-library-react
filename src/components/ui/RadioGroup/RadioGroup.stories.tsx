@@ -5,6 +5,7 @@ import React from 'react';
 
 import { RadioGroup } from './';
 import RadioGroupDocs from './RadioGroup.mdx';
+import Flex from '../Flex';
 
 export default {
   title: 'UI Components/Form/RadioGroup',
@@ -32,11 +33,13 @@ const options = [
 ];
 
 export const _RadioGroup = () => (
-  <RadioGroup
-    options={options}
-    value="monkeynuts"
-    onChange={() => console.log('change')}
-  />
+  <Flex layout="fill-space-centered">
+    <RadioGroup
+      options={options}
+      value="monkeynuts"
+      onChange={() => console.log('change')}
+    />
+  </Flex>
 );
 
 _RadioGroup.story = {

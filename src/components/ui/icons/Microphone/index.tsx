@@ -50,4 +50,6 @@ const Microphone: React.SFC<MicrophoneProps> = ({
   );
 };
 
+Microphone.displayName = "Microphone";
+
 export default Microphone;

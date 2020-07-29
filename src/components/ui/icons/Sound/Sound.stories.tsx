@@ -6,9 +6,10 @@ import React from 'react';
 import { boolean, text } from '@storybook/addon-knobs';
 import Sound from '.';
 import SoundIconDocs from './Sound.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Sound',
+  title: 'UI Components/Icons/Sound',
   parameters: {
     docs: {
       page: SoundIconDocs.parameters.docs.page().props.children.type
@@ -18,5 +19,5 @@ export default {
 };
 
 export const _Sound = () => (
-  <Sound disabled={boolean('disabled', false)} width={text('width', '2rem')} />
+  <Flex layout="fill-space-centered"><Sound disabled={boolean('disabled', false)} width={text('width', '2rem')} /></Flex>
 );

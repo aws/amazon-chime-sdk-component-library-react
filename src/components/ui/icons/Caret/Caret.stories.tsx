@@ -6,9 +6,10 @@ import React from 'react';
 import { select, text } from '@storybook/addon-knobs';
 import Caret from './';
 import CaretIconDocs from './Caret.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Caret',
+  title: 'UI Components/Icons/Caret',
   parameters: {
     docs: {
       page: CaretIconDocs.parameters.docs.page().props.children.type
@@ -18,12 +19,14 @@ export default {
 };
 
 export const _Caret = () => (
-  <Caret
-    direction={select(
-      'direction',
-      { up: 'up', right: 'right', down: 'down', left: 'left' },
-      'down'
-    )}
-    width={text('width', '2rem')}
-  />
+  <Flex layout="fill-space-centered">
+    <Caret
+      direction={select(
+        'direction',
+        { up: 'up', right: 'right', down: 'down', left: 'left' },
+        'down'
+      )}
+      width={text('width', '2rem')}
+    />
+  </Flex>
 );

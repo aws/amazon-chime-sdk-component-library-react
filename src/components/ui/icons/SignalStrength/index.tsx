@@ -10,4 +10,6 @@ const SignalStrength: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+SignalStrength.displayName = "SignalStrength";
+
 export default SignalStrength;

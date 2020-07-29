@@ -6,9 +6,10 @@ import React from 'react';
 import { text } from '@storybook/addon-knobs';
 import Information from '.';
 import InformationIconDocs from './Information.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Information',
+  title: 'UI Components/Icons/Information',
   parameters: {
     docs: {
       page: InformationIconDocs.parameters.docs.page().props.children.type
@@ -17,4 +18,4 @@ export default {
   component: Information
 };
 
-export const _Information = () => <Information width={text('width', '2rem')} />;
+export const _Information = () => <Flex layout="fill-space-centered"><Information width={text('width', '2rem')} /></Flex>;

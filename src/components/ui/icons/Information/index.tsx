@@ -10,4 +10,6 @@ const Information: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Information.displayName = "Information";
+
 export default Information;

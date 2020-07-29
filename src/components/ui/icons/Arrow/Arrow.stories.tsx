@@ -6,9 +6,10 @@ import React from 'react';
 import { text, select } from '@storybook/addon-knobs';
 import Arrow from './';
 import ArrowIconDocs from './Arrow.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Arrow',
+  title: 'UI Components/Icons/Arrow',
   parameters: {
     docs: {
       page: ArrowIconDocs.parameters.docs.page().props.children.type
@@ -18,12 +19,14 @@ export default {
 };
 
 export const _Arrow = () => (
-  <Arrow
-    direction={select(
-      'direction',
-      { up: 'up', right: 'right', down: 'down', left: 'left' },
-      'down'
-    )}
-    width={text('width', '2rem')}
-  />
+  <Flex layout="fill-space-centered">
+    <Arrow
+      direction={select(
+        'direction',
+        { up: 'up', right: 'right', down: 'down', left: 'left' },
+        'down'
+      )}
+      width={text('width', '2rem')}
+    />
+  </Flex>
 );

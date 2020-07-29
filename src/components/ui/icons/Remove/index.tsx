@@ -10,4 +10,6 @@ const Remove: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Remove.displayName = "Remove";
+
 export default Remove;

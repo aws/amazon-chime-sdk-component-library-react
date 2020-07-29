@@ -6,9 +6,10 @@ import React from 'react';
 import { text } from '@storybook/addon-knobs';
 import Phone from '.';
 import PhoneIconDocs from './Phone.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Phone',
+  title: 'UI Components/Icons/Phone',
   parameters: {
     docs: {
       page: PhoneIconDocs.parameters.docs.page().props.children.type
@@ -17,4 +18,4 @@ export default {
   component: Phone
 };
 
-export const _Phone = () => <Phone width={text('width', '2rem')} />;
+export const _Phone = () => <Flex layout="fill-space-centered"><Phone width={text('width', '2rem')} /></Flex>;

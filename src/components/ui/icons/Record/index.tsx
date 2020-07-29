@@ -10,4 +10,6 @@ const Record: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Record.displayName = "Record";
+
 export default Record;

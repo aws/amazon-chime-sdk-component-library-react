@@ -10,6 +10,7 @@ import SecondaryButton from './SecondaryButton';
 import IconButton from './IconButton';
 import Meeting from '../icons/Meeting';
 import ButtonDocs from './Button.mdx';
+import Flex from '../Flex';
 
 export default {
   title: 'UI Components/Form/Buttons',
@@ -21,20 +22,30 @@ export default {
   component: Button
 };
 
-export const BasicButton = () => <Button label="Basic button" />;
+export const BasicButton = () => (
+  <Flex layout="fill-space-centered">
+    <Button label="Basic button" />
+  </Flex>
+);
 
 BasicButton.story = {
   name: 'Basic button'
 };
 
-export const _PrimaryButton = () => <PrimaryButton label="Primary" />;
+export const _PrimaryButton = () => (
+  <Flex layout="fill-space-centered">
+    <PrimaryButton label="Primary" />
+  </Flex>
+);
 
 _PrimaryButton.story = {
   name: 'Primary button'
 };
 
 export const _SecondaryButton = () => (
-  <SecondaryButton label="This is a secondary button" />
+  <Flex layout="fill-space-centered">
+    <SecondaryButton label="This is a secondary button" />
+  </Flex>
 );
 
 _SecondaryButton.story = {
@@ -43,12 +54,14 @@ _SecondaryButton.story = {
 
 export const _IconButton = () => {
   return (
-    <IconButton
-      selected={boolean('Selected', false)}
-      label="click me"
-      icon={<Meeting />}
-      iconSize={select('iconSize', ['sm', 'md', 'lg'], 'sm')}
-    />
+    <Flex layout="fill-space-centered">
+      <IconButton
+        selected={boolean('Selected', false)}
+        label="click me"
+        icon={<Meeting />}
+        iconSize={select('iconSize', ['sm', 'md', 'lg'], 'sm')}
+      />
+    </Flex>
   );
 };
 

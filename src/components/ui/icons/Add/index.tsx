@@ -10,4 +10,6 @@ const Add: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Add.displayName = "Add";
+
 export default Add;

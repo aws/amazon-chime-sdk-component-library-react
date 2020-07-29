@@ -6,9 +6,10 @@ import React from 'react';
 import { text } from '@storybook/addon-knobs';
 import Attendees from '.';
 import AttendeesIconDocs from './Attendees.mdx';
+import Flex from '../../Flex';
 
 export default {
-  title: 'Icons/Attendees',
+  title: 'UI Components/Icons/Attendees',
   parameters: {
     docs: {
       page: AttendeesIconDocs.parameters.docs.page().props.children.type
@@ -17,4 +18,4 @@ export default {
   component: Attendees
 };
 
-export const _Attendees = () => <Attendees width={text('width', '2rem')} />;
+export const _Attendees = () => <Flex layout="fill-space-centered"><Attendees width={text('width', '2rem')} /></Flex>;

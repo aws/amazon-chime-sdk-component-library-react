@@ -10,4 +10,6 @@ const Hamburger: React.SFC<SvgProps> = (props) => (
   </Svg>
 );
 
+Hamburger.displayName = "Hamburger";
+
 export default Hamburger;

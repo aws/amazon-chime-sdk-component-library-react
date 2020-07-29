@@ -10,4 +10,6 @@ const LeaveMeeting: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+LeaveMeeting.displayName = "LeaveMeeting";
+
 export default LeaveMeeting;

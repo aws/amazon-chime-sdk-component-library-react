@@ -10,4 +10,6 @@ const Play: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Play.displayName = "Play";
+
 export default Play;

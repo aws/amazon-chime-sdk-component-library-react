@@ -10,4 +10,6 @@ const Phone: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Phone.displayName = "Phone";
+
 export default Phone;

@@ -10,4 +10,6 @@ const Cog: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Cog.displayName = "Cog";
+
 export default Cog;

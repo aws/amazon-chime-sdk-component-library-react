@@ -10,4 +10,6 @@ const Clock: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Clock.displayName = "Clock";
+
 export default Clock;

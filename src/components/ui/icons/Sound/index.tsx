@@ -19,4 +19,6 @@ const Sound: React.SFC<SoundProps> = ({ disabled, ...rest }) => (
   </Svg>
 );
 
+Sound.displayName = "Sound";
+
 export default Sound;

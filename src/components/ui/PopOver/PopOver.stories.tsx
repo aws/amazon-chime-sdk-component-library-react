@@ -10,6 +10,8 @@ import PopOverSubMenu from './PopOverSubMenu';
 import PopOverSeparator from './PopOverSeparator';
 import PopOverHeader from './PopOverHeader';
 import Meeting from '../icons/Meeting';
+import Flex from '../Flex';
+import Heading from '../Heading';
 import PopOverDocs from './PopOver.mdx';
 
 export default {
@@ -44,55 +46,18 @@ const getButtonContents = (isOpen: boolean) => {
 }
 
 export const BasicPopOverMenu = () => (
-  <PopOver
-    a11yLabel="Click me"
-    renderButton={(isOpen) => getButtonContents(isOpen)}
-    >
-    <PopOverItem
-      as="a"
-      href='https://www.amazon.com'
-      children={<span>Visit amazon.com</span>}
-    />
-    <PopOverItem
-      as="button"
-      onClick={() => console.log('clicked')}
-      children={<span>More test content</span>}
-    />
-    <PopOverItem
-      as="button"
-      onClick={() => console.log('clicked')}
-      children={<span>Also test content</span>}
-      checked
-    />
+  <>
 
-    <PopOverItem
-      as="button"
-      onClick={() => console.log('clicked')}
-      children={<span>This has very long text</span>}
-    />
-  </PopOver>
-);
-
-BasicPopOverMenu.story = {
-  name: 'Basic Popover Menu'
-};
-
-export const PopOverMenuWithHeader = () => {
-  return (
-    <>
-
+    <Flex layout="fill-space-centered" flexDirection="column">
+      <Heading tag="p" level={6} mb={4}>Click the button icon to trigger the popover</Heading>
       <PopOver
         a11yLabel="Click me"
         renderButton={(isOpen) => getButtonContents(isOpen)}
         >
-        <PopOverHeader
-          title="Title text"
-          subtitle="Subtitle text"
-        />
         <PopOverItem
-          as="button"
-          onClick={() => console.log('clicked')}
-          children={<span>Test content</span>}
+          as="a"
+          href='https://www.amazon.com'
+          children={<span>Visit amazon.com</span>}
         />
         <PopOverItem
           as="button"
@@ -102,51 +67,95 @@ export const PopOverMenuWithHeader = () => {
         <PopOverItem
           as="button"
           onClick={() => console.log('clicked')}
+          children={<span>Also test content</span>}
+          checked
+        />
+
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked')}
           children={<span>This has very long text</span>}
         />
       </PopOver>
-    </>
-  );
+    </Flex>
+  </>
+);
+
+BasicPopOverMenu.story = {
+  name: 'Basic Popover Menu'
 };
+
+export const PopOverMenuWithHeader = () => (
+  <Flex layout="fill-space-centered" flexDirection="column">
+    <Heading tag="p" level={6} mb={4}>Click the button icon to trigger the popover</Heading>
+    <PopOver
+      a11yLabel="Click me"
+      renderButton={(isOpen) => getButtonContents(isOpen)}
+      >
+      <PopOverHeader
+        title="Title text"
+        subtitle="Subtitle text"
+      />
+      <PopOverItem
+        as="button"
+        onClick={() => console.log('clicked')}
+        children={<span>Test content</span>}
+      />
+      <PopOverItem
+        as="button"
+        onClick={() => console.log('clicked')}
+        children={<span>More test content</span>}
+      />
+      <PopOverItem
+        as="button"
+        onClick={() => console.log('clicked')}
+        children={<span>This has very long text</span>}
+      />
+    </PopOver>
+  </Flex>
+);
 
 PopOverMenuWithHeader.story = {
   name: 'Popover Menu with header'
 };
 
 export const PopOverMenuWithSubmenu = () => (
-  <PopOver
-    a11yLabel="Click me"
-    renderButton={(isOpen) => getButtonContents(isOpen)}
-    >
-    <PopOverItem
-      as="button"
-      onClick={() => console.log('clicked')}
-      children={<span>Also test content</span>}
-    />
-    <PopOverSeparator />
-    <PopOverItem
-      as="button"
-      onClick={() => console.log('clicked')}
-      children={<span>This is more test content</span>}
-    />
-    <PopOverSubMenu text="This is a submenu">
+  <Flex layout="fill-space-centered" flexDirection="column">
+    <Heading tag="p" level={6} mb={4}>Click the button icon to trigger the popover</Heading>
+    <PopOver
+      a11yLabel="Click me"
+      renderButton={(isOpen) => getButtonContents(isOpen)}
+      >
       <PopOverItem
         as="button"
         onClick={() => console.log('clicked')}
-        children={<span>This is also a submenu component</span>}
+        children={<span>Also test content</span>}
       />
+      <PopOverSeparator />
       <PopOverItem
         as="button"
         onClick={() => console.log('clicked')}
-        children={<span>This is also a submenu component</span>}
+        children={<span>This is more test content</span>}
       />
-    </PopOverSubMenu>
-    <PopOverItem
-      as="button"
-      onClick={() => console.log('clicked')}
-      children={<span>This has very long text</span>}
-      />
-  </PopOver>
+      <PopOverSubMenu text="This is a submenu">
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked')}
+          children={<span>This is also a submenu component</span>}
+        />
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked')}
+          children={<span>This is also a submenu component</span>}
+        />
+      </PopOverSubMenu>
+      <PopOverItem
+        as="button"
+        onClick={() => console.log('clicked')}
+        children={<span>This has very long text</span>}
+        />
+    </PopOver>
+  </Flex>
 );
 
 PopOverMenuWithSubmenu.story = {

@@ -10,4 +10,6 @@ const Caution: React.SFC<SvgProps> = props => (
   </Svg>
 );
 
+Caution.displayName = "Caution";
+
 export default Caution;

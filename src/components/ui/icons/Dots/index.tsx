@@ -10,4 +10,6 @@ const Dots: React.SFC<SvgProps> = (props) => (
   </Svg>
 );
 
+Dots.displayName = "Dots";
+
 export default Dots;

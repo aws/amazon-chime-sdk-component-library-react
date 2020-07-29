@@ -22,4 +22,6 @@ const Camera: React.SFC<CameraProps> = ({ disabled = false, ...rest }) => (
   </Svg>
 );
 
+Camera.displayName = "Camera";
+
 export default Camera;
