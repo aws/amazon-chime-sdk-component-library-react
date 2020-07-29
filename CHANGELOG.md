@@ -131,5 +131,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix demo application not allowing to select video / audio via popover
 - Fixed some demo layout issues
 - Fixed issue in demo when reselecting a device in the control bar
+- Fix roster not including attendees when rejoining meeting
+- Fix mobile portrait local video being too large
+- Fix content share not resetting when leaving a meeting
 
 ## [0.1.1] - 2020-06-16

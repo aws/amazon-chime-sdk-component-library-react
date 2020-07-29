@@ -23,8 +23,8 @@ const staticStyles = `
   position: absolute;
   bottom: 1rem;
   right: 1rem;
-  width: 18vw;
-  min-width: 200px;
+  width: 20vw;
+  max-height: 30vh;
   height: auto;
 
   video {

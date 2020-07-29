@@ -4,13 +4,15 @@
 import React, { useState } from 'react';
 import {
   SpeakerSelection,
-  SecondaryButton
+  SecondaryButton,
+  useAudioOutputs
 } from 'amazon-chime-sdk-component-library-react';
 
 import TestSound from '../../../utils/TestSound';
 
 const SpeakerDevices = () => {
-  const [selectedOutput, setSelectedOutput] = useState('');
+  const { selectedDevice } = useAudioOutputs();
+  const [selectedOutput, setSelectedOutput] = useState(selectedDevice);
 
   const handleChange = (deviceId: string): void => {
     setSelectedOutput(deviceId);

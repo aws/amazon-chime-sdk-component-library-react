@@ -133,9 +133,10 @@ const ContentShareProvider: React.FC = ({ children }) => {
 
     if (isLocalUserSharing || isLocalShareLoading) {
       audioVideo.stopContentShare();
+      setIsContentSharePaused(false);
       setContentShareState(localState => ({
         ...localState,
-        isLocalShareLoading: true,
+        isLocalShareLoading: false,
         isLocalUserSharing: false
       }));
     } else {
@@ -146,6 +147,17 @@ const ContentShareProvider: React.FC = ({ children }) => {
       }));
     }
   }, [audioVideo, isLocalUserSharing, isLocalShareLoading]);
+
+  useEffect(() => {
+    if (!audioVideo) {
+      return;
+    }
+
+    return () => {
+      setIsContentSharePaused(false);
+      setContentShareState(initialState);
+    };
+  }, [audioVideo]);
 
   const togglePauseContentShare = useCallback((): void => {
     if (!audioVideo || !isLocalUserSharing) {

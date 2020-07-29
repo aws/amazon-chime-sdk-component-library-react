@@ -82,6 +82,7 @@ const RosterProvider: React.FC = ({ children }) => {
 
     return () => {
       setRoster({});
+      rosterRef.current = {};
       audioVideo.realtimeUnsubscribeToAttendeeIdPresence(rosterUpdateCallback);
     };
   }, [audioVideo]);
