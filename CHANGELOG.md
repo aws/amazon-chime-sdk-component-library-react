@@ -113,6 +113,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Use route HOME constant as BASE_URL to replace runtime BASE_URL generation
 - Make Microphone red when connection is poor. Adjust MicActivity %s
 - Updated Portal storybook documentation to only show documentation without visual documentation
+- Change className to include `ch-` prefix for all UI components
+- Change `data-testid` in some components to maintain consistency
 
 ### Removed
 

@@ -18,10 +18,28 @@ export interface NavbarItemProps {
   popOver?: PopOverItemProps[] | null;
 }
 
-export const NavbarItem = ({ onClick, label, icon, popOver = null }: NavbarItemProps) => (
-  <StyledNavbarItem data-testid='navbar-item'>
-    <ControlBarButton onClick={onClick} label={label} icon={icon} popOver={popOver} />
-    {label && <span data-testid='navbar-label' className='navigationBarItem__label' onClick={onClick}>{label}</span>}
+export const NavbarItem = ({
+  onClick,
+  label,
+  icon,
+  popOver = null
+}: NavbarItemProps) => (
+  <StyledNavbarItem data-testid="navbar-item">
+    <ControlBarButton
+      onClick={onClick}
+      label={label}
+      icon={icon}
+      popOver={popOver}
+    />
+    {label && (
+      <span
+        data-testid="navbar-label"
+        className="ch-navigation-bar-item-label"
+        onClick={onClick}
+      >
+        {label}
+      </span>
+    )}
   </StyledNavbarItem>
 );
 

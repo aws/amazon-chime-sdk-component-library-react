@@ -17,14 +17,18 @@ export const PopOverSubMenu: FC<PopOverItemProps> = ({ text, children }) => {
     return (
       <>
         {text}
-        <Caret className="caret" direction="right" data-testid='submenu-caret'/>
+        <Caret
+          className="ch-caret"
+          direction="right"
+          data-testid="submenu-caret"
+        />
       </>
     );
-  }
+  };
   return (
     <StyledSubMenu>
       <PopOver
-        renderButton={(isOpen) => getButtonContents(isOpen)}
+        renderButton={isOpen => getButtonContents(isOpen)}
         placement="right-start"
         isSubMenu
         a11yLabel={text}

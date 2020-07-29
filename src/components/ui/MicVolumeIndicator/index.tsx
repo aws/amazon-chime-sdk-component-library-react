@@ -30,11 +30,11 @@ export const MicVolumeIndicator = forwardRef(
         {...rest}
         signalStrength={signalStrength}
         muted={muted}
-        className="mic-volume-indicator"
+        className="ch-mic-volume-indicator"
       >
         <Microphone
           muted={muted}
-          className="mic-icon"
+          className="ch-mic-icon"
           poorConnection={poorConnection}
         />
         <div className="ch-bg-volume-wrapper">

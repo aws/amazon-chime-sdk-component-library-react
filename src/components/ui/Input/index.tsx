@@ -77,14 +77,14 @@ export const Input = forwardRef(
       <InputWrapper
         leadingIcon={leadingIcon}
         sizing={sizing}
-        className={`InputWrapper ${className || ''}`}
+        className={`ch-input-wrapper ${className || ''}`}
       >
         <StyledInput
           {...rest}
           value={value}
           type={type || 'text'}
           ref={ref}
-          className="Input"
+          className="ch-input"
           onChange={onChange}
           data-testid="input"
         />
@@ -103,7 +103,5 @@ export const Input = forwardRef(
     );
   }
 );
-
-Input.displayName = 'Input';
 
 export default Input;

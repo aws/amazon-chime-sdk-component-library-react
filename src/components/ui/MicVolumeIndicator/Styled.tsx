@@ -13,7 +13,7 @@ export const StyledMicVolumeIndicator = styled.div<MicVolumeIndicatorProps>`
 
   ${baseStyles}
 
-  .mic-icon {
+  .ch-mic-icon {
     position: relative;
     z-index: 2;
     width: 100%;

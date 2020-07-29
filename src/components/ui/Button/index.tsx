@@ -35,11 +35,11 @@ export const Button = forwardRef(
       data-testid="button"
     >
       {props.icon && (
-        <span className="icon" data-testid="button-icon">
+        <span className="ch-icon" data-testid="button-icon">
           {props.icon}
         </span>
       )}
-      <span className="label" data-testid="button-label">
+      <span className="ch-label" data-testid="button-label">
         {props.label}
       </span>
     </StyledButton>

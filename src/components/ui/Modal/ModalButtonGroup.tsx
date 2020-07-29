@@ -6,12 +6,16 @@ import { useModalContext } from './ModalContext';
 
 import { StyledModalButtonGroup } from './Styled';
 
-export interface ModalButtonGroupProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ModalButtonGroupProps
+  extends React.HTMLAttributes<HTMLDivElement> {
   primaryButtons: ReactElement | ReactElement[];
   secondaryButtons?: ReactElement | ReactElement[];
 }
 
-export const ModalButtonGroup:FC<ModalButtonGroupProps> = ({ primaryButtons, secondaryButtons  }) => {
+export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
+  primaryButtons,
+  secondaryButtons
+}) => {
   const context = useModalContext();
 
   const addCloseBehaviorToButton = (button: any) => {
@@ -20,7 +24,7 @@ export const ModalButtonGroup:FC<ModalButtonGroupProps> = ({ primaryButtons, sec
         button.props.onClick && button.props.onClick();
         !!button.props.closesModal && context.onClose();
       },
-      key: button.props.label,
+      key: button.props.label
     });
   };
 
@@ -35,11 +39,11 @@ export const ModalButtonGroup:FC<ModalButtonGroupProps> = ({ primaryButtons, sec
   };
 
   return (
-    <StyledModalButtonGroup data-testid='modalButtonGroup'>
-      <div>
-        {addCloseBehaviorToButtons(primaryButtons)}
-      </div>
-      {secondaryButtons && <div>{addCloseBehaviorToButtons(secondaryButtons)}</div>}
+    <StyledModalButtonGroup data-testid="modal-button-group">
+      <div>{addCloseBehaviorToButtons(primaryButtons)}</div>
+      {secondaryButtons && (
+        <div>{addCloseBehaviorToButtons(secondaryButtons)}</div>
+      )}
     </StyledModalButtonGroup>
   );
 };

@@ -20,10 +20,10 @@ export const NavbarHeader: React.FC<NavbarHeaderProps> = ({
   onClose
 }: NavbarHeaderProps) => (
   <StyledHeader>
-    <span className="title">{title}</span>
+    <span className="ch-title">{title}</span>
     {onClose && (
       <IconButton
-        className="btn-close"
+        className="ch-btn-close"
         label="Close"
         onClick={onClose}
         icon={<Remove />}

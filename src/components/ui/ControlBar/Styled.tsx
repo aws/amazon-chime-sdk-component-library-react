@@ -108,24 +108,24 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
     grid-column-start: ${({ layout, popOver }) =>
       isVertical(layout) && popOver ? '2' : '1'};
 
-    .icon {
+    .ch-icon {
       width: 1.5rem;
       height: 1.5rem;
       background-color: inherit;
       border-radius: 100%;
     }
 
-    .controlBarItem__caret {
+    .ch-control-bar-item-caret {
       width: 1.5rem;
       height: 1.5rem;
     }
 
-    .isOpen.controlBarItem__caret {
+    .isOpen.ch-control-bar-item-caret {
       color: ${props => props.theme.colors.primary.main};
     }
   }
 
-  .controlBarItem__label {
+  .ch-control-bar-item-label {
     color: ${({ theme }) => theme.controlBar.text};
     grid-row-start: 2;
     font-size: ${props =>

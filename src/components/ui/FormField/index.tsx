@@ -72,19 +72,19 @@ export const FormField = forwardRef(
       ...rest
     } = props;
 
-    const { displayName } = Field;
+    const displayName = Field.displayName?.toLowerCase();
     const labelId = useUniqueId();
     const descriptionId = useUniqueId();
     let helpText = (error && errorText) || infoText;
 
     const renderLabel = () => {
-      if (layout === 'input-only' && displayName !== 'Checkbox') {
+      if (layout === 'input-only' && displayName !== 'checkbox') {
         return null;
       }
 
-      if (Field.displayName !== 'RadioGroup') {
+      if (displayName !== 'radiogroup') {
         return (
-          <Label htmlFor={labelId} className={`${displayName}-label`}>
+          <Label htmlFor={labelId} className={`ch-${displayName}-label`}>
             {label}
           </Label>
         );
@@ -96,12 +96,12 @@ export const FormField = forwardRef(
       <StyledFormField
         layout={layout}
         error={error}
-        className={`FormField-${Field.displayName} ${className || ''}`}
+        className={`ch-form-field-${displayName} ${className || ''}`}
         data-testid="form-field"
         {...rest}
       >
         {renderLabel()}
-        {Field.displayName === 'RadioGroup' ? (
+        {displayName === 'radiogroup' ? (
           <fieldset
             aria-describedby={helpText && descriptionId}
             aria-invalid={error}
@@ -131,7 +131,7 @@ export const FormField = forwardRef(
           />
         )}
         {helpText && (
-          <span className="helpText" id={descriptionId}>
+          <span className="ch-help-text" id={descriptionId}>
             {helpText}
           </span>
         )}

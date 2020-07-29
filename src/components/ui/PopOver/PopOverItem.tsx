@@ -6,7 +6,7 @@ import React, { FC } from 'react';
 import Check from '../icons/Check';
 import { StyledPopOverItem } from './Styled';
 
-export type PopOverItemType = "a" | "button";
+export type PopOverItemType = 'a' | 'button';
 
 export interface PopOverItemProps {
   onClick?: () => void;
@@ -19,13 +19,15 @@ export interface PopOverItemProps {
 }
 
 export const PopOverItem: FC<PopOverItemProps> = props => {
-  const { as = "button", children, ...rest } = props;
+  const { as = 'button', children, ...rest } = props;
 
   let Tag = as;
   return (
-    <StyledPopOverItem data-testid='popover-item'>
-      {props.checked && <Check className="check" data-testid='popover-check' />}
-      <Tag className="content" {...rest}>
+    <StyledPopOverItem data-testid="popover-item">
+      {props.checked && (
+        <Check className="ch-check" data-testid="popover-check" />
+      )}
+      <Tag className="ch-content" {...rest}>
         {children}
       </Tag>
     </StyledPopOverItem>

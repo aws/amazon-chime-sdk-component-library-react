@@ -7,48 +7,49 @@ import { FieldWrapperProps } from './';
 import { baseStyles, baseSpacing } from '../Base';
 
 export const stack = css`
-  &.FormField-Input,
-  &.FormField-Select,
-  &.FormField-Textarea {
+  &.ch-form-field-input,
+  &.ch-form-field-select,
+  &.ch-form-field-textarea {
     display: flex;
     flex-direction: column;
 
     label {
       display: block;
-      margin-bottom: .5rem;
+      margin-bottom: 0.5rem;
     }
 
-    input, select {
+    input,
+    select {
       width: 100%;
     }
   }
 
-  &.FormField-Checkbox {
+  &.ch-form-field-checkbox {
     display: grid;
     grid-template-columns: 1.5rem 1fr;
     grid-template-rows: auto;
     gap: 0px 0.5rem;
 
-    .Checkbox {
+    .ch-checkbox {
       grid-column: 1;
       grid-row: 1;
     }
 
-    .Checkbox-label {
+    .ch-checkbox-label {
       line-height: 1.3;
       grid-column: 2;
     }
 
-    .helpText {
+    .ch-help-text {
       grid-row: 2;
       grid-column: 1/3;
     }
   }
 
-  &.FormField-RadioGroup {
+  &.ch-form-field-radiogroup {
     flex-direction: column;
 
-    .Radio-wrapper {
+    .ch-radio-wrapper {
       display: block;
       margin-bottom: 0.5rem;
       padding-left: 0.125rem;
@@ -59,7 +60,7 @@ export const stack = css`
       align-items: center;
     }
 
-    .Radio-label {
+    .ch-radio-label {
       margin-left: 1rem;
       position: relative;
       bottom: -0.5px;
@@ -68,16 +69,15 @@ export const stack = css`
 `;
 
 export const horizontal = css`
-
-  @media(max-width: 599px) {
+  @media (max-width: 599px) {
     ${stack};
   }
 
-  @media (min-width: 600px)  {
-    &.FormField-Input,
-    &.FormField-Select,
-    &.FormField-Textarea,
-    &.FormField-Checkbox {
+  @media (min-width: 600px) {
+    &.ch-form-field-input,
+    &.ch-form-field-select,
+    &.ch-form-field-textarea,
+    &.ch-form-field-checkbox {
       display: grid;
       grid-template-columns: 30% 1fr;
       grid-template-rows: auto;
@@ -88,50 +88,50 @@ export const horizontal = css`
         width: 100%;
       }
 
-      .helpText {
+      .ch-help-text {
         grid-column: 2;
       }
     }
 
-    &.FormField-RadioGroup {
-    flex-wrap: wrap;
+    &.ch-form-field-radiogroup {
+      flex-wrap: wrap;
 
-    fieldset {
-      width: 100%;
-    }
+      fieldset {
+        width: 100%;
+      }
 
-    .Radio-wrapper {
-      display: grid;
-      grid-template-columns: 30% 1fr;
-      grid-template-rows: auto;
-      gap: 0px 0.5rem;
-      align-items: center;
-      margin-bottom: 0.5rem;
-    }
+      .ch-radio-wrapper {
+        display: grid;
+        grid-template-columns: 30% 1fr;
+        grid-template-rows: auto;
+        gap: 0px 0.5rem;
+        align-items: center;
+        margin-bottom: 0.5rem;
+      }
 
-    .Radio {
-      grid-column: 2;
-      grid-row: 1;
-      margin-top: -4px;
-    }
+      .ch-radio {
+        grid-column: 2;
+        grid-row: 1;
+        margin-top: -4px;
+      }
 
-    .Radio-label {
-      grid-column: 1;
-      padding-right: 1rem;
-      margin-left: 0;
-    }
+      .ch-radio-label {
+        grid-column: 1;
+        padding-right: 1rem;
+        margin-left: 0;
+      }
 
-    .helpText {
-      width: 100%;
+      .ch-help-text {
+        width: 100%;
+      }
     }
   }
-}
 `;
 
 export const inputOnly = css`
-  &.FormField-Input,
-  &.FormField-Select,
-  &.FormField-Textarea {
+  &.ch-form-field-input,
+  &.ch-form-field-select,
+  &.ch-form-field-textarea {
     display: flex;
     flex-direction: column;
 
@@ -140,35 +140,35 @@ export const inputOnly = css`
     }
   }
 
-  &.FormField-Checkbox {
+  &.ch-form-field-checkbox {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
 
-    .Checkbox {
+    .ch-checkbox {
       order: 1;
     }
 
-    .Checkbox-label {
+    .ch-checkbox-label {
       order: 2;
       padding-left: 1rem;
     }
 
-    .helpText {
+    .ch-help-text {
       width: 100%;
       order: 3;
     }
   }
 
-  &.FormField-RadioGroup {
+  &.ch-form-field-radiogroup {
     flex-direction: column;
 
-    .Radio-wrapper {
+    .ch-radio-wrapper {
       display: block;
       margin-bottom: 0.5rem;
     }
 
-    .Radio-label {
+    .ch-radio-label {
       margin-left: 1rem;
     }
   }
@@ -177,7 +177,7 @@ export const inputOnly = css`
 const layoutMap = {
   stack,
   horizontal,
-  "input-only": inputOnly,
+  'input-only': inputOnly
 };
 
 export const StyledFormField = styled.div<FieldWrapperProps>`
@@ -191,10 +191,13 @@ export const StyledFormField = styled.div<FieldWrapperProps>`
     padding: 0;
   }
 
-  .helpText {
+  .ch-help-text {
     font-size: ${props => props.theme.fontSizes.small.fontSize};
     margin-top: 0.5rem;
-    color: ${props => !!props.error ? props.theme.inputs.error.fontColor : props.theme.inputs.fontColor};
+    color: ${props =>
+      !!props.error
+        ? props.theme.inputs.error.fontColor
+        : props.theme.inputs.fontColor};
   }
 
   legend {

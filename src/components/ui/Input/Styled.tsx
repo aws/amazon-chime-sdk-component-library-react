@@ -15,7 +15,7 @@ const getPadding = (props: InputWrapperProps) => {
 export const StyledInputWrapper = styled.span<InputWrapperProps>`
   position: relative;
 
-  > .icon {
+  > .ch-icon {
     position: absolute;
     width: 1rem;
     left: 0.1875rem;

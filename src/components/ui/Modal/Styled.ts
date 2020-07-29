@@ -16,9 +16,9 @@ export const StyledModal = styled.div<ModalProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index:  ${props => props.theme.zIndex.modal};;
+  z-index: ${props => props.theme.zIndex.modal};
   overflow-x: hidden;
-  animation: ${fadeAnimation} .25s ease 0s forwards;
+  animation: ${fadeAnimation} 0.25s ease 0s forwards;
   will-change: opacity;
 
   > section {
@@ -31,11 +31,17 @@ export const StyledModal = styled.div<ModalProps>`
     background-color: ${props => props.theme.modal.bgd};
     width: ${props => props.theme.modalSizes[props.size || 'md'].width};
     box-shadow: ${props => props.theme.modal.shadow};
-    max-width: ${props => props.size === 'fullscreen' ? props.theme.modalSizes[props.size].width : '90vw'};
-    height: ${props => props.size === 'fullscreen' ? props.theme.modalSizes[props.size].height : 'auto'};
+    max-width: ${props =>
+      props.size === 'fullscreen'
+        ? props.theme.modalSizes[props.size].width
+        : '90vw'};
+    height: ${props =>
+      props.size === 'fullscreen'
+        ? props.theme.modalSizes[props.size].height
+        : 'auto'};
     max-height: ${props => props.theme.modalSizes[props.size || 'md'].height};
     will-change: transform, opacity;
-    animation: ${slideDownAndScaleUp} .15s ease 0s forwards;
+    animation: ${slideDownAndScaleUp} 0.15s ease 0s forwards;
 
     @media only screen and (max-height: 25rem) {
       position: absolute;
@@ -49,13 +55,13 @@ export const StyledModal = styled.div<ModalProps>`
 export const StyledModalHeader = styled.header`
   padding: 1rem 1.5rem;
 
-  .closeButton {
+  .ch-close-button {
     position: absolute;
     right: 1.55rem;
     top: 1rem;
   }
 
-  .title {
+  .ch-title {
     padding-right: 2rem;
     margin: 0;
     font-size: ${props => props.theme.modal.titleSize};
@@ -85,7 +91,7 @@ export const StyledModalButtonGroup = styled.footer`
     margin: 0 0.5rem 0 0;
   }
 
-  @media(max-width: 35rem) {
+  @media (max-width: 35rem) {
     flex-direction: column;
 
     button {

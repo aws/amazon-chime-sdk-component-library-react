@@ -86,7 +86,7 @@ export const RosterCell: React.FC<RosterCellProps> = props => {
         <LateMessage>{runningLate}</LateMessage>
       ) : (
         <>
-          {showMic && <div className="mic">{mic}</div>}
+          {showMic && <div className="ch-mic">{mic}</div>}
           {videoIcon}
           {menu && <PopOverMenu menu={menu} a11yMenuLabel={a11yMenuLabel} />}
         </>

@@ -9,7 +9,7 @@ import { StyledCheckboxProps } from './';
 export const HiddenCheckbox = styled.input`
   ${visuallyHidden};
 
-  &[aria-invalid="true"] + .Checkbox {
+  &[aria-invalid='true'] + .ch-checkbox {
     border: ${props => props.theme.inputs.error.border};
     box-shadow: ${props => props.theme.inputs.error.shadow};
   }
@@ -25,7 +25,7 @@ export const StyledCheckbox = styled.div<StyledCheckboxProps>`
   height: 1rem;
   position: relative;
   width: 1rem;
-  transition: box-shadow .05s ease-in;
+  transition: box-shadow 0.05s ease-in;
 
   > svg {
     left: -0.03125rem;

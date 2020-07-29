@@ -26,10 +26,10 @@ export const VideoTile = forwardRef(
         data-testid="video-tile"
         {...rest}
       >
-        <video ref={ref} className="video" />
+        <video ref={ref} className="ch-video" />
         {nameplate && (
-          <header className="nameplate">
-            <p className="text">{nameplate}</p>
+          <header className="ch-nameplate">
+            <p className="ch-text">{nameplate}</p>
           </header>
         )}
       </StyledVideoTile>

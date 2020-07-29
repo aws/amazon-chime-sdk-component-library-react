@@ -9,36 +9,35 @@ import { useModalContext } from './ModalContext';
 import { StyledModalHeader } from './Styled';
 import { BaseProps } from '../Base';
 
-export interface ModalHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>, BaseProps {
+export interface ModalHeaderProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseProps {
   title: string;
   displayClose?: boolean;
   as?: any;
 }
 
-export const ModalHeader:FC<ModalHeaderProps> = ({
-  as: Tag = "div",
+export const ModalHeader: FC<ModalHeaderProps> = ({
+  as: Tag = 'div',
   displayClose = true,
-  title,
+  title
 }) => {
-
   const context = useModalContext();
-  const handleClick = (() => {
+  const handleClick = () => {
     return context && context.onClose();
-  });
+  };
 
   return (
     <StyledModalHeader>
-      <Tag
-        className="title"
-        id={context.labelID}>
+      <Tag className="ch-title" id={context.labelID}>
         {title}
       </Tag>
 
       {displayClose && (
         <IconButton
           label="Close"
-          icon={<Remove/>}
-          className="closeButton"
+          icon={<Remove />}
+          className="ch-close-button"
           onClick={handleClick}
         />
       )}

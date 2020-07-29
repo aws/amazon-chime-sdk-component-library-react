@@ -8,20 +8,20 @@ export const SmallText = styled.small`
 `;
 
 export const StyledCard = styled.div`
-  .body {
+  .ch-body {
     margin-bottom: 1rem;
   }
 
-  .header {
+  .ch-header {
     font-size: 1.5rem;
   }
 
-  .title {
+  .ch-title {
     font-size: 1.25rem;
     margin-top: 1rem;
   }
 
-  .description {
+  .ch-description {
     margin: 1rem 0 1rem 0;
   }
 `;

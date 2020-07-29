@@ -27,6 +27,4 @@ const ActivityBar = React.forwardRef((props, ref: any) => (
   </Track>
 ));
 
-ActivityBar.displayName = 'MicrophoneActivityBar';
-
 export default ActivityBar;
