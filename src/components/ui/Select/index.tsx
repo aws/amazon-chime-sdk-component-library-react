@@ -45,4 +45,6 @@ export const Select = forwardRef(
   )
 );
 
+Select.displayName = 'Select';
+
 export default Select;

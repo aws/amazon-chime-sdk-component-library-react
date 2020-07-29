@@ -25,4 +25,6 @@ export const Textarea: FC<TextareaProps> = ({ label, ...props }) => {
   );
 };
 
+Textarea.displayName = 'Textarea';
+
 export default Textarea;

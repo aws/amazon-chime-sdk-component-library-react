@@ -137,5 +137,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix roster not including attendees when rejoining meeting
 - Fix mobile portrait local video being too large
 - Fix content share not resetting when leaving a meeting
+- Fix demo form, add display names back to form components
 
 ## [0.1.1] - 2020-06-16
