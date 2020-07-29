@@ -55,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added documentation for Modal component again, after being reverted
 - Add RosterAttendee component, connected MicVolumeIndicator
 - Add docs for Themes
+- Add theme switcher to demo nav
 
 ### Changed
 

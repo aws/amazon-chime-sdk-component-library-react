@@ -17,6 +17,8 @@ interface FeaturedTileState {
   tileId: number | null;
 }
 
+const TILE_TRANSITION_DELAY = 1500;
+
 const FeaturedTileContext = createContext<FeaturedTileState | null>(null);
 
 const FeaturedVideoTileProvider: React.FC = ({ children }) => {
@@ -25,9 +27,16 @@ const FeaturedVideoTileProvider: React.FC = ({ children }) => {
   const activeTileRef = useRef<number | null>(null);
   const [activeTile, setActiveTile] = useState<number | null>(null);
   const timeout = useRef<number | null>(null);
+  const pendingAttendee = useRef<string | null>(null);
 
   useEffect(() => {
     const activeId = activeAttendees[0];
+
+    if (activeId === pendingAttendee.current) {
+      return;
+    }
+
+    pendingAttendee.current = activeId;
 
     if (timeout.current) {
       clearTimeout(timeout.current);
@@ -46,7 +55,7 @@ const FeaturedVideoTileProvider: React.FC = ({ children }) => {
         timeout.current = setTimeout(() => {
           activeTileRef.current = null;
           setActiveTile(null);
-        }, 2000);
+        }, TILE_TRANSITION_DELAY);
       }
 
       return;
@@ -56,8 +65,17 @@ const FeaturedVideoTileProvider: React.FC = ({ children }) => {
       return;
     }
 
-    activeTileRef.current = tileId;
-    setActiveTile(tileId);
+    // Set featured tile immediately if there is no current featured tile.
+    // Otherwise, delay it to avoid tiles jumping around too frequently
+    if (!activeTileRef.current) {
+      activeTileRef.current = tileId;
+      setActiveTile(tileId);
+    } else {
+      timeout.current = setTimeout(() => {
+        activeTileRef.current = tileId;
+        setActiveTile(tileId);
+      }, TILE_TRANSITION_DELAY);
+    }
   }, [attendeeIdToTileId, activeAttendees]);
 
   const value = useMemo(

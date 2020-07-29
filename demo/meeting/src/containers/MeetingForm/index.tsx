@@ -30,7 +30,9 @@ const MeetingForm: React.FC = () => {
   const meetingManager = useMeetingManager();
   const { setMeeting, setLocalName, setRegion: setAppRegion } = useAppState();
   const [meetingId, setMeetingId] = useState('');
+  const [meetingErr, setMeetingErr] = useState(false);
   const [name, setName] = useState('');
+  const [nameErr, setNameErr] = useState(false);
   const [region, setRegion] = useState('us-east-1');
   const [isLoading, setIsLoading] = useState(false);
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
@@ -39,7 +41,14 @@ const MeetingForm: React.FC = () => {
   const handleJoinMeeting = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!meetingId) {
+    if (!meetingId || !name) {
+      if (!name) {
+        setNameErr(true);
+      }
+
+      if (!meetingId) {
+        setMeetingErr(true);
+      }
       return;
     }
 
@@ -83,9 +92,14 @@ const MeetingForm: React.FC = () => {
           name: 'meetingId',
           placeholder: 'Enter Meeting Id'
         }}
-        onChange={(e: ChangeEvent<HTMLInputElement>): void =>
-          setMeetingId(e.target.value)
-        }
+        errorText="Please enter a valid meeting ID"
+        error={meetingErr}
+        onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+          setMeetingId(e.target.value);
+          if (meetingErr) {
+            setMeetingErr(false);
+          }
+        }}
       />
       <FormField
         field={Input}
@@ -95,9 +109,14 @@ const MeetingForm: React.FC = () => {
           name: 'name',
           placeholder: 'Enter Your Name'
         }}
-        onChange={(e: ChangeEvent<HTMLInputElement>): void =>
-          setName(e.target.value)
-        }
+        errorText="Please enter a valid name"
+        error={nameErr}
+        onChange={(e: ChangeEvent<HTMLInputElement>): void => {
+          setName(e.target.value);
+          if (nameErr) {
+            setNameErr(false);
+          }
+        }}
       />
       <FormField
         field={Select}

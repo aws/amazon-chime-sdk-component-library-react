@@ -34,13 +34,18 @@ export function AppStateProvider({ children }: Props) {
   const [meetingId, setMeeting] = useState('');
   const [region, setRegion] = useState('us-east-1');
   const [localUserName, setLocalName] = useState('');
-  const [theme, setTheme] = useState('light');
+  const [theme, setTheme] = useState(() => {
+    const storedTheme = localStorage.getItem('theme');
+    return storedTheme || 'light';
+  });
 
   const toggleTheme = (): void => {
     if (theme === 'light') {
       setTheme('dark');
+      localStorage.setItem('theme', 'dark');
     } else {
       setTheme('light');
+      localStorage.setItem('theme', 'light');
     }
   };
 
