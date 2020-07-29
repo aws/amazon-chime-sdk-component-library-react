@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Eye from './';
+import { lightTheme } from '../../../../theme/';
+
+# Eye Icon
+
+The Eye component creates an eye icon using inline SVG.
+
+## Importing
+
+```javascript
+import { Eye } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Eye width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Eye width="2rem" />
+```
+
+## Props
+
+<Props of={Eye} />
