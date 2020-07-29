@@ -58,11 +58,7 @@ export default function SIPMeetingForm({
         layout="fill-space-centered"
         style={{ marginTop: '2.5rem' }}
       >
-        <PrimaryButton
-          className="btn-submit"
-          label="Get SIP URI"
-          onClick={handleSubmit}
-        />
+        <PrimaryButton label="Get SIP URI" onClick={handleSubmit} />
       </Flex>
     </form>
   );

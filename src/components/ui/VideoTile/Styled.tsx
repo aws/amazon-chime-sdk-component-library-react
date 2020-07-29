@@ -24,7 +24,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
     object-fit: ${props => props.objectFit || 'cover'}};
   }
 
-  .icon {
+  .ch-icon {
     width: 1.5rem;
     height: 1.5rem;
     display: inline-block;
@@ -33,7 +33,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
     flex: 0 0 1.5rem;
   }
 
-  .nameplate {
+  .ch-nameplate {
     backdrop-filter: blur(20px);
     background-color: rgba(46, 47, 52, 0.85);
     border-radius: 0.25rem;
@@ -50,7 +50,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
       align-items: center;
     }
 
-    .text {
+    .ch-text {
       font-size: ${props => props.theme.fontSizes.text.fontSize};
       ${ellipsis};
       margin: 0;

@@ -13,10 +13,12 @@ enum Severity {
   ERROR = 'error',
   SUCCESS = 'success',
   INFO = 'info',
-  WARNING = 'warning',
-};
+  WARNING = 'warning'
+}
 
-export interface NotificationProps extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>, BaseProps {
+export interface NotificationProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseProps {
   /** Notification Severity */
   severity?: Severity;
   /** Message to show in notification */
@@ -35,7 +37,7 @@ const iconMapping = {
   success: <CheckRound />,
   warning: <Clock />,
   error: <Caution />,
-  info: <Information />,
+  info: <Information />
 };
 
 export const Notification: React.FC<NotificationProps> = props => {
@@ -46,7 +48,7 @@ export const Notification: React.FC<NotificationProps> = props => {
     autoClose = false,
     autoCloseDelay = DEFAULT_DELAY,
     severity = Severity.ERROR,
-    className,
+    className
   } = props;
 
   const ariaLive = severity === Severity.ERROR ? 'assertive' : 'polite';
@@ -68,14 +70,20 @@ export const Notification: React.FC<NotificationProps> = props => {
       as={tag}
       {...props}
       className={className || ''}
-      data-testid='notification'
+      data-testid="notification"
     >
-      <div className='severity-icon' data-testid='severity-icon'>{iconMapping[severity]}</div>
-      <output className='message' data-testid='message' role={ariaRole}>
+      <div className="ch-severity-icon" data-testid="severity-icon">
+        {iconMapping[severity]}
+      </div>
+      <output className="ch-message" data-testid="message" role={ariaRole}>
         {message}
       </output>
       {onClose && (
-        <StyledCloseIconButton label='close' icon={<Remove />} onClick={onClose} />
+        <StyledCloseIconButton
+          label="close"
+          icon={<Remove />}
+          onClick={onClose}
+        />
       )}
     </StyledNotification>
   );

@@ -12,21 +12,14 @@ interface PopOverMenuProps {
   a11yMenuLabel?: string;
 }
 
-export const PopOverMenu = ({
-  menu,
-  a11yMenuLabel=''
-}: PopOverMenuProps) => (
-    <PopOver
-      className="menu"
-      a11yLabel={a11yMenuLabel}
-      renderButton={() => (
-        <IconButton
-          className="menu"
-          icon={<Dots />}
-          label={a11yMenuLabel}
-        />
-      )}
-    >
+export const PopOverMenu = ({ menu, a11yMenuLabel = '' }: PopOverMenuProps) => (
+  <PopOver
+    className="ch-menu"
+    a11yLabel={a11yMenuLabel}
+    renderButton={() => (
+      <IconButton className="ch-menu" icon={<Dots />} label={a11yMenuLabel} />
+    )}
+  >
     {menu}
   </PopOver>
 );

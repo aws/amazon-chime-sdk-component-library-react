@@ -34,16 +34,16 @@ export const Checkbox: FC<CheckboxProps> = (props: CheckboxProps) => {
     <>
       <HiddenCheckbox
         {...props}
-        data-testid="hiddenCheckbox"
+        data-testid="hidden-checkbox"
         ref={checkboxNode}
         type="checkbox"
         value={value}
         onChange={onChange}
       />
       <StyledCheckbox
-        data-testid="styledCheckbox"
+        data-testid="styled-checkbox"
         checked={checked}
-        className="Checkbox"
+        className="ch-checkbox"
         onClick={handleChange}
       >
         {checked && <Check data-testid="check" />}

@@ -31,7 +31,8 @@ export const StyledPopOverItem = styled.li`
   height: 2rem;
   position: relative;
 
-  button, a {
+  button,
+  a {
     width: 100%;
     height: 100%;
     display: flex;
@@ -62,11 +63,11 @@ export const StyledPopOverItem = styled.li`
     width: unset;
   }
 
-  .content > * {
+  .ch-content > * {
     ${ellipsis};
   }
 
-  .check {
+  .ch-check {
     position: absolute;
     left: 0.5rem;
     width: 1.5rem;
@@ -87,7 +88,7 @@ export const StyledSubMenu = styled(StyledPopOverItem)`
     position: relative;
   }
 
-  .caret {
+  .ch-caret {
     position: absolute;
     width: 1.5rem;
     height: 1.5rem;
@@ -108,11 +109,11 @@ export const StyledPopOverHeader = styled.header`
     border-radius: 0.25rem 0.25rem 0 0;
   }
 
-  img + .title {
+  img + .ch-title {
     margin-top: 0.75rem;
   }
 
-  .title {
+  .ch-title {
     ${ellipsis};
     padding: 0 2.5rem;
     margin-top: 0.5rem;
@@ -122,7 +123,7 @@ export const StyledPopOverHeader = styled.header`
     line-height: ${props => props.theme.fontSizes.text.lineHeight};
   }
 
-  .subtitle {
+  .ch-subtitle {
     ${ellipsis};
     padding: 0 2.5rem;
     color: #616672;
@@ -134,11 +135,10 @@ export const StyledPopOverHeader = styled.header`
 `;
 
 export const StyledPopOverSeparator = styled.li`
-    margin: 0;
-    border-width: 0.0625rem 0 0 0;
-    border-style: solid;
-    border-color: ${props => props.theme.popOver.separator};
-    margin-bottom: 0.75rem;
-    opacity: .8;
-
+  margin: 0;
+  border-width: 0.0625rem 0 0 0;
+  border-style: solid;
+  border-color: ${props => props.theme.popOver.separator};
+  margin-bottom: 0.75rem;
+  opacity: 0.8;
 `;

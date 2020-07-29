@@ -46,7 +46,7 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
   const getButtonContents = (isOpen: boolean) => (
     <Caret
       direction={isVertical(context.layout) ? 'right' : 'up'}
-      className={`controlBarItem__caret ${isOpen ? 'isOpen' : ''}`}
+      className={`ch-control-bar-item-caret ${isOpen ? 'isOpen' : ''}`}
       data-testid="control-bar-item-caret"
     />
   );
@@ -61,7 +61,7 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
       <IconButton onClick={onClick} label={label} icon={icon} />
       {!!popOver && renderPopOver()}
       {context.showLabels && (
-        <div className="controlBarItem__label">{label}</div>
+        <div className="ch-control-bar-item-label">{label}</div>
       )}
     </StyledControlBarItem>
   );

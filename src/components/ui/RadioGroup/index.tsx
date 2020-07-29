@@ -40,6 +40,4 @@ export const RadioGroup: FC<RadioGroupProps> = props => {
   );
 };
 
-RadioGroup.displayName = 'RadioGroup';
-
 export default RadioGroup;

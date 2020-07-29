@@ -26,13 +26,13 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
   margin: 0.5rem;
   max-width: 45rem;
 
-  .severity-icon {
+  .ch-severity-icon {
     width: 1.5rem;
     flex-shrink: 0;
     margin-top: 0.25rem;
   }
 
-  .message {
+  .ch-message {
     display: flex;
     flex-flow: column wrap;
     font-size: ${props => props.theme.fontSizes.text.fontSize};
@@ -42,19 +42,25 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
   }
 
   ${StyledCloseIconButton} {
-    background-color: ${({ theme, severity }) => theme.colors[severity].primary};
-    color: ${({ theme, severity }) => theme.notification[severity].closeButton.text}};
+    background-color: ${({ theme, severity }) =>
+      theme.colors[severity].primary};
+    color: ${({ theme, severity }) =>
+      theme.notification[severity].closeButton.text}};
   }
 
   ${StyledCloseIconButton}:hover, ${StyledCloseIconButton}:focus {
-    background-color: ${({ theme, severity }) => theme.notification[severity].closeButton.hover.bgd};
-    color: ${({ theme, severity }) => theme.notification[severity].closeButton.hover.text};
+    background-color: ${({ theme, severity }) =>
+      theme.notification[severity].closeButton.hover.bgd};
+    color: ${({ theme, severity }) =>
+      theme.notification[severity].closeButton.hover.text};
   }
 
   ${StyledCloseIconButton}:active {
-    background-color: ${({ theme, severity }) => theme.notification[severity].closeButton.active.bgd};
-    color: ${({ theme, severity }) => theme.notification[severity].closeButton.active.text};
-  };
+    background-color: ${({ theme, severity }) =>
+      theme.notification[severity].closeButton.active.bgd};
+    color: ${({ theme, severity }) =>
+      theme.notification[severity].closeButton.active.text};
+  }
 
   ${baseSpacing}
   ${baseStyles}

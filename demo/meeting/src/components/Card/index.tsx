@@ -19,10 +19,10 @@ const Card: React.FC<CardProps> = ({
   smallText
 }: CardProps) => (
   <StyledCard>
-    {header && <div className="header">{header}</div>}
-    <div className="body">
-      <div className="title">{title}</div>
-      <div className="description">{description}</div>
+    {header && <div className="ch-header">{header}</div>}
+    <div className="ch-body">
+      <div className="ch-title">{title}</div>
+      <div className="ch-description">{description}</div>
       {smallText && <SmallText>{smallText}</SmallText>}
     </div>
   </StyledCard>

@@ -58,30 +58,30 @@ export const StyledHeader = styled.div<any>`
   margin-bottom: 0.5rem;
   border-bottom: 0.0625rem solid ${props => props.theme.roster.headerBorder};
 
-  .title {
+  .ch-title {
     font-size: 0.875rem;
     color: ${props => props.theme.roster.primaryText};
     ${props => (props.isSearching ? 'opacity: 0;' : '')}
     ${ellipsis};
   }
 
-  .badge {
+  .ch-badge {
     margin-left: 0.5rem;
     ${props => (props.isSearching ? 'opacity: 0;' : '')}
   }
 
-  .buttons {
+  .ch-buttons {
     margin-left: auto;
     ${props => (props.isSearching ? 'opacity: 0;' : '')}
   }
 
-  .search-wrapper {
+  .ch-search-wrapper {
     position: absolute !important;
     bottom: 0.75rem;
     left: 0.5rem;
     right: 0.5rem;
 
-    .search-input {
+    .ch-search-input {
       flex: 1;
 
       input {
@@ -89,12 +89,12 @@ export const StyledHeader = styled.div<any>`
       }
     }
 
-    .search-close {
+    .ch-search-close {
       margin-left: 0.5rem;
     }
   }
 
-  .navigation-icon {
+  .ch-navigation-icon {
     margin-right: 0.5rem;
     margin-left: -0.5rem;
 
@@ -112,13 +112,13 @@ export const StyledName = styled.div`
   min-width: 0;
   line-height: 1.5;
 
-  .name {
+  .ch-name {
     ${ellipsis};
     font-size: 0.875rem;
     color: ${props => props.theme.roster.primaryText};
   }
 
-  .subtitle {
+  .ch-subtitle {
     ${ellipsis};
     font-size: 0.65rem;
     color: ${props => props.theme.roster.secondaryText};

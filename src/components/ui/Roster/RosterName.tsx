@@ -12,8 +12,8 @@ export interface RosterNameProps {
 
 const RosterName = ({ name, subtitle }: RosterNameProps) => (
   <StyledName>
-    <div className="name">{name}</div>
-    {subtitle && <div className="subtitle">{subtitle}</div>}
+    <div className="ch-name">{name}</div>
+    {subtitle && <div className="ch-subtitle">{subtitle}</div>}
   </StyledName>
 );
 

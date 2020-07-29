@@ -11,7 +11,7 @@ export const StyledCell = styled.div<RosterCellProps>`
   align-items: center;
   padding: 0.625rem 1rem;
 
-  .mic {
+  .ch-mic {
     width: 1.5rem;
 
     ${({ micPosition }) =>
@@ -23,7 +23,7 @@ export const StyledCell = styled.div<RosterCellProps>`
         : ''}
   }
 
-  .menu {
+  .ch-menu {
     color: ${props => props.theme.buttons.icon.hover.bgd};
 
     &:hover,

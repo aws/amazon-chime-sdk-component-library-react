@@ -10,11 +10,15 @@ export interface PopOverHeaderProps {
   imgSrc?: string;
 }
 
-export const PopOverHeader: FC<PopOverHeaderProps> = ({ title, subtitle, imgSrc }) =>  (
-  <StyledPopOverHeader data-testid='popover-header'>
+export const PopOverHeader: FC<PopOverHeaderProps> = ({
+  title,
+  subtitle,
+  imgSrc
+}) => (
+  <StyledPopOverHeader data-testid="popover-header">
     {imgSrc && <img src={imgSrc} alt={title} />}
-    {title && <p className="title">{title}</p>}
-    {subtitle && <p className="subtitle">{subtitle}</p>}
+    {title && <p className="ch-title">{title}</p>}
+    {subtitle && <p className="ch-subtitle">{subtitle}</p>}
   </StyledPopOverHeader>
 );
 

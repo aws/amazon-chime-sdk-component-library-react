@@ -52,10 +52,10 @@ const SearchBar: any = ({ onChange, onClose, value }: any) => {
   }, []);
 
   return (
-    <Flex container alignItems="center" className="search-wrapper">
+    <Flex container alignItems="center" className="ch-search-wrapper">
       <SearchInput
         aria-label="Search"
-        className="search-input"
+        className="ch-search-input"
         ref={inputEl}
         onChange={onChange}
         value={value}
@@ -96,12 +96,12 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
       className={className || ''}
       {...rest}
     >
-      <div className="title">{title}</div>
+      <div className="ch-title">{title}</div>
       {typeof badge === 'number' && badge > -1 && (
-        <Badge className="badge" value={badge} />
+        <Badge className="ch-badge" value={badge} />
       )}
 
-      <div className="buttons">
+      <div className="ch-buttons">
         {onSearch && (
           <IconButton
             ref={searchBtn}

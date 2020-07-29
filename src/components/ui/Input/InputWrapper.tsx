@@ -18,7 +18,7 @@ export const InputWrapper = forwardRef(
 
     return (
       <StyledInputWrapper ref={ref} {...props} data-testid="input-wrapper">
-        {leadingIcon && <span className="icon">{leadingIcon}</span>}
+        {leadingIcon && <span className="ch-icon">{leadingIcon}</span>}
         {children}
       </StyledInputWrapper>
     );

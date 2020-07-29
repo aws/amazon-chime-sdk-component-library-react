@@ -1,14 +1,14 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import styled from "styled-components";
+import styled from 'styled-components';
 
 import { visuallyHidden, absoluteCenter } from '../../../utils/style';
 
 export const HiddenRadio = styled.input`
   ${visuallyHidden};
 
-  &[aria-invalid="true"] + .Radio {
+  &[aria-invalid='true'] + .ch-radio {
     border: ${props => props.theme.inputs.error.border};
     box-shadow: ${props => props.theme.inputs.error.shadow};
   }
@@ -30,14 +30,13 @@ export const StyledRadio = styled.div<any>`
   margin-bottom: -0.1875rem;
   position: relative;
   width: 1rem;
-  transition: box-shadow .05s ease-in;
+  transition: box-shadow 0.05s ease-in;
 
   &:after {
     background-color: ${props =>
-      props.checked ?
-      props.theme.inputs.checked.fontColor :
-      props.theme.inputs.bgd
-    };
+      props.checked
+        ? props.theme.inputs.checked.fontColor
+        : props.theme.inputs.bgd};
     border-radius: ${props => props.theme.radii.circle};
     content: '';
     display: block;

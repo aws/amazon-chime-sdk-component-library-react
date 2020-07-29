@@ -10,17 +10,27 @@ export interface BadgeProps extends BaseProps {
   /** The value shows in the badge*/
   value: string | number;
   /** The status of the badge */
-  status?: "default" | "alert";
+  status?: 'default' | 'alert';
 }
 
-export const Badge: FC<BadgeProps> = ({ value, status = "default", className, tag, ...rest }) => {
+export const Badge: FC<BadgeProps> = ({
+  value,
+  status = 'default',
+  className,
+  tag,
+  ...rest
+}) => {
   return (
-    <StyledBadge className={className || ''} as={tag} status={status} data-testid='badge' {...rest}>
+    <StyledBadge
+      className={className || ''}
+      as={tag}
+      status={status}
+      data-testid="badge"
+      {...rest}
+    >
       {value}
     </StyledBadge>
   );
 };
-
-Badge.displayName = 'Badge';
 
 export default Badge;
