@@ -9,7 +9,6 @@ import { RosterProvider } from '../RosterProvider';
 import { DevicesProvider } from '../DevicesProvider';
 import { RemoteVideoTileProvider } from '../RemoteVideoTileProvider';
 import { LocalVideoProvider } from '../LocalVideoProvider';
-import { ActiveSpeakersProvider } from '../ActiveSpeakersProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
 import { MeetingStatusProvider } from '../MeetingStatusProvider';
 import { LocalAudioOutputProvider } from '../LocalAudioOutputProvider';
@@ -30,11 +29,9 @@ export const MeetingProvider: React.FC = ({ children }) => {
                 <MeetingStatusProvider>
                   <LocalAudioOutputProvider>
                     <ContentShareProvider>
-                      <ActiveSpeakersProvider>
-                        <FeaturedVideoTileProvider>
-                          {children}
-                        </FeaturedVideoTileProvider>
-                      </ActiveSpeakersProvider>
+                      <FeaturedVideoTileProvider>
+                        {children}
+                      </FeaturedVideoTileProvider>
                     </ContentShareProvider>
                   </LocalAudioOutputProvider>
                 </MeetingStatusProvider>

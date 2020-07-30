@@ -4,6 +4,8 @@
 
 Returns a list of active speaker attendee IDs. The list is sorted from most 'active' to least. See the [Chime SDK's ActiveSpeakerDetector](https://aws.github.io/amazon-chime-sdk-js/interfaces/activespeakerdetector.html) for more details.
 
+This hook is updated often and causes frequent rendering. You should try to use it at or near the "leaf" components of your application.
+
 ### Return value
 
 ```javascript
@@ -20,7 +22,7 @@ import { useActiveSpeakersState } from 'amazon-chime-sdk-component-library-react
 
 ## Usage
 
-The hook depends on the `ActiveSpeakerProvider`. If you are using `MeetingProvider`, it is rendered by default.
+The hook depends on the `MeetingProvider`.
 
 ```jsx
 import React from 'react';

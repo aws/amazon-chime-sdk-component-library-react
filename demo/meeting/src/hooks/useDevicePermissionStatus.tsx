@@ -18,7 +18,7 @@ export default function useDevicePermissionStatus() {
     };
     meetingManager.subscribeToDevicePermissionUpdate(callback);
     return () => {
-      meetingManager.unSubscribeFromDevicePermissionUpdate(callback);
+      meetingManager.unsubscribeFromDevicePermissionUpdate(callback);
     };
   }, [meetingManager]);
 
