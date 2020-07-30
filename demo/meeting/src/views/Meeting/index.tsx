@@ -9,8 +9,10 @@ import NavigationControl from '../../containers/Navigation/NavigationControl';
 import { useNavigation } from '../../providers/NavigationProvider';
 import MeetingDetails from '../../containers/MeetingDetails';
 import MeetingControlsContainer from '../../containers/MeetingControlsContainer';
+import useMeetingEndRedirect from '../../hooks/useMeetingEndRedirect';
 
 const MeetingView = () => {
+  useMeetingEndRedirect();
   const { showNavbar, showRoster } = useNavigation();
 
   return (

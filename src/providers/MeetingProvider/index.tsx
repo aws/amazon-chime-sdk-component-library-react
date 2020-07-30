@@ -10,7 +10,6 @@ import { DevicesProvider } from '../DevicesProvider';
 import { RemoteVideoTileProvider } from '../RemoteVideoTileProvider';
 import { LocalVideoProvider } from '../LocalVideoProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
-import { MeetingStatusProvider } from '../MeetingStatusProvider';
 import { LocalAudioOutputProvider } from '../LocalAudioOutputProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
 
@@ -26,15 +25,13 @@ export const MeetingProvider: React.FC = ({ children }) => {
           <RosterProvider>
             <RemoteVideoTileProvider>
               <LocalVideoProvider>
-                <MeetingStatusProvider>
-                  <LocalAudioOutputProvider>
-                    <ContentShareProvider>
-                      <FeaturedVideoTileProvider>
-                        {children}
-                      </FeaturedVideoTileProvider>
-                    </ContentShareProvider>
-                  </LocalAudioOutputProvider>
-                </MeetingStatusProvider>
+                <LocalAudioOutputProvider>
+                  <ContentShareProvider>
+                    <FeaturedVideoTileProvider>
+                      {children}
+                    </FeaturedVideoTileProvider>
+                  </ContentShareProvider>
+                </LocalAudioOutputProvider>
               </LocalVideoProvider>
             </RemoteVideoTileProvider>
           </RosterProvider>

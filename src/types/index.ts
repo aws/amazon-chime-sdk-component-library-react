@@ -1,8 +1,6 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { MeetingStatus } from '../providers/MeetingStatusProvider';
-
 export type Direction = 'up' | 'right' | 'down' | 'left';
 
 export type DeviceType = {
@@ -39,10 +37,12 @@ export type ContentShareControlContextType = {
   togglePauseContentShare: () => void;
 };
 
-export type MeetingContextType = {
-  meetingStatus: MeetingStatus;
-  updateMeetingStatus: (s: MeetingStatus) => void;
-};
+export enum MeetingStatus {
+  Loading,
+  Succeeded,
+  Failed,
+  Ended
+}
 
 export type RosterAttendeeType = {
   chimeAttendeeId: string;

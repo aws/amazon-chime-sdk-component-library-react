@@ -32,7 +32,12 @@ export const RemoteVideo: React.FC<Props> = ({
 
     audioVideo.bindVideoElement(tileId, videoEl.current);
 
-    return () => audioVideo.unbindVideoElement(tileId);
+    return () => {
+      const tile = audioVideo.getVideoTile(tileId);
+      if (tile) {
+        audioVideo.unbindVideoElement(tileId);
+      }
+    };
   }, [audioVideo, tileId]);
 
   return (

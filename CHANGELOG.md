@@ -121,12 +121,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change `data-testid` in some components to maintain consistency
 - Use MeetingManager to maintain active speakers
 - Change storybook layouts so that there's a more consistent look
+- Add `useMeetingStatus` hook
+- Renamed `MeetingManager` subscriptions for consistency
 
 ### Removed
 
 - Removed active state button tests.
 - 'styled-reset' package due to license incompatibility
 - Reverted `Add docs for the Modal component` commit to fix CSSProperties compatibility error
+- Removed `MeetingStatusProvider`
 
 ### Fixed
 
@@ -144,5 +147,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix content share not resetting when leaving a meeting
 - Fix demo form, add display names back to form components
 - Fix race condition where content share would stop but grey bg would persist
+- Fix end meeting
 
 ## [0.1.1] - 2020-06-16

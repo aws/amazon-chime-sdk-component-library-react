@@ -16,9 +16,9 @@ export default function useDevicePermissionStatus() {
     const callback = (updatedPermission: string): void => {
       setPermission(updatedPermission);
     };
-    meetingManager.subscribeToDevicePermissionUpdate(callback);
+    meetingManager.subscribeToDevicePermissionStatus(callback);
     return () => {
-      meetingManager.unsubscribeFromDevicePermissionUpdate(callback);
+      meetingManager.unsubscribeFromDevicePermissionStatus(callback);
     };
   }, [meetingManager]);
 
