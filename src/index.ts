@@ -115,7 +115,7 @@ export {
   useContentShareState,
   useContentShareControls
 } from './providers/ContentShareProvider';
-export { useMeetingStatus } from './providers/MeetingStatusProvider';
+export { useMeetingStatus } from './hooks/sdk/useMeetingStatus';
 export { useLocalAudioInputActivityPreview } from './hooks/sdk/useLocalAudioInputActivityPreview';
 
 // Providers
@@ -124,7 +124,6 @@ export { MeetingProvider } from './providers/MeetingProvider';
 export { LocalAudioOutputProvider } from './providers/LocalAudioOutputProvider';
 export { LocalVideoProvider } from './providers/LocalVideoProvider';
 export { ContentShareProvider } from './providers/ContentShareProvider';
-export { MeetingStatusProvider } from './providers/MeetingStatusProvider';
 export { AudioVideoProvider } from './providers/AudioVideoProvider';
 export { RosterProvider } from './providers/RosterProvider';
 export { DevicesProvider } from './providers/DevicesProvider';
@@ -138,7 +137,7 @@ export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';
 export { VideoQuality } from './hooks/sdk/useSelectVideoQuality';
 
 // enums
-export { MeetingStatus } from './providers/MeetingStatusProvider';
+export { MeetingStatus } from './types/index';
 export { Severity, ActionType } from './providers/NotificationProvider';
 
 // Class

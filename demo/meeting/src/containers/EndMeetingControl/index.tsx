@@ -12,40 +12,51 @@ import {
   ModalButton,
   ModalButtonGroup,
   useMeetingManager,
-  useMeetingStatus,
-  MeetingStatus
+  ActionType,
+  useNotificationDispatch,
+  Severity
 } from 'amazon-chime-sdk-component-library-react';
 
 import { endMeeting } from '../../utils/api';
-import routes from '../../constants/routes';
 import { StyledP } from './Styled';
 import { useAppState } from '../../providers/AppStateProvider';
+import routes from '../../constants/routes';
 
 const EndMeetingControl: React.FC = () => {
   const meetingManager = useMeetingManager();
-  const history = useHistory();
   const [showModal, setShowModal] = useState(false);
   const toggleModal = (): void => setShowModal(!showModal);
-  const { updateMeetingStatus } = useMeetingStatus();
   const { meetingId } = useAppState();
+  const history = useHistory();
+  const dispatch = useNotificationDispatch();
 
-  const endMeetingForAll = async (): Promise<void> => {
-    try {
-      await meetingManager.leave();
-      if (meetingId) {
-        await endMeeting(meetingId);
+  const leaveNotifyAndRedirect = (notificationMessage: string): void => {
+    meetingManager.leave();
+    dispatch({
+      type: ActionType.ADD,
+      payload: {
+        severity: Severity.INFO,
+        message: `${notificationMessage}`,
+        autoClose: true,
+        replaceAll: true
       }
-    } catch (e) {
-      console.log('Could not end meeting');
-    }
-
-    updateMeetingStatus(MeetingStatus.Ended);
+    });
     history.push(routes.HOME);
   };
 
   const leaveMeeting = async (): Promise<void> => {
-    await meetingManager.leave();
-    history.push(routes.HOME);
+    leaveNotifyAndRedirect('You left the meeting');
+  };
+
+  const endMeetingForAll = async (): Promise<void> => {
+    try {
+      if (meetingId) {
+        await endMeeting(meetingId);
+        leaveNotifyAndRedirect('Meeting ended for all');
+      }
+    } catch (e) {
+      console.log('Could not end meeting');
+    }
   };
 
   return (
@@ -56,8 +67,8 @@ const EndMeetingControl: React.FC = () => {
           <ModalHeader title="End Meeting" />
           <ModalBody>
             <StyledP>
-              Are you sure you want to end the meeting for everyone? The meeting
-              cannot be used after ending it.
+              Leave meeting or you can end the meeting for all. The meeting
+              cannot be used once it ends.
             </StyledP>
           </ModalBody>
           <ModalButtonGroup

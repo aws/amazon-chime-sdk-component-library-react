@@ -26,8 +26,16 @@ const LocalVideoProvider: React.FC = ({ children }) => {
   const [tileId, setTileId] = useState<number | null>(null);
 
   useEffect(() => {
-    if (audioVideo?.hasStartedLocalVideoTile()) {
+    if (!audioVideo) {
+      return ;
+    }
+
+    if (audioVideo.hasStartedLocalVideoTile()) {
       setIsVideoEnabled(true);
+    }
+
+    return () => {
+      setIsVideoEnabled(false);
     }
   }, [audioVideo]);
 

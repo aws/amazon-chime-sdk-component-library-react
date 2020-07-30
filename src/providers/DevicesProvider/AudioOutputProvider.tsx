@@ -29,10 +29,10 @@ const AudioOutputProvider: React.FC = ({ children }) => {
       setSelectedAudioOutputDevice(updatedAudioOutputDevice);
     };
 
-    meetingManager.subscribeToSelectedAudioOutputDeviceChange(callback);
+    meetingManager.subscribeToSelectedAudioOutputDevice(callback);
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedAudioOutputDeviceChange(callback);
+      meetingManager.unsubscribeFromSelectedAudioOutputDevice(callback);
     };
   }, []);
 

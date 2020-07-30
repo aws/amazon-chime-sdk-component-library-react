@@ -31,10 +31,10 @@ const VideoInputProvider: React.FC = ({ children }) => {
       setSelectedVideoInputDevice(updatedVideoInputDevice);
     };
 
-    meetingManager.subscribeToSelectedVideoInputDeviceChange(callback);
+    meetingManager.subscribeToSelectedVideoInputDevice(callback);
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedVideoInputDeviceChange(callback);
+      meetingManager.unsubscribeFromSelectedVideoInputDevice(callback);
     };
   }, []);
 

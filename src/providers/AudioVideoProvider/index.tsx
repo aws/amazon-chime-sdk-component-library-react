@@ -21,7 +21,7 @@ const AudioVideoProvider: React.FC = ({ children }) => {
 
     meetingManager.subscribeToAudioVideo(audioVideoUpdateCb);
 
-    return () => meetingManager.unsubscribeToAudioVideo(audioVideoUpdateCb);
+    return () => meetingManager.unsubscribeFromAudioVideo(audioVideoUpdateCb);
   }, []);
 
   return (
