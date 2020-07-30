@@ -101,7 +101,7 @@ export { useMeetingManager } from './providers/MeetingProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRosterState } from './providers/RosterProvider';
 export { useRemoteVideoTileState } from './providers/RemoteVideoTileProvider';
-export { useActiveSpeakersState } from './providers/ActiveSpeakersProvider';
+export { useActiveSpeakersState } from './hooks/sdk/useActiveSpeakersState';
 export { useFeaturedTileState } from './providers/FeaturedVideoTileProvider';
 export {
   useAudioInputs,
@@ -129,7 +129,6 @@ export { AudioVideoProvider } from './providers/AudioVideoProvider';
 export { RosterProvider } from './providers/RosterProvider';
 export { DevicesProvider } from './providers/DevicesProvider';
 export { RemoteVideoTileProvider } from './providers/RemoteVideoTileProvider';
-export { ActiveSpeakersProvider } from './providers/ActiveSpeakersProvider';
 export { FeaturedVideoTileProvider } from './providers/FeaturedVideoTileProvider';
 
 // Themes

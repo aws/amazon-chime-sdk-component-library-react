@@ -10,8 +10,8 @@ import React, {
   useMemo
 } from 'react';
 
-import { useActiveSpeakersState } from '../ActiveSpeakersProvider';
 import { useRemoteVideoTileState } from '../RemoteVideoTileProvider';
+import { useMeetingManager } from '../MeetingProvider';
 
 interface FeaturedTileState {
   tileId: number | null;
@@ -22,61 +22,68 @@ const TILE_TRANSITION_DELAY = 1500;
 const FeaturedTileContext = createContext<FeaturedTileState | null>(null);
 
 const FeaturedVideoTileProvider: React.FC = ({ children }) => {
+  const meetingManager = useMeetingManager();
   const { attendeeIdToTileId } = useRemoteVideoTileState();
-  const activeAttendees = useActiveSpeakersState();
   const activeTileRef = useRef<number | null>(null);
   const [activeTile, setActiveTile] = useState<number | null>(null);
   const timeout = useRef<number | null>(null);
   const pendingAttendee = useRef<string | null>(null);
 
   useEffect(() => {
-    const activeId = activeAttendees[0];
+    const activeSpeakerCallback = (activeAttendees: string[]) => {
+      const activeId = activeAttendees[0];
 
-    if (activeId === pendingAttendee.current) {
-      return;
-    }
-
-    pendingAttendee.current = activeId;
-
-    if (timeout.current) {
-      clearTimeout(timeout.current);
-    }
-
-    if (!activeId) {
-      activeTileRef.current = null;
-      setActiveTile(null);
-      return;
-    }
-
-    const tileId = attendeeIdToTileId[activeId];
-
-    if (!tileId) {
-      if (activeTileRef.current) {
-        timeout.current = setTimeout(() => {
-          activeTileRef.current = null;
-          setActiveTile(null);
-        }, TILE_TRANSITION_DELAY);
+      if (activeId === pendingAttendee.current) {
+        return;
       }
 
-      return;
-    }
+      pendingAttendee.current = activeId;
 
-    if (tileId === activeTileRef.current) {
-      return;
-    }
+      if (timeout.current) {
+        clearTimeout(timeout.current);
+      }
 
-    // Set featured tile immediately if there is no current featured tile.
-    // Otherwise, delay it to avoid tiles jumping around too frequently
-    if (!activeTileRef.current) {
-      activeTileRef.current = tileId;
-      setActiveTile(tileId);
-    } else {
-      timeout.current = setTimeout(() => {
+      if (!activeId) {
+        activeTileRef.current = null;
+        setActiveTile(null);
+        return;
+      }
+
+      const tileId = attendeeIdToTileId[activeId];
+
+      if (!tileId) {
+        if (activeTileRef.current) {
+          timeout.current = setTimeout(() => {
+            activeTileRef.current = null;
+            setActiveTile(null);
+          }, TILE_TRANSITION_DELAY);
+        }
+
+        return;
+      }
+
+      if (tileId === activeTileRef.current) {
+        return;
+      }
+
+      // Set featured tile immediately if there is no current featured tile.
+      // Otherwise, delay it to avoid tiles jumping around too frequently
+      if (!activeTileRef.current) {
         activeTileRef.current = tileId;
         setActiveTile(tileId);
-      }, TILE_TRANSITION_DELAY);
-    }
-  }, [attendeeIdToTileId, activeAttendees]);
+      } else {
+        timeout.current = setTimeout(() => {
+          activeTileRef.current = tileId;
+          setActiveTile(tileId);
+        }, TILE_TRANSITION_DELAY);
+      }
+    };
+
+    meetingManager.subscribeToActiveSpeaker(activeSpeakerCallback);
+
+    return () =>
+      meetingManager.unsubscribeFromActiveSpeaker(activeSpeakerCallback);
+  }, [attendeeIdToTileId]);
 
   const value = useMemo(
     () => ({

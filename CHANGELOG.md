@@ -117,6 +117,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Portal storybook documentation to only show documentation without visual documentation
 - Change className to include `ch-` prefix for all UI components
 - Change `data-testid` in some components to maintain consistency
+- Use MeetingManager to maintain active speakers
 
 ### Removed
 

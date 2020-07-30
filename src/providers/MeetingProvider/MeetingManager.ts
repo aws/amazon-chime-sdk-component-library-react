@@ -7,7 +7,8 @@ import {
   DefaultDeviceController,
   DefaultMeetingSession,
   LogLevel,
-  MeetingSessionConfiguration
+  MeetingSessionConfiguration,
+  DefaultActiveSpeakerPolicy
 } from 'amazon-chime-sdk-js';
 
 import {
@@ -78,6 +79,12 @@ export class MeetingManager {
 
   devicePermissionsObservers: ((permission: string) => void)[] = [];
 
+  activeSpeakerListener: ((activeSpeakers: string[]) => void) | null = null;
+
+  activeSpeakerCallbacks: ((activeSpeakers: string[]) => void)[] = [];
+
+  activeSpeakers: string[] = [];
+
   audioVideoCallbacks: ((audioVideo: AudioVideoFacade | null) => void)[] = [];
 
   devicesUpdatedCallbacks: ((
@@ -95,6 +102,8 @@ export class MeetingManager {
     this.audioInputDevices = [];
     this.audioOutputDevices = [];
     this.videoInputDevices = [];
+    this.activeSpeakers = [];
+    this.activeSpeakerListener = null;
   }
 
   async join({ meetingInfo, attendeeInfo }: MeetingJoinData) {
@@ -121,11 +130,20 @@ export class MeetingManager {
 
       this.audioVideo.unbindAudioElement();
       await this.audioVideo.chooseAudioInputDevice(null);
+
+      if (this.activeSpeakerListener) {
+        this.audioVideo.unsubscribeFromActiveSpeakerDetector(
+          this.activeSpeakerListener
+        );
+      }
+
       this.audioVideo.stop();
     }
 
     this.initializeMeetingManager();
+
     this.publishAudioVideoUpdate();
+    this.publishActiveSpeakerUpdate();
   }
 
   async initializeMeetingSession(
@@ -144,6 +162,7 @@ export class MeetingManager {
     this.setupDeviceLabelTrigger();
     await this.listAndSelectDevices();
     this.publishAudioVideoUpdate();
+    this.setupActiveSpeakerDetection();
   }
 
   async updateDeviceLists(): Promise<void> {
@@ -168,6 +187,20 @@ export class MeetingManager {
     this.audioVideo?.setDeviceLabelTrigger(callback);
     this.devicePermissions = DevicePermissionStatus.GRANTED;
     this.notifyDevicePermissionChange();
+  }
+
+  setupActiveSpeakerDetection(): void {
+    this.publishActiveSpeakerUpdate();
+
+    this.activeSpeakerListener = (activeSpeakers: string[]) => {
+      this.activeSpeakers = activeSpeakers;
+      this.activeSpeakerCallbacks.forEach(cb => cb(activeSpeakers));
+    };
+
+    this.audioVideo?.subscribeToActiveSpeakerDetector(
+      new DefaultActiveSpeakerPolicy(),
+      this.activeSpeakerListener
+    );
   }
 
   async listAndSelectDevices(): Promise<void> {
@@ -275,13 +308,34 @@ export class MeetingManager {
     });
   };
 
+  subscribeToActiveSpeaker = (
+    callback: (activeSpeakers: string[]) => void
+  ): void => {
+    this.activeSpeakerCallbacks.push(callback);
+    callback(this.activeSpeakers);
+  };
+
+  unsubscribeFromActiveSpeaker = (
+    callbackToRemove: (activeSpeakers: string[]) => void
+  ): void => {
+    this.activeSpeakerCallbacks = this.activeSpeakerCallbacks.filter(
+      callback => callback !== callbackToRemove
+    );
+  };
+
+  publishActiveSpeakerUpdate = () => {
+    this.activeSpeakerCallbacks.forEach(callback => {
+      callback(this.activeSpeakers);
+    });
+  };
+
   subscribeToDevicePermissionUpdate = (
     callback: (permission: string) => void
   ): void => {
     this.devicePermissionsObservers.push(callback);
   };
 
-  unSubscribeFromDevicePermissionUpdate = (
+  unsubscribeFromDevicePermissionUpdate = (
     callbackToRemove: (permission: string) => void
   ): void => {
     this.devicePermissionsObservers = this.devicePermissionsObservers.filter(
