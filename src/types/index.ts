@@ -33,17 +33,8 @@ export type LocalVideoContextType = {
   toggleVideo: () => Promise<void>;
 };
 
-export type ContentShareState = {
-  activeContentTileId: number | null;
-  isLocalShareLoading: boolean;
-  isRemoteUserSharing: boolean;
-  isLocalUserSharing: boolean;
-  isSomeoneSharing: boolean;
-  sharingAttendeeId: string | null;
-};
-
 export type ContentShareControlContextType = {
-  isContentSharePaused: boolean;
+  paused: boolean;
   toggleContentShare: () => Promise<void>;
   togglePauseContentShare: () => void;
 };

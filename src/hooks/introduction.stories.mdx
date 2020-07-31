@@ -38,7 +38,7 @@ import {
 
 const ContentShare () => => {
   const audioVideo = useAudioVideo();
-  const { activeContentTileId } = useContentShareState();
+  const { tileId } = useContentShareState();
   const videoEl = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
@@ -46,10 +46,10 @@ const ContentShare () => => {
       return;
     }
 
-    audioVideo.bindVideoElement(activeContentTileId, videoEl.current);
+    audioVideo.bindVideoElement(tileId, videoEl.current);
 
-    return () => audioVideo.unbindVideoElement(activeContentTileId);
-  }, [audioVideo, activeContentTileId]);
+    return () => audioVideo.unbindVideoElement(tileId);
+  }, [audioVideo, tileId]);
 
   return ( 
     <video ref={videoEl} className="my-content-tile" />

@@ -12,20 +12,25 @@ interface Props extends BaseSdkProps {}
 
 export const ContentShare: React.FC<Props> = ({ className, ...rest }) => {
   const audioVideo = useAudioVideo();
-  const { activeContentTileId, isSomeoneSharing } = useContentShareState();
+  const { tileId } = useContentShareState();
   const videoEl = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
-    if (!audioVideo || !videoEl.current || !activeContentTileId) {
+    if (!audioVideo || !videoEl.current || !tileId) {
       return;
     }
 
-    audioVideo.bindVideoElement(activeContentTileId, videoEl.current);
+    audioVideo.bindVideoElement(tileId, videoEl.current);
 
-    return () => audioVideo.unbindVideoElement(activeContentTileId);
-  }, [audioVideo, activeContentTileId]);
+    return () => {
+      const tile = audioVideo.getVideoTile(tileId);
+      if (tile) {
+        audioVideo.unbindVideoElement(tileId);
+      }
+    };
+  }, [audioVideo, tileId]);
 
-  return isSomeoneSharing ? (
+  return tileId ? (
     <ContentTile
       objectFit="contain"
       className={className || ''}
