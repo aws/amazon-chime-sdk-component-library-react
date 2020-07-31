@@ -7,23 +7,19 @@ import React, {
   createContext,
   useContext,
   useEffect,
-  useState
+  useReducer,
+  useRef
 } from 'react';
 import { DefaultModality, VideoTileState } from 'amazon-chime-sdk-js';
 
+import {
+  reducer,
+  initialState,
+  ContentShareState,
+  ContentActionType
+} from './state';
 import { ContentShareControlContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
-
-import { ContentShareState } from '../../types';
-
-const initialState: ContentShareState = {
-  activeContentTileId: null,
-  isRemoteUserSharing: false,
-  isLocalUserSharing: false,
-  isLocalShareLoading: false,
-  isSomeoneSharing: false,
-  sharingAttendeeId: null
-};
 
 const ContentShareContext = createContext<ContentShareState | null>(null);
 const ContentShareControlContext = createContext<ContentShareControlContextType | null>(
@@ -32,15 +28,9 @@ const ContentShareControlContext = createContext<ContentShareControlContextType 
 
 const ContentShareProvider: React.FC = ({ children }) => {
   const audioVideo = useAudioVideo();
-  const [isContentSharePaused, setIsContentSharePaused] = useState(false);
-  const [contentShareState, setContentShareState] = useState<ContentShareState>(
-    initialState
-  );
-  const {
-    isLocalUserSharing,
-    activeContentTileId,
-    isLocalShareLoading
-  } = contentShareState;
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const { paused, isLocalUserSharing, isLocalShareLoading } = state;
+  const localUserTileIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!audioVideo) {
@@ -63,62 +53,63 @@ const ContentShareProvider: React.FC = ({ children }) => {
           .realtimeController.state.localAttendeeId;
         const isLocalUser = baseAttendeeId === localAttendeeId;
 
-        if (!isLocalUser && isLocalUserSharing) {
+        if (
+          !isLocalUser &&
+          localUserTileIdRef.current &&
+          localUserTileIdRef.current < tileState.tileId
+        ) {
           audioVideo.stopContentShare();
+          localUserTileIdRef.current = null;
         }
 
-        setContentShareState(localState => ({
-          ...localState,
-          isLocalShareLoading: false,
-          isLocalUserSharing: isLocalUser,
-          activeContentTileId: tileState.tileId,
-          isRemoteUserSharing: !isLocalUser,
-          isSomeoneSharing: true,
-          sharingAttendeeId: baseAttendeeId
-        }));
+        if (isLocalUser) {
+          localUserTileIdRef.current = tileState.tileId;
+        }
+
+        dispatch({
+          type: ContentActionType.UPDATE,
+          payload: {
+            tileState,
+            isLocalUser
+          }
+        });
       },
       videoTileWasRemoved: (tileId: number) => {
-        if (tileId === activeContentTileId) {
-          setContentShareState(initialState);
+        if (tileId === localUserTileIdRef.current) {
+          localUserTileIdRef.current = null;
         }
+
+        dispatch({
+          type: ContentActionType.REMOVE,
+          payload: tileId
+        });
       }
     };
 
     const contentShareObserver = {
-      contentShareDidStart: () => {
-        setContentShareState(localState => ({
-          ...localState,
-          isLocalUserSharing: true
-        }));
-      },
       contentShareDidStop: () => {
-        setContentShareState(localState => ({
-          ...localState,
-          isLocalShareLoading: false,
-          isLocalUserSharing: false
-        }));
+        dispatch({ type: ContentActionType.DID_STOP });
       }
     };
+
     audioVideo.addObserver(videoObserver);
     audioVideo.addContentShareObserver(contentShareObserver);
 
     return () => {
       audioVideo.removeObserver(videoObserver);
       audioVideo.removeContentShareObserver(contentShareObserver);
+      dispatch({ type: ContentActionType.RESET });
     };
-  }, [audioVideo, activeContentTileId, isLocalUserSharing]);
+  }, [audioVideo]);
 
   useEffect(() => {
-    if (!isLocalShareLoading) {
+    if (!audioVideo) {
       return;
     }
 
     const cb = (event: PromiseRejectionEvent) => {
       if (event.reason.name === 'NotAllowedError') {
-        setContentShareState(localState => ({
-          ...localState,
-          isLocalShareLoading: false
-        }));
+        dispatch({ type: ContentActionType.DENIED });
       }
     };
 
@@ -133,56 +124,36 @@ const ContentShareProvider: React.FC = ({ children }) => {
 
     if (isLocalUserSharing || isLocalShareLoading) {
       audioVideo.stopContentShare();
-      setIsContentSharePaused(false);
-      setContentShareState(localState => ({
-        ...localState,
-        isLocalShareLoading: false,
-        isLocalUserSharing: false
-      }));
     } else {
       audioVideo.startContentShareFromScreenCapture();
-      setContentShareState(localState => ({
-        ...localState,
-        isLocalShareLoading: true
-      }));
+      dispatch({ type: ContentActionType.STARTING });
     }
   }, [audioVideo, isLocalUserSharing, isLocalShareLoading]);
-
-  useEffect(() => {
-    if (!audioVideo) {
-      return;
-    }
-
-    return () => {
-      setIsContentSharePaused(false);
-      setContentShareState(initialState);
-    };
-  }, [audioVideo]);
 
   const togglePauseContentShare = useCallback((): void => {
     if (!audioVideo || !isLocalUserSharing) {
       return;
     }
 
-    if (isContentSharePaused) {
+    if (paused) {
       audioVideo.unpauseContentShare();
     } else {
       audioVideo.pauseContentShare();
     }
 
-    setIsContentSharePaused(currentState => !currentState);
-  }, [audioVideo, isContentSharePaused, isLocalUserSharing]);
+    dispatch({ type: ContentActionType.TOGGLE_PAUSE });
+  }, [audioVideo, paused, isLocalUserSharing]);
 
   const controlsValue: ContentShareControlContextType = useMemo(
     () => ({
-      isContentSharePaused,
+      paused,
       isLocalUserSharing,
       isLocalShareLoading,
       toggleContentShare,
       togglePauseContentShare
     }),
     [
-      isContentSharePaused,
+      paused,
       toggleContentShare,
       togglePauseContentShare,
       isLocalUserSharing,
@@ -191,7 +162,7 @@ const ContentShareProvider: React.FC = ({ children }) => {
   );
 
   return (
-    <ContentShareContext.Provider value={contentShareState}>
+    <ContentShareContext.Provider value={state}>
       <ContentShareControlContext.Provider value={controlsValue}>
         {children}
       </ContentShareControlContext.Provider>

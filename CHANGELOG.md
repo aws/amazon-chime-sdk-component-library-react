@@ -143,5 +143,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix mobile portrait local video being too large
 - Fix content share not resetting when leaving a meeting
 - Fix demo form, add display names back to form components
+- Fix race condition where content share would stop but grey bg would persist
 
 ## [0.1.1] - 2020-06-16

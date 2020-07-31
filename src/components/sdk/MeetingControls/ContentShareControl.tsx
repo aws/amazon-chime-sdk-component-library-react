@@ -12,14 +12,14 @@ import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 const ContentShareControl: React.FC = () => {
   const { isLocalUserSharing } = useContentShareState();
   const {
-    isContentSharePaused,
+    paused,
     toggleContentShare,
     togglePauseContentShare
   } = useContentShareControls();
 
   const dropdownOptions: PopOverItemProps[] = [
     {
-      children: <span>{isContentSharePaused ? 'Play' : 'Pause'}</span>,
+      children: <span>{paused ? 'Unpause' : 'Pause'}</span>,
       onClick: togglePauseContentShare
     }
   ];
