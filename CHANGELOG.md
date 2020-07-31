@@ -151,5 +151,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix race condition where content share would stop but grey bg would persist
 - Fix end meeting
 - Fix video grid, input bugs on iOS
+- Fix microphone poorConnection SVG warning in devtools
 
 ## [0.1.1] - 2020-06-16
