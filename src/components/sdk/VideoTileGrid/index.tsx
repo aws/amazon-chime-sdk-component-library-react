@@ -52,8 +52,8 @@ export const VideoTileGrid: React.FC<Props> = ({
 
   return (
     <VideoGrid {...rest} size={gridSize} layout={featured ? 'featured' : null}>
-      <FeaturedRemoteVideos />
       <ContentShare css="grid-area: ft;" />
+      <FeaturedRemoteVideos />
       <LocalVideo
         nameplate="Me"
         css={gridSize > 1 ? fluidStyles : staticStyles}

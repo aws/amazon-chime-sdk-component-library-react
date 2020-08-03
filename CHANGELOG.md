@@ -58,7 +58,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add theme switcher to demo nav
 - Add docs for local devices and meeting status providers
 - Add docs for VideoGrid and VideoTile components
-- Add  `Grid` unit test.
+- Add `Grid` unit test.
 - Add a story to display all icons in one place for reference
 - Add versioning tag to demo app
 
@@ -149,5 +149,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix demo form, add display names back to form components
 - Fix race condition where content share would stop but grey bg would persist
 - Fix end meeting
+- Fix video grid, input bugs on iOS
 
 ## [0.1.1] - 2020-06-16
