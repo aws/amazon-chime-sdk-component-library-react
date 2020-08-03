@@ -15,15 +15,11 @@ interface Props extends BaseSdkProps {
   nameplate?: string;
 }
 
-const StyledLocalVideo = styled(VideoTile)`
-  background: unset;
+const StyledLocalVideo = styled<any>(VideoTile)`
+  ${props => (!props.active ? 'display: none' : '')};
 `;
 
-export const LocalVideo: React.FC<Props> = ({
-  className,
-  nameplate,
-  ...rest
-}) => {
+export const LocalVideo: React.FC<Props> = ({ nameplate, ...rest }) => {
   const { tileId, isVideoEnabled } = useLocalVideo();
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);
@@ -75,8 +71,8 @@ export const LocalVideo: React.FC<Props> = ({
 
   return (
     <StyledLocalVideo
-      nameplate={active ? nameplate : null}
-      className={className || ''}
+      active={active}
+      nameplate={nameplate}
       ref={videoEl}
       {...rest}
     />

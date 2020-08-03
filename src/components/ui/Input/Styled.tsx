@@ -91,14 +91,20 @@ export const StyledClear = styled.button<ClearProps>`
     fill: ${props => props.theme.inputs.clearBg};
   }
 
-  input:focus + &,
-  input:hover + &,
-  &:hover {
+  input:focus + &
     display: block;
   }
 
   &:active,
   &:focus {
     outline: none;
+  }
+
+  @media (pointer: fine) {
+    .ch-form-field-input:hover &,
+    input:hover + &,
+    &:hover {
+      display: block;
+    }
   }
 `;

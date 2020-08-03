@@ -27,8 +27,9 @@ export const FeaturedRemoteVideos: FC<Props> = props => {
       {tiles.map(tileId => {
         const featured = !contentTileId && featuredTileId === tileId;
         const styles = gridData && featured ? 'grid-area: ft;' : '';
-        const classes = `${featured ? 'featured-tile' : ''} ${props.className ||
-          ''}`;
+        const classes = `${
+          featured ? 'ch-featured-tile' : ''
+        } ${props.className || ''}`;
         const attendee = roster[tileIdToAttendeeId[tileId]] || {};
         const { name } = attendee;
 

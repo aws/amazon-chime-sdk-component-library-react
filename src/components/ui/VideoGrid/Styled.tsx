@@ -224,7 +224,7 @@ const responsiveStyles = {
   '2.featured': `
     @media (max-width: 600px) {
       grid-template-columns: 1fr;
-      grid-template-rows: unset;
+      grid-template-rows: calc(100% / 3);
       grid-auto-rows: calc(100% / 3);
     }
   `,
@@ -232,7 +232,7 @@ const responsiveStyles = {
   '3.r16by9': `
     @media (max-height: 600px) {
       grid-template-rows: repeat(2,1fr);
-      grid-template-columns: unset;
+      grid-template-columns: 50%;
       grid-auto-columns: 50%;
       grid-auto-flow: column;
     }
@@ -242,7 +242,7 @@ const responsiveStyles = {
     @media (max-width: 600px) {
       grid-template-areas: 'ft' 'ft';
       grid-template-columns: 1fr;
-      grid-template-rows: unset;
+      grid-template-rows: 25%;
       grid-auto-rows: 25%;
     }
   `,
@@ -250,7 +250,7 @@ const responsiveStyles = {
   '4.r16by9': `
     @media (max-height: 600px) {
       grid-template-rows: repeat(2,1fr);
-      grid-template-columns: unset;
+      grid-template-columns: 50%;
       grid-auto-columns: 50%;
       grid-auto-flow: column;
     }
@@ -259,7 +259,7 @@ const responsiveStyles = {
   '5.r16by9': `grid-template: repeat(2,1fr) / repeat(3,1fr);
     @media (max-height: 600px) {
       grid-template-rows: repeat(2,1fr);
-      grid-template-columns: unset;
+      grid-template-columns: calc(100% / 3);
       grid-auto-columns: calc(100% / 3);
       grid-auto-flow: column;
     }
@@ -268,7 +268,7 @@ const responsiveStyles = {
   '6.r16by9': `grid-template: repeat(2,1fr) / repeat(3,1fr);
     @media (max-height: 600px) {
       grid-template-rows: repeat(2,1fr);
-      grid-template-columns: unset;
+      grid-template-columns: calc(100% / 3);
       grid-auto-columns: calc(100% / 3);
       grid-auto-flow: column;
     }
@@ -277,7 +277,7 @@ const responsiveStyles = {
   '7.r16by9': `
     @media (max-height: 600px) {
       grid-template-rows: repeat(2,1fr);
-      grid-template-columns: unset;
+      grid-template-columns: 25%;
       grid-auto-columns: 25%;
       grid-auto-flow: column;
     }
@@ -288,7 +288,7 @@ const portraitStyles = `
   @media (max-width: 600px) {
     grid-template-areas: 'ft ft' 'ft ft';
     grid-template-columns: repeat(2,1fr);
-    grid-template-rows: unset;
+    grid-template-rows: 25%;
     grid-auto-rows: 25%;
   }
 `;
@@ -297,7 +297,7 @@ const landscapeStyles = `
   @media (max-height: 600px) {
     grid-template-areas: 'ft ft' 'ft ft';
     grid-template-rows: repeat(2,1fr);
-    grid-template-columns: unset;
+    grid-template-columns: 25%;
     grid-auto-columns: 25%;
     grid-auto-flow: column;
   }
