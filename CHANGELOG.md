@@ -131,6 +131,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - 'styled-reset' package due to license incompatibility
 - Reverted `Add docs for the Modal component` commit to fix CSSProperties compatibility error
 - Removed `MeetingStatusProvider`
+- Removed minor version bumping for each merge.
 
 ### Fixed
 

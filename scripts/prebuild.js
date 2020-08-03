@@ -3,7 +3,12 @@
 const fs = require('fs');
 const path = require('path');
 const exec = require('child_process').spawnSync;
-const { logger, spawnOrFail, process, shouldContinuePrompt } = require('./utilities');
+const {
+  logger,
+  spawnOrFail,
+  process,
+  shouldContinuePrompt,
+} = require('./utilities');
 
 const { labels = [], actor = '' } = process.env.GITHUB_CONTEXT || {};
 const botName = 'dependabot';
@@ -28,7 +33,7 @@ if (!commits || !commits[0]) {
     '--no-commit-id',
     '--name-only',
     '-r',
-    `${commits[0]}`
+    `${commits[0]}`,
   ])
     .toString()
     .trim()
@@ -45,7 +50,10 @@ if (!commits || !commits[0]) {
     return process.exit(1);
   }
 
-  if (commit_files.includes('.github/workflows') && !process.env.GITHUB_ACTIONS) {
+  if (
+    commit_files.includes('.github/workflows') &&
+    !process.env.GITHUB_ACTIONS
+  ) {
     logger.warn(
       "If your github action workflow uses a 'push' or 'pull_request' trigger, have you verified that the github workflow change is safe to execute when the PR is created? Or type yes if this does not apply to you."
     );
@@ -72,37 +80,10 @@ if (!commits || !commits[0]) {
     );
     return process.exit(1);
   }
-  
-  // On every PR do a minor version bump and only run this once (on local) before PR
-  if (!process.argv.includes('--publish') && !process.env.GITHUB_ACTIONS) {
-    const version_file = 'src/versioning/Versioning.ts';
 
-    // Reset to the base version
-    const base_version = JSON.parse(
-      spawnOrFail('git', ['show', `${base}:package.json`])
-    ).version;
-
-    let package_json = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
-    package_json['version'] = base_version;
-    fs.writeFileSync('package.json', JSON.stringify(package_json, null, 2));
-
-    // Increase to new version
-    spawnOrFail('npm version patch --no-git-tag-version');
-    package_json = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
-    const new_version = package_json['version'];
-    logger.log(
-      `Increasing patch version from ${base_version} to ${new_version}`
-    );
-    fs.writeFileSync(
-      version_file,
-      fs
-        .readFileSync(version_file)
-        .toString()
-        .replace(/return '[.0-9]+';/, `return '${new_version}';`)
-    );
+  if (!process.env.GITHUB_ACTIONS) {
     // Pull in npm audit fixes automatically
     spawnOrFail('npm', ['audit', 'fix']);
-    spawnOrFail('git', ['add', `${version_file}`]);
     spawnOrFail('git', ['add', 'package.json']);
     spawnOrFail('git', ['add', 'package-lock.json']);
     spawnOrFail('git', ['commit', '--amend', '--no-edit']);
