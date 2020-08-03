@@ -194,7 +194,7 @@ const footerCopyright = `\nCopyright ${joinYears(
   allYears.sort().filter(unique)
 )} Amazon.com, Inc. or its affiliates. All Rights Reserved.\n`;
 
-for (const file of ['README.md', 'NOTICE']) {
+for (const file of ['README.md', 'NOTICE.md']) {
   if (
     !fs
       .readFileSync(file)
