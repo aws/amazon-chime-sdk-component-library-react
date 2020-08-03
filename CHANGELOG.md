@@ -61,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `Grid` unit test.
 - Add a story to display all icons in one place for reference
 - Add versioning tag to demo app
+- Add third party dependency attributes to NOTICE file
 
 ### Changed
 
