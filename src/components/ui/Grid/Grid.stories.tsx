@@ -62,14 +62,14 @@ export const NamedGrid = () => {
         }}
         gridTemplateAreas={{
           md: `"other main sidebar"
-               "other main sidebar"
-               "other main sidebar"`,
+              "other main sidebar"
+              "other main sidebar"`,
           lg: `"other other sidebar"
-               "main main sidebar"
-               "main main sidebar"`,
+              "main main sidebar"
+              "main main sidebar"`,
           xl: `"other main sidebar"
-               "other main sidebar"
-               "other main sidebar"`
+              "other main sidebar"
+              "other main sidebar"`
         }}
       >
         <Child>Other</Child>

@@ -140,6 +140,7 @@ declare module 'styled-components' {
 
     zIndex: {
       navigation: string | number;
+      controlBar: string | number;
       modal: string | number;
       popOver: string | number;
       notificationGroup: string | number;
