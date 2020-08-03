@@ -16,6 +16,7 @@ export const radii = {
 
 export const zIndex = {
   navigation: 10,
+  controlBar: 15,
   modal: 20,
   popOver: 30,
   notificationGroup: 40,

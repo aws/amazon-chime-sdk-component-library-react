@@ -46,6 +46,7 @@ export { Roster } from './components/ui/Roster';
 export { RosterHeader } from './components/ui/Roster/RosterHeader';
 export { RosterGroup } from './components/ui/Roster/RosterGroup';
 export { RosterCell } from './components/ui/Roster/RosterCell';
+export { UserActivityManager } from './components/ui/UserActivityManager';
 
 // SDK components
 export {
@@ -92,6 +93,8 @@ export { AudioVideoContext } from './providers/AudioVideoProvider';
 export { useClickOutside } from './hooks/useClickOutside';
 export { useTabOutside } from './hooks/useTabOutside';
 export { useUniqueId } from './hooks/useUniqueId';
+export { useFocusIn } from './hooks/useFocusIn';
+export { useMouseMove } from './hooks/useMouseMove';
 
 export { useAttendeeStatus } from './hooks/sdk/useAttendeeStatus';
 export { useAttendeeAudioStatus } from './hooks/sdk/useAttendeeAudioStatus';
@@ -129,6 +132,7 @@ export { RosterProvider } from './providers/RosterProvider';
 export { DevicesProvider } from './providers/DevicesProvider';
 export { RemoteVideoTileProvider } from './providers/RemoteVideoTileProvider';
 export { FeaturedVideoTileProvider } from './providers/FeaturedVideoTileProvider';
+export { UserActivityProvider, useUserActivityState } from './providers/UserActivityProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';
