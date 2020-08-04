@@ -124,14 +124,14 @@ allFiles().forEach(file => {
     return;
   }
   let yearsForFileInGitHistory = [];
-  const stdout = exec(`git log --pretty=format:'%ad' --date=short '${file}'`);
+  const stdout = exec(`git log --pretty=format:'%ad' --date=short ${file}`);
 
   const dates = [];
   for (const line of stdout
     .toString()
     .trim()
     .split('\n')) {
-    const year = line.replace(/[-].*/, '');
+    const year = line.replace(/[-].*/, '').replace(`'`, '');
     dates.push(year);
     allYears.push(year);
   }
