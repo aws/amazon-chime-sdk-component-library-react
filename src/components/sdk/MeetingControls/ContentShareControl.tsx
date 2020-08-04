@@ -9,7 +9,20 @@ import { useContentShareState } from '../../../providers/ContentShareProvider';
 import { useContentShareControls } from '../../../providers/ContentShareProvider';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
-const ContentShareControl: React.FC = () => {
+interface Props {
+  /** Label shown for content share control, by default it is "Content" */
+  label?: string;
+  /** Label shown for pausing content share button in content share control, by default it is "Pause" */
+  pauseLabel?: string;
+  /** Label shown for unpausing content share button in content share control, by default it is "Unpause" */
+  unpauseLabel?: string;
+}
+
+const ContentShareControl: React.FC<Props> = ({ 
+  label = 'Content',
+  pauseLabel = 'Pause',
+  unpauseLabel = 'Unpause'
+}) => {
   const { isLocalUserSharing } = useContentShareState();
   const {
     paused,
@@ -19,7 +32,7 @@ const ContentShareControl: React.FC = () => {
 
   const dropdownOptions: PopOverItemProps[] = [
     {
-      children: <span>{paused ? 'Unpause' : 'Pause'}</span>,
+      children: <span>{paused ? unpauseLabel : pauseLabel}</span>,
       onClick: togglePauseContentShare
     }
   ];
@@ -29,7 +42,7 @@ const ContentShareControl: React.FC = () => {
       <ControlBarButton
         icon={<ContentShare />}
         onClick={toggleContentShare}
-        label="Content"
+        label={label}
         popOver={isLocalUserSharing ? dropdownOptions : null}
       />
     </>

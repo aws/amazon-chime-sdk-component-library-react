@@ -10,10 +10,13 @@ import DeviceInput from '../DeviceInput';
 interface Props {
   /** Message shown when no microphone devices are found */
   notFoundMsg?: string;
+  /** Label shown for mic selection, by default it is "Microphone source" */
+  label?: string;
 }
 
 export const MicSelection: React.FC<Props> = ({
-  notFoundMsg = 'No microphone devices found'
+  notFoundMsg = 'No microphone devices found',
+  label = 'Microphone source'
 }) => {
   const meetingManager = useMeetingManager();
   const { devices } = useAudioInputs();
@@ -24,7 +27,7 @@ export const MicSelection: React.FC<Props> = ({
 
   return (
     <DeviceInput
-      label="Microphone source"
+      label={label}
       onChange={selectAudioInput}
       devices={devices}
       notFoundMsg={notFoundMsg}

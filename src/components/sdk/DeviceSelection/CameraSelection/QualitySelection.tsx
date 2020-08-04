@@ -8,6 +8,11 @@ import { Select } from '../../../ui/Select';
 import { useSelectVideoQuality, VideoQuality } from '../../../../hooks/sdk/useSelectVideoQuality';
 import { VIDEO_INPUT_QUALITY } from '../../../../constants';
 
+interface Props {
+  /** Label shown for video quality selection, by default it is "Video quality" */
+  label?: string;
+}
+
 const qualityOptions = [
   {
     label: 'Select video quality',
@@ -27,7 +32,7 @@ const qualityOptions = [
   }
 ];
 
-export const QualitySelection = () => {
+export const QualitySelection: React.FC<Props> = ({ label = 'Video quality' }) => {
   const selectVideoQuality = useSelectVideoQuality();
   const [videoQuality, setVideoQuality] = useState('unselected');
 
@@ -43,7 +48,7 @@ export const QualitySelection = () => {
       options={qualityOptions}
       onChange={selectQuality}
       value={videoQuality}
-      label="Video quality"
+      label={label}
     />
   );
 };

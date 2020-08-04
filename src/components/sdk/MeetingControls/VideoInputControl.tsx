@@ -12,11 +12,16 @@ import { isOptionActive } from '../../../utils/device-utils';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 
+interface Props {
+  /** Label shown for video input control, by default it is "Video" */
+  label?: string;
+}
+
 const videoInputConfig: DeviceConfig = {
   additionalDevices: true
 };
 
-const VideoInputControl: React.FC = () => {
+const VideoInputControl: React.FC<Props> = ({ label = 'Video' }) => {
   const { devices, selectedDevice } = useVideoInputs(videoInputConfig);
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
   const selectDevice = useSelectVideoInputDevice();
@@ -31,7 +36,7 @@ const VideoInputControl: React.FC = () => {
     <ControlBarButton
       icon={<Camera disabled={!isVideoEnabled} />}
       onClick={toggleVideo}
-      label="Video"
+      label={label}
       popOver={dropdownOptions}
     />
   );

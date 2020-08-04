@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { VideoTile } from '../../ui/VideoTile';
 
 export const ContentTile = styled(VideoTile)`
-  background-color: #3f4149;
+  background-color: ${({ theme }) => theme.colors.greys.grey80};
 `;
 
 export default ContentTile;

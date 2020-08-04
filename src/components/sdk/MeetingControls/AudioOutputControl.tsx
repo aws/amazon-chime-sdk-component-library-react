@@ -12,7 +12,12 @@ import { isOptionActive } from '../../../utils/device-utils';
 import { DeviceType } from '../../../types';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
-const AudioOutputControl: React.FC = () => {
+interface Props {
+  /** Label shown for audio output speaker control, by default it is "Speaker" */
+  label?: string;
+}
+
+const AudioOutputControl: React.FC<Props> = ({ label = 'Speaker' }) => {
   const meetingManager = useMeetingManager();
   const { devices, selectedDevice } = useAudioOutputs();
   const { isAudioOn, toggleAudio } = useLocalAudioOutput();
@@ -31,7 +36,7 @@ const AudioOutputControl: React.FC = () => {
       <ControlBarButton
         icon={<Sound disabled={!isAudioOn} />}
         onClick={toggleAudio}
-        label="Audio"
+        label={label}
         popOver={dropdownOptions.length ? dropdownOptions : null}
       />
     </>
