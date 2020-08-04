@@ -5,9 +5,16 @@ import React from 'react';
 
 import { ContentTile } from './';
 import { Flex } from '../Flex';
+import ContentTileDocs from './ContentTile.mdx';
 
 export default {
-  title: 'UI Components/Video/ContentTile'
+  title: 'UI Components/Video/ContentTile',
+  parameters: {
+    docs: {
+      page: ContentTileDocs.parameters.docs.page().props.children.type
+    }
+  },
+  component: ContentTile
 };
 
 export const _ContentTile = () => {

@@ -8,9 +8,9 @@ import { useAudioOutputs } from '../../../../providers/DevicesProvider';
 import DeviceInput from '../DeviceInput';
 
 interface Props {
-  /** Message shown when no audio output speaker devices are found */
+  /** The displayed message when no audio output speaker devices are found. */
   notFoundMsg?: string;
-  /** Callback fired on selection change, needed if you want to add testing functionality around speaker selection  */
+  /** The callback fired when the selection is changed. It is required if you want to add testing functionality around speaker selection.  */
   onChange?: (selectedAudioOutputDeviceId: string) => void;
 }
 

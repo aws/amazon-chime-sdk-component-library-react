@@ -9,9 +9,9 @@ import { StyledHeading } from './Styled';
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
 
 export interface HeadingProps extends BaseProps {
-  /** The children element within a heading. */
+  /** The children element(s) within a heading. */
   children: ReactNode | ReactNode[];
-  /** The level of heading from 1 to 6, 1 defines the most important heading. 6 defines the least important heading. */
+  /** The level of heading from 1 to 6. 1 defines the most important heading, 6 defines the least important heading. */
   level: HeadingLevel;
 }
 

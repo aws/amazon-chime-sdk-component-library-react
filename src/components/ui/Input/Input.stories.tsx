@@ -56,7 +56,7 @@ export const InputWithIcon = () => {
 };
 
 InputWithIcon.story = {
-  name: 'Input with icon'
+  name: 'Input With Icon'
 };
 
 export const _SearchInput = () => {

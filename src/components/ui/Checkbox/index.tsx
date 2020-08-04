@@ -10,11 +10,11 @@ export interface CheckboxProps
     React.InputHTMLAttributes<HTMLInputElement>,
     'onChange' | 'value'
   > {
-  /** Callback fired when the state is changed. */
+  /** The callback fired when the state is changed. */
   onChange: (event?: ChangeEvent | string) => void;
   /** The value of the checkbox. */
   value: string;
-  /** If true, the checkbox is checked. */
+  /** Whether or not the checkbox is checked. */
   checked?: boolean;
 }
 export interface StyledCheckboxProps {

@@ -6,11 +6,11 @@ import { StyledTextarea } from './Styled';
 
 export interface TextareaProps
   extends Omit<InputHTMLAttributes<HTMLTextAreaElement>, 'onChange' | 'value'> {
-  /** Callback fired when the state is changed. */
+  /** The callback fired when the text is changed. */
   onChange(event: ChangeEvent): void;
   /** The value of the textarea. */
   value: string;
-  /** Aria label. */
+  /** The label for availability. */
   label: string;
 }
 

@@ -1,7 +1,13 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, createRef, useState, HTMLAttributes, useEffect } from 'react'
+import React, {
+  FC,
+  createRef,
+  useState,
+  HTMLAttributes,
+  useEffect
+} from 'react';
 import { Manager, Reference, Popper } from 'react-popper';
 
 import { KEY_CODES } from '../../../constants';
@@ -10,27 +16,32 @@ import useTabOutside from '../../../hooks/useTabOutside';
 import { StyledPopOverMenu, StyledPopOverToggle } from './Styled';
 
 export type Placement =
-| 'top-start'
-| 'top-end'
-| 'bottom-start'
-| 'bottom-end'
-| 'right-start'
-| 'right-end'
-| 'left-start'
-| 'left-end';
+  | 'top-start'
+  | 'top-end'
+  | 'bottom-start'
+  | 'bottom-end'
+  | 'right-start'
+  | 'right-end'
+  | 'left-start'
+  | 'left-end';
 
 export interface PopOverProps extends HTMLAttributes<HTMLSpanElement> {
+  /** CSS classname to apply custom styles. */
   className?: string;
+  /** Whether or not this is a sub menu. */
   isSubMenu?: Boolean;
+  /** Defines the placement of PopOver menu. */
   placement?: Placement;
+  /** Defines the function to render button(s). */
   renderButton: (isActive: boolean) => {};
+  /** The label used for availability. */
   a11yLabel: string;
   children: any;
 }
 
 const getFocusableElements = (node: HTMLElement): NodeListOf<HTMLElement> => {
   return node.querySelectorAll('button, [href]');
-}
+};
 
 export const PopOver: FC<PopOverProps> = ({
   renderButton,
@@ -39,12 +50,11 @@ export const PopOver: FC<PopOverProps> = ({
   placement = 'bottom-start',
   a11yLabel
 }) => {
-
   const menuRef = createRef<HTMLSpanElement>();
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    if(isOpen && !!menuRef.current) {
+    if (isOpen && !!menuRef.current) {
       const nodes = getFocusableElements(menuRef.current);
       !!nodes && nodes[0].focus();
     }
@@ -53,35 +63,34 @@ export const PopOver: FC<PopOverProps> = ({
   const move = (direction: string) => {
     const node = menuRef.current;
 
-    if(isSubMenu) {
+    if (isSubMenu) {
       // the parent menu can access
       // child nodes and manage focused elements
       return;
     }
-    if(!!node) {
+    if (!!node) {
       const nodes = getFocusableElements(node);
       const currentElement = document.activeElement;
 
-      for(let i = 0; i < nodes.length; i++) {
+      for (let i = 0; i < nodes.length; i++) {
         if (nodes[i] === currentElement) {
-
-          if(direction === 'down' && i !== nodes.length - 1) {
+          if (direction === 'down' && i !== nodes.length - 1) {
             return nodes[i + 1].focus();
           }
 
-          if(direction === 'up' && i > 0) {
+          if (direction === 'up' && i > 0) {
             return nodes[i - 1].focus();
           }
           break;
         }
       }
     }
-  }
+  };
 
   const closePopover = (e: any) => {
     const isSubMenuButton = e.target.closest("[data-menu='submenu']");
     return !isSubMenuButton ? setIsOpen(false) : false;
-  }
+  };
 
   const handleKeyUp = (e: any) => {
     switch (e.keyCode) {
@@ -92,46 +101,47 @@ export const PopOver: FC<PopOverProps> = ({
       case KEY_CODES.ARROW_DOWN:
         return move('down');
     }
-  }
+  };
 
   useClickOutside(menuRef, () => setIsOpen(false));
   useTabOutside(menuRef, () => setIsOpen(false));
 
   return (
-    <span ref={menuRef} onKeyDown={handleKeyUp} data-testid='popover'>
+    <span ref={menuRef} onKeyDown={handleKeyUp} data-testid="popover">
       <Manager>
         <Reference>
           {({ ref }) => (
             <StyledPopOverToggle
-              data-menu={isSubMenu ? 'submenu': null}
+              data-menu={isSubMenu ? 'submenu' : null}
               onClick={() => setIsOpen(!isOpen)}
               ref={ref}
               aria-label={a11yLabel}
               aria-haspopup={true}
               aria-expanded={isOpen}
-              data-testid='popover-toggle'
+              data-testid="popover-toggle"
             >
               {renderButton(isOpen)}
             </StyledPopOverToggle>
           )}
         </Reference>
-        {
-          isOpen && (
-            <Popper placement={placement} modifiers={[{ name: 'offset', options: { offset: [-8,0]} }]}>
-              {({ ref, style, placement }) => (
-                <StyledPopOverMenu
-                  data-placement={placement}
-                  onClick={(e: any) => closePopover(e)}
-                  ref={ref}
-                  style={style}
-                  data-testid='menu'
-                >
-                  {children}
-                </StyledPopOverMenu>
-              )}
-            </Popper>
-          )
-        }
+        {isOpen && (
+          <Popper
+            placement={placement}
+            modifiers={[{ name: 'offset', options: { offset: [-8, 0] } }]}
+          >
+            {({ ref, style, placement }) => (
+              <StyledPopOverMenu
+                data-placement={placement}
+                onClick={(e: any) => closePopover(e)}
+                ref={ref}
+                style={style}
+                data-testid="menu"
+              >
+                {children}
+              </StyledPopOverMenu>
+            )}
+          </Popper>
+        )}
       </Manager>
     </span>
   );

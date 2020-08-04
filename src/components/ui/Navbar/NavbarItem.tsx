@@ -10,7 +10,7 @@ import ControlBarButton from '../ControlBar/ControlBarItem';
 export interface NavbarItemProps {
   /** Any icon from the library for button in navbar item */
   icon: JSX.Element;
-  /** Callback fired when icon is clicked */
+  /** The callback fired when the icon is clicked */
   onClick: () => void;
   /** Label for navbar item */
   label: string;

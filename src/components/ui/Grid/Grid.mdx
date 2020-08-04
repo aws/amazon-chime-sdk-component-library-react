@@ -18,10 +18,9 @@ import { Grid } from 'amazon-chime-sdk-component-library-react';
 
 ## Example
 
-### With Grid Props and `responsive`.
+### Basic Grid
 
-All children components are placed based on grid props,
-like `gridGap`, `gridTemplateRows`, `gridTemplateColumns`, etc.
+You can place children components based on grid props, e.g. `gridGap`, `gridTemplateRows`, `gridTemplateColumns`, `responsive`, etc.
 
 <ThemeProvider theme={lightTheme}>
   <Preview>
@@ -61,11 +60,11 @@ like `gridGap`, `gridTemplateRows`, `gridTemplateColumns`, etc.
 </Grid>
 ```
 
-### Named Area Grid
+### Named Areas Grid
 
 First, you define names of your choice on grid items with the `gridArea` property.
 
-Then, on the grid container, you use the `gridTemplateAreas` property to define how the named areas get applied.
+Then, on the grid container, you can use the `gridTemplateAreas` property to define how to place named areas.
 
 <ThemeProvider theme={lightTheme}>
   <Preview>

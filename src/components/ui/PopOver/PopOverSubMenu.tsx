@@ -9,6 +9,7 @@ import Caret from '../icons/Caret';
 
 export interface PopOverItemProps {
   children?: JSX.Element | JSX.Element[];
+  /** The text shown in the item. */
   text: string;
 }
 

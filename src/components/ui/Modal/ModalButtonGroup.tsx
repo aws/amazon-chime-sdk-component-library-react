@@ -8,7 +8,9 @@ import { StyledModalButtonGroup } from './Styled';
 
 export interface ModalButtonGroupProps
   extends React.HTMLAttributes<HTMLDivElement> {
+  /** Defines the primary button(s) in the modal. */
   primaryButtons: ReactElement | ReactElement[];
+  /** Defines the secondary button(s) in the modal. */
   secondaryButtons?: ReactElement | ReactElement[];
 }
 

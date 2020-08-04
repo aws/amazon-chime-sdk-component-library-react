@@ -9,9 +9,9 @@ import useElementAspectRatio from '../../../hooks/useElementAspectRatio';
 type Layout = 'standard' | 'featured' | null;
 
 export interface VideoGridProps extends React.HTMLAttributes<HTMLDivElement> {
-  /** The number of tiles to lay out */
+  /** The number of tiles to lay out. */
   size?: number;
-  /** The layout of the grid */
+  /** The layout of the grid. */
   layout?: Layout;
 }
 
@@ -25,9 +25,9 @@ const GridContext = createContext<GridContext | null>(null);
 export const VideoGrid: React.FC<VideoGridProps> = ({
   size,
   children,
-  ...props
+  layout = 'standard',
+  ...rest
 }) => {
-  const layout = props.layout || 'standard';
   const gridEl = createRef<HTMLDivElement>();
   const ratio = useElementAspectRatio(gridEl);
   const gridSize =
@@ -37,7 +37,7 @@ export const VideoGrid: React.FC<VideoGridProps> = ({
     <GridContext.Provider value={gridData}>
       <StyledGrid
         ref={gridEl}
-        {...props}
+        {...rest}
         size={gridSize}
         ratio={ratio}
         featured={layout === 'featured'}

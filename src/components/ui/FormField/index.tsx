@@ -23,7 +23,7 @@ export type FieldType =
   | FC<RadioProps>;
 
 export interface FieldProps {
-  /** Callback fired when the state is changed. */
+  /** The callback fired when the state is changed. */
   onChange(event: ChangeEvent): void;
   /** The label of the field. */
   label: string;
@@ -31,7 +31,7 @@ export interface FieldProps {
   field: FieldType;
   /** The informational text in the field. */
   infoText?: string;
-  /** If true, error text will be shown. */
+  /** Whether or not the error text is shown. */
   error?: boolean;
   /** The error text in the field. */
   errorText?: string;
@@ -39,14 +39,14 @@ export interface FieldProps {
   fieldProps?: any;
   /** The value of the field. */
   value: string;
-  /** If true, the field is checked. */
+  /** Whether or not the field is checked. */
   checked?: boolean;
   /** Options for some fields, e.g. radio group or select. */
   options?: string[] | object[];
 }
 
 export interface LayoutProps {
-  /** Specify the layout of the field */
+  /** Specify the layout of the field, it defaults to `stack`. */
   layout?: 'stack' | 'horizontal' | 'input-only';
   error?: boolean;
 }

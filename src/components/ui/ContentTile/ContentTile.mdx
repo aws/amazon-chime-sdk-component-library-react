@@ -1,17 +1,17 @@
 import { Preview, Props } from '@storybook/addon-docs/blocks';
 import { ThemeProvider } from 'styled-components';
 
-import VideoTile from '.';
+import ContentTile from './';
 import { lightTheme } from '../../../theme/';
 
-# VideoTile
+# ContentTile
 
-You can use VideoTile component to render local or remote video content.
+You can use the ContentTile component to render content share stream.
 
 ## Importing
 
 ```javascript
-import { VideoTile } from 'amazon-chime-sdk-component-library-react';
+import { ContentTile } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Example
@@ -20,17 +20,16 @@ import { VideoTile } from 'amazon-chime-sdk-component-library-react';
   <Preview>
     <Flex css="height: 100vh" layout="fill-space-centered">
       <div style={{ height: "15rem", width: '25rem', margin: '2rem auto' }}>
-        <VideoTile nameplate="Test name" />
+        <ContentTile nameplate="Content share" />
       </div>
     </Flex>
   </Preview>
 </ThemeProvider>
 
 ```jsx
-  <VideoTile  nameplate="Test name"/>
+  <ContentTile nameplate="Content share" />
 ```
 
 ## Props
 
-#### VideoTile component
-<Props of={VideoTile} />
+<Props of={ContentTile} />

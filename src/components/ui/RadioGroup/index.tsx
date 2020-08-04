@@ -12,7 +12,7 @@ export interface RadioProps {
 }
 
 export interface RadioGroupProps {
-  /** Callback fired when the state is changed. */
+  /** The callback fired when the state is changed. */
   onChange(event: ChangeEvent): void;
   /** Options of radio group. */
   options: RadioProps[];

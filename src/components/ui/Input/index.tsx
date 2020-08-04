@@ -14,9 +14,9 @@ export interface InputProps
     React.InputHTMLAttributes<HTMLInputElement>,
     'onChange' | 'value'
   > {
-  /** Callback fired when the state is changed. */
+  /** The callback fired when the state is changed. */
   onChange(event: ChangeEvent): void;
-  /** Callback fired when the input value is cleared. */
+  /** The callback fired when the input value is cleared. */
   onClear?(): void;
   /** The icon in the input. */
   leadingIcon?: ReactNode;
@@ -26,7 +26,7 @@ export interface InputProps
   value: string;
   /** The id of the input. */
   id?: string;
-  /** If true, the clear icon will be shown. */
+  /** Whether or not the clear icon is shown, it defaults to `true`. */
   showClear?: boolean;
 }
 

@@ -12,22 +12,24 @@ import ModalContext from './ModalContext';
 import useClickOutside from '../../../hooks/useClickOutside';
 import useUniqueId from '../../../hooks/useUniqueId';
 
-export type ModalSize = 'md' | 'lg' | 'fullscreen'
+export type ModalSize = 'md' | 'lg' | 'fullscreen';
 
 export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+  /** The callback fired when the modal is closed. */
   onClose: () => void;
+  /** The size of the modal. */
   size?: ModalSize;
+  /** The rootId of the modal. */
   rootId?: string;
-};
+}
 
-export const Modal:FC<ModalProps> = props => {
-  const {
-    size = 'md',
-    onClose,
-    children,
-    rootId,
-  } = props;
-
+export const Modal: FC<ModalProps> = ({
+  size = 'md',
+  onClose,
+  children,
+  rootId,
+  ...rest
+}) => {
   const labelID = useUniqueId();
   const contentEl = useRef<HTMLDivElement>(null);
   const mainEl = useRef<HTMLDivElement>(null);
@@ -47,15 +49,15 @@ export const Modal:FC<ModalProps> = props => {
     // ensure that the focus event fires after Portal render is complete
     setTimeout(() => mainEl.current?.focus(), 0);
 
-    const onKeydown = (e:any) => {
+    const onKeydown = (e: any) => {
       if (e.keyCode === KEY_CODES.ESCAPE && onClose) {
         onClose();
       } else {
-        trapFocus(e, (contentEl.current as HTMLElement))
+        trapFocus(e, contentEl.current as HTMLElement);
       }
-    }
+    };
 
-    window.addEventListener('keydown', e => onKeydown(e))
+    window.addEventListener('keydown', e => onKeydown(e));
     return () => window.removeEventListener('keydown', e => onKeydown(e));
   }, []);
 
@@ -63,8 +65,9 @@ export const Modal:FC<ModalProps> = props => {
     <Portal rootId={rootId}>
       <ModalContext.Provider value={modalContext}>
         <StyledModal
-          {...props}
+          {...rest}
           size={size}
+          onClose={onClose}
           ref={contentEl}
           data-testid="modal"
         >

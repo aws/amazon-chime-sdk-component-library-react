@@ -31,5 +31,5 @@ export const BasicHeading = () => (
 );
 
 BasicHeading.story = {
-  name: 'Basic heading'
+  name: 'Basic Heading'
 };

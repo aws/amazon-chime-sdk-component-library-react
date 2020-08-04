@@ -8,13 +8,13 @@ import useUniqueId from '../../../hooks/useUniqueId';
 import { StyledRadio, HiddenRadio, StyledRadioWrapper } from './Styled';
 
 export interface RadioProps {
-  /** If true, the radio is selected. */
+  /** Whether or not the radio is selected. */
   checked?: boolean;
   /** The label of the radio. */
   label: string;
   /** The value of the radio. */
   value: string;
-  /** Callback fired when the state is changed. */
+  /** The callback fired when the state is changed. */
   onChange: (event: any) => void;
   /** Other props of the radio. */
   radioProps?: InputHTMLAttributes<HTMLButtonElement>;

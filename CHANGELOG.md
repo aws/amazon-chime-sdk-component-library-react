@@ -125,6 +125,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Change storybook layouts so that there's a more consistent look
 - Add `useMeetingStatus` hook
 - Renamed `MeetingManager` subscriptions for consistency
+- Improve Storybook documentaions according to the guidance of technical writing
 
 ### Removed
 

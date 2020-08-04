@@ -8,7 +8,7 @@ import { BaseProps } from '../Base';
 import { StyledGrid } from './Styled';
 
 export interface GridProps extends BaseProps, SSGridProps {
-  /** If `true`, the grid is responsive to different window sizes. */
+  /** Whether or not the grid is responsive to different window sizes. */
   responsive?: boolean;
 }
 

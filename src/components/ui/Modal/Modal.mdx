@@ -14,7 +14,7 @@ import PrimaryButton from '../Button/PrimaryButton';
 
 # Modal
 
-The Modal component renders as an overlay over the rest of the application. It may be closed on an outside click. While the modal is open, it will trap the user's focus.
+The Modal component renders as an overlay over the rest of the application. You can click outside of the modal to close the modal. While the modal is open, it will trap the user's focus.
 
 The modal itself is composed of other components including ModalHeader, ModalBody, ModalButtonGroup, and ModalButton. Other elements can also be included in the modal.
 
@@ -32,37 +32,51 @@ import {
 
 ## Example
 
-### Modal
-
 <ThemeProvider theme={lightTheme}>
   <Preview>
-      <ModalDemo/>
+    <ModalDemo />
   </Preview>
 </ThemeProvider>
 
 ```jsx
-{isOpen && <Modal size='md' onClose={() => setIsOpen(false)} rootId='modal-root'>
-  <ModalHeader title='Modal header'/>
-  <ModalBody>
-    <p>This is information presented in a modal</p>
-    <ModalButtonGroup
-      primaryButtons={[<ModalButton onClick={() => {}} label='submit' variant='primary' />]}
-      secondaryButtons={[<ModalButton onClick={() => {}} label='More info' variant='secondary' />]}
-    />
-  </ModalBody>
-</Modal>}
+{
+  isOpen && (
+    <Modal size="md" onClose={() => setIsOpen(false)} rootId="modal-root">
+      <ModalHeader title="Modal header" />
+      <ModalBody>
+        <p>This is information presented in a modal</p>
+        <ModalButtonGroup
+          primaryButtons={[
+            <ModalButton onClick={() => {}} label="submit" variant="primary" />
+          ]}
+          secondaryButtons={[
+            <ModalButton
+              onClick={() => {}}
+              label="More info"
+              variant="secondary"
+            />
+          ]}
+        />
+      </ModalBody>
+    </Modal>
+  );
+}
 ```
 
 ## Props
 
 ### Modal
-<Props of={Modal}/>
+
+<Props of={Modal} />
 
 ### ModalHeader
-<Props of={ModalHeader}/>
+
+<Props of={ModalHeader} />
 
 ### ModalButtonGroup
-<Props of={ModalButtonGroup}/>
+
+<Props of={ModalButtonGroup} />
 
 ### ModalButton
-<Props of={ModalButton}/>
+
+<Props of={ModalButton} />

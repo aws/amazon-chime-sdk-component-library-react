@@ -13,27 +13,27 @@ import { PopOverMenu } from '../PopOverMenu';
 type MicPosition = 'leading' | 'grouped';
 
 export interface RosterCellProps extends BaseProps {
-  /** Primary name in roster cell */
+  /** The primary name in the roster cell. */
   name: string;
-  /** Subtitle for the primary name */
+  /** The subtitle for the primary name. */
   subtitle?: string;
-  /** Late message */
+  /** The running late message. */
   runningLate?: string;
-  /** Mic's position defined by type MicPosition either 'leading' or 'grouped' */
+  /** The position to place microphone icon. */
   micPosition?: MicPosition;
-  /** Whether or not the user is muted. This is ignored if you pass a custom microphone via the microphone prop */
+  /** Whether or not the attendee is muted. This is ignored if you pass a custom microphone via the microphone prop. */
   muted?: boolean;
-  /** Whether or not the user has enabled the local video */
+  /** Whether or not the attendee has enabled their local video. */
   videoEnabled?: boolean;
-  /** Whether or not the user is sharing content */
+  /** Whether or not the attendee is sharing content. */
   sharingContent?: boolean;
-  /** Whether or not the user is having poor connection. This is ignored if you pass a custom microphone via the microphone prop */
+  /** Whether or not the attendee is having poor connection, it defaults to `false`. This is ignored if you pass a custom microphone via the microphone prop. */
   poorConnection?: boolean;
-  /** A replacement for the default volume icon, such as the MicrophoneActivity component */
+  /** A replacement for the default volume icon, such as the `MicrophoneActivity` component. */
   microphone?: React.ReactNode;
-  /** PopOver menu for more options */
+  /** The PopOver menu for more options. */
   menu?: React.ReactNode;
-  /** Label for PopOverMenu, by default it is an empty string */
+  /** The label for availability, it defaults to an empty string. */
   a11yMenuLabel?: string;
 }
 

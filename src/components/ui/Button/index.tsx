@@ -15,9 +15,9 @@ export interface ButtonProps
   label: string;
   /** The variant of button. */
   variant?: ButtonVariant;
-  /** If true, the button is selected. */
+  /** Whether or not the button is selected. */
   selected?: boolean;
-  /** Defines the size of the icon in the button */
+  /** Defines the size of the icon in the button, it defaults to `sm`. */
   iconSize?: IconSize;
 }
 
