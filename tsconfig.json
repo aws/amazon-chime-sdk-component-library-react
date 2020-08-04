@@ -25,12 +25,13 @@
   "exclude": [
     "node_modules",
     "build",
+    "demo",
     "scripts",
     ".storybook",
     "src/internal",
     "src/**/*.test.tsx",
     "src/**/*.stories.tsx",
-    "tst/**/*.test.tsx",
+    "tst",
     "coverage",
   ]
 }
