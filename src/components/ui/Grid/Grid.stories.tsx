@@ -86,5 +86,5 @@ export const NamedGrid = () => {
 };
 
 NamedGrid.story = {
-  name: 'Named grid areas'
+  name: 'Named Areas Grid'
 };

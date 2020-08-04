@@ -37,26 +37,27 @@ const StyledContents = styled.span`
 `;
 
 const getButtonContents = (isOpen: boolean) => {
-  const foo = isOpen ? `#0042bb` : '#075fff';  // avoiding TS prop problems.
+  const foo = isOpen ? `#0042bb` : '#075fff'; // avoiding TS prop problems.
   return (
-    <StyledContents style={{ backgroundColor: `${foo}`}}>
+    <StyledContents style={{ backgroundColor: `${foo}` }}>
       <Meeting />
     </StyledContents>
   );
-}
+};
 
 export const BasicPopOverMenu = () => (
   <>
-
     <Flex layout="fill-space-centered" flexDirection="column">
-      <Heading tag="p" level={6} mb={4}>Click the button icon to trigger the popover</Heading>
+      <Heading tag="p" level={6} mb={4}>
+        Click the button icon to trigger the popover
+      </Heading>
       <PopOver
         a11yLabel="Click me"
-        renderButton={(isOpen) => getButtonContents(isOpen)}
-        >
+        renderButton={isOpen => getButtonContents(isOpen)}
+      >
         <PopOverItem
           as="a"
-          href='https://www.amazon.com'
+          href="https://www.amazon.com"
           children={<span>Visit amazon.com</span>}
         />
         <PopOverItem
@@ -82,20 +83,19 @@ export const BasicPopOverMenu = () => (
 );
 
 BasicPopOverMenu.story = {
-  name: 'Basic Popover Menu'
+  name: 'Basic PopOver Menu'
 };
 
 export const PopOverMenuWithHeader = () => (
   <Flex layout="fill-space-centered" flexDirection="column">
-    <Heading tag="p" level={6} mb={4}>Click the button icon to trigger the popover</Heading>
+    <Heading tag="p" level={6} mb={4}>
+      Click the button icon to trigger the popover
+    </Heading>
     <PopOver
       a11yLabel="Click me"
-      renderButton={(isOpen) => getButtonContents(isOpen)}
-      >
-      <PopOverHeader
-        title="Title text"
-        subtitle="Subtitle text"
-      />
+      renderButton={isOpen => getButtonContents(isOpen)}
+    >
+      <PopOverHeader title="Title text" subtitle="Subtitle text" />
       <PopOverItem
         as="button"
         onClick={() => console.log('clicked')}
@@ -116,16 +116,18 @@ export const PopOverMenuWithHeader = () => (
 );
 
 PopOverMenuWithHeader.story = {
-  name: 'Popover Menu with header'
+  name: 'PopOver Menu with Header'
 };
 
 export const PopOverMenuWithSubmenu = () => (
   <Flex layout="fill-space-centered" flexDirection="column">
-    <Heading tag="p" level={6} mb={4}>Click the button icon to trigger the popover</Heading>
+    <Heading tag="p" level={6} mb={4}>
+      Click the button icon to trigger the popover
+    </Heading>
     <PopOver
       a11yLabel="Click me"
-      renderButton={(isOpen) => getButtonContents(isOpen)}
-      >
+      renderButton={isOpen => getButtonContents(isOpen)}
+    >
       <PopOverItem
         as="button"
         onClick={() => console.log('clicked')}
@@ -153,11 +155,11 @@ export const PopOverMenuWithSubmenu = () => (
         as="button"
         onClick={() => console.log('clicked')}
         children={<span>This has very long text</span>}
-        />
+      />
     </PopOver>
   </Flex>
 );
 
 PopOverMenuWithSubmenu.story = {
-  name: 'Popover Menu with submenu'
+  name: 'PopOver Menu with Submenu'
 };

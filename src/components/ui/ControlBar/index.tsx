@@ -18,21 +18,20 @@ export type ControlBarLayout =
 export interface ControlBarProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
     BaseProps {
-  /** Whether labels of control bar items will be shown, or not. */
+  /** Whether or not the labels of the control bar items should show. */
   showLabels: boolean;
-  /** The layout of control bar, available options are: `top`, `bottom`, `right`, `left`, `undocked-horizontal` and `undocked-vertical`. */
+  /** The layout of the control bar, available options are: `top`, `bottom`, `right`, `left`, `undocked-horizontal`, and `undocked-vertical`. */
   layout: ControlBarLayout;
 }
 
-export const ControlBar: FC<ControlBarProps> = props => {
-  const {
-    tag,
-    layout,
-    showLabels = false,
-    className,
-    children,
-    ...rest
-  } = props;
+export const ControlBar: FC<ControlBarProps> = ({
+  tag,
+  layout,
+  showLabels = false,
+  className,
+  children,
+  ...rest
+}) => {
   const controlBarContext = { layout, showLabels };
 
   return (

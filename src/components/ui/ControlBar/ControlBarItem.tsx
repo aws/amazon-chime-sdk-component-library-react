@@ -16,11 +16,11 @@ export interface ControlBarButtonProps
     BaseProps {
   /** The icon of the control bar item. */
   icon: JSX.Element;
-  /** Callback fired when the item is clicked. */
+  /** The callback fired when the item is clicked. */
   onClick: () => void;
   /** The label of an control bar item. */
   label: string;
-  /** The items to render in a popover menu. When passed, the button will render an arrow to open/close a popover menu. Refer to: [PopOverItem](/?path=/docs/ui-components-popover--basic-pop-over-menu) */
+  /** The items to render in a popover menu. When passed, the button will render an arrow to open or close a popover menu. Refer to [PopOverItem](/?path=/docs/ui-components-popover--basic-pop-over-menu) */
   popOver?: PopOverItemProps[] | null;
 }
 

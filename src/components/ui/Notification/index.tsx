@@ -19,17 +19,17 @@ enum Severity {
 export interface NotificationProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
     BaseProps {
-  /** Notification Severity */
+  /** The severity of the notification. */
   severity?: Severity;
-  /** Message to show in notification */
+  /** The message to display in the notification. */
   message?: string;
-  /** Callback fired when notification is closed */
+  /** The callback fired when a notification is closed. */
   onClose: () => void;
-  /** Whether or not the notification should get autoclosed */
+  /** Whether or not the notification should get closed automatically. */
   autoClose?: boolean;
-  /** Auto-closing delay in milliseconds, default delay is 6000 (6s) */
+  /** The auto close delay in milliseconds, it defaults to `6000` (6s). */
   autoCloseDelay?: number;
-  /** CSS classname to apply custom styles */
+  /** CSS classname to apply custom styles. */
   className?: string;
 }
 

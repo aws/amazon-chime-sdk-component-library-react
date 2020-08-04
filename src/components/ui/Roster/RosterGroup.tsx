@@ -10,9 +10,9 @@ import { BaseProps } from '../Base';
 import { StyledGroupWrapper, StyledGroup, StyledTitle } from './Styled';
 
 interface Props extends BaseProps {
-  /** Title of the Roster group */
+  /** The title of the roster group. */
   title?: string;
-  /** Number of attendees under one roster group*/
+  /** The number of attendees within one roster group. */
   badge?: number;
 }
 

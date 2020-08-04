@@ -36,6 +36,6 @@ const Caret: React.FC<CaretProps> = ({ direction = 'up', ...rest }) => {
   );
 };
 
-Caret.displayName = "Caret";
+Caret.displayName = 'Caret';
 
 export default Caret;

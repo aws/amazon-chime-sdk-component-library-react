@@ -18,7 +18,7 @@ export type SelectOptions = {
 export interface SelectProps extends InputHTMLAttributes<HTMLSelectElement> {
   /** Options */
   options: SelectOptions[];
-  /** Callback fired when the state is changed. */
+  /** The callback fired when the option is changed. */
   onChange(event: ChangeEvent): void;
   /** The selected option */
   value: string;

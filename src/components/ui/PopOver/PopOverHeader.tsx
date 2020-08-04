@@ -5,8 +5,11 @@ import React, { FC } from 'react';
 import { StyledPopOverHeader } from './Styled';
 
 export interface PopOverHeaderProps {
+  /** The title of the PopOver menu header. */
   title?: string;
+  /** The subtitle of the PopOver menu header. */
   subtitle?: string;
+  /** The source of the PopOver menu image. */
   imgSrc?: string;
 }
 
