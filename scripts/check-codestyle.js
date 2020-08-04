@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* 
+/*
   This scripts validates files for:
     Correct copyright and licencing message presents in files
     Each test file has corresponding source file.
@@ -194,7 +194,7 @@ const footerCopyright = `\nCopyright ${joinYears(
   allYears.sort().filter(unique)
 )} Amazon.com, Inc. or its affiliates. All Rights Reserved.\n`;
 
-for (const file of ['README.md', 'NOTICE.md']) {
+for (const file of ['README.md', 'NOTICE']) {
   if (
     !fs
       .readFileSync(file)

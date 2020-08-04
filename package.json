@@ -1,6 +1,6 @@
 {
   "name": "amazon-chime-sdk-component-library-react",
-  "version": "0.1.28",
+  "version": "0.1.29",
   "description": "Amazon Chime SDK Component Library - React",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -38,6 +38,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@popperjs/core": "^2.2.2",
+    "@types/puppeteer": "^2.0.1",
     "@types/uuid": "^7.0.3",
     "react-popper": "^2.2.1",
     "throttle-debounce": "^2.1.0",
@@ -61,7 +62,6 @@
     "@testing-library/user-event": "^10.0.2",
     "@types/classnames": "^2.2.10",
     "@types/jest": "^25.2.1",
-    "@types/puppeteer": "^2.0.1",
     "@types/react": "^16.9.34",
     "@types/react-dom": "^16.9.6",
     "@types/react-test-renderer": "^16.0.1",
