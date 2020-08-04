@@ -10,10 +10,13 @@ import DeviceInput from '../DeviceInput';
 interface Props {
   /** Message shown when no camera devices are found */
   notFoundMsg?: string;
+  /** Label shown for camera selection, by default it is "Camera source" */
+  label?: string;
 }
 
 export const CameraSelection: React.FC<Props> = ({
-  notFoundMsg = 'No camera devices found'
+  notFoundMsg = 'No camera devices found',
+  label = 'Camera source'
 }) => {
   const meetingManager = useMeetingManager();
   const { devices } = useVideoInputs();
@@ -24,7 +27,7 @@ export const CameraSelection: React.FC<Props> = ({
 
   return (
     <DeviceInput
-      label="Camera source"
+      label={label}
       onChange={selectVideoInput}
       devices={devices}
       notFoundMsg={notFoundMsg}

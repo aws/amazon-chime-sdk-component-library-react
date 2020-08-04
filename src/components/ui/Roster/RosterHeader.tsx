@@ -27,6 +27,8 @@ interface RosterHeaderProps extends BaseProps {
   menu?: React.ReactNode;
   /** The label for availability. */
   a11yMenuLabel?: string;
+  /** Label shown for search icon button, by default it is "Open search" */
+  searchLabel?: string;
 }
 
 const SearchBar: any = ({ onChange, onClose, value }: any) => {
@@ -75,6 +77,7 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
   className,
   menu,
   a11yMenuLabel = '',
+  searchLabel = 'Open search',
   ...rest
 }) => {
   const [isSearching, setIsSearching] = useState(false);
@@ -105,7 +108,7 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
         {onSearch && (
           <IconButton
             ref={searchBtn}
-            label="Open search"
+            label={searchLabel}
             onClick={openSearch}
             icon={<Search />}
           />

@@ -10,12 +10,15 @@ import DeviceInput from '../DeviceInput';
 interface Props {
   /** The displayed message when no audio output speaker devices are found. */
   notFoundMsg?: string;
-  /** The callback fired when the selection is changed. It is required if you want to add testing functionality around speaker selection.  */
+  /** Label shown for speaker selection, by default it is "Speaker source" */
+  label?: string;
+  /** The callback fired when the selection is changed. It is required if you want to add testing functionality around speaker selection. */
   onChange?: (selectedAudioOutputDeviceId: string) => void;
 }
 
 export const SpeakerSelection: React.FC<Props> = ({
   notFoundMsg = 'No speaker devices found',
+  label = 'Speaker source',
   onChange
 }) => {
   const meetingManager = useMeetingManager();
@@ -38,7 +41,7 @@ export const SpeakerSelection: React.FC<Props> = ({
 
   return (
     <DeviceInput
-      label="Speaker source"
+      label={label}
       devices={devices}
       onChange={selectAudioOutput}
       notFoundMsg={notFoundMsg}

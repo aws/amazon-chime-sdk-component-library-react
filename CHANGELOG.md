@@ -131,6 +131,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - NOTICE includes correct copyright text
 - LICENSE includes full Apache license
 - Update typescript build tree to exclude test-helper and demo's folder from library build process
+- Changed hard coded labels in components to take labels in prop and updated related docs
+- Updated `ContentTile` static color to refer theme color
 
 ### Removed
 
