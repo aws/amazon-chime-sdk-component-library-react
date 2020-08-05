@@ -112,7 +112,8 @@
     "amazon-chime-sdk-js": "^1.11.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "styled-components": "^5.0.0"
+    "styled-components": "^5.0.0",
+    "styled-system": "^5.1.5"
   },
   "prettier": {
     "singleQuote": true
