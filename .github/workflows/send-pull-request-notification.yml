@@ -14,4 +14,4 @@ jobs:
         uses: aws-actions/amazon-chime-github-webhook@v1
         with:
           webhook: ${{secrets.NEW_PULL_REQUEST}}
-          message: New Pull Request by ${{ github.actor }} - [${{ github.event.pull_request.title }}](${{github.event.pull_request.html_url}})
+          message: 💥 New Pull Request by ${{ github.actor }}💥 - [${{ github.event.pull_request.title }}](${{github.event.pull_request.html_url}})

@@ -79,9 +79,13 @@ logger.log(
 
 shouldContinuePrompt();
 
+logger.log('Reseting HEAD to origin/master');
 spawnOrFail('git', ['fetch origin']);
 spawnOrFail('git', ['reset --hard origin/master']);
 spawnOrFail('git', [' clean -ffxd .']);
+
+
+logger.log(`Updating ${versionFile} with ${versionString}`);
 
 // Update version number in Versions file.
 fs.writeFileSync(
@@ -91,6 +95,8 @@ fs.writeFileSync(
     .toString()
     .replace(/return '[.0-9]+';/, `return '${versionString}';`)
 );
+
+logger.log(`Updating CHANGELOG.md with a new release entry - ${versionString}`);
 // Update CHANGELOG.md with release version
 fs.writeFileSync(
   changeLog,
@@ -103,11 +109,15 @@ fs.writeFileSync(
     )
 );
 spawnOrFail('npm', [`version ${versionString} --no-git-tag-version`]);
+logger.log(`Updated package.json version to ${versionString}`);
 
 spawnOrFail('git', ['add -A']);
 spawnOrFail('git', [`commit -m 'Publish ${tag}'`]);
+logger.log(`Created commit called: "Publish ${tag}"`);
 
+logger.log(`Running build:publish script`);
 spawnOrFail('npm', [`run build:publish`]);
+logger.log(`Running npm pack --dry-run, this can take a few minutes`);
 spawnOrFail('npm', ['pack --dry-run']);
 
 logger.warn(`

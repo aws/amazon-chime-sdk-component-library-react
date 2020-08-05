@@ -35,8 +35,19 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build:release --if-present
-    - run: npm run test:snapshots
+    - name: Clean Install
+      run: npm ci
+    - name: Build
+      run: npm run build:release --if-present
+    - name: Check for changes to the src folder
+      uses: tj-actions/verify-changed-files@v5
+      id: changed_files
+      with:
+        pathspec: src
+    - name: Run Snapshot testing for src folder changes
+      if: steps.changed_files.outputs.files_changed == 'true'
+      run: npm run test:snapshots
       env:
         GITHUB_CONTEXT: ${{ toJson(github) }}
+        # Increase timeout for snapshot testing to 8 minutes
+        WAIT_ON_TIMEOUT: 480000
