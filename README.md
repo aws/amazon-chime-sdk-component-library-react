@@ -1,5 +1,8 @@
 # Chime SDK UI Component Library
 
+<a href="https://www.npmjs.com/package/amazon-chime-sdk-component-library-react"><img src="https://img.shields.io/npm/v/amazon-chime-sdk-component-library-react?style=flat-square"></a>
+<a href="https://github.com/aws/amazon-chime-sdk-component-library-react"><img src="https://github.com/aws/amazon-chime-sdk-component-library-react/workflows/CI%20Workflow/badge.svg"></a>
+
 This contains reusable components written with React, TypeScript and styled components to be used to create UIs with Chime SDK JS.
 
 ## To genereate dependencies
