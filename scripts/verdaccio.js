@@ -70,7 +70,7 @@ if (!fs.existsSync(comonentsTestDir)) {
 process.chdir(comonentsTestDir);
 
 // Clone SDK from github
-logger.log(`Cloning ${COMPONENTS_APP_NAME} in to testing direcotry.`);
+logger.log(`Cloning ${COMPONENTS_APP_NAME} in to testing directory.`);
 
 //Clean up
 spawnOrFail('rm', ['-rf', `${COMPONENTS_APP_NAME}`]);

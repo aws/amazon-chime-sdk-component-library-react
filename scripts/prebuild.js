@@ -74,6 +74,9 @@ if (!commits || !commits[0]) {
     labels.filter(lbl => lbl.name === 'dependencies').length === 1
   ) {
     logger.log('Skipping CHANGELOG.md verification.');
+  } else if (!commit_files.includes('./src')) {
+    // Only require a changelog change for changes to the component library
+    logger.log('Skipping CHANGELOG.md verification.');
   } else {
     logger.error(
       `Error: Does not contain CHANGELOG.md in the commit ${commits[0]}`

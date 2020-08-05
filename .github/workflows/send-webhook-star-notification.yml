@@ -12,5 +12,5 @@ jobs:
         uses: aws-actions/amazon-chime-github-webhook@v1
         with:
           webhook: ${{secrets.CHIMEWEBHOOK}}
-          message: ${{ github.actor }} starred the repo!
+          message: ⭐️ ${{ github.actor }} ⭐️ starred the repo!
                     
