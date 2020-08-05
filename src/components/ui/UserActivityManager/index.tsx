@@ -12,7 +12,10 @@ export interface Props {
 export const UserActivityManager: FC<Props> = ({ children }) => {
   const { isUserActive } = useUserActivityState();
   return (
-    <StyledUserActivityManager isActive={isUserActive} className={`${isUserActive ? "active" : ""}` }>
+    <StyledUserActivityManager
+      isActive={isUserActive}
+      className={`${isUserActive ? 'ch-active' : ''}`}
+    >
       {children}
     </StyledUserActivityManager>
   );

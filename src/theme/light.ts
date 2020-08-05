@@ -314,7 +314,7 @@ const roster = {
   title: colors.greys.grey100,
   primaryText: colors.greys.grey80,
   secondaryText: colors.greys.grey50,
-  headerBorder: colors.greys.grey50,
+  headerBorder: colors.greys.grey40,
   containerBorder: colors.greys.grey30,
   bgd: colors.greys.grey10,
   fgd: colors.greys.white,

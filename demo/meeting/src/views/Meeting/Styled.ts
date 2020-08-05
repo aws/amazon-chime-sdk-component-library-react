@@ -22,27 +22,27 @@ export const StyledLayout = styled.main<Props>`
     if (showNav && showRoster) {
       return `
         grid-template-columns: auto auto 1fr;
-        grid-template-areas: 'nav roster content'; 
+        grid-template-areas: 'nav roster content';
       `;
     }
 
     if (showNav) {
       return `
         grid-template-columns: auto 1fr;
-        grid-template-areas: 'nav content'; 
+        grid-template-areas: 'nav content';
       `;
     }
 
     if (showRoster) {
       return `
         grid-template-columns: auto 1fr;
-        grid-template-areas: 'roster content'; 
+        grid-template-areas: 'roster content';
       `;
     }
 
     return `
       grid-template-columns: 1fr;
-      grid-template-areas: 'content';  
+      grid-template-areas: 'content';
     `;
   }}
 
@@ -94,6 +94,10 @@ export const StyledContent = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
+
+  .videos {
+    flex: 1;
+  }
 
   .controls {
     position: absolute;
