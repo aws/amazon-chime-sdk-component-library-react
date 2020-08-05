@@ -2,7 +2,7 @@
 
 # useMeetingStatus
 
-Returns one of the status from below meeting status enum.
+The `useMeetingStatus` hook returns the meeting status from the enum below.
 
 ```javascript
 enum MeetingStatus {
@@ -13,10 +13,10 @@ enum MeetingStatus {
 }
 ```
 
-### Return value
+### Return Value
 
 ```javascript
-meetingStatus: MeetingStatus
+meetingStatus: MeetingStatus;
 ```
 
 ## Importing
@@ -31,22 +31,22 @@ The hook depends on the `MeetingProvider`.
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useMeetingStatus } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useMeetingStatus
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
-      <MyChild />
+    <MyChild />
   </MeetingProvider>
 );
-
 
 const MyChild = () => {
   const meetingStatus = useMeetingStatus();
 
-  return (
-    <p>Meeting Status: {meetingStatus}</p>
-  )
-}
+  return <p>Meeting Status: {meetingStatus}</p>;
+};
 ```
 
 ### Dependencies

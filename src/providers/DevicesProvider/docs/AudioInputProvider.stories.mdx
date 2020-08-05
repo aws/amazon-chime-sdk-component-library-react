@@ -2,7 +2,7 @@
 
 # AudioInputProvider
 
-Provides a list of the user's available `audio-input` devices and the currently selected device.
+The `AudioInputProvider` provides a list of the user's available `audio-input` devices and the currently selected device.
 
 ## State
 
@@ -19,7 +19,7 @@ Provides a list of the user's available `audio-input` devices and the currently 
 
 ```
 
-You can access the provided values using [useAudioInputs](/?path=/docs/sdk-hooks-useaudioinputs--page) hook.
+You can access the state by using the [useAudioInputs](/?path=/docs/sdk-hooks-useaudioinputs--page) hook.
 
 ## Importing
 
@@ -33,7 +33,10 @@ If you are using `MeetingProvider`, `AudioInputProvider` is rendered by default.
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useAudioInputs } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useAudioInputs
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -43,19 +46,20 @@ const App = () => (
 
 const MyChild = () => {
   const { devices, selectedDevice } = useAudioInputs();
-  const items = devices.map((device) => <li key={device.deviceId}>{device.label}</li>)
+  const items = devices.map(device => (
+    <li key={device.deviceId}>{device.label}</li>
+  ));
 
   return (
     <div>
       <p>Current Selected DeviceId: {selectedDevice}</p>
       <p>Devices</p>
-      <ul>
-        {items}
-      </ul>
+      <ul>{items}</ul>
     </div>
   );
-}
+};
 ```
 
 ### Dependencies
+
 - `MeetingProvider`

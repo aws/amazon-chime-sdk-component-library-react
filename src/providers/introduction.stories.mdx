@@ -2,13 +2,15 @@
 
 # Introduction
 
-Providers are responsible for maintaining state and functionality related to the Amazon Chime JS SDK. While this section includes documentation on individual providers, **you will likely only ever need to work with the `MeetingProvider`**. The `MeetingProvider` is the root provider, and renders all other providers so that you can quickly build out a realtime meeting application. 
+Providers are responsible for maintaining state and functionality related to the Amazon Chime JS SDK.
 
-## Getting started with MeetingProvider
+While this section includes documentation on individual providers, **you will likely only ever need to work with the `MeetingProvider`**. The `MeetingProvider` is the root provider, and renders all other providers so that you can quickly build out a realtime meeting application.
 
-To build realtime meeting applications with the `MeetingProvider`, follow these steps 
+## Getting Started with MeetingProvider
 
-1. Render the MeetingProvider near the root of your application. 
+To build a realtime meeting applications with the `MeetingProvider`, you can follow these steps
+
+1. Render the MeetingProvider near the root of your application.
 
 ```jsx
 import React from 'react';
@@ -21,11 +23,11 @@ const App = () => (
 );
 ```
 
-2. *Optional* - Configure how to fetch attendees as they join the meeting
+2. _Optional_ - Configure how to fetch attendees as they join the meeting
 
-If you want nameplates on your videos or want to build a realtime roster of attendees, you will need to assign a `meetingManager.getAttendee` function. This function is passed the chime attendee ID and external user ID (if present) as attendees join the meeting. It is expected to return a promise that resolves with the attendee's name.
+If you want nameplates on your videos or want to build a realtime roster of attendees, you will need to assign a `meetingManager.getAttendee` function. You can pass the chime attendee ID and external user ID (if present) to this function as attendees join the meeting. It is expected to return a promise that resolves with the attendee's name.
 
-You can access the MeetingManager class instance with the `useMeetingManager` hook.
+You can access the `MeetingManager` class instance with the `useMeetingManager` hook.
 
 ```jsx
 import React from 'react';
@@ -61,7 +63,10 @@ Once you have your meeting and attendee data, you can call `meetingManager.join`
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useMeetingManager
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -73,29 +78,29 @@ const MyApp = () => {
   const meetingManager = useMeetingManager();
 
   const joinMeeting = async () => {
-    const response = await fetch('/my-meetings-endpoint')
+    const response = await fetch('/my-meetings-endpoint');
     const data = await response.json();
 
     const joinData = {
       meetingInfo: data.Meeting,
       attendeeInfo: data.Attendee
-    }
+    };
 
     try {
       await meetingManager.join(joinData);
     } catch {
-      console.error("Something went wrong");
-    }   
-  }
+      console.error('Something went wrong');
+    }
+  };
 
-  <button onClick={joinMeeting}>Join Meeting</button>
-}
+  <button onClick={joinMeeting}>Join Meeting</button>;
+};
 ```
 
 4. Start the meeting session
 
-After joining a meeting, you can begin the meeting sesion by calling `meetingManager.start`. You may want to allow users to configure their selected input/output devices prior to calling `start`. 
+After joining a meeting, you can begin the meeting sesion by calling `meetingManager.start`. You may want to allow users to configure their selected input/output devices prior to calling `start`.
 
 5. Done!
 
-The attendee should be in the meeting, and able to receive audio/video. Check out the `SDK components` documentation section for components that you can drop in, or the `SDK hooks` for building out your own UI. 
+The attendee should be in the meeting, and able to receive audio/video. Check out the `SDK components` documentation section for components that you can drop in, or the `SDK hooks` for building out your own UI.

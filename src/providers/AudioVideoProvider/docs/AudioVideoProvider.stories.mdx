@@ -2,11 +2,13 @@
 
 # AudioVideoProvider
 
-Provides the meeting session's [AudioVideo instance](https://aws.github.io/amazon-chime-sdk-js/interfaces/audiovideofacade.html) to the application. This instance is used internally by our components and hooks, but is also available if you need to set up your own observers to the Chime JS SDK.
+The `AudioVideoProvider` provides [AudioVideo instance](https://aws.github.io/amazon-chime-sdk-js/interfaces/audiovideofacade.html) of the meeting session to your application.
+
+This instance is used internally by our components and hooks, but is also available if you need to set up your own observers to the Chime JS SDK.
 
 ## Usage
 
-If you are using `MeetingProvider`, the `AudioVideoProvider` is rendered by default and you don't need to do anything else. 
+If you are using `MeetingProvider`, the `AudioVideoProvider` is rendered by default and you don't need to do anything else.
 
 If necessary, you can access the audioVideo instance directly by the `useAudioVideo` hook.
 
@@ -48,7 +50,7 @@ const App = () => {
     const credentials = await fetch();
     const session = new DefaultMeetingSession(MyConfig);
     // Store our audioVideo instance
-    setAudioVideo(session)
+    setAudioVideo(session);
   }
 
   return (

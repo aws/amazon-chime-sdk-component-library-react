@@ -2,7 +2,7 @@
 
 # MeetingManager
 
-The `MeetingManager` is a class that helps integrates with the SDK. It is tied to the `MeetingProvider` and is primarily responsible for joining, starting, and leaving your meeting. 
+The `MeetingManager` is a class that helps integration with the SDK. It is tied to the `MeetingProvider` and is primarily responsible for joining, starting, and leaving your meeting.
 
 You can access the `MeetingManager` instance with the `useMeetingManager` hook.
 
@@ -37,17 +37,17 @@ Creates a meeting session using the meeting and attendee data passed. It will at
 (data: MeetingJoinData) => Promise<void>
 
 interface MeetingJoinData {
-  // The response from calling chime:CreateMeeting from your server
+  // The response of calling chime:CreateMeeting from your server
   meetingInfo: any;
 
-  // The response from calling chime:CreateAttendee from your server
+  // The response of calling chime:CreateAttendee from your server
   attendeeInfo: any;
 }
 ```
 
 ### `meetingManager.start`
 
-Starts the meeting session so that attendee's can receive audio and video from the meeting. This must be called after calling `join`.
+Starts the meeting session so that attendees can receive audio and video from the meeting. This must be called after calling `join`.
 
 ```javascript
 () => Promise<void>
@@ -63,7 +63,7 @@ Stops the meeting session and performs cleanup. This should be called anytime a 
 
 ### `meetingManager.getAttendee`
 
-This method is expected to be supplied by the developer. It is called with the Chime user ID and external user ID anytime an attendee joins the meeting, and expects to be resolved with an object that has a `name` property that will be used for video nameplates and roster state.
+This method is expected to be supplied by the developer. You may call this function with the Chime user ID and external user ID anytime an attendee joins the meeting, and expect to be resolved with an object that has a `name` property that will be used for video nameplates and roster state.
 
 For example - you may want to fetch the attendee from the database, or get the name from some local application state. This is up to the developer.
 
@@ -104,4 +104,3 @@ const MyApp = () => {
   }, [])
 }
 ```
-

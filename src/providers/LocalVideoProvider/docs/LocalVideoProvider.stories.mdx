@@ -2,7 +2,7 @@
 
 # LocalVideoProvider
 
-Provides the local video status, video tile id associated with the local user's video and a function to toggle their video.
+The `LocalVideoProvider` provides the local video status, video tile id associated with the local user's video and a function to toggle their video.
 
 ## State
 
@@ -11,7 +11,7 @@ Provides the local video status, video tile id associated with the local user's 
   // The tile ID associated with the local user's video
   tileId: null | number;
 
-  // Whether or not the local user has video enabled 
+  // Whether or not the local user has video enabled
   isVideoEnabled: boolean;
 
   // A function that toggles the local user's video
@@ -19,7 +19,7 @@ Provides the local video status, video tile id associated with the local user's 
 }
 ```
 
-You can access the provided values using [useLocalVideo](/?path=/docs/sdk-hooks-uselocalvideo--page) hook.
+You can access the state by using the [useLocalVideo](/?path=/docs/sdk-hooks-uselocalvideo--page) hook.
 
 ## Usage
 
@@ -27,7 +27,10 @@ If you are using `MeetingProvider`, `LocalVideoProvider` is rendered by default.
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useLocalVideo } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useLocalVideo
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -40,11 +43,12 @@ const MyChild = () => {
 
   return (
     <button onClick={toggleVideo}>
-      { isVideoEnabled ? 'Stop your video' : 'Start your video' }
+      {isVideoEnabled ? 'Stop your video' : 'Start your video'}
     </button>
   );
-}
+};
 ```
 
 ### Dependencies
+
 - `MeetingProvider`

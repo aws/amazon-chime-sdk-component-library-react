@@ -2,9 +2,9 @@
 
 # useContentShareState
 
-Returns state related to the meeting session's content share status.
+The `useContentShareState` hook returns the state related to content share status of a meeting session.
 
-### Return value
+### Return Value
 
 ```javascript
 {
@@ -20,10 +20,10 @@ Returns state related to the meeting session's content share status.
   // Whether or not the local user's content share is loading
   isLocalShareLoading: boolean;
 
-  // Whether or not or not someone in the session (remote, or local) is sharing
+  // Whether or not someone in the session (remote, or local) is sharing
   isSomeoneSharing: boolean;
 
-  // The chime attendee ID of the user sharing
+  // The chime attendee ID of the sharing user
   sharingAttendeeId: string | null;
 }
 ```
@@ -32,7 +32,6 @@ Returns state related to the meeting session's content share status.
 
 ```javascript
 import { useContentShareState } from 'amazon-chime-sdk-component-library-react';
-
 ```
 
 ## Usage
@@ -41,20 +40,22 @@ The hook depends on the `ContentShareProvider`. If you are using `MeetingProvide
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useContentShareState } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useContentShareState
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
-      <MyChild />
+    <MyChild />
   </MeetingProvider>
 );
-
 
 const MyChild = () => {
   const { isLocalUserSharing } = useContentShareState();
 
-  return isLocalUserSharing ? <div>Sharing</div> : <div>Not sharing</div>
-}
+  return isLocalUserSharing ? <div>Sharing</div> : <div>Not sharing</div>;
+};
 ```
 
 ### Dependencies

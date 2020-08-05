@@ -2,9 +2,9 @@
 
 # useContentShareControls
 
-Returns state and functionality around starting, stopping, pausing, and unpausing the local user's content share.
+The `useContentShareControls` hook returns the state and functionality around starting, stopping, pausing, and unpausing content sharing of a local user.
 
-### Return value
+### Return Value
 
 ```javascript
 {
@@ -17,12 +17,12 @@ Returns state and functionality around starting, stopping, pausing, and unpausin
   // Whether or not the local user has started to share and is loading
   isLocalShareLoading: boolean;
 
-  // A function to toggle content share. 
+  // A function to toggle content share.
   // If the user is sharing, it will stop the content share.
   // If a user is not sharing, it will start the content share workflow.
   toggleContentShare: () => void;
 
-  // A function to toggle the local user's content share's pause status. 
+  // A function to toggle the local user's content share's pause status.
   togglePauseContentShare: () => void;
 }
 ```
@@ -31,7 +31,6 @@ Returns state and functionality around starting, stopping, pausing, and unpausin
 
 ```javascript
 import { useContentShareControls } from 'amazon-chime-sdk-component-library-react';
-
 ```
 
 ## Usage
@@ -40,24 +39,22 @@ The hook depends on the `ContentShareProvider`. If you are using `MeetingProvide
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useContentShareControls } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useContentShareControls
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
-      <MyChild />
+    <MyChild />
   </MeetingProvider>
 );
-
 
 const MyChild = () => {
   const { toggleContentShare } = useContentShareControls();
 
-  return (
-    <button onClick={toggleContentShare}>
-      Toggle content share
-    </button>
-  )
-}
+  return <button onClick={toggleContentShare}>Toggle content share</button>;
+};
 ```
 
 ### Dependencies
