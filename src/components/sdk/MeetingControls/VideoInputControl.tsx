@@ -13,7 +13,7 @@ import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 
 interface Props {
-  /** Label shown for video input control, by default it is "Video" */
+  /** The label that will be shown for video input control, it defaults to `Video`. */
   label?: string;
 }
 

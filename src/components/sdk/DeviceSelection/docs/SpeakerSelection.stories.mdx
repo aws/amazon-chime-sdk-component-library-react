@@ -4,13 +4,15 @@ import SpeakerSelection from '../SpeakerSelection';
 <Meta title="SDK Components/DeviceSelection/SpeakerSelection" />
 
 # SpeakerSelection
-Renders a `Select FormField` with audio output source options provided by the `useAudioOutputs` hook.
 
-By default, the first device is selected from the devices returned by `useAudioOutputs` hook, otherwise a single option with not found message is shown.
+The `SpeakerSelection` component renders a `Select FormField` with audio input source options provided by the `useAudioOutputs` hook.
+
+By default, the first device will be selected from the device list returned by the `useAudioOutputs` hook, otherwise a single option with _not found_ message will be shown.
 
 The component depends on the `DevicesProvider`. If you are using `MeetingProvider`, `DevicesProvider` is rendered by default.
 
 ## Importing
+
 ```javascript
 import { SpeakerSelection } from 'amazon-chime-sdk-component-library-react';
 ```
@@ -19,7 +21,7 @@ import { SpeakerSelection } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { 
+import {
   MeetingProvider,
   SpeakerSelection
 } from 'amazon-chime-sdk-component-library-react';
@@ -30,10 +32,11 @@ const App = () => {
       <SpeakerSelection />
     </MeetingProvider>
   );
-}
+};
 ```
 
 ## Props
+
 <Props of={SpeakerSelection} />
 
 ### Dependencies
@@ -41,4 +44,3 @@ const App = () => {
 - `MeetingProvider`
 - `DevicesProvider`, If you are using `MeetingProvider`, `DevicesProvider` is rendered by default
 - `useAudioOutputs`
-

@@ -13,7 +13,7 @@ import { DeviceType } from '../../../types';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
 interface Props {
-  /** Label shown for audio output speaker control, by default it is "Speaker" */
+  /** The label that will be shown for audio output speaker control, it defaults to `Speaker`. */
   label?: string;
 }
 

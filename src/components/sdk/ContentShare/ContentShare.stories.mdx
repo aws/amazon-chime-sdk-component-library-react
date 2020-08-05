@@ -4,13 +4,15 @@ import { ContentShare } from './';
 <Meta title="SDK Components/ContentShare" />
 
 # ContentShare
-Renders a `ContentTile` for the active content share video, remote or local. 
+
+The `ContentShare` component renders a `ContentTile` for the active content share video, remote or local.
 
 If used within the `VideoGrid` component, it will automatically place the active tile in the featured grid slot. It takes precedence over the featured video tile.
 
 Once a meeting session has been started, a user can start and stop content sharing by using the `useContentShareControls` hook.
 
 ## Importing
+
 ```javascript
 import { ContentShare } from 'amazon-chime-sdk-component-library-react';
 ```
@@ -19,10 +21,10 @@ import { ContentShare } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { 
-  MeetingProvider, 
-  ContentShare, 
-  useContentShareControls 
+import {
+  MeetingProvider,
+  ContentShare,
+  useContentShareControls
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {
@@ -31,14 +33,12 @@ const App = () => {
   return (
     <MeetingProvider>
       <ContentShare />
-      <button onClick={toggleContentShare}>
-        Toggle content share
-      </button>
+      <button onClick={toggleContentShare}>Toggle content share</button>
     </MeetingProvider>
   );
-}
-
+};
 ```
 
 ## Props
+
 <Props of={ContentShare} />

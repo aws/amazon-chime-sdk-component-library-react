@@ -4,11 +4,13 @@ import QualitySelection from '../CameraSelection/QualitySelection';
 <Meta title="SDK Components/DeviceSelection/Camera/QualitySelection" />
 
 # QualitySelection
-Renders a `Select FormField` to select video input quality from '720p', '540p' and '360p'.
+
+The `QualitySelection` component renders a `Select FormField` to select video input quality from `720p`, `540p`, and `360p`.
 
 The component depends on the `DevicesProvider`. If you are using `MeetingProvider`, `DevicesProvider` is rendered by default.
 
 ## Importing
+
 ```javascript
 import { QualitySelection } from 'amazon-chime-sdk-component-library-react';
 ```
@@ -17,7 +19,7 @@ import { QualitySelection } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { 
+import {
   MeetingProvider,
   QualitySelection
 } from 'amazon-chime-sdk-component-library-react';
@@ -28,10 +30,11 @@ const App = () => {
       <QualitySelection />
     </MeetingProvider>
   );
-}
+};
 ```
 
 ## Props
+
 <Props of={QualitySelection} />
 
 ### Dependencies
@@ -39,4 +42,3 @@ const App = () => {
 - `MeetingProvider`
 - `DevicesProvider`, If you are using `MeetingProvider`, `DevicesProvider` is rendered by default
 - `useSelectVideoQuality` - Uses `selectVideoQuality` to select the current video input quality
-

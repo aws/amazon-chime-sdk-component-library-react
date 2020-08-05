@@ -4,13 +4,15 @@ import CameraSelection from '../CameraSelection';
 <Meta title="SDK Components/DeviceSelection/Camera/CameraSelection" />
 
 # CameraSelection
-Renders a `Select FormField` component with video input source options provided by the `useVideoInputs` hook.
 
-By default, the first device is selected from the devices returned by `useVideoInputs` hook, otherwise a single option with not found message is shown.
+The `CameraSelection` component renders a `Select FormField` component with video input source options provided by the `useVideoInputs` hook.
+
+By default, the first device will be selected from the device list returned by the `useVideoInputs` hook, otherwise a single option with _not found_ message will be shown.
 
 The component depends on the `DevicesProvider`. If you are using `MeetingProvider`, `DevicesProvider` is rendered by default.
 
 ## Importing
+
 ```javascript
 import { CameraSelection } from 'amazon-chime-sdk-component-library-react';
 ```
@@ -19,7 +21,7 @@ import { CameraSelection } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { 
+import {
   MeetingProvider,
   CameraSelection
 } from 'amazon-chime-sdk-component-library-react';
@@ -30,10 +32,11 @@ const App = () => {
       <CameraSelection />
     </MeetingProvider>
   );
-}
+};
 ```
 
 ## Props
+
 <Props of={CameraSelection} />
 
 ### Dependencies
@@ -41,4 +44,3 @@ const App = () => {
 - `MeetingProvider`
 - `DevicesProvider`, If you are using `MeetingProvider`, `DevicesProvider` is rendered by default
 - `useVideoInputs`
-

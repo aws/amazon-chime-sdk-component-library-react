@@ -5,7 +5,7 @@ import { RemoteVideos } from './';
 
 # RemoteVideos
 
-Renders all remote attendee's videos with no layout. You will need to provide the styling to handle the layout.
+The `RemoteVideos` component renders videos of all remote attendees with no layout. You will need to provide the styling to handle the layout.
 
 Remote videos are added to the session as attendees start and stop their own video.
 
@@ -19,7 +19,10 @@ import { RemoteVideos } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, RemoteVideos } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  RemoteVideos
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -31,4 +34,5 @@ const App = () => (
 ```
 
 ## Props
+
 <Props of={RemoteVideos} />

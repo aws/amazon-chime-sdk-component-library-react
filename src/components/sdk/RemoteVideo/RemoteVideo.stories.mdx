@@ -5,9 +5,9 @@ import { RemoteVideo } from './';
 
 # RemoteVideo
 
-Renders a `VideoTile` and connects the video to the associated tileId.
+The `RemoteVideo` component renders a `VideoTile` and connects the video to the associated tileId.
 
-**Note** - The binding occurs any time the passed tileId changes. If you are working with a list of tiles, make sure to give each item [a key](https://reactjs.org/docs/lists-and-keys.html) of the tileId to avoid binding the video unecessarily.
+**Note** - The binding occurs any time the passed tileId changes. If you are working with a list of tiles, make sure to give each item a [key](https://reactjs.org/docs/lists-and-keys.html) of the tileId to avoid binding the video unecessarily.
 
 ## Importing
 
@@ -19,7 +19,10 @@ import { RemoteVideo } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, RemoteVideo } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  RemoteVideo
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -31,4 +34,5 @@ const App = () => (
 ```
 
 ## Props
+
 <Props of={RemoteVideo} />

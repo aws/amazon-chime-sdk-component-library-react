@@ -10,15 +10,15 @@ import { useContentShareControls } from '../../../providers/ContentShareProvider
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
 interface Props {
-  /** Label shown for content share control, by default it is "Content" */
+  /** The label that will be shown for content share control, it defaults to `Content`. */
   label?: string;
-  /** Label shown for pausing content share button in content share control, by default it is "Pause" */
+  /** The label that will be shown for pausing content share button in content share control, it defaults to `Pause`. */
   pauseLabel?: string;
-  /** Label shown for unpausing content share button in content share control, by default it is "Unpause" */
+  /** The label that will be shown for unpausing content share button in content share control, it defaults to `Unpause`. */
   unpauseLabel?: string;
 }
 
-const ContentShareControl: React.FC<Props> = ({ 
+const ContentShareControl: React.FC<Props> = ({
   label = 'Content',
   pauseLabel = 'Pause',
   unpauseLabel = 'Unpause'

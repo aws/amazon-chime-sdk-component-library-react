@@ -4,14 +4,16 @@ import VideoInputControl from '../VideoInputControl';
 <Meta title="SDK Components/MeetingControls/VideoInputControl" />
 
 # VideoInputControl
-Renders a `ControlBarButton` with pop over menu options for selecting through multiple video input sources.
-These video input sources are provided by the `useVideoInputs` hook. 
 
-On clicking this button, the local video input toggles between on/off state.
+The `VideoInputControl` component renders a `ControlBarButton` with pop over menu options to select through multiple video input sources.
+These video input sources are provided by the `useVideoInputs` hook.
 
-You can use it in `ControlBar` [component](/?path=/docs/ui-components-controlbar--control-bar) to build the meeting controls bar.
+When you click the button, the local video input toggles between on/off state.
+
+You can use it in the [ControlBar component](/?path=/docs/ui-components-controlbar--control-bar) to build the meeting controls bar.
 
 ## Importing
+
 ```javascript
 import { VideoInputControl } from 'amazon-chime-sdk-component-library-react';
 ```
@@ -20,22 +22,22 @@ import { VideoInputControl } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { 
+import {
   MeetingProvider,
   VideoInputControl
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {
-
   return (
     <MeetingProvider>
       <VideoInputControl />
     </MeetingProvider>
   );
-}
-
+};
 ```
+
 ## Props
+
 <Props of={VideoInputControl} />
 
 ### Dependencies
@@ -43,4 +45,3 @@ const App = () => {
 - `MeetingProvider`
 - `useVideoInputs`
 - `useLocalVideo`
-

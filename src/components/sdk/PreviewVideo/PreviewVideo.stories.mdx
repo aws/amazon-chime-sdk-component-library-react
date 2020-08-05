@@ -4,11 +4,13 @@ import { PreviewVideo } from './';
 <Meta title="SDK Components/PreviewVideo" />
 
 # PreviewVideo
-Renders a preview of the local user's video. If there is no available video input, the video will be blank.
 
-A PreviewVideo is typically used on a pre-meeting view, or a device settings page.
+The `PreviewVideo` component renders a preview of the local user's video. If there is no available video input, the video will be blank.
+
+A `PreviewVideo` is typically used on a pre-meeting view, or a device settings page.
 
 ## Importing
+
 ```javascript
 import { PreviewVideo } from 'amazon-chime-sdk-component-library-react';
 ```
@@ -17,7 +19,10 @@ import { PreviewVideo } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, PreviewVideo } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  PreviewVideo
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {
   return (
@@ -25,8 +30,9 @@ const App = () => {
       <PreviewVideo />
     </MeetingProvider>
   );
-}
+};
 ```
 
 ## Props
+
 <Props of={PreviewVideo} />
