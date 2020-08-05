@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- Updated the github actions publishing workflow
+- Added npm run build to the github actions publishing workflow
 
 ### Removed
 
