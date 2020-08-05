@@ -43,7 +43,7 @@ jobs:
       uses: tj-actions/verify-changed-files@v5
       id: changed_files
       with:
-        pathspec: src
+        files: src
     - name: Run Snapshot testing for src folder changes
       if: steps.changed_files.outputs.files_changed == 'true'
       run: npm run test:snapshots
