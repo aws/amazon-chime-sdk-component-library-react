@@ -5,7 +5,7 @@ import React from 'react';
 import Svg, { SvgProps } from '../Svg';
 
 interface CameraProps extends SvgProps {
-  /** Whether or not shows a camera icon with strikethrough. */
+  /** Whether or not should show a camera icon with strikethrough. */
   disabled?: boolean;
 }
 
@@ -22,6 +22,6 @@ const Camera: React.SFC<CameraProps> = ({ disabled = false, ...rest }) => (
   </Svg>
 );
 
-Camera.displayName = "Camera";
+Camera.displayName = 'Camera';
 
 export default Camera;

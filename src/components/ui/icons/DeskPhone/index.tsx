@@ -5,7 +5,7 @@ import React from 'react';
 import Svg, { SvgProps } from '../Svg';
 
 interface DeskPhoneProps extends SvgProps {
-  /** Whether or not shows a desk phone icon with strikethrough. */
+  /** Whether or not should show a desk phone icon with strikethrough. */
   disabled?: boolean;
 }
 
@@ -22,6 +22,6 @@ const DeskPhone: React.SFC<DeskPhoneProps> = ({
   </Svg>
 );
 
-DeskPhone.displayName = "DeskPhone";
+DeskPhone.displayName = 'DeskPhone';
 
 export default DeskPhone;

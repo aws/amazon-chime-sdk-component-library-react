@@ -2,11 +2,13 @@
 
 # useSelectVideoInputDevice
 
-Selects a video input device given a device ID. If the passed device ID is `none`, it will stop the local video if active. A user must select a device again before being able to share their video.
+The `useSelectVideoInputDevice` hook return a function that selects a video input device given a device ID.
+
+If you pass `none` as device ID, it will stop the local video if active. A user must select a device again before being able to share their video.
 
 You can access the available video input device IDs using the `useVideoInputs` hook.
 
-### Return value
+### Return Value
 
 ```javascript
 (deviceId: string) => Promise<void>;
@@ -24,28 +26,26 @@ The hook depends on the `MeetingProvider` being rendered.
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useSelectVideoInputDevice } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useSelectVideoInputDevice
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
-      <MyChild />
+    <MyChild />
   </MeetingProvider>
 );
-
 
 const MyChild = () => {
   const selectVideoInput = useSelectVideoInputDevice();
 
   const handleClick = () => {
-    selectVideoInput("some-device-id");
-  }
+    selectVideoInput('some-device-id');
+  };
 
-  return (
-    <button onClick={handleClick}>
-      Some device ID
-    </button>
-  )
-}
+  return <button onClick={handleClick}>Some device ID</button>;
+};
 ```
 
 ### Dependencies

@@ -5,9 +5,9 @@ import { useAudioInputs } from '../';
 
 # useAudioInputs
 
-Returns a list of the user's available `audio-input` devices and the currently selected device.
+The `useAudioInputs` hook returns a list of the user's available `audio-input` devices and the currently selected device.
 
-## Return value
+## Return Value
 
 ```javascript
 {
@@ -26,7 +26,6 @@ Returns a list of the user's available `audio-input` devices and the currently s
 
 ```javascript
 import { useAudioInputs } from 'amazon-chime-sdk-component-library-react';
-
 ```
 
 ## Usage
@@ -35,7 +34,10 @@ The hook depends on the `DevicesProvider`. If you are using `MeetingProvider`, i
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useAudioInputs } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useAudioInputs
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -43,18 +45,16 @@ const App = () => (
   </MeetingProvider>
 );
 
-
 const MyChild = () => {
   const { devices } = useAudioInputs();
-  const items = devices.map((device) => <li key={device.deviceId}>{device.label}</li>)
+  const items = devices.map(device => (
+    <li key={device.deviceId}>{device.label}</li>
+  ));
 
-  return (
-    <ul>
-      {items}
-    </ul>
-  );
-}
+  return <ul>{items}</ul>;
+};
 ```
 
 ## Props
+
 <Props of={useAudioInputs} />

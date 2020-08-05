@@ -18,7 +18,9 @@ import {
 
 # Themes
 
-The Chime SDK Components Library provides **_light_** and **_dark_** themes. You can customize your application by applying a theme to all components. In Storybook, you can switch between themes for each component in **Themes** tab in `Canvas` view. The usage and some examples are shown as below.
+The Chime SDK Components Library provides **_light_** and **_dark_** themes. You can customize your application by applying a theme to all components.
+
+In Storybook, you can switch between themes for each component in **Themes** tab in **Canvas** view. You can refer to the usage and some examples below.
 
 ## Usage
 
@@ -36,9 +38,7 @@ import { ThemeProvider } from 'styled-components';
 
 ## Example
 
-### Button
-
-Light theme
+#### Buttons in Light Theme
 
 <ThemeProvider theme={lightTheme}>
   <Preview>
@@ -56,7 +56,7 @@ Light theme
 </ThemeProvider>
 ```
 
-Dark theme
+#### Buttons in Dark Theme
 
 <ThemeProvider theme={darkTheme}>
   <Preview>
@@ -74,9 +74,7 @@ Dark theme
 </ThemeProvider>
 ```
 
-### Roster
-
-Light theme
+#### Roster in Light Theme
 
 <ThemeProvider theme={lightTheme}>
   <Preview>
@@ -142,7 +140,7 @@ Light theme
 </ThemeProvider>
 ```
 
-Dark theme
+#### Roster in Dark Theme
 
 <ThemeProvider theme={darkTheme}>
   <Preview>

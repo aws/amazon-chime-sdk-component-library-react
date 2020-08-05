@@ -2,9 +2,9 @@
 
 # useSelectVideoQuality
 
-Returns a function that can be used to select the user's video input quality.
+The `useSelectVideoQuality` hook returns a function that you can select the user's video input quality.
 
-### Return value
+### Return Value
 
 ```javascript
 (VideoQuality) => void;
@@ -28,10 +28,9 @@ import { MeetingProvider, useSelectVideoQuality } from 'amazon-chime-sdk-compone
 
 const App = () => (
   <MeetingProvider>
-      <MyChild />
+    <MyChild />
   </MeetingProvider>
 );
-
 
 const MyChild = () => {
   const selectVideoQuality = useSelectVideoQuality();

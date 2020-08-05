@@ -2,7 +2,7 @@
 
 # ContentShareProvider
 
-Provides state and functionality for content sharing.
+The `ContentShareProvider` provides state and functionality for content sharing.
 
 ### State
 
@@ -22,7 +22,7 @@ Provides state and functionality for content sharing.
 
   // Whether or not someone in the session (remote, or local) is sharing
   isSomeoneSharing: boolean;
-  
+
   // The chime attendee ID of the user sharing
   sharingAttendeeId: string | null;
 }
@@ -36,7 +36,10 @@ If you are using `MeetingProvider`, the `ContentShareProvider` is rendered by de
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useContentShareState } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useContentShareState
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -44,17 +47,16 @@ const App = () => (
   </MeetingProvider>
 );
 
-
 const MyChild = () => {
   const { isLocalUserSharing } = useContentShareState();
 
-  return isLocalUserSharing ? <div>Sharing</div> : <div>Not sharing</div>
-}
+  return isLocalUserSharing ? <div>Sharing</div> : <div>Not sharing</div>;
+};
 ```
 
 ## Usage without MeetingProvider
 
-If you opt out of using MeetingProvider, you can drop in a ContentShareProvider and use its state. Make sure that its dependencies are rendered higher in the tree.
+If you opt out of using `MeetingProvider`, you can drop in a `ContentShareProvider` and use its state. Make sure that its dependencies are rendered higher in the tree.
 
 ```jsx
 import React from 'react';

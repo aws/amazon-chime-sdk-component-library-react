@@ -1,12 +1,12 @@
-import useToggleLocalMute from '../useToggleLocalMute'
+import useToggleLocalMute from '../useToggleLocalMute';
 
 <Meta title="SDK Hooks/useToggleLocalMute" />
 
 # useToggleLocalMute
 
-Returns the state of whether the local user is muted or not, and a function to toggle their mute state.
+The `useToggleLocalMute` hook returns the state of whether the local user is muted or not, and a function to toggle their mute state.
 
-### Return value
+### Return Value
 
 ```javascript
 {
@@ -34,13 +34,12 @@ import { MeetingProvider, useToggleLocalMute } from 'amazon-chime-sdk-component-
 
 const App = () => (
   <MeetingProvider>
-      <MyChild />
+    <MyChild />
   </MeetingProvider>
 );
 
-
 const MyChild = () => {
-  const {muted, toggleMute} = useToggleLocalMute();
+  const { muted, toggleMute } = useToggleLocalMute();
 
   return (
     <button onClick={toggleMute}>

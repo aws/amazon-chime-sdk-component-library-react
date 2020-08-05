@@ -7,9 +7,9 @@ import { SvgProps } from '../Svg';
 import { StyledSvg } from './Styled';
 
 export interface MicrophoneProps extends SvgProps {
-  /** Whether or not shows muted status. */
+  /** Whether or not should show muted status. */
   muted?: boolean;
-  /** Whether or not shows poor connected status. */
+  /** Whether or not should show poor connected status. */
   poorConnection?: boolean;
 }
 
@@ -50,6 +50,6 @@ const Microphone: React.SFC<MicrophoneProps> = ({
   );
 };
 
-Microphone.displayName = "Microphone";
+Microphone.displayName = 'Microphone';
 
 export default Microphone;

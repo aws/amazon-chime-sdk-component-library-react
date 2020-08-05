@@ -5,7 +5,7 @@ import React from 'react';
 import Svg, { SvgProps } from '../Svg';
 
 interface SoundProps extends SvgProps {
-  /** Whether or not shows a disabled sound icon. */
+  /** Whether or not should show a sound off icon. */
   disabled?: boolean;
 }
 
@@ -19,6 +19,6 @@ const Sound: React.SFC<SoundProps> = ({ disabled, ...rest }) => (
   </Svg>
 );
 
-Sound.displayName = "Sound";
+Sound.displayName = 'Sound';
 
 export default Sound;

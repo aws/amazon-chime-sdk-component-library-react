@@ -2,8 +2,7 @@
 
 # DevicesProvider
 
-Renders the audio and video providers, which provide state around the available and currently selected audio and video devices.
-
+The `DevicesProvider` renders the audio and video providers, which provide state around the available and currently selected audio and video devices.
 
 ## Importing
 
@@ -17,7 +16,10 @@ If you are using `MeetingProvider`, `DevicesProvider` is rendered by default.
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useVideoInputs } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useVideoInputs
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -27,20 +29,19 @@ const App = () => (
 
 const MyChild = () => {
   const { devices, selectedDevice } = useVideoInputs();
-  const items = devices.map((device) => <li>{device.label}</li>)
+  const items = devices.map(device => <li>{device.label}</li>);
 
   return (
     <div>
       <p>Current Selected DeviceId: {selectedDevice}</p>
       <p>Devices</p>
-      <ul>
-        {items}
-      </ul>
+      <ul>{items}</ul>
     </div>
   );
-}
+};
 ```
 
 ### Dependencies
+
 - `AudioVideoProvider`
 - `MeetingProvider`

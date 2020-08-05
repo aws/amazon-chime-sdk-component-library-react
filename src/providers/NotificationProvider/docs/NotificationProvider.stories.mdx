@@ -2,31 +2,32 @@
 
 # NotificationProvider
 
-Provides state and react dispatch method for building NotificationGroup like component.
+The `NotificationProvider` provides state and react dispatch method for building NotificationGroup like component.
 
 ## Provides
 
-Internally uses `useReducer` hook from React to provide a state and a dispatch method to update this state.
+It internally uses `useReducer` hook from React to provide a state and a dispatch method to update this state.
 
 ### State
+
 ```javascript
 [{
-  // uuid generated while adding the notification to state array
+  // The uuid generated while adding the notification to the state array
   id?: string;
 
-  // Notification Severity controlled by Seveirty enum
+  // The severity of notification, Severity enum contains ERROR, SUCCESS, INFO, and WARNING
   severity?: Severity;
 
-  // Message to show in notification
+  // The message to display in the notification
   message?: string;
 
-  // Whether or not the notification should autoclose
+  // Whether or not the notification should be closed automatically
   autoClose?: boolean;
 
-  // Auto close delay in milliseconds, default delay is 6000 (6s)
+  // Auto close delay in milliseconds, it defaults to 6000 (6s)
   autoCloseDelay?: number;
 
-  // Whether or not the current notification array (state) be emptied
+  // Whether or not the current notification array (state) should be emptied
   replaceAll?: boolean;
 }]
 ```
@@ -34,17 +35,19 @@ Internally uses `useReducer` hook from React to provide a state and a dispatch m
 You can access the state using `useNotificationState` hook.
 
 ### Dispatch Method
+
 ```javascript
 dispatch: React.Dispatch<Action>
 ```
+
 You can access the dispatch method using `useNotificationDispatch` hook.
 
 ## Usage
 
 ```jsx
 import React from 'react';
-import { 
-  NotificationProvider, 
+import {
+  NotificationProvider,
   useNotificationState,
   useNotificationDispatch,
   Notification
