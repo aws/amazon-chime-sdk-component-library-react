@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added npm run build to the github actions publishing workflow
 - Improve consistency and accuracy of docs for Hooks and Providers
 - Fix `npm run build:release` running on windows OS
+- Update Storybook to 5.3
 
 ### Removed
 
@@ -22,11 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.3] - 2020-08-04
 
 ### Added
+
 - Add NPM and CI Flow badge to README
 
 ### Changed
 
-- Move StyeldSystem to peer dependencies
+- Move StyledSystem to peer dependencies
 
 ### Removed
 
