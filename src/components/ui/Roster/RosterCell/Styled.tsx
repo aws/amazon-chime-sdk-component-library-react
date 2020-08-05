@@ -12,6 +12,7 @@ export const StyledCell = styled.div<RosterCellProps>`
   padding: 0.625rem 1rem;
 
   .ch-mic {
+    flex-shrink: 0;
     width: 1.5rem;
 
     ${({ micPosition }) =>

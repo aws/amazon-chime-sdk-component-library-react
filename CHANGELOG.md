@@ -18,10 +18,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix `npm run build:release` running on windows OS
 - Update Storybook to 5.3
 - Improve docs for SDK components
+- Portrait video support, minor style fixes
 
 ### Removed
 
 ### Fixed
+
 - Fixed reversed labels for mute/unmute control in `AudioInputControl`
 
 ## [1.0.3] - 2020-08-04

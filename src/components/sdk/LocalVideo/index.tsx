@@ -9,6 +9,7 @@ import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
+import { useApplyVideoObjectFit } from '../../../hooks/useApplyVideoObjectFit';
 
 interface Props extends BaseSdkProps {
   id?: string;
@@ -23,6 +24,7 @@ export const LocalVideo: React.FC<Props> = ({ nameplate, ...rest }) => {
   const { tileId, isVideoEnabled } = useLocalVideo();
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);
+  useApplyVideoObjectFit(videoEl);
   const [active, setActive] = useState(() =>
     audioVideo?.hasStartedLocalVideoTile()
   );

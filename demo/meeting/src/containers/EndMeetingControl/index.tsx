@@ -11,10 +11,7 @@ import {
   ModalHeader,
   ModalButton,
   ModalButtonGroup,
-  useMeetingManager,
-  ActionType,
-  useNotificationDispatch,
-  Severity
+  useMeetingManager
 } from 'amazon-chime-sdk-component-library-react';
 
 import { endMeeting } from '../../utils/api';
@@ -28,34 +25,21 @@ const EndMeetingControl: React.FC = () => {
   const toggleModal = (): void => setShowModal(!showModal);
   const { meetingId } = useAppState();
   const history = useHistory();
-  const dispatch = useNotificationDispatch();
-
-  const leaveNotifyAndRedirect = (notificationMessage: string): void => {
-    meetingManager.leave();
-    dispatch({
-      type: ActionType.ADD,
-      payload: {
-        severity: Severity.INFO,
-        message: `${notificationMessage}`,
-        autoClose: true,
-        replaceAll: true
-      }
-    });
-    history.push(routes.HOME);
-  };
 
   const leaveMeeting = async (): Promise<void> => {
-    leaveNotifyAndRedirect('You left the meeting');
+    meetingManager.leave();
+    history.push(routes.HOME);
   };
 
   const endMeetingForAll = async (): Promise<void> => {
     try {
       if (meetingId) {
         await endMeeting(meetingId);
-        leaveNotifyAndRedirect('Meeting ended for all');
+        await meetingManager.leave();
+        history.push(routes.HOME);
       }
     } catch (e) {
-      console.log('Could not end meeting');
+      console.log('Could not end meeting', e);
     }
   };
 

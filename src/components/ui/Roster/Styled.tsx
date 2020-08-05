@@ -45,6 +45,7 @@ export const StyledGroupWrapper = styled.div`
 
 export const StyledGroup = styled.div`
   background-color: ${props => props.theme.roster.fgd};
+  border-radius: ${props => props.theme.radii.default};
 
   ${baseSpacing}
   ${baseStyles}
@@ -72,6 +73,12 @@ export const StyledHeader = styled.div<any>`
 
   .ch-buttons {
     margin-left: auto;
+    display: flex;
+
+    > * {
+      margin-left: 0.5rem;
+    }
+
     ${props => (props.isSearching ? 'opacity: 0;' : '')}
   }
 
