@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.3] - 2020-08-04
 
 ### Added
+- Add NPM and CI Flow badge to README
 
 ### Changed
 
