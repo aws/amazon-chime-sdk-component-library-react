@@ -9,12 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add Github documentation link to README
+
 ### Changed
 
 - Added npm run build to the github actions publishing workflow
 - Improve consistency and accuracy of docs for Hooks and Providers
 - Fix `npm run build:release` running on windows OS
 - Update Storybook to 5.3
+- Improve docs for SDK components
 
 ### Removed
 

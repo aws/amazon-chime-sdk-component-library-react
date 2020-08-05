@@ -8,9 +8,9 @@ import { useAudioInputs } from '../../../../providers/DevicesProvider';
 import DeviceInput from '../DeviceInput';
 
 interface Props {
-  /** Message shown when no microphone devices are found */
+  /** The message that will be shown when no microphone devices are found. */
   notFoundMsg?: string;
-  /** Label shown for mic selection, by default it is "Microphone source" */
+  /** The label that will be shown for microphone selection, it defaults to `Microphone source`. */
   label?: string;
 }
 

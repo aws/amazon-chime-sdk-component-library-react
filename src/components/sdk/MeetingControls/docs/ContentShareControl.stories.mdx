@@ -4,13 +4,15 @@ import ContentShareControl from '../ContentShareControl';
 <Meta title="SDK Components/MeetingControls/ContentShareControl" />
 
 # ContentShareControl
-Renders a `ControlBarButton` with pop over menu options to pause/play content share once enabled.
 
-On clicking this button, the content share toggles between on/off state.
+The `ContentShareControl` component renders a `ControlBarButton` with pop over menu options to pause/play content share once enabled.
 
-You can use it in `ControlBar` [component](/?path=/docs/ui-components-controlbar--control-bar) to build the meeting controls bar.
+When you click the button, the content share toggles between on/off state.
+
+You can use it in the [ControlBar component](/?path=/docs/ui-components-controlbar--control-bar) to build the meeting controls bar.
 
 ## Importing
+
 ```javascript
 import { ContentShareControl } from 'amazon-chime-sdk-component-library-react';
 ```
@@ -19,23 +21,22 @@ import { ContentShareControl } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { 
+import {
   MeetingProvider,
   ContentShareControl
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {
-
   return (
     <MeetingProvider>
       <ContentShareControl />
     </MeetingProvider>
   );
-}
-
+};
 ```
 
 ## Props
+
 <Props of={ContentShareControl} />
 
 ### Dependencies
@@ -44,4 +45,3 @@ const App = () => {
 - If using `MeetingProvider`, the `ContentShareProvider` is rendered by default
 - `useContentShareState`
 - `useContentShareControls`
-

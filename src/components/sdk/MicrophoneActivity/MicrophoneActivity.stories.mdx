@@ -4,9 +4,12 @@ import { MicrophoneActivity } from './';
 <Meta title="SDK Components/MicrophoneActivity" />
 
 # MicrophoneActivity
-Renders a `Microphone` icon that displays the audio activity for a given attendee. It will update to match the attendee's mute and signal strength status.
+
+The `MicrophoneActivity` component renders a `Microphone` icon that displays the audio activity for a given attendee.
+It will update to match the attendee's mute and signal strength status.
 
 ## Importing
+
 ```javascript
 import { MicrophoneActivity } from 'amazon-chime-sdk-component-library-react';
 ```
@@ -15,7 +18,10 @@ import { MicrophoneActivity } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, MicrophoneActivity } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  MicrophoneActivity
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {
   return (
@@ -23,8 +29,9 @@ const App = () => {
       <MicrophoneActivity attendeeId="some-chime-attendee-id" />
     </MeetingProvider>
   );
-}
+};
 ```
 
 ## Props
+
 <Props of={MicrophoneActivity} />

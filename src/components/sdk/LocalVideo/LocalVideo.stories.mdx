@@ -4,11 +4,13 @@ import { LocalVideo } from './';
 <Meta title="SDK Components/LocalVideo" />
 
 # LocalVideo
-Renders a `VideoTile` for the local user's video. 
+
+The `LocalVideo` component renders a `VideoTile` for the local user's video.
 
 The video can be started and stopped with the `useLocalVideo` hook once a meeting session has started.
 
 ## Importing
+
 ```javascript
 import { LocalVideo } from 'amazon-chime-sdk-component-library-react';
 ```
@@ -17,7 +19,11 @@ import { LocalVideo } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, RemoteVideo, useLocalVideo } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  RemoteVideo,
+  useLocalVideo
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {
   const { toggleVideo } = useLocalVideo();
@@ -28,8 +34,9 @@ const App = () => {
       <button onClick={toggleVideo}>Toggle video</button>
     </MeetingProvider>
   );
-}
+};
 ```
 
 ## Props
+
 <Props of={LocalVideo} />

@@ -2,23 +2,26 @@
 
 # SDK Components
 
-Components for building out a realtime meeting experience. They have a dependency on providers being rendered in your application tree, which subsequently have a dependency on the `amazon-chime-sdk-js`.
+SDK Components provide you the capability to build out a realtime meeting experience easily. They have a dependency on providers being rendered in your application tree, which subsequently have a dependency on the `amazon-chime-sdk-js`.
 
-SDK components are aimed at accelerating your Amazon Chime SDK app development. 
+SDK components are aimed at accelerating your Amazon Chime SDK application development.
 
-## Getting started
+## Getting Started
 
 1. Add amazon-chime-sdk-component-library-react and the necessary peer dependencies to your project
 
 `npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system`
 
-2. Render a `ThemeProvider` and `MeetingProvider` in the root of your application. 
+2. Render a `ThemeProvider` and `MeetingProvider` in the root of your application
 
 You can pass a default theme that we provide, or a customized theme that adheres to our theme's structure.
 
 ```jsx
 import { ThemeProvider } from 'styled-components';
-import { lightTheme, MeetingProvider } from 'amazon-chime-sdk-component-library-react';
+import {
+  lightTheme,
+  MeetingProvider
+} from 'amazon-chime-sdk-component-library-react';
 
 const Root = () => (
   <ThemeProvider theme={lightTheme}>
@@ -29,12 +32,15 @@ const Root = () => (
 );
 ```
 
-3. Use the SDK components to build your app. 
+3. Use the SDK components to build your app
 
-*Note* - Some components won't render anything unless there is an active meeting. To join a meeting, you need to use the `join` and `start` APIs that are provided through the `useMeetingManager` hook.
+_Note_ - Some components won't render anything unless there is an active meeting. To join a meeting, you need to use the `join` and `start` APIs that are provided through the [useMeetingManager](/?path=/docs/sdk-hooks-usemeetingmanager--page) hook.
 
 ```jsx
-import { VideoTileGrid, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import {
+  VideoTileGrid,
+  useMeetingManager
+} from 'amazon-chime-sdk-component-library-react';
 
 const MyApp = () => {
   const meetingManager = useMeetingManager();
@@ -47,14 +53,14 @@ const MyApp = () => {
     const joinData = {
       meetingInfo: data.Meeting,
       attendeeInfo: data.Attendee
-    }
+    };
 
     // Use the join API to create a meeting session
     await meetingManager.join(joinData);
 
     // At this point you can let users setup their devices, or start the session immediately
     await meetingManager.start();
-  }
+  };
 
   return (
     <>
@@ -62,5 +68,5 @@ const MyApp = () => {
       <VideoTileGrid />
     </>
   );
-}
+};
 ```

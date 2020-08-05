@@ -4,11 +4,13 @@ import { RosterAttendee } from './';
 <Meta title="SDK Components/RosterAttendee" />
 
 # RosterAttendee
-Renders a [RosterCell](?path=/docs/ui-components-roster--roster-cell) for a given attendee. It will display the attendee's name along with their mute, video, and content share status.
 
-You must provide the `MeetingManager` with a `getAttendee` function in order to get names. See the [MeetingManager docs](?path=/docs/providers-meetingmanager--page) for more information.
+The `RosterAttendee` component renders a [RosterCell](?path=/docs/ui-components-roster--roster-cell) for a given attendee. It will display the attendee's name along with their mute, video, and content share status.
+
+You have to provide the `MeetingManager` with a `getAttendee` function in order to get names. See the [MeetingManager](?path=/docs/providers-meetingmanager--page) for more information.
 
 ## Importing
+
 ```javascript
 import { RosterAttendee } from 'amazon-chime-sdk-component-library-react';
 ```
@@ -17,7 +19,10 @@ import { RosterAttendee } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, RosterAttendee } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  RosterAttendee
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {
   return (
@@ -25,8 +30,9 @@ const App = () => {
       <RosterAttendee attendeeId="some-chime-attendee-id" />
     </MeetingProvider>
   );
-}
+};
 ```
 
 ## Props
+
 <Props of={RosterAttendee} />

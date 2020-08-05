@@ -4,19 +4,30 @@
 
 React components for building realtime meeting applications with Amazon Chime.
 
-## Getting started
+- [UI Components](/?path=/docs/ui-components-badge--basic-badge)
+- [SDK Components](/?path=/docs/sdk-components-introduction--page)
+- [UI Providers](/?path=/docs/ui-providers-notificationprovider--page)
+- [SDK Providers](/?path=/docs/sdk-providers-introduction--page)
+- [UI Hooks](/?path=/docs/ui-hooks-notification-usenotificationdispatch--page)
+- [SDK Hooks](/?path=/docs/ui-hooks-notification-usenotificationdispatch--page)
+- [Themes](/?path=/docs/themes--page)
+
+## Getting Started
 
 1. Add amazon-chime-sdk-component-library-react and the necessary peer dependencies to your project
 
 `npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system`
 
-2. Render a `ThemeProvider` and a `MeetingProvider` in the root of your application.
+2. Render a `ThemeProvider` and a `MeetingProvider` in the root of your application
 
 You can pass in the default theme, or you can customize it to match your app's design.
 
 ```jsx
 import { ThemeProvider } from 'styled-components';
-import { MeetingProvider, lightTheme } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  lightTheme
+} from 'amazon-chime-sdk-component-library-react';
 
 const Root = () => (
   <ThemeProvider theme={lightTheme}>
@@ -45,21 +56,17 @@ const MyApp = () => {
     const joinData = {
       meetingInfo: data.Meeting,
       attendeeInfo: data.Attendee
-    }
+    };
 
     // Use the join API to create a meeting session
     await meetingManager.join(joinData);
 
     // At this point you can let users setup their devices, or start the session immediately
     await meetingManager.start();
-  }
+  };
 
-  return (
-    <button onClick={joinMeeting}>
-      Join
-    </button>
-  );
-}
+  return <button onClick={joinMeeting}>Join</button>;
+};
 ```
 
 4. Use the SDK components to build out your app
@@ -72,8 +79,8 @@ For example, the VideoTileGrid will render out all attendee's videos and content
 import { VideoTileGrid } from 'amazon-chime-sdk-component-library-react';
 
 const MyMeetingView = () => {
-  <VideoTileGrid />
-}
+  <VideoTileGrid />;
+};
 ```
 
 5. Optional - adding attendee names to build a roster
@@ -99,7 +106,7 @@ const MyApp = () => {
 }
 ```
 
-### FAQ 
+### FAQ
 
 #### How do I build out my own UI using the existing providers?
 
@@ -108,15 +115,15 @@ We provide a set of hooks that you can use that help make building the UI simple
 For example, if you want to build your own mute button, use the `useToggleLocalMute` hook which returns a function to toggle the mute status, and the current mute state.
 
 ```jsx
-import { useToggleLocalMute  } from 'amazon-chime-sdk-component-library-react';
+import { useToggleLocalMute } from 'amazon-chime-sdk-component-library-react';
 
 const MyMuteButton = () => {
   const { muted, toggleMute } = useToggleLocalMute();
 
   return (
     <button onClick={toggleMute}>
-      { muted ? "Unmute myself" : "Mute myself" }
+      {muted ? 'Unmute myself' : 'Mute myself'}
     </button>
-  )
-}
+  );
+};
 ```

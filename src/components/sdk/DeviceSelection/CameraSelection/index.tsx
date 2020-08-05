@@ -8,9 +8,9 @@ import { useVideoInputs } from '../../../../providers/DevicesProvider';
 import DeviceInput from '../DeviceInput';
 
 interface Props {
-  /** Message shown when no camera devices are found */
+  /** The message that will be shown when no camera devices are found. */
   notFoundMsg?: string;
-  /** Label shown for camera selection, by default it is "Camera source" */
+  /** The label that will be shown for camera selection, it defaults to "Camera source". */
   label?: string;
 }
 

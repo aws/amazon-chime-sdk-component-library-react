@@ -9,6 +9,7 @@ import { useRosterState } from '../../../providers/RosterProvider';
 import useAttendeeStatus from '../../../hooks/sdk/useAttendeeStatus';
 
 interface Props extends Omit<RosterCellProps, 'name'> {
+  /** The ID of a Chime meeting attendee. */
   attendeeId: string;
 }
 

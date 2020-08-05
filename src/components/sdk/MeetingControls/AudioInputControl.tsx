@@ -13,13 +13,13 @@ import { isOptionActive } from '../../../utils/device-utils';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
 interface Props {
-  /** Label shown for audio input control when microphone is muted , by default it is "Mute" */
+  /** The label that will be shown when microphone is muted , it defaults to `Mute`. */
   muteLabel?: string;
-  /** Label shown for audio input control when microphone is unmuted, by default it is "Unmute" */
+  /** The label that will be shown when microphone is unmuted, it defaults to `Unmute`. */
   unmuteLabel?: string;
 }
 
-const AudioInputControl: React.FC<Props> = ({ 
+const AudioInputControl: React.FC<Props> = ({
   muteLabel = 'Mute',
   unmuteLabel = 'Unmute'
 }) => {
