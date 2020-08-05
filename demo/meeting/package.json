@@ -14,7 +14,8 @@
     "react-dom": "^16.12.0",
     "react-router-dom": "^5.1.2",
     "styled-components": "^5.0.0",
-    "throttle-debounce": "^2.1.0"
+    "throttle-debounce": "^2.1.0",
+    "styled-system": "^5.1.5"
   },
   "scripts": {
     "build": "npm install && npm run build:prod",
@@ -23,6 +24,7 @@
     "start:backend": "node server.js"
   },
   "devDependencies": {
+    "@types/styled-system": "^5.1.9",
     "@babel/core": "^7.5.0",
     "@babel/plugin-transform-regenerator": "^7.4.5",
     "@babel/plugin-transform-runtime": "^7.5.0",

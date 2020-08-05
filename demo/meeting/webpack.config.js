@@ -41,7 +41,7 @@ module.exports = {
     filename: `${app}-bundle.js`,
     publicPath: '/',
     libraryTarget: 'var',
-    library: `app_${app}`,
+    library: `app_${app}`
   },
   node: {
     fs: 'empty',
@@ -54,7 +54,7 @@ module.exports = {
       filename: __dirname + `/dist/${app}.html`,
       inject: 'head'
     }),
-    new HtmlWebpackInlineSourcePlugin(),
+    new HtmlWebpackInlineSourcePlugin()
   ],
   devServer: {
     proxy: {

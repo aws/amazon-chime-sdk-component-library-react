@@ -9,25 +9,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-
 ### Changed
+
 - Updated the github actions publishing workflow
 
 ### Removed
 
+### Fixed
+
+## [1.0.3] - 2020-08-04
+
+### Added
+
+### Changed
+
+- Move StyeldSystem to peer dependency
+
+### Removed
 
 ### Fixed
 
 ## [1.0.2] - 2020-08-04
+
 ### Added
+
 ### Changed
+
 ### Removed
+
 ### Fixed
 
 ## [1.0.1] - 2020-08-04
+
 ### Added
+
 ### Changed
+
 ### Removed
+
 ### Fixed
 
 ## [1.0.0] - 2020-08-04
