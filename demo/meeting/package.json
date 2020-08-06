@@ -21,7 +21,8 @@
     "build": "npm install && npm run build:prod",
     "build:prod": "webpack --config ./webpack.config.js --mode=production --devtool=false",
     "start:client": "npm install && webpack-dev-server",
-    "start:backend": "node server.js"
+    "start:backend": "node server.js",
+    "start": "concurrently \"npm run start:client\" \"npm run start:backend\""
   },
   "devDependencies": {
     "@types/styled-system": "^5.1.9",
@@ -38,6 +39,7 @@
     "@types/throttle-debounce": "^2.1.0",
     "babel-eslint": "^9.0.0",
     "babel-loader": "^8.0.4",
+    "concurrently": "5.2.0",
     "css-loader": "^3.5.3",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
