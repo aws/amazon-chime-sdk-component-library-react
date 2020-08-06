@@ -17,10 +17,16 @@ const base = fs
   .readFileSync(path.join(process.cwd(), '.base-branch'), 'utf8')
   .trim();
 
-const commits = spawnOrFail('git', ['rev-list', `${base}..`])
+// const commits = spawnOrFail('git', ['rev-list', `${base}..`])
+//   .toString()
+//   .trim()
+//   .split(`\n`)
+//   .filter(commit => commit !== '');
+
+  const commits = spawnOrFail('git', ['rev-list', `HEAD`])
   .toString()
   .trim()
-  .split(`\n`)
+  .split('\n')
   .filter(commit => commit !== '');
 
 let commit_files = [];
