@@ -101,6 +101,12 @@ export class MeetingManager implements AudioVideoObserver{
     fullDeviceInfo: FullDeviceInfoType
   ) => void)[] = [];
 
+  logLevel: LogLevel = LogLevel.WARN;
+
+  constructor(logLevel: LogLevel) {
+    this.logLevel = logLevel;
+  }
+
   initializeMeetingManager(): void {
     this.meetingSession = null;
     this.audioVideo = null;
@@ -161,7 +167,7 @@ export class MeetingManager implements AudioVideoObserver{
   async initializeMeetingSession(
     configuration: MeetingSessionConfiguration
   ): Promise<any> {
-    const logger = new ConsoleLogger('SDK', LogLevel.WARN);
+    const logger = new ConsoleLogger('SDK', this.logLevel);
     const deviceController = new DefaultDeviceController(logger);
     configuration.enableWebAudio = false;
     this.meetingSession = new DefaultMeetingSession(

@@ -12,11 +12,17 @@ import { LocalVideoProvider } from '../LocalVideoProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
 import { LocalAudioOutputProvider } from '../LocalAudioOutputProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
+import { LogLevel } from 'amazon-chime-sdk-js';
+
+interface Props {
+  /** Log level defined by the Loglevel enum in amazon-chime-sdk-js */
+  logLevel?: LogLevel;
+}
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
 
-export const MeetingProvider: React.FC = ({ children }) => {
-  const [meetingManager] = useState(() => new MeetingManager());
+export const MeetingProvider: React.FC<Props> = ({ children, logLevel = LogLevel.WARN }) => {
+  const [meetingManager] = useState(() => new MeetingManager(logLevel));
 
   return (
     <MeetingContext.Provider value={meetingManager}>

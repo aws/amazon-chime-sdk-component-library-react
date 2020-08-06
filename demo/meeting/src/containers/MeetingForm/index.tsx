@@ -28,7 +28,11 @@ import { useAppState } from '../../providers/AppStateProvider';
 
 const MeetingForm: React.FC = () => {
   const meetingManager = useMeetingManager();
-  const { setMeeting, setLocalName, setRegion: setAppRegion } = useAppState();
+  const { 
+    setMeeting,
+    setLocalName,
+    setRegion: setAppRegion
+  } = useAppState();
   const [meetingId, setMeetingId] = useState('');
   const [meetingErr, setMeetingErr] = useState(false);
   const [name, setName] = useState('');
