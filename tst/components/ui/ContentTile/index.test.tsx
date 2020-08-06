@@ -9,9 +9,6 @@ import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 
 describe('ContentTile', () => {
-
-  const labelText = 'Basic Button';
-
   it('should render a basic ContentTile', () => {
     const component = <ContentTile nameplate="Test nameplate" />;
     const { getByTestId, getByText } = renderWithTheme(

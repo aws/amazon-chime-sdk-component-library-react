@@ -23,8 +23,8 @@ describe('Roster', () => {
         />
       </Roster>
     );
-    const { getByLabelText } = renderWithTheme(lightTheme, component);
-
+    const { getByLabelText, queryAllByLabelText } = renderWithTheme(lightTheme, component);
+    expect.not.arrayContaining(queryAllByLabelText('Search'));
     getByLabelText('Open search').click();
     const searchLbl = getByLabelText('Search');
     expect(searchLbl).toBeInTheDocument();

@@ -25,7 +25,7 @@ const useMeetingEndRedirect = () => {
         type: ActionType.ADD,
         payload: {
           severity: Severity.INFO,
-          message: 'Meeting ended for all',
+          message: 'The meeting was ended by another attendee',
           autoClose: true,
           replaceAll: true
         }

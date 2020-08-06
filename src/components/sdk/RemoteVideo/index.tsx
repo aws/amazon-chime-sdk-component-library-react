@@ -5,6 +5,7 @@ import React, { useRef, useEffect, HTMLAttributes } from 'react';
 
 import { VideoTile } from '../../ui/VideoTile';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { useApplyVideoObjectFit } from '../../../hooks/useApplyVideoObjectFit';
 import { BaseSdkProps } from '../Base';
 
 interface Props
@@ -24,6 +25,7 @@ export const RemoteVideo: React.FC<Props> = ({
 }) => {
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);
+  useApplyVideoObjectFit(videoEl);
 
   useEffect(() => {
     if (!audioVideo || !videoEl.current) {

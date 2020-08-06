@@ -41,30 +41,33 @@ const MeetingForm: React.FC = () => {
   const handleJoinMeeting = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!meetingId || !name) {
-      if (!name) {
+    const id = meetingId.trim().toLocaleLowerCase();
+    const attendeeName = name.trim();
+
+    if (!id || !attendeeName) {
+      if (!attendeeName) {
         setNameErr(true);
       }
 
-      if (!meetingId) {
+      if (!id) {
         setMeetingErr(true);
       }
       return;
     }
 
     setIsLoading(true);
-    meetingManager.getAttendee = createGetAttendeeCallback(meetingId);
+    meetingManager.getAttendee = createGetAttendeeCallback(id);
 
     try {
-      const { JoinInfo } = await fetchMeeting(meetingId, name, region);
+      const { JoinInfo } = await fetchMeeting(id, attendeeName, region);
 
       await meetingManager.join({
         meetingInfo: JoinInfo.Meeting,
         attendeeInfo: JoinInfo.Attendee
       });
 
-      setMeeting(meetingId);
-      setLocalName(name);
+      setMeeting(id);
+      setLocalName(attendeeName);
       history.push(routes.DEVICE);
     } catch (error) {
       updateErrorMessage(error.message);

@@ -2,13 +2,16 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { VideoTileGrid, UserActivityProvider, UserActivityManager } from 'amazon-chime-sdk-component-library-react';
+import {
+  VideoTileGrid,
+  UserActivityProvider
+} from 'amazon-chime-sdk-component-library-react';
 
 import { StyledLayout, StyledContent } from './Styled';
 import NavigationControl from '../../containers/Navigation/NavigationControl';
 import { useNavigation } from '../../providers/NavigationProvider';
 import MeetingDetails from '../../containers/MeetingDetails';
-import MeetingControlsContainer from '../../containers/MeetingControlsContainer';
+import MeetingControls from '../../containers/MeetingControls';
 import useMeetingEndRedirect from '../../hooks/useMeetingEndRedirect';
 
 const MeetingView = () => {
@@ -19,10 +22,11 @@ const MeetingView = () => {
     <UserActivityProvider>
       <StyledLayout showNav={showNavbar} showRoster={showRoster}>
         <StyledContent>
-          <VideoTileGrid noRemoteVideoView={<MeetingDetails />} />
-          <UserActivityManager>
-            <MeetingControlsContainer />
-          </UserActivityManager>
+          <VideoTileGrid
+            className="videos"
+            noRemoteVideoView={<MeetingDetails />}
+          />
+          <MeetingControls />
         </StyledContent>
         <NavigationControl />
       </StyledLayout>

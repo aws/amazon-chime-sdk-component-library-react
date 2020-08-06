@@ -3,7 +3,7 @@
 
 import '@testing-library/jest-dom';
 import React from 'react';
-import { fireEvent,  } from '@testing-library/dom';
+import { fireEvent } from '@testing-library/dom';
 import Modal from '../../../../src/components/ui/Modal';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
@@ -34,7 +34,7 @@ describe('Modal', () => {
     expect(component.props.onClose).toHaveBeenCalled();
   });
 
-  it('Pressing non ESC keystrokes doest not trigger modal onClose fn', () => {
+  it(`Pressing non ESC keystrokes doesn't trigger modal onClose fn`, () => {
     const component = (
       <Modal size="md" rootId="modal-root" onClose={jest.fn()}>
         <p>Dummy Content</p>

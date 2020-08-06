@@ -3,7 +3,7 @@
 
 import '@testing-library/jest-dom';
 import React from 'react';
-import { fireEvent } from '@testing-library/dom';
+import { fireEvent, queryAllByLabelText } from '@testing-library/dom';
 
 import ModalContext from '../../../../src/components/ui/Modal/ModalContext';
 import ModalButtonGroup from '../../../../src/components/ui/Modal/ModalButtonGroup';
@@ -12,40 +12,49 @@ import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 
 describe('ModalButtonGroup', () => {
-  it('renders a group with a Button', () => {
-    const onClose = jest.fn();
-    const labelID = 'test-label';
-    const testContext = { onClose, labelID };
-    const component = (
-      <ModalContext.Provider value={testContext}>
-        <ModalButtonGroup primaryButtons={[<ModalButton label="Button" />]} />
-      </ModalContext.Provider>
-    );
-    const { getByTestId } = renderWithTheme(lightTheme, component);
-    const el = getByTestId('modal-button-group');
-    expect(el).toBeInTheDocument();
-  });
-  it('renders a group with a Button & secondary Button', () => {
-    const onClose = jest.fn();
-    const labelID = 'test-label';
-    const testContext = { onClose, labelID };
+  const primaryButtonLbl = 'test-primary';
+  const secondaryButtonLbl = 'test-secondary';
+  const onClose = jest.fn();
+  const labelID = 'test-label';
+  const testContext = { onClose, labelID };
+
+  it('renders a group with a primary Button', () => {
     const component = (
       <ModalContext.Provider value={testContext}>
         <ModalButtonGroup
-          primaryButtons={[<ModalButton label="Button" />]}
-          secondaryButtons={[<ModalButton label="Secondary Button" />]}
+          primaryButtons={[<ModalButton label={primaryButtonLbl} />]}
         />
       </ModalContext.Provider>
     );
-    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const { getByTestId, getByLabelText } = renderWithTheme(
+      lightTheme,
+      component
+    );
     const el = getByTestId('modal-button-group');
     expect(el).toBeInTheDocument();
+    expect(getByLabelText(primaryButtonLbl)).toBeInTheDocument();
   });
 
-  it('renders a group with single primary button & empty secondary', () => {
-    const onClose = jest.fn();
-    const labelID = 'test-label';
-    const testContext = { onClose, labelID };
+  it('renders a group with a primary Button & secondary Button', () => {
+    const component = (
+      <ModalContext.Provider value={testContext}>
+        <ModalButtonGroup
+          primaryButtons={[<ModalButton label={primaryButtonLbl} />]}
+          secondaryButtons={[<ModalButton label={secondaryButtonLbl} />]}
+        />
+      </ModalContext.Provider>
+    );
+    const { getByTestId, getByLabelText } = renderWithTheme(
+      lightTheme,
+      component
+    );
+    const el = getByTestId('modal-button-group');
+    expect(el).toBeInTheDocument();
+    expect(getByLabelText(primaryButtonLbl)).toBeInTheDocument();
+    expect(getByLabelText(secondaryButtonLbl)).toBeInTheDocument();
+  });
+
+  it('renders a group with single primary Button & empty secondary Button', () => {
     const component = (
       <ModalContext.Provider value={testContext}>
         <ModalButtonGroup
@@ -54,15 +63,18 @@ describe('ModalButtonGroup', () => {
         />
       </ModalContext.Provider>
     );
-    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const {
+      getByTestId,
+      getByLabelText,
+      queryAllByLabelText
+    } = renderWithTheme(lightTheme, component);
     const el = getByTestId('modal-button-group');
     expect(el).toBeInTheDocument();
+    expect(getByLabelText('close')).toBeInTheDocument();
+    expect.not.arrayContaining(queryAllByLabelText(secondaryButtonLbl));
   });
 
   it('passes the onClose function to the close button', () => {
-    const onClose = jest.fn();
-    const labelID = 'test-label';
-    const testContext = { onClose, labelID };
     const component = (
       <ModalContext.Provider value={testContext}>
         <ModalButtonGroup
@@ -70,16 +82,17 @@ describe('ModalButtonGroup', () => {
         />
       </ModalContext.Provider>
     );
-    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const { getByTestId, getByLabelText } = renderWithTheme(
+      lightTheme,
+      component
+    );
     const modalButton = getByTestId('button');
     fireEvent.click(modalButton);
     expect(component.props.value.onClose).toHaveBeenCalled();
+    expect(getByLabelText('close')).toBeInTheDocument();
   });
 
   it('passes the onClose function to the close button with custom onClick()', () => {
-    const onClose = jest.fn();
-    const labelID = 'test-label';
-    const testContext = { onClose, labelID };
     const component = (
       <ModalContext.Provider value={testContext}>
         <ModalButtonGroup
@@ -89,9 +102,13 @@ describe('ModalButtonGroup', () => {
         />
       </ModalContext.Provider>
     );
-    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const { getByTestId, getByLabelText } = renderWithTheme(
+      lightTheme,
+      component
+    );
     const modalButton = getByTestId('button');
     fireEvent.click(modalButton);
     expect(component.props.value.onClose).toHaveBeenCalled();
+    expect(getByLabelText('close')).toBeInTheDocument();
   });
 });
