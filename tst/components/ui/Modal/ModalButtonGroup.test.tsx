@@ -3,7 +3,7 @@
 
 import '@testing-library/jest-dom';
 import React from 'react';
-import { fireEvent, queryAllByLabelText } from '@testing-library/dom';
+import { fireEvent } from '@testing-library/dom';
 
 import ModalContext from '../../../../src/components/ui/Modal/ModalContext';
 import ModalButtonGroup from '../../../../src/components/ui/Modal/ModalButtonGroup';
