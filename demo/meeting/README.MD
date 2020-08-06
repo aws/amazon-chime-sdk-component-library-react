@@ -20,9 +20,14 @@ This is the SDK react meeting demo app. It shows how to use the Amazon Chime SDK
 
 ### Troubleshooting
 
+- You can change the `amazon-chime-sdk-js` [log level](https://aws.github.io/amazon-chime-sdk-js/enums/loglevel.html) by providing `logLevel` through URL as a query parameter with value 'warn' | 'error' | 'info' | 'debug' | 'off'.
+   ```
+    https://0.0.0.0:9000/?logLevel=debug
+    ```
+
 - `UnrecognizedClientException: The security token included in the request is invalid.` when trying to join a meeting
 
-This likely means that your AWS credentials are invalid. Refer to the [AWS Configuration docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) for setting up your credentials.
+  This likely means that your AWS credentials are invalid. Refer to the [AWS Configuration docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) for setting up your credentials.
 
 ## To deploy the serverless device demo
 

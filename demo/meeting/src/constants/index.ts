@@ -1,6 +1,8 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { LogLevel } from 'amazon-chime-sdk-js';
+
 export const AMAZON_CHIME_VOICE_CONNECTOR_PHONE_NUMDER = '+17035550122';
 
 export const VIDEO_INPUT = {
@@ -38,3 +40,11 @@ export const VIDEO_INPUT_QUALITY = {
   '540p': '540p (qHD) @ 15 fps (1.4 Mbps max)',
   '720p': '720p (HD) @ 15 fps (1.4 Mbps max)',
 };
+
+export const SDK_LOG_LEVELS = {
+  'debug': LogLevel.DEBUG,
+  'info': LogLevel.INFO,
+  'warn': LogLevel.WARN,
+  'error': LogLevel.ERROR,
+  'off': LogLevel.OFF,
+}
