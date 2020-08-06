@@ -12,11 +12,9 @@ This is the SDK react meeting demo app. It shows how to use the Amazon Chime SDK
 
 4. Install dependencies: `npm install`
 
-5. Start the webpack server: `npm run start:client`
+5. Start the webpack server and node server concurrently: `npm run start`
 
-6. Open a second terminal. Within the same directory, start the server: `npm run start:backend`
-
-7. Open https://0.0.0.0:9000/ in your browser
+6. Open https://0.0.0.0:9000/ in your browser
 
 ### Troubleshooting
 
