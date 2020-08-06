@@ -5,8 +5,32 @@ import '@testing-library/jest-dom';
 import React from 'react';
 
 import RosterCell from '../../../../src/components/ui/Roster/RosterCell';
+import Roster from '../../../../src/components/ui/Roster';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
+import RosterHeader from '../../../../src/components/ui/Roster/RosterHeader';
+
+describe('Roster', () => {
+  it('should render a search button when search is pressed', () => {
+    const component = (
+      <Roster>
+        <RosterHeader
+          onClose={jest.fn()}
+          badge={1}
+          menu={'ds'}
+          title="Present"
+          onSearch={() => {}}
+        />
+      </Roster>
+    );
+    const { getByLabelText } = renderWithTheme(lightTheme, component);
+
+    getByLabelText('Open search').click();
+    const searchLbl = getByLabelText('Search');
+    expect(searchLbl).toBeInTheDocument();
+    getByLabelText('clear Search').click();
+  });
+});
 
 describe('RosterCell', () => {
   it('should render a name', () => {

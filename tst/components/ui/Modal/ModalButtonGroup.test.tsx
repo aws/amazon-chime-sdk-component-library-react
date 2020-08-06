@@ -25,6 +25,39 @@ describe('ModalButtonGroup', () => {
     const el = getByTestId('modal-button-group');
     expect(el).toBeInTheDocument();
   });
+  it('renders a group with a Button & secondary Button', () => {
+    const onClose = jest.fn();
+    const labelID = 'test-label';
+    const testContext = { onClose, labelID };
+    const component = (
+      <ModalContext.Provider value={testContext}>
+        <ModalButtonGroup
+          primaryButtons={[<ModalButton label="Button" />]}
+          secondaryButtons={[<ModalButton label="Secondary Button" />]}
+        />
+      </ModalContext.Provider>
+    );
+    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const el = getByTestId('modal-button-group');
+    expect(el).toBeInTheDocument();
+  });
+
+  it('renders a group with single primary button & empty secondary', () => {
+    const onClose = jest.fn();
+    const labelID = 'test-label';
+    const testContext = { onClose, labelID };
+    const component = (
+      <ModalContext.Provider value={testContext}>
+        <ModalButtonGroup
+          primaryButtons={<ModalButton label="close" closesModal />}
+          secondaryButtons={[]}
+        />
+      </ModalContext.Provider>
+    );
+    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const el = getByTestId('modal-button-group');
+    expect(el).toBeInTheDocument();
+  });
 
   it('passes the onClose function to the close button', () => {
     const onClose = jest.fn();
@@ -34,6 +67,25 @@ describe('ModalButtonGroup', () => {
       <ModalContext.Provider value={testContext}>
         <ModalButtonGroup
           primaryButtons={[<ModalButton label="close" closesModal />]}
+        />
+      </ModalContext.Provider>
+    );
+    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const modalButton = getByTestId('button');
+    fireEvent.click(modalButton);
+    expect(component.props.value.onClose).toHaveBeenCalled();
+  });
+
+  it('passes the onClose function to the close button with custom onClick()', () => {
+    const onClose = jest.fn();
+    const labelID = 'test-label';
+    const testContext = { onClose, labelID };
+    const component = (
+      <ModalContext.Provider value={testContext}>
+        <ModalButtonGroup
+          primaryButtons={[
+            <ModalButton label="close" closesModal onClick={onClose} />
+          ]}
         />
       </ModalContext.Provider>
     );
