@@ -7,6 +7,7 @@ import React from 'react';
 import Grid from '../../../../src/components/ui/Grid';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
+import Cell from '../../../../src/components/ui/Grid/Cell';
 
 const CHILD = 'Child';
 const Child = () => <p>{CHILD}</p>;
@@ -63,6 +64,19 @@ describe('Grid', () => {
     );
     const { container } = renderWithTheme(lightTheme, component);
 
-    expect(container.getElementsByClassName('test-class')).toBeInTheDOM
+    expect(container.getElementsByClassName('test-class')).toBeInTheDOM;
+  });
+
+  it('should render a Grid with Cell component', () => {
+    const component = (
+      <Grid>
+        <Cell gridArea={{ md: 'main' }}>TestCell</Cell>
+      </Grid>
+    );
+    const { getAllByText, container } = renderWithTheme(lightTheme, component);
+    const result = getAllByText(/TestCell/);
+
+    expect(result).toHaveLength(1);
+    expect(container.childElementCount).toBe(1);
   });
 });
