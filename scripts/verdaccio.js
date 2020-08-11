@@ -106,7 +106,7 @@ fs.writeFileSync(
 logger.log(`Installing ${COMPONENTS_APP_NAME} from local repo...`);
 spawnOrFail('npm', [`install ${COMPONENTS_APP_NAME} --registry ${endpoint}`]);
 
-const demoAppClientProcess = cp.exec('npm run start:client', {
+const demoAppClientProcess = cp.exec('npm run start', {
   detached: true
 });
 applicationProcesses.push(demoAppClientProcess);
