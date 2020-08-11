@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useContext, ChangeEvent } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import {
   Input,
   Flex,
@@ -27,13 +27,10 @@ import { fetchMeeting, createGetAttendeeCallback } from '../../utils/api';
 import { useAppState } from '../../providers/AppStateProvider';
 
 const MeetingForm: React.FC = () => {
+  const query = new URLSearchParams(useLocation().search);
   const meetingManager = useMeetingManager();
-  const { 
-    setMeeting,
-    setLocalName,
-    setRegion: setAppRegion
-  } = useAppState();
-  const [meetingId, setMeetingId] = useState('');
+  const { setMeeting, setLocalName, setRegion: setAppRegion } = useAppState();
+  const [meetingId, setMeetingId] = useState(query.get('meetingId') || '');
   const [meetingErr, setMeetingErr] = useState(false);
   const [name, setName] = useState('');
   const [nameErr, setNameErr] = useState(false);
