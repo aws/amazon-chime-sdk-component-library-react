@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Radio from './';
 import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # Radio
 
@@ -19,6 +20,7 @@ import { Radio } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Radio value="apple" label="Radio Input" checked onChange={e => {}} />
   </Preview>

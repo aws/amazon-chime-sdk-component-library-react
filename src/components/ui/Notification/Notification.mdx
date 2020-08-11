@@ -1,8 +1,10 @@
 import { Preview, Props } from '@storybook/addon-docs/blocks';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme } from '../../../theme/';
+
 import { Notification } from '.';
 import { Severity } from '../../../providers/NotificationProvider';
+import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # Notification
 
@@ -24,6 +26,7 @@ import { Notification } from 'amazon-chime-sdk-component-library-react';
 
 ### Notification Component
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Notification
     onClose={() => {console.log('Close notification')}}
     severity={Severity.ERROR}

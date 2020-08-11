@@ -11,6 +11,7 @@ import ModalContext from './ModalContext';
 import { ModalDemo } from './Modal.stories';
 import { lightTheme } from '../../../theme/';
 import PrimaryButton from '../Button/PrimaryButton';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # Modal
 
@@ -33,6 +34,7 @@ import {
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <ModalDemo />
   </Preview>

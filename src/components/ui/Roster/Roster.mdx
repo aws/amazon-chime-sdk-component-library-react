@@ -1,11 +1,13 @@
 import { Preview, Props } from '@storybook/addon-docs/blocks';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme } from '../../../theme/';
+
 import RosterCell from './RosterCell';
 import RosterGroup from './RosterGroup';
 import RosterHeader from './RosterHeader';
 import Roster from './';
 import Flex from '../Flex';
+import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # Roster
 
@@ -26,9 +28,11 @@ import {
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
+  <Preview>
   <Flex 
     container
-    css="height: 10%; background: #f6f9fc;"
+    css="height: 50vh; background: #f6f9fc;"
   >
     <Roster>
       <RosterHeader
@@ -58,6 +62,7 @@ import {
       </RosterGroup>
     </Roster>
   </Flex>
+  </Preview>
 </ThemeProvider>
 
 ```jsx
@@ -98,13 +103,16 @@ It is also equipped with the search functionality and close icon button to close
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <RosterHeader
-    title="Present"
-    badge={2}
-    onClose={() => {}}
-    searchValue="Michael"
-    onSearch={() => {}}
-  />
+  <GlobalStyles/>
+  <Preview>
+    <RosterHeader
+      title="Present"
+      badge={2}
+      onClose={() => {}}
+      searchValue="Michael"
+      onSearch={() => {}}
+    />
+  </Preview>
 </ThemeProvider>
 
 ```jsx
@@ -127,6 +135,7 @@ The RosterGroup component displays multiple RosterCell components grouped by a c
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Flex container layout="fill-space-centered" css="height: 5%;">
     <Flex css="width: 100%; max-width: 280px;">
       <RosterGroup title={"Left"} badge={4}>
@@ -159,6 +168,7 @@ The RosterCell component displays a single row in the Roster component providing
 RosterCell Component with the `running late` message
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Flex container layout="fill-space-centered" css="height: 5%;">
     <Flex css="width: 100%; max-width: 280px;">
       <RosterCell
@@ -187,6 +197,7 @@ RosterCell Component with the `running late` message
 RosterCell Component with `micPosition leading`
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Flex container layout="fill-space-centered" css="height: 5%;">
     <Flex css="width: 100%; max-width: 280px;">
       <RosterCell
@@ -215,6 +226,7 @@ RosterCell Component with `micPosition leading`
 RosterCell Component with `micPosition grouped`
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Flex container layout="fill-space-centered" css="height: 5%;">
     <Flex css="width: 100%; max-width: 280px;">
       <RosterCell

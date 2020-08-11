@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import VideoTile from '.';
 import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # VideoTile
 
@@ -17,6 +18,7 @@ import { VideoTile } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Flex css="height: 100vh" layout="fill-space-centered">
       <div style={{ height: "15rem", width: '25rem', margin: '2rem auto' }}>

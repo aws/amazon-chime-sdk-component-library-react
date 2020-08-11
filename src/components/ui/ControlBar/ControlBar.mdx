@@ -5,6 +5,7 @@ import ControlBar from '.';
 import ControlBarItem from './ControlBarItem';
 import { ControlBarForDocs } from './ControlBar.stories';
 import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # ControlBar
 
@@ -26,6 +27,7 @@ import {
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <div style={{height: '50vh'}}>
       <ControlBarForDocs />

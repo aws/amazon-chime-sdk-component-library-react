@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Checkbox from './';
 import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # Checkbox
 
@@ -17,6 +18,7 @@ import { Checkbox } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Checkbox value="" checked onChange={() => console.log('change')} />
     <Checkbox value="" checked={false} onChange={() => console.log('change')} />

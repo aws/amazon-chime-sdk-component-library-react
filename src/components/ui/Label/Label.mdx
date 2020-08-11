@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Label from './';
 import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # Label
 
@@ -17,6 +18,7 @@ import { Label } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Flex layout="fill-space-centered">
       <Label>Hello World</Label>
