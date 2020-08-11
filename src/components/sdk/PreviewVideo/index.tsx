@@ -8,6 +8,7 @@ import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import VideoTile from '../../ui/VideoTile';
 import styled from 'styled-components';
 import { BaseSdkProps } from '../Base';
+import { useVideoInputs } from '../../../providers/DevicesProvider';
 
 const StyledPreview = styled(VideoTile)`
   height: auto;
@@ -21,20 +22,36 @@ const StyledPreview = styled(VideoTile)`
 export const PreviewVideo: React.FC<BaseSdkProps> = props => {
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);
+  const { selectedDevice } = useVideoInputs();
 
   useEffect(() => {
-    if (!audioVideo || !videoEl.current) {
+    if (!audioVideo || !selectedDevice || !videoEl.current) {
       return;
     }
 
-    audioVideo.startVideoPreviewForVideoInput(videoEl.current);
+    let mounted = true;
+
+    async function startPreview() {
+      if (!audioVideo) {
+        return;
+      }
+
+      await audioVideo.chooseVideoInputDevice(selectedDevice);
+      if (videoEl.current && mounted) {
+        audioVideo.startVideoPreviewForVideoInput(videoEl.current);
+      }
+    }
+
+    startPreview();
 
     return () => {
+      mounted = false;
+
       if (videoEl.current) {
         audioVideo.stopVideoPreviewForVideoInput(videoEl.current);
       }
     };
-  }, [audioVideo]);
+  }, [audioVideo, selectedDevice]);
 
   return <StyledPreview {...props} ref={videoEl} />;
 };
