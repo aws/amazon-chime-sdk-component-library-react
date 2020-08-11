@@ -6,6 +6,7 @@ import Flex from '../Flex';
 import Input from './';
 import SearchInput from './SearchInput';
 import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # Input/SearchInput
 
@@ -22,6 +23,7 @@ import { Input, SearchInput } from 'amazon-chime-sdk-component-library-react';
 ### Basic Input
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Flex layout="fill-space-centered">
       <Input
@@ -52,6 +54,7 @@ import { Input, SearchInput } from 'amazon-chime-sdk-component-library-react';
 ### Input with Icon
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Flex layout="fill-space-centered">
       <Input
@@ -84,6 +87,7 @@ import { Input, SearchInput } from 'amazon-chime-sdk-component-library-react';
 ### Search Input Component
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Flex layout="fill-space-centered">
       <SearchInput

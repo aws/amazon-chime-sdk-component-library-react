@@ -9,6 +9,7 @@ import PopOverSubMenu from './PopOverSubMenu';
 import { lightTheme } from '../../../theme/';
 import Meeting from '../icons/Meeting';
 import PrimaryButton from '../Button/PrimaryButton';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # PopOver
 
@@ -31,6 +32,7 @@ import {
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <PopOver
       a11yLabel='Click me'

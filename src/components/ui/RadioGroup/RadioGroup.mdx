@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import Flex from '../Flex';
 import RadioGroup from './';
 import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # RadioGroup
 
@@ -18,6 +19,7 @@ import { RadioGroup } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Flex layout="fill-space-centered">
       <RadioGroup

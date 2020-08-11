@@ -1,7 +1,9 @@
 import { Preview, Props } from '@storybook/addon-docs/blocks';
-import { Badge } from './';
 import { ThemeProvider } from 'styled-components';
+
+import { Badge } from './';
 import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # Badge
 Badge contains a numeric value and indicates a running tally, such as the number of unread messages in a room.
@@ -13,6 +15,7 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
 
 ## Example
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <div style={{ 'alignItems': 'center', 'display': 'flex'}}>
       <span style={{ 'marginRight': '0.5rem' }}>Number of new messages</span>

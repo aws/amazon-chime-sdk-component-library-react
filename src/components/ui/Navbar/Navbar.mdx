@@ -1,11 +1,14 @@
 import { Preview, Props } from '@storybook/addon-docs/blocks';
 import { ThemeProvider } from 'styled-components';
-import { lightTheme } from '../../../theme/';
+
 import Navbar from '.';
 import NavbarHeader from './NavbarHeader';
 import NavbarItem from './NavbarItem';
 import { Attendees, LeaveMeeting, Information } from '../icons';
 import Flex from '../Flex';
+import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
+
 
 # Navbar
 
@@ -25,28 +28,31 @@ import {
 
 ### Navbar Component
 <ThemeProvider theme={lightTheme}>
-  <Navbar flexDirection="column" container>
-    <NavbarHeader onClose={() => {}}/>
-    <Flex>
-      <NavbarItem
-        icon={<Information />}
-        onClick={() => {}}
-        label="Bridge Information"
-      />
-      <NavbarItem
-        icon={<Attendees />}
-        onClick={() => {}}
-        label="Attendees"
-      />
-    </Flex>
-    <Flex marginTop='auto'>
-      <NavbarItem
-        icon={<LeaveMeeting />}
-        onClick={() => {}}
-        label="Leave Meeting"
-      />
-    </Flex>
-  </Navbar>
+  <GlobalStyles/>
+  <Preview>
+    <Navbar flexDirection="column" container css="height: 50vh">
+      <NavbarHeader onClose={() => {}}/>
+      <Flex>
+        <NavbarItem
+          icon={<Information />}
+          onClick={() => {}}
+          label="Bridge Information"
+        />
+        <NavbarItem
+          icon={<Attendees />}
+          onClick={() => {}}
+          label="Attendees"
+        />
+      </Flex>
+      <Flex marginTop='auto'>
+        <NavbarItem
+          icon={<LeaveMeeting />}
+          onClick={() => {}}
+          label="Leave Meeting"
+        />
+      </Flex>
+    </Navbar>
+  </Preview>
 </ThemeProvider>
 
 ```jsx
