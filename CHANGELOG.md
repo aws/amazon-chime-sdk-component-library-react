@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed reversed labels for mute/unmute control in `AudioInputControl`
+- Fixed `PreviewVideo` component when selecting new video input device
 
 ## [1.0.3] - 2020-08-04
 
