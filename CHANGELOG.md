@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add Github documentation link to README
 - Add SDK log level selection ability to demo and library
+- Add PostLogger support to MeetingProvider
 
 ### Changed
 
@@ -21,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improve docs for SDK components
 - Portrait video support, minor style fixes
 - [Demo] Update demo dependencies
+- [Demo] Default to nearest available region
 
 ### Removed
 

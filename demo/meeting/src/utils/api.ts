@@ -20,7 +20,9 @@ export async function fetchMeeting(
   const response = await fetch(
     `${BASE_URL}join?title=${encodeURIComponent(
       meetingId
-    )}&name=${encodeURIComponent(name)}&region=${encodeURIComponent(region)}`,
+    )}&name=${encodeURIComponent(name)}${
+      region ? `&region=${encodeURIComponent(region)}` : ''
+    }`,
     {
       method: 'POST'
     }
