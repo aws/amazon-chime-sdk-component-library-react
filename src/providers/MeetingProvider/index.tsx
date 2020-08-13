@@ -4,6 +4,7 @@
 import React, { useContext, useState, createContext } from 'react';
 
 import MeetingManager from './MeetingManager';
+import { PostLogConfig } from './types';
 import { AudioVideoProvider } from '../AudioVideoProvider';
 import { RosterProvider } from '../RosterProvider';
 import { DevicesProvider } from '../DevicesProvider';
@@ -15,14 +16,22 @@ import { ContentShareProvider } from '../ContentShareProvider';
 import { LogLevel } from 'amazon-chime-sdk-js';
 
 interface Props {
-  /** Log level defined by the Loglevel enum in amazon-chime-sdk-js */
+  /** Determines how verbose the logging statements will be */
   logLevel?: LogLevel;
+  /** Configuration for a MeetingSessionPOSTLogger */
+  postLogConfig?: PostLogConfig;
 }
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
 
-export const MeetingProvider: React.FC<Props> = ({ children, logLevel = LogLevel.WARN }) => {
-  const [meetingManager] = useState(() => new MeetingManager(logLevel));
+export const MeetingProvider: React.FC<Props> = ({
+  logLevel = LogLevel.WARN,
+  postLogConfig,
+  children,
+}) => {
+  const [meetingManager] = useState(
+    () => new MeetingManager({ logLevel, postLogConfig })
+  );
 
   return (
     <MeetingContext.Provider value={meetingManager}>

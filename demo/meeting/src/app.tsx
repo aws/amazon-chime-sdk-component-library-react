@@ -19,11 +19,7 @@ import { NavigationProvider } from './providers/NavigationProvider';
 import { Meeting, Home, DeviceSetup } from './views';
 import Notifications from './containers/Notifications';
 import NoMeetingRedirect from './containers/NoMeetingRedirect';
-import { SDK_LOG_LEVELS } from './constants';
-
-const urlParams = new URLSearchParams(window.location.search);
-const queryLogLevel = urlParams.get('logLevel') || 'warn';
-const logLevel = SDK_LOG_LEVELS[queryLogLevel] || SDK_LOG_LEVELS.warn;
+import meetingConfig from './meetingConfig';
 
 const App: FC = () => (
   <Router>
@@ -32,7 +28,7 @@ const App: FC = () => (
         <NotificationProvider>
           <Notifications />
           <ErrorProvider>
-            <MeetingProvider logLevel={logLevel}>
+            <MeetingProvider {...meetingConfig}>
               <NavigationProvider>
                 <Switch>
                   <Route exact path={routes.HOME} component={Home} />

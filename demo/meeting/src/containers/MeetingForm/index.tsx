@@ -2,12 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useContext, ChangeEvent } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {
   Input,
   Flex,
   Heading,
-  Select,
   FormField,
   PrimaryButton,
   useMeetingManager,
@@ -21,20 +20,22 @@ import routes from '../../constants/routes';
 import Card from '../../components/Card';
 import Spinner from '../../components/Spinner';
 import DevicePermissionPrompt from '../DevicePermissionPrompt';
-import { AVAILABLE_AWS_REGIONS } from '../../constants';
-import getFormattedOptionsForSelect from '../../utils/select-options-format';
+import RegionSelection from './RegionSelection';
 import { fetchMeeting, createGetAttendeeCallback } from '../../utils/api';
 import { useAppState } from '../../providers/AppStateProvider';
 
 const MeetingForm: React.FC = () => {
-  const query = new URLSearchParams(useLocation().search);
   const meetingManager = useMeetingManager();
-  const { setMeeting, setLocalName, setRegion: setAppRegion } = useAppState();
-  const [meetingId, setMeetingId] = useState(query.get('meetingId') || '');
+  const {
+    setAppMeetingInfo,
+    region: appRegion,
+    meetingId: appMeetingId
+  } = useAppState();
+  const [meetingId, setMeetingId] = useState(appMeetingId);
   const [meetingErr, setMeetingErr] = useState(false);
   const [name, setName] = useState('');
   const [nameErr, setNameErr] = useState(false);
-  const [region, setRegion] = useState('us-east-1');
+  const [region, setRegion] = useState(appRegion);
   const [isLoading, setIsLoading] = useState(false);
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
   const history = useHistory();
@@ -53,6 +54,7 @@ const MeetingForm: React.FC = () => {
       if (!id) {
         setMeetingErr(true);
       }
+
       return;
     }
 
@@ -67,8 +69,7 @@ const MeetingForm: React.FC = () => {
         attendeeInfo: JoinInfo.Attendee
       });
 
-      setMeeting(id);
-      setLocalName(attendeeName);
+      setAppMeetingInfo(id, attendeeName, region);
       history.push(routes.DEVICE);
     } catch (error) {
       updateErrorMessage(error.message);
@@ -122,16 +123,7 @@ const MeetingForm: React.FC = () => {
           }
         }}
       />
-      <FormField
-        field={Select}
-        options={getFormattedOptionsForSelect(AVAILABLE_AWS_REGIONS)}
-        onChange={(e: ChangeEvent<HTMLSelectElement>): void => {
-          setRegion(e.target.value);
-          setAppRegion(e.target.value);
-        }}
-        value={region}
-        label="Select AWS region"
-      />
+      <RegionSelection setRegion={setRegion} region={region} />
       <Flex
         container
         layout="fill-space-centered"

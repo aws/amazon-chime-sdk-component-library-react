@@ -13,9 +13,7 @@ interface AppStateValue {
   theme: string;
   region: string;
   toggleTheme: () => void;
-  setMeeting: (meetingId: string) => void;
-  setLocalName: (name: string) => void;
-  setRegion: (region: string) => void;
+  setAppMeetingInfo: (meetingId: string, name: string, region: string) => void;
 }
 
 const AppStateContext = React.createContext<AppStateValue | null>(null);
@@ -30,9 +28,11 @@ export function useAppState(): AppStateValue {
   return state;
 }
 
+const query = new URLSearchParams(location.search);
+
 export function AppStateProvider({ children }: Props) {
-  const [meetingId, setMeeting] = useState('');
-  const [region, setRegion] = useState('us-east-1');
+  const [meetingId, setMeeting] = useState(query.get('meetingId') || '');
+  const [region, setRegion] = useState(query.get('region') || '');
   const [localUserName, setLocalName] = useState('');
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem('theme');
@@ -49,15 +49,23 @@ export function AppStateProvider({ children }: Props) {
     }
   };
 
+  const setAppMeetingInfo = (
+    meetingId: string,
+    name: string,
+    region: string
+  ) => {
+    setRegion(region);
+    setMeeting(meetingId);
+    setLocalName(name);
+  };
+
   const providerValue = {
     meetingId,
     localUserName,
     theme,
     region,
     toggleTheme,
-    setLocalName,
-    setMeeting,
-    setRegion
+    setAppMeetingInfo
   };
 
   return (
