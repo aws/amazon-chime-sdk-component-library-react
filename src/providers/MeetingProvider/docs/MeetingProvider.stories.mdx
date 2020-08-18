@@ -7,18 +7,6 @@ import { MeetingProvider } from '../';
 
 The `MeetingProvider` is the **root provider** for building a realtime meeting application. It is responsible for rendering out a series of providers and providing a `MeetingManager` class that helps integration with the Chime JavaScript SDK. The `MeetingManager` has APIs for joining, starting, and leaving a meeting.
 
-It takes a prop to update the `MeetingManager` log level. This log level is defined by the [LogLevel](https://aws.github.io/amazon-chime-sdk-js/enums/loglevel.html) enum in `amazon-chime-sdk-js`.
-
-```javascript
-enum LogLevel {
-  DEBUG,
-  INFO,
-  WARN,
-  ERROR,
-  OFF
-}
-```
-
 You can access the `MeetingManager` instance with the `useMeetingManager` hook.
 
 ## Importing
@@ -45,3 +33,31 @@ const App = () => (
 ## Props
 
 <Props of={MeetingProvider} />
+
+### Prop values
+
+#### logLevel
+The level of logging you want with your meeting session. It is defined by the [LogLevel](https://aws.github.io/amazon-chime-sdk-js/enums/loglevel.html) enum in `amazon-chime-sdk-js`.
+
+```javascript
+enum LogLevel {
+  DEBUG,
+  INFO,
+  WARN,
+  ERROR,
+  OFF
+}
+```
+
+#### postLogger
+Configuration for setting up a [MeetingSessionPOSTLogger](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionpostlogger.html).
+
+```javascript
+interface PostLogConfig = {
+  name: string;
+  batchSize: number;
+  intervalMs: number;
+  url: string;
+  logLevel: LogLevel
+}
+```
