@@ -81,8 +81,6 @@ spawnOrFail('git', [
 // navigate in to cloned SDK
 process.chdir(path.join(`./${COMPONENTS_APP_NAME}`));
 
-logger.log('Installing dependencies...');
-spawnOrFail('npm', ['install']);
 logger.log('Building...');
 spawnOrFail('npm', ['run', 'build']);
 
