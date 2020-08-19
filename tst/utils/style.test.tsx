@@ -27,18 +27,18 @@ describe('isValidCSSHex', () => {
 
 describe('hexTorgba', () => {
   it('returns an rgba formatted version of the hex input when it is valid', () => {
-    expect(hexTorgba("#333333")).toEqual("rgba(51, 51, 51, 1)");
+    expect(hexTorgba('#333333')).toEqual('rgba(51, 51, 51, 1)');
   });
 
   it('returns false when the input hex is not valid', () => {
-    expect(hexTorgba("333333")).toBe(false);
+    expect(hexTorgba('333333')).toBe('');
   });
 
   it('includes the alpha value in the output if specified', () => {
-    expect(hexTorgba("#333333", 0.4)).toEqual("rgba(51, 51, 51, 0.4)");
+    expect(hexTorgba('#333333', 0.4)).toEqual('rgba(51, 51, 51, 0.4)');
   });
 
   it('provides a default value of "1" if the alpha argument is not specified', () => {
-    expect(hexTorgba("#333333")).toEqual("rgba(51, 51, 51, 1)");
+    expect(hexTorgba('#333333')).toEqual('rgba(51, 51, 51, 1)');
   });
 });

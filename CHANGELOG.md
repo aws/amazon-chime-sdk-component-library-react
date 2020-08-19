@@ -38,6 +38,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improve docs for SDK components
 - Portrait video support, minor style fixes
 - [Demo] Update demo dependencies
+- [Demo] Default to nearest available region
+- [Docs] Upgrade storybook to v6
 
 ### Removed
 

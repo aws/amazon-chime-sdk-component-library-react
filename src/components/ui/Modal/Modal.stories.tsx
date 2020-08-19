@@ -159,7 +159,9 @@ export const ModalDemo = () => {
       {isOpen && <Modal size='md' onClose={() => setIsOpen(false)} rootId='modal-root'>
         <ModalHeader title='Modal header' displayClose={true} />
         <ModalBody>
-          <p>This is information presented in a modal</p>
+          <p style={{ 'color': '#616672', 'fontSize': '14px','margin': '0 0 0.5rem' }}>
+            This is information presented in a modal
+          </p>
           <ModalButtonGroup
             primaryButtons={[<ModalButton onClick={() => {}} label='submit' variant='primary' />]}
             secondaryButtons={[<ModalButton onClick={() => {}} label='More info' variant='secondary' />]}
