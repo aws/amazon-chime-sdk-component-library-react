@@ -5,13 +5,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Add PostLogger support to MeetingProvider
+
+### Changed
+
+- [Demo] Default to nearest available region
+
+### Removed
+
+### Fixed
+- Fixed `css` prop not taking precedence over media queries
+
 ## [1.1.0] - 2020-08-14
 
 ### Added
 
 - Add Github documentation link to README
 - Add SDK log level selection ability to demo and library
-- Add PostLogger support to MeetingProvider
 
 ### Changed
 
@@ -22,7 +36,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improve docs for SDK components
 - Portrait video support, minor style fixes
 - [Demo] Update demo dependencies
-- [Demo] Default to nearest available region
 
 ### Removed
 
@@ -31,7 +44,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed reversed labels for mute/unmute control in `AudioInputControl`
 - Fixed `PreviewVideo` component when selecting new video input device
 - Fixed incorrect Storybook docs rendering
-- Fixed `css` prop not taking precedence over media queries
 
 ## [1.0.3] - 2020-08-04
 
