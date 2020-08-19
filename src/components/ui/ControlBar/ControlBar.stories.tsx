@@ -81,7 +81,7 @@ export const ControlBarForDocs = () => {
   };
 
   return (
-    <ControlBar showLabels layout="left">
+    <ControlBar showLabels layout="left" css="position: absolute;">
       <ControlBarItem {...microphoneButtonProps} />
       <ControlBarItem {...volumeButtonProps} />
       <ControlBarItem {...cameraButtonProps} />
