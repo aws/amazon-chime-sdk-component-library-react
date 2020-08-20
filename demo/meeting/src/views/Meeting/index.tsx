@@ -13,6 +13,7 @@ import { useNavigation } from '../../providers/NavigationProvider';
 import MeetingDetails from '../../containers/MeetingDetails';
 import MeetingControls from '../../containers/MeetingControls';
 import useMeetingEndRedirect from '../../hooks/useMeetingEndRedirect';
+import MeetingMetrics from '../../containers/MeetingMetrics';
 
 const MeetingView = () => {
   useMeetingEndRedirect();
@@ -22,6 +23,7 @@ const MeetingView = () => {
     <UserActivityProvider>
       <StyledLayout showNav={showNavbar} showRoster={showRoster}>
         <StyledContent>
+          <MeetingMetrics />
           <VideoTileGrid
             className="videos"
             noRemoteVideoView={<MeetingDetails />}

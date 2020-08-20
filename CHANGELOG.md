@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add PostLogger support to MeetingProvider
+- Add `useBandwidthMetrics` hook, add bandwidth stats to demo
 
 ### Changed
 
@@ -18,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Fixed
+
 - Fixed `css` prop not taking precedence over media queries
 
 ## [1.1.0] - 2020-08-14

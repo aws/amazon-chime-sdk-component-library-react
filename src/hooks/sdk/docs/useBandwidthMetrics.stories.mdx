@@ -1,0 +1,56 @@
+<Meta title="SDK Hooks/useBandwidthMetrics" />
+
+# useBandwidthMetrics
+
+The `useBandwidthMetrics` hook returns the available outgoing and incoming bandwidth for the current meeting session.
+
+This hook re-renders frequently. You should avoid using it high in your app tree, and ideally use it in your leaf components.
+
+### Return Value
+
+```javascript
+{
+  availableOutgoingBandwidth: number | null;
+  availableIncomingBandwidth: number | null;
+}
+}
+```
+
+## Importing
+
+```javascript
+import { useBandwidthMetrics } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook depends on the `AudioVideoProvider` being rendered. If you are using the MeetingProvider, it is rendered by default.
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useBandwidthMetrics
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const metrics = useBandwidthMetrics();
+
+  return (
+    <>
+      <p>Incoming: {metrics.availableIncomingBandwidth}</p>
+      <p>Outgoing: {metrics.availableOutgoingBandwidth}</p>    
+    </>
+  )
+};
+```
+
+### Dependencies
+
+- `AudioVideoProvider`
