@@ -40,9 +40,9 @@ const AudioOutputProvider: React.FC = ({ children }) => {
     let isMounted = true;
 
     const observer: DeviceChangeObserver = {
-      audioOutputsChanged: (newAudioOutput: MediaDeviceInfo[]) => {
+      audioOutputsChanged: (newAudioOutputs: MediaDeviceInfo[]) => {
         console.log('AudioOutputProvider - audio outputs updated');
-        setAudioOutputs(newAudioOutput);
+        setAudioOutputs(newAudioOutputs);
       },
     };
 

@@ -1,7 +1,7 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { useAudioOutputs } from '../../../../providers/DevicesProvider';
@@ -22,19 +22,9 @@ export const SpeakerSelection: React.FC<Props> = ({
   onChange
 }) => {
   const meetingManager = useMeetingManager();
-  const { devices } = useAudioOutputs();
-  const [selectedOutput, setSelectedOutput] = useState('');
-
-  useEffect(() => {
-    if (!devices.length || selectedOutput) {
-      return;
-    }
-
-    setSelectedOutput(devices[0].deviceId);
-  }, [selectedOutput, devices]);
+  const { devices, selectedDevice } = useAudioOutputs();
 
   async function selectAudioOutput(deviceId: string) {
-    setSelectedOutput(deviceId);
     meetingManager.selectAudioOutputDevice(deviceId);
     onChange && onChange(deviceId);
   }
@@ -44,6 +34,7 @@ export const SpeakerSelection: React.FC<Props> = ({
       label={label}
       devices={devices}
       onChange={selectAudioOutput}
+      selectedDeviceId={selectedDevice}
       notFoundMsg={notFoundMsg}
     />
   );

@@ -19,7 +19,7 @@ export const CameraSelection: React.FC<Props> = ({
   label = 'Camera source'
 }) => {
   const meetingManager = useMeetingManager();
-  const { devices } = useVideoInputs();
+  const { devices, selectedDevice } = useVideoInputs();
 
   async function selectVideoInput(deviceId: string) {
     meetingManager.selectVideoInputDevice(deviceId);
@@ -30,6 +30,7 @@ export const CameraSelection: React.FC<Props> = ({
       label={label}
       onChange={selectVideoInput}
       devices={devices}
+      selectedDeviceId={selectedDevice}
       notFoundMsg={notFoundMsg}
     />
   );

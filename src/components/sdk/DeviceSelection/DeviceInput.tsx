@@ -1,16 +1,17 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, ChangeEvent } from 'react';
+import React, { ChangeEvent } from 'react';
 
 import { FormField } from '../../ui/FormField';
 import { Select } from '../../ui/Select';
-import { DeviceType } from '../../../types';
+import { DeviceType, SelectedDeviceId } from '../../../types';
 
 interface Props {
   label: string;
   notFoundMsg: string;
   devices: DeviceType[];
+  selectedDeviceId: SelectedDeviceId;
   onChange: (deviceId: string) => void;
 }
 
@@ -18,9 +19,9 @@ const DeviceInput: React.FC<Props> = ({
   onChange,
   label,
   devices,
+  selectedDeviceId,
   notFoundMsg
 }) => {
-  const [selectedDevice, setSelectedDevice] = useState('');
 
   const outputOptions = devices.map(device => ({
     value: device.deviceId,
@@ -36,22 +37,12 @@ const DeviceInput: React.FC<Props> = ({
         }
       ];
 
-  useEffect(() => {
-    if (!devices.length || selectedDevice) {
-      return;
-    }
-
-    setSelectedDevice(devices[0].deviceId);
-  }, [devices, selectedDevice]);
-
   async function selectDevice(e: ChangeEvent<HTMLSelectElement>) {
     const deviceId = e.target.value;
 
     if (deviceId === 'not-available') {
       return;
     }
-
-    setSelectedDevice(deviceId);
     onChange(deviceId);
   }
 
@@ -60,7 +51,7 @@ const DeviceInput: React.FC<Props> = ({
       field={Select}
       options={options}
       onChange={selectDevice}
-      value={selectedDevice}
+      value={selectedDeviceId || ''}
       label={label}
     />
   );
