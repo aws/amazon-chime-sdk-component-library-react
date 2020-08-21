@@ -1,0 +1,61 @@
+<Meta title="SDK Providers/RosterProvider" />
+
+# RosterProvider
+
+The `RosterProvider` provides the state of the roster.
+
+### State
+
+```javascript
+{
+ [AttendeeId: string]: {
+   chimeAttendeeId: string;
+   externalUserId?: string;
+   name?: string;
+ }
+}
+```
+You can access the state by using the [useRosterState](/?path=/docs/sdk-hooks-userosterstate--page) hook.
+
+## Usage
+
+If you are using `MeetingProvider`, the `RosterProvider` is rendered by default.
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useRosterState,
+  Roster,
+  RosterGroup,
+  RosterAttendee
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const { roster } = useRosterState();
+  const rosterArray = Object.values(roster);
+
+  const attendeeItems = attendees.map(attendee => {
+    const { chimeAttendeeId, name } = attendee;
+    return (
+      <RosterAttendee key={chimeAttendeeId} attendeeId={chimeAttendeeId} />
+    );
+  });
+
+  return (
+    <Roster>
+      <RosterGroup>{attendeeItems}</RosterGroup>
+    </Roster>
+  );
+};
+```
+
+### Dependencies
+
+- `MeetingProvider`
