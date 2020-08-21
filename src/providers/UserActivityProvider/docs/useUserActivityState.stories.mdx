@@ -1,0 +1,48 @@
+<Meta title="SDK Hooks/useUserActivityState" />
+
+# useUserActivityState
+
+The `useUserActivityState` hook returns the state of the user activity.
+
+### Return Value
+
+```javascript
+{
+    // Whether or not the the user is active
+    isUserActive: boolean | null;
+}
+```
+
+## Importing
+
+```javascript
+import { useUserActivityState } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook depends on the `UserActivityProvider`.
+
+```jsx
+import React from 'react';
+import {
+  UserActivityProvider,
+  useUserActivityState,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <UserActivityProvider>
+    <MyChild />
+  </UserActivityProvider>
+);
+
+const MyChild = () => {
+  const { isUserActive } = useUserActivityState();
+
+  return isUserActive ? <div>Active</div> : <div>Not active</div>;
+};
+```
+
+### Dependencies
+
+- `UserActivityProvider`

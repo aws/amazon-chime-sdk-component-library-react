@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Add documentation for UserActivityProvider and RosterProvider
+
+### Changed
+
+### Removed
+
+### Fixed
+
+## [Unreleased]
+
+### Added
 
 - Add PostLogger support to MeetingProvider
 - Add `useBandwidthMetrics` hook, add bandwidth stats to demo
