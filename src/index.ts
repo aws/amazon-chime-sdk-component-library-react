@@ -53,13 +53,13 @@ export {
   CameraSelection,
   MicSelection,
   SpeakerSelection,
-  QualitySelection
+  QualitySelection,
 } from './components/sdk/DeviceSelection';
 export {
   AudioInputControl,
   AudioOutputControl,
   ContentShareControl,
-  VideoInputControl
+  VideoInputControl,
 } from './components/sdk/MeetingControls';
 export { ContentShare } from './components/sdk/ContentShare';
 export { LocalVideo } from './components/sdk/LocalVideo';
@@ -77,15 +77,15 @@ export { KEY_CODES } from './constants';
 // Contexts
 export {
   ControlBarContext,
-  useControlBarContext
+  useControlBarContext,
 } from './components/ui/ControlBar/ControlBarContext';
 export {
   ModalContext,
-  useModalContext
+  useModalContext,
 } from './components/ui/Modal/ModalContext';
 export {
   useNotificationState,
-  useNotificationDispatch
+  useNotificationDispatch,
 } from './providers/NotificationProvider';
 export { AudioVideoContext } from './providers/AudioVideoProvider';
 
@@ -109,17 +109,18 @@ export { useFeaturedTileState } from './providers/FeaturedVideoTileProvider';
 export {
   useAudioInputs,
   useVideoInputs,
-  useAudioOutputs
+  useAudioOutputs,
 } from './providers/DevicesProvider';
 export { useToggleLocalMute } from './hooks/sdk/useToggleLocalMute';
 export { useLocalAudioOutput } from './providers/LocalAudioOutputProvider';
 export { useLocalVideo } from './providers/LocalVideoProvider';
 export {
   useContentShareState,
-  useContentShareControls
+  useContentShareControls,
 } from './providers/ContentShareProvider';
 export { useMeetingStatus } from './hooks/sdk/useMeetingStatus';
 export { useLocalAudioInputActivityPreview } from './hooks/sdk/useLocalAudioInputActivityPreview';
+export { useBandwidthMetrics } from './hooks/sdk/useBandwidthMetrics';
 
 // Providers
 export { NotificationProvider } from './providers/NotificationProvider';
@@ -132,7 +133,10 @@ export { RosterProvider } from './providers/RosterProvider';
 export { DevicesProvider } from './providers/DevicesProvider';
 export { RemoteVideoTileProvider } from './providers/RemoteVideoTileProvider';
 export { FeaturedVideoTileProvider } from './providers/FeaturedVideoTileProvider';
-export { UserActivityProvider, useUserActivityState } from './providers/UserActivityProvider';
+export {
+  UserActivityProvider,
+  useUserActivityState,
+} from './providers/UserActivityProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';
