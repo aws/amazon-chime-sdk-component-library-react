@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Add `useLocalAudioInputActivityPreview` hook for direct access to microphone input value
+- Add chat message component
 
 ### Changed
 - Adjust clear behavior and minor styling of inputs
@@ -258,5 +259,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix end meeting
 - Fix video grid, input bugs on iOS
 - Fix microphone poorConnection SVG warning in devtools
+- Fix search input snapshot tests for new layout
 
 ## [0.1.1] - 2020-06-16

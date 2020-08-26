@@ -333,6 +333,21 @@ const videoGrid = {
   bgd: colors.greys.grey90
 };
 
+const chatMessage = {
+  incoming: {
+    bgd: colors.greys.grey80,
+    fontColor: colors.greys.grey30,
+  },
+  outgoing: {
+    bgd: colors.primary.dark,
+    fontColor: colors.greys.grey70,
+  },
+  container: {
+    fontColor: colors.greys.grey30,
+    bgd: colors.greys.black,
+  }
+}
+
 export const darkTheme = {
   name: 'Dark Theme',
   buttons,
@@ -348,6 +363,7 @@ export const darkTheme = {
   roster,
   navbar,
   videoGrid,
+  chatMessage,
   ...defaultTheme
 };
 
