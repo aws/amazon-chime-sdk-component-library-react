@@ -37,5 +37,5 @@ const withGlobalStyles = (cb: Function) => (
 addDecorator(withGlobalStyles);
 addDecorator(withKnobs);
 addDecorator(withA11y);
-addDecorator(withThemesProvider(themes));
+addDecorator(withThemesProvider(themes, { disableThemePreview: false }));
 configure(requiredStories, module);
