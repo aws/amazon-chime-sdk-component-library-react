@@ -167,6 +167,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add third party dependency attributes to NOTICE file
 - Add component to manage visibility of controlbar
 - Add third party licence text
+- Add InfiniteList container component
 
 ### Changed
 

@@ -1,0 +1,33 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Spinner from './';
+import { lightTheme } from '../../../../theme/';
+
+# Spinner Icon
+
+The Spinner component creates a spinner icon using inline SVG. Typically, you can use it to indicate loading or fetching.
+
+## Importing
+
+```javascript
+import { Spinner } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width and height
+<Preview>
+  <ThemeProvider theme={lightTheme}>
+    <Spinner width="2rem" height="2rem" />
+  </ThemeProvider>
+</Preview>
+
+
+```jsx
+<Spinner width="2rem" height="2rem" />
+```
+
+## Props
+
+<Props of={Spinner} />
