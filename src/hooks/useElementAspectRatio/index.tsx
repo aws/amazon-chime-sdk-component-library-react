@@ -45,7 +45,7 @@ export interface VideoGridProps extends React.HTMLAttributes<HTMLDivElement> {
   size: number;
 }
 
-const useElementAspectRatio = (
+export const useElementAspectRatio = (
   ref: RefObject<HTMLElement>
 ): AspectRatio | null => {
   const [ratio, setRatio] = useState<AspectRatio | null>(null);

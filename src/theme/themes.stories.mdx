@@ -11,7 +11,9 @@ import {
   RosterGroup,
   RosterHeader,
   RosterCell,
-  SecondaryButton
+  SecondaryButton,
+  Flex,
+  GlobalStyles
 } from '../';
 
 <Meta title="Themes" />
@@ -42,9 +44,11 @@ import { ThemeProvider } from 'styled-components';
 
 <ThemeProvider theme={lightTheme}>
   <Preview>
-    <Button label="Basic button" />
-    <PrimaryButton label="Primary" icon={<Meeting />} />
-    <SecondaryButton label="This is a secondary button" />
+    <Flex container alignItems="center" justifyContent="space-around">
+      <Button label="Basic button" />
+      <PrimaryButton label="Primary" icon={<Meeting />} />
+      <SecondaryButton label="This is a secondary button" />
+    </Flex>
   </Preview>
 </ThemeProvider>
 
@@ -60,9 +64,11 @@ import { ThemeProvider } from 'styled-components';
 
 <ThemeProvider theme={darkTheme}>
   <Preview>
-    <Button label="Basic button" />
-    <PrimaryButton label="Primary" icon={<Meeting />} />
-    <SecondaryButton label="This is a secondary button" />
+    <Flex container alignItems="center" justifyContent="space-around">
+      <Button label="Basic button" />
+      <PrimaryButton label="Primary" icon={<Meeting />} />
+      <SecondaryButton label="This is a secondary button" />
+    </Flex>
   </Preview>
 </ThemeProvider>
 
@@ -77,6 +83,7 @@ import { ThemeProvider } from 'styled-components';
 #### Roster in Light Theme
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Roster>
       <RosterHeader
@@ -143,6 +150,7 @@ import { ThemeProvider } from 'styled-components';
 #### Roster in Dark Theme
 
 <ThemeProvider theme={darkTheme}>
+  <GlobalStyles/>
   <Preview>
     <Roster>
       <RosterHeader
