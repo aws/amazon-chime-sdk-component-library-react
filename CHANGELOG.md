@@ -5,16 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
 ## [Unreleased]
 
 ### Added
 
 - Add PostLogger support to MeetingProvider
 - Add `useBandwidthMetrics` hook, add bandwidth stats to demo
+- Add missing exported hooks to index.ts
+- Add documentation for UserActivityProvider and RosterProvider
+
 
 ### Changed
 
 - [Demo] Default to nearest available region
+- [Docs] Upgrade storybook to v6
 
 ### Removed
 
@@ -38,6 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Improve docs for SDK components
 - Portrait video support, minor style fixes
 - [Demo] Update demo dependencies
+
 
 ### Removed
 

@@ -1,0 +1,44 @@
+<Meta title="SDK Providers/UserActivityProvider" />
+
+# UserActivityProvider
+
+The `UserActivityProvider` provides the state of user activity by tracking mouse movements and focus events. The user activity state can be used to conditionally show/hide elements like the [ControlBar](?path=/story/ui-components-controlbar--control-bar) component.
+
+### State
+
+```javascript
+{
+    // Whether or not the the user is active
+    isUserActive: boolean | null;
+}
+```
+
+## Importing
+
+```javascript
+import { UserActivityProvider } from 'amazon-chime-sdk-component-library-react';
+```
+
+You can access the state by using the [useUserActivityState](/?path=/docs/sdk-hooks-useuseractivitystate--page) hook.
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  UserActivityProvider,
+  useUserActivityState,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <UserActivityProvider>
+    <MyChild />
+  </UserActivityProvider>
+);
+
+const MyChild = () => {
+  const { isUserActive } = useUserActivityState();
+
+  return isUserActive ? <div>Active</div> : <div>Not active</div>;
+};
+```

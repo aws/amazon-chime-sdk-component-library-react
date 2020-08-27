@@ -95,29 +95,33 @@ export { useTabOutside } from './hooks/useTabOutside';
 export { useUniqueId } from './hooks/useUniqueId';
 export { useFocusIn } from './hooks/useFocusIn';
 export { useMouseMove } from './hooks/useMouseMove';
-
-export { useAttendeeStatus } from './hooks/sdk/useAttendeeStatus';
-export { useAttendeeAudioStatus } from './hooks/sdk/useAttendeeAudioStatus';
-export { useSelectVideoQuality } from './hooks/sdk/useSelectVideoQuality';
+export { useApplyVideoObjectFit } from './hooks/useApplyVideoObjectFit';
+export { useElementAspectRatio } from './hooks/useElementAspectRatio';
 
 export { useMeetingManager } from './providers/MeetingProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRosterState } from './providers/RosterProvider';
 export { useRemoteVideoTileState } from './providers/RemoteVideoTileProvider';
-export { useActiveSpeakersState } from './hooks/sdk/useActiveSpeakersState';
 export { useFeaturedTileState } from './providers/FeaturedVideoTileProvider';
 export {
   useAudioInputs,
   useVideoInputs,
   useAudioOutputs,
 } from './providers/DevicesProvider';
-export { useToggleLocalMute } from './hooks/sdk/useToggleLocalMute';
 export { useLocalAudioOutput } from './providers/LocalAudioOutputProvider';
 export { useLocalVideo } from './providers/LocalVideoProvider';
 export {
   useContentShareState,
   useContentShareControls,
 } from './providers/ContentShareProvider';
+
+// SDK Hooks
+export { useAttendeeStatus } from './hooks/sdk/useAttendeeStatus';
+export { useAttendeeAudioStatus } from './hooks/sdk/useAttendeeAudioStatus';
+export { useSelectVideoQuality } from './hooks/sdk/useSelectVideoQuality';
+export { useSelectVideoInputDevice } from './hooks/sdk/useSelectVideoInputDevice';
+export { useActiveSpeakersState } from './hooks/sdk/useActiveSpeakersState';
+export { useToggleLocalMute } from './hooks/sdk/useToggleLocalMute';
 export { useMeetingStatus } from './hooks/sdk/useMeetingStatus';
 export { useLocalAudioInputActivityPreview } from './hooks/sdk/useLocalAudioInputActivityPreview';
 export { useBandwidthMetrics } from './hooks/sdk/useBandwidthMetrics';
