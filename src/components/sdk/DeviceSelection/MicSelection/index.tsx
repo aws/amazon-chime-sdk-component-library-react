@@ -19,7 +19,7 @@ export const MicSelection: React.FC<Props> = ({
   label = 'Microphone source'
 }) => {
   const meetingManager = useMeetingManager();
-  const { devices } = useAudioInputs();
+  const { devices, selectedDevice } = useAudioInputs();
 
   async function selectAudioInput(deviceId: string) {
     meetingManager.selectAudioInputDevice(deviceId);
@@ -30,6 +30,7 @@ export const MicSelection: React.FC<Props> = ({
       label={label}
       onChange={selectAudioInput}
       devices={devices}
+      selectedDeviceId={selectedDevice}
       notFoundMsg={notFoundMsg}
     />
   );
