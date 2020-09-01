@@ -23,10 +23,18 @@ export function useAttendeeStatus(attendeeId: string): RosterAttendeeStatus {
       return null;
     }
 
+    const localAttendeeId = (audioVideo as any).audioVideoController
+      ?.realtimeController?.state?.localAttendeeId;
+    const isLocalUser = attendeeId === localAttendeeId;
     const tiles = audioVideo.getAllVideoTiles();
-    const videoTile = tiles.find(tile => {
+    const videoTile = tiles.find((tile) => {
       const state = tile.state();
-      return !state.isContent && state.boundAttendeeId === attendeeId;
+
+      if (state.isContent || (isLocalUser && !state.active)) {
+        return false;
+      }
+
+      return state.boundAttendeeId === attendeeId;
     });
 
     return videoTile ? videoTile.state().tileId : null;
@@ -38,7 +46,7 @@ export function useAttendeeStatus(attendeeId: string): RosterAttendeeStatus {
     }
 
     const tiles = audioVideo.getAllVideoTiles();
-    const videoTile = tiles.find(tile => {
+    const videoTile = tiles.find((tile) => {
       const state = tile.state();
       if (!state.boundAttendeeId || !state.isContent) {
         return false;
@@ -56,7 +64,7 @@ export function useAttendeeStatus(attendeeId: string): RosterAttendeeStatus {
     }
 
     const observer: AudioVideoObserver = {
-      videoTileDidUpdate: state => {
+      videoTileDidUpdate: (state) => {
         if (state.boundAttendeeId !== attendeeId) {
           return;
         }
@@ -76,7 +84,7 @@ export function useAttendeeStatus(attendeeId: string): RosterAttendeeStatus {
         if (tileId === videoTileId) {
           setVideoTileId(null);
         }
-      }
+      },
     };
 
     audioVideo.addObserver(observer);
@@ -90,7 +98,7 @@ export function useAttendeeStatus(attendeeId: string): RosterAttendeeStatus {
     }
 
     const observer: AudioVideoObserver = {
-      videoTileDidUpdate: state => {
+      videoTileDidUpdate: (state) => {
         if (!state.isContent || !state.boundAttendeeId || contentTileId) {
           return;
         }
@@ -107,7 +115,7 @@ export function useAttendeeStatus(attendeeId: string): RosterAttendeeStatus {
         if (tileId === contentTileId) {
           setContentTileId(null);
         }
-      }
+      },
     };
 
     audioVideo.addObserver(observer);
@@ -122,7 +130,7 @@ export function useAttendeeStatus(attendeeId: string): RosterAttendeeStatus {
   return {
     ...audioState,
     videoEnabled,
-    sharingContent
+    sharingContent,
   };
 }
 

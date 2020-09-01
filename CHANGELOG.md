@@ -26,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed `css` prop not taking precedence over media queries
 - Fixed incorrect device permission status
+- Fixed `useAttendeeStatus` returning incorrect video state for local user when mounting
 
 ## [1.1.0] - 2020-08-14
 
