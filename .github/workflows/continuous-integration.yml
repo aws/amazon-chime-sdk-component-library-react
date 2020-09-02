@@ -18,6 +18,10 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
+    env:
+      GITHUB_CONTEXT: ${{ toJson(github) }}
+      # Increase timeout for snapshot testing to 8 minutes
+      WAIT_ON_TIMEOUT: 480000
 
     steps:
     - name: Checkout Package
@@ -30,15 +34,22 @@ jobs:
       run: npm ci
     - name: Build
       run: npm run build:release --if-present
-    - name: Check for changes to the src folder
-      uses: tj-actions/verify-changed-files@v5
+    - name: Get all changes in the commit
+      uses: jitterbit/get-changed-files@v1
       id: changed_files
-      with:
-        files: src
+    - name: Check for changes to src folder
+      id: src_check
+      run: |
+        for file in ${{steps.changed_files.outputs.all}}; do
+          if [[ ${file} == "src/"* ]]
+          then
+            echo "::set-output name=src_changed::true"
+          else 
+            echo "::set-output name=src_changed::false"
+          fi
+        done
     - name: Run Snapshot testing for src folder changes
-      if: steps.changed_files.outputs.files_changed == 'true'
+      needs: src_check
+      if: ${{steps.src_check.outputs.src_changed}}
       run: npm run test:snapshots
-      env:
-        GITHUB_CONTEXT: ${{ toJson(github) }}
-        # Increase timeout for snapshot testing to 8 minutes
-        WAIT_ON_TIMEOUT: 480000
+  

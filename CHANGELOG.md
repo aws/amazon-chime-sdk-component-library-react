@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Demo] Default to nearest available region
 - [Docs] Upgrade storybook to v6
 - Update Device selector to use hooks instead of local state
+- Update github action to run snapshot tests only on src/ folder changes
 
 ### Removed
 
