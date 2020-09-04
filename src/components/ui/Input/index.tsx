@@ -1,7 +1,15 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { ChangeEvent, ReactNode, forwardRef, Ref, useRef } from 'react';
+import React, {
+  ChangeEvent,
+  ReactNode,
+  forwardRef,
+  Ref,
+  useRef,
+  useState,
+  useEffect,
+} from 'react';
 
 import InputWrapper from './InputWrapper';
 import { StyledInput, StyledClear } from './Styled';
@@ -43,11 +51,13 @@ export const Input = forwardRef(
       showClear = true,
       ...rest
     } = props;
-
+    const [focused, setFocused] = useState(false);
+    const focusedRef = useRef(false);
     const internalRef = useRef(null);
-    const ref = (externalRef || internalRef) as React.MutableRefObject<
+    const inputRef = (externalRef || internalRef) as React.MutableRefObject<
       HTMLInputElement
     >;
+    const clearRef = useRef<HTMLButtonElement>(null);
 
     const label = props['aria-label']
       ? `clear ${props['aria-label']}`
@@ -59,7 +69,7 @@ export const Input = forwardRef(
         return;
       }
 
-      const input = ref.current;
+      const input = inputRef.current;
       const nativeSetter = Object.getOwnPropertyDescriptor(
         window.HTMLInputElement.prototype,
         'value'
@@ -73,6 +83,50 @@ export const Input = forwardRef(
       input.focus();
     };
 
+    useEffect(() => {
+      let blurring = false;
+
+      const onFocus = (e: any) => {
+        if (!focusedRef.current) {
+          return;
+        }
+
+        if (e.target !== clearRef.current && e.target !== inputRef.current) {
+          focusedRef.current = false;
+          setFocused(false);
+          return;
+        }
+
+        if (blurring) {
+          blurring = false;
+        }
+      };
+
+      const onFocusOut = (e: any) => {
+        if (!focusedRef.current) {
+          return;
+        }
+
+        blurring = true;
+        setTimeout(() => {
+          if (blurring) {
+            focusedRef.current = false;
+            setFocused(false);
+          }
+
+          blurring = false;
+        }, 10);
+      };
+
+      document.addEventListener('focusin', onFocus);
+      document.addEventListener('focusout', onFocusOut);
+
+      return () => {
+        document.removeEventListener('focusin', onFocus);
+        document.removeEventListener('focusout', onFocusOut);
+      };
+    }, []);
+
     return (
       <InputWrapper
         leadingIcon={leadingIcon}
@@ -83,18 +137,23 @@ export const Input = forwardRef(
           {...rest}
           value={value}
           type={type || 'text'}
-          ref={ref}
+          ref={inputRef}
           className="ch-input"
           onChange={onChange}
           data-testid="input"
+          onFocus={() => {
+            focusedRef.current = true;
+            setFocused(true);
+          }}
         />
         {showClear && (
           <StyledClear
             type="button"
-            active={!!onClear}
+            active={!!(onClear || (focused && value.length))}
             tabIndex={-1}
             aria-label={label}
             onClick={handleClear}
+            ref={clearRef}
           >
             <Clear width="1.25rem" />
           </StyledClear>
