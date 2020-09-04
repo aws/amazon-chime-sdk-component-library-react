@@ -115,8 +115,8 @@ spawnOrFail('git', ['add -A']);
 spawnOrFail('git', [`commit -m 'Publish ${tag}'`]);
 logger.log(`Created commit called: "Publish ${tag}"`);
 
-logger.log(`Running build:release script`);
-spawnOrFail('npm', [`run build:release`]);
+logger.log(`Running build:publish script`);
+spawnOrFail('npm', [`run build:publish`]);
 logger.log(`Running npm pack --dry-run, this can take a few minutes`);
 spawnOrFail('npm', ['pack --dry-run']);
 
