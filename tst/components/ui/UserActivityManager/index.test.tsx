@@ -3,7 +3,6 @@
 
 import '@testing-library/jest-dom';
 import React, { useState } from 'react';
-import { fireEvent } from '@testing-library/dom';
 
 import UserActivityManager from '../../../../src/components/ui/UserActivityManager';
 import { UserActivityContext } from '../../../../src/providers/UserActivityProvider';
