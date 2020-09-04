@@ -17,6 +17,7 @@ export function useToggleLocalMute() {
     };
 
     audioVideo?.realtimeSubscribeToMuteAndUnmuteLocalAudio(muteUnmutecallback);
+    setMuted(audioVideo?.realtimeIsLocalAudioMuted() || false);
 
     return (): void => {
       audioVideo?.realtimeUnsubscribeToMuteAndUnmuteLocalAudio(muteUnmutecallback);
@@ -29,7 +30,7 @@ export function useToggleLocalMute() {
     } else {
       audioVideo?.realtimeMuteLocalAudio();
     }
-  }, [muted]);
+  }, [muted, audioVideo]);
 
   return { muted, toggleMute };
 }
