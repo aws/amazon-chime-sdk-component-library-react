@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `useLocalAudioInputActivityPreview` hook for direct access to microphone input value
 
 ### Changed
+- Adjust clear behavior and minor styling of inputs
 
 ### Removed
 
