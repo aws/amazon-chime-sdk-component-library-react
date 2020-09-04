@@ -26,7 +26,7 @@ describe('UserActivityManager', () => {
     );
   };
 
-  it('should render a UserActivityManager when user isActive', () => {
+  it('should render a UserActivityManager when user isUserActive=true', () => {
     const component = <ComponentUnderTest isUserActive></ComponentUnderTest>;
 
     const { queryByText } = renderWithTheme(lightTheme, component);
