@@ -1,0 +1,53 @@
+<Meta title="SDK Hooks/useLocalAudioInputActivity" />
+
+# useLocalAudioInputActivity
+
+The `useLocalAudioInputActivity` calls the provided callback with the current microphone input decimal value.
+
+You can use this hook to develop a custom microphone activity preview component. Be aware that the update is high-frequency, so you should be careful when storing it in React
+
+## Parameters
+
+This hook accepts a single parameter:
+
+```javascript
+// The current audio input activity in decimal format
+- cb: (decimal: number) => void;
+```
+
+## Importing
+
+```javascript
+import { useLocalAudioInputActivity } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook depends on the `AudioVideoProvider`. If you are using `MeetingProvider`, it is rendered by default.
+
+```jsx
+import React, { useRef } from 'react';
+import {
+  MeetingProvider,
+  useLocalAudioInputActivity,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <CustomMicrophoneActivity />
+  </MeetingProvider>
+);
+
+const CustomMicrophoneActivity = () => {
+  const callback = (decimal: number) => {
+    console.log('Current audio level: ', decimal);
+  };
+  useLocalAudioInputActivity(callback);
+};
+```
+
+### Dependencies
+
+- `MeetingProvider`
+- `AudioVideoProvider`, If you are using `MeetingProvider`, `AudioVideoProvider` is rendered by default
+- `useAudioInputs`
