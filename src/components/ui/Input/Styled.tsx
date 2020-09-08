@@ -20,7 +20,7 @@ export const StyledInputWrapper = styled.span<InputWrapperProps>`
     width: 1rem;
     left: 0.1875rem;
     position: absolute;
-    top: ${props => (props.sizing === 'sm' ? '0.25rem' : '0.5rem')};
+    top: ${(props) => (props.sizing === 'sm' ? '0.35rem' : '0.6rem')};
   }
 
   > input {
