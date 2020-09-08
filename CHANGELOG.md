@@ -10,6 +10,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed `useToggleLocalMute` not working when mounted before audioVideo initialized
 
+## Unreleased
+
+### Added
+
+- Add `useLocalAudioInputActivityPreview` hook for direct access to microphone input value
+
+### Changed
+
+### Removed
+
+### Fixed
+
+- Fixed missing `audioVideo` deps in `useLocalAudioInputActivityPreview`
+
 ## [1.2.0] - 2020-09-04
 
 ### Added
