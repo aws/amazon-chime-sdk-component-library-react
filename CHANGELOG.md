@@ -4,25 +4,20 @@ All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
 ## [Unreleased]
 
 ### Fixed
-
 - Fixed `useToggleLocalMute` not working when mounted before audioVideo initialized
-
-## Unreleased
+- Fixed missing `audioVideo` deps in `useLocalAudioInputActivityPreview`
+- Fixed `leadingIcon` alignment in `SearchInput`
 
 ### Added
-
 - Add `useLocalAudioInputActivityPreview` hook for direct access to microphone input value
 
 ### Changed
 
 ### Removed
-
-### Fixed
-
-- Fixed missing `audioVideo` deps in `useLocalAudioInputActivityPreview`
 
 ## [1.2.0] - 2020-09-04
 
