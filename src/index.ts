@@ -114,6 +114,7 @@ export {
   useContentShareState,
   useContentShareControls,
 } from './providers/ContentShareProvider';
+export { useAppCheckerManager } from './providers/AppCheckerProvider';
 
 // SDK Hooks
 export { useAttendeeStatus } from './hooks/sdk/useAttendeeStatus';
@@ -142,6 +143,7 @@ export {
   UserActivityProvider,
   useUserActivityState,
 } from './providers/UserActivityProvider';
+export { AppCheckerProvider } from './providers/AppCheckerProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';

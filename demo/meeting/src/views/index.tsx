@@ -4,3 +4,5 @@
 export { default as DeviceSetup } from './DeviceSetup';
 export { default as Home } from './Home';
 export { default as Meeting } from './Meeting';
+export { default as AppChecker } from './AppChecker';
+export { default as AppCheckerDetail } from './AppCheckerDetail';

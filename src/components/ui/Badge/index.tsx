@@ -10,7 +10,7 @@ export interface BadgeProps extends BaseProps {
   /** The value shows in the badge*/
   value: string | number;
   /** The status of the badge */
-  status?: 'default' | 'alert';
+  status?: 'default' | 'alert' | 'success' | 'warning';
 }
 
 export const Badge: FC<BadgeProps> = ({

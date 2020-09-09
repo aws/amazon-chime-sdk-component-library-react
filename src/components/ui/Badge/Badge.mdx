@@ -54,5 +54,45 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
 />
 ```
 
+### Using Success Status
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <div style={{ 'alignItems': 'center', 'display': 'flex'}}>
+      <span style={{ 'marginRight': '0.5rem' }}>Number of new messages</span>
+      <Badge
+        value="50+"
+        status="success"
+      />
+    </div>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Badge
+  value="50+"
+  status="success"
+/>
+```
+
+### Using Warning Status
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <div style={{ 'alignItems': 'center', 'display': 'flex'}}>
+      <span style={{ 'marginRight': '0.5rem' }}>Number of new messages</span>
+      <Badge
+        value="50+"
+        status="warning"
+      />
+    </div>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Badge
+  value="50+"
+  status="warning"
+/>
+```
+
 ## Props
 <Props of={Badge} />

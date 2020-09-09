@@ -1,0 +1,26 @@
+<Meta title="SDK Hooks/useAppCheckerManager" />
+
+# useAppCheckerManager
+
+The `useAppCheckerManager` hook returns the [AppCheckerManager](?path=/docs/sdk-providers-appcheckermanager--page) instance.
+
+You can access the `AppCheckerManager` instance with the `useAppCheckerManager` hook.
+
+## Usage
+
+```jsx
+import React from 'react';
+import { AppCheckerProvider, useAppCheckerManager } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <AppCheckerProvider>
+    <MyApp />
+  </AppCheckerProvider>
+);
+
+const MyApp = () => {
+  const appCheckerManager = useAppCheckerManager();
+
+  ...
+}
+```

@@ -1,0 +1,42 @@
+<Meta title="SDK Providers/AppCheckerProvider" />
+
+# AppCheckerProvider
+
+The `AppCheckerProvider` provides functionality to check meeting readiness.
+
+## Importing
+
+```jsx
+import { AppCheckerProvider } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+`AppCheckerProvider` needs to be used with by `MeetingProvider` and `DevicesProvider`.
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  DevicesProvider
+  AppCheckerProvider,
+  useAppCheckerManager
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <DevicesProvider>
+      <AppCheckerProvider>
+        <MyChild />
+      </AppCheckerProvider>
+    </DevicesProvider>
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  // When a meeting session is started, you'll have access to the appCheckerManager instance
+  const appCheckerManager = useAppCheckerManager();
+
+  ...
+};
+```

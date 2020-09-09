@@ -24,7 +24,8 @@ export const BasicBadge = () => {
         <span style={{ 'marginRight': '0.5rem' }}>Number of new messages</span>
         <Badge
           value="50+"
-          status={select('status', { default: 'default', alert: 'alert', }, 'default')}
+          status={select('status',
+            { default: 'default', alert: 'alert', success: 'success', warning: 'warning' }, 'default')}
         />
       </div>
     </Flex>

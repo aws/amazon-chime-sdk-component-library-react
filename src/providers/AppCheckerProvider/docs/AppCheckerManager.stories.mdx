@@ -1,0 +1,104 @@
+<Meta title="SDK Providers/AppCheckerManager" />
+
+# MeetingManager
+
+The `AppCheckerManager` is a class that helps integration with the SDK meeting readiness checker APIs. It is tied to the `AppCheckerProvider` and is responsible for checking meeting readiness state.
+
+You can access the `AppCheckerManager` instance with the `useAppCheckerManager` hook.
+
+## Usage
+
+```jsx
+import React from 'react';
+import { AppCheckerProvider, useAppCheckerManager } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <AppCheckerProvider>
+    <MyApp />
+  </AppCheckerProvider>
+);
+
+const MyApp = () => {
+  const appCheckerManager = useAppCheckerManager();
+
+  ...
+}
+```
+
+## Constructor
+
+Accepts `meetingManager`, `selectedAudioInput`, `selectedAudioOutput` and `selectedVideoInput`
+
+## Interface
+
+### `appCheckerManager.checkAudioOutput`
+
+Tests speaker (audio output) locally.
+
+```javascript
+appCheckerManager.checkAudioOutput(() => Promise<boolean>);
+```
+
+### `appCheckerManager.checkAudioInput`
+
+Tests microphone (audio input) locally.
+
+```javascript
+appCheckerManager.checkAudioInput();
+```
+
+### `appCheckerManager.checkVideoInput`
+
+Tests camera (video input) locally.
+
+```javascript
+appCheckerManager.checkVideoInput();
+```
+
+### `appCheckerManager.checkCameraResolution`
+
+Tests supported camera resolution locally.
+
+```javascript
+appCheckerManager.checkCameraResolution({ width: number, height: number });
+```
+
+### `appCheckerManager.checkNetworkUDP`
+
+Tests for UDP network connectivity.
+
+```javascript
+appCheckerManager.checkNetworkUDP();
+```
+
+### `appCheckerManager.checkNetworkTCP`
+
+Tests for TCP network connectivity.
+
+```javascript
+appCheckerManager.checkNetworkTCP();
+```
+
+### `appCheckerManager.checkAudioConnectivity`
+
+Tests audio connection.
+
+```javascript
+appCheckerManager.checkAudioConnectivity();
+```
+
+### `appCheckerManager.checkVideoConnectivity`
+
+Test video connection.
+
+```javascript
+appCheckerManager.checkVideoConnectivity();
+```
+
+### `appCheckerManager.checkContentShare`
+
+Tests content share connectivity.
+
+```javascript
+appCheckerManager.checkContentShare();
+```

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useContext, useState, createContext } from 'react';
+import { LogLevel } from 'amazon-chime-sdk-js';
 
 import MeetingManager from './MeetingManager';
 import { PostLogConfig } from './types';
@@ -13,7 +14,6 @@ import { LocalVideoProvider } from '../LocalVideoProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
 import { LocalAudioOutputProvider } from '../LocalAudioOutputProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
-import { LogLevel } from 'amazon-chime-sdk-js';
 
 interface Props {
   /** Determines how verbose the logging statements will be */

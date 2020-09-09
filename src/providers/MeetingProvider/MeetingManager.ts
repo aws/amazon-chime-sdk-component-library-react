@@ -13,7 +13,9 @@ import {
   MeetingSessionStatusCode,
   AudioVideoObserver,
   MultiLogger,
-  MeetingSessionPOSTLogger
+  MeetingSessionPOSTLogger,
+  DefaultMeetingReadinessChecker,
+  MeetingReadinessChecker
 } from 'amazon-chime-sdk-js';
 
 import {
@@ -92,6 +94,8 @@ export class MeetingManager implements AudioVideoObserver {
 
   postLoggerConfig: PostLogConfig | null = null;
 
+  meetingReadinessChecker: MeetingReadinessChecker | null = null;
+
   constructor(config: ManagerConfig) {
     this.logLevel = config.logLevel;
 
@@ -118,6 +122,7 @@ export class MeetingManager implements AudioVideoObserver {
     this.publishMeetingStatus();
     this.meetingStatusObservers = [];
     this.audioVideoObservers = {};
+    this.meetingReadinessChecker = null;
   }
 
   async join({ meetingInfo, attendeeInfo }: MeetingJoinData) {
@@ -173,6 +178,10 @@ export class MeetingManager implements AudioVideoObserver {
     );
 
     this.audioVideo = this.meetingSession.audioVideo;
+    this.meetingReadinessChecker = new DefaultMeetingReadinessChecker(
+      logger,
+      this.meetingSession
+    );
     this.setupAudioVideoObservers();
     this.setupDeviceLabelTrigger();
     await this.listAndSelectDevices();
@@ -217,8 +226,8 @@ export class MeetingManager implements AudioVideoObserver {
       console.log('[MeetingManager audioVideoDidStop] Meeting ended for all');
       this.meetingStatus = MeetingStatus.Ended;
       this.publishMeetingStatus();
+      this.leave();
     }
-    this.leave();
   };
 
   setupAudioVideoObservers() {

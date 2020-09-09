@@ -10,6 +10,8 @@ const routes = {
   HOME: `${rootPath}`,
   DEVICE: `${rootPath}devices`,
   MEETING: `${rootPath}meeting`,
+  CHECKER: `${rootPath}checker`,
+  CHECKER_DETAIL: `${rootPath}checker-result`,
 };
 
 export default routes;

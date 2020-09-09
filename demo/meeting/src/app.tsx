@@ -16,7 +16,7 @@ import { AppStateProvider, useAppState } from './providers/AppStateProvider';
 import ErrorProvider from './providers/ErrorProvider';
 import routes from './constants/routes';
 import { NavigationProvider } from './providers/NavigationProvider';
-import { Meeting, Home, DeviceSetup } from './views';
+import { Meeting, Home, DeviceSetup, AppChecker, AppCheckerDetail } from './views';
 import Notifications from './containers/Notifications';
 import NoMeetingRedirect from './containers/NoMeetingRedirect';
 import meetingConfig from './meetingConfig';
@@ -42,6 +42,8 @@ const App: FC = () => (
                       <Meeting />
                     </NoMeetingRedirect>
                   </Route>
+                  <Route path={routes.CHECKER} component={AppChecker} />
+                  <Route exact path={routes.CHECKER_DETAIL} component={AppCheckerDetail} />
                 </Switch>
               </NavigationProvider>
             </MeetingProvider>
