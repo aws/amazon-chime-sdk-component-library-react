@@ -11,20 +11,20 @@ export const StyledBadge = styled.span<Partial<BadgeProps>>`
   padding: 0.1rem 0.4rem 0.125rem;
   border-radius: 0.5rem;
   line-height: 1.43;
-  color: ${props => props.theme.colors.greys.white};
+  color: ${(props) => props.theme.colors.greys.white};
   font-size: 0.65rem;
-  background-color: ${props =>
-    props.status === 'alert' ?
-    props.theme.colors.error.primary
-    :
-    props.status === 'default' ?
-      props.theme.colors.greys.grey60
-      :
-      props.status === 'success' ?
-        props.theme.colors.success.primary
-        :
-        props.theme.colors.warning.primary    
-  };
+  background-color: ${(props) => {
+    switch (props.status) {
+      case 'alert':
+        return props.theme.colors.error.primary;
+      case 'default':
+        return props.theme.colors.greys.grey60;
+      case 'success':
+        return props.theme.colors.success.primary;
+      default:
+        return props.theme.colors.warning.primary;
+    }
+  }};
 
   ${baseSpacing};
   ${baseStyles}

@@ -46,6 +46,7 @@ export class AppCheckerManager {
 
   async checkAudioOutput(callback: () => Promise<boolean>): Promise<string> {
     const selectedAudioOutput = await this.getSelectedAudioOutput();
+  
     if (!this.meetingReadinessChecker) {
       return 'Failed';
     }
