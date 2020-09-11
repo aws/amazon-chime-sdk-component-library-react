@@ -1,0 +1,48 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import ChannelList from './';
+import { _ChannelList } from './ChannelList.stories.tsx';
+import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+
+# ChannelList
+
+The ChannelList component displays a column of chat channels.
+
+## Importing
+
+```javascript
+import { ChannelList } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
+  <Preview>
+    <_ChannelList />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<ChannelList
+  activeChannelArn={activeChannelArn}
+  setActiveChannelArn={setActiveChannelArn}
+>
+  <ChannelItem
+    name='Channel 1'
+    arn='abc'
+    moreOptions={[{ children: <span>Option 1</span>, onClick: () => setActiveChannelArn('abc') }]}
+  />
+  <ChannelItem
+    name='Channel 2'
+    arn='dce'
+    moreOptions={[{ children: <span>Option 1</span>, onClick: () => setActiveChannelArn('dce') }] }
+  />
+</ChannelList>
+```
+
+## Props
+
+<Props of={ChannelList} />
