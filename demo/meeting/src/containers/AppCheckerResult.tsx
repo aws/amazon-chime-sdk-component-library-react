@@ -97,7 +97,7 @@ const AppCheckerResult = () => {
     if (audioOutputResult === '') {
       initChecking(callback);
     }
-  }, [appCheckerManager, audioOutputResult, initChecking, meetingId]);
+  }, [audioOutputResult]);
 
   async function initChecking(cb: () => Promise<boolean>): Promise<void> {
     setIsAudioOutputCheckLoading(true);
