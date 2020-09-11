@@ -6,10 +6,10 @@ import {
   CameraSelection,
   MicSelection,
   SpeakerSelection,
-  Heading,
+  Heading
 } from 'amazon-chime-sdk-component-library-react';
 
-import { StyledLayout } from './Styled';
+import { StyledLayout, StyledWrapper } from './Styled';
 import RegionSelection from '../../containers/MeetingForm/RegionSelection';
 import { useAppState } from '../../providers/AppStateProvider';
 import AppCheckerSubmit from '../../components/AppCheckerSubmit';
@@ -20,16 +20,18 @@ const AppChecker = () => {
 
   return (
     <StyledLayout>
-      <Heading tag="h1" level={3} css="align-self: flex-start">
-        App Readiness Checker
-      </Heading>
-      <div style={{ paddingTop: '2rem' }}>
-        <SpeakerSelection />
-        <MicSelection />
-        <CameraSelection />
-        <RegionSelection setRegion={setRegion} region={region} />
-        <AppCheckerSubmit />
-      </div>
+      <StyledWrapper>
+        <Heading tag="h1" level={3} css="align-self: flex-start">
+          App Readiness Checker
+        </Heading>
+        <div style={{ paddingTop: '2rem' }}>
+          <SpeakerSelection />
+          <MicSelection />
+          <CameraSelection />
+          <RegionSelection setRegion={setRegion} region={region} />
+          <AppCheckerSubmit />
+        </div>
+      </StyledWrapper>
     </StyledLayout>
   );
 };
