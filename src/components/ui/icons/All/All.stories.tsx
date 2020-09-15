@@ -18,7 +18,7 @@ import Clear from '../Clear';
 import Clock from '../Clock';
 import Cog from '../Cog';
 import Dots from '../Dots';
-import ContentShare from '../ContentShare';
+import ScreenShare from '../ScreenShare';
 import Crown from '../Crown';
 import DeskPhone from '../DeskPhone';
 import Dialer from '../Dialer';
@@ -43,7 +43,7 @@ import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/All',
-  component: null
+  component: null,
 };
 
 const icons = [
@@ -60,7 +60,7 @@ const icons = [
   Clock,
   Cog,
   Dots,
-  ContentShare,
+  ScreenShare,
   Crown,
   DeskPhone,
   Dialer,
@@ -88,30 +88,25 @@ const IconWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: .5rem 1.5rem;
+  margin: 0.5rem 1.5rem;
   width: 80px;
-  padding: .5rem;
+  padding: 0.5rem;
   border-radius: 2px;
 `;
 
-const getIconAndName = ((Component) => {
+const getIconAndName = (Component) => {
   return (
     <IconWrapper>
-      <Component width={text('width', '4rem')}  />
+      <Component width={text('width', '4rem')} />
       <p>{Component.displayName}</p>
     </IconWrapper>
   );
-});
+};
 
 export const _All = () => {
   return (
-    <Flex
-      container
-      flexDirection="row"
-      alignItems="center"
-      flexWrap="wrap"
-    >
-      {icons.map(i => getIconAndName(i))}
+    <Flex container flexDirection="row" alignItems="center" flexWrap="wrap">
+      {icons.map((i) => getIconAndName(i))}
     </Flex>
   );
-}
+};
