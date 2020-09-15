@@ -8,14 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+
 - Fixed `useToggleLocalMute` not working when mounted before audioVideo initialized
 - Fixed missing `audioVideo` deps in `useLocalAudioInputActivityPreview`
 - Fixed `leadingIcon` alignment in `SearchInput`
+- Rename icon (ContentShare > ScreenShare) to fix conflicting names
 
 ### Added
+
 - Add `useLocalAudioInputActivityPreview` hook for direct access to microphone input value
 
 ### Changed
+
 - Adjust clear behavior and minor styling of inputs
 
 ### Removed
