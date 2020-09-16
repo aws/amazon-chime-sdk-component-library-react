@@ -14,6 +14,7 @@ export const StyledCell = styled.div<RosterCellProps>`
   .ch-mic {
     flex-shrink: 0;
     width: 1.5rem;
+    line-height: 0;
 
     ${({ micPosition }) =>
       micPosition === 'leading'
