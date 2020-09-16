@@ -22,6 +22,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Adjust clear behavior and minor styling of inputs
 - Changed RosterCell CSS to ensure vertical alignment of icons
+- [DEMO] Upgrade `webpack-dev-server` to fix `node-forge` security vulnerability alert
 
 ### Removed
 
