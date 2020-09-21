@@ -70,6 +70,8 @@ export const StyledModalHeader = styled.header`
 `;
 
 export const StyledModalBody = styled.div`
+  font-size: ${(props) => props.theme.fontSizes.text.fontSize};
+  line-height: ${(props) => props.theme.fontSizes.text.lineHeight};
   padding: 0 1.5rem;
   flex-grow: 1;
   overflow-y: auto;
