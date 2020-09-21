@@ -48,7 +48,8 @@ export const PopOver: FC<PopOverProps> = ({
   children,
   isSubMenu = false,
   placement = 'bottom-start',
-  a11yLabel
+  a11yLabel,
+  className,
 }) => {
   const menuRef = createRef<HTMLSpanElement>();
   const [isOpen, setIsOpen] = useState(false);
@@ -119,6 +120,7 @@ export const PopOver: FC<PopOverProps> = ({
               aria-haspopup={true}
               aria-expanded={isOpen}
               data-testid="popover-toggle"
+              className={className || ''}
             >
               {renderButton(isOpen)}
             </StyledPopOverToggle>

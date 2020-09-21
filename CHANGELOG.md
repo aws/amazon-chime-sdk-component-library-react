@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add `useLocalAudioInputActivityPreview` hook for direct access to microphone input value
 - Add chat message component
+- Add `isSelected` prop to `ControlBarButton` component
 
 ### Changed
 

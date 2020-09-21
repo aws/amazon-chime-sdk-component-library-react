@@ -220,6 +220,10 @@ declare module 'styled-components' {
       bgd: string;
       border: string;
       opacity: string | number;
+      selected: {
+        text: string,
+        bgd: string,
+      }
     };
 
     roster: {
