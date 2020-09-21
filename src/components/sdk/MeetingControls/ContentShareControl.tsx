@@ -4,7 +4,7 @@
 import React from 'react';
 
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
-import { ContentShare } from '../../ui/icons';
+import { ScreenShare } from '../../ui/icons';
 import { useContentShareState } from '../../../providers/ContentShareProvider';
 import { useContentShareControls } from '../../../providers/ContentShareProvider';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
@@ -21,26 +21,26 @@ interface Props {
 const ContentShareControl: React.FC<Props> = ({
   label = 'Content',
   pauseLabel = 'Pause',
-  unpauseLabel = 'Unpause'
+  unpauseLabel = 'Unpause',
 }) => {
   const { isLocalUserSharing } = useContentShareState();
   const {
     paused,
     toggleContentShare,
-    togglePauseContentShare
+    togglePauseContentShare,
   } = useContentShareControls();
 
   const dropdownOptions: PopOverItemProps[] = [
     {
       children: <span>{paused ? unpauseLabel : pauseLabel}</span>,
-      onClick: togglePauseContentShare
-    }
+      onClick: togglePauseContentShare,
+    },
   ];
 
   return (
     <>
       <ControlBarButton
-        icon={<ContentShare />}
+        icon={<ScreenShare />}
         onClick={toggleContentShare}
         label={label}
         popOver={isLocalUserSharing ? dropdownOptions : null}

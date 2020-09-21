@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import ScreenShare from './';
+import { lightTheme } from '../../../../theme/';
+
+# ScreenShare Icon
+
+The ScreenShare component creates a display icon using inline SVG. Typically, you can use it to represent a screen share action.
+
+## Importing
+
+```javascript
+import { ScreenShare } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <ScreenShare width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<ScreenShare width="2rem" />
+```
+
+## Props
+
+<Props of={ScreenShare} />

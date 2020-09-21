@@ -13,7 +13,7 @@ export { default as CheckRound } from './CheckRound';
 export { default as Clear } from './Clear';
 export { default as Clock } from './Clock';
 export { default as Cog } from './Cog';
-export { default as ContentShare } from './ContentShare';
+export { default as ScreenShare } from './ScreenShare';
 export { default as Crown } from './Crown';
 export { default as DeskPhone } from './DeskPhone';
 export { default as Dialer } from './Dialer';
