@@ -6,7 +6,7 @@ import React from 'react';
 import RosterName from '../RosterName';
 import LateMessage from './LateMessage';
 import { BaseProps } from '../../Base';
-import { Microphone, Camera, ContentShare } from '../../icons';
+import { Microphone, Camera, ScreenShare } from '../../icons';
 import { StyledCell } from './Styled';
 import { PopOverMenu } from '../PopOverMenu';
 
@@ -42,7 +42,7 @@ function getVideoIcon(
   isSharingContent: boolean | null | undefined
 ) {
   if (isSharingContent) {
-    return <ContentShare />;
+    return <ScreenShare />;
   }
 
   if (typeof isVideoEnabled === 'boolean') {
@@ -52,7 +52,7 @@ function getVideoIcon(
   return null;
 }
 
-export const RosterCell: React.FC<RosterCellProps> = props => {
+export const RosterCell: React.FC<RosterCellProps> = (props) => {
   const {
     tag,
     name,
@@ -65,7 +65,7 @@ export const RosterCell: React.FC<RosterCellProps> = props => {
     sharingContent,
     poorConnection = false,
     microphone,
-    a11yMenuLabel = ''
+    a11yMenuLabel = '',
   } = props;
 
   const videoIcon = getVideoIcon(videoEnabled, sharingContent);
