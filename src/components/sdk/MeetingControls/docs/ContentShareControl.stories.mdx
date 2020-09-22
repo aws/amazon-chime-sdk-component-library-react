@@ -5,9 +5,9 @@ import ContentShareControl from '../ContentShareControl';
 
 # ContentShareControl
 
-The `ContentShareControl` component renders a `ControlBarButton` with pop over menu options to pause/play content share once enabled.
+The `ContentShareControl` component renders a `ControlBarButton` with pop over menu options to pause/resume screen or video file share once enabled.
 
-When you click the button, the content share toggles between on/off state.
+When you click the button, it toggles screen share between on/off state.
 
 You can use it in the [ControlBar component](/?path=/docs/ui-components-controlbar--control-bar) to build the meeting controls bar.
 
@@ -23,7 +23,7 @@ import { ContentShareControl } from 'amazon-chime-sdk-component-library-react';
 import React from 'react';
 import {
   MeetingProvider,
-  ContentShareControl
+  ContentShareControl,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {

@@ -6,7 +6,7 @@ import React, {
   createRef,
   useState,
   HTMLAttributes,
-  useEffect
+  useEffect,
 } from 'react';
 import { Manager, Reference, Popper } from 'react-popper';
 
@@ -89,6 +89,10 @@ export const PopOver: FC<PopOverProps> = ({
   };
 
   const closePopover = (e: any) => {
+    // workaround for input file component - stop from removing it from the DOM
+    if (e.target.tagName === 'LABEL' || e.target.tagName === 'INPUT') {
+      return;
+    }
     const isSubMenuButton = e.target.closest("[data-menu='submenu']");
     return !isSubMenuButton ? setIsOpen(false) : false;
   };
