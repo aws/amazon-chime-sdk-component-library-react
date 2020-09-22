@@ -8,7 +8,7 @@ import React, {
   useContext,
   useEffect,
   useReducer,
-  useRef
+  useRef,
 } from 'react';
 import { DefaultModality, VideoTileState } from 'amazon-chime-sdk-js';
 
@@ -16,7 +16,7 @@ import {
   reducer,
   initialState,
   ContentShareState,
-  ContentActionType
+  ContentActionType,
 } from './state';
 import { ContentShareControlContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
@@ -70,8 +70,8 @@ const ContentShareProvider: React.FC = ({ children }) => {
           type: ContentActionType.UPDATE,
           payload: {
             tileState,
-            isLocalUser
-          }
+            isLocalUser,
+          },
         });
       },
       videoTileWasRemoved: (tileId: number) => {
@@ -81,15 +81,15 @@ const ContentShareProvider: React.FC = ({ children }) => {
 
         dispatch({
           type: ContentActionType.REMOVE,
-          payload: tileId
+          payload: tileId,
         });
-      }
+      },
     };
 
     const contentShareObserver = {
       contentShareDidStop: () => {
         dispatch({ type: ContentActionType.DID_STOP });
-      }
+      },
     };
 
     audioVideo.addObserver(videoObserver);
@@ -130,6 +130,25 @@ const ContentShareProvider: React.FC = ({ children }) => {
     }
   }, [audioVideo, isLocalUserSharing, isLocalShareLoading]);
 
+  const toggleVideoFileShare = useCallback(
+    async (mediaUrl?: string): Promise<void> => {
+      if (!audioVideo) {
+        return;
+      }
+
+      if (isLocalUserSharing || isLocalShareLoading) {
+        audioVideo.stopContentShare();
+      } else {
+        dispatch({
+          type: ContentActionType.UPDATE_MEDIA_URL,
+          payload: { mediaUrl },
+        });
+        dispatch({ type: ContentActionType.STARTING });
+      }
+    },
+    [audioVideo, isLocalUserSharing, isLocalShareLoading]
+  );
+
   const togglePauseContentShare = useCallback((): void => {
     if (!audioVideo || !isLocalUserSharing) {
       return;
@@ -150,14 +169,16 @@ const ContentShareProvider: React.FC = ({ children }) => {
       isLocalUserSharing,
       isLocalShareLoading,
       toggleContentShare,
-      togglePauseContentShare
+      toggleVideoFileShare,
+      togglePauseContentShare,
     }),
     [
       paused,
       toggleContentShare,
+      toggleVideoFileShare,
       togglePauseContentShare,
       isLocalUserSharing,
-      isLocalShareLoading
+      isLocalShareLoading,
     ]
   );
 

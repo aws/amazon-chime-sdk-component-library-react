@@ -9,7 +9,10 @@ The `ContentShare` component renders a `ContentTile` for the active content shar
 
 If used within the `VideoGrid` component, it will automatically place the active tile in the featured grid slot. It takes precedence over the featured video tile.
 
-Once a meeting session has been started, a user can start and stop content sharing by using the `useContentShareControls` hook.
+Once a meeting session has been started, a user can use the `useContentShareControls` hook to:
+
+1. Start/stop and pause/resume sharing screen.
+2. Start/stop and pause/resume sharing a video file.
 
 ## Importing
 
@@ -24,7 +27,7 @@ import React from 'react';
 import {
   MeetingProvider,
   ContentShare,
-  useContentShareControls
+  useContentShareControls,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {

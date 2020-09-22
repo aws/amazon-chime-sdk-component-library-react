@@ -23,8 +23,11 @@ The `ContentShareProvider` provides state and functionality for content sharing.
   // Whether or not someone in the session (remote, or local) is sharing
   isSomeoneSharing: boolean;
 
-  // The chime attendee ID of the user sharing
+  // The chime attendee ID of the sharing user
   sharingAttendeeId: string | null;
+
+  // Generated URL of the selected file when share a video file
+  mediaUrl: string;
 }
 ```
 
@@ -38,7 +41,7 @@ If you are using `MeetingProvider`, the `ContentShareProvider` is rendered by de
 import React from 'react';
 import {
   MeetingProvider,
-  useContentShareState
+  useContentShareState,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
