@@ -22,12 +22,15 @@ export interface ControlBarButtonProps
   label: string;
   /** The items to render in a popover menu. When passed, the button will render an arrow to open or close a popover menu. Refer to [PopOverItem](/?path=/docs/ui-components-popover--basic-pop-over-menu) */
   popOver?: PopOverItemProps[] | null;
+  /**  Apply this prop to receive visual feedback that the button is 'active' */
+  isSelected?: boolean;
 }
 
 export const ControlBarButton: FC<ControlBarButtonProps> = ({
   icon,
   onClick,
   label,
+  isSelected = false,
   popOver = null,
   ...rest
 }) => {
@@ -40,6 +43,7 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
       children={popOver?.map((option: PopOverItemProps, index: number) => (
         <PopOverItem {...option} key={index} />
       ))}
+      className="ch-control-bar-popover"
     />
   );
 
@@ -53,12 +57,13 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
 
   return (
     <StyledControlBarItem
+      isSelected={isSelected}
       data-testid="control-bar-item"
       {...rest}
       {...context}
       popOver={popOver}
     >
-      <IconButton onClick={onClick} label={label} icon={icon} />
+      <IconButton onClick={onClick} label={label} icon={icon} className="ch-control-bar-item-iconButton"/>
       {!!popOver && renderPopOver()}
       {context.showLabels && (
         <div className="ch-control-bar-item-label">{label}</div>

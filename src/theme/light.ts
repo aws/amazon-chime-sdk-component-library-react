@@ -307,7 +307,11 @@ const controlBar = {
   shadow: shadows.large,
   bgd: colors.greys.white,
   border: `0.03125rem solid ${colors.greys.grey20}`,
-  opacity: 0.95
+  opacity: 0.95,
+  selected: {
+    text: buttons.primary.selected.text,
+    bgd: buttons.primary.selected.bgd,
+  },
 };
 
 const roster = {
@@ -333,6 +337,21 @@ const videoGrid = {
   bgd: colors.greys.white
 };
 
+const chatMessage = {
+  incoming: {
+    bgd: colors.greys.white,
+    fontColor: colors.greys.grey60,
+  },
+  outgoing: {
+    bgd: colors.primary.light,
+    fontColor: colors.greys.grey10,
+  },
+  container: {
+    fontColor: colors.greys.grey70,
+    bgd: colors.greys.grey20,
+  }
+};
+
 export const lightTheme = {
   name: 'Light Theme',
   buttons,
@@ -348,6 +367,7 @@ export const lightTheme = {
   roster,
   navbar,
   videoGrid,
+  chatMessage,
   ...defaultTheme
 };
 
