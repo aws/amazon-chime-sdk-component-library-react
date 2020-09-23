@@ -1,7 +1,11 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import styled from "styled-components";
+import styled from 'styled-components';
+
+export const StyledWrapper = styled.div`
+  position: relative;
+`;
 
 export const StyledSelectInput = styled.select`
   background-color: ${props => props.theme.inputs.bgd};
@@ -13,8 +17,11 @@ export const StyledSelectInput = styled.select`
   line-height: ${props => props.theme.fontSizes.text.lineHeight};
   height: 2rem;
   letter-spacing: -0.005625rem;
-  padding: 0.375rem 0.5rem;
-  transition: box-shadow .05s ease-in;
+  width: 100%;
+  padding: 0.375rem 1.5rem 0.375rem 0.5rem;
+  transition: box-shadow 0.05s ease-in;
+  display: inline-block;
+  appearance: none;
 
   &:focus,
   &[aria-invalid="true"]:focus {
@@ -28,5 +35,3 @@ export const StyledSelectInput = styled.select`
     box-shadow: ${props => props.theme.inputs.error.shadow};
   }
 `;
-
-

@@ -19,12 +19,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `useLocalAudioInputActivityPreview` hook for direct access to microphone input value
 - Add chat message component
 - Add `isSelected` prop to `ControlBarButton` component
+- Add `UpAndDownCaret` icon component
 
 ### Changed
 
 - Adjust clear behavior and minor styling of inputs
 - Changed RosterCell CSS to ensure vertical alignment of icons
 - [DEMO] Upgrade `webpack-dev-server` to fix `node-forge` security vulnerability alert
+- Updated `Select` caret icon
 
 ### Removed
 

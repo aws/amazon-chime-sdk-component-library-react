@@ -18,34 +18,42 @@ import { Select } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
+  <GlobalStyles />
   <Preview>
+    <Flex layout="fill-space-centered">
+      <div style={{ height: 'auto', width: '15rem', margin: '2rem auto' }}>
+        <Select
+          value="no_fruit_selected"
+          options={[
+            { value: 'no_fruit_selected', label: 'Select an option' },
+            { value: 'bananas', label: 'Bananas' },
+            { value: 'oranges', label: 'Oranges' },
+            { value: 'grapefruit', label: 'Grapefruit' },
+          ]}
+          aria-label="basic select input"
+          onChange={(e) => {}}
+        />
+      </div>
+    </Flex>
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Flex layout="fill-space-centered">
+  <div style={{ height: 'auto', width: '15rem', margin: '2rem auto' }}>
     <Select
       value="no_fruit_selected"
       options={[
         { value: 'no_fruit_selected', label: 'Select an option' },
         { value: 'bananas', label: 'Bananas' },
         { value: 'oranges', label: 'Oranges' },
-        { value: 'grapefruit', label: 'Grapefruit' }
+        { value: 'grapefruit', label: 'Grapefruit' },
       ]}
       aria-label="basic select input"
-      onChange={e => {}}
+      onChange={(e) => {}}
     />
-  </Preview>
-</ThemeProvider>
-
-```jsx
-<Select
-  value="no_fruit_selected"
-  options={[
-    { value: 'no_fruit_selected', label: 'Select an option' },
-    { value: 'bananas', label: 'Bananas' },
-    { value: 'oranges', label: 'Oranges' },
-    { value: 'grapefruit', label: 'Grapefruit' }
-  ]}
-  aria-label="basic select input"
-  onChange={e => {}}
-/>
+  </div>
+</Flex>
 ```
 
 ## Props
