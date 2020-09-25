@@ -36,3 +36,5 @@ export { default as Search } from './Search';
 export { default as Share } from './Share';
 export { default as SignalStrength } from './SignalStrength';
 export { default as Sound } from './Sound';
+export { default as Spinner } from './Spinner';
+export { default as UpAndDownCaret } from './UpAndDownCaret';

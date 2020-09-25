@@ -77,7 +77,7 @@ export const BasicExample = () => {
               <ModalHeader title="Start an instant meeting"/>
 
               <ModalBody>
-                <p style={{ 'color': '#616672', 'fontSize': '14px','margin': '0 0 0.5rem' }}>
+                <p style={{ 'margin': '0 0 0.5rem' }}>
                 Start this meeting with your personal meeting ID or generate a new, unique and private meeting ID.
                 </p>
                 <TestRadioGroup />
@@ -121,7 +121,7 @@ export const largeContent = () => {
             >
               <ModalHeader title="Scrollable content example"/>
               <ModalBody>
-                <div style={{ 'color': '#616672', 'fontSize': '14px','margin': '0 0 1rem' }}>
+                <div style={{ 'margin': '0 0 1rem' }}>
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse urna eros, vestibulum quis gravida quis, tempus in sapien. Sed aliquet velit lectus, ac tempus dui iaculis ac. Morbi ullamcorper laoreet magna ac commodo. Aenean pharetra nulla sapien, nec interdum dolor semper quis. Ut posuere libero at scelerisque iaculis. Phasellus eu arcu ullamcorper, ultrices turpis id, pretium tellus. Integer accumsan ultrices semper. Maecenas eu scelerisque metus, nec pulvinar odio. Nunc imperdiet efficitur vehicula. Curabitur laoreet ut tellus quis sagittis. Nulla auctor vitae felis quis convallis. Nunc hendrerit imperdiet elit at auctor. Integer condimentum euismod orci vitae venenatis. Proin maximus in sem vitae auctor. Aliquam egestas, lorem vel volutpat pharetra, dolor felis malesuada lorem, vitae fermentum eros erat tempor lacus.</p>
                   <p>Duis tempus sagittis consectetur. Aliquam ut ante eu elit laoreet condimentum. Pellentesque nunc leo, egestas a porttitor sed, euismod tempor neque. Aenean a est eu mauris elementum venenatis. Cras sit amet ex pellentesque augue suscipit dignissim. Donec tempor lacinia orci non elementum. Fusce quis elit est. Nullam magna tortor, dapibus quis maximus varius, dapibus a nunc. Proin eget magna posuere justo ullamcorper posuere sit amet at quam. Donec lacinia libero vel tellus efficitur, vitae posuere enim porta. Suspendisse vitae tellus vitae tellus semper cursus ornare in nunc. Mauris molestie velit eu malesuada pellentesque.</p>
                   <p>Vivamus nisi justo, sagittis eu dolor vel, pretium placerat dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nullam condimentum nisi velit, id pellentesque quam facilisis dapibus. Donec orci est, faucibus at dapibus sit amet, hendrerit vitae libero. Quisque sed pellentesque diam. Fusce vitae imperdiet nisi, a elementum ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed fringilla pharetra nunc, sed ornare urna congue a.</p>

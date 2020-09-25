@@ -1,0 +1,45 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import UpAndDownCaret from './';
+import { lightTheme } from '../../../../theme/';
+
+# Up and Down Caret Icon
+
+The UpAndDownCaret component creates a up and down facing carets icon using inline SVG. Typically, you can use it to represent an more options action.
+
+## Importing
+
+```javascript
+import { UpAndDownCaret } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width and height
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <UpAndDownCaret width="2rem" height="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<UpAndDownCaret width="2rem" height="2rem" />
+```
+
+With title on hover
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <UpAndDownCaret width="2rem" height="2rem" title="Select one" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<UpAndDownCaret width="2rem" height="2rem" title="Select one" />
+```
+
+## Props
+
+<Props of={UpAndDownCaret} />

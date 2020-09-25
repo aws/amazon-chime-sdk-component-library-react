@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add `useLocalAudioInputActivityPreview` hook for direct access to microphone input value
+- Add chat message component
+- Add `isSelected` prop to `ControlBarButton` component
+- Add `UpAndDownCaret` icon component
+- Add channel list component for chat
 - Add app readiness check
 
 ### Changed
@@ -24,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Adjust clear behavior and minor styling of inputs
 - Changed RosterCell CSS to ensure vertical alignment of icons
 - [DEMO] Upgrade `webpack-dev-server` to fix `node-forge` security vulnerability alert
+- Updated `Select` caret icon
 
 ### Removed
 
@@ -168,6 +173,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add third party dependency attributes to NOTICE file
 - Add component to manage visibility of controlbar
 - Add third party licence text
+- Add InfiniteList container component
 
 ### Changed
 
@@ -265,5 +271,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix end meeting
 - Fix video grid, input bugs on iOS
 - Fix microphone poorConnection SVG warning in devtools
+- Fix search input snapshot tests for new layout
 
 ## [0.1.1] - 2020-06-16

@@ -82,6 +82,7 @@ export const StyledControlBar = styled.div<StyledControlBarProps>`
 
 interface StyledControlBarItemProps extends StyledControlBarProps {
   popOver: PopOverItemProps[] | null;
+  isSelected: boolean;
 }
 
 export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
@@ -100,13 +101,10 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
       ''}
   `};
 
-  button {
-    color: ${({ theme }) => theme.controlBar.text};
-    border: none;
-    outline: none;
-    background-color: inherit;
-    grid-column-start: ${({ layout, popOver }) =>
-      isVertical(layout) && popOver ? '2' : '1'};
+  .ch-control-bar-item-iconButton {
+    color: ${({ theme, isSelected }) => isSelected ? `${theme.controlBar.selected.text}` : theme.controlBar.text};
+    background-color: ${({ isSelected, theme }) =>  isSelected ? `${theme.controlBar.selected.bgd}` : 'inherit'};
+    grid-column-start: ${({ layout, popOver }) => isVertical(layout) && popOver ? '2' : '1'};
 
     .ch-icon {
       width: 1.5rem;
@@ -114,14 +112,20 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
       background-color: inherit;
       border-radius: 100%;
     }
+  }
+
+  .ch-control-bar-popover {
+    background-color: inherit;
+    grid-column-start: ${({ layout, popOver }) => isVertical(layout) && popOver ? '2' : '1'};
+    color: ${({ theme }) => theme.controlBar.text};
+
+    .isOpen.ch-control-bar-item-caret {
+      color: ${props => props.theme.colors.primary.main};
+    }
 
     .ch-control-bar-item-caret {
       width: 1.5rem;
       height: 1.5rem;
-    }
-
-    .isOpen.ch-control-bar-item-caret {
-      color: ${props => props.theme.colors.primary.main};
     }
   }
 

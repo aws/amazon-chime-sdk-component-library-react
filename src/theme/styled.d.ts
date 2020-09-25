@@ -220,6 +220,10 @@ declare module 'styled-components' {
       bgd: string;
       border: string;
       opacity: string | number;
+      selected: {
+        text: string,
+        bgd: string,
+      }
     };
 
     roster: {
@@ -265,5 +269,44 @@ declare module 'styled-components' {
       headerBorder: string;
       wrapperBgd: string;
     };
+
+    chatMessage: {
+      outgoing: {
+        bgd: string;
+        fontColor: string;
+      },
+      incoming: {
+        bgd: string;
+        fontColor: string;
+      },
+      container: {
+        fontColor: string;
+        bgd: string;
+      }
+    }
+    
+    channelList: {
+      bgd: string;
+      fontColor: string;
+      border: string;
+      active: {
+        bgd: string;
+        fontColor: string;
+      },
+      hover: {
+        bgd: string;
+      },
+      focus: {
+        border: string;
+        selectedBorder: string;
+      },
+      selected: {
+        bgd: string;
+        fontColor: string;
+      },
+      iconButton: {
+        activeBgd: string;
+      }
+    }
   }
 }

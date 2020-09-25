@@ -307,7 +307,11 @@ const controlBar = {
   shadow: shadows.large,
   bgd: colors.greys.grey100,
   border: 'none',
-  opacity: 1
+  opacity: 1,
+  selected: {
+    text: buttons.primary.selected.text,
+    bgd: buttons.primary.selected.bgd,
+  },
 };
 
 const roster = {
@@ -333,6 +337,45 @@ const videoGrid = {
   bgd: colors.greys.grey90
 };
 
+const chatMessage = {
+  incoming: {
+    bgd: colors.greys.grey80,
+    fontColor: colors.greys.grey30,
+  },
+  outgoing: {
+    bgd: colors.primary.dark,
+    fontColor: colors.greys.grey70,
+  },
+  container: {
+    fontColor: colors.greys.grey30,
+    bgd: colors.greys.black,
+  }
+}
+
+const channelList = {
+  bgd: colors.greys.grey80,
+  fontColor: colors.greys.grey10,
+  border: '1px solid transparent',
+  active: {
+    bgd: colors.primary.dark,
+    fontColor: colors.greys.grey70,
+  },
+  hover: {
+    bgd: colors.greys.grey70,
+  },
+  focus: {
+    border: `1px solid ${colors.primary.dark}`,
+    selectedBorder: `1px solid ${colors.greys.grey70}`,
+  },
+  selected: {
+    bgd: colors.primary.light,
+    fontColor: colors.greys.grey70,
+  },
+  iconButton: {
+    activeBgd: colors.greys.grey80,
+  }
+}
+
 export const darkTheme = {
   name: 'Dark Theme',
   buttons,
@@ -348,6 +391,8 @@ export const darkTheme = {
   roster,
   navbar,
   videoGrid,
+  chatMessage,
+  channelList,
   ...defaultTheme
 };
 

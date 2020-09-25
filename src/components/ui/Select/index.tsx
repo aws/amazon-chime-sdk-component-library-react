@@ -5,10 +5,13 @@ import React, {
   ChangeEvent,
   forwardRef,
   Ref,
-  InputHTMLAttributes
+  InputHTMLAttributes,
+  CSSProperties,
 } from 'react';
 
-import { StyledSelectInput } from './Styled';
+import { StyledSelectInput, StyledWrapper } from './Styled';
+import UpAndDownCaret from '../icons/UpAndDownCaret';
+import { position } from 'styled-system';
 
 export type SelectOptions = {
   value: string | number;
@@ -32,16 +35,32 @@ const renderOptions = (options: SelectOptions[]) => {
   ));
 };
 
+const upAndDownCaretStyle = {
+  position: 'absolute',
+  top: '50%',
+  transform: 'translateY(-50%)',
+  right: '0.2rem',
+  width: '1.5rem',
+  height: '1.5rem',
+} as CSSProperties;
+
 export const Select = forwardRef(
   (props: SelectProps, ref: Ref<HTMLSelectElement>) => (
-    <StyledSelectInput
-      className="ch-select"
-      data-testid="select"
-      ref={ref}
-      {...props}
-    >
-      {renderOptions(props.options)}
-    </StyledSelectInput>
+    <StyledWrapper>
+      <StyledSelectInput
+        className="ch-select"
+        data-testid="select"
+        ref={ref}
+        {...props}
+      >
+        {renderOptions(props.options)}
+      </StyledSelectInput>
+      <UpAndDownCaret
+        style={upAndDownCaretStyle}
+        className="ch-select-icon"
+        data-testid="select-icon"
+      />
+    </StyledWrapper>
   )
 );
 
