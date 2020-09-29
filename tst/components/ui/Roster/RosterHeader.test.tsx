@@ -1,7 +1,7 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import '@testing-library/jest-dom';
 import { fireEvent } from '@testing-library/dom';
 
@@ -28,10 +28,32 @@ describe('RosterCell', () => {
     expect(getByLabelText('Close')).toBeInTheDocument();
   });
 
-  it('should render a search button when onClose is passed', () => {
+  it('should render a search button when onSearch is passed', () => {
     const component = <RosterHeader title="Present" onSearch={() => {}} />;
     const { getByLabelText } = renderWithTheme(lightTheme, component);
     expect(getByLabelText('Open search')).toBeInTheDocument();
+  });
+
+  it('should call onSearch with "" when the search is closed', () => {
+    const mockOnSearch = jest.fn();
+    const component = <RosterHeader title="Present" onSearch={mockOnSearch} />;
+    const { getByLabelText } = renderWithTheme(lightTheme, component);
+    fireEvent(
+      getByLabelText('Open search'),
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      })
+    );
+    expect(getByLabelText('Search')).toBeInTheDocument();
+    fireEvent(
+      getByLabelText('clear Search'),
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      })
+    );
+    expect(mockOnSearch).toBeCalled();
   });
 
   it('should render a search button when search is pressed', () => {
