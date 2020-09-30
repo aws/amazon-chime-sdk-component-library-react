@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed missing `audioVideo` deps in `useLocalAudioInputActivityPreview`
 - Fixed `leadingIcon` alignment in `SearchInput`
 - Rename icon (ContentShare > ScreenShare) to fix conflicting names
+- Remove unused import in Select
 
 ### Added
 

@@ -11,7 +11,6 @@ import React, {
 
 import { StyledSelectInput, StyledWrapper } from './Styled';
 import UpAndDownCaret from '../icons/UpAndDownCaret';
-import { position } from 'styled-system';
 
 export type SelectOptions = {
   value: string | number;
