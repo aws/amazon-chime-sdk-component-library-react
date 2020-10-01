@@ -5,7 +5,7 @@ import AudioInputControl from '../AudioInputControl';
 
 # AudioInputControl
 
-The `AudioInputControl` component renders a `ControlBarButton` with pop over menu options to select through multiple audio input options.
+The `AudioInputControl` component renders a `ControlBarItem` with pop over menu options to select through multiple audio input options.
 These audio input options are provided by the `useAudioInputs` hook.
 
 When you click the button, the local audio input toggles between muted/unmuted state.
@@ -24,7 +24,7 @@ import { AudioInputControl } from 'amazon-chime-sdk-component-library-react';
 import React from 'react';
 import {
   MeetingProvider,
-  AudioInputControl
+  AudioInputControl,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {

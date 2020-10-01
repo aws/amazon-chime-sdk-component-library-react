@@ -5,7 +5,7 @@ import React from 'react';
 
 import { StyledNavbarItem } from './Styled';
 import { PopOverItemProps } from '../PopOver/PopOverItem';
-import ControlBarButton from '../ControlBar/ControlBarItem';
+import ControlBarItem from '../ControlBar/ControlBarItem';
 
 export interface NavbarItemProps {
   /** Any icon from the library for button in navbar item */
@@ -25,7 +25,7 @@ export const NavbarItem = ({
   popOver = null
 }: NavbarItemProps) => (
   <StyledNavbarItem data-testid="navbar-item">
-    <ControlBarButton
+    <ControlBarItem
       onClick={onClick}
       label={label}
       icon={icon}

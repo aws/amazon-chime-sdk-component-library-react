@@ -3,7 +3,7 @@
 
 import React, { useRef } from 'react';
 
-import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
+import { ControlBarItem } from '../../ui/ControlBar/ControlBarItem';
 import { ScreenShare } from '../../ui/icons';
 import { useContentShareState } from '../../../providers/ContentShareProvider';
 import { useContentShareControls } from '../../../providers/ContentShareProvider';
@@ -69,7 +69,7 @@ const ContentShareControl: React.FC<Props> = ({
 
   return (
     <>
-      <ControlBarButton
+      <ControlBarItem
         icon={<ScreenShare />}
         onClick={mediaUrl ? toggleVideoFileShare : toggleContentShare}
         label={label}

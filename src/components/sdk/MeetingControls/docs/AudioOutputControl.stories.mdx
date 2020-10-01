@@ -5,7 +5,7 @@ import AudioOutputControl from '../AudioOutputControl';
 
 # AudioOutputControl
 
-The `AudioOutputControl` component renders a `ControlBarButton` with pop over menu options to select through multiple audio output options.
+The `AudioOutputControl` component renders a `ControlBarItem` with pop over menu options to select through multiple audio output options.
 These audio output options are provided by the `useAudioOutputs` hook.
 
 When you click the button, the local audio output toggles between on/off state.
@@ -24,7 +24,7 @@ import { AudioOutputControl } from 'amazon-chime-sdk-component-library-react';
 import React from 'react';
 import {
   MeetingProvider,
-  AudioOutputControl
+  AudioOutputControl,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {
