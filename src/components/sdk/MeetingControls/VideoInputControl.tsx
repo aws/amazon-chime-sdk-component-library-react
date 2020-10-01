@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
+import { ControlBarItem } from '../../ui/ControlBar/ControlBarItem';
 import { Camera } from '../../ui/icons';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
@@ -33,7 +33,7 @@ const VideoInputControl: React.FC<Props> = ({ label = 'Video' }) => {
   }));
 
   return (
-    <ControlBarButton
+    <ControlBarItem
       icon={<Camera disabled={!isVideoEnabled} />}
       onClick={toggleVideo}
       label={label}
