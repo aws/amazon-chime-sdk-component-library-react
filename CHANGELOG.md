@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed RosterCell CSS to ensure vertical alignment of icons
 - [DEMO] Upgrade `webpack-dev-server` to fix `node-forge` security vulnerability alert
 - Updated `Select` caret icon
+- Allow layout prop for VideoTileGrid
 
 ### Removed
 

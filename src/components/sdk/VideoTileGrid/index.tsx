@@ -10,7 +10,8 @@ import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { ContentShare } from '../ContentShare';
 import { LocalVideo } from '../LocalVideo';
 import { FeaturedRemoteVideos } from '../FeaturedRemoteVideos';
-import { VideoGrid } from '../../ui/VideoGrid';
+import { RemoteVideos } from '../RemoteVideos';
+import { VideoGrid, Layout } from '../../ui/VideoGrid';
 import { BaseProps } from '../../ui/Base';
 
 const fluidStyles = `
@@ -35,17 +36,20 @@ const staticStyles = `
 interface Props extends BaseProps {
   /** A component to render when there are no remote videos present */
   noRemoteVideoView?: React.ReactNode;
+  /** The layout of the grid. */
+  layout?: Layout;
 }
 
 export const VideoTileGrid: React.FC<Props> = ({
   noRemoteVideoView,
+  layout = "featured",
   ...rest
 }) => {
   const { tileId: featureTileId } = useFeaturedTileState();
   const { tiles } = useRemoteVideoTileState();
   const { tileId: contentTileId } = useContentShareState();
   const { isVideoEnabled } = useLocalVideo();
-  const featured = !!featureTileId || !!contentTileId;
+  const featured = layout === "featured" && !!featureTileId || !!contentTileId;
   const remoteSize = tiles.length + (contentTileId ? 1 : 0);
   const gridSize =
     remoteSize > 1 && isVideoEnabled ? remoteSize + 1 : remoteSize;
@@ -53,7 +57,7 @@ export const VideoTileGrid: React.FC<Props> = ({
   return (
     <VideoGrid {...rest} size={gridSize} layout={featured ? 'featured' : null}>
       <ContentShare css="grid-area: ft;" />
-      <FeaturedRemoteVideos />
+      { layout === "featured" ? <FeaturedRemoteVideos /> : <RemoteVideos/> }
       <LocalVideo
         nameplate="Me"
         css={gridSize > 1 ? fluidStyles : staticStyles}
