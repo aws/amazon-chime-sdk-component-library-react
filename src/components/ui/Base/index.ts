@@ -11,6 +11,8 @@ export interface BaseProps extends SpaceProps {
   css?: string;
   /** Optional class names to appear on the container */
   className?: string;
+  /** Optional tab index for keyboard accessibility */
+  tabIndex?: number;
 }
 
 export const baseStyles = ({ css }: BaseProps) =>

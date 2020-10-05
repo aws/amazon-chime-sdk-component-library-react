@@ -23,7 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `UpAndDownCaret` icon component
 - Add channel list component for chat
 - Add Share Video File feature
-- Rename component `ControlBarButton` to `ControlBarItem`
+- Add `tabIndex` to BaseProps
 
 ### Changed
 
@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [DEMO] Upgrade `webpack-dev-server` to fix `node-forge` security vulnerability alert
 - Updated `Select` caret icon
 - Allow layout prop for VideoTileGrid
+- Rename component `ControlBarButton` to `ControlBarItem`
 
 ### Removed
 
