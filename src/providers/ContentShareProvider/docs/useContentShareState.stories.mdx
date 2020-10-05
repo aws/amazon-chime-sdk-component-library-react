@@ -25,6 +25,9 @@ The `useContentShareState` hook returns the state related to content share statu
 
   // The chime attendee ID of the sharing user
   sharingAttendeeId: string | null;
+
+  // Generated URL of the selected file when share a video file
+  mediaUrl: string;
 }
 ```
 
@@ -42,7 +45,7 @@ The hook depends on the `ContentShareProvider`. If you are using `MeetingProvide
 import React from 'react';
 import {
   MeetingProvider,
-  useContentShareState
+  useContentShareState,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (

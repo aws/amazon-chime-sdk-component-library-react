@@ -13,14 +13,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed missing `audioVideo` deps in `useLocalAudioInputActivityPreview`
 - Fixed `leadingIcon` alignment in `SearchInput`
 - Rename icon (ContentShare > ScreenShare) to fix conflicting names
+- Remove unused import in Select
 
 ### Added
 
 - Add `useLocalAudioInputActivityPreview` hook for direct access to microphone input value
 - Add chat message component
-- Add `isSelected` prop to `ControlBarButton` component
+- Add `isSelected` prop to `ControlBarItem` component
 - Add `UpAndDownCaret` icon component
 - Add channel list component for chat
+- Add Share Video File feature
+- Rename component `ControlBarButton` to `ControlBarItem`
 
 ### Changed
 
@@ -28,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed RosterCell CSS to ensure vertical alignment of icons
 - [DEMO] Upgrade `webpack-dev-server` to fix `node-forge` security vulnerability alert
 - Updated `Select` caret icon
+- Allow layout prop for VideoTileGrid
 
 ### Removed
 

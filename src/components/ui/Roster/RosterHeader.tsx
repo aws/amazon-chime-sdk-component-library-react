@@ -88,6 +88,11 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
   };
 
   const closeSearch = () => {
+    onSearch?.({
+      currentTarget: {
+        value: '',
+      },
+    } as React.ChangeEvent<HTMLInputElement>);
     setIsSearching(false);
     searchBtn.current?.focus();
   };

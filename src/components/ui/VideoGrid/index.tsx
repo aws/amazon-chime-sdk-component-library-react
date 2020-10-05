@@ -6,7 +6,7 @@ import React, { createRef, useContext, createContext } from 'react';
 import { StyledGrid } from './Styled';
 import useElementAspectRatio from '../../../hooks/useElementAspectRatio';
 
-type Layout = 'standard' | 'featured' | null;
+export type Layout = 'standard' | 'featured' | null;
 
 export interface VideoGridProps extends React.HTMLAttributes<HTMLDivElement> {
   /** The number of tiles to lay out. */
