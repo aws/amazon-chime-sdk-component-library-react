@@ -40,6 +40,7 @@
     "@popperjs/core": "^2.2.2",
     "@types/puppeteer": "^2.0.1",
     "@types/uuid": "^7.0.3",
+    "fast-memoize": "^2.5.2",
     "react-popper": "^2.2.1",
     "throttle-debounce": "^2.3.0",
     "uuid": "^8.0.0"

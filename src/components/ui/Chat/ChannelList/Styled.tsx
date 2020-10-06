@@ -19,6 +19,9 @@ export const StyledChannelList = styled.ul<ChannelListProps>`
 export const StyledChannelItem = styled.li<ChannelItemProps>`
   position: relative;
 
+  ${baseStyles};
+  ${baseSpacing};
+
   & .ch-channel-button {
     width: 100%;
     height: 100%;
@@ -30,6 +33,7 @@ export const StyledChannelItem = styled.li<ChannelItemProps>`
     padding-left: 1rem;
     color: ${props => props.theme.channelList.fontColor};
     border: ${props => props.theme.channelList.border};
+    font-family: ${props => props.theme.fonts.body};
 
     &:hover {
       background-color: ${props => props.theme.channelList.hover.bgd};

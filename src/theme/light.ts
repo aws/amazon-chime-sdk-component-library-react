@@ -337,7 +337,7 @@ const videoGrid = {
   bgd: colors.greys.white
 };
 
-const chatMessage = {
+const chatBubble = {
   incoming: {
     bgd: colors.greys.white,
     fontColor: colors.greys.grey60,
@@ -348,7 +348,7 @@ const chatMessage = {
   },
   container: {
     fontColor: colors.greys.grey70,
-    bgd: colors.greys.grey20,
+    bgd: colors.greys.grey10,
   }
 }
 
@@ -376,6 +376,11 @@ const channelList = {
   }
 }
 
+const chatDateHeader = {
+  bgd: colors.greys.grey60,
+  fontColor: colors.greys.white
+}
+
 export const lightTheme = {
   name: 'Light Theme',
   buttons,
@@ -391,8 +396,9 @@ export const lightTheme = {
   roster,
   navbar,
   videoGrid,
-  chatMessage,
+  chatBubble,
   channelList,
+  chatDateHeader,
   ...defaultTheme
 };
 

@@ -17,7 +17,6 @@ describe('Roster', () => {
         <RosterHeader
           onClose={jest.fn()}
           badge={1}
-          menu={'ds'}
           title="Present"
           onSearch={() => {}}
         />

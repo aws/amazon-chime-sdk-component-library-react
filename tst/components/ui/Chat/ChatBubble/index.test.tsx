@@ -3,54 +3,54 @@
 
 import '@testing-library/jest-dom';
 import React from 'react';
-import { fireEvent } from '@testing-library/dom';
 
-import Message, { MessageProps } from '../../../../../src/components/ui/Chat/Message';
+import ChatBubble, { ChatBubbleProps } from '../../../../../src/components/ui/Chat/ChatBubble';
+import PopOverItem from '../../../../../src/components/ui/PopOver/PopOverItem';
 import lightTheme from '../../../../../src/theme/light';
 import { renderWithTheme } from '../../../../test-helpers';
-describe('Message', () => {
+describe('ChatBubble', () => {
 
-    const defaultProps: MessageProps = {
-        content: 'test message',
-        name: 'test user',
-        time: '10:00 AM',
-        variant: 'outgoing'
-    }
+  const defaultProps: ChatBubbleProps = {
+      content: 'test message',
+      senderName: 'test user',
+      createdTimestamp: '10:00 AM',
+      variant: 'outgoing'
+  }
 
   it('should render a Message component in the document', () => {
-    const component = <Message {...defaultProps} />;
+    const component = <ChatBubble {...defaultProps} />;
     const { getByTestId } = renderWithTheme(lightTheme, component);
-    const message = getByTestId('chat-message');
+    const message = getByTestId('chat-bubble');
 
     expect(message).toBeInTheDocument();
   });
 
-  it('should render content in the Message component', () => {
-    const component = <Message {...defaultProps} />;
+  it('should render content in the ChatBubble component', () => {
+    const component = <ChatBubble {...defaultProps} />;
     const { getByText } = renderWithTheme(lightTheme, component);
     const content = getByText('test message');
 
     expect(content).toBeInTheDocument();
   });
 
-  it('should render time in the Message component', () => {
-    const component = <Message {...defaultProps} />;
+  it('should render time in the ChatBubble component', () => {
+    const component = <ChatBubble {...defaultProps} />;
     const { getByText } = renderWithTheme(lightTheme, component);
     const time = getByText('10:00 AM');
 
     expect(time).toBeInTheDocument();
   });
 
-  it('should render the name in the Message component', () => {
-    const component = <Message {...defaultProps} />;
+  it('should render the name in the ChatBubble component', () => {
+    const component = <ChatBubble {...defaultProps} />;
     const { getByText } = renderWithTheme(lightTheme, component);
     const name = getByText('test user');
 
     expect(name).toBeInTheDocument();
   });
 
-  it('should render an icon button in the Message component', () => {
-    const component = <Message {...defaultProps} />;
+  it('should render an icon button in the ChatBubble component', () => {
+    const component = <ChatBubble {...defaultProps} />;
     const { getByText } = renderWithTheme(lightTheme, component);
     const content = getByText('test message');
 
@@ -58,7 +58,8 @@ describe('Message', () => {
   });
 
   it('should render a popover if more options are passed', () => {
-    const component = <Message {...defaultProps} moreOptions={[{ children: <span>Option 1</span>, onClick: () => null }]} />;
+    const popOverItem = <PopOverItem children={<span>Option 1</span>} onClick={() => null} />
+    const component = <ChatBubble {...defaultProps} actions={popOverItem} />;
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const popover = getByTestId('popover');
 
@@ -66,15 +67,7 @@ describe('Message', () => {
   });
 
   it('should not render a popover if more options are not passed', () => {
-    const component = <Message {...defaultProps} />;
-    const { queryByTestId } = renderWithTheme(lightTheme, component);
-    const popover = queryByTestId('popover');
-
-    expect(popover).not.toBeInTheDocument();
-  });
-
-  it('should not render a popover if more options has a length of 0', () => {
-    const component = <Message {...defaultProps} moreOptions={[]} />;
+    const component = <ChatBubble {...defaultProps} />;
     const { queryByTestId } = renderWithTheme(lightTheme, component);
     const popover = queryByTestId('popover');
 

@@ -7,13 +7,13 @@ import PopOver from './';
 import { StyledSubMenu } from './Styled';
 import Caret from '../icons/Caret';
 
-export interface PopOverItemProps {
+export interface PopOverSubMenuProps {
   children?: JSX.Element | JSX.Element[];
   /** The text shown in the item. */
   text: string;
 }
 
-export const PopOverSubMenu: FC<PopOverItemProps> = ({ text, children }) => {
+export const PopOverSubMenu: FC<PopOverSubMenuProps> = ({ text, children }) => {
   const getButtonContents = (isOpen: boolean) => {
     return (
       <>
