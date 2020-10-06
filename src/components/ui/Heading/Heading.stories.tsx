@@ -21,7 +21,7 @@ export default {
 export const BasicHeading = () => (
   <Flex layout="fill-space-centered" style={{ width: 'auto' }}>
     <Heading
-      css={text('css', 'color: palevioletred;')}
+      styles={text('styles', 'color: palevioletred;')}
       level={select('level', { 1: 1, 2: 2, 3: 3, 4: 4, 5: 5, 6: 6 }, 1)}
       tag={text('tag', 'p')}
     >

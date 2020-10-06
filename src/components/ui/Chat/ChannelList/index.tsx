@@ -8,8 +8,7 @@ import { StyledChannelList } from './Styled';
 import { BaseProps } from '../../Base';
 
 export interface ChannelListProps
-  extends Omit<HTMLAttributes<HTMLUListElement & HTMLLIElement>, 'css'>,
-    BaseProps {
+  extends HTMLAttributes<HTMLUListElement & HTMLLIElement>, BaseProps {
       activeChannelArn: string;
       setActiveChannelArn: (arn: string) => void;
 }

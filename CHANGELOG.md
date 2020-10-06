@@ -32,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [DEMO] Upgrade `webpack-dev-server` to fix `node-forge` security vulnerability alert
 - Updated `Select` caret icon
 - Allow layout prop for VideoTileGrid
+- Change base `css` prop name to `styles`
 
 ### Removed
 

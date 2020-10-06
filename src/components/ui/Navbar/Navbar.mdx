@@ -30,7 +30,7 @@ import {
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
   <Preview>
-    <Navbar flexDirection="column" container css="height: 50vh">
+    <Navbar flexDirection="column" container styles="height: 50vh">
       <NavbarHeader onClose={() => {}}/>
       <Flex>
         <NavbarItem
@@ -102,7 +102,7 @@ It gives a title to Navbar and also a close icon button to close the Navbar in m
 
 # NavbarItem
 
-The NavbarItem component displays a single row in the Navbar. It is made up of `ControlBarItem` which acts as a button and a label. 
+The NavbarItem component displays a single row in the Navbar. It is made up of `ControlBarItem` which acts as a button and a label.
 
 The label is displayed only on smaller screens with width defined by `theme.mediaQueries.min.md` value in your theme (defaults to 768px), else only icon button is shown.
 

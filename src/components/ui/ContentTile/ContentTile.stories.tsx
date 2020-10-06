@@ -19,7 +19,7 @@ export default {
 
 export const _ContentTile = () => {
   return (
-    <Flex css="height: 100vh" layout="fill-space-centered">
+    <Flex styles="height: 100vh" layout="fill-space-centered">
       <div style={{ height: '30rem', width: '50rem', margin: '2rem auto' }}>
         <ContentTile nameplate="Content share" />
       </div>

@@ -17,7 +17,7 @@ It is made up of one RosterHeader component and multiple RosterGroup components.
 ## Importing
 
 ```javascript
-import { 
+import {
   Roster,
   RosterGroup,
   RosterHeader,
@@ -30,9 +30,9 @@ import {
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
   <Preview>
-  <Flex 
+  <Flex
     container
-    css="height: 50vh; background: #f6f9fc;"
+    styles="height: 50vh; background: #f6f9fc;"
   >
     <Roster>
       <RosterHeader
@@ -136,8 +136,8 @@ The RosterGroup component displays multiple RosterCell components grouped by a c
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
-  <Flex container layout="fill-space-centered" css="height: 5%;">
-    <Flex css="width: 100%; max-width: 280px;">
+  <Flex container layout="fill-space-centered" styles="height: 5%;">
+    <Flex styles="width: 100%; max-width: 280px;">
       <RosterGroup title={"Left"} badge={4}>
         <RosterCell name="Michael Scarn" subtitle="FBI agent" />
         <RosterCell name="Prison Mike" subtitle="Inmate" />
@@ -169,8 +169,8 @@ RosterCell Component with the `running late` message
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
-  <Flex container layout="fill-space-centered" css="height: 5%;">
-    <Flex css="width: 100%; max-width: 280px;">
+  <Flex container layout="fill-space-centered" styles="height: 5%;">
+    <Flex styles="width: 100%; max-width: 280px;">
       <RosterCell
         name="Stanley Hudson"
         subtitle="Manager"
@@ -198,8 +198,8 @@ RosterCell Component with `micPosition leading`
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
-  <Flex container layout="fill-space-centered" css="height: 5%;">
-    <Flex css="width: 100%; max-width: 280px;">
+  <Flex container layout="fill-space-centered" styles="height: 5%;">
+    <Flex styles="width: 100%; max-width: 280px;">
       <RosterCell
         name="Stanley Hudson"
         subtitle="Manager"
@@ -227,8 +227,8 @@ RosterCell Component with `micPosition grouped`
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
-  <Flex container layout="fill-space-centered" css="height: 5%;">
-    <Flex css="width: 100%; max-width: 280px;">
+  <Flex container layout="fill-space-centered" styles="height: 5%;">
+    <Flex styles="width: 100%; max-width: 280px;">
       <RosterCell
         name="Stanley Hudson"
         subtitle="Manager"

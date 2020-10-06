@@ -16,8 +16,7 @@ export type ControlBarLayout =
   | 'undocked-vertical';
 
 export interface ControlBarProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
-    BaseProps {
+  extends HTMLAttributes<HTMLDivElement>, BaseProps {
   /** Whether or not the labels of the control bar items should show. */
   showLabels: boolean;
   /** The layout of the control bar, available options are: `top`, `bottom`, `right`, `left`, `undocked-horizontal`, and `undocked-vertical`. */

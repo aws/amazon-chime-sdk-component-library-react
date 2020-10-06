@@ -11,7 +11,7 @@ import { Dots } from '../../icons';
 
 export type MessageVariant = 'outgoing' | 'incoming';
 
-export interface MessageProps extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>, BaseProps {
+export interface MessageProps extends HTMLAttributes<HTMLDivElement>, BaseProps {
     /* determines styling for outgoing and incoming messages. */
     variant: MessageVariant;
     /* the name of the user that sent the message. */
@@ -33,7 +33,7 @@ const Message = (props: MessageProps) => {
             <StyledMessageContent {...props}>
                 <div className='ch-sender-name'>{props.name}</div>
                 <div>{props.content}</div>
-                {props.showCaret &&   
+                {props.showCaret &&
                 <svg viewBox="0 0 4 9">
                     <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
                       <g transform="translate(0.000000, -53.000000)" className='ch-chat-caret'>
@@ -44,7 +44,7 @@ const Message = (props: MessageProps) => {
             </StyledMessageContent>
             <StyledMessageInfo>
                 <span>{props.time}</span>
-                {(props.moreOptions && props.moreOptions?.length !== 0) && 
+                {(props.moreOptions && props.moreOptions?.length !== 0) &&
                 <PopOver
                     a11yLabel="Open channel options"
                     placement="bottom-end"

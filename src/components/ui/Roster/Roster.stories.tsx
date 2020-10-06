@@ -36,7 +36,7 @@ export const _Roster = () => {
     <Flex
       container
       layout="fill-space"
-      css="height: 100vh; background: #f6f9fc"
+      styles="height: 100vh; background: #f6f9fc"
     >
       <Roster>
         <RosterHeader
@@ -80,8 +80,8 @@ export const _RosterGroup = () => {
   const badge = number('badge', 2);
 
   return (
-    <Flex container layout="fill-space-centered" css="height: 100vh;">
-      <Flex css="width: 100%; max-width: 280px;">
+    <Flex container layout="fill-space-centered" styles="height: 100vh;">
+      <Flex styles="width: 100%; max-width: 280px;">
         <RosterGroup title={title} badge={badge}>
           <RosterCell name="Michael Scarn" subtitle="FBI agent" />
           <RosterCell name="Prison Mike" subtitle="Inmate" />
@@ -104,8 +104,8 @@ export const _RosterHeader = () => {
   const handleSearch = e => setSearch(e.target.value);
 
   return (
-    <Flex container layout="fill-space-centered" css="height: 100vh;">
-      <Flex css="width: 100%; max-width: 280px;">
+    <Flex container layout="fill-space-centered" styles="height: 100vh;">
+      <Flex styles="width: 100%; max-width: 280px;">
         <RosterHeader
           title={title}
           badge={badge}
@@ -139,8 +139,8 @@ export const _RosterHeaderWithNavigationIcon = () => {
   const handleSearch = e => setSearch(e.target.value);
 
   return (
-    <Flex container layout="fill-space-centered" css="height: 100vh;">
-      <Flex css="width: 100%; max-width: 280px;">
+    <Flex container layout="fill-space-centered" styles="height: 100vh;">
+      <Flex styles="width: 100%; max-width: 280px;">
         <RosterHeader
           title={title}
           badge={badge}
@@ -184,8 +184,8 @@ export const _RosterCell = () => {
   );
 
   return (
-    <Flex container layout="fill-space-centered" css="height: 100vh;">
-      <Flex css="width: 100%; max-width: 280px;">
+    <Flex container layout="fill-space-centered" styles="height: 100vh;">
+      <Flex styles="width: 100%; max-width: 280px;">
         <RosterCell
           name={name}
           subtitle={subtitle}

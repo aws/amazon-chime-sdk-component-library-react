@@ -10,8 +10,7 @@ import { StyledModalHeader } from './Styled';
 import { BaseProps } from '../Base';
 
 export interface ModalHeaderProps
-  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
-    BaseProps {
+  extends HTMLAttributes<HTMLDivElement>, BaseProps {
   /** The title of the header in the modal. */
   title: string;
   /** Whether or not the close icon is shown on the modal. */
