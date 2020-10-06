@@ -35,6 +35,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `UpAndDownCaret` icon component
 - Add channel list component for chat
 - Add `children` prop for ControlBarItem to allow for custom PopOver content
+- Added styleMessageList function
+- Added Chat DateHeader component
+- Added formatDate utility function
 
 ### Changed
 
@@ -43,6 +46,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [DEMO] Upgrade `webpack-dev-server` to fix `node-forge` security vulnerability alert
 - Updated `Select` caret icon
 - Allow layout prop for VideoTileGrid
+- Changed Message component to ChatBubble and moved InfiniteList to /Chat/MessageList
 
 ### Removed
 

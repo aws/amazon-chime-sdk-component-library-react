@@ -6,7 +6,6 @@ import React, { FC, HTMLAttributes } from 'react';
 import { ChannelListContext } from './ChannelListContext';
 import { StyledChannelList } from './Styled';
 import { BaseProps } from '../../Base';
-import { ChannelItemProps } from './ChannelItem';
 
 export interface ChannelListProps
   extends Omit<HTMLAttributes<HTMLUListElement & HTMLLIElement>, 'css'>,

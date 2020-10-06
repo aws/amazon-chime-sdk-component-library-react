@@ -10,7 +10,7 @@ import ChannelListDocs from './ChannelList.mdx';
 import PopOverItem from '../../PopOver/PopOverItem';
 
 export default {
-  title: 'UI Components/Chat/ChannelList',
+  title: 'UI Components/Chat',
   parameters: {
     docs: {
       page: ChannelListDocs.parameters.docs.page().props.children.type
@@ -54,5 +54,5 @@ export const _ChannelList = () => {
 };
 
 _ChannelList.story = {
-  name: 'Channel List'
+  name: 'ChannelList'
 }; 

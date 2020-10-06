@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled, { keyframes } from 'styled-components';
-
-import { baseStyles, baseSpacing } from '../Base';
 import { InfiniteListProps } from './';
+
+import { baseStyles, baseSpacing } from '../../Base';
 
 // Create the keyframes
 const rotate = keyframes`
@@ -16,8 +16,9 @@ const rotate = keyframes`
   }
 `;
 
+interface StyledInfiniteListProps extends InfiniteListProps {}
 
-export const StyledInfiniteList = styled.ul<InfiniteListProps>`
+export const StyledInfiniteList = styled.ul<StyledInfiniteListProps>`
   overflow-y: scroll;
   display: flex;
   flex-direction: column;

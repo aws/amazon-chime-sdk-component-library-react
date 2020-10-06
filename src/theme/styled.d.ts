@@ -270,7 +270,7 @@ declare module 'styled-components' {
       wrapperBgd: string;
     };
 
-    chatMessage: {
+    chatBubble: {
       outgoing: {
         bgd: string;
         fontColor: string;
@@ -307,6 +307,11 @@ declare module 'styled-components' {
       iconButton: {
         activeBgd: string;
       }
+    }
+
+    chatDateHeader: {
+      bgd: string;
+      fontColor: string;
     }
   }
 }
