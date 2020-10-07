@@ -23,8 +23,8 @@ export const controlBarItemWithPopOverProps = {
   popOver: [{ onClick: () => console.log('popover item clicked'), children: <span>option 1</span>}]
 };
 
-describe('ControlBarItem', () => {
-  it('renders a ControlBarItem', () => {
+describe('ControlBarButton', () => {
+  it('renders a ControlBarButton', () => {
     const component = <ControlBarItem {...controlBarItemProps}/>;
     const { getByTestId } = renderWithTheme(lightTheme, component)
     const el = getByTestId('control-bar-item');

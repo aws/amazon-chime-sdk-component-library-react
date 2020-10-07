@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { ControlBarItem } from '../../ui/ControlBar/ControlBarItem';
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
 import { Microphone } from '../../ui/icons';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
@@ -38,7 +38,7 @@ const AudioInputControl: React.FC<Props> = ({
   }));
 
   return (
-    <ControlBarItem
+    <ControlBarButton
       icon={<Microphone muted={muted} />}
       onClick={toggleMute}
       label={muted ? unmuteLabel : muteLabel}
