@@ -8,10 +8,11 @@ import { StyledMicVolumeIndicator } from './Styled';
 import { BaseProps } from '../Base';
 
 export interface MicVolumeIndicatorProps
-  extends HTMLAttributes<HTMLDivElement>, BaseProps {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseProps {
   /* Whether or not the attendee is muted */
   muted?: boolean | undefined;
-  /* The measure of an attendee's network connection on a scale of 0 to 1.
+  /* The measure of an attendee's network connection on a scale of 0 to 1. 
   A bad connection is .5 or below. */
   signalStrength: number | undefined;
 }

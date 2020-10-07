@@ -7,7 +7,8 @@ import { BaseProps } from '../Base';
 import { StyledButton } from './Styled';
 
 export interface ButtonProps
-  extends HTMLAttributes<HTMLButtonElement>, BaseProps {
+  extends Omit<HTMLAttributes<HTMLButtonElement>, 'css'>,
+    BaseProps {
   /** The icon element to be shown in the button. */
   icon?: JSX.Element;
   /** The text of the button. */

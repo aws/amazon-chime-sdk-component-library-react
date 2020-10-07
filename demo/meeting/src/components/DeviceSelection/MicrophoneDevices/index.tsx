@@ -13,7 +13,7 @@ import MicrophoneActivityPreview from './MicrophoneActivityPreview';
 const MicrophoneDevices = () => {
   return (
     <div>
-      <Heading tag="h2" level={6} styles={title}>
+      <Heading tag="h2" level={6} css={title}>
         Audio
       </Heading>
       <MicSelection />

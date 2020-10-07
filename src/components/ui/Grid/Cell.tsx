@@ -8,7 +8,7 @@ import { StyledCell } from './Styled';
 
 export interface CellProps extends SpaceProps, GridProps {
   tag?: string;
-  styles?: string;
+  css?: string;
   className?: string;
 }
 

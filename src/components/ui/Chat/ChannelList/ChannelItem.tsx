@@ -11,7 +11,7 @@ import Button from '../../Button';
 import { BaseProps } from '../../Base';
 import { Dots } from '../../icons';
 
-export interface ChannelItemProps extends HTMLAttributes<HTMLLIElement & HTMLLIElement>, BaseProps {
+export interface ChannelItemProps extends Omit<HTMLAttributes<HTMLLIElement & HTMLLIElement>, 'css'>, BaseProps {
   name: string;
   arn: string;
   moreOptions?: PopOverItemProps[];

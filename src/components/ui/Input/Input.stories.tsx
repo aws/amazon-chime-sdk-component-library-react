@@ -24,7 +24,7 @@ export const BasicInput = () => {
   const [input, setInput] = useState('');
 
   return (
-    <Flex layout="fill-space-centered" styles="height: 100vh">
+    <Flex layout="fill-space-centered" css="height: 100vh">
       <Input
         showClear={boolean('showClear', true)}
         onChange={e => setInput(e.target.value)}
@@ -41,7 +41,7 @@ export const InputWithIcon = () => {
   const [input, setInput] = useState('');
 
   return (
-    <Flex layout="fill-space-centered" styles="height: 100vh">
+    <Flex layout="fill-space-centered" css="height: 100vh">
       <Input
         showClear={boolean('showClear', true)}
         onChange={e => setInput(e.target.value)}
@@ -63,7 +63,7 @@ export const _SearchInput = () => {
   const [search, setSearch] = useState('');
 
   return (
-    <Flex layout="fill-space-centered" styles="height: 100vh">
+    <Flex layout="fill-space-centered" css="height: 100vh">
       <SearchInput
         showClear={boolean('showClear', true)}
         value={search}

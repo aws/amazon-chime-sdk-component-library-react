@@ -30,12 +30,12 @@ export const StyledGrid = styled.div<GridProps>`
   `
       : ''}
 
-  ${props => props.styles || ''}
+  ${props => props.css || ''}
 `;
 
 export const StyledCell = styled.div<CellProps>`
   ${baseSpacing}
   ${grid}
 
-  ${props => props.styles || ''}
+  ${props => props.css || ''}
 `;

@@ -11,7 +11,9 @@ import { useControlBarContext } from './ControlBarContext';
 import IconButton from '../Button/IconButton';
 import { BaseProps } from '../Base';
 
-export interface ControlBarItemProps extends React.HTMLAttributes<HTMLDivElement>, BaseProps {
+export interface ControlBarItemProps
+  extends Omit<React.HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseProps {
   /** The icon of the control bar item. */
   icon: JSX.Element;
   /** The callback fired when the item is clicked. */
