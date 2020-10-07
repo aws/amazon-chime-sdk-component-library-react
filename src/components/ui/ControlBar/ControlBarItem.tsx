@@ -11,7 +11,7 @@ import { useControlBarContext } from './ControlBarContext';
 import IconButton from '../Button/IconButton';
 import { BaseProps } from '../Base';
 
-export interface ControlBarItemProps
+export interface ControlBarButtonProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'css'>,
     BaseProps {
   /** The icon of the control bar item. */
@@ -26,7 +26,7 @@ export interface ControlBarItemProps
   isSelected?: boolean;
 }
 
-export const ControlBarItem: FC<ControlBarItemProps> = ({
+export const ControlBarButton: FC<ControlBarButtonProps> = ({
   icon,
   onClick,
   label,
@@ -72,4 +72,4 @@ export const ControlBarItem: FC<ControlBarItemProps> = ({
   );
 };
 
-export default ControlBarItem;
+export default ControlBarButton;

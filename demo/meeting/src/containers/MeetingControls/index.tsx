@@ -8,7 +8,7 @@ import {
   VideoInputControl,
   ContentShareControl,
   AudioOutputControl,
-  ControlBarItem,
+  ControlBarButton,
   useUserActivityState,
   Dots
 } from 'amazon-chime-sdk-component-library-react';
@@ -36,7 +36,7 @@ const MeetingControls = () => {
         layout="undocked-horizontal"
         showLabels
       >
-        <ControlBarItem
+        <ControlBarButton
           className="mobile-toggle"
           icon={<Dots />}
           onClick={handleToggle}
