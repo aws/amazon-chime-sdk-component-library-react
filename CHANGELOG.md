@@ -23,7 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `UpAndDownCaret` icon component
 - Add channel list component for chat
 - Add Share Video File feature
-- Rename component `ControlBarButton` to `ControlBarItem`
 
 ### Changed
 
