@@ -10,8 +10,7 @@ export enum ContentActionType {
   TOGGLE_PAUSE,
   REMOVE,
   DENIED,
-  RESET,
-  UPDATE_MEDIA_URL,
+  RESET
 }
 
 type StartingAction = {
@@ -54,11 +53,6 @@ type ResetAction = {
   payload?: any;
 };
 
-type UpdateMediaUrlAction = {
-  type: ContentActionType.UPDATE_MEDIA_URL;
-  payload?: any;
-};
-
 export type Action =
   | StartingAction
   | DidStopAction
@@ -66,8 +60,7 @@ export type Action =
   | TogglePauseAction
   | RemoveAction
   | DeniedAction
-  | ResetAction
-  | UpdateMediaUrlAction;
+  | ResetAction;
 
 export type ContentShareState = {
   tileId: number | null;
@@ -75,7 +68,6 @@ export type ContentShareState = {
   isLocalShareLoading: boolean;
   isLocalUserSharing: boolean;
   sharingAttendeeId: string | null;
-  mediaUrl: string;
 };
 
 export const initialState: ContentShareState = {
@@ -83,8 +75,7 @@ export const initialState: ContentShareState = {
   paused: false,
   isLocalUserSharing: false,
   isLocalShareLoading: false,
-  sharingAttendeeId: null,
-  mediaUrl: '',
+  sharingAttendeeId: null
 };
 
 export function reducer(
@@ -95,7 +86,7 @@ export function reducer(
     case ContentActionType.STARTING: {
       return {
         ...state,
-        isLocalShareLoading: true,
+        isLocalShareLoading: true
       };
     }
     case ContentActionType.UPDATE: {
@@ -114,8 +105,7 @@ export function reducer(
         tileId: tileState.tileId!,
         isLocalShareLoading: false,
         isLocalUserSharing: isLocalUser,
-        sharingAttendeeId: tileState.boundAttendeeId,
-        mediaUrl: state.mediaUrl,
+        sharingAttendeeId: tileState.boundAttendeeId
       };
     }
     case ContentActionType.REMOVE: {
@@ -138,7 +128,7 @@ export function reducer(
         ...state,
         isLocalShareLoading: false,
         isLocalUserSharing: false,
-        paused: false,
+        paused: false
       };
     }
     case ContentActionType.TOGGLE_PAUSE: {
@@ -148,7 +138,7 @@ export function reducer(
 
       return {
         ...state,
-        paused: !state.paused,
+        paused: !state.paused
       };
     }
     case ContentActionType.DENIED: {
@@ -158,18 +148,12 @@ export function reducer(
 
       return {
         ...state,
-        isLocalShareLoading: false,
+        isLocalShareLoading: false
       };
     }
 
     case ContentActionType.RESET: {
       return initialState;
-    }
-    case ContentActionType.UPDATE_MEDIA_URL: {
-      return {
-        ...state,
-        mediaUrl: payload.mediaUrl,
-      };
     }
     default:
       throw new Error('Incorrect type in VideoProvider');
