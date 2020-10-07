@@ -9,6 +9,11 @@ import ControlBar from '.';
 import ControlBarItem from './ControlBarItem';
 import ControlBarDocs from './ControlBar.mdx';
 
+import PopOverItem from '../PopOver/PopOverItem';
+import PopOverSubMenu from '../PopOver/PopOverSubMenu';
+import PopOverSeparator from '../PopOver/PopOverSeparator';
+import PopOverHeader from '../PopOver/PopOverHeader';
+
 export default {
   title: 'UI Components/ControlBar',
   parameters: {
@@ -82,7 +87,37 @@ export const ControlBarForDocs = () => {
 
   return (
     <ControlBar showLabels layout="left" css="position: absolute;">
-      <ControlBarItem {...microphoneButtonProps} />
+      <ControlBarItem {...microphoneButtonProps}>
+        <PopOverHeader title="Title text" subtitle="Subtitle text" />
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked')}
+          children={<span>Also test content</span>}
+        />
+        <PopOverSeparator />
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked')}
+          children={<span>This is more test content</span>}
+        />
+        <PopOverSubMenu text="This is a submenu">
+          <PopOverItem
+            as="button"
+            onClick={() => console.log('clicked')}
+            children={<span>This is also a submenu component</span>}
+          />
+          <PopOverItem
+            as="button"
+            onClick={() => console.log('clicked')}
+            children={<span>This is also a submenu component</span>}
+          />
+        </PopOverSubMenu>
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked')}
+          children={<span>This has very long text</span>}
+        />
+      </ControlBarItem>
       <ControlBarItem {...volumeButtonProps} />
       <ControlBarItem {...cameraButtonProps} />
       <ControlBarItem {...dialButtonProps} />
@@ -133,16 +168,16 @@ export const _ControlBar = () => {
   const volumeButtonProps = {
     icon: <Sound />,
     onClick: () => console.log('Volume button clicked'),
-    popOver: [
-      {
-        onClick: () => console.log('volume popover option 1'),
-        children: <span>Some option text</span>
-      },
-      {
-        onClick: () => console.log('volume popover option 2'),
-        children: <span>More option text</span>
-      }
-    ],
+      popOver: [
+        {
+          onClick: () => console.log('volume popover option 1'),
+          children: <span>Some option text</span>
+        },
+        {
+          onClick: () => console.log('volume popover option 2'),
+          children: <span>More option text</span>
+        }
+      ],
     label: 'Volume'
   };
 
@@ -169,11 +204,47 @@ export const _ControlBar = () => {
       )}
     >
       <ControlBarItem {...microphoneButtonProps} />
-      <ControlBarItem {...volumeButtonProps} />
+      <ControlBarItem {...volumeButtonProps}>
+      <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked')}
+          children={<span>This is more test content</span>}
+        />
+      </ControlBarItem>
       <ControlBarItem {...cameraButtonProps} />
       <ControlBarItem {...dialButtonProps} />
       <ControlBarItem {...laptopButtonProps} />
-      <ControlBarItem {...hangUpButtonProps} />
+      <ControlBarItem {...hangUpButtonProps} popOverPlacement='bottom-end'>
+        <PopOverHeader title="Title text" subtitle="Subtitle text" />
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked')}
+          children={<span>Also test content</span>}
+        />
+        <PopOverSeparator />
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked')}
+          children={<span>This is more test content</span>}
+        />
+        <PopOverSubMenu text="This is a submenu">
+          <PopOverItem
+            as="button"
+            onClick={() => console.log('clicked')}
+            children={<span>This is also a submenu component</span>}
+          />
+          <PopOverItem
+            as="button"
+            onClick={() => console.log('clicked')}
+            children={<span>This is also a submenu component</span>}
+          />
+        </PopOverSubMenu>
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked')}
+          children={<span>This has very long text</span>}
+        />
+      </ControlBarItem>
     </ControlBar>
   );
 };
