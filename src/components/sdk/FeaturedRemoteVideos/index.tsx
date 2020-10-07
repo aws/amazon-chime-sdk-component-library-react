@@ -11,7 +11,9 @@ import { useRosterState } from '../../../providers/RosterProvider';
 import { useGridData } from '../../ui/VideoGrid';
 import { BaseSdkProps } from '../Base';
 
-interface Props extends BaseSdkProps, HTMLAttributes<HTMLDivElement> {}
+interface Props
+  extends BaseSdkProps,
+    Omit<HTMLAttributes<HTMLDivElement>, 'css'> {}
 
 export const FeaturedRemoteVideos: FC<Props> = props => {
   const gridData = useGridData();
@@ -38,7 +40,7 @@ export const FeaturedRemoteVideos: FC<Props> = props => {
             {...props}
             className={classes}
             key={tileId}
-            styles={styles}
+            css={styles}
           />
         );
       })}

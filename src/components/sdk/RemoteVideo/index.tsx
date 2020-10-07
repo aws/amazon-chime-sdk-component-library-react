@@ -9,7 +9,8 @@ import { useApplyVideoObjectFit } from '../../../hooks/useApplyVideoObjectFit';
 import { BaseSdkProps } from '../Base';
 
 interface Props
-  extends HTMLAttributes<HTMLDivElement>, BaseSdkProps {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseSdkProps {
   /** The tile ID to bind the video element to */
   tileId: number;
   /** The name to show on the video's nameplate */

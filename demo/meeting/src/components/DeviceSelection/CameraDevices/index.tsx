@@ -15,7 +15,7 @@ import { title, StyledInputGroup } from '../Styled';
 const CameraDevices = () => {
   return (
     <div>
-      <Heading tag="h2" level={6} styles={title}>
+      <Heading tag="h2" level={6} css={title}>
         Video
       </Heading>
       <StyledInputGroup>

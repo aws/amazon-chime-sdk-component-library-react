@@ -85,7 +85,7 @@ const MeetingForm: React.FC = () => {
 
   return (
     <form>
-      <Heading tag="h1" level={4} styles="margin-bottom: 1rem">
+      <Heading tag="h1" level={4} css="margin-bottom: 1rem">
         Join a meeting
       </Heading>
       <FormField

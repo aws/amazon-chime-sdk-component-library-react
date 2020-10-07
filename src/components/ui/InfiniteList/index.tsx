@@ -7,7 +7,7 @@ import { StyledInfiniteList } from './Styled';
 import { BaseProps } from '../Base';
 import { Spinner } from '../icons'; // TODO: update icon
 
-export interface InfiniteListProps extends HTMLAttributes<HTMLUListElement>, BaseProps {
+export interface InfiniteListProps extends Omit<HTMLAttributes<HTMLUListElement>, 'css'>, BaseProps {
   /* The elements that will populat the list. These elements will be wrapped in <li> tags, so that can be any element. */
   items: JSX.Element[];
   /* A callback function that will make an api call to load the next batch of items. */
@@ -43,12 +43,12 @@ const InfiniteList = (props: InfiniteListProps) => {
         onLoadRef.current()
       }
     },
-      {
+      { 
         root: feedRef.current,
         threshold: 1
       }
     );
-
+    
     if (currentTopItem.current) {
       observer.observe(currentTopItem.current);
     }

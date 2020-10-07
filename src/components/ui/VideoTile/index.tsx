@@ -9,7 +9,8 @@ import { BaseProps } from '../Base';
 type ObjectFit = 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 
 export interface VideoTileProps
-  extends HTMLAttributes<HTMLDivElement>, BaseProps {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseProps {
   /** The name to show on the video tile */
   nameplate?: string | null;
   /** Specifies which CSS object-fit value to apply to the VideoTile so that it resizes to fit its container  */

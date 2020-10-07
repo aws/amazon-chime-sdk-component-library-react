@@ -57,12 +57,12 @@ export const BasicInfiniteList = () => {
   };
 
   return (
-    <Flex styles="height: unset; display: flex; justify-content: center;">
+    <Flex css="height: unset; display: flex; justify-content: center;">
       <InfiniteList
         label='chat-feed'
         items={items}
         onLoad={onLoad}
-        styles='border: 1px solid #3f4149; width: 10rem; height: 20rem'
+        css='border: 1px solid #3f4149; width: 10rem; height: 20rem'
         isLoading={isLoading}
       />
     </Flex>

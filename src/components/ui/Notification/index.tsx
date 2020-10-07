@@ -17,7 +17,8 @@ enum Severity {
 }
 
 export interface NotificationProps
-  extends HTMLAttributes<HTMLDivElement>, BaseProps {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseProps {
   /** The severity of the notification. */
   severity?: Severity;
   /** The message to display in the notification. */
