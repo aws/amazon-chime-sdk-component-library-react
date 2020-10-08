@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename icon (ContentShare > ScreenShare) to fix conflicting names
 - Remove unused import in Select
 - Temporarily removed ChannelList component snapshot test
+- [Demo] Fixed so a user leaves a meeting when they press the back button in the browser or navigate back to home
 
 ### Added
 

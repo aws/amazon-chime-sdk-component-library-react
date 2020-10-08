@@ -8,6 +8,10 @@ import React, {
   useRef,
   ReactNode
 } from 'react';
+import { useLocation } from 'react-router-dom';
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+import routes from '../constants/routes';
 
 export type NavigationContextType = {
   showNavbar: boolean;
@@ -37,6 +41,17 @@ const NavigationProvider = ({ children }: Props) => {
   const [showRoster, setShowRoster] = useState(() => isDesktop());
   const [showMetrics, setShowMetrics] = useState(false);
   const isDesktopView = useRef(isDesktop());
+
+  const location = useLocation();
+  const meetingManager = useMeetingManager();
+
+  useEffect(() => {
+    if (location.pathname.includes(routes.MEETING)) {
+      return () => { 
+        meetingManager.leave();
+      }
+    }
+  }, [location.pathname])
 
   useEffect(() => {
     const handler = () => {
