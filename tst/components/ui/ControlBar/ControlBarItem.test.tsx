@@ -39,20 +39,5 @@ describe('ControlBarButton', () => {
     const el = getByText('option 1');
     expect(el).toBeInTheDocument();
     fireEvent.click(button); // We will get a React warning if we don't return the UI to the initial state
-  });
-
-  it('should render a PopOver if children are present', () => {
-    const component = (
-      <ControlBarItem {...controlBarItemWithPopOverProps}>
-        <p>Child element</p>
-      </ControlBarItem>
-    );
-
-    const { getByTestId, getByText } = renderWithTheme(lightTheme, component);
-    const button = getByTestId('control-bar-item-caret');
-    fireEvent.click(button);
-    const el = getByText('Child element');
-    expect(el).toBeInTheDocument();
-    fireEvent.click(button); // We will get a React warning if we don't return the UI to the initial state
-  });
-});
+  })
+})
