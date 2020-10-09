@@ -92,11 +92,11 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
     showLabels ? '1.5rem 1rem' : '1.5rem'};
   justify-items: center;
   align-items: center;
-  ${({ popOver, layout }) => `
-    ${(!isVertical(layout) && popOver && gridTemplateColumnMap['popOver']) ||
+  ${({ popOver, layout, children }) => `
+    ${(!isVertical(layout) && (popOver || children) && gridTemplateColumnMap['popOver']) ||
       ''}
     ${(isVertical(layout) &&
-      popOver &&
+      (popOver || children) &&
       gridTemplateColumnMap['popOver&vertical']) ||
       ''}
   `};
@@ -104,7 +104,7 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
   .ch-control-bar-item-iconButton {
     color: ${({ theme, isSelected }) => isSelected ? `${theme.controlBar.selected.text}` : theme.controlBar.text};
     background-color: ${({ isSelected, theme }) =>  isSelected ? `${theme.controlBar.selected.bgd}` : 'inherit'};
-    grid-column-start: ${({ layout, popOver }) => isVertical(layout) && popOver ? '2' : '1'};
+    grid-column-start: ${({ layout, popOver, children }) => isVertical(layout) && (popOver || children) ? '2' : '1'};
 
     .ch-icon {
       width: 1.5rem;
@@ -116,7 +116,7 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
 
   .ch-control-bar-popover {
     background-color: inherit;
-    grid-column-start: ${({ layout, popOver }) => isVertical(layout) && popOver ? '2' : '1'};
+    grid-column-start: ${({ layout, popOver, children }) => isVertical(layout) && (popOver || children) ? '2' : '1'};
     color: ${({ theme }) => theme.controlBar.text};
 
     .isOpen.ch-control-bar-item-caret {
@@ -137,8 +137,8 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
         .fontSize}; /* TODO: get updated font size from design */
     padding-top: 0.25rem;
     justify-self: center;
-    grid-column: ${({ layout, popOver }) =>
-      isVertical(layout) && popOver ? '2' : '1'};
+    grid-column: ${({ layout, popOver, children }) =>
+      isVertical(layout) && (popOver || children) ? '2' : '1'};
   }
 
   ${({ theme }) => theme.mediaQueries.max.sm} {
