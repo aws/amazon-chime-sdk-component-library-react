@@ -46,7 +46,7 @@ const App = () => (
 
 const MyChild = () => {
   const { roster } = useRosterState();
-  const rosterArray = Object.values(roster);
+  const attendees = Object.values(roster);
 
   const attendeeItems = attendees.map(attendee => {
     const { chimeAttendeeId, name } = attendee;
