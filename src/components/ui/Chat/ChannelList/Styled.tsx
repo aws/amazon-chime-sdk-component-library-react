@@ -61,7 +61,7 @@ export const StyledChannelItem = styled.li<ChannelItemProps>`
       fill: ${props => props.theme.channelList.active.fontColor};
     }
 
-    & button:focus .ch-more-channel-options {
+    & button:focus .ch-channel-actions {
       border: ${props => props.theme.channelList.focus.selectedBorder};
       border-radius: 50%;
     }

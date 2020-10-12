@@ -12,8 +12,8 @@ import { renderWithTheme } from '../../../../test-helpers';
 describe('ChannelList', () => {
 
   const defaultComponent = (
-    <ChannelList activeChannelArn='abc' setActiveChannelArn={() => null}>
-      <ChannelItem name='Channel 1' arn='abc' />
+    <ChannelList activeChannelId='abc' setActiveChannelId={() => null}>
+      <ChannelItem name='Channel 1' id='abc' />
     </ChannelList>
   );
 

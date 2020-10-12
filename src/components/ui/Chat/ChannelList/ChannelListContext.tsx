@@ -4,8 +4,8 @@
 import { createContext, useContext } from 'react';
 
 export const ChannelListContext = createContext({
-  setActiveChannelArn(arn: string) {},
-  activeChannelArn: '',
+  setActiveChannelId(id: string) {},
+  activeChannelId: '',
 });
 
 export const useChannelListContext = () => {

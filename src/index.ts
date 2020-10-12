@@ -47,6 +47,8 @@ export { RosterHeader } from './components/ui/Roster/RosterHeader';
 export { RosterGroup } from './components/ui/Roster/RosterGroup';
 export { RosterCell } from './components/ui/Roster/RosterCell';
 export { UserActivityManager } from './components/ui/UserActivityManager';
+export { ChannelList } from './components/ui/Chat/ChannelList';
+export { ChannelItem } from './components/ui/Chat/ChannelList/ChannelItem'
 
 // SDK components
 export {
