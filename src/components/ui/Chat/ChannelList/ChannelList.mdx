@@ -5,6 +5,7 @@ import ChannelList from './';
 import { _ChannelList } from './ChannelList.stories.tsx';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import PopOverItem from '../../PopOver/PopOverItem';
 
 # ChannelList
 
@@ -27,18 +28,18 @@ import { ChannelList } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 <ChannelList
-  activeChannelArn={activeChannelArn}
-  setActiveChannelArn={setActiveChannelArn}
+  activeChannelId={activeChannelId}
+  setActiveChannelId={setActiveChannelId}
 >
   <ChannelItem
     name='Channel 1'
-    arn='abc'
-    moreOptions={[{ children: <span>Option 1</span>, onClick: () => setActiveChannelArn('abc') }]}
+    id='abc'
+    actions={<PopOverItem children={<span>Option 1</span>} onClick={() => console.log('Option 1 clicked')} />}
   />
   <ChannelItem
     name='Channel 2'
-    arn='dce'
-    moreOptions={[{ children: <span>Option 1</span>, onClick: () => setActiveChannelArn('dce') }] }
+    id='dce'
+    actions={<PopOverItem children={<span>Option 1</span>} onClick={() => console.log('Option 1 clicked')} />}
   />
 </ChannelList>
 ```

@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 #### Fixed
 - Docs rename variable `rosterArray ` from the attendees list to `attendees`
 
+### Changed
+
+- Changed ChannelList props to accept and children instead of PopOveItem props
 
 ## [1.3.0] - 2020-10-09
 

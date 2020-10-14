@@ -35,7 +35,7 @@ const Message = (props: MessageProps) => {
                 <div>{props.content}</div>
                 {props.showCaret &&   
                 <svg viewBox="0 0 4 9">
-                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                    <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
                       <g transform="translate(0.000000, -53.000000)" className='ch-chat-caret'>
                         <path d="M4,62 L3.92789928,61.999999 C2.89671177,62.0004988 1.33197354,61.8123902 0.200755581,60.8250184 C-0.0781312712,60.5814641 -0.0639788041,60.0290387 0.229060515,59.8181428 C1.47198013,58.9247413 3.99237825,57.6821586 4,52.9112516 L4,52.9112516 L4,62 Z" />
                       </g>
