@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Fixed
 - Docs rename variable `rosterArray ` from the attendees list to `attendees`
+- Add base styles to ChannelList
 
 ### Changed
 
