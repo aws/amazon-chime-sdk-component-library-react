@@ -4,12 +4,16 @@
 import styled from 'styled-components';
 
 import { ChannelListProps } from '.';
+import { baseStyles, baseSpacing } from '../../Base';
 import { ChannelItemProps } from './ChannelItem';
 
 export const StyledChannelList = styled.ul<ChannelListProps>`
   display: flex;
   flex-direction: column;
   width: 20rem;
+
+  ${baseStyles}
+  ${baseSpacing}
 `;
 
 export const StyledChannelItem = styled.li<ChannelItemProps>`
