@@ -14,11 +14,9 @@ export type Message = {
   /* The timestamp when the message was originally sent by the sender. */
   createdTimestamp: string;
   /* The timestamp of the last time the message was edited. */
-  lastUpdatedTimestamp: string;
+  lastUpdatedTimestamp?: string;
   /* Determines if a message was redacted (deleted) by a user. */
   redacted: boolean;
-  /* The unique identifier of the channel the message was sent in. */
-  channelId?: string;
   /* The display name of the sender. */
   senderName: string;
   /* The unique identifier of the sender. */

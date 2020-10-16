@@ -4,34 +4,33 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 
-import formatMessageList, { MessageProps } from '../../../../../src/components/ui/Chat/MessageList/formatMessageList';
+import createChatBubbleList, { Message } from '../../../../../src/components/ui/Chat/ChatBubble/createChatBubbleList';
+import insertDateHeaders from '../../../../../src/components/ui/Chat/DateHeader/insertDateHeaders';
 import lightTheme from '../../../../../src/theme/light';
 import { renderWithTheme } from '../../../../test-helpers';
 
 describe('InfiniteList', () => {
-  const defaultMessage: MessageProps = {
+  const defaultMessage: Message = {
     content: 'Test message',
     messageId: 'test-message-123',
     createdTimestamp: '2020-10-05T21:51:26.569Z',
     lastUpdatedTimestamp: '2020-10-05T21:51:26.569Z',
     redacted: false,
-    sender: {
-      name: 'Test User',
-      arn: 'test-user-123',
-    }
+    senderName: 'Test User',
+    senderId: 'test-user-123',
   };
   const memberId = 'test-user-abc';
 
   it('should return a list of ChatBubbles', () => {
-    const component = <ul>{formatMessageList([defaultMessage], memberId, null)}</ul>;
+    const component = <ul>{createChatBubbleList([defaultMessage], memberId, null)}</ul>;
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const list = getByTestId('chat-bubble');
 
     expect(list).toBeInTheDocument();
   });
 
-  it('should render a DateHeader', () => {
-    const component = <ul>{formatMessageList([defaultMessage], memberId, null)}</ul>;
+  it('should render a DateHeader when called with insertDateHeaders helper function', () => {
+    const component = <ul>{createChatBubbleList(insertDateHeaders([defaultMessage]), memberId, null)}</ul>;
       const { getAllByTestId } = renderWithTheme(lightTheme, component);
       const dateHeaders = getAllByTestId('date-header');
   

@@ -10,13 +10,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Docs rename variable `rosterArray ` from the attendees list to `attendees`
 - Add base styles to ChannelList
+- Fixed createChatBubbleList unit test that was incorrectly named and not running
 
 ### Added
 - Add `tabIndex` to BaseProps
 
 ### Changed
 
-- Changed ChannelList props to accept and children instead of PopOveItem props
+- Changed ChannelList props to accept and children instead of PopOverItem props.
+- Added extra scroll functionality to the InfiniteList component when a new message is sent.
+- Changed Message type to only include needed properties.
 
 ## [1.3.0] - 2020-10-09
 
