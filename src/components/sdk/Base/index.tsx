@@ -6,4 +6,6 @@ export interface BaseSdkProps {
   css?: string;
   /** Optional class names to apply to the element */
   className?: string;
+  /** Optional tab index for keyboard accessibility */
+  tabIndex?: number;
 }

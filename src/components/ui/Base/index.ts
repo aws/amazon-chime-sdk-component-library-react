@@ -3,14 +3,11 @@
 
 import { SpaceProps } from 'styled-system';
 import { space } from 'styled-system';
+import { BaseSdkProps } from '../../sdk/Base';
 
-export interface BaseProps extends SpaceProps {
+export interface BaseProps extends SpaceProps, BaseSdkProps {
   /** Optional tag to render the component as a different HTML tag */
   tag?: any;
-  /** Optional css */
-  css?: string;
-  /** Optional class names to appear on the container */
-  className?: string;
 }
 
 export const baseStyles = ({ css }: BaseProps) =>
