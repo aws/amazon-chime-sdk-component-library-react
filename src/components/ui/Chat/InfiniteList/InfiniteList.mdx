@@ -1,9 +1,9 @@
 import { Preview, Props } from '@storybook/addon-docs/blocks';
 import { ThemeProvider } from 'styled-components';
 
-import Flex from '../Flex';
-import { lightTheme } from '../../../theme/';
-import { GlobalStyles } from '../../../theme/GlobalStyles';
+import Flex from '../../Flex';
+import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 import InfiniteList from './';
 import { BasicInfiniteList } from './InfiniteList.stories.tsx';
 
@@ -31,13 +31,17 @@ import { InfiniteList } from 'amazon-chime-sdk-component-library-react';
 
 
 ```jsx
-<Flex layout="fill-space-centered">
-  <InfiniteList
-    items={[<span>1</span>, ...]}
-    handleLoad={fetchItems}
-    batchSize={50}
-  />
-</Flex>
+<InfiniteList
+  items={[<span>1</span>, ...]}
+  handleLoad={fetchItems}
+  batchSize={50}
+/>
+
+<InfiniteList
+  items={createChatBubbleList(insertDateHeaders(messages), memberId, actions)}
+  handleLoad={fetchItems}
+  batchSize={50}
+/>
 ```
 
 ## Props

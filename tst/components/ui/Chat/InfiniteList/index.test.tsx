@@ -4,10 +4,9 @@
 import '@testing-library/jest-dom';
 import React from 'react';
 
-import InfiniteList, { InfiniteListProps } from '../../../../src/components/ui/InfiniteList';
-import lightTheme from '../../../../src/theme/light';
-import { renderWithTheme, setupIntersectionObserverMock } from '../../../test-helpers';
-
+import InfiniteList, { InfiniteListProps } from '../../../../../src/components/ui/Chat/InfiniteList';
+import lightTheme from '../../../../../src/theme/light';
+import { renderWithTheme, setupIntersectionObserverMock } from '../../../../test-helpers';
 
 describe('InfiniteList', () => {
   setupIntersectionObserverMock()
@@ -24,8 +23,7 @@ describe('InfiniteList', () => {
   const defaultProps: InfiniteListProps = {
     onLoad: async () => {},
     items: dummyItems(20),
-    isLoading: false, 
-    label: 'test-infinite-list'
+    isLoading: false,
   }
 
   it('should render a list', () => {

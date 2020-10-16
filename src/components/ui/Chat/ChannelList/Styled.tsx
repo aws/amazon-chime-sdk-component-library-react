@@ -4,16 +4,23 @@
 import styled from 'styled-components';
 
 import { ChannelListProps } from '.';
+import { baseStyles, baseSpacing } from '../../Base';
 import { ChannelItemProps } from './ChannelItem';
 
 export const StyledChannelList = styled.ul<ChannelListProps>`
   display: flex;
   flex-direction: column;
   width: 20rem;
+
+  ${baseStyles}
+  ${baseSpacing}
 `;
 
 export const StyledChannelItem = styled.li<ChannelItemProps>`
   position: relative;
+
+  ${baseStyles};
+  ${baseSpacing};
 
   & .ch-channel-button {
     width: 100%;
@@ -26,6 +33,7 @@ export const StyledChannelItem = styled.li<ChannelItemProps>`
     padding-left: 1rem;
     color: ${props => props.theme.channelList.fontColor};
     border: ${props => props.theme.channelList.border};
+    font-family: ${props => props.theme.fonts.body};
 
     &:hover {
       background-color: ${props => props.theme.channelList.hover.bgd};
@@ -61,7 +69,7 @@ export const StyledChannelItem = styled.li<ChannelItemProps>`
       fill: ${props => props.theme.channelList.active.fontColor};
     }
 
-    & button:focus .ch-more-channel-options {
+    & button:focus .ch-channel-actions {
       border: ${props => props.theme.channelList.focus.selectedBorder};
       border-radius: 50%;
     }

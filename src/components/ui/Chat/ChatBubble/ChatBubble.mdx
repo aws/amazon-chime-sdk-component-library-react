@@ -1,0 +1,37 @@
+import { Props, Canvas } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import ChatBubble from './';
+import { lightTheme } from '../../../../theme';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+
+# Chat Message
+
+The Message component displays incoming and outgoing chat messages and data.
+To create styled lists of chat bubbles including coloration, chat bubble tail placement, and name placement, use the createChatBubbleList function.
+
+## Importing
+
+```javascript
+import { ChatBubble } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<Canvas style={{ 'background-color': '#eee' }}>
+  <ThemeProvider theme={lightTheme}>
+    <GlobalStyles/>
+    <ChatBubble variant='outgoing' name='Me' time='9:45 AM' content='This is an outgoing message' />
+    <ChatBubble variant='incoming' name='Sarah Anderson' time='9:47 AM' content='This is an incoming message. It is much longer. This amount of text reaches the max length and goes onto the next line.' />
+  </ThemeProvider>
+</Canvas>
+
+```jsx
+<ChatBubble variant='outgoing' name='Me' time='9:45 AM' content='This is an outgoing message' />
+<ChatBubble variant='incoming' name='Sarah Anderson' time='9:47 AM' content='This is an incoming message' />
+
+<ul>{createChatBubbleList(messages, memberId, actions)}</ul>
+```
+
+## Props
+<Props of={ChatBubble} />

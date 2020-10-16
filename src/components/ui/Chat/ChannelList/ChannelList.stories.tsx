@@ -7,9 +7,10 @@ import Flex from '../../Flex';
 import ChannelList from './';
 import ChannelItem from './ChannelItem';
 import ChannelListDocs from './ChannelList.mdx';
+import PopOverItem from '../../PopOver/PopOverItem';
 
 export default {
-  title: 'UI Components/Chat/ChannelList',
+  title: 'UI Components/Chat',
   parameters: {
     docs: {
       page: ChannelListDocs.parameters.docs.page().props.children.type
@@ -19,33 +20,33 @@ export default {
 };
 
 export const _ChannelList = () => {
-  const [activeChannelArn, setActiveChannelArn] = useState(null);
+  const [activeChannelId, setActiveChannelId] = useState(null);
 
   return (
     <Flex layout="fill-space-centered">
         <ChannelList
-          activeChannelArn={activeChannelArn}
-          setActiveChannelArn={setActiveChannelArn}
+          activeChannelId={activeChannelId}
+          setActiveChannelId={setActiveChannelId}
         >
           <ChannelItem
             name='Channel 1'
-            arn='abc'
-            moreOptions={[{ children: <span>Option 1</span>, onClick: () => console.log('Option 1 clicked') }]}
+            id='abc'
+            actions={<PopOverItem children={<span>Option 1</span>} onClick={() => console.log('Option 1 clicked')} />}
           />
           <ChannelItem
             name='Channel 2'
-            arn='dce'
-            moreOptions={[{ children: <span>Option 1</span>, onClick: () => console.log('Option 1 clicked') }] }
+            id='dce'
+            actions={<PopOverItem children={<span>Option 1</span>} onClick={() => console.log('Option 1 clicked')} />}
           />
           <ChannelItem
             name='Channel 3'
-            arn='fgh'
-            moreOptions={[{ children: <span>Option 1</span>, onClick: () => console.log('Option 1 clicked') }] }
+            id='fgh'
+            actions={<PopOverItem children={<span>Option 1</span>} onClick={() => console.log('Option 1 clicked')} />}
           />
           <ChannelItem
             name='Channel 4'
-            arn='ijk'
-            moreOptions={[{ children: <span>Option 1</span>, onClick: () => console.log('Option 1 clicked') }] }
+            id='ijk'
+            actions={<PopOverItem children={<span>Option 1</span>} onClick={() => console.log('Option 1 clicked')} />}
           />
         </ChannelList>
     </Flex>
@@ -53,5 +54,5 @@ export const _ChannelList = () => {
 };
 
 _ChannelList.story = {
-  name: 'Channel List'
+  name: 'ChannelList'
 }; 

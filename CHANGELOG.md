@@ -7,6 +7,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+#### Fixed
+- Docs rename variable `rosterArray ` from the attendees list to `attendees`
+- Add base styles to ChannelList
+
+### Changed
+
+- Changed ChannelList props to accept and children instead of PopOveItem props
+
+## [1.3.0] - 2020-10-09
+
 ### Fixed
 
 - Fixed `useToggleLocalMute` not working when mounted before audioVideo initialized
@@ -14,16 +24,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed `leadingIcon` alignment in `SearchInput`
 - Rename icon (ContentShare > ScreenShare) to fix conflicting names
 - Remove unused import in Select
+- Temporarily removed ChannelList component snapshot test
+- [Demo] Fixed so a user leaves a meeting when they press the back button in the browser or navigate back to home
 
 ### Added
 
 - Add `useLocalAudioInputActivityPreview` hook for direct access to microphone input value
 - Add chat message component
-- Add `isSelected` prop to `ControlBarItem` component
+- Add `isSelected` prop to `ControlBarButton` component
 - Add `UpAndDownCaret` icon component
 - Add channel list component for chat
 - Add Share Video File feature
 - Add `tabIndex` to BaseProps
+- Add `children` prop for ControlBarItem to allow for custom PopOver content
+- Added styleMessageList function
+- Added Chat DateHeader component
+- Added formatDate utility function
+
 
 ### Changed
 
@@ -33,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated `Select` caret icon
 - Allow layout prop for VideoTileGrid
 - Rename component `ControlBarButton` to `ControlBarItem`
+- Changed Message component to ChatBubble and moved InfiniteList to /Chat/MessageList
 
 ### Removed
 

@@ -22,9 +22,6 @@ The `useContentShareControls` hook returns the state and functionality around st
   // If a user is not sharing, it will start the content share workflow.
   toggleContentShare: () => void;
 
-  // A function to toggle video file share.
-  toggleVideoFileShare: (mediaUrl?: string) => void;
-
   // A function to toggle the local user's content share's pause status.
   togglePauseContentShare: () => void;
 }
@@ -44,7 +41,7 @@ The hook depends on the `ContentShareProvider`. If you are using `MeetingProvide
 import React from 'react';
 import {
   MeetingProvider,
-  useContentShareControls,
+  useContentShareControls
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -54,16 +51,9 @@ const App = () => (
 );
 
 const MyChild = () => {
-  const { toggleContentShare, toggleVideoFileShare } = useContentShareControls();
+  const { toggleContentShare } = useContentShareControls();
 
-  // get file object from <input type='file' ... >
-  const file = document.getElementById("input-file").files[0];
-  const url: string = URL.createObjectURL(file);
-
-  return (
-    <button onClick={toggleContentShare}>Toggle screen share</button>
-    <button onClick={() => toggleVideoFileShare(url)}>Toggle video file share</button>
-  );
+  return <button onClick={toggleContentShare}>Toggle content share</button>;
 };
 ```
 

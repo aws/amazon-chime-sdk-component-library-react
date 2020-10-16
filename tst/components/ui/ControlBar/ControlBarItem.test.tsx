@@ -23,8 +23,8 @@ export const controlBarItemWithPopOverProps = {
   popOver: [{ onClick: () => console.log('popover item clicked'), children: <span>option 1</span>}]
 };
 
-describe('ControlBarItem', () => {
-  it('renders a ControlBarItem', () => {
+describe('ControlBarButton', () => {
+  it('renders a ControlBarButton', () => {
     const component = <ControlBarItem {...controlBarItemProps}/>;
     const { getByTestId } = renderWithTheme(lightTheme, component)
     const el = getByTestId('control-bar-item');
@@ -39,5 +39,20 @@ describe('ControlBarItem', () => {
     const el = getByText('option 1');
     expect(el).toBeInTheDocument();
     fireEvent.click(button); // We will get a React warning if we don't return the UI to the initial state
-  })
-})
+  });
+
+  it('should render a PopOver if children are present', () => {
+    const component = (
+      <ControlBarItem {...controlBarItemWithPopOverProps}>
+        <p>Child element</p>
+      </ControlBarItem>
+    );
+
+    const { getByTestId, getByText } = renderWithTheme(lightTheme, component);
+    const button = getByTestId('control-bar-item-caret');
+    fireEvent.click(button);
+    const el = getByText('Child element');
+    expect(el).toBeInTheDocument();
+    fireEvent.click(button); // We will get a React warning if we don't return the UI to the initial state
+  });
+});

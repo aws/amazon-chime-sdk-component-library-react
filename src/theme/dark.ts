@@ -337,7 +337,7 @@ const videoGrid = {
   bgd: colors.greys.grey90
 };
 
-const chatMessage = {
+const chatBubble = {
   incoming: {
     bgd: colors.greys.grey80,
     fontColor: colors.greys.grey30,
@@ -376,6 +376,11 @@ const channelList = {
   }
 }
 
+const chatDateHeader = {
+  bgd: colors.greys.grey10,
+  fontColor: colors.greys.grey80
+}
+
 export const darkTheme = {
   name: 'Dark Theme',
   buttons,
@@ -391,8 +396,9 @@ export const darkTheme = {
   roster,
   navbar,
   videoGrid,
-  chatMessage,
+  chatBubble,
   channelList,
+  chatDateHeader,
   ...defaultTheme
 };
 
