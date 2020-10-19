@@ -1,7 +1,7 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useRef, useEffect, HTMLAttributes, ComponentType, ReactNode } from 'react';
+import React, { useRef, useEffect, useState, HTMLAttributes, FC, ReactNode } from 'react';
 
 import { StyledInfiniteList } from './Styled';
 import { BaseProps } from '../../Base';
@@ -12,9 +12,11 @@ export interface InfiniteListProps extends Omit<HTMLAttributes<HTMLUListElement>
   onLoad: () => void;
   /* Manages the visibility of the spinner when the API call is resolving. */
   isLoading: boolean;
+  /* The elements to be shown in the list */
   items: ReactNode[];
 }
-const InfiniteList = (props: InfiniteListProps) => {
+
+export const InfiniteList: FC<InfiniteListProps> = (props) => {
   const { isLoading, onLoad, items } = props;
 
   const containerRef = useRef<HTMLUListElement>(null);
@@ -27,13 +29,16 @@ const InfiniteList = (props: InfiniteListProps) => {
 
   onLoadRef.current = onLoad;
 
+  const [atBottom, setAtBottom] = useState(false);
+
   useEffect(() => {
     firstNew.current?.scrollIntoView();
   }, [items.length]);
-
+  
   useEffect(() => {
     listEnd.current?.scrollIntoView();
-    const observer = new IntersectionObserver(entries => {
+
+    const topObserver = new IntersectionObserver(entries => {
       const topEntry = entries[0];
       if (topEntry.isIntersecting) {
         onLoadRef.current()
@@ -46,11 +51,11 @@ const InfiniteList = (props: InfiniteListProps) => {
     );
     
     if (currentTopItemRef.current) {
-      observer.observe(currentTopItemRef.current);
+      topObserver.observe(currentTopItemRef.current);
     }
     return () => {
       if (currentTopItemRef.current) {
-        observer.unobserve(currentTopItemRef.current)
+        topObserver.unobserve(currentTopItemRef.current)
       }
     }
   }, []);
@@ -59,8 +64,11 @@ const InfiniteList = (props: InfiniteListProps) => {
     prevLength.current = newLength.current;
   }
   newLength.current = items.length;
+
   const getRef = (index: number) => {
-    if (
+     if (index === newLength.current - 1) {
+      return newBottom;
+     } else if (
       index === (items.length - prevLength.current) - 1 &&
       isLoading &&
       items.length !== prevLength.current
@@ -71,13 +79,47 @@ const InfiniteList = (props: InfiniteListProps) => {
     }
   };
 
+  const newBottom = useRef<HTMLLIElement>(null);
+  let prevBottom: Element | null;
+
   const messageList = items.map((item: JSX.Element, i: number) => <li id={i.toString()} key={i} ref={i === 0 ? currentTopItemRef : getRef(i)} role='article'>{item}</li>);
+
+  useEffect(() => {
+    if (atBottom && listEnd.current) {
+      listEnd.current.scrollIntoView();
+    }
+    prevBottom = newBottom.current;
+
+    const bottomObserver = new IntersectionObserver(entries => {
+      const entry = entries[0];
+      setAtBottom(entry.isIntersecting)
+    },
+    { 
+      root: containerRef.current,
+      threshold: 0
+    });
+
+    if (prevBottom) {
+      bottomObserver.unobserve(prevBottom);
+    }
+
+    if (newBottom.current) {
+      bottomObserver.observe(newBottom.current);
+      prevBottom = newBottom.current;
+    }
+
+    return () => {
+      if (prevBottom) {
+        bottomObserver.unobserve(prevBottom)
+      }
+    }
+  }, [items.length])
 
   return (
     <StyledInfiniteList
       {...props}
       ref={containerRef}
-      className={`${isLoading ? 'ch-not-scrollable' : ''} infinite`}
+      className={`${isLoading ? 'ch-not-scrollable' : ''}`}
       data-testid='infinite-list'
       aria-busy={isLoading ? true : false}
       role='feed'

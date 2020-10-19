@@ -19,6 +19,7 @@ const rotate = keyframes`
 interface StyledInfiniteListProps extends InfiniteListProps {}
 
 export const StyledInfiniteList = styled.ul<StyledInfiniteListProps>`
+  background-color: ${props => props.theme.chatBubble.container.bgd};
   overflow-y: scroll;
   display: flex;
   flex-direction: column;
