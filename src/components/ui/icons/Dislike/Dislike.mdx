@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Dislike from './';
+import { lightTheme } from '../../../../theme/';
+
+# Dislike Icon
+
+The Dislike component creates an icon using inline SVG. Typically, you can use it to indicate a dislike action.
+
+## Importing
+
+```javascript
+import { Dislike } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Dislike width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Dislike width="2rem" />
+```
+
+## Props
+
+<Props of={Dislike} />

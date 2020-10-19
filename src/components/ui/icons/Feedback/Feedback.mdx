@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Feedback from './';
+import { lightTheme } from '../../../../theme/';
+
+# Feedback Icon
+
+The Feedback component creates an icon using inline SVG. Typically, you can use it to indicate a feedback action.
+
+## Importing
+
+```javascript
+import { Feedback } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Feedback width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Feedback width="2rem" />
+```
+
+## Props
+
+<Props of={Feedback} />
