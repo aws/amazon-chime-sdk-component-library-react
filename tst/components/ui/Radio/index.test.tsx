@@ -6,6 +6,7 @@ import React from 'react';
 import { fireEvent } from '@testing-library/dom';
 
 import Radio from '../../../../src/components/ui/Radio';
+import Add from '../../../../src/components/ui/icons/Add';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 
@@ -126,5 +127,20 @@ describe('Radio', () => {
     const radioLabel = getByText('test-label');
 
     expect(radioLabel).toBeInTheDocument();
+  });
+
+  it('should render an Icon component', () => {
+    const component = (
+      <Radio
+        value={value}
+        onChange={mockFunction}
+        label={label}
+        icon={<Add width="2rem" />}
+      />
+    );
+    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const radioIcon = getByTestId('styled-radio-icon');
+
+    expect(radioIcon).toBeInTheDocument();
   });
 });
