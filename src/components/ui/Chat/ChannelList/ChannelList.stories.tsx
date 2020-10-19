@@ -6,18 +6,18 @@ import React, { useState } from 'react';
 import Flex from '../../Flex';
 import ChannelList from './';
 import ChannelItem from './ChannelItem';
-import ChannelListDocs from './ChannelList.mdx';
 import PopOverItem from '../../PopOver/PopOverItem';
+import ChannelListDocs from './ChannelList.mdx';
 
-export default {
-  title: 'UI Components/Chat',
-  parameters: {
-    docs: {
-      page: ChannelListDocs.parameters.docs.page().props.children.type
-    }
-  },
-  component: ChannelList
-};
+// export default {
+//   title: 'UI Components/Chat',
+//   parameters: {
+//     docs: {
+//       page: ChannelListDocs.parameters.docs.page().props.children.type
+//     }
+//   },
+//   component: ChannelList
+// };
 
 export const _ChannelList = () => {
   const [activeChannelId, setActiveChannelId] = useState(null);

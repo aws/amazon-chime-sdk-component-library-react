@@ -4,11 +4,8 @@
 import styled from 'styled-components';
 
 import { baseStyles, baseSpacing } from '../../Base';
-import { DateHeaderProps } from '.';
 
-interface StyledDateHeaderProps extends DateHeaderProps {}
-
-export const StyledDateHeader = styled.div<StyledDateHeaderProps>`
+export const StyledDateHeader = styled.div`
   border-radius: 13px;
   background-color: ${props => props.theme.chatDateHeader.bgd};
   color: ${props => props.theme.chatDateHeader.fontColor};
