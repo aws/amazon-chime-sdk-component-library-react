@@ -4,18 +4,18 @@
 import React from 'react';
 
 import Flex from '../../Flex';
-import DateHeaderDocs from './DateHeader.mdx';
 import DateHeader from './';
+import DateHeaderDocs from './DateHeader.mdx';
 
-export default {
-  title: 'UI Components/Chat/DateHeader',
-  parameters: {
-    docs: {
-      page: DateHeaderDocs.parameters.docs.page().props.children.type
-    }
-  },
-  component: DateHeader
-};
+// export default {
+//   title: 'UI Components/Chat/DateHeader',
+//   parameters: {
+//     docs: {
+//       page: DateHeaderDocs.parameters.docs.page().props.children.type
+//     }
+//   },
+//   component: DateHeader
+// };
 
 
 export const _DateHeader = () => {

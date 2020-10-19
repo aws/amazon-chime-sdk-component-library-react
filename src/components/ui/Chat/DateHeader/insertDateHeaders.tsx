@@ -4,7 +4,7 @@
 import React from 'react';
 
 import DateHeader from './';
-import { Message } from '../ChatBubble/createChatBubbleList';
+import { Message } from '../ChatBubble/ChatBubbleContainer';
 
 export const insertDateHeaders = (messageItems: Message[]) => {
   const items: any[] = [...messageItems];
@@ -12,7 +12,7 @@ export const insertDateHeaders = (messageItems: Message[]) => {
   let messageDate: string;
   let dateCount = 0;
   messageItems.forEach((m: any, i: number) => {
-    if (!m.content) {
+    if (!m || !m.content) {
       return // not a message
     }
     if (i === 0) {

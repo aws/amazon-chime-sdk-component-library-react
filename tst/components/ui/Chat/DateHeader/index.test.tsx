@@ -17,8 +17,8 @@ describe('DateHeader', () => {
   it('should render a DateHaader component in the document', () => {
     const component = <DateHeader {...defaultProps} />;
     const { getByTestId } = renderWithTheme(lightTheme, component);
-    const message = getByTestId('date-header');
+    const el = getByTestId('date-header');
 
-    expect(message).toBeInTheDocument();
+    expect(el).toBeInTheDocument();
   });
 });

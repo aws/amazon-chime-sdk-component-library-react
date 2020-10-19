@@ -10,7 +10,7 @@ export interface DateOptions {
   day?: string;
 }
 
-const formatDateUnmemoized = (dateStr: string, locale: string | undefined, dateOptions?: DateOptions, todayText?: string, yesterdayText?: string) => {
+const formatDateUnmemoized = (dateStr: string, locale?: string, dateOptions?: DateOptions, todayText?: string, yesterdayText?: string) => {
   const options = dateOptions ? dateOptions : { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   const date = new Date(dateStr).toLocaleDateString(locale, options)
   const today = new Date().toLocaleDateString(locale, options);

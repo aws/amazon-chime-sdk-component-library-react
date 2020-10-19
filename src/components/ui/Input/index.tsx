@@ -14,14 +14,15 @@ import React, {
 import InputWrapper from './InputWrapper';
 import { StyledInput, StyledClear } from './Styled';
 import { Clear } from '../icons';
+import { BaseProps } from '../Base';
 
 export type Size = 'sm' | 'md';
 
 export interface InputProps
   extends Omit<
     React.InputHTMLAttributes<HTMLInputElement>,
-    'onChange' | 'value'
-  > {
+    'onChange' | 'value' | 'css'
+  >, BaseProps {
   /** The callback fired when the state is changed. */
   onChange(event: ChangeEvent): void;
   /** The callback fired when the input value is cleared. */

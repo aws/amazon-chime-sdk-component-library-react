@@ -4,11 +4,14 @@
 import styled from 'styled-components';
 
 import { baseStyles, baseSpacing } from '../../Base';
-import { ChatBubbleProps } from '.';
+import { MessageVariant } from './ChatBubbleContainer';
 
-interface StyledChatBubbleProps extends ChatBubbleProps {}
+interface StyledChatBubbleProps {
+  variant: MessageVariant;
+  editable?: boolean;
+}
 
-export const StyledChatBubble = styled.div<StyledChatBubbleProps>`
+export const StyledChatBubbleContainer = styled.div`
   display: flex;
   flex-direction: row;
   margin: 0.5rem 0;
@@ -20,7 +23,7 @@ export const StyledChatBubble = styled.div<StyledChatBubbleProps>`
   ${baseStyles}
 `;
 
-export const StyledChatBubbleContent = styled.div<StyledChatBubbleProps>`
+export const StyledChatBubble = styled.div<StyledChatBubbleProps>`
   background-color: ${props => props.theme.chatBubble[props.variant].bgd};
   padding: 0.625rem 1rem;
   border-radius: 4px;
@@ -28,10 +31,11 @@ export const StyledChatBubbleContent = styled.div<StyledChatBubbleProps>`
   color: ${props => props.theme.chatBubble[props.variant].fontColor};
   box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.1);
   line-height: 20px;
-  width: fit-content;
+  width: ${props => props.editable ? '100%' : 'fit-content'};
   max-width: 70.6%;
   font-size: 0.875rem;
   position: relative;
+  margin-bottom: ${props => props.editable ? '4rem' : 'auto'};
 
   & .ch-sender-name {
     font-weight: bold;
@@ -45,9 +49,25 @@ export const StyledChatBubbleContent = styled.div<StyledChatBubbleProps>`
     margin-top: -3px;
     margin-left: -20px;
 
-    & .ch-chat-caret {
+    & .ch-chat-bubble-tail {
       fill: ${props => props.theme.chatBubble[props.variant].bgd}
     }
+  }
+
+  .ch-input {
+    width: 100%;
+  }
+
+  .ch-edit-buttons {
+    position: absolute;
+    margin-top: 1rem;
+    display: flex;
+    width: 10rem;
+    justify-content: space-between;
+  }
+
+  .ch-edited {
+    font-style: italic;
   }
 `;
 

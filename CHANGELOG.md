@@ -25,6 +25,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed ChannelList props to accept and children instead of PopOverItem props.
 - Added extra scroll functionality to the InfiniteList component when a new message is sent.
 - Changed Message type to only include needed properties.
+- Changed ChatBubble to composed components to support redact and edit.
+
+### Removed
+- Removed createChatBubbleList function.
+- Removed exports and stories for unreleased chat components
 
 ## [1.3.0] - 2020-10-09
 
