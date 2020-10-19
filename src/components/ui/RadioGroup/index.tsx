@@ -8,6 +8,7 @@ import Radio from '../Radio';
 export interface RadioProps {
   label: string;
   value: string;
+  icon?: JSX.Element;
   inputProps?: InputHTMLAttributes<HTMLButtonElement>;
 }
 
@@ -20,7 +21,7 @@ export interface RadioGroupProps {
   value: string;
 }
 
-export const RadioGroup: FC<RadioGroupProps> = props => {
+export const RadioGroup: FC<RadioGroupProps> = (props) => {
   const { options, value, onChange } = props;
   return (
     <>
@@ -31,6 +32,7 @@ export const RadioGroup: FC<RadioGroupProps> = props => {
             key={`${option}-${index}`}
             label={option.label}
             checked={option.value === value}
+            icon={option.icon}
             onChange={onChange}
             {...option.inputProps}
           />

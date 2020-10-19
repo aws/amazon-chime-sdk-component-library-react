@@ -7,4 +7,11 @@ describe('Radio Group', () => {
     const image = await page.screenshot();
     expect(image).toMatchImageSnapshot();
   });
+  it('radio group with icon', async () => {
+    await page.goto(
+      'http://host.docker.internal:9009/iframe.html?id=ui-components-form-radiogroup--radio-group-icon'
+    );
+    const image = await page.screenshot();
+    expect(image).toMatchImageSnapshot();
+  });
 });
