@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Like from './';
+import { lightTheme } from '../../../../theme/';
+
+# Like Icon
+
+The Like component creates an icon using inline SVG. Typically, you can use it to indicate a like action.
+
+## Importing
+
+```javascript
+import { Like } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Like width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Like width="2rem" />
+```
+
+## Props
+
+<Props of={Like} />
