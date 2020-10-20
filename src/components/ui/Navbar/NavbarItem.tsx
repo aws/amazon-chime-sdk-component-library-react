@@ -16,12 +16,15 @@ export interface NavbarItemProps {
   label: string;
   /** PopOver menu if needed in navbar item */
   popOver?: PopOverItemProps[] | null;
+  /**  Apply this prop to receive visual feedback that the button is 'active' */
+  isSelected?: boolean;
 }
 
 export const NavbarItem = ({
   onClick,
   label,
   icon,
+  isSelected = false,
   popOver = null
 }: NavbarItemProps) => (
   <StyledNavbarItem data-testid="navbar-item">
@@ -30,6 +33,7 @@ export const NavbarItem = ({
       label={label}
       icon={icon}
       popOver={popOver}
+      isSelected={isSelected}
     />
     {label && (
       <span
