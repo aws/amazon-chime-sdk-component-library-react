@@ -1,7 +1,7 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useRef, useEffect, ChangeEvent } from 'react';
+import React, { useState, useRef, useEffect, ChangeEvent, ReactNode } from 'react';
 
 import Flex from '../Flex';
 import Badge from '../Badge';
@@ -29,6 +29,8 @@ interface RosterHeaderProps extends BaseProps {
   a11yMenuLabel?: string;
   /** Label shown for search icon button, by default it is "Open search" */
   searchLabel?: string;
+  /** Use children to render custom elements in the RosterHeader */
+  children?: ReactNode | ReactNode[];
 }
 
 const SearchBar: any = ({ onChange, onClose, value }: any) => {
@@ -78,6 +80,7 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
   menu,
   a11yMenuLabel = '',
   searchLabel = 'Open search',
+  children,
   ...rest
 }) => {
   const [isSearching, setIsSearching] = useState(false);
@@ -120,7 +123,7 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
         )}
 
         {menu && <PopOverMenu menu={menu} a11yMenuLabel={a11yMenuLabel} />}
-
+        {children}
         {onClose && (
           <IconButton label="Close" onClick={onClose} icon={<Remove />} />
         )}
