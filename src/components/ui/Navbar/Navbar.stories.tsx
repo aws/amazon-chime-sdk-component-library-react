@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+import { boolean } from '@storybook/addon-knobs';
 
 import Navbar from '.';
 import NavbarHeader from './NavbarHeader';
@@ -34,11 +35,13 @@ export const _Navbar = () => {
           icon={<Information />}
           onClick={() => alert('Information')}
           label="Bridge Information"
+          isSelected={boolean('isSelected', false)}
         />
         <NavbarItem
           icon={<Attendees />}
           onClick={() => alert('Attendees')}
           label="Attendees"
+          isSelected={boolean('isSelected', false)}
         />
       </Flex>
       <Flex marginTop='auto'>
@@ -46,6 +49,7 @@ export const _Navbar = () => {
           icon={<LeaveMeeting />}
           onClick={() => alert('Leave Meeting')}
           label="Leave Meeting"
+          isSelected={boolean('isSelected', false)}
         />
       </Flex>
     </Navbar>
