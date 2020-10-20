@@ -17,7 +17,7 @@ It is made up of one RosterHeader component and multiple RosterGroup components.
 ## Importing
 
 ```javascript
-import { 
+import {
   Roster,
   RosterGroup,
   RosterHeader,
@@ -30,7 +30,7 @@ import {
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
   <Preview>
-  <Flex 
+  <Flex
     container
     css="height: 50vh; background: #f6f9fc;"
   >
@@ -98,7 +98,8 @@ import {
 # RosterHeader
 
 The RosterHeader component displays the title of the Roster's header and number of attendees.
-It is also equipped with the search functionality and close icon button to close the roster itself.
+It is equipped with the search functionality and close icon button to close the roster itself.
+Additionally, custom elements can be rendered into the RosterHeader via the 'children' prop.
 
 ## Example
 

@@ -10,6 +10,9 @@ import RosterGroup from './RosterGroup';
 import RosterCell from './RosterCell';
 import RosterHeader from './RosterHeader';
 import RosterDocs from './Roster.mdx';
+import IconButton from '../Button/IconButton';
+import SignalStrength from '../icons/SignalStrength';
+import Cog from '../icons/Cog';
 
 export default {
   title: 'UI Components/Roster',
@@ -46,7 +49,6 @@ export const _Roster = () => {
           searchValue={search}
           onSearch={handleSearch}
           menu={<Menu />}
-          onMobileToggleClick={() => alert('Open Navigation')}
         />
 
         <RosterGroup>
@@ -133,7 +135,7 @@ _RosterHeader.story = 'RosterHeader';
 export const _RosterHeaderWithNavigationIcon = () => {
   const title = text('title', 'Present');
   const badge = number('badge', 4);
-  const children = text('children', '');
+
   const [search, setSearch] = useState('');
 
   const handleSearch = e => setSearch(e.target.value);
@@ -148,10 +150,7 @@ export const _RosterHeaderWithNavigationIcon = () => {
           searchValue={search}
           onSearch={handleSearch}
           menu={<Menu />}
-          onMobileToggleClick={() => alert('Open Navigation')}
-        >
-          {children}
-        </RosterHeader>
+        />
 
         <RosterGroup>
           <RosterCell name="Michael Scarn" subtitle="FBI agent" />
@@ -165,6 +164,42 @@ export const _RosterHeaderWithNavigationIcon = () => {
 };
 
 _RosterHeaderWithNavigationIcon.story = 'RosterHeaderWithNavigationIcon';
+
+export const _RosterHeaderWithCustomElements = () => {
+  const title = text('title', 'Present');
+  const badge = number('badge', 4);
+
+  const [search, setSearch] = useState('');
+
+  const handleSearch = e => setSearch(e.target.value);
+
+  return (
+    <Flex container layout="fill-space-centered" css="height: 100vh;">
+      <Flex css="width: 100%; max-width: 280px;">
+        <RosterHeader
+          title={title}
+          badge={badge}
+          onClose={() => alert('Closing')}
+          searchValue={search}
+          onSearch={handleSearch}
+          menu={<Menu />}
+        >
+          <IconButton label="test" icon={<Cog />}/>
+          <IconButton label="test" icon={<SignalStrength />}/>
+        </RosterHeader>
+        <RosterGroup>
+          <RosterCell name="Michael Scarn" subtitle="FBI agent" />
+          <RosterCell name="Prison Mike" subtitle="Inmate" />
+          <RosterCell name="Date Mike" subtitle="Bachelor" />
+          <RosterCell name="Dwight" subtitle="Assistant regional manager" />
+        </RosterGroup>
+      </Flex>
+    </Flex>
+  );
+};
+
+_RosterHeaderWithCustomElements.story = '_RosterHeaderWithCustomElements';
+
 
 export const _RosterCell = () => {
   const name = text('name', 'Stanley Hudson');
