@@ -6,8 +6,8 @@ import React from 'react';
 import { RadioGroup } from './';
 import RadioGroupDocs from './RadioGroup.mdx';
 import Flex from '../Flex';
-import Add from '../icons/Add';
-import Remove from '../icons/Remove';
+import Like from '../icons/Like';
+import Dislike from '../icons/Dislike';
 
 export default {
   title: 'UI Components/Form/RadioGroup',
@@ -48,12 +48,12 @@ const optionWithIcons = [
   {
     value: 'like',
     label: 'Like',
-    icon: <Add width="2rem" />, // TODO: Use Like icon once https://github.com/aws/amazon-chime-sdk-component-library-react/pull/245 makes it in.
+    icon: <Like width="2rem" />,
   },
   {
     value: 'dislike',
     label: 'Dislike',
-    icon: <Remove width="2rem" />, // TODO: Use Dislike icon once https://github.com/aws/amazon-chime-sdk-component-library-react/pull/245 makes it in.
+    icon: <Dislike width="2rem" />,
   },
 ];
 
