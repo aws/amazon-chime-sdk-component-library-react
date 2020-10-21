@@ -6,8 +6,9 @@ import React from 'react';
 import { StyledNavbarItem } from './Styled';
 import { PopOverItemProps } from '../PopOver/PopOverItem';
 import ControlBarButton from '../ControlBar/ControlBarItem';
+import { FocusableProps, BaseProps } from '../Base';
 
-export interface NavbarItemProps {
+export interface NavbarItemProps extends FocusableProps, BaseProps {
   /** Any icon from the library for button in navbar item */
   icon: JSX.Element;
   /** The callback fired when the icon is clicked */
@@ -25,9 +26,10 @@ export const NavbarItem = ({
   label,
   icon,
   isSelected = false,
-  popOver = null
+  popOver = null,
+  ...rest
 }: NavbarItemProps) => (
-  <StyledNavbarItem data-testid="navbar-item">
+  <StyledNavbarItem data-testid="navbar-item" {...rest}>
     <ControlBarButton
       onClick={onClick}
       label={label}

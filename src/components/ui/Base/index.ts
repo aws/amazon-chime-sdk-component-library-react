@@ -10,6 +10,15 @@ export interface BaseProps extends SpaceProps, BaseSdkProps {
   tag?: any;
 }
 
+export interface FocusableProps {
+  /** Optional tab index for keyboard accessibility */
+  tabIndex?: number;
+  /** onFocus event handler */
+  onFocus?: (event: React.FocusEvent<any>) => void;
+  /** onBlur event handler */
+  onBlur?: (event: React.FocusEvent<any>) => void;
+}
+
 export const baseStyles = ({ css }: BaseProps) =>
   css ? `@media { ${css} };` : '';
 export const baseSpacing = (props: BaseProps) => space(props);

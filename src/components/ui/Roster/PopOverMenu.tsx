@@ -16,8 +16,13 @@ export const PopOverMenu = ({ menu, a11yMenuLabel = '' }: PopOverMenuProps) => (
   <PopOver
     className="ch-menu"
     a11yLabel={a11yMenuLabel}
-    renderButton={() => (
-      <IconButton className="ch-menu" icon={<Dots />} label={a11yMenuLabel} />
+    renderButtonWrapper={(isActive, props) => (
+      <IconButton
+        {...props}
+        className="ch-menu"
+        icon={<Dots />}
+        label={a11yMenuLabel}
+      />
     )}
   >
     {menu}

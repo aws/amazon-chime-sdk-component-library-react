@@ -34,8 +34,17 @@ describe('PopOver', () => {
     expect(element).toBeInTheDocument();
   });
 
-  it('should render a toggle button', () => {
+  it('should render a toggle button when renderButton is passed', () => {
     const component = <PopOver renderButton={popOverButton} children={testChild} a11yLabel='test-label'/>
+    const { getByRole } = renderWithTheme(lightTheme, component);
+    const element = getByRole('button');
+
+    expect(element).toBeInTheDocument();
+  });
+
+  it('should render the contents of renderButtonWrapper when passed', () => {
+    const renderFn = () => <button>Hello world</button>
+    const component = <PopOver renderButtonWrapper={renderFn} children={testChild} a11yLabel='test-label'/>
     const { getByRole } = renderWithTheme(lightTheme, component);
     const element = getByRole('button');
 

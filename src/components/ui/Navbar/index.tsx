@@ -5,8 +5,9 @@ import React from 'react';
 
 import { StyledNavbar } from './Styled';
 import { FlexProps } from '../Flex';
+import { FocusableProps, BaseProps } from '../Base';
 
-export interface NavbarProps extends FlexProps {
+export interface NavbarProps extends FlexProps, BaseProps, FocusableProps {
   /** Classname to apply custom CSS styles */
   className?: string;
   /** Any react components or HTML elements */

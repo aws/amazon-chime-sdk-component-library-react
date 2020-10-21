@@ -9,10 +9,10 @@ import SearchInput from '../Input/SearchInput';
 import { Search, Remove } from '../icons';
 import IconButton from '../Button/IconButton';
 import { StyledHeader } from './Styled';
-import { BaseProps } from '../Base';
 import { PopOverMenu } from './PopOverMenu';
+import { BaseProps, FocusableProps } from '../Base';
 
-interface RosterHeaderProps extends BaseProps {
+export interface RosterHeaderProps extends BaseProps, FocusableProps {
   /** The title of the roster header. */
   title: string;
   /** The number of attendees in a meeing. */
@@ -92,6 +92,9 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
 
   const closeSearch = () => {
     onSearch?.({
+      target: {
+        value: '',
+      },
       currentTarget: {
         value: '',
       },
