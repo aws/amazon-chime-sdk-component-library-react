@@ -6,6 +6,8 @@ import '@testing-library/jest-dom';
 import { fireEvent } from '@testing-library/dom';
 
 import RosterHeader from '../../../../src/components/ui/Roster/RosterHeader';
+import IconBUtton from '../../../../src/components/ui/Button/IconButton';
+import Presenter from '../../../../src/components/ui/icons/Presenter';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 
@@ -67,5 +69,15 @@ describe('RosterCell', () => {
       })
     );
     expect(getByLabelText('Search')).toBeInTheDocument();
+  });
+  it('should render children if they are available', () => {
+    const component = (
+      <RosterHeader title="Present" onSearch={() => {}}>
+        <IconBUtton label="presenter" icon={<Presenter/>} />
+      </RosterHeader>
+    );
+    const { getByLabelText } = renderWithTheme(lightTheme, component);
+
+    expect(getByLabelText('presenter')).toBeInTheDocument();
   });
 });

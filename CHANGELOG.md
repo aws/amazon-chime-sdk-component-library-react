@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `tabIndex` to BaseProps
 - Add `Like`, `Dislike`, `Feedback` icons
 - Add `isSelected` prop to NavBarItem
+- Add optional children to RosterHeader for custom element rendering
 - Add optional `icon` property for `Radio` and `RadioGroup` to allow for rendering an icon instead of a label
 
 ### Changed
