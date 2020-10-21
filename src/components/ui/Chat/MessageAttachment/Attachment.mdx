@@ -1,0 +1,41 @@
+import { Props, Canvas } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import MessageAttachment from './';
+import { lightTheme } from '../../../../theme';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+
+# MessageAttachment
+
+The MessageAttachment component displays basic information about attachment.
+
+## Importing
+
+```javascript
+import { MessageAttachment } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<Canvas style={{ margin: 'auto' }}>
+  <ThemeProvider theme={lightTheme}>
+    <GlobalStyles />
+    <MessageAttachment
+      name="FileName.txt"
+      downloadUrl="https://download.com/url.txt"
+      size="23KB"
+    />
+  </ThemeProvider>
+</Canvas>
+
+```jsx
+<MessageAttachment
+  name="FileName.txt"
+  downloadUrl="https://download.com/url.txt"
+  size="23KB"
+/>
+```
+
+## Props
+
+<Props of={MessageAttachment} />

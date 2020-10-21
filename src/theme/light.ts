@@ -352,6 +352,28 @@ const chatBubble = {
   }
 }
 
+const messageAttachment = {
+  size: {
+    fontColor: colors.greys.grey40,
+    bgd: colors.greys.white,
+    letterSpacing: '-0.07px',
+    lineHight: '16px',
+    fontSize: '10.4px'
+  },
+  icon: {
+    bgd: colors.greys.grey10,
+    color: colors.greys.grey80
+  },
+  name: {
+    fontColor: colors.greys.grey80
+  },
+  content: {
+    letterSpacing: '-0.09px',
+    bgd: colors.greys.white,
+    fontColor: colors.greys.grey80
+  }
+}
+
 const channelList = {
   bgd: colors.greys.white,
   fontColor: colors.greys.grey70,
@@ -399,6 +421,7 @@ export const lightTheme = {
   chatBubble,
   channelList,
   chatDateHeader,
+  messageAttachment,
   ...defaultTheme
 };
 
