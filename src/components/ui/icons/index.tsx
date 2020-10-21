@@ -18,6 +18,7 @@ export { default as Crown } from './Crown';
 export { default as DeskPhone } from './DeskPhone';
 export { default as Dialer } from './Dialer';
 export { default as Dots } from './Dots';
+export { default as Document } from './Document';
 export { default as Eye } from './Eye';
 export { default as Hamburger } from './Hamburger';
 export { default as Information } from './Information';

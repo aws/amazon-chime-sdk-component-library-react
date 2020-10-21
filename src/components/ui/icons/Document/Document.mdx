@@ -1,0 +1,33 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Document from './';
+import { lightTheme } from '../../../../theme/';
+
+# Document Icon
+
+The Document component creates a document icon using inline SVG. Typically, you can use it to represent an attachement file.
+
+## Importing
+
+```javascript
+import { Document } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width and height
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Document width="2rem" height="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Document width="2rem" height="2rem" />
+```
+
+## Props
+
+<Props of={Document} />

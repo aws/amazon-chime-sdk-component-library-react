@@ -284,6 +284,28 @@ declare module 'styled-components' {
         bgd: string;
       }
     }
+
+    messageAttachment: {
+      size: {
+        fontColor: string;
+        bgd: string;
+        letterSpacing: string;
+        lineHight: string;
+        fontSize: string;
+      }
+      icon: {
+        color: string;
+        bgd: string;
+      },
+      name: {
+        fontColor: string;
+      }
+      content: {
+        letterSpacing: string;
+        bgd: string;
+        fontColor: string;
+      }
+    }
     
     channelList: {
       bgd: string;
