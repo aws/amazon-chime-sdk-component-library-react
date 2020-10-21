@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Docs rename variable `rosterArray ` from the attendees list to `attendees`
 - Add base styles to ChannelList
 - Fixed createChatBubbleList unit test that was incorrectly named and not running
+- Fixed TS error inside /InfiniteList/index.tsx.
 
 ### Added
 - Add `tabIndex` to BaseProps
