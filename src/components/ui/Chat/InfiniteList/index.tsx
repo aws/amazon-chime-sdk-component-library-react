@@ -82,7 +82,7 @@ export const InfiniteList: FC<InfiniteListProps> = (props) => {
   const newBottom = useRef<HTMLLIElement>(null);
   let prevBottom: Element | null;
 
-  const messageList = items.map((item: JSX.Element, i: number) => <li id={i.toString()} key={i} ref={i === 0 ? currentTopItemRef : getRef(i)} role='article'>{item}</li>);
+  const messageList = items.map((item: ReactNode, i: number) => <li id={i.toString()} key={i} ref={i === 0 ? currentTopItemRef : getRef(i)} role='article'>{item}</li>);
 
   useEffect(() => {
     if (atBottom && listEnd.current) {
