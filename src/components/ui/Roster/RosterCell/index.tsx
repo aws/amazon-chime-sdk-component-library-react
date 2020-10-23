@@ -35,6 +35,8 @@ export interface RosterCellProps extends BaseProps {
   menu?: React.ReactNode;
   /** The label for availability, it defaults to an empty string. */
   a11yMenuLabel?: string;
+  /** The icon to depict moderator or presentor status . */
+  extraIcon: React.ReactNode;
 }
 
 function getVideoIcon(
@@ -66,6 +68,7 @@ export const RosterCell: React.FC<RosterCellProps> = (props) => {
     poorConnection = false,
     microphone,
     a11yMenuLabel = '',
+    extraIcon,
   } = props;
 
   const videoIcon = getVideoIcon(videoEnabled, sharingContent);
@@ -87,10 +90,11 @@ export const RosterCell: React.FC<RosterCellProps> = (props) => {
       ) : (
         <>
           {showMic && <div className="ch-mic">{mic}</div>}
+          {extraIcon}
           {videoIcon}
-          {menu && <PopOverMenu menu={menu} a11yMenuLabel={a11yMenuLabel} />}
         </>
       )}
+      {menu && <PopOverMenu menu={menu} a11yMenuLabel={a11yMenuLabel} />}
     </StyledCell>
   );
 };
