@@ -19,7 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `isSelected` prop to NavBarItem
 - Add optional children to RosterHeader for custom element rendering
 - Add optional `icon` property for `Radio` and `RadioGroup` to allow for rendering an icon instead of a label
-- Add Document icon and MessageAttachment components
+- Add Document icon and MessageAttachment components. 
+- Add stories and tests for all ChatBubble components.
 
 ### Changed
 
@@ -28,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed Message type to only include needed properties.
 - Changed ChatBubble to composed components to support redact and edit.
 - Changed RosterCell to support extra icons and menus when running late
+- Changed ChatBubble component props for simplicity.
 
 ### Removed
 - Removed createChatBubbleList function.

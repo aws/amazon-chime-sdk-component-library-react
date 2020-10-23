@@ -28,15 +28,23 @@ export const BasicInfiniteList = () => {
       const batch = [];
       for (let i = 1; i <= batchSize; i++) {
         batch.push(
-          <div style={{'border': '1px solid #3f4149', 'textAlign': 'center', 'backgroundColor': '#075fff', 'color': 'white', 'padding': '0.5rem'}}>
-            {((batchSize * (numberOfBatches - batchNum) + 1) + i - 1).toString()}
+          <div
+            style={{
+              border: '1px solid #3f4149',
+              textAlign: 'center',
+              backgroundColor: '#075fff',
+              color: 'white',
+              padding: '0.5rem',
+            }}
+          >
+            {(batchSize * (numberOfBatches - batchNum) + 1 + i - 1).toString()}
           </div>
         );
       }
-      return batch
+      return batch;
     } else {
-      console.log("No more messages to send.")
-      return []
+      console.log('No more messages to send.');
+      return [];
     }
   };
 
@@ -44,12 +52,12 @@ export const BasicInfiniteList = () => {
   const [items, setItems] = useState([...createBatch(1)]);
 
   const onLoad = async () => {
-    setIsLoading(true)
+    setIsLoading(true);
     setTimeout(() => {
       setBatchNumber(batchNumber + 1);
       setItems([...createBatch(batchNumber), ...items]);
-      setIsLoading(false)
-    }, 500)
+      setIsLoading(false);
+    }, 500);
   };
 
   return (
@@ -57,14 +65,13 @@ export const BasicInfiniteList = () => {
       <InfiniteList
         items={items}
         onLoad={onLoad}
-        css='border: 1px solid #3f4149; width: 10rem; height: 20rem'
+        css="border: 1px solid #3f4149; width: 10rem; height: 20rem"
         isLoading={isLoading}
       />
     </Flex>
   );
 };
 
-
 BasicInfiniteList.story = {
-  name: 'Basic InfiniteList'
+  name: 'Basic InfiniteList',
 };

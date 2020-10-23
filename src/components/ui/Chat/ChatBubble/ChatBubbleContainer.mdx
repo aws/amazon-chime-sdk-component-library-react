@@ -1,0 +1,49 @@
+import { Props, Canvas } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import ChatBubbleContainer from './ChatBubbleContainer';
+import { lightTheme } from '../../../../theme';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+
+# ChatBubbleContainer
+
+The ChatBubbleContainer creates an entry that can container and display a ChatBubble. It includes a timestamp and button with a PopOver that displays clickable options.
+
+## Importing
+
+```javascript
+import { ChatBubbleContainer } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<Canvas style={{ backgroundColor: '#eee' }}>
+  <ThemeProvider theme={lightTheme}>
+    <GlobalStyles />
+    <ChatBubbleContainer
+      time={new Date().toString()}
+      actions={
+        <PopOverItem
+          children={<span>Option 1</span>}
+          onClick={() => console.log('Option 1 clicked')}
+        />
+      }
+    />
+  </ThemeProvider>
+</Canvas>
+
+```jsx
+<ChatBubbleContainer
+  time={new Date().toString()}
+  actions={
+    <PopOverItem
+      children={<span>Option 1</span>}
+      onClick={() => console.log('Option 1 clicked')}
+    />
+  }
+/>
+```
+
+## Props
+
+<Props of={ChatBubbleContainer} />

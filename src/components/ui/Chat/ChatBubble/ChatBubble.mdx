@@ -2,36 +2,87 @@ import { Props, Canvas } from '@storybook/addon-docs/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import ChatBubble from './';
+import MessageAttachment from '../MessageAttachment';
 import { lightTheme } from '../../../../theme';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
-# Chat Message
+# ChatBubble
 
-The Message component displays incoming and outgoing chat messages and data.
-To create styled lists of chat bubbles including coloration, chat bubble tail placement, and name placement, use the createChatBubbleList function.
+The ChatBubble component displays incoming and outgoing chat messages and data.
+It also determines the style of the bubble including color, chat bubble tail visibility, and name visibility.
 
 ## Importing
 
 ```javascript
-import { ChatBubble } from 'amazon-chime-sdk-component-library-react';
+import {
+  ChatBubble,
+  MessageAttachment,
+} from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Example
 
-<Canvas style={{ 'background-color': '#eee' }}>
+<Canvas style={{ backgroundColor: '#eee' }}>
   <ThemeProvider theme={lightTheme}>
-    <GlobalStyles/>
-    <ChatBubble variant='outgoing' name='Me' time='9:45 AM' content='This is an outgoing message' />
-    <ChatBubble variant='incoming' name='Sarah Anderson' time='9:47 AM' content='This is an incoming message. It is much longer. This amount of text reaches the max length and goes onto the next line.' />
+    <GlobalStyles />
+    <ChatBubble
+      variant="incoming"
+      senderName="Jim Halpert"
+      time="9:47 AM"
+      content="I've always been your biggest flan."
+      css="margin: 1rem;"
+    />
+    <ChatBubble
+      variant="outgoing"
+      senderName="Ryan Howard"
+      time="9:45 AM"
+      content="You should have put him in custardy."
+      css="margin: 1rem;"
+    />
+    <ChatBubble
+      variant="outgoing"
+      senderName="Fred Miller"
+      content="This is an outgoing message with attachment"
+      css="margin: 1rem;"
+    >
+      <MessageAttachment
+        name="Report.pdf"
+        size="23.3KB"
+        downloadUrl="https://test.com/download/Report.pdf"
+      />
+    </ChatBubble>
   </ThemeProvider>
 </Canvas>
 
 ```jsx
-<ChatBubble variant='outgoing' name='Me' time='9:45 AM' content='This is an outgoing message' />
-<ChatBubble variant='incoming' name='Sarah Anderson' time='9:47 AM' content='This is an incoming message' />
-
-<ul>{createChatBubbleList(messages, memberId, actions)}</ul>
+    <ChatBubble
+      variant="incoming"
+      senderName="Jim Halpert"
+      time="9:47 AM"
+      content="I've always been your biggest flan."
+      css="margin: 1rem;"
+    />
+    <ChatBubble
+      variant="outgoing"
+      senderName="Ryan Howard"
+      time="9:45 AM"
+      content="You should have put him in custardy."
+      css="margin: 1rem;"
+    />
+    <ChatBubble
+      variant="outgoing"
+      senderName="Fred Miller"
+      content="This is an outgoing message with attachment"
+      css="margin: 1rem;"
+    >
+      <MessageAttachment
+        name="Report.pdf"
+        size="23.3KB"
+        downloadUrl="https://test.com/download/Report.pdf"
+      />
+    </ChatBubble>
 ```
 
 ## Props
+
 <Props of={ChatBubble} />

@@ -7,8 +7,8 @@ import { GlobalStyles } from '../../../../theme/GlobalStyles';
 import DateHeader from './';
 
 # DateHeader
- 
-A DateHeader is used to separate posts in feed, such as chat messages by date. 
+
+A DateHeader is used to separate posts in feed, such as chat messages by date.
 
 ## Importing
 
@@ -20,16 +20,15 @@ import { DateHeader } from 'amazon-chime-sdk-component-library-react';
 
 <Preview>
   <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
+    <GlobalStyles />
     <Flex css="background-color: #e4e9f2">
       <DateHeader date={new Date().toString()} />
     </Flex>
   </ThemeProvider>
 </Preview>
 
-
 ```jsx
-<DateHeader date={new Date().toString()} key='1' />
+<DateHeader date={new Date().toString()} />
 ```
 
 ## Props
