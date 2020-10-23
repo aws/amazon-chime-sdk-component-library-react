@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added extra scroll functionality to the InfiniteList component when a new message is sent.
 - Changed Message type to only include needed properties.
 - Changed ChatBubble to composed components to support redact and edit.
+- Changed RosterCell to support extra icons and menus when running late
 
 ### Removed
 - Removed createChatBubbleList function.
