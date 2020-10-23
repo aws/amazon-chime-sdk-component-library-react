@@ -3,11 +3,13 @@
 
 import React, { FC, HTMLAttributes } from 'react';
 
-import { StyledDateHeader } from './Styled';
 import { BaseProps } from '../../Base';
 import { formatDate, DateOptions } from '../../Utilities';
+import Badge from '../../Badge';
 
-export interface DateHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>, BaseProps {
+export interface DateHeaderProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseProps {
   date: string;
   key: string;
   locale?: string;
@@ -15,7 +17,10 @@ export interface DateHeaderProps extends Omit<HTMLAttributes<HTMLDivElement>, 'c
 }
 
 export const DateHeader: FC<DateHeaderProps> = (props) => (
-  <StyledDateHeader data-testid='date-header'>{formatDate(props.date, props.locale, props.dateOptions)}</StyledDateHeader>
+  <Badge
+    data-testid="date-header"
+    value={formatDate(props.date, props.locale, props.dateOptions)}
+  />
 );
 
 export default DateHeader;

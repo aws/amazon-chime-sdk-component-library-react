@@ -13,23 +13,31 @@ export const insertDateHeaders = (messageItems: Message[]) => {
   let dateCount = 0;
   messageItems.forEach((m: any, i: number) => {
     if (!m || !m.content) {
-      return // not a message
+      return; // not a message
     }
     if (i === 0) {
-      items.splice(0, 0, <DateHeader key={'date'+i.toString()} date={m.createdTimestamp} />);
+      items.splice(
+        0,
+        0,
+        <DateHeader key={'date' + i.toString()} date={m.createdTimestamp} />
+      );
       dateMap[new Date(m.createdTimestamp).toLocaleDateString()] = 1;
       dateCount++;
     } else if (
-        new Date(m.createdTimestamp).toLocaleDateString() !== messageDate &&
-        !dateMap[new Date(m.createdTimestamp).toLocaleDateString()]
-      ) {  
-      items.splice(i + dateCount, 0, <DateHeader key={'date'+i.toString()} date={m.createdTimestamp} />);
+      new Date(m.createdTimestamp).toLocaleDateString() !== messageDate &&
+      !dateMap[new Date(m.createdTimestamp).toLocaleDateString()]
+    ) {
+      items.splice(
+        i + dateCount,
+        0,
+        <DateHeader key={'date' + i.toString()} date={m.createdTimestamp} />
+      );
       messageDate = new Date(m.createdTimestamp).toLocaleDateString();
       dateMap[new Date(m.createdTimestamp).toLocaleDateString()] = 1;
       dateCount++;
     }
-  })
-  return items
+  });
+  return items;
 };
 
 export default insertDateHeaders;

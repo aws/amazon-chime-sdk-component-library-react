@@ -1,0 +1,46 @@
+import { Props, Canvas } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import EditableChatBubble from './EditableChatBubble';
+import { lightTheme } from '../../../../theme';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+
+# EditableChatBubble
+
+The EditableChatBubble component displays a form inside a ChatBubble in order to edit the content. Save and Cancel callback handle the data.
+It also determines the style of the bubble including color, chat bubble tail visibility, and name visibility.
+
+## Importing
+
+```javascript
+import { EditableChatBubble } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<Canvas style={{ backgroundColor: '#eee' }}>
+  <ThemeProvider theme={lightTheme}>
+    <GlobalStyles />
+    <EditableChatBubble
+      variant="outgoing"
+      senderName="Michael Scott"
+      content="This messsage has typos that ned to be fixxed."
+      save={(e) => e.preventDefault()}
+      cancel={(e) => e.preventDefault()}
+    />
+  </ThemeProvider>
+</Canvas>
+
+```jsx
+<EditableChatBubble
+  variant="outgoing"
+  senderName="Michael Scott"
+  content="This messsage has typos that ned to be fixxed."
+  save={(e) => e.preventDefault()}
+  cancel={(e) => e.preventDefault()}
+/>
+```
+
+## Props
+
+<Props of={EditableChatBubble} />
