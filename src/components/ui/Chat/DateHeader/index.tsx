@@ -19,6 +19,7 @@ export interface DateHeaderProps
 export const DateHeader: FC<DateHeaderProps> = (props) => (
   <Badge
     data-testid="date-header"
+    className="ch-date-header"
     value={formatDate(props.date, props.locale, props.dateOptions)}
   />
 );
