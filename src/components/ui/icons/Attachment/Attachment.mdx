@@ -1,0 +1,33 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Attachment from './';
+import { lightTheme } from '../../../../theme/';
+
+# Attachment Icon
+
+The Attachment component creates a clip icon using inline SVG. Typically, you can use it to represent an attachement action.
+
+## Importing
+
+```javascript
+import { Attachment } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width and height
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Attachment width="2rem" height="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Attachment width="2rem" height="2rem" />
+```
+
+## Props
+
+<Props of={Attachment} />

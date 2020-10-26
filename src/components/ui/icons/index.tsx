@@ -3,6 +3,7 @@
 
 export { default as Add } from './Add';
 export { default as Arrow } from './Arrow';
+export { default as Attachment } from './Attachment';
 export { default as Attendees } from './Attendees';
 export { default as Camera } from './Camera';
 export { default as Caret } from './Caret';

@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Document icon and MessageAttachment components.
 - Add stories and tests for all ChatBubble components.
 - Add class to DateHeader component.
+- Add Attachment icon
 
 ### Changed
 
