@@ -18,10 +18,10 @@ export default {
   title: 'UI Components/Roster',
   parameters: {
     docs: {
-      page: RosterDocs.parameters.docs.page().props.children.type
-    }
+      page: RosterDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Roster
+  component: Roster,
 };
 
 const Menu = () => (
@@ -31,9 +31,20 @@ const Menu = () => (
   </>
 );
 
+const HeaderMenu = () => (
+  <>
+    <div style={{ padding: '.5rem 1rem', cursor: 'pointer' }}>
+      Some menu action
+    </div>
+    <div style={{ padding: '.5rem 1rem', cursor: 'pointer' }}>
+      Some other menu action
+    </div>
+  </>
+);
+
 export const _Roster = () => {
   const [search, setSearch] = useState('');
-  const handleSearch = e => setSearch(e.target.value);
+  const handleSearch = (e) => setSearch(e.target.value);
 
   return (
     <Flex
@@ -48,7 +59,9 @@ export const _Roster = () => {
           onClose={() => alert('Closing')}
           searchValue={search}
           onSearch={handleSearch}
-          menu={<Menu />}
+          menu={<HeaderMenu />}
+          a11yMenuLabel="Roster options"
+          onMobileToggleClick={() => alert('Open Navigation')}
         />
 
         <RosterGroup>
@@ -58,6 +71,7 @@ export const _Roster = () => {
             muted={false}
             videoEnabled={true}
             menu={<Menu />}
+            a11yMenuLabel="Contact options"
           />
           <RosterCell
             name="Michael Scarn"
@@ -65,6 +79,7 @@ export const _Roster = () => {
             muted={true}
             videoEnabled={false}
             menu={<Menu />}
+            a11yMenuLabel="Contact options"
           />
         </RosterGroup>
 
@@ -103,7 +118,7 @@ export const _RosterHeader = () => {
   const children = text('children', '');
   const [search, setSearch] = useState('');
 
-  const handleSearch = e => setSearch(e.target.value);
+  const handleSearch = (e) => setSearch(e.target.value);
 
   return (
     <Flex container layout="fill-space-centered" css="height: 100vh;">
@@ -138,7 +153,7 @@ export const _RosterHeaderWithNavigationIcon = () => {
 
   const [search, setSearch] = useState('');
 
-  const handleSearch = e => setSearch(e.target.value);
+  const handleSearch = (e) => setSearch(e.target.value);
 
   return (
     <Flex container layout="fill-space-centered" css="height: 100vh;">
@@ -213,7 +228,7 @@ export const _RosterCell = () => {
     'micPosition',
     {
       grouped: 'grouped',
-      leading: 'leading'
+      leading: 'leading',
     },
     'grouped'
   );

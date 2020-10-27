@@ -5,14 +5,14 @@ import React from 'react';
 
 import RosterName from '../RosterName';
 import LateMessage from './LateMessage';
-import { BaseProps } from '../../Base';
+import { BaseProps, FocusableProps } from '../../Base';
 import { Microphone, Camera, ScreenShare } from '../../icons';
 import { StyledCell } from './Styled';
 import { PopOverMenu } from '../PopOverMenu';
 
 type MicPosition = 'leading' | 'grouped';
 
-export interface RosterCellProps extends BaseProps {
+export interface RosterCellProps extends BaseProps, FocusableProps {
   /** The primary name in the roster cell. */
   name: string;
   /** The subtitle for the primary name. */

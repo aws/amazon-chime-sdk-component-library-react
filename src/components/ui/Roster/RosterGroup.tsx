@@ -5,18 +5,18 @@ import React from 'react';
 
 import Badge from '../Badge';
 import Flex from '../Flex';
-import { BaseProps } from '../Base';
+import { BaseProps, FocusableProps } from '../Base';
 
 import { StyledGroupWrapper, StyledGroup, StyledTitle } from './Styled';
 
-interface Props extends BaseProps {
+export interface RosterGroupProps extends BaseProps, FocusableProps {
   /** The title of the roster group. */
   title?: string;
   /** The number of attendees within one roster group. */
   badge?: number;
 }
 
-export const RosterGroup: React.FC<Props> = ({
+export const RosterGroup: React.FC<RosterGroupProps> = ({
   tag,
   title,
   badge,

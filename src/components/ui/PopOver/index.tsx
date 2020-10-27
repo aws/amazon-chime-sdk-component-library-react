@@ -6,7 +6,7 @@ import React, {
   createRef,
   useState,
   HTMLAttributes,
-  useEffect
+  useEffect,
 } from 'react';
 import { Manager, Reference, Popper } from 'react-popper';
 
@@ -32,8 +32,10 @@ export interface PopOverProps extends HTMLAttributes<HTMLSpanElement> {
   isSubMenu?: Boolean;
   /** Defines the placement of PopOver menu. */
   placement?: Placement;
-  /** Defines the function to render button(s). */
-  renderButton: (isActive: boolean) => {};
+  /** Defines the function to render the inner contents of the popover button element */
+  renderButton?: (isActive: boolean) => {};
+  /** Alternative to renderButton, defines the function to render the full popover button element (as opposed to just its contents). This is used if you want full control over the button rendering. The button must forwardRef */
+  renderButtonWrapper?: (isActive: boolean, props: any) => {};
   /** The label used for availability. */
   a11yLabel: string;
   children: any;
@@ -45,6 +47,7 @@ const getFocusableElements = (node: HTMLElement): NodeListOf<HTMLElement> => {
 
 export const PopOver: FC<PopOverProps> = ({
   renderButton,
+  renderButtonWrapper,
   children,
   isSubMenu = false,
   placement = 'bottom-start',
@@ -111,20 +114,32 @@ export const PopOver: FC<PopOverProps> = ({
     <span ref={menuRef} onKeyDown={handleKeyUp} data-testid="popover">
       <Manager>
         <Reference>
-          {({ ref }) => (
-            <StyledPopOverToggle
-              data-menu={isSubMenu ? 'submenu' : null}
-              onClick={() => setIsOpen(!isOpen)}
-              ref={ref}
-              aria-label={a11yLabel}
-              aria-haspopup={true}
-              aria-expanded={isOpen}
-              data-testid="popover-toggle"
-              className={className || ''}
-            >
-              {renderButton(isOpen)}
-            </StyledPopOverToggle>
-          )}
+          {({ ref }) => {
+            const props = {
+              ref,
+              className: className || '',
+              onClick: () => setIsOpen(!isOpen),
+              'data-menu': isSubMenu ? 'submenu' : null,
+              'aria-label': a11yLabel,
+              'aria-haspopup': true,
+              'aria-expanded': isOpen,
+              'data-testid': 'popover-toggle',
+            };
+
+            if (renderButton) {
+              return (
+                <StyledPopOverToggle {...props}>
+                  {renderButton(isOpen)}
+                </StyledPopOverToggle>
+              );
+            }
+
+            if (renderButtonWrapper) {
+              return renderButtonWrapper(isOpen, props);
+            }
+
+            return null;
+          }}
         </Reference>
         {isOpen && (
           <Popper

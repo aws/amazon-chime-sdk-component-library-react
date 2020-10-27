@@ -8,12 +8,12 @@ import MicrophoneActivity from '../MicrophoneActivity';
 import { useRosterState } from '../../../providers/RosterProvider';
 import useAttendeeStatus from '../../../hooks/sdk/useAttendeeStatus';
 
-interface Props extends Omit<RosterCellProps, 'name'> {
+export interface RosterAttendeeProps extends Omit<RosterCellProps, 'name'> {
   /** The ID of a Chime meeting attendee. */
   attendeeId: string;
 }
 
-export const RosterAttendee: React.FC<Props> = ({ attendeeId, ...rest }) => {
+export const RosterAttendee: React.FC<RosterAttendeeProps> = ({ attendeeId, ...rest }) => {
   const { muted, videoEnabled, sharingContent } = useAttendeeStatus(attendeeId);
   const { roster } = useRosterState();
   const attendeeName = roster[attendeeId]?.name || '';
