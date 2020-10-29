@@ -9,6 +9,7 @@ import { BaseProps, FocusableProps } from '../../Base';
 import { Microphone, Camera, ScreenShare } from '../../icons';
 import { StyledCell } from './Styled';
 import { PopOverMenu } from '../PopOverMenu';
+import { IconButtonProps } from '../../Button/IconButton';
 
 type MicPosition = 'leading' | 'grouped';
 
@@ -37,6 +38,8 @@ export interface RosterCellProps extends BaseProps, FocusableProps {
   a11yMenuLabel?: string;
   /** The icon to depict moderator or presentor status . */
   extraIcon?: React.ReactNode;
+  /** extra properties to pass through to the menu button */
+  buttonProps?: Partial<IconButtonProps>;
 }
 
 function getVideoIcon(
@@ -69,6 +72,7 @@ export const RosterCell: React.FC<RosterCellProps> = (props) => {
     microphone,
     a11yMenuLabel = '',
     extraIcon,
+    buttonProps,
   } = props;
 
   const videoIcon = getVideoIcon(videoEnabled, sharingContent);
@@ -94,7 +98,13 @@ export const RosterCell: React.FC<RosterCellProps> = (props) => {
           {videoIcon}
         </>
       )}
-      {menu && <PopOverMenu menu={menu} a11yMenuLabel={a11yMenuLabel} />}
+      {menu && (
+        <PopOverMenu
+          menu={menu}
+          a11yMenuLabel={a11yMenuLabel}
+          buttonProps={buttonProps}
+        />
+      )}
     </StyledCell>
   );
 };
