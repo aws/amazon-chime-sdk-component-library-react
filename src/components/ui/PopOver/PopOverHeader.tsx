@@ -1,14 +1,14 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC } from 'react';
+import React, { FC, ReactNode } from 'react';
 import { StyledPopOverHeader } from './Styled';
 
 export interface PopOverHeaderProps {
   /** The title of the PopOver menu header. */
   title?: string;
   /** The subtitle of the PopOver menu header. */
-  subtitle?: string;
+  subtitle?: string | ReactNode;
   /** The source of the PopOver menu image. */
   imgSrc?: string;
 }
