@@ -25,6 +25,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add stories and tests for all ChatBubble components.
 - Add class to DateHeader component.
 - Add Attachment icon
+- Added passthrough for a react node in the subtitle of PopOverHeader
 
 ### Changed
 
