@@ -17,15 +17,19 @@ import CheckRound from '../CheckRound';
 import Clear from '../Clear';
 import Clock from '../Clock';
 import Cog from '../Cog';
+import Dislike from '../Dislike';
 import Dots from '../Dots';
 import ScreenShare from '../ScreenShare';
 import Crown from '../Crown';
 import DeskPhone from '../DeskPhone';
 import Dialer from '../Dialer';
+import Document from '../Document';
 import Hamburger from '../Hamburger';
 import Information from '../Information';
 import Laptop from '../Laptop';
 import LeaveMeeting from '../LeaveMeeting';
+import Like from '../Like';
+import Lock from '../Lock';
 import Meeting from '../Meeting';
 import Microphone from '../Microphone';
 import Pause from '../Pause';
@@ -40,6 +44,9 @@ import Share from '../Share';
 import SignalStrength from '../SignalStrength';
 import Sound from '../Sound';
 import Flex from '../../Flex';
+import Eye from '../Eye';
+import UpAndDownCaret from '../UpAndDownCaret';
+import Spinner from '../Spinner';
 
 export default {
   title: 'UI Components/Icons/All',
@@ -59,15 +66,21 @@ const icons = [
   Clear,
   Clock,
   Cog,
+  Crown,
+  Dislike,
   Dots,
+  Document,
   ScreenShare,
   Crown,
   DeskPhone,
   Dialer,
+  Eye,
   Hamburger,
   Information,
   Laptop,
   LeaveMeeting,
+  Like,
+  Lock,
   Meeting,
   Microphone,
   Pause,
@@ -81,6 +94,8 @@ const icons = [
   Share,
   SignalStrength,
   Sound,
+  Spinner,
+  UpAndDownCaret
 ];
 
 const IconWrapper = styled.div`

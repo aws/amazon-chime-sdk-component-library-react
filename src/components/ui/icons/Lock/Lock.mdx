@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Lock from './';
+import { lightTheme } from '../../../../theme/';
+
+# Lock Icon
+
+The Lock component creates an icon using inline SVG. Typically, you can use it to indicate a like action.
+
+## Importing
+
+```javascript
+import { Lock } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Lock width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Lock width="2rem" />
+```
+
+## Props
+
+<Props of={Lock} />

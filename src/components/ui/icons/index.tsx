@@ -18,13 +18,17 @@ export { default as ScreenShare } from './ScreenShare';
 export { default as Crown } from './Crown';
 export { default as DeskPhone } from './DeskPhone';
 export { default as Dialer } from './Dialer';
+export { default as Dislike } from './Dislike';
 export { default as Dots } from './Dots';
 export { default as Document } from './Document';
 export { default as Eye } from './Eye';
+export { default as Feedback } from './Feedback'
 export { default as Hamburger } from './Hamburger';
 export { default as Information } from './Information';
 export { default as Laptop } from './Laptop';
 export { default as LeaveMeeting } from './LeaveMeeting';
+export { default as Like } from './Like';
+export { default as Lock } from './Lock';
 export { default as Meeting } from './Meeting';
 export { default as Microphone } from './Microphone';
 export { default as Pause } from './Pause';
