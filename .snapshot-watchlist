@@ -1,0 +1,24 @@
+# run snapshot tests if files in these directories change
+demos/meeting
+src/
+
+# exceptions
+!src/versioning/Versioning.ts
+!src/providers/AudioVideoProvider/docs
+!src/providers/ContentShareProvider/docs
+!src/providers/DevicesProvider/docs
+!src/providers/FeaturedVideoTileProvider/docs
+!src/providers/LocalAudioOutputProvider/docs
+!src/providers/LocalVideoProvider/docs
+!src/providers/MeetingProvider/docs
+!src/providers/NotificationProvider/docs
+!src/providers/RemoteVideoTileProvider/docs
+!src/providers/RosterProvider/docs
+!src/providers/UserActivityProvider/docs
+!src/hooks/sdk/docs
+!src/components/sdk/DeviceSelection/docs
+!src/components/sdk/MeetingControls/docs
+CHANGELOG.md
+package.json
+README.md
+package-lock.json
