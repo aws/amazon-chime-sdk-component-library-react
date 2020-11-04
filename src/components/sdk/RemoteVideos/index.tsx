@@ -8,15 +8,15 @@ import { useRosterState } from '../../../providers/RosterProvider';
 import { RemoteVideo } from '../RemoteVideo';
 import { BaseSdkProps } from '../Base';
 
-export const RemoteVideos: React.FC<BaseSdkProps> = props => {
+export const RemoteVideos: React.FC<BaseSdkProps> = (props) => {
   const { roster } = useRosterState();
   const { tiles, tileIdToAttendeeId } = useRemoteVideoTileState();
 
   return (
     <>
-      {tiles.map(tileId => {
+      {tiles.map((tileId) => {
         const attendee = roster[tileIdToAttendeeId[tileId]] || {};
-        const { name } = attendee;
+        const { name }: any = attendee;
         return (
           <RemoteVideo {...props} key={tileId} tileId={tileId} name={name} />
         );
