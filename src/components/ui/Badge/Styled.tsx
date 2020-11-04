@@ -7,10 +7,24 @@ import { BadgeProps } from './';
 import { baseStyles, baseSpacing } from '../Base';
 
 export const StyledBadge = styled.span<Partial<BadgeProps>>`
+  ${props => {
+    if ((typeof props.value) === 'object') {
+      const element: JSX.Element = (props.value) as JSX.Element;
+      const width: string = (element.props && element.props.width) || '1rem';
+      return `width: ${width};`
+    }
+    return null;
+  }}
   display: inline-block;
-  padding: 0.1rem 0.4rem 0.125rem;
+  padding: ${props => 
+    (typeof props.value) === 'object'
+      ? '0'
+      : '0.1rem 0.4rem 0.125rem'};
   border-radius: 0.5rem;
-  line-height: 1.43;
+  line-height: ${props =>
+    (typeof props.value) === 'object'
+      ? '1'
+      : '1.43'};
   color: ${props => props.theme.colors.greys.white};
   font-size: 0.65rem;
   background-color: ${props =>

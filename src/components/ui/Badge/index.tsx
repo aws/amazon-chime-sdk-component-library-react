@@ -8,7 +8,7 @@ import { StyledBadge } from './Styled';
 
 export interface BadgeProps extends BaseProps {
   /** The value shows in the badge*/
-  value: string | number;
+  value: string | number | JSX.Element;
   /** The status of the badge */
   status?: 'default' | 'alert';
 }
@@ -25,6 +25,7 @@ export const Badge: FC<BadgeProps> = ({
       className={className || ''}
       as={tag}
       status={status}
+      value={value}
       data-testid="badge"
       {...rest}
     >
