@@ -90,7 +90,7 @@ export const StyledModalButtonGroup = styled.footer`
   }
 
   button + button {
-    margin: 0 0.5rem 0 0;
+    margin: 0 0.5rem 0 0.5rem;
   }
 
   @media (max-width: 35rem) {

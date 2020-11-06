@@ -33,6 +33,7 @@ import Lock from '../Lock';
 import Meeting from '../Meeting';
 import Microphone from '../Microphone';
 import Pause from '../Pause';
+import Pin from '../Pin';
 import Phone from '../Phone';
 import Play from '../Play';
 import Presenter from '../Presenter';
@@ -84,6 +85,7 @@ const icons = [
   Meeting,
   Microphone,
   Pause,
+  Pin,
   Phone,
   Play,
   Presenter,
