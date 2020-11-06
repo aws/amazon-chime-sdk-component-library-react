@@ -6,6 +6,7 @@ import { select } from '@storybook/addon-knobs';
 import Flex from '../Flex';
 import { Badge } from './';
 import mdx from './Badge.mdx';
+import { Lock } from '../icons';
 
 export default {
   title: 'UI Components/Badge',
@@ -25,6 +26,12 @@ export const BasicBadge = () => {
         <Badge
           value="50+"
           status={select('status', { default: 'default', alert: 'alert', }, 'default')}
+        />
+      </div>
+      <div style={{ 'marginLeft': '1rem', 'display': 'flex' }}>
+        <span style={{ 'marginRight': '0.5rem' }}>Lock badge</span>
+        <Badge
+          value={<Lock />}
         />
       </div>
     </Flex>
