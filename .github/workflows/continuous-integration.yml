@@ -4,11 +4,8 @@
 name: CI Workflow
 
 on:
-  push:
-    branches: [master]
   pull_request:
-    branches:
-      - master
+    branches: [ master ]
 
 jobs:
   build:
@@ -32,15 +29,42 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build:release --if-present
-      - name: Check for changes to the src folder
-        uses: tj-actions/verify-changed-files@v5
-        id: changed_files
+      
+  require-snapshot-test:
+    name: Check if Snapshot Tests are required
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    strategy:
+      matrix:
+        node-version: [12.x]
+    steps:
+      - name: Checkout Package
+        uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
         with:
-          files: src
-      - name: Run Snapshot testing for src folder changes
-        if: steps.changed_files.outputs.files_changed == 'true'
+          node-version: ${{ matrix.node-version }}
+      - name: Clean Install
+        run: npm ci
+      - name: Fetch all changed files
+        id: files
+        uses: jitterbit/get-changed-files@v1
+      - name: Check if snapshot tests are needed
+        id: test_needed
+        run: |
+          for changed_file in ${{ steps.files.outputs.all }}; do
+            if [[ $changed_file == *.tsx ]] || [[ $changed_file == *.ts ]]
+            then
+              echo '::set-output name=snapshot_test_required::true'
+            else
+              echo '::set-output name=snapshot_test_required::false'
+            fi
+          done
+
+      - name: Run Snapshot tests
+        if:  steps.test_needed.outputs.snapshot_test_required == 'true'
         run: npm run test:snapshots
         env:
-          GITHUB_CONTEXT: ${{ toJson(github) }}
-          # Increase timeout for snapshot testing to 8 minutes
-          WAIT_ON_TIMEOUT: 480000
+          WAIT_ON_TIMEOUT: 1200000
