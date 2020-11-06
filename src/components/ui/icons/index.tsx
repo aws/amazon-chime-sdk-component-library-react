@@ -32,6 +32,7 @@ export { default as Lock } from './Lock';
 export { default as Meeting } from './Meeting';
 export { default as Microphone } from './Microphone';
 export { default as Pause } from './Pause';
+export { default as Pin } from './Pin';
 export { default as Phone } from './Phone';
 export { default as Play } from './Play';
 export { default as Presenter } from './Presenter';

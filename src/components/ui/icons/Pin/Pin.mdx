@@ -1,0 +1,45 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Pin from './';
+import { lightTheme } from '../../../../theme/';
+
+# Pin Icon
+
+The Pin component creates a pin icon using inline SVG. Typically, you can use it to dock and undock a Roster or Chat display.
+
+## Importing
+
+```javascript
+import { Pin } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width and height
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Pin width="2rem" height="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Pin width="2rem" height="2rem" />
+```
+
+Unpin icon
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Pin width="2rem" height="2rem" unpin title="Unpin" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Pin width="2rem" height="2rem" unpin title="Unpin" />
+```
+
+## Props
+
+<Props of={Pin} />
