@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add base styles to ChannelList
 - Fixed createChatBubbleList unit test that was incorrectly named and not running
 - Fixed TS error inside /InfiniteList/index.tsx.
+- Fixed small visual errors in chat componnets.
+- Fixed broken snapshot tests for Badge component.
 
 ### Added
 
@@ -36,11 +38,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed ChatBubble to composed components to support redact and edit.
 - Changed RosterCell to support extra icons and menus when running late
 - Changed ChatBubble component props for simplicity.
+- Changed ChatBubbleContainer props to be more flexible.
 
 ### Removed
 
 - Removed createChatBubbleList function.
 - Removed exports and stories for unreleased chat components
+- Removed DateHeader component
 
 ## [1.3.0] - 2020-10-09
 

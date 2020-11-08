@@ -25,7 +25,7 @@ export const MessageAttachment: FC<MessageAttachmentProps> = ({
   const { name, downloadUrl } = props;
 
   return (
-    <StyledMessageAttachmentContent>
+    <StyledMessageAttachmentContent {...props}>
       <div className="attachment-icon">
         <Document className="document-icon" width="2rem" height="2rem" />
       </div>

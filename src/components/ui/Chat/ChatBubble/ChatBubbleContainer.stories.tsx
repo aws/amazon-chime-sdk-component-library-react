@@ -7,6 +7,7 @@ import Flex from '../../Flex';
 import ChatBubbleContainer from './ChatBubbleContainer';
 import ChatBubble from './';
 import PopOverItem from '../../PopOver/PopOverItem';
+import { formatTime } from '../../Utilities';
 
 import ChatBubbleContainerDocs from './ChatBubbleContainer.mdx';
 
@@ -41,7 +42,7 @@ export const _ChatBubbleContainer = () => {
   return (
     <Flex layout="fill-space-centered" css={flexStyles}>
       <ChatBubbleContainer
-        timestamp={'2020-10-05T21:51:26.569Z'}
+        timestamp={formatTime('2020-10-05T21:51:26.569Z')}
         actions={actions}
       >
         <ChatBubble
@@ -53,7 +54,7 @@ export const _ChatBubbleContainer = () => {
         />
       </ChatBubbleContainer>
       <ChatBubbleContainer
-        timestamp={'2020-10-05T21:51:26.569Z'}
+        timestamp={formatTime('2020-10-05T21:51:26.569Z')}
         actions={null}
       >
         <ChatBubble

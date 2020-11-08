@@ -88,6 +88,7 @@ export const ChatBubbleWithMessageAttachment = () => {
           name="Report.pdf"
           size="23.3KB"
           downloadUrl="https://test.com/download/Report.pdf"
+          css="margin-top: 1rem"
         />
       </ChatBubble>
       <ChatBubble
@@ -99,10 +100,10 @@ export const ChatBubbleWithMessageAttachment = () => {
         css={bubbleStyles}
       >
         <MessageAttachment
-          style={{ margin: '10px' }}
           name="Report.pdf"
           size="23.3KB"
           downloadUrl="https://test.com/download/Report.pdf"
+          css="margin-top: 1rem"
         />
       </ChatBubble>
     </Flex>
