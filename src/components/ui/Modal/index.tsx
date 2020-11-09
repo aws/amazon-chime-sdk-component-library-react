@@ -11,10 +11,13 @@ import ModalContext from './ModalContext';
 
 import useClickOutside from '../../../hooks/useClickOutside';
 import useUniqueId from '../../../hooks/useUniqueId';
+import { BaseProps } from '../Base';
 
 export type ModalSize = 'md' | 'lg' | 'fullscreen';
 
-export interface ModalProps extends HTMLAttributes<HTMLDivElement> {
+export interface ModalProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseProps {
   /** The callback fired when the modal is closed. */
   onClose: () => void;
   /** The size of the modal. */
@@ -57,8 +60,8 @@ export const Modal: FC<ModalProps> = ({
       }
     };
 
-    window.addEventListener('keydown', e => onKeydown(e));
-    return () => window.removeEventListener('keydown', e => onKeydown(e));
+    window.addEventListener('keydown', (e) => onKeydown(e));
+    return () => window.removeEventListener('keydown', (e) => onKeydown(e));
   }, []);
 
   return (
