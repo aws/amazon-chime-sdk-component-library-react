@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed TS error inside /InfiniteList/index.tsx.
 - Fixed small visual errors in chat componnets.
 - Fixed broken snapshot tests for Badge component.
+- Fixed ModalBody component to allow custom classNames
 
 ### Added
 
