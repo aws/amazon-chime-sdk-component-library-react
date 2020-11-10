@@ -18,10 +18,10 @@ export default {
   title: 'UI Components/PopOver',
   parameters: {
     docs: {
-      page: PopOverDocs.parameters.docs.page().props.children.type
-    }
+      page: PopOverDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: PopOver
+  component: PopOver,
 };
 
 const StyledContents = styled.span`
@@ -53,7 +53,7 @@ export const BasicPopOverMenu = () => (
       </Heading>
       <PopOver
         a11yLabel="Click me"
-        renderButton={isOpen => getButtonContents(isOpen)}
+        renderButton={(isOpen) => getButtonContents(isOpen)}
       >
         <PopOverItem
           as="a"
@@ -83,7 +83,7 @@ export const BasicPopOverMenu = () => (
 );
 
 BasicPopOverMenu.story = {
-  name: 'Basic PopOver Menu'
+  name: 'Basic PopOver Menu',
 };
 
 export const PopOverMenuWithHeader = () => (
@@ -93,7 +93,7 @@ export const PopOverMenuWithHeader = () => (
     </Heading>
     <PopOver
       a11yLabel="Click me"
-      renderButton={isOpen => getButtonContents(isOpen)}
+      renderButton={(isOpen) => getButtonContents(isOpen)}
     >
       <PopOverHeader title="Title text" subtitle="Subtitle text" />
       <PopOverItem
@@ -116,7 +116,7 @@ export const PopOverMenuWithHeader = () => (
 );
 
 PopOverMenuWithHeader.story = {
-  name: 'PopOver Menu with Header'
+  name: 'PopOver Menu with Header',
 };
 
 export const PopOverMenuWithSubmenu = () => (
@@ -126,7 +126,7 @@ export const PopOverMenuWithSubmenu = () => (
     </Heading>
     <PopOver
       a11yLabel="Click me"
-      renderButton={isOpen => getButtonContents(isOpen)}
+      renderButton={(isOpen) => getButtonContents(isOpen)}
     >
       <PopOverItem
         as="button"
@@ -161,5 +161,5 @@ export const PopOverMenuWithSubmenu = () => (
 );
 
 PopOverMenuWithSubmenu.story = {
-  name: 'PopOver Menu with Submenu'
+  name: 'PopOver Menu with Submenu',
 };

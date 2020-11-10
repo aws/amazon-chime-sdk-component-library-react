@@ -1,10 +1,14 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, ReactNode } from 'react';
+import React, { FC, HTMLAttributes, ReactNode } from 'react';
+import { BaseProps } from '../Base';
+
 import { StyledPopOverHeader } from './Styled';
 
-export interface PopOverHeaderProps {
+export interface PopOverHeaderProps
+  extends Omit<HTMLAttributes<HTMLHeadingElement>, 'css'>,
+    BaseProps {
   /** The title of the PopOver menu header. */
   title?: string;
   /** The subtitle of the PopOver menu header. */
@@ -16,9 +20,10 @@ export interface PopOverHeaderProps {
 export const PopOverHeader: FC<PopOverHeaderProps> = ({
   title,
   subtitle,
-  imgSrc
+  imgSrc,
+  ...rest
 }) => (
-  <StyledPopOverHeader data-testid="popover-header">
+  <StyledPopOverHeader data-testid="popover-header" {...rest}>
     {imgSrc && <img src={imgSrc} alt={title} />}
     {title && <p className="ch-title">{title}</p>}
     {subtitle && <p className="ch-subtitle">{subtitle}</p>}
