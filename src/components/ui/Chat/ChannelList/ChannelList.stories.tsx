@@ -3,11 +3,14 @@
 
 import React, { useState } from 'react';
 
+import { boolean } from '@storybook/addon-knobs';
+
 import Flex from '../../Flex';
 import ChannelList from './';
 import ChannelItem from './ChannelItem';
 import PopOverItem from '../../PopOver/PopOverItem';
 import ChannelListDocs from './ChannelList.mdx';
+import Badge from '../../Badge';
 
 export default {
   title: 'UI Components/Chat',
@@ -24,49 +27,52 @@ export const _ChannelList = () => {
 
   return (
     <Flex layout="fill-space-centered">
-      <ChannelList
-        activeChannelId={activeChannelId}
-        setActiveChannelId={setActiveChannelId}
-      >
+      <ChannelList>
         <ChannelItem
+          unread={boolean('unread', false)}
+          unreadBadgeLabel="New"
           name="Channel 1"
-          id="abc"
           actions={
             <PopOverItem
               children={<span>Option 1</span>}
               onClick={() => console.log('Option 1 clicked')}
             />
           }
+          onClick={() => setActiveChannelId('channel1')}
+          isSelected={activeChannelId === 'channel1'}
         />
         <ChannelItem
           name="Channel 2"
-          id="dce"
           actions={
             <PopOverItem
               children={<span>Option 1</span>}
               onClick={() => console.log('Option 1 clicked')}
             />
           }
+          onClick={() => setActiveChannelId('channel2')}
+          isSelected={activeChannelId === 'channel2'}
         />
         <ChannelItem
           name="Channel 3"
-          id="fgh"
           actions={
             <PopOverItem
               children={<span>Option 1</span>}
               onClick={() => console.log('Option 1 clicked')}
             />
           }
+          onClick={() => setActiveChannelId('channel3')}
+          isSelected={activeChannelId === 'channel3'}
         />
         <ChannelItem
           name="Channel 4"
-          id="ijk"
           actions={
             <PopOverItem
               children={<span>Option 1</span>}
               onClick={() => console.log('Option 1 clicked')}
             />
           }
+          onClick={() => setActiveChannelId('channel4')}
+          isSelected={activeChannelId === 'channel4'}
         />
       </ChannelList>
     </Flex>

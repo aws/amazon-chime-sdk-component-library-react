@@ -49,7 +49,24 @@ export const StyledChannelItem = styled.li<ChannelItemProps>`
     }
   }
 
-  &.ch-active .ch-channel-button {
+  & .ch-label {
+    padding-left: 1.5rem;
+  }
+
+  & .ch-unread-badge {
+    display: ${(props) => (props.unread ? 'inline' : 'none')};
+    position: absolute;
+    z-index: 2;
+    top: 12px;
+    left: 5px;
+    background-color: ${(props) => props.theme.colors.primary.light};
+  }
+
+  &.ch-unread .ch-channel-button {
+    font-weight: bold;
+  }
+
+  &.ch-selected .ch-channel-button {
     background-color: ${(props) => props.theme.colors.primary.light};
     color: ${(props) => props.theme.channelList.selected.fontColor};
 
@@ -58,7 +75,7 @@ export const StyledChannelItem = styled.li<ChannelItemProps>`
     }
   }
 
-  & > span {
+  & .ch-popover-toggle {
     position: absolute;
     right: 1rem;
     margin: 0.5rem 0;

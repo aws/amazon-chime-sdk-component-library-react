@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed small visual errors in chat componnets.
 - Fixed broken snapshot tests for Badge component.
 - Fixed ModalBody component to allow custom classNames
+- Fixed PopOver components to allow custom classNames
 
 ### Added
 
@@ -30,6 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Attachment icon
 - Added passthrough for a react node in the subtitle of PopOverHeader
 - Add `buttonProps` passthrough for `RosterCell` and `PopOverMenu`
+- Export Chat components
 
 ### Changed
 

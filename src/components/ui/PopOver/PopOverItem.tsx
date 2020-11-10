@@ -13,6 +13,7 @@ export interface PopOverItemProps {
   onClick?: () => void;
   /** Whether or not the item is checked. */
   checked?: boolean;
+  /** The elements that populate the content of the item. */
   children?: React.ReactElement<any> | React.ReactElement<any>[];
   /** Whether or not the item is disabled. */
   disabled?: boolean;
