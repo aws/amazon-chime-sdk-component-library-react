@@ -31,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Attachment icon
 - Added passthrough for a react node in the subtitle of PopOverHeader
 - Add `buttonProps` passthrough for `RosterCell` and `PopOverMenu`
-- Export Chat components
+- Export Chat components and utilities
 
 ### Changed
 
