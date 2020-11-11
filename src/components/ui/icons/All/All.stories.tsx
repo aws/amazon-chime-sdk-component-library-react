@@ -8,6 +8,7 @@ import { text } from '@storybook/addon-knobs';
 import Add from '../Add';
 import Arrow from '../Arrow';
 import Attendees from '../Attendees';
+import Attachment from '../Attachment';
 import Camera from '../Camera';
 import Caret from '../Caret';
 import Caution from '../Caution';
@@ -18,6 +19,7 @@ import Clear from '../Clear';
 import Clock from '../Clock';
 import Cog from '../Cog';
 import Dislike from '../Dislike';
+import Dock from '../Dock';
 import Dots from '../Dots';
 import ScreenShare from '../ScreenShare';
 import Crown from '../Crown';
@@ -46,6 +48,7 @@ import SignalStrength from '../SignalStrength';
 import Sound from '../Sound';
 import Flex from '../../Flex';
 import Eye from '../Eye';
+import EmojiPicker from '../EmojiPicker';
 import UpAndDownCaret from '../UpAndDownCaret';
 import Spinner from '../Spinner';
 
@@ -58,6 +61,7 @@ const icons = [
   Add,
   Arrow,
   Attendees,
+  Attachment,
   Camera,
   Caret,
   Caution,
@@ -70,11 +74,13 @@ const icons = [
   Crown,
   Dislike,
   Dots,
+  Dock,
   Document,
   ScreenShare,
   Crown,
   DeskPhone,
   Dialer,
+  EmojiPicker,
   Eye,
   Hamburger,
   Information,
