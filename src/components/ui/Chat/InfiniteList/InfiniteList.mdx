@@ -37,7 +37,7 @@ import { InfiniteList } from 'amazon-chime-sdk-component-library-react';
 />
 
 <InfiniteList
-  items={createChatBubbleList(insertDateHeaders(messages), memberId, actions)}
+  items={items}
   handleLoad={fetchItems}
   batchSize={50}
 />

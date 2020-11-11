@@ -3,18 +3,20 @@
 
 import styled from 'styled-components';
 import { ellipsis } from '../../../utils/style';
+import { PopOverSeparatorProps } from './PopOverSeparator';
 
 export const StyledPopOverMenu = styled.ul`
-  background-color: ${props => props.theme.popOver.menuBgd};
-  border: ${props => props.theme.popOver.menuBorder};
+  width: fit-content;
+  background-color: ${(props) => props.theme.popOver.menuBgd};
+  border: ${(props) => props.theme.popOver.menuBorder};
   width: 13.75rem;
   margin: 0;
   border-radius: 0.25rem;
   backdrop-filter: blur(1rem);
   list-style: none;
   padding: 0.5rem 0;
-  box-shadow: ${props => props.theme.popOver.shadow};
-  z-index: ${props => props.theme.zIndex.popOver};
+  box-shadow: ${(props) => props.theme.popOver.shadow};
+  z-index: ${(props) => props.theme.zIndex.popOver};
 `;
 
 export const StyledPopOverToggle = styled.button`
@@ -39,22 +41,22 @@ export const StyledPopOverItem = styled.li`
     align-items: center;
     border: none;
     cursor: pointer;
-    background-color: ${props => props.theme.popOver.itemBgd};
-    color: ${props => props.theme.popOver.itemText};
-    line-height: ${props => props.theme.fontSizes.text.lineHeight};
-    font-size: ${props => props.theme.fontSizes.text.fontSize};
+    background-color: ${(props) => props.theme.popOver.itemBgd};
+    color: ${(props) => props.theme.popOver.itemText};
+    line-height: ${(props) => props.theme.fontSizes.text.lineHeight};
+    font-size: ${(props) => props.theme.fontSizes.text.fontSize};
     padding: 0 2.5rem;
     text-decoration: none;
     outline: 0;
 
     &:hover,
     &:focus {
-      background-color: ${props => props.theme.popOver.active.itemBgd};
-      color: ${props => props.theme.popOver.active.itemText};
+      background-color: ${(props) => props.theme.popOver.active.itemBgd};
+      color: ${(props) => props.theme.popOver.active.itemText};
       outline: 0;
 
       svg {
-        fill: ${props => props.theme.popOver.active.itemText};
+        fill: ${(props) => props.theme.popOver.active.itemText};
       }
     }
   }
@@ -99,7 +101,7 @@ export const StyledSubMenu = styled(StyledPopOverItem)`
 `;
 
 export const StyledPopOverHeader = styled.header`
-  border-bottom: 0.0625rem solid ${props => props.theme.popOver.separator};
+  border-bottom: 0.0625rem solid ${(props) => props.theme.popOver.separator};
   margin-bottom: 0.75rem;
 
   img {
@@ -118,17 +120,17 @@ export const StyledPopOverHeader = styled.header`
     padding: 0 2.5rem;
     margin-top: 0.5rem;
     margin-bottom: 0;
-    color: ${props => props.theme.popOver.titleText};
+    color: ${(props) => props.theme.popOver.titleText};
     font-size: 1.18125rem;
-    line-height: ${props => props.theme.fontSizes.text.lineHeight};
+    line-height: ${(props) => props.theme.fontSizes.text.lineHeight};
   }
 
   .ch-subtitle {
     ${ellipsis};
     padding: 0 2.5rem;
     color: #616672;
-    font-size: ${props => props.theme.fontSizes.text.fontSize};
-    line-height: ${props => props.theme.fontSizes.text.lineHeight};
+    font-size: ${(props) => props.theme.fontSizes.text.fontSize};
+    line-height: ${(props) => props.theme.fontSizes.text.lineHeight};
     line-height: 1.43;
     margin: 0 0 1rem;
   }
@@ -138,7 +140,7 @@ export const StyledPopOverSeparator = styled.li`
   margin: 0;
   border-width: 0.0625rem 0 0 0;
   border-style: solid;
-  border-color: ${props => props.theme.popOver.separator};
+  border-color: ${(props) => props.theme.popOver.separator};
   margin-bottom: 0.75rem;
   opacity: 0.8;
 `;

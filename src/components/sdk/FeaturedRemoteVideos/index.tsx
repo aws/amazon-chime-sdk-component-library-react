@@ -15,7 +15,7 @@ interface Props
   extends BaseSdkProps,
     Omit<HTMLAttributes<HTMLDivElement>, 'css'> {}
 
-export const FeaturedRemoteVideos: FC<Props> = props => {
+export const FeaturedRemoteVideos: FC<Props> = (props) => {
   const gridData = useGridData();
   const { roster } = useRosterState();
   const { tileId: featuredTileId } = useFeaturedTileState();
@@ -24,14 +24,14 @@ export const FeaturedRemoteVideos: FC<Props> = props => {
 
   return (
     <>
-      {tiles.map(tileId => {
+      {tiles.map((tileId) => {
         const featured = !contentTileId && featuredTileId === tileId;
         const styles = gridData && featured ? 'grid-area: ft;' : '';
-        const classes = `${
-          featured ? 'ch-featured-tile' : ''
-        } ${props.className || ''}`;
+        const classes = `${featured ? 'ch-featured-tile' : ''} ${
+          props.className || ''
+        }`;
         const attendee = roster[tileIdToAttendeeId[tileId]] || {};
-        const { name } = attendee;
+        const { name }: any = attendee;
 
         return (
           <RemoteVideo

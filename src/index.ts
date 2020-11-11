@@ -47,6 +47,14 @@ export { RosterHeader } from './components/ui/Roster/RosterHeader';
 export { RosterGroup } from './components/ui/Roster/RosterGroup';
 export { RosterCell } from './components/ui/Roster/RosterCell';
 export { UserActivityManager } from './components/ui/UserActivityManager';
+export { ChannelList } from './components/ui/Chat/ChannelList';
+export { ChannelItem } from './components/ui/Chat/ChannelList/ChannelItem';
+export { ChatBubble } from './components/ui/Chat/ChatBubble';
+export { EditableChatBubble } from './components/ui/Chat/ChatBubble/EditableChatBubble';
+export { ChatBubbleContainer } from './components/ui/Chat/ChatBubble/ChatBubbleContainer';
+export { InfiniteList } from './components/ui/Chat/InfiniteList';
+export { MessageAttachment } from './components/ui/Chat/MessageAttachment';
+export { formatDate, formatTime } from './components/ui/Utilities';
 
 // SDK components
 export {

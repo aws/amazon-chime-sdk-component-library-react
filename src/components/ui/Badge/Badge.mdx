@@ -24,6 +24,12 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
         status="default"
       />
     </div>
+    <div style={{ 'marginLeft': '1rem', 'display': 'flex' }}>
+      <span style={{ 'marginRight': '0.5rem' }}>Lock badge</span>
+      <Badge
+        value={<Lock />}
+      />
+    </div>
   </Preview>
 </ThemeProvider>
 
@@ -31,6 +37,12 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
 <Badge
   value="50+"
   status="default"
+/>
+<Badge
+  value={<Lock />}
+/>
+<Badge
+  value={<Lock width="3rem" />}
 />
 ```
 
@@ -44,6 +56,12 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
         status="alert"
       />
     </div>
+    <div style={{ 'marginLeft': '1rem', 'display': 'flex' }}>
+      <span style={{ 'marginRight': '0.5rem' }}>Lock badge</span>
+      <Badge
+        value={<Lock />}
+      />
+    </div>
   </Preview>
 </ThemeProvider>
 
@@ -51,6 +69,12 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
 <Badge
   value="50+"
   status="alert"
+/>
+<Badge
+  value={<Lock />}
+/>
+<Badge
+  value={<Lock width="3rem" />}
 />
 ```
 

@@ -9,10 +9,12 @@ import React, {
   useEffect,
 } from 'react';
 import { Manager, Reference, Popper } from 'react-popper';
+import classnames from 'classnames';
 
 import { KEY_CODES } from '../../../constants';
 import useClickOutside from '../../../hooks/useClickOutside';
 import useTabOutside from '../../../hooks/useTabOutside';
+import { BaseProps } from '../Base';
 import { StyledPopOverMenu, StyledPopOverToggle } from './Styled';
 
 export type Placement =
@@ -25,7 +27,9 @@ export type Placement =
   | 'left-start'
   | 'left-end';
 
-export interface PopOverProps extends HTMLAttributes<HTMLSpanElement> {
+export interface PopOverProps
+  extends Omit<HTMLAttributes<HTMLUListElement>, 'css'>,
+    BaseProps {
   /** CSS classname to apply custom styles. */
   className?: string;
   /** Whether or not this is a sub menu. */
@@ -38,6 +42,7 @@ export interface PopOverProps extends HTMLAttributes<HTMLSpanElement> {
   renderButtonWrapper?: (isActive: boolean, props: any) => {};
   /** The label used for availability. */
   a11yLabel: string;
+  /** The elements that populate the menu */
   children: any;
 }
 
@@ -53,6 +58,7 @@ export const PopOver: FC<PopOverProps> = ({
   placement = 'bottom-start',
   a11yLabel,
   className,
+  ...rest
 }) => {
   const menuRef = createRef<HTMLSpanElement>();
   const [isOpen, setIsOpen] = useState(false);
@@ -117,7 +123,7 @@ export const PopOver: FC<PopOverProps> = ({
           {({ ref }) => {
             const props = {
               ref,
-              className: className || '',
+              className: classnames(className, 'ch-popover-toggle'),
               onClick: () => setIsOpen(!isOpen),
               'data-menu': isSubMenu ? 'submenu' : null,
               'aria-label': a11yLabel,
@@ -145,6 +151,7 @@ export const PopOver: FC<PopOverProps> = ({
           <Popper
             placement={placement}
             modifiers={[{ name: 'offset', options: { offset: [-8, 0] } }]}
+            {...rest}
           >
             {({ ref, style, placement }) => (
               <StyledPopOverMenu

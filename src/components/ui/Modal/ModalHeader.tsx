@@ -21,7 +21,8 @@ export interface ModalHeaderProps
 export const ModalHeader: FC<ModalHeaderProps> = ({
   tag: Tag = 'div',
   displayClose = true,
-  title
+  title,
+  ...rest
 }) => {
   const context = useModalContext();
   const handleClick = () => {
@@ -29,7 +30,7 @@ export const ModalHeader: FC<ModalHeaderProps> = ({
   };
 
   return (
-    <StyledModalHeader>
+    <StyledModalHeader {...rest}>
       <Tag className="ch-title" id={context.labelID}>
         {title}
       </Tag>
