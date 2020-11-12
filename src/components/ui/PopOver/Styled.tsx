@@ -54,10 +54,6 @@ export const StyledPopOverItem = styled.li`
       background-color: ${(props) => props.theme.popOver.active.itemBgd};
       color: ${(props) => props.theme.popOver.active.itemText};
       outline: 0;
-
-      svg {
-        fill: ${(props) => props.theme.popOver.active.itemText};
-      }
     }
   }
 
@@ -75,6 +71,11 @@ export const StyledPopOverItem = styled.li`
     width: 1.5rem;
     height: 1.5rem;
     top: 0.33rem;
+  }
+
+  &:hover .ch-check g,
+  &:focus .ch-check g {
+    fill: ${(props) => props.theme.popOver.active.itemText};
   }
 `;
 

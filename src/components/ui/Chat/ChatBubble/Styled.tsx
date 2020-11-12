@@ -27,7 +27,11 @@ export const StyledChatBubbleContainer = styled.div<
   width: 100%;
 
   .ch-timestamp {
-    padding-right: ${(props) => (props.actions ? '0.5rem' : '2.5rem')};
+    padding-right: ${(props) => (props.actions ? '1rem' : '2.5rem')};
+  }
+
+  .ch-popover-toggle {
+    height: 1.5rem;
   }
 
   ${baseSpacing}

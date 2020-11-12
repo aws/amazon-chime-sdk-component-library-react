@@ -132,6 +132,7 @@ export const PopOverMenuWithSubmenu = () => (
         as="button"
         onClick={() => console.log('clicked')}
         children={<span>Also test content</span>}
+        checked
       />
       <PopOverSeparator />
       <PopOverItem
