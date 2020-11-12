@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed broken snapshot tests for Badge component.
 - Fixed ModalBody component to allow custom classNames
 - Fixed PopOver components to allow custom classNames
+- Fixed slight spacing issue in ChatBubbleContainer.
+- Fixed issue where checkmark in PopOverItem wouldn't change on hover/focus.
 
 ### Added
 

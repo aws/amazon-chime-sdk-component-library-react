@@ -25,7 +25,7 @@ export const _ChatBubbleContainer = () => {
   const flexStyles = `
     display: flex; 
     flex-direction: column;
-    width: 50rem;
+    width: 30rem;
   `;
 
   const bubbleStyles = `
