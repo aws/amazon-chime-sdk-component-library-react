@@ -1,0 +1,45 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Dock from './';
+import { lightTheme } from '../../../../theme/';
+
+# Dock Icon
+
+The Dock component creates a dock icon using inline SVG. Typically, you can use it to dock and undock a Roster or Chat display.
+
+## Importing
+
+```javascript
+import { Dock } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width and height
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Dock width="2rem" height="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Dock width="2rem" height="2rem" />
+```
+
+Undock icon
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Dock width="2rem" height="2rem" undock title="Undock" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Dock width="2rem" height="2rem" undock title="Undock" />
+```
+
+## Props
+
+<Props of={Dock} />
