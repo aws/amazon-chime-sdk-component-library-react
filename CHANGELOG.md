@@ -5,6 +5,35 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Unreleased
+
+### Fixed
+
+- Fixed ModalBody component to allow custom classNames
+- Fixed PopOver components to allow custom classNames
+- Fixed small visual errors in chat componnets.
+- Fixed broken snapshot tests for Badge component.
+- Fixed slight spacing issue in ChatBubbleContainer.
+- Fixed issue where checkmark in PopOverItem wouldn't change on hover/focus.
+
+### Added
+
+- Added Lock and Pin icons
+- Export Chat components and utilities
+- Added Attachment, Dock, and Emoji picker icons
+
+### Changed
+
+- Changed ChatBubbleContainer props to be more flexible.
+- Changed Record icon
+- Slight style changes to Modal and PopOver components.
+- Changed Badge props to be more flexible.
+- Changed PopOver component styling.
+
+### Removed
+
+- Removed DateHeader component
+
 ## [1.4.0] - 2020-11-06
 
 ### Fixed
@@ -13,12 +42,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add base styles to ChannelList
 - Fixed createChatBubbleList unit test that was incorrectly named and not running
 - Fixed TS error inside /InfiniteList/index.tsx.
-- Fixed small visual errors in chat componnets.
-- Fixed broken snapshot tests for Badge component.
-- Fixed ModalBody component to allow custom classNames
-- Fixed PopOver components to allow custom classNames
-- Fixed slight spacing issue in ChatBubbleContainer.
-- Fixed issue where checkmark in PopOverItem wouldn't change on hover/focus.
 
 ### Added
 
@@ -33,7 +56,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Attachment icon
 - Added passthrough for a react node in the subtitle of PopOverHeader
 - Add `buttonProps` passthrough for `RosterCell` and `PopOverMenu`
-- Export Chat components and utilities
 
 ### Changed
 
@@ -43,13 +65,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed ChatBubble to composed components to support redact and edit.
 - Changed RosterCell to support extra icons and menus when running late
 - Changed ChatBubble component props for simplicity.
-- Changed ChatBubbleContainer props to be more flexible.
 
 ### Removed
 
 - Removed createChatBubbleList function.
 - Removed exports and stories for unreleased chat components
-- Removed DateHeader component
 
 ## [1.3.0] - 2020-10-09
 
