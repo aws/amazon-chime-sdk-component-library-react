@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed broken snapshot tests for Badge component.
 - Fixed slight spacing issue in ChatBubbleContainer.
 - Fixed issue where checkmark in PopOverItem wouldn't change on hover/focus.
+- Removed unused import in ChatBubble component.
 
 ### Added
 
