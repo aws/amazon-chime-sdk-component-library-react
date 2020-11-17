@@ -6,7 +6,8 @@ import React, {
   useEffect,
   useState,
   useContext,
-  useMemo
+  useMemo,
+  useRef
 } from 'react';
 import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
@@ -25,6 +26,8 @@ const AudioInputProvider: React.FC = ({ children }) => {
   const [selectedAudioInputDevice, setSelectedAudioInputDevice] = useState(
     meetingManager.selectedAudioInputDevice
   );
+  const selectedInputRef = useRef(selectedAudioInputDevice);
+  selectedInputRef.current = selectedAudioInputDevice;
 
   useEffect(() => {
     const callback = (updatedAudioInputDevice: string | null): void => {
@@ -41,8 +44,27 @@ const AudioInputProvider: React.FC = ({ children }) => {
     let isMounted = true;
 
     const observer: DeviceChangeObserver = {
-      audioInputsChanged: (newAudioInputs: MediaDeviceInfo[]) => {
+      audioInputsChanged: async (newAudioInputs: MediaDeviceInfo[]) => {
         console.log('AudioInputProvider - audio inputs updated');
+
+        const hasSelectedDevice = newAudioInputs.some(
+          device => device.deviceId === selectedInputRef.current
+        );
+
+        if (
+          selectedInputRef.current
+          && !hasSelectedDevice
+          && newAudioInputs.length
+        ) {
+          console.log("Previously selected audio input lost. Selecting a default device.");
+          meetingManager.selectAudioInputDevice(newAudioInputs[0].deviceId);
+        } else if (
+          selectedInputRef.current === "default"
+        ) {
+          console.log(`Audio devices updated and "default" device is selected. Reselecting input.`);
+          await audioVideo?.chooseAudioInputDevice(selectedInputRef.current);
+        }
+
         setAudioInputs(newAudioInputs);
       }
     };
