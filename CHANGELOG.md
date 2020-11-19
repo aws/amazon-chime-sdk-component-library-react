@@ -32,11 +32,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed Badge props to be more flexible.
 - Changed PopOver component styling.
 - Bumped chime-sdk-js version to 1.22.
+- Added try/catch block to MeetingManager leave() function.
+- [Demo] Changed handling audio binding asynchronously.
 
 ### Removed
 
 - Removed DateHeader component
 - [Demo] Removed use of depricated methods.
+- [Demo] Removed call MeetingManager.leave() on leave button click. (dublicate)
 
 ## [1.4.0] - 2020-11-06
 

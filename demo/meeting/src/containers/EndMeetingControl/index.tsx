@@ -27,7 +27,6 @@ const EndMeetingControl: React.FC = () => {
   const history = useHistory();
 
   const leaveMeeting = async (): Promise<void> => {
-    meetingManager.leave();
     history.push(routes.HOME);
   };
 
