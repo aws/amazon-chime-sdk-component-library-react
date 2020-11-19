@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed slight spacing issue in ChatBubbleContainer.
 - Fixed issue where checkmark in PopOverItem wouldn't change on hover/focus.
 - Removed unused import in ChatBubble component.
+- Fix InfiniteList to make it more flexible.
 
 ### Added
 

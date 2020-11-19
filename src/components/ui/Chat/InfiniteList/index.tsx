@@ -28,7 +28,6 @@ export interface InfiniteListProps
 export const InfiniteList: FC<InfiniteListProps> = (props) => {
   const { isLoading, onLoad, items } = props;
 
-  const containerRef = useRef<HTMLUListElement>(null);
   const listEnd = useRef<HTMLDivElement>(null);
   const currentTopItemRef = useRef<HTMLLIElement>(null);
   const firstNew = useRef<HTMLLIElement>(null);
@@ -44,21 +43,20 @@ export const InfiniteList: FC<InfiniteListProps> = (props) => {
     firstNew.current?.scrollIntoView();
   }, [items.length]);
 
+  const topObserver = new IntersectionObserver(
+    (entries) => {
+      const topEntry = entries[0];
+      if (topEntry.isIntersecting) {
+        onLoadRef.current();
+      }
+    },
+    {
+      threshold: 1,
+    }
+  );
+
   useEffect(() => {
     listEnd.current?.scrollIntoView();
-
-    const topObserver = new IntersectionObserver(
-      (entries) => {
-        const topEntry = entries[0];
-        if (topEntry.isIntersecting) {
-          onLoadRef.current();
-        }
-      },
-      {
-        root: containerRef.current,
-        threshold: 1,
-      }
-    );
 
     if (currentTopItemRef.current) {
       topObserver.observe(currentTopItemRef.current);
@@ -103,22 +101,21 @@ export const InfiniteList: FC<InfiniteListProps> = (props) => {
     </li>
   ));
 
+  const bottomObserver = new IntersectionObserver(
+    (entries) => {
+      const entry = entries[0];
+      setAtBottom(entry.isIntersecting);
+    },
+    {
+      threshold: 0,
+    }
+  );
+
   useEffect(() => {
     if (atBottom && listEnd.current) {
       listEnd.current.scrollIntoView();
     }
     prevBottom = newBottom.current;
-
-    const bottomObserver = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        setAtBottom(entry.isIntersecting);
-      },
-      {
-        root: containerRef.current,
-        threshold: 0,
-      }
-    );
 
     if (prevBottom) {
       bottomObserver.unobserve(prevBottom);
@@ -139,7 +136,6 @@ export const InfiniteList: FC<InfiniteListProps> = (props) => {
   return (
     <StyledInfiniteList
       {...props}
-      ref={containerRef}
       className={`${isLoading ? 'ch-not-scrollable' : ''}`}
       data-testid="infinite-list"
       aria-busy={isLoading ? true : false}
