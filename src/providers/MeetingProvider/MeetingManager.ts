@@ -132,8 +132,6 @@ export class MeetingManager implements AudioVideoObserver {
 
   async start(): Promise<void> {
     this.audioVideo?.start();
-    await this.meetingSession?.screenShare.open();
-    await this.meetingSession?.screenShareView.open();
   }
 
   async leave(): Promise<void> {
@@ -164,7 +162,6 @@ export class MeetingManager implements AudioVideoObserver {
   ): Promise<any> {
     const logger = this.createLogger(configuration);
     const deviceController = new DefaultDeviceController(logger);
-    configuration.enableWebAudio = false;
 
     this.meetingSession = new DefaultMeetingSession(
       configuration,

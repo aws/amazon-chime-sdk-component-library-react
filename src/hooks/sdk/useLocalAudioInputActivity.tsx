@@ -15,16 +15,34 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
       return;
     }
 
-    const analyserNode = audioVideo.createAnalyserNodeForAudioInput();
-
-    if (!analyserNode?.getByteTimeDomainData) {
-      return;
-    }
-
-    const data = new Uint8Array(analyserNode.fftSize);
-    let frameIndex = 0;
+    let analyserNode: AnalyserNode | null;
+    let restart = false;
+    let data: Uint8Array;
+    let frameIndex: number;
     let isMounted = true;
     let lastDecimal: number;
+
+    audioVideo.addDeviceChangeObserver({
+      audioInputsChanged: () => {
+        restart = true;
+      }
+    });
+
+    function initializePreview() {
+      if (!audioVideo || !isMounted) return;
+
+      analyserNode = audioVideo.createAnalyserNodeForAudioInput();
+
+      if (!analyserNode?.getByteTimeDomainData) {
+        return;
+      }
+
+      data = new Uint8Array(analyserNode.fftSize);
+      frameIndex = 0;
+      restart = false;
+
+      requestAnimationFrame(analyserNodeCallback);
+    }
 
     function analyserNodeCallback() {
       if (!analyserNode) {
@@ -51,12 +69,14 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
 
       frameIndex = (frameIndex + 1) % 2;
 
-      if (isMounted) {
+      if (restart) {
+        setTimeout(initializePreview, 500);
+      } else if (isMounted) {
         requestAnimationFrame(analyserNodeCallback);
       }
     }
 
-    requestAnimationFrame(analyserNodeCallback);
+    initializePreview();
 
     return () => {
       isMounted = false;

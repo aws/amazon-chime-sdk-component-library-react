@@ -7,15 +7,15 @@ import Flex from '../../Flex';
 import InfiniteList from './';
 import InfiniteListDocs from './InfiniteList.mdx';
 
-// export default {
-//   title: 'UI Components/Chat/InfiniteList',
-//   parameters: {
-//     docs: {
-//       page: InfiniteListDocs.parameters.docs.page().props.children.type
-//     }
-//   },
-//   component: InfiniteList
-// };
+export default {
+  title: 'UI Components/Chat/InfiniteList',
+  parameters: {
+    docs: {
+      page: InfiniteListDocs.parameters.docs.page().props.children.type,
+    },
+  },
+  component: InfiniteList,
+};
 
 export const BasicInfiniteList = () => {
   // All of the below code is just to fake an API call that would return a new batch of messages
