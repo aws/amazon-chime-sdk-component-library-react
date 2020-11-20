@@ -23,6 +23,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Lock and Pin icons
 - Export Chat components and utilities
 - Added Attachment, Dock, and Emoji picker icons
+- Added HandRaise and ListHandRaise icons
 
 ### Changed
 

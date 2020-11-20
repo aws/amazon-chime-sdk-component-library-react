@@ -1,0 +1,45 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import HandRaise from './';
+import { lightTheme } from '../../../../theme/';
+
+# HandRaise Icon
+
+The HandRaise component creates a hand raise icon using inline SVG. Typically, you can use it to action hand raise in a meeting.
+
+## Importing
+
+```javascript
+import { HandRaise } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width and height
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <HandRaise width="2rem" height="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<HandRaise width="2rem" height="2rem" />
+```
+
+HandRaised icon
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <HandRaise width="2rem" height="2rem" isRaised title="Raised Hand" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<HandRaise width="2rem" height="2rem" isRaised title="Raised Hand" />
+```
+
+## Props
+
+<Props of={HandRaise} />

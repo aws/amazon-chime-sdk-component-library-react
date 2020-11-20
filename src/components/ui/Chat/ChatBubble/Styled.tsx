@@ -51,6 +51,9 @@ export const StyledChatBubble = styled.div<StyledChatBubbleProps>`
   font-size: 0.875rem;
   position: relative;
   margin-bottom: ${(props) => (props.editable ? '4rem' : 'unset')};
+  overflow-wrap: break-word;
+  word-break: break-word;
+  hyphens: auto;
 
   & .ch-sender-name {
     font-weight: bold;
