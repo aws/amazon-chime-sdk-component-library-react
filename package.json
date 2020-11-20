@@ -73,7 +73,7 @@
     "@types/testing-library__react": "^10.0.1",
     "@types/throttle-debounce": "^2.1.0",
     "add": "^2.0.6",
-    "amazon-chime-sdk-js": "^1.15.0",
+    "amazon-chime-sdk-js": "^1.22.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^2.1.1",
     "jest": "^25.3.0",
@@ -110,7 +110,7 @@
     "webpack-cli": "^3.3.2"
   },
   "peerDependencies": {
-    "amazon-chime-sdk-js": "^1.11.0",
+    "amazon-chime-sdk-js": "1.x || 2.x",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "styled-components": "^5.0.0",
