@@ -27,10 +27,12 @@ import DeskPhone from '../DeskPhone';
 import Dialer from '../Dialer';
 import Document from '../Document';
 import Hamburger from '../Hamburger';
+import HandRaise from '../HandRaise';
 import Information from '../Information';
 import Laptop from '../Laptop';
 import LeaveMeeting from '../LeaveMeeting';
 import Like from '../Like';
+import ListHandRaise from '../ListHandRasie';
 import Lock from '../Lock';
 import Meeting from '../Meeting';
 import Microphone from '../Microphone';
@@ -83,10 +85,12 @@ const icons = [
   EmojiPicker,
   Eye,
   Hamburger,
+  HandRaise,
   Information,
   Laptop,
   LeaveMeeting,
   Like,
+  ListHandRaise,
   Lock,
   Meeting,
   Microphone,

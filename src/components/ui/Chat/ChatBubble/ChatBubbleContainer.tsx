@@ -35,12 +35,13 @@ export interface ChatBubbleContainerProps
 }
 
 export const ChatBubbleContainer: FC<ChatBubbleContainerProps> = (props) => {
-  const { timestamp, actions } = props;
+  const { timestamp, actions, ...rest } = props;
 
   return (
     <StyledChatBubbleContainer
       data-testid="chat-bubble-container"
       actions={actions}
+      {...rest}
     >
       {props.children}
       <StyledChatBubbleInfo>

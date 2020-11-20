@@ -26,10 +26,12 @@ export { default as Eye } from './Eye';
 export { default as EmojiPicker } from './EmojiPicker';
 export { default as Feedback } from './Feedback'
 export { default as Hamburger } from './Hamburger';
+export { default as HandRaise } from './HandRaise';
 export { default as Information } from './Information';
 export { default as Laptop } from './Laptop';
 export { default as LeaveMeeting } from './LeaveMeeting';
 export { default as Like } from './Like';
+export { default as ListHandRaise } from './ListHandRasie';
 export { default as Lock } from './Lock';
 export { default as Meeting } from './Meeting';
 export { default as Microphone } from './Microphone';
