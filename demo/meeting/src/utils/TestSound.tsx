@@ -37,9 +37,24 @@ class TestSound {
     );
     oscillatorNode.start();
     const audioMixController = new DefaultAudioMixController();
-    // @ts-ignore
-    audioMixController.bindAudioDevice({ deviceId: sinkId });
-    audioMixController.bindAudioElement(new Audio());
+
+    const handlingBindingAsynchronous = async () => {
+      try {
+        // @ts-ignore
+        await audioMixController.bindAudioDevice({ deviceId: this.sinkId });
+      } catch (e) {
+        console.error('Failed to bind audio device', e);
+      }
+
+      try {
+        // @ts-ignore
+        await audioMixController.bindAudioElement(new Audio());
+      } catch (e) {
+        console.error('Failed to bind audio element', e);
+      }
+    };
+
+    handlingBindingAsynchronous();
     audioMixController.bindAudioStream(destinationStream.stream);
     new TimeoutScheduler((rampSec * 2 + durationSec + 1) * 1000).start(() => {
       audioContext.close();

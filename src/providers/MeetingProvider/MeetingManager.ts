@@ -139,9 +139,14 @@ export class MeetingManager implements AudioVideoObserver {
       this.audioVideo.stopContentShare();
       this.audioVideo.stopLocalVideoTile();
       this.audioVideo.unbindAudioElement();
-      await this.audioVideo.chooseVideoInputDevice(null);
-      await this.audioVideo.chooseAudioInputDevice(null);
-      await this.audioVideo.chooseAudioOutputDevice(null);
+
+      try {
+        await this.audioVideo.chooseVideoInputDevice(null);
+        await this.audioVideo.chooseAudioInputDevice(null);
+        await this.audioVideo.chooseAudioOutputDevice(null);
+      } catch (e) {
+        console.log('Unable to set device to null on leave.');
+      }
 
       if (this.activeSpeakerListener) {
         this.audioVideo.unsubscribeFromActiveSpeakerDetector(
