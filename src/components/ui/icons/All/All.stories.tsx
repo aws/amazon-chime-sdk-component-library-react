@@ -18,6 +18,7 @@ import CheckRound from '../CheckRound';
 import Clear from '../Clear';
 import Clock from '../Clock';
 import Cog from '../Cog';
+import ConnectionProblem from '../ConnectionProblem';
 import Dislike from '../Dislike';
 import Dock from '../Dock';
 import Dots from '../Dots';
@@ -73,6 +74,7 @@ const icons = [
   Clear,
   Clock,
   Cog,
+  ConnectionProblem,
   Crown,
   Dislike,
   Dots,
@@ -107,7 +109,7 @@ const icons = [
   SignalStrength,
   Sound,
   Spinner,
-  UpAndDownCaret
+  UpAndDownCaret,
 ];
 
 const IconWrapper = styled.div`

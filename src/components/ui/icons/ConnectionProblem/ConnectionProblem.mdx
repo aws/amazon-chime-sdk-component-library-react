@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import ConnectionProblem from './';
+import { lightTheme } from '../../../../theme/';
+
+# ConnectionProblem Icon
+
+The ConnectionProblem component creates an icon using inline SVG. Typically, you can use it to indicate problems with video connection.
+
+## Importing
+
+```javascript
+import { ConnectionProblem } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <ConnectionProblem width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<ConnectionProblem width="2rem" />
+```
+
+## Props
+
+<Props of={ConnectionProblem} />

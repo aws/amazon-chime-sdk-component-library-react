@@ -14,6 +14,7 @@ export { default as CheckRound } from './CheckRound';
 export { default as Clear } from './Clear';
 export { default as Clock } from './Clock';
 export { default as Cog } from './Cog';
+export { default as ConnectionProblem } from './ConnectionProblem';
 export { default as ScreenShare } from './ScreenShare';
 export { default as Crown } from './Crown';
 export { default as DeskPhone } from './DeskPhone';
@@ -24,7 +25,7 @@ export { default as Dock } from './Dock';
 export { default as Document } from './Document';
 export { default as Eye } from './Eye';
 export { default as EmojiPicker } from './EmojiPicker';
-export { default as Feedback } from './Feedback'
+export { default as Feedback } from './Feedback';
 export { default as Hamburger } from './Hamburger';
 export { default as HandRaise } from './HandRaise';
 export { default as Information } from './Information';
