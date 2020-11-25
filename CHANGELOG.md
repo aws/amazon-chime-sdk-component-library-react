@@ -9,6 +9,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+### Added
+
+### Changed
+- Allow arbitrary to be passed to RosterProvider
+
+### Removed
+
+## [1.5.0] - 2020-11-20
+
+### Fixed
+
 - Fixed ModalBody component to allow custom classNames
 - Fixed PopOver components to allow custom classNames
 - Fixed small visual errors in chat componnets.
@@ -41,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed DateHeader component
 - [Demo] Removed use of depricated methods.
-- [Demo] Removed call MeetingManager.leave() on leave button click. (dublicate)
+- [Demo] Removed call MeetingManager.leave() on leave button click. (duplicate)
 
 ## [1.4.0] - 2020-11-06
 
