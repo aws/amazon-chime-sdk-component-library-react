@@ -16,11 +16,15 @@ import routes from '../constants/routes';
 export type NavigationContextType = {
   showNavbar: boolean;
   showRoster: boolean;
+  showChat  : boolean;
   showMetrics: boolean;
   toggleRoster: () => void;
+  toggleChat  : () => void
   toggleNavbar: () => void;
   openRoster: () => void;
   closeRoster: () => void;
+  openChat: () => void;
+  closeChat: () => void;
   openNavbar: () => void;
   closeNavbar: () => void;
   toggleMetrics: () => void;
@@ -39,6 +43,7 @@ const isDesktop = () => window.innerWidth > 768;
 const NavigationProvider = ({ children }: Props) => {
   const [showNavbar, setShowNavbar] = useState(() => isDesktop());
   const [showRoster, setShowRoster] = useState(() => isDesktop());
+  const [showChat, setShowChat] = useState(false);
   const [showMetrics, setShowMetrics] = useState(false);
   const isDesktopView = useRef(isDesktop());
 
@@ -65,6 +70,7 @@ const NavigationProvider = ({ children }: Props) => {
       if (!isResizeDesktop) {
         setShowNavbar(false);
         setShowRoster(false);
+        setShowChat(false);
       } else {
         setShowNavbar(true);
       }
@@ -76,6 +82,10 @@ const NavigationProvider = ({ children }: Props) => {
 
   const toggleRoster = (): void => {
     setShowRoster(!showRoster);
+  };
+
+  const toggleChat = (): void => {
+    setShowChat(!showChat);
   };
 
   const toggleNavbar = (): void => {
@@ -101,16 +111,27 @@ const NavigationProvider = ({ children }: Props) => {
   const closeRoster = (): void => {
     setShowRoster(false);
   };
+  const openChat = (): void => {
+    setShowChat(true);
+  };
+
+  const closeChat = (): void => {
+    setShowChat(false);
+  };
 
   const providerValue = {
     showNavbar,
     showRoster,
+    showChat,
     showMetrics,
     toggleRoster,
+    toggleChat,
     toggleNavbar,
     toggleMetrics,
     openRoster,
     closeRoster,
+    openChat,
+    closeChat,
     openNavbar,
     closeNavbar
   };

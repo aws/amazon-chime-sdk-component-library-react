@@ -14,14 +14,17 @@ import MeetingDetails from '../../containers/MeetingDetails';
 import MeetingControls from '../../containers/MeetingControls';
 import useMeetingEndRedirect from '../../hooks/useMeetingEndRedirect';
 import MeetingMetrics from '../../containers/MeetingMetrics';
+import { RealitimeSubscribeStateProvider } from '../../providers/RealtimeSubscribeProvider';
 
 const MeetingView = () => {
   useMeetingEndRedirect();
-  const { showNavbar, showRoster } = useNavigation();
+  const { showNavbar, showRoster, showChat } = useNavigation();
 
   return (
     <UserActivityProvider>
-      <StyledLayout showNav={showNavbar} showRoster={showRoster}>
+      <StyledLayout showNav={showNavbar} showRoster={showRoster || showChat}>
+      <RealitimeSubscribeStateProvider>
+
         <StyledContent>
           <MeetingMetrics />
           <VideoTileGrid
@@ -31,6 +34,7 @@ const MeetingView = () => {
           <MeetingControls />
         </StyledContent>
         <NavigationControl />
+        </RealitimeSubscribeStateProvider>
       </StyledLayout>
     </UserActivityProvider>
   );

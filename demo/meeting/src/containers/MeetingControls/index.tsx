@@ -18,12 +18,15 @@ import { useNavigation } from '../../providers/NavigationProvider';
 import { StyledControls } from './Styled';
 
 const MeetingControls = () => {
-  const { toggleNavbar, closeRoster, showRoster } = useNavigation();
+  const { toggleNavbar, closeRoster, showRoster, showChat, closeChat} = useNavigation();
   const { isUserActive } = useUserActivityState();
 
   const handleToggle = () => {
     if (showRoster) {
       closeRoster();
+    }
+    if (showChat){
+      closeChat();
     }
 
     toggleNavbar();
