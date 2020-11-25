@@ -51,5 +51,7 @@ export const Checkbox: FC<CheckboxProps> = (props: CheckboxProps) => {
     </>
   );
 };
+Checkbox.displayName = 'Checkbox';
+
 
 export default Checkbox;
