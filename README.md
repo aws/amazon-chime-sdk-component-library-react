@@ -3,6 +3,11 @@ This repository is the sample of chat feature with Amazon Chime SDK React Compon
 
 And this is forked from original official [repository](https://github.com/aws/amazon-chime-sdk-component-library-react) and based on version 1.5.0 of demo/meeting
 
+
+This is temporal project for the experiments.
+Our complete project is in [this repository](https://github.com/w-okada/flect-chime-sdk-demo). please refer.
+
+
 ## To run sample
 ```
 $ npm install
