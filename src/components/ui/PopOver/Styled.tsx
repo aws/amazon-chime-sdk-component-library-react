@@ -7,7 +7,6 @@ import { ellipsis } from '../../../utils/style';
 export const StyledPopOverMenu = styled.ul`
   width: fit-content;
   max-width: 22rem;
-  ${ellipsis};
   background-color: ${(props) => props.theme.popOver.menuBgd};
   border: ${(props) => props.theme.popOver.menuBorder};
   margin: 0;
