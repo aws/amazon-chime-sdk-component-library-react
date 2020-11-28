@@ -349,11 +349,15 @@ Resources:
                   - "chime:CreateChannel"
                   - "chime:DescribeChannel"
                   - "chime:ListChannels"
+                  - "chime:UpdateChannel"
                   - "chime:DeleteChannel"
                   - "chime:RedactChannelMessage"
                   - "chime:UpdateChannelMessage"
                   - "chime:Connect"
-                  - "chime:ListChannelMembershipsForAppInstanceUser"                  
+                  - "chime:ListChannelMembershipsForAppInstanceUser" 
+                  - "chime:CreateChannelBan"
+                  - "chime:ListChannelBans"
+                  - "chime:DeleteChannelBan"
                 Resource:
                   - !Join ['', [!GetAtt TriggerChimeAppInstanceLambda.AppInstanceArn, '/user/${cognito-identity.amazonaws.com:sub}']]
                   - !Join ['', [!GetAtt TriggerChimeAppInstanceLambda.AppInstanceArn, '/channel/*']]
