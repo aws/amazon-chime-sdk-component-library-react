@@ -39,4 +39,5 @@ export interface PostLogConfig {
 export interface ManagerConfig {
   logLevel: LogLevel;
   postLogConfig?: PostLogConfig;
+  simulcastEnabled?: boolean;
 }

@@ -8,12 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Fixed
+- Remove needless camera selection when joining meeting
 
 ### Added
 - [Demo] Add Chat Demo app
 
 ### Changed
 - Allow arbitrary to be passed to RosterProvider
+- Allow for simlucast configuration in MeetingProvider
 
 ### Removed
 
