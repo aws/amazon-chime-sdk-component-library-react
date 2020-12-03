@@ -117,6 +117,11 @@ const buttons = {
       bgd: colors.primary.light,
       border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.4)}`,
       text: colors.greys.grey70
+    },
+    disabled: {
+      bgd: colors.greys.grey80,
+      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.4)}`,
+      text: colors.greys.grey40,
     }
   },
 
@@ -146,6 +151,11 @@ const buttons = {
       bgd: colors.greys.grey60,
       border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.7)}`,
       text: colors.greys.white
+    },
+    disabled: {
+      bgd: colors.greys.grey80,
+      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.6)}`,
+      text: colors.greys.grey40,
     }
   },
 
@@ -175,6 +185,11 @@ const buttons = {
       bgd: colors.primary.light,
       border: 'none',
       text: colors.greys.grey80
+    },
+    disabled: {
+      bgd: 'transparent',
+      border: 'none',
+      text: colors.greys.grey40,
     }
   }
 };

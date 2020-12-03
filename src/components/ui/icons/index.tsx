@@ -20,6 +20,7 @@ export { default as Crown } from './Crown';
 export { default as DeskPhone } from './DeskPhone';
 export { default as Dialer } from './Dialer';
 export { default as Dislike } from './Dislike';
+export { default as DropToAttach } from './DropToAttach';
 export { default as Dots } from './Dots';
 export { default as Dock } from './Dock';
 export { default as Document } from './Document';

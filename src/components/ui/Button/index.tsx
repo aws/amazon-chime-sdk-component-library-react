@@ -19,6 +19,8 @@ export interface ButtonProps
   selected?: boolean;
   /** Defines the size of the icon in the button, it defaults to `sm`. */
   iconSize?: IconSize;
+  /** Whether or not the button is disabled. **/
+  disabled?: boolean;
 }
 
 export type IconSize = 'sm' | 'md' | 'lg';
@@ -33,6 +35,7 @@ export const Button = forwardRef(
       ref={ref}
       aria-label={props.label}
       data-testid="button"
+      disabled={props.disabled}
     >
       {props.icon && (
         <span className="ch-icon" data-testid="button-icon">

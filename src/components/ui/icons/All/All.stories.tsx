@@ -27,6 +27,7 @@ import Crown from '../Crown';
 import DeskPhone from '../DeskPhone';
 import Dialer from '../Dialer';
 import Document from '../Document';
+import DropToAttach from '../DropToAttach';
 import Hamburger from '../Hamburger';
 import HandRaise from '../HandRaise';
 import Information from '../Information';
@@ -77,6 +78,7 @@ const icons = [
   ConnectionProblem,
   Crown,
   Dislike,
+  DropToAttach,
   Dots,
   Dock,
   Document,
