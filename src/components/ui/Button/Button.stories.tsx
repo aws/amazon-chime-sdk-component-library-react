@@ -34,7 +34,10 @@ BasicButton.story = {
 
 export const _PrimaryButton = () => (
   <Flex layout="fill-space-centered">
-    <PrimaryButton label="Primary" />
+    <PrimaryButton 
+      label="Primary" 
+      disabled={boolean('Disabled', false)}
+    />
   </Flex>
 );
 
@@ -44,7 +47,10 @@ _PrimaryButton.story = {
 
 export const _SecondaryButton = () => (
   <Flex layout="fill-space-centered">
-    <SecondaryButton label="This is a secondary button" />
+    <SecondaryButton 
+      label="This is a secondary button" 
+      disabled={boolean('Disabled', false)}
+    />
   </Flex>
 );
 
@@ -60,6 +66,7 @@ export const _IconButton = () => {
         label="click me"
         icon={<Meeting />}
         iconSize={select('iconSize', ['sm', 'md', 'lg'], 'sm')}
+        disabled={boolean('Disabled', false)}
       />
     </Flex>
   );

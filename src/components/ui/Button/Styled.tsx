@@ -72,6 +72,13 @@ export const StyledPrimaryButton = css<ButtonProps>`
     border: ${(props) => props.theme.buttons.primary.active.border};
     color: ${(props) => props.theme.buttons.primary.active.text};
   }
+
+  &:disabled {
+    background-color: ${(props) => props.theme.buttons.primary.disabled.bgd};
+    border: ${(props) => props.theme.buttons.primary.disabled.border};
+    color: ${(props) => props.theme.buttons.primary.disabled.text};
+    cursor: not-allowed;
+  }
 `;
 
 export const StyledSecondaryButton = css<ButtonProps>`
@@ -105,6 +112,13 @@ export const StyledSecondaryButton = css<ButtonProps>`
     background-color: ${(props) => props.theme.buttons.secondary.active.bgd};
     border: ${(props) => props.theme.buttons.secondary.active.border};
     color: ${(props) => props.theme.buttons.secondary.active.text};
+  }
+
+  &:disabled {
+    background-color: ${(props) => props.theme.buttons.secondary.disabled.bgd};
+    border: ${(props) => props.theme.buttons.secondary.disabled.border};
+    color: ${(props) => props.theme.buttons.secondary.disabled.text};
+    cursor: not-allowed;
   }
 `;
 
@@ -151,5 +165,12 @@ export const StyledIconButton = css<ButtonProps>`
     background-color: ${(props) => props.theme.buttons.icon.active.bgd};
     border: ${(props) => props.theme.buttons.icon.active.border};
     color: ${(props) => props.theme.buttons.icon.active.text};
+  }
+
+  &:disabled {
+    background-color: ${(props) => props.theme.buttons.icon.disabled.bgd};
+    border: ${(props) => props.theme.buttons.icon.disabled.border};
+    color: ${(props) => props.theme.buttons.icon.disabled.text};
+    cursor: not-allowed;
   }
 `;

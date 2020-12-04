@@ -117,6 +117,11 @@ const buttons = {
       bgd: colors.primary.light,
       border: `0.03125rem solid ${colors.primary.darker}`,
       text: colors.greys.white
+    },
+    disabled: {
+      bgd: colors.greys.white,
+      border: `0.03125rem solid ${colors.greys.grey10}`,
+      text: colors.greys.grey40,
     }
   },
 
@@ -146,6 +151,11 @@ const buttons = {
       bgd: colors.greys.grey10,
       border: `0.03125rem solid ${colors.greys.grey30}`,
       text: colors.greys.grey70
+    },
+    disabled: {
+      bgd: colors.greys.white,
+      border: `0.03125rem solid ${colors.greys.grey10}`,
+      text: colors.greys.grey40,
     }
   },
 
@@ -175,6 +185,11 @@ const buttons = {
       bgd: colors.primary.light,
       border: 'none',
       text: colors.greys.white
+    },
+    disabled: {
+      bgd: 'transparent',
+      border: 'none',
+      text: colors.greys.grey40,
     }
   }
 };

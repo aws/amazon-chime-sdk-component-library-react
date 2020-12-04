@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import DropToAttach from './';
+import { lightTheme } from '../../../../theme/';
+
+# DropToAttach Icon
+
+The DropToAttach component creates an icon to indicate that user could drag and drop to attach file.
+
+## Importing
+
+```javascript
+import { DropToAttach } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <DropToAttach width="10rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<DropToAttach width="10rem" />
+```
+
+## Props
+
+<Props of={DropToAttach} />
