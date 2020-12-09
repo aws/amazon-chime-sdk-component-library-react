@@ -25,6 +25,7 @@ interface ButtonType {
   bgd: string;
   border: string;
   text: string;
+  shadow: string;
 }
 
 interface ButtonGroupType {

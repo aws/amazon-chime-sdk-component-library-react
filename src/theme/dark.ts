@@ -95,102 +95,120 @@ const buttons = {
     shadow: shadows.none,
     static: {
       bgd: colors.primary.main,
-      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.4)}`,
-      text: colors.greys.grey70
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.grey80,
+      shadow: 'none'
     },
     hover: {
       bgd: colors.primary.dark,
-      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.6)}`,
-      text: colors.greys.grey70
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.grey80,
+      shadow: 'none'
     },
     focus: {
-      bgd: colors.primary.main,
-      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.6)}`,
-      text: colors.greys.grey70
+      bgd: colors.primary.dark,
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.grey80,
+      shadow: `0 0 0 0.25rem ${colors.primary.darkest}`,
     },
     active: {
       bgd: colors.primary.darker,
-      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.6)}`,
-      text: colors.greys.grey70
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.grey80,
+      shadow: 'none'
     },
     selected: {
       bgd: colors.primary.light,
-      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.4)}`,
-      text: colors.greys.grey70
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.grey80,
+      shadow: 'none'
     },
     disabled: {
       bgd: colors.greys.grey80,
       border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.4)}`,
       text: colors.greys.grey40,
-    }
+      shadow: 'none'
+    },
   },
 
   secondary: {
     shadow: shadows.none,
     static: {
       bgd: colors.greys.grey50,
-      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.6)}`,
-      text: colors.greys.white
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.white,
+      shadow: 'none'
     },
     hover: {
       bgd: colors.greys.grey60,
-      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.7)}`,
-      text: colors.greys.white
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.white,
+      shadow: 'none'
     },
     focus: {
       bgd: colors.greys.grey60,
-      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.7)}`,
-      text: colors.greys.white
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.white,
+      shadow: `0 0 0 0.25rem ${colors.primary.lighter}`,
     },
     active: {
       bgd: colors.greys.grey70,
-      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.8)}`,
-      text: colors.greys.white
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.white,
+      shadow: 'none'
     },
     selected: {
       bgd: colors.greys.grey60,
-      border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.7)}`,
-      text: colors.greys.white
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.white,
+      shadow: 'none'
     },
     disabled: {
       bgd: colors.greys.grey80,
       border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.6)}`,
       text: colors.greys.grey40,
-    }
+      shadow: 'none'
+    },
   },
 
   icon: {
     shadow: shadows.none,
     static: {
       bgd: 'transparent',
-      border: 'none',
-      text: colors.greys.grey20
+      border: `0 solid ${colors.greys.black}`,
+      text: colors.greys.grey20,
+      shadow: 'none'
     },
     hover: {
       bgd: colors.primary.dark,
-      border: 'none',
-      text: colors.greys.grey80
+      border: `0.03125rem  solid ${colors.greys.black}`,
+      text: colors.greys.grey80,
+      shadow: 'none'
     },
     focus: {
-      bgd: colors.primary.dark,
-      border: 'none',
-      text: colors.greys.grey80
+      bgd: 'transparent',
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.grey80,
+      shadow: `0 0 0 0.25rem ${colors.primary.darker}` 
     },
     active: {
       bgd: colors.primary.darker,
-      border: 'none',
-      text: colors.greys.grey80
+      border: `0.03125rem solid ${colors.greys.black}`,
+      text: colors.greys.grey80,
+      shadow: 'none'
     },
     selected: {
       bgd: colors.primary.light,
-      border: 'none',
-      text: colors.greys.grey80
+      border: `0 solid ${colors.greys.black}`,
+      text: colors.greys.grey80,
+      shadow: 'none'
     },
     disabled: {
       bgd: 'transparent',
       border: 'none',
       text: colors.greys.grey40,
-    }
+      shadow: 'none'
+    },
   }
 };
 

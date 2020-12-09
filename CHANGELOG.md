@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Allow arbitrary to be passed to RosterProvider
 - Allow for simlucast configuration in MeetingProvider
+- Updated button focus states to increase their accessibility
 
 ### Removed
 

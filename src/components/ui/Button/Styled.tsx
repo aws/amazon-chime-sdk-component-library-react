@@ -53,24 +53,31 @@ export const StyledPrimaryButton = css<ButtonProps>`
     props.selected
       ? props.theme.buttons.primary.selected.border
       : props.theme.buttons.primary.static.border};
-  box-shadow: ${(props) => props.theme.buttons.primary.shadow};
-
-  &:hover {
-    background-color: ${(props) => props.theme.buttons.primary.hover.bgd};
-    border: ${(props) => props.theme.buttons.primary.hover.border};
-    color: ${(props) => props.theme.buttons.primary.hover.text};
-  }
+  box-shadow: ${(props) => props.theme.buttons.primary.static.shadow};
 
   &:focus {
     background-color: ${(props) => props.theme.buttons.primary.focus.bgd};
     border: ${(props) => props.theme.buttons.primary.focus.border};
     color: ${(props) => props.theme.buttons.primary.focus.text};
+    box-shadow: ${(props) => props.theme.buttons.primary.focus.shadow};
+  }
+
+  &:hover {
+    background-color: ${(props) => props.theme.buttons.primary.hover.bgd};
+    border: ${(props) => props.theme.buttons.primary.hover.border};
+    color: ${(props) => props.theme.buttons.primary.hover.text};
+    box-shadow: ${(props) => props.theme.buttons.primary.hover.shadow};
+  }
+
+  &:focus:hover {
+    box-shadow: ${(props) => props.theme.buttons.primary.focus.shadow};
   }
 
   &:active {
     background-color: ${(props) => props.theme.buttons.primary.active.bgd};
     border: ${(props) => props.theme.buttons.primary.active.border};
     color: ${(props) => props.theme.buttons.primary.active.text};
+    box-shadow: ${(props) => props.theme.buttons.primary.active.shadow};
   }
 
   &:disabled {
@@ -96,22 +103,29 @@ export const StyledSecondaryButton = css<ButtonProps>`
       : props.theme.buttons.secondary.static.border};
   box-shadow: ${(props) => props.theme.buttons.secondary.shadow};
 
-  &:hover {
-    background-color: ${(props) => props.theme.buttons.secondary.hover.bgd};
-    border: ${(props) => props.theme.buttons.secondary.hover.border};
-    color: ${(props) => props.theme.buttons.secondary.hover.text};
-  }
-
   &:focus {
     background-color: ${(props) => props.theme.buttons.secondary.focus.bgd};
     border: ${(props) => props.theme.buttons.secondary.focus.border};
     color: ${(props) => props.theme.buttons.secondary.focus.text};
+    box-shadow: ${(props) => props.theme.buttons.secondary.focus.shadow};
+  }
+
+  &:hover {
+    background-color: ${(props) => props.theme.buttons.secondary.hover.bgd};
+    border: ${(props) => props.theme.buttons.secondary.hover.border};
+    color: ${(props) => props.theme.buttons.secondary.hover.text};
+    box-shadow: ${(props) => props.theme.buttons.secondary.hover.shadow};
+  }
+
+  &:focus:hover {
+    box-shadow: ${(props) => props.theme.buttons.secondary.focus.shadow};
   }
 
   &:active {
     background-color: ${(props) => props.theme.buttons.secondary.active.bgd};
     border: ${(props) => props.theme.buttons.secondary.active.border};
     color: ${(props) => props.theme.buttons.secondary.active.text};
+    box-shadow: ${(props) => props.theme.buttons.secondary.focus.shadow};
   }
 
   &:disabled {
@@ -149,16 +163,24 @@ export const StyledIconButton = css<ButtonProps>`
     margin: 0;
   }
 
+  &:focus {
+    background-color: ${({ theme, selected }) => 
+      selected 
+        ? theme.buttons.icon.selected.bgd 
+        : theme.buttons.icon.static.bgd};
+    border: ${(props) => props.theme.buttons.icon.focus.border};
+    color: ${(props) => props.theme.buttons.icon.focus.text};
+    color: ${({ theme, selected }) => 
+      selected  
+      ? theme.buttons.icon.selected.text 
+      : theme.buttons.icon.static.text};
+    box-shadow: ${(props) => props.theme.buttons.icon.focus.shadow};
+  }
+
   &:hover {
     background-color: ${(props) => props.theme.buttons.icon.hover.bgd};
     border: ${(props) => props.theme.buttons.icon.hover.border};
     color: ${(props) => props.theme.buttons.icon.hover.text};
-  }
-
-  &:focus {
-    background-color: ${(props) => props.theme.buttons.icon.focus.bgd};
-    border: ${(props) => props.theme.buttons.icon.focus.border};
-    color: ${(props) => props.theme.buttons.icon.focus.text};
   }
 
   &:active {
