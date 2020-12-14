@@ -41,7 +41,7 @@ class TestSound {
     const handlingBindingAsynchronous = async () => {
       try {
         // @ts-ignore
-        await audioMixController.bindAudioDevice({ deviceId: this.sinkId });
+        await audioMixController.bindAudioDevice({ deviceId: sinkId });
       } catch (e) {
         console.error('Failed to bind audio device', e);
       }
