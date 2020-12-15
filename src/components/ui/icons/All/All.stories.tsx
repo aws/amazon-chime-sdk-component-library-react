@@ -25,6 +25,7 @@ import Dots from '../Dots';
 import ScreenShare from '../ScreenShare';
 import Crown from '../Crown';
 import DeskPhone from '../DeskPhone';
+import Echo from '../Echo';
 import Dialer from '../Dialer';
 import Document from '../Document';
 import DropToAttach from '../DropToAttach';
@@ -85,6 +86,7 @@ const icons = [
   ScreenShare,
   Crown,
   DeskPhone,
+  Echo,
   Dialer,
   EmojiPicker,
   Eye,

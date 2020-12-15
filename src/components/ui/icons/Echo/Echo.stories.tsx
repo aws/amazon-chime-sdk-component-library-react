@@ -4,24 +4,24 @@
 import React from 'react';
 
 import { boolean, text } from '@storybook/addon-knobs';
-import DeskPhone from '.';
-import DeskPhoneIconDocs from './DeskPhone.mdx';
+import Echo from '.';
+import EchoIconDocs from './Echo.mdx';
 import Flex from '../../Flex';
 
 export default {
-  title: 'UI Components/Icons/DeskPhone',
+  title: 'UI Components/Icons/Echo',
   parameters: {
     docs: {
-      page: DeskPhoneIconDocs.parameters.docs.page().props.children.type,
+      page: EchoIconDocs.parameters.docs.page().props.children.type,
     },
   },
-  component: DeskPhone,
+  component: Echo,
 };
 
-export const _DeskPhone = () => (
+export const _Echo = () => (
   <Flex layout="fill-space-centered">
-    <DeskPhone
-      disabled={boolean('disabled', false)}
+    <Echo
+      muted={boolean('muted', false)}
       poorConnection={boolean('poorConnection', false)}
       width={text('width', '2rem')}
     />
