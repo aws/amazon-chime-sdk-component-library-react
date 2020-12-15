@@ -8,6 +8,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Fixed
+- Fix icon preventing clicks on `Select` components
+
+### Added
+
+### Changed
+
+### Removed
+
+## [1.6.0] - 2020-12-14
+
+### Fixed
 - Remove needless camera selection when joining meeting
 - [Demo] Fix demo test speakers
 
