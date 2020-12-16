@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Add `useSelectAudioInputDevice`, `useSelectAudioOutputDevice` hooks
+- Added Echo icon
+- Added poorConnection property to DeskPhone icon
 
 ### Changed
 

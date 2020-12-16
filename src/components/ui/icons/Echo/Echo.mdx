@@ -1,0 +1,45 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import Echo from './';
+import { lightTheme } from '../../../../theme/';
+
+# Echo Icon
+
+The Echo component creates a echo icon using inline SVG. Typically, you can use it in a meeting roster to indicate status of attendees who join the meeting via echo.
+
+## Importing
+
+```javascript
+import { Echo } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With custom width
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Echo width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Echo width="2rem" />
+```
+
+Muted Echo icon
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <Echo width="2rem" muted />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<Echo width="2rem" muted />
+```
+
+## Props
+
+<Props of={Echo} />

@@ -24,6 +24,7 @@ export { default as DropToAttach } from './DropToAttach';
 export { default as Dots } from './Dots';
 export { default as Dock } from './Dock';
 export { default as Document } from './Document';
+export { default as Echo } from './Echo';
 export { default as Eye } from './Eye';
 export { default as EmojiPicker } from './EmojiPicker';
 export { default as Feedback } from './Feedback';
