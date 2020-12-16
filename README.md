@@ -13,7 +13,7 @@ This contains reusable components written with React, TypeScript and styled comp
 npm install
 ```
 
-## To run Storybook locally
+## To run Storybook server locally
 
 ```
 npm start
@@ -29,37 +29,48 @@ Once you build, check and resolve any warnings you may get like unresolved depen
 
 ## Test
 
-Run all unit tests
+Run all unit test suites.
 
 ```
 npm run test
 ```
 
-Run one file
+Run an individual unit test suite.
 
 ```
 npm run test -- <filepath>
 ```
 
-Run test in watch mode
+Run all unit test suites in watch mode
 
 ```
 npm run test -- --watch
 ```
 
-Run snapshot image tests, [Docker](https://docs.docker.com/install/) installation is required to run puppeteer in container.
+Run all snapshots test suites, [Docker](https://docs.docker.com/install/) installation is required to run puppeteer in docker container.
 
 ```
 npm run test:snapshots
 ```
 
-Run snapshot image test for one file, make sure storybook dev server is running locally before running test.
+> Error 1: Service 'chromium' failed to build : toomanyrequests: You have reached your pull rate limit
+
+You may need to create a [Docker Hub](https://hub.docker.com/) account and [authenticate pull request from Docker Hub](https://docs.docker.com/docker-hub/download-rate-limit/#how-do-i-authenticate-pull-requests). Unauthenticated (anonymous) users will have the limits enforced via IP.
+
+> Error 2: Timeout when you run `npm run test:snapshots`
+
+You have 2 options: 
+1. Set an environment variable `WAIT_ON_TIMEOUT=600000` (e.g. 10 minutes. By default, it's 5 minutes). It will wait for a longer time while checking for the server to respond.
+2. Start storybook server locally by running `npm start`, then run `npm run test:snapshots`.
+
+
+Run an individual snapshot test suite, make sure that storybook server is running locally before kicking off the test.
 
 ```
 npm run test:snapshots-path -- <filepath>
 ```
 
-Run snapshot image test for one file and override existing snapshots.
+Run an individual snapshot test suite and override existing snapshot(s).
 
 ```
 npm run test:snapshots-path -- <filepath> -u
