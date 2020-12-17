@@ -26,7 +26,7 @@
     "start": "start-storybook -p 9009",
     "test": "jest -c jest.config.js",
     "deploy-storybook": "storybook-to-ghpages",
-    "build-storybook": "build-storybook -s public",
+    "build-storybook": "build-storybook",
     "jest:integration": "jest -c jest-snapshot.config.js --verbose ./tst/snapshots/*",
     "test:snapshots-path": "jest -c jest-snapshot.config.js --verbose",
     "test:snapshots": "start-server-and-test start http-get://localhost:9009 jest:integration",
