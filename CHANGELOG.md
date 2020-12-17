@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - [Demo] Add Chat Demo app
+- Added optional 'id' prop for ui components
 
 ### Changed
 - Allow arbitrary to be passed to RosterProvider
