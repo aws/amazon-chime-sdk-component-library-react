@@ -8,6 +8,7 @@ import { BaseSdkProps } from '../../sdk/Base';
 export interface BaseProps extends SpaceProps, BaseSdkProps {
   /** Optional tag to render the component as a different HTML tag */
   tag?: any;
+  id?: string;
 }
 
 export interface FocusableProps {
