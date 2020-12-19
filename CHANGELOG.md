@@ -8,16 +8,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Fixed
-
 - Fix icon preventing clicks on `Select` components
-- Fix Github Actions build-storybook error
 
 ### Added
-
 - Add `useSelectAudioInputDevice`, `useSelectAudioOutputDevice` hooks
 - Added Echo icon
 - Added poorConnection property to DeskPhone icon
-- Added optional 'id' prop for ui components
 
 ### Changed
 
@@ -26,16 +22,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.6.0] - 2020-12-14
 
 ### Fixed
-
 - Remove needless camera selection when joining meeting
 - [Demo] Fix demo test speakers
 
 ### Added
-
 - [Demo] Add Chat Demo app
+- Added optional 'id' prop for ui components
 
 ### Changed
-
 - Allow arbitrary to be passed to RosterProvider
 - Allow for simlucast configuration in MeetingProvider
 - Updated button focus states to increase their accessibility
