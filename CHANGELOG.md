@@ -8,6 +8,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+
 - Fix serverless deploy script to work on Windows
 
 ### Fixed
@@ -42,6 +43,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a classname to PopOverMenu component for styling access
 - Added forwardRef for Textarea
 - Added style variants to Caution icon
+- Added optional `timestamp` prop in ChatBubble
+- Added forwardRef for ChatBubbleContainer
+- Added optional img to MessageAttachment
 
 ### Changed
 
@@ -61,6 +65,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed senderName to optional in ChatBubble
 - Moved children inside of a div in ChatBubble
 - Changed `MeetingManager` to strictly enforce `DevicePermissionStatus` type.
+
+- Changed senderName to optional in ChatBubble
+- Moved children inside of a div in ChatBubble
 
 ### Removed
 

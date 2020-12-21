@@ -44,7 +44,11 @@ export const StyledMessageAttachmentContent = styled.div`
   }
 `;
 
+<<<<<<< HEAD
 export const StyledMessageAttachment = styled.div<StyledMessageAttachmentProps>`
+=======
+export const StyledMessageAttachment = styled.div`
+>>>>>>> Update ChatBubble and MessageAttachment
   color: ${(props) => props.theme.messageAttachment.content.fontColor};
   display: flex;
   flex-direction: column;
@@ -57,10 +61,13 @@ export const StyledMessageAttachment = styled.div<StyledMessageAttachmentProps>`
     props.theme.messageAttachment.content.letterSpacing};
   font-size: ${(props) => props.theme.fontSizes.text.fontSize};
   line-height: ${(props) => props.theme.fontSizes.text.lineHeight};
+<<<<<<< HEAD
 
   & img {
     ${(props) => props.imgStyles};
   }
+=======
+>>>>>>> Update ChatBubble and MessageAttachment
 
   ${baseSpacing}
   ${baseStyles}
