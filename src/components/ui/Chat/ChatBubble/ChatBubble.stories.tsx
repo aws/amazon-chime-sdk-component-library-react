@@ -39,19 +39,21 @@ export const _ChatBubble = () => {
       <ChatBubble
         variant="incoming"
         senderName="Kam Chancellor"
-        content="This is an incoming message."
         showTail={showTail}
         showName={showName}
         css={bubbleStyles}
-      />
+      >
+        This is an incoming message.
+      </ChatBubble>
       <ChatBubble
         variant="outgoing"
         senderName="Jamal Adams"
-        content="This is an outgoing message with longer text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
         showTail={showTail}
         showName={showName}
         css={bubbleStyles}
-      />
+      >
+        This is an outgoing message with longer text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+      </ChatBubble>
     </Flex>
   );
 };
@@ -79,11 +81,11 @@ export const ChatBubbleWithMessageAttachment = () => {
       <ChatBubble
         variant="outgoing"
         senderName="Fred Miller"
-        content="This is an outgoing message with attachment"
         showTail={showTail}
         showName={showName}
         css={bubbleStyles}
       >
+        This is an outgoing message with attachment
         <MessageAttachment
           name="Report.pdf"
           size="23.3KB"
@@ -94,11 +96,11 @@ export const ChatBubbleWithMessageAttachment = () => {
       <ChatBubble
         variant="incoming"
         senderName="Sarah Anderson"
-        content="This is an incoming message with attachment. It is much longer. This amount of text reaches the max length and goes onto the next line."
         showTail={showTail}
         showName={showName}
         css={bubbleStyles}
       >
+        This is an incoming message with attachment. It is much longer. This amount of text reaches the max length and goes onto the next line.
         <MessageAttachment
           name="Report.pdf"
           size="23.3KB"
