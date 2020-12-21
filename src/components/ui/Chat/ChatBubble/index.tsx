@@ -11,11 +11,9 @@ export interface ChatBubbleProps extends Omit<HTMLAttributes<HTMLDivElement>, 'c
   /** Determines styling for outgoing and incoming messages. */
   variant: MessageVariant;
   /** The name of the user that sent the message. */
-  senderName: string;
-  /** The text content of the message. */
-  content: string;
-  /** Determines if the name should be shown or not. */
-  showName?: boolean;
+  senderName?: string;
+  /** The timestamp of the message being sent. */
+  timestamp?: string;
   /** Adds the bubble tail style to a message. */
   showTail?: boolean;
   /** Determines if the message has been removed after being sent. */
@@ -24,12 +22,15 @@ export interface ChatBubbleProps extends Omit<HTMLAttributes<HTMLDivElement>, 'c
   children?: ReactNode | ReactNode[];
 };
 
-export const ChatBubble: FC<ChatBubbleProps> = ({ variant, senderName, content, showName = true, showTail, redacted, children, ...rest }) => {
+export const ChatBubble: FC<ChatBubbleProps> = ({ variant, senderName, timestamp, showTail, redacted, children, ...rest }) => {
   return (
     <StyledChatBubble variant={variant} editable={false} {...rest} data-testid='chat-bubble'>
-      {showName && <div className='ch-sender-name'>{senderName}</div>}
-      <div>{content}</div>
-      {children}
+      {(senderName || timestamp) &&
+        <div className='ch-header'>
+          {senderName && <div className='ch-sender-name' data-testid='chat-bubble-sender-name'>{senderName}</div>}
+          {timestamp && <div className='ch-header-timestamp' data-testid='chat-bubble-timestamp'>{timestamp}</div>}
+        </div>}
+      {children && <div>{children}</div>}
       {showTail &&   
       <svg viewBox="0 0 4 9" data-testid='tail'>
           <g stroke="none" strokeWidth="1" fill="none" fillRule="evenodd">
