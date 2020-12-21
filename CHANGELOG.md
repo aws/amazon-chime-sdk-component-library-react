@@ -9,8 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-- Fix serverless deploy script to work on Windows
-
 ### Fixed
 
 - Fix icon preventing clicks on `Select` components
@@ -20,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix incorrect fill-rule property on `ZoomIn` and `ZoomOut`
 - [Demo] Fix closing roster from stopping active speaker detection.
 - Fix meeting manager to handle `setSinkId` error
+- Fix serverless deploy script to work on Windows
 
 ### Added
 
@@ -46,13 +45,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added optional `timestamp` prop in ChatBubble
 - Added forwardRef for ChatBubbleContainer
 - Added optional img to MessageAttachment
-- Added a classname to PopOverMenu component for styling access
-- Added forwardRef for Textarea
-- Added `useDevicePermissionStatus` hook as an exported component from the library.
-- Added a "dismissible" prop to Modal to optionally allow persistent modals
-- Added ZoomIn and ZoomOut icons
-- Refactored NavBar to allow static width
-- Refactored NavBarItem to use IconButton directly
 
 ### Changed
 

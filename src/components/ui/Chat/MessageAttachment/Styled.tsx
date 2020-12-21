@@ -12,14 +12,12 @@ export const StyledMessageAttachmentContent = styled.div`
   display: flex;
   flex-direction: row;
   padding: 10px;
-
   & .ch-attachment-icon {
     height: 2rem;
     width: 2rem;
     margin: auto;
     background-color: ${(props) => props.theme.messageAttachment.icon.bgd};
     border-radius: 25px;
-
     & .ch-document-icon {
       margin: auto 0;
       color: ${(props) => props.theme.messageAttachment.icon.color};
@@ -27,7 +25,6 @@ export const StyledMessageAttachmentContent = styled.div`
   }
   & .ch-attachment-name {
     margin-left: 1rem;
-
     & a:link,
     a:visited,
     a:hover,
@@ -44,11 +41,7 @@ export const StyledMessageAttachmentContent = styled.div`
   }
 `;
 
-<<<<<<< HEAD
 export const StyledMessageAttachment = styled.div<StyledMessageAttachmentProps>`
-=======
-export const StyledMessageAttachment = styled.div`
->>>>>>> Update ChatBubble and MessageAttachment
   color: ${(props) => props.theme.messageAttachment.content.fontColor};
   display: flex;
   flex-direction: column;
@@ -61,14 +54,9 @@ export const StyledMessageAttachment = styled.div`
     props.theme.messageAttachment.content.letterSpacing};
   font-size: ${(props) => props.theme.fontSizes.text.fontSize};
   line-height: ${(props) => props.theme.fontSizes.text.lineHeight};
-<<<<<<< HEAD
-
   & img {
     ${(props) => props.imgStyles};
   }
-=======
->>>>>>> Update ChatBubble and MessageAttachment
-
   ${baseSpacing}
   ${baseStyles}
 `;
