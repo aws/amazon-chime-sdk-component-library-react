@@ -4,7 +4,10 @@
 import React, { FC, HTMLAttributes } from 'react';
 
 import { BaseProps } from '../../Base';
-import { StyledMessageAttachment, StyledMessageAttachmentContent } from './Styled';
+import {
+  StyledMessageAttachment,
+  StyledMessageAttachmentContent,
+} from './Styled';
 import { Document } from '../../icons';
 
 export interface MessageAttachmentProps
@@ -23,7 +26,7 @@ export interface MessageAttachmentProps
   /** How to handle onClick of the image. */
   imgOnClick?: () => void;
   /** How to handle onLoad of the image. */
-  imgOnLoad? : () => void;
+  imgOnLoad?: () => void;
   /** The size of attachment. */
   size?: string;
 }
@@ -46,7 +49,7 @@ export const MessageAttachment: FC<MessageAttachmentProps> = ({
             {name}
           </a>
           <span className="ch-attachment-size">{size}</span>
-        </div>       
+        </div>
       </StyledMessageAttachmentContent>
       {renderImg && (
         <img
