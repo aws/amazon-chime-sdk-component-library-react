@@ -33,6 +33,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added ZoomIn and ZoomOut icons
 - Refactored NavBar to allow static width
 - Refactored NavBarItem to use IconButton directly
+- Added optional `timestamp` prop in ChatBubble
+- Added forwardRef for ChatBubbleContainer
+- Added optional img to MessageAttachment
 
 ### Changed
 
@@ -48,9 +51,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed showName in ChatBubble
 - Change control bar theme opacity to 1
 
+- Changed senderName to optional in ChatBubble
+- Moved children inside of a div in ChatBubble
+
 ### Removed
 
 - Remove playwright tests, scripts, and dependency
+- Removed content in ChatBubble
+- Removed showName in ChatBubble
 
 ## [1.6.0] - 2020-12-14
 

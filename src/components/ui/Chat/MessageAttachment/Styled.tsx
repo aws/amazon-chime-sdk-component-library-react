@@ -44,9 +44,7 @@ export const StyledMessageAttachmentContent = styled.div`
   }
 `;
 
-export const StyledMessageAttachment = styled.div<
-  StyledMessageAttachmentProps
->`
+export const StyledMessageAttachment = styled.div<StyledMessageAttachmentProps>`
   color: ${(props) => props.theme.messageAttachment.content.fontColor};
   display: flex;
   flex-direction: column;
