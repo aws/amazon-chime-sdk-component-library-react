@@ -19,3 +19,13 @@ $ npm run start
 ## To use sample
 Access https://localhost:9000 with your browser.
 
+#### Developing memo
+## to merge original repository
+```
+$ git remote -v
+$ git remote add fork_master https://github.com/aws/amazon-chime-sdk-component-library-react.git
+$ git fetch fork_master
+$ git checkout -b fork_master_develop fork_master/master
+$ git checkout chat_feature
+$ git merge --no-ff fork_master_develop
+```
