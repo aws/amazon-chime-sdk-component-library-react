@@ -12,16 +12,17 @@ export default {
   title: 'UI Components/Icons/DeskPhone',
   parameters: {
     docs: {
-      page: DeskPhoneIconDocs.parameters.docs.page().props.children.type
-    }
+      page: DeskPhoneIconDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: DeskPhone
+  component: DeskPhone,
 };
 
 export const _DeskPhone = () => (
   <Flex layout="fill-space-centered">
     <DeskPhone
       disabled={boolean('disabled', false)}
+      poorConnection={boolean('poorConnection', false)}
       width={text('width', '2rem')}
     />
   </Flex>

@@ -37,6 +37,7 @@ export const ControlBarForDocs = () => {
 
   const cameraButtonProps = {
     icon: cameraActive ? <Camera /> : <Camera disabled />,
+    isSelected: true,
     popOver: [
       {
         onClick: () => console.log('camera popover option 1'),
@@ -86,7 +87,7 @@ export const ControlBarForDocs = () => {
   };
 
   return (
-    <ControlBar showLabels layout="left" css="position: absolute;">
+    <ControlBar showLabels={true} layout="left" css="position: absolute;">
       <ControlBarItem {...microphoneButtonProps}>
         <PopOverHeader title="Title text" subtitle="Subtitle text" />
         <PopOverItem
@@ -144,6 +145,7 @@ export const _ControlBar = () => {
 
   const cameraButtonProps = {
     icon: cameraActive ? <Camera /> : <Camera disabled />,
+    isSelected: true,
     popOver: [
       {
         onClick: () => console.log('camera popover option 1'),
@@ -193,8 +195,9 @@ export const _ControlBar = () => {
   };
 
   return (
-    <ControlBar
+    <ControlBar 
       showLabels={boolean('show labels', true)}
+      responsive={boolean('responsive', true)}
       layout={select(
         'layout',
         {

@@ -18,19 +18,24 @@ import CheckRound from '../CheckRound';
 import Clear from '../Clear';
 import Clock from '../Clock';
 import Cog from '../Cog';
+import ConnectionProblem from '../ConnectionProblem';
 import Dislike from '../Dislike';
 import Dock from '../Dock';
 import Dots from '../Dots';
 import ScreenShare from '../ScreenShare';
 import Crown from '../Crown';
 import DeskPhone from '../DeskPhone';
+import Echo from '../Echo';
 import Dialer from '../Dialer';
 import Document from '../Document';
+import DropToAttach from '../DropToAttach';
 import Hamburger from '../Hamburger';
+import HandRaise from '../HandRaise';
 import Information from '../Information';
 import Laptop from '../Laptop';
 import LeaveMeeting from '../LeaveMeeting';
 import Like from '../Like';
+import ListHandRaise from '../ListHandRasie';
 import Lock from '../Lock';
 import Meeting from '../Meeting';
 import Microphone from '../Microphone';
@@ -71,22 +76,27 @@ const icons = [
   Clear,
   Clock,
   Cog,
+  ConnectionProblem,
   Crown,
   Dislike,
+  DropToAttach,
   Dots,
   Dock,
   Document,
   ScreenShare,
   Crown,
   DeskPhone,
+  Echo,
   Dialer,
   EmojiPicker,
   Eye,
   Hamburger,
+  HandRaise,
   Information,
   Laptop,
   LeaveMeeting,
   Like,
+  ListHandRaise,
   Lock,
   Meeting,
   Microphone,
@@ -103,7 +113,7 @@ const icons = [
   SignalStrength,
   Sound,
   Spinner,
-  UpAndDownCaret
+  UpAndDownCaret,
 ];
 
 const IconWrapper = styled.div`

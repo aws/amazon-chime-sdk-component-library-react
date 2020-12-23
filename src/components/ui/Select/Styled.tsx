@@ -5,6 +5,10 @@ import styled from 'styled-components';
 
 export const StyledWrapper = styled.div`
   position: relative;
+
+  .ch-select-icon {
+    pointer-events: none;
+  }
 `;
 
 export const StyledSelectInput = styled.select`

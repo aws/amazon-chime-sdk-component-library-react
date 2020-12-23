@@ -92,8 +92,14 @@ export class MeetingManager implements AudioVideoObserver {
 
   postLoggerConfig: PostLogConfig | null = null;
 
+  simulcastEnabled: boolean = false;
+
   constructor(config: ManagerConfig) {
     this.logLevel = config.logLevel;
+
+    if (config.simulcastEnabled) {
+      this.simulcastEnabled = config.simulcastEnabled;
+    }
 
     if (config.postLogConfig) {
       this.postLoggerConfig = config.postLogConfig;
@@ -125,6 +131,12 @@ export class MeetingManager implements AudioVideoObserver {
       meetingInfo,
       attendeeInfo
     );
+
+    if (this.simulcastEnabled) {
+      this.configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
+      this.configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = true;
+    };
+
     this.meetingRegion = meetingInfo.MediaRegion;
     this.meetingId = this.configuration.meetingId;
     await this.initializeMeetingSession(this.configuration);
@@ -312,9 +324,6 @@ export class MeetingManager implements AudioVideoObserver {
       this.videoInputDevices.length
     ) {
       this.selectedVideoInputDevice = this.videoInputDevices[0].deviceId;
-      await this.audioVideo?.chooseVideoInputDevice(
-        this.videoInputDevices[0].deviceId
-      );
       this.publishSelectedVideoInputDevice();
     }
   }

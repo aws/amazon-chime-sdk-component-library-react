@@ -65,9 +65,7 @@ const RosterProvider: React.FC = ({ children }) => {
           externalUserId
         );
 
-        if (externalData.name) {
-          attendee.name = externalData.name;
-        }
+        attendee = { ...attendee, ...externalData };
       }
 
       rosterRef.current[attendeeId] = attendee;

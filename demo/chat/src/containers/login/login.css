@@ -1,0 +1,45 @@
+.signin-container {
+    text-align: center;
+    width: 25rem;
+    margin: 0 auto;
+    margin-top: 6.5rem;
+}
+
+form.signin-form {
+    display: flex;
+    flex-direction: column;
+    margin-top: 1rem;
+}
+
+div.input.username-input, div.input.password-input {
+    margin-left: -5rem;
+    width: 100%;
+    grid-template-columns: 18% 1fr;
+}
+
+div.input {
+    margin-bottom: 2rem;
+    text-align: left;
+}
+
+div.input span {
+    width: 25rem;
+}
+
+.input input {
+    width: 100%;
+}
+
+div.input span {
+    width: 25rem;
+}
+
+.signin-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.or-span {
+    font-size: .875rem;
+}

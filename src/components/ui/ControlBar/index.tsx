@@ -22,12 +22,14 @@ export interface ControlBarProps
   showLabels: boolean;
   /** The layout of the control bar, available options are: `top`, `bottom`, `right`, `left`, `undocked-horizontal`, and `undocked-vertical`. */
   layout: ControlBarLayout;
+  responsive?: boolean;
 }
 
 export const ControlBar: FC<ControlBarProps> = ({
   tag,
   layout,
   showLabels = false,
+  responsive = true,
   className,
   children,
   ...rest
@@ -38,6 +40,7 @@ export const ControlBar: FC<ControlBarProps> = ({
     <ControlBarContext.Provider value={controlBarContext}>
       <StyledControlBar
         className={className || ''}
+        responsive={responsive}
         as={tag}
         {...controlBarContext}
         data-testid="control-bar"

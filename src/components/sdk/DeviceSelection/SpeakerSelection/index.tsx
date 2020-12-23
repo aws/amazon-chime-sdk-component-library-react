@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { useAudioOutputs } from '../../../../providers/DevicesProvider';
+import useSelectAudioOutputDevice from '../../../../hooks/sdk/useSelectAudioOutputDevice';
 import DeviceInput from '../DeviceInput';
 
 interface Props {
@@ -21,11 +21,11 @@ export const SpeakerSelection: React.FC<Props> = ({
   label = 'Speaker source',
   onChange
 }) => {
-  const meetingManager = useMeetingManager();
   const { devices, selectedDevice } = useAudioOutputs();
+  const selectAudioOutput = useSelectAudioOutputDevice();
 
-  async function selectAudioOutput(deviceId: string) {
-    meetingManager.selectAudioOutputDevice(deviceId);
+  async function selectDevice(deviceId: string) {
+    selectAudioOutput(deviceId);
     onChange && onChange(deviceId);
   }
 
@@ -33,7 +33,7 @@ export const SpeakerSelection: React.FC<Props> = ({
     <DeviceInput
       label={label}
       devices={devices}
-      onChange={selectAudioOutput}
+      onChange={selectDevice}
       selectedDeviceId={selectedDevice}
       notFoundMsg={notFoundMsg}
     />

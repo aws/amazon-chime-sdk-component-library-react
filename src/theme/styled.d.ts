@@ -25,6 +25,7 @@ interface ButtonType {
   bgd: string;
   border: string;
   text: string;
+  shadow: string;
 }
 
 interface ButtonGroupType {
@@ -34,6 +35,7 @@ interface ButtonGroupType {
   focus: ButtonType;
   active: ButtonType;
   selected: ButtonType;
+  disabled: ButtonType;
 }
 
 interface NotificationType {

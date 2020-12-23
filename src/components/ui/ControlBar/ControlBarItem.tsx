@@ -24,6 +24,8 @@ export interface ControlBarButtonProps
   popOver?: PopOverItemProps[] | null;
   /** Defines the placement of PopOver menu. */
   popOverPlacement?: Placement;
+  /** The label for the optional popOver button. */
+  popOverLabel?: string;
   /**  Apply this prop to receive visual feedback that the button is 'active' */
   isSelected?: boolean;
   /** Use children to define an alternative to popOver prop with a custom set of elements to be rendered into the popover */
@@ -37,6 +39,7 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
   isSelected = false,
   popOver = null,
   popOverPlacement,
+  popOverLabel,
   children,
   ...rest
 }) => {
@@ -44,7 +47,15 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
 
   const renderPopOver = () => (
     <PopOver
-      renderButton={isOpen => getButtonContents(isOpen)}
+      renderButtonWrapper={(isActive, props) => (
+        <IconButton
+          {...props}
+          icon={<Caret direction={isVertical(context.layout) ? 'right' : 'up'} data-testid="control-bar-item-caret"/>}
+          label={popOverLabel || label}
+          selected={isActive}
+          className={`ch-control-bar-item-caret ${isActive ? 'isOpen' : ''}`}
+        />
+      )}
       a11yLabel={label}
       className="ch-control-bar-popover"
       placement={popOverPlacement}
@@ -55,15 +66,7 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
       {children}
     </PopOver>
   );
-
-  const getButtonContents = (isOpen: boolean) => (
-    <Caret
-      direction={isVertical(context.layout) ? 'right' : 'up'}
-      className={`ch-control-bar-item-caret ${isOpen ? 'isOpen' : ''}`}
-      data-testid="control-bar-item-caret"
-    />
-  );
-
+  
   return (
     <StyledControlBarItem
       isSelected={isSelected}
@@ -72,7 +75,12 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
       {...context}
       popOver={popOver}
     >
-      <IconButton onClick={onClick} label={label} icon={icon} className="ch-control-bar-item-iconButton"/>
+      <IconButton  
+        onClick={onClick} 
+        label={label} icon={icon} 
+        className="ch-control-bar-item-iconButton"
+        selected={isSelected}
+      />
       {(popOver || children) && renderPopOver()}
       {context.showLabels && (
         <div className="ch-control-bar-item-label">{label}</div>

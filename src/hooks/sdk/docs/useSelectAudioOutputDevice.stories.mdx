@@ -1,0 +1,47 @@
+<Meta title="SDK Hooks/useSelectAudioOutputDevice" />
+
+# useSelectAudioOutputDevice
+
+The `useSelectAudioOutputDevice` hook returns a function that selects an audio input device given a device ID. The browser must support `setSinkId` to select audio output devices.
+
+You can access the available audio input device IDs using the `useAudioOutputs` hook.
+
+### Return Value
+
+```javascript
+(deviceId: string) => Promise<void>;
+```
+
+## Importing
+
+```javascript
+import { useSelectAudioOutputDevice } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook depends on the `MeetingProvider` being rendered.
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useSelectAudioOutputDevice
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const selectAudioOutput = useSelectAudioOutputDevice();
+
+  const handleClick = () => {
+    selectAudioOutput('some-device-id');
+  };
+
+  return <button onClick={handleClick}>Some device ID</button>;
+};
+```

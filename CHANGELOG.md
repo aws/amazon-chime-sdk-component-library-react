@@ -9,6 +9,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fix icon preventing clicks on `Select` components
+- Fix Github Actions build-storybook error
+
+### Added
+
+- Add `useSelectAudioInputDevice`, `useSelectAudioOutputDevice` hooks
+- Added Echo icon
+- Added poorConnection property to DeskPhone icon
+- Added optional 'id' prop for ui components
+
+### Changed
+
+### Removed
+
+## [1.6.0] - 2020-12-14
+
+### Fixed
+
+- Remove needless camera selection when joining meeting
+- [Demo] Fix demo test speakers
+
+### Added
+
+- [Demo] Add Chat Demo app
+
+### Changed
+
+- Allow arbitrary to be passed to RosterProvider
+- Allow for simlucast configuration in MeetingProvider
+- Updated button focus states to increase their accessibility
+- [Documentation] Update README with solutions of common issues
+
+### Removed
+
+## [1.5.0] - 2020-11-20
+
+### Fixed
+
 - Fixed ModalBody component to allow custom classNames
 - Fixed PopOver components to allow custom classNames
 - Fixed small visual errors in chat componnets.
@@ -17,12 +55,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fixed issue where checkmark in PopOverItem wouldn't change on hover/focus.
 - Removed unused import in ChatBubble component.
 - Fix InfiniteList to make it more flexible.
+- Fix Popover Submenu being hidden.
 
 ### Added
 
 - Added Lock and Pin icons
 - Export Chat components and utilities
 - Added Attachment, Dock, and Emoji picker icons
+- Added HandRaise and ListHandRaise icons
+- Added ConnectionProblem icon
 
 ### Changed
 
@@ -39,7 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed DateHeader component
 - [Demo] Removed use of depricated methods.
-- [Demo] Removed call MeetingManager.leave() on leave button click. (dublicate)
+- [Demo] Removed call MeetingManager.leave() on leave button click. (duplicate)
 
 ## [1.4.0] - 2020-11-06
 

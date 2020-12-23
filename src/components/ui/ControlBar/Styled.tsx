@@ -1,27 +1,29 @@
 // Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
+import { lightTheme } from '../../../theme/light';
+import { darkTheme } from '../../../theme/dark';
 import { ControlBarProps, ControlBarLayout } from '.';
 import { PopOverItemProps } from '../PopOver/PopOverItem';
 import { baseStyles, baseSpacing } from '../Base';
 
-interface StyledControlBarProps extends ControlBarProps {}
+interface StyledControlBarProps extends ControlBarProps {
+  theme: typeof lightTheme | typeof darkTheme;
+}
 
 const layoutMap = {
-  'undocked-vertical': 'flex-direction: column; padding: 0.375rem 0; ',
-  'undocked-horizontal': 'flex-direction: row; padding: 1.125rem;',
-  top:
-    'flex-direction: row; width: 100%; top: 0; position: fixed; padding: 1.125rem;',
-  bottom:
-    'flex-direction: row; width: 100%; bottom: 0; position: fixed; padding: 1.125rem;',
+  'undocked-vertical': 'flex-direction: column;',
+  'undocked-horizontal': 'flex-direction: row;',
+  top: 'flex-direction: row; width: 100%; top: 0; position: fixed;',
+  bottom: 'flex-direction: row; width: 100%; bottom: 0; position: fixed;',
   right: 'flex-direction: column; height: 100%; right: 0; position: fixed;',
   left: 'flex-direction: column; height: 100%; left: 0; position: fixed;'
 };
 
 const gridTemplateColumnMap = {
-  popOver: 'grid-template-columns: 1.5rem 1.5rem',
+  popOver: 'grid-template-columns: 2.5rem minmax(0.5rem, auto);',
   'popOver&vertical': 'grid-template-columns: 1.5rem 1.5rem 1.5rem'
 };
 
@@ -41,11 +43,36 @@ const unsetPosition = {
   left: 'unset;'
 };
 
+export const responsiveStyles = (props:StyledControlBarProps) => {
+  return css`  
+    ${({ theme }) => theme.mediaQueries.max.sm} {
+      ${unsetPosition}
+      ${(props:StyledControlBarProps) =>
+        isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
+      box-shadow: ${(props:StyledControlBarProps) => props.theme.controlBar.shadow};
+      border: none;
+      height: ${(props:StyledControlBarProps) => isVertical(props.layout) && '100%'};
+      width: ${(props:StyledControlBarProps) => !isVertical(props.layout) && '100%'};
+    }
+
+    ${({ theme }) => theme.mediaQueries.max.xs} {
+      justify-content: ${(props:StyledControlBarProps) =>
+        isVertical(props.layout) ? 'center' : 'space-around'};
+      ${unsetPosition}
+      ${(props:StyledControlBarProps) =>
+        isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
+      box-shadow: ${({ theme }) => theme.controlBar.shadow};
+      border: none;
+    }
+  `;
+};
+ 
 export const StyledControlBar = styled.div<StyledControlBarProps>`
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  justify-content: center;
+  border-radius: ${({ theme, layout }) =>
+    isUndocked(layout) ? theme.radii.default : '0'};
   background-color: ${props => props.theme.controlBar.bgd};
   opacity: ${props => props.theme.controlBar.opacity};
   border: ${({ theme, layout }) =>
@@ -54,27 +81,10 @@ export const StyledControlBar = styled.div<StyledControlBarProps>`
     isUndocked(layout) ? theme.controlBar.shadow : 'none'};
   ${({ layout }) => layoutMap[`${layout}`]};
 
-  ${({ theme }) => theme.mediaQueries.max.sm} {
-    padding: 1rem;
-    padding-top: ${({ showLabels }) => (showLabels ? '1.25rem' : '1rem')};
-    ${unsetPosition}
-    ${({ layout }) =>
-      isVertical(layout) ? layoutMap['left'] : layoutMap['bottom']};
-    box-shadow: ${({ theme }) => theme.controlBar.shadow};
-    border: none;
-  }
+  ${(props) => props.responsive && responsiveStyles(props)}
 
-  ${({ theme }) => theme.mediaQueries.max.xs} {
-    padding: 1rem;
-    padding-top: ${({ showLabels }) => (showLabels ? '1.25rem' : '1rem')};
-    justify-content: ${({ layout }) =>
-      isVertical(layout) ? 'center' : 'space-around'};
-    ${unsetPosition}
-    ${({ layout }) =>
-      isVertical(layout) ? layoutMap['left'] : layoutMap['bottom']};
-    box-shadow: ${({ theme }) => theme.controlBar.shadow};
-    border: none;
-  }
+  width: ${({ layout }) => isVertical(layout) && '5rem'};
+  height: ${({ layout }) => !isVertical(layout) && '5rem'};
 
   ${baseSpacing}
   ${baseStyles}
@@ -102,17 +112,32 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
   `};
 
   .ch-control-bar-item-iconButton {
-    color: ${({ theme, isSelected }) => isSelected ? `${theme.controlBar.selected.text}` : theme.controlBar.text};
-    background-color: ${({ isSelected, theme }) =>  isSelected ? `${theme.controlBar.selected.bgd}` : 'inherit'};
     grid-column-start: ${({ layout, popOver, children }) => isVertical(layout) && (popOver || children) ? '2' : '1'};
 
     .ch-icon {
       width: 1.5rem;
       height: 1.5rem;
-      background-color: inherit;
       border-radius: 100%;
     }
   }
+
+  .ch-control-bar-item-caret {
+      width: 1.25rem;
+      height: 1.25rem;
+      padding: 0;
+
+      .ch-icon {
+        width: 100%;
+        height: 100%;
+      }
+
+      // setting this transform on the shape so we 
+      // don't overwrite the rotate transform on the Caret
+      .Svg g {
+        transform: scale(1.333); 
+        transform-origin: 50% 50%;
+      }
+    }
 
   .ch-control-bar-popover {
     background-color: inherit;
@@ -121,11 +146,6 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
 
     .isOpen.ch-control-bar-item-caret {
       color: ${props => props.theme.colors.primary.main};
-    }
-
-    .ch-control-bar-item-caret {
-      width: 1.5rem;
-      height: 1.5rem;
     }
   }
 
@@ -142,18 +162,14 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
   }
 
   ${({ theme }) => theme.mediaQueries.max.sm} {
-    grid-template-columns: unset;
     justify-content: space-around;
-
     button ~ span {
       display: none;
     }
   }
 
   ${({ theme }) => theme.mediaQueries.max.xs} {
-    grid-template-columns: unset;
     margin: ${({ layout }) => (isVertical(layout) ? '0.75rem 0' : '0')};
-
     button ~ span {
       display: none;
     }
