@@ -11,17 +11,14 @@ The `useContentShareState` hook returns the state related to content share statu
   // The tile ID of the active content share
   tileId: number | null;
 
-  // Whether or not a remote user is screen sharing
-  isRemoteUserSharing: boolean;
+  // Whether the content share is paused
+  paused: boolean;
 
   // Whether or not the local user is screen sharing
   isLocalUserSharing: boolean;
 
   // Whether or not the local user's content share is loading
   isLocalShareLoading: boolean;
-
-  // Whether or not someone in the session (remote, or local) is sharing
-  isSomeoneSharing: boolean;
 
   // The chime attendee ID of the sharing user
   sharingAttendeeId: string | null;
