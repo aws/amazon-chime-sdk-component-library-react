@@ -2,7 +2,11 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { baseStyles, baseSpacing } from '../../Base';
+import { baseStyles, baseSpacing, BaseProps } from '../../Base';
+
+interface StyledMessageAttachmentProps extends BaseProps {
+  imgStyles?: string;
+}
 
 export const StyledMessageAttachmentContent = styled.div`
   display: flex;
@@ -40,7 +44,9 @@ export const StyledMessageAttachmentContent = styled.div`
   }
 `;
 
-export const StyledMessageAttachment = styled.div`
+export const StyledMessageAttachment = styled.div<
+  StyledMessageAttachmentProps
+>`
   color: ${(props) => props.theme.messageAttachment.content.fontColor};
   display: flex;
   flex-direction: column;
@@ -53,6 +59,10 @@ export const StyledMessageAttachment = styled.div`
     props.theme.messageAttachment.content.letterSpacing};
   font-size: ${(props) => props.theme.fontSizes.text.fontSize};
   line-height: ${(props) => props.theme.fontSizes.text.lineHeight};
+
+  & img {
+    ${(props) => props.imgStyles};
+  }
 
   ${baseSpacing}
   ${baseStyles}

@@ -18,10 +18,12 @@ export interface MessageAttachmentProps
   renderImg?: boolean;
   /** The URL of the image. */
   imgUrl?: string;
-  /** The height (pixel) of the image. */
-  imgHeight?: number;
-  /** How to handle onClick on the image. */
+  /** The style of the image. */
+  imgStyles?: string;
+  /** How to handle onClick of the image. */
   imgOnClick?: () => void;
+  /** How to handle onLoad of the image. */
+  imgOnLoad? : () => void;
   /** The size of attachment. */
   size?: string;
 }
@@ -30,7 +32,7 @@ export const MessageAttachment: FC<MessageAttachmentProps> = ({
   size = 'Unknown',
   ...props
 }) => {
-  const { name, downloadUrl, renderImg, imgUrl, imgHeight = 100, imgOnClick } = props;
+  const { name, downloadUrl, renderImg, imgUrl, imgOnClick, imgOnLoad } = props;
 
   return (
     <StyledMessageAttachment {...props}>
@@ -53,7 +55,7 @@ export const MessageAttachment: FC<MessageAttachmentProps> = ({
           alt={imgUrl || downloadUrl}
           onClick={imgOnClick}
           src={imgUrl || downloadUrl}
-          height={imgHeight}
+          onLoad={imgOnLoad}
         />
       )}
     </StyledMessageAttachment>
