@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix icon preventing clicks on `Select` components
 - Fix Github Actions build-storybook error
+- [Docs] Fix ContentShare docs
 
 ### Added
 
@@ -23,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added optional img to MessageAttachment
 
 ### Changed
+- Update Jest major version
 
 - Changed senderName to optional in ChatBubble
 - Moved children inside of a div in ChatBubble
