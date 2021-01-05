@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix icon preventing clicks on `Select` components
 - Fix Github Actions build-storybook error
+- [Docs] Fix ContentShare docs
 
 ### Added
 
@@ -20,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added optional 'id' prop for ui components
 
 ### Changed
+- Update Jest major version
 
 ### Removed
 

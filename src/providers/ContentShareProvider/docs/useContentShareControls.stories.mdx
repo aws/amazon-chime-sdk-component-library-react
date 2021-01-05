@@ -9,13 +9,7 @@ The `useContentShareControls` hook returns the state and functionality around st
 ```javascript
 {
   // Whether or not the local content share is paused
-  isContentSharePaused: boolean;
-
-  // Whether or not the local user is sharing
-  isLocalUserSharing: boolean;
-
-  // Whether or not the local user has started to share and is loading
-  isLocalShareLoading: boolean;
+  paused: boolean;
 
   // A function to toggle content share.
   // If the user is sharing, it will stop the content share.
