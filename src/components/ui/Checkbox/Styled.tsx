@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
@@ -10,17 +10,17 @@ export const HiddenCheckbox = styled.input`
   ${visuallyHidden};
 
   &[aria-invalid='true'] + .ch-checkbox {
-    border: ${props => props.theme.inputs.error.border};
-    box-shadow: ${props => props.theme.inputs.error.shadow};
+    border: ${(props) => props.theme.inputs.error.border};
+    box-shadow: ${(props) => props.theme.inputs.error.shadow};
   }
 `;
 
 export const StyledCheckbox = styled.div<StyledCheckboxProps>`
-  background-color: ${props => props.theme.inputs.bgd};
-  border: ${props => props.theme.inputs.border};
-  border-radius: ${props => props.theme.radii.default};
-  box-shadow: ${props => props.theme.inputs.shadow};
-  color: ${props => props.theme.inputs.fontColor};
+  background-color: ${(props) => props.theme.inputs.bgd};
+  border: ${(props) => props.theme.inputs.border};
+  border-radius: ${(props) => props.theme.radii.default};
+  box-shadow: ${(props) => props.theme.inputs.shadow};
+  color: ${(props) => props.theme.inputs.fontColor};
   display: inline-block;
   height: 1rem;
   position: relative;
@@ -34,14 +34,14 @@ export const StyledCheckbox = styled.div<StyledCheckboxProps>`
   }
 
   ${HiddenCheckbox}:checked ~ & {
-    background-color: ${props => props.theme.inputs.checked.bgd};
-    border: ${props => props.theme.inputs.checked.border};
-    box-shadow: ${props => props.theme.inputs.checked.shadow};
-    color: ${props => props.theme.inputs.checked.fontColor};
+    background-color: ${(props) => props.theme.inputs.checked.bgd};
+    border: ${(props) => props.theme.inputs.checked.border};
+    box-shadow: ${(props) => props.theme.inputs.checked.shadow};
+    color: ${(props) => props.theme.inputs.checked.fontColor};
   }
 
   ${HiddenCheckbox}:focus ~ & {
-    border: ${props => props.theme.inputs.focus.border};
-    box-shadow: ${props => props.theme.inputs.focus.shadow};
+    border: ${(props) => props.theme.inputs.focus.border};
+    box-shadow: ${(props) => props.theme.inputs.focus.shadow};
   }
 `;

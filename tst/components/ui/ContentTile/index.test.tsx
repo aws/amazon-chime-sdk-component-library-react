@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -11,10 +11,7 @@ import { renderWithTheme } from '../../../test-helpers';
 describe('ContentTile', () => {
   it('should render a basic ContentTile', () => {
     const component = <ContentTile nameplate="Test nameplate" />;
-    const { getByTestId, getByText } = renderWithTheme(
-      lightTheme,
-      component
-    );
+    const { getByTestId, getByText } = renderWithTheme(lightTheme, component);
     const el = getByTestId('video-tile');
     expect(el).toBeInTheDocument();
     expect(getByText('Test nameplate')).toBeInTheDocument();

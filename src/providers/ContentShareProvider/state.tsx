@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import { VideoTileState } from 'amazon-chime-sdk-js';
@@ -10,7 +10,7 @@ export enum ContentActionType {
   TOGGLE_PAUSE,
   REMOVE,
   DENIED,
-  RESET
+  RESET,
 }
 
 type StartingAction = {
@@ -75,7 +75,7 @@ export const initialState: ContentShareState = {
   paused: false,
   isLocalUserSharing: false,
   isLocalShareLoading: false,
-  sharingAttendeeId: null
+  sharingAttendeeId: null,
 };
 
 export function reducer(
@@ -86,7 +86,7 @@ export function reducer(
     case ContentActionType.STARTING: {
       return {
         ...state,
-        isLocalShareLoading: true
+        isLocalShareLoading: true,
       };
     }
     case ContentActionType.UPDATE: {
@@ -105,7 +105,7 @@ export function reducer(
         tileId: tileState.tileId!,
         isLocalShareLoading: false,
         isLocalUserSharing: isLocalUser,
-        sharingAttendeeId: tileState.boundAttendeeId
+        sharingAttendeeId: tileState.boundAttendeeId,
       };
     }
     case ContentActionType.REMOVE: {
@@ -128,7 +128,7 @@ export function reducer(
         ...state,
         isLocalShareLoading: false,
         isLocalUserSharing: false,
-        paused: false
+        paused: false,
       };
     }
     case ContentActionType.TOGGLE_PAUSE: {
@@ -138,7 +138,7 @@ export function reducer(
 
       return {
         ...state,
-        paused: !state.paused
+        paused: !state.paused,
       };
     }
     case ContentActionType.DENIED: {
@@ -148,7 +148,7 @@ export function reducer(
 
       return {
         ...state,
-        isLocalShareLoading: false
+        isLocalShareLoading: false,
       };
     }
 

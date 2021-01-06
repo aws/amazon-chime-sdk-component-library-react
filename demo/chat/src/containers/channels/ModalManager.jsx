@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -11,7 +11,7 @@ import {
   ViewChannelDetailsModal,
   ViewMembersModal,
   EditChannelModal,
-  BanModal
+  BanModal,
 } from '../../components/ChannelModals';
 
 const ModalManager = ({
@@ -31,7 +31,7 @@ const ModalManager = ({
   handleLeaveChannel,
   banList,
   banUser,
-  unbanUser
+  unbanUser,
 }) => {
   if (!modal) {
     return null;

@@ -1,11 +1,11 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useContext, useState } from 'react';
 const AppStateContext = React.createContext();
 
 export const AppStateProvider = ({ children }) => {
-  // Theme 
+  // Theme
   const [theme, setTheme] = useState(() => {
     const storedTheme = localStorage.getItem('theme');
     return storedTheme || 'light';

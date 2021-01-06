@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -30,7 +30,7 @@ const Svg: React.FC<SvgProps> = ({
   // for width and height attributes: https://bugzilla.mozilla.org/show_bug.cgi?id=1231147
   const styles = {
     width: width,
-    height: height
+    height: height,
   };
 
   return (

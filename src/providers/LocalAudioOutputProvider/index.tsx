@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
@@ -8,7 +8,7 @@ import React, {
   createContext,
   useMemo,
   useCallback,
-  useContext
+  useContext,
 } from 'react';
 import { LocalAudioOutputContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
@@ -47,7 +47,7 @@ const LocalAudioOutputProvider: React.FC = ({ children }) => {
 
   const value = useMemo(() => ({ isAudioOn, toggleAudio }), [
     isAudioOn,
-    toggleAudio
+    toggleAudio,
   ]);
 
   return (

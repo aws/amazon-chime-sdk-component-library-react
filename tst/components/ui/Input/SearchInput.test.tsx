@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -9,7 +9,6 @@ import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 
 describe('SearchInput', () => {
-
   let mockFunction: any;
   beforeEach(() => {
     mockFunction = jest.fn();
@@ -23,7 +22,9 @@ describe('SearchInput', () => {
   });
 
   it('should render an SearchInput with type = search', () => {
-    const component = <SearchInput value={''} onChange={mockFunction} sizing={'sm'} />;
+    const component = (
+      <SearchInput value={''} onChange={mockFunction} sizing={'sm'} />
+    );
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const input = getByTestId('input');
 
@@ -36,5 +37,4 @@ describe('SearchInput', () => {
 
     expect(queryByTestId('search-icon')).toBeInTheDocument();
   });
-
 });

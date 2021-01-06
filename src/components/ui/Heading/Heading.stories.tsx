@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,10 +12,10 @@ export default {
   title: 'UI Components/Headings',
   parameters: {
     docs: {
-      page: HeadingDocs.parameters.docs.page().props.children.type
-    }
+      page: HeadingDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Heading
+  component: Heading,
 };
 
 export const BasicHeading = () => (
@@ -31,5 +31,5 @@ export const BasicHeading = () => (
 );
 
 BasicHeading.story = {
-  name: 'Basic Heading'
+  name: 'Basic Heading',
 };

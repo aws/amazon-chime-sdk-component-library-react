@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled, { css } from 'styled-components';
@@ -164,16 +164,16 @@ export const StyledIconButton = css<ButtonProps>`
   }
 
   &:focus {
-    background-color: ${({ theme, selected }) => 
-      selected 
-        ? theme.buttons.icon.selected.bgd 
+    background-color: ${({ theme, selected }) =>
+      selected
+        ? theme.buttons.icon.selected.bgd
         : theme.buttons.icon.static.bgd};
     border: ${(props) => props.theme.buttons.icon.focus.border};
     color: ${(props) => props.theme.buttons.icon.focus.text};
-    color: ${({ theme, selected }) => 
-      selected  
-      ? theme.buttons.icon.selected.text 
-      : theme.buttons.icon.static.text};
+    color: ${({ theme, selected }) =>
+      selected
+        ? theme.buttons.icon.selected.text
+        : theme.buttons.icon.static.text};
     box-shadow: ${(props) => props.theme.buttons.icon.focus.shadow};
   }
 

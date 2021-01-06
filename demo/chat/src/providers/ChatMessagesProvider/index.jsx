@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
@@ -7,7 +7,7 @@ import React, {
   useContext,
   useEffect,
   useState,
-  useRef
+  useRef,
 } from 'react';
 
 import appConfig from '../../Config';
@@ -32,7 +32,7 @@ const MessagingProvider = ({ children }) => {
   const unreadChannelsListRef = useRef(unreadChannels);
   const hasMembership =
     activeChannelMemberships
-      .map(m => m.Member.Arn)
+      .map((m) => m.Member.Arn)
       .indexOf(createMemberArn(member.userId)) > -1;
   // Messages
   const [messages, setMessages] = useState([]);
@@ -64,9 +64,9 @@ const MessagingProvider = ({ children }) => {
     };
   }, [isAuthenticated, awsCredentials]);
 
-  const processChannelMessage = async message => {
+  const processChannelMessage = async (message) => {
     const promise = Promise.resolve(message);
-    const newMessage = await promise.then(m => m);
+    const newMessage = await promise.then((m) => m);
 
     let isDuplicate = false;
 
@@ -87,7 +87,7 @@ const MessagingProvider = ({ children }) => {
     setMessages(newMessages);
   };
 
-  const messagesProcessor = async message => {
+  const messagesProcessor = async (message) => {
     const messageType = message?.headers['x-amz-chime-event-type'];
     const record = JSON.parse(message?.payload);
     console.log('Incoming Message', message);
@@ -102,12 +102,12 @@ const MessagingProvider = ({ children }) => {
           processChannelMessage(record);
         } else {
           const findMatch = unreadChannelsListRef.current.find(
-            chArn => chArn === record.ChannelArn
+            (chArn) => chArn === record.ChannelArn
           );
           if (findMatch) return;
           const newUnreads = [
             ...unreadChannelsListRef.current,
-            record.ChannelArn
+            record.ChannelArn,
           ];
           setUnreadChannels(newUnreads);
         }
@@ -117,7 +117,7 @@ const MessagingProvider = ({ children }) => {
       case 'UPDATE_CHANNEL':
         {
           const newChannelArn = record.ChannelArn;
-          const updatedChannelList = channelListRef.current.map(c => {
+          const updatedChannelList = channelListRef.current.map((c) => {
             if (c.ChannelArn !== newChannelArn) {
               return c;
             }
@@ -130,7 +130,7 @@ const MessagingProvider = ({ children }) => {
       case 'DELETE_CHANNEL': {
         setChannelList(
           channelListRef.current.filter(
-            chRef => chRef.ChannelArn !== record.ChannelArn
+            (chRef) => chRef.ChannelArn !== record.ChannelArn
           )
         );
         break;
@@ -172,7 +172,7 @@ const MessagingProvider = ({ children }) => {
         if (record.Member.Arn.includes(member.userId)) {
           setChannelList(
             channelListRef.current.filter(
-              chRef => chRef.ChannelArn !== record.ChannelArn
+              (chRef) => chRef.ChannelArn !== record.ChannelArn
             )
           );
           if (activeChannelRef.current.ChannelArn === record.ChannelArn) {
@@ -181,7 +181,7 @@ const MessagingProvider = ({ children }) => {
         } else {
           // Someone else is removed
           const updatedMemberships = activeChannelMembershipsRef.current.filter(
-            m => m.Member.Arn !== record.Member.Arn
+            (m) => m.Member.Arn !== record.Member.Arn
           );
           setActiveChannelMemberships(updatedMemberships);
         }
@@ -203,7 +203,7 @@ const MessagingProvider = ({ children }) => {
   const messageStateValue = {
     messages,
     messagesRef,
-    setMessages
+    setMessages,
   };
   const channelStateValue = {
     channelList,
@@ -219,7 +219,7 @@ const MessagingProvider = ({ children }) => {
     setActiveChannelMemberships,
     setChannelMessageToken,
     setChannelList,
-    setUnreadChannels
+    setUnreadChannels,
   };
   return (
     <ChatMessagingServiceContext.Provider value={messagingService}>
@@ -270,5 +270,5 @@ export {
   MessagingProvider,
   useChatChannelState,
   useChatMessagingService,
-  useChatMessagingState
+  useChatMessagingState,
 };

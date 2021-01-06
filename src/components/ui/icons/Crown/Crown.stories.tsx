@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,10 +12,14 @@ export default {
   title: 'UI Components/Icons/Crown',
   parameters: {
     docs: {
-      page: CrownIconDocs.parameters.docs.page().props.children.type
-    }
+      page: CrownIconDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Crown
+  component: Crown,
 };
 
-export const _Crown = () => <Flex layout="fill-space-centered"><Crown width={text('width', '2rem')} /></Flex>;
+export const _Crown = () => (
+  <Flex layout="fill-space-centered">
+    <Crown width={text('width', '2rem')} />
+  </Flex>
+);

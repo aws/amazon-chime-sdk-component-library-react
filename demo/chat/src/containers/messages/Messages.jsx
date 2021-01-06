@@ -1,6 +1,6 @@
 /* eslint-disable react/no-children-prop */
 /* eslint-disable no-console */
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect } from 'react';
@@ -16,7 +16,7 @@ import {
   ChatBubbleContainer,
   EditableChatBubble,
   formatDate,
-  formatTime
+  formatTime,
 } from 'amazon-chime-sdk-component-library-react';
 import { AttachmentProcessor } from './AttachmentProcessor';
 
@@ -24,7 +24,7 @@ import {
   listChannelMessages,
   createMemberArn,
   updateChannelMessage,
-  redactChannelMessage
+  redactChannelMessage,
 } from '../../api/ChimeAPI';
 import insertDateHeaders from '../../utilities/insertDateHeaders';
 
@@ -39,7 +39,7 @@ const Messages = ({
   channelName,
   userId,
   setChannelMessageToken,
-  activeChannelRef
+  activeChannelRef,
 }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { channelMessageTokenRef } = useChatChannelState();
@@ -92,14 +92,14 @@ const Messages = ({
               variant="secondary"
               closesModal
               key="2"
-            />
+            />,
           ]}
         />
       </ModalBody>
     </Modal>
   );
 
-  const handleShowRedactModal = messageId => {
+  const handleShowRedactModal = (messageId) => {
     setRedactingMessageId(messageId);
     setShowRedactModal(true);
   };
@@ -133,14 +133,14 @@ const Messages = ({
               variant="secondary"
               closesModal
               key="2"
-            />
+            />,
           ]}
         />
       </ModalBody>
     </Modal>
   );
 
-  const cancelEdit = e => {
+  const cancelEdit = (e) => {
     e.preventDefault();
     setShowDiscardModal(true);
   };
@@ -157,7 +157,7 @@ const Messages = ({
     setEditingMessageId('');
   };
 
-  const flattenedMessages = messages.map(m => {
+  const flattenedMessages = messages.map((m) => {
     const content = !m.Content || m.Redacted ? '(Deleted)' : m.Content;
     let editedNote;
     if (m.LastEditedTimestamp && !m.Redacted) {
@@ -175,7 +175,7 @@ const Messages = ({
       redacted: m.Redacted,
       senderName: m.Sender.Name,
       senderId: m.Sender.Arn,
-      metadata: m.Metadata
+      metadata: m.Metadata,
     };
   });
 
@@ -200,7 +200,7 @@ const Messages = ({
           key="2"
           children={<span>Delete</span>}
           onClick={() => handleShowRedactModal(m.messageId)}
-        />
+        />,
       ];
     }
 
@@ -225,7 +225,7 @@ const Messages = ({
       showName = false;
     }
 
-    const attachment = metadata => {
+    const attachment = (metadata) => {
       try {
         const metadataJSON = JSON.parse(metadata);
         return metadataJSON?.attachments[0];

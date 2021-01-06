@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,10 +12,14 @@ export default {
   title: 'UI Components/Icons/Caution',
   parameters: {
     docs: {
-      page: CautionIconDocs.parameters.docs.page().props.children.type
-    }
+      page: CautionIconDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Caution
+  component: Caution,
 };
 
-export const _Caution = () => <Flex layout="fill-space-centered"><Caution width={text('width', '2rem')} /></Flex>;
+export const _Caution = () => (
+  <Flex layout="fill-space-centered">
+    <Caution width={text('width', '2rem')} />
+  </Flex>
+);

@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
@@ -35,8 +35,8 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
   .ch-message {
     display: flex;
     flex-flow: column wrap;
-    font-size: ${props => props.theme.fontSizes.text.fontSize};
-    font-size: ${props => props.theme.fontSizes.text.lineHeight};
+    font-size: ${(props) => props.theme.fontSizes.text.fontSize};
+    font-size: ${(props) => props.theme.fontSizes.text.lineHeight};
     letter-spacing: -0.005625rem;
     margin: 0.5rem 3.3125rem 0.375rem 0.75rem;
   }

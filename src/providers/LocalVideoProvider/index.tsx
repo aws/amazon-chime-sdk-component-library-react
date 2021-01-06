@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
@@ -7,7 +7,7 @@ import React, {
   useEffect,
   useContext,
   useCallback,
-  useMemo
+  useMemo,
 } from 'react';
 import { VideoTileState } from 'amazon-chime-sdk-js';
 
@@ -27,7 +27,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (!audioVideo) {
-      return ;
+      return;
     }
 
     if (audioVideo.hasStartedLocalVideoTile()) {
@@ -36,7 +36,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
 
     return () => {
       setIsVideoEnabled(false);
-    }
+    };
   }, [audioVideo]);
 
   const toggleVideo = useCallback(async (): Promise<void> => {
@@ -70,14 +70,14 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     };
 
     audioVideo.addObserver({
-      videoTileDidUpdate
+      videoTileDidUpdate,
     });
   }, [audioVideo, tileId]);
 
   const value = useMemo(() => ({ isVideoEnabled, toggleVideo, tileId }), [
     isVideoEnabled,
     toggleVideo,
-    tileId
+    tileId,
   ]);
 
   return <Context.Provider value={value}>{children}</Context.Provider>;

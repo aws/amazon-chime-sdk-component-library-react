@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -21,25 +21,25 @@ export default {
 export const BasicBadge = () => {
   return (
     <Flex layout="fill-space-centered">
-      <div style={{ 'alignItems': 'center', 'display': 'flex'}}>
-        <span style={{ 'marginRight': '0.5rem' }}>Number of new messages</span>
+      <div style={{ alignItems: 'center', display: 'flex' }}>
+        <span style={{ marginRight: '0.5rem' }}>Number of new messages</span>
         <Badge
           value="50+"
-          status={select('status', { default: 'default', alert: 'alert', }, 'default')}
+          status={select(
+            'status',
+            { default: 'default', alert: 'alert' },
+            'default'
+          )}
         />
       </div>
-      <div style={{ 'marginLeft': '1rem', 'display': 'flex' }}>
-        <span style={{ 'marginRight': '0.5rem' }}>Lock badge</span>
-        <Badge
-          value={<Lock />}
-        />
+      <div style={{ marginLeft: '1rem', display: 'flex' }}>
+        <span style={{ marginRight: '0.5rem' }}>Lock badge</span>
+        <Badge value={<Lock />} />
       </div>
     </Flex>
   );
-}
+};
 
 BasicBadge.story = {
   name: 'Basic Badge',
 };
-
-
