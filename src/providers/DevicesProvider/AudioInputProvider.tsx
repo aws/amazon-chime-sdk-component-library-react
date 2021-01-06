@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
@@ -7,7 +7,7 @@ import React, {
   useState,
   useContext,
   useMemo,
-  useRef
+  useRef,
 } from 'react';
 import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
@@ -48,25 +48,27 @@ const AudioInputProvider: React.FC = ({ children }) => {
         console.log('AudioInputProvider - audio inputs updated');
 
         const hasSelectedDevice = newAudioInputs.some(
-          device => device.deviceId === selectedInputRef.current
+          (device) => device.deviceId === selectedInputRef.current
         );
 
         if (
-          selectedInputRef.current
-          && !hasSelectedDevice
-          && newAudioInputs.length
+          selectedInputRef.current &&
+          !hasSelectedDevice &&
+          newAudioInputs.length
         ) {
-          console.log("Previously selected audio input lost. Selecting a default device.");
+          console.log(
+            'Previously selected audio input lost. Selecting a default device.'
+          );
           meetingManager.selectAudioInputDevice(newAudioInputs[0].deviceId);
-        } else if (
-          selectedInputRef.current === "default"
-        ) {
-          console.log(`Audio devices updated and "default" device is selected. Reselecting input.`);
+        } else if (selectedInputRef.current === 'default') {
+          console.log(
+            `Audio devices updated and "default" device is selected. Reselecting input.`
+          );
           await audioVideo?.chooseAudioInputDevice(selectedInputRef.current);
         }
 
         setAudioInputs(newAudioInputs);
-      }
+      },
     };
 
     async function initAudioInput() {
@@ -93,7 +95,7 @@ const AudioInputProvider: React.FC = ({ children }) => {
   const contextValue: DeviceTypeContext = useMemo(
     () => ({
       devices: audioInputs,
-      selectedDevice: selectedAudioInputDevice
+      selectedDevice: selectedAudioInputDevice,
     }),
     [audioInputs, selectedAudioInputDevice]
   );

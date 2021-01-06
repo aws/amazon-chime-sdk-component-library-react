@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -9,7 +9,7 @@ import {
   lightTheme,
   NotificationProvider,
   darkTheme,
-  GlobalStyles
+  GlobalStyles,
 } from 'amazon-chime-sdk-component-library-react';
 import routes from './constants/routes';
 import Notifications from './containers/Notifications';

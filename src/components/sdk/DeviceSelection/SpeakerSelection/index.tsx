@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -19,7 +19,7 @@ interface Props {
 export const SpeakerSelection: React.FC<Props> = ({
   notFoundMsg = 'No speaker devices found',
   label = 'Speaker source',
-  onChange
+  onChange,
 }) => {
   const { devices, selectedDevice } = useAudioOutputs();
   const selectAudioOutput = useSelectAudioOutputDevice();

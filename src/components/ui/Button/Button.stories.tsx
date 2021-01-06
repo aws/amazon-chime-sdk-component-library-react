@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -16,10 +16,10 @@ export default {
   title: 'UI Components/Form/Buttons',
   parameters: {
     docs: {
-      page: ButtonDocs.parameters.docs.page().props.children.type
-    }
+      page: ButtonDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Button
+  component: Button,
 };
 
 export const BasicButton = () => (
@@ -29,33 +29,30 @@ export const BasicButton = () => (
 );
 
 BasicButton.story = {
-  name: 'Basic button'
+  name: 'Basic button',
 };
 
 export const _PrimaryButton = () => (
   <Flex layout="fill-space-centered">
-    <PrimaryButton 
-      label="Primary" 
-      disabled={boolean('Disabled', false)}
-    />
+    <PrimaryButton label="Primary" disabled={boolean('Disabled', false)} />
   </Flex>
 );
 
 _PrimaryButton.story = {
-  name: 'Primary button'
+  name: 'Primary button',
 };
 
 export const _SecondaryButton = () => (
   <Flex layout="fill-space-centered">
-    <SecondaryButton 
-      label="This is a secondary button" 
+    <SecondaryButton
+      label="This is a secondary button"
       disabled={boolean('Disabled', false)}
     />
   </Flex>
 );
 
 _SecondaryButton.story = {
-  name: 'Secondary button'
+  name: 'Secondary button',
 };
 
 export const _IconButton = () => {
@@ -73,5 +70,5 @@ export const _IconButton = () => {
 };
 
 _IconButton.story = {
-  name: 'Icon button'
+  name: 'Icon button',
 };

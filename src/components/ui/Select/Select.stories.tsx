@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,20 +12,20 @@ import SelectDocs from './Select.mdx';
 const options = [
   {
     value: 'no_fruit_selected',
-    label: 'Select an option'
+    label: 'Select an option',
   },
   {
     value: 'bananas',
-    label: 'Bananas'
+    label: 'Bananas',
   },
   {
     value: 'oranges',
-    label: 'Oranges'
+    label: 'Oranges',
   },
   {
     value: 'grapefruit',
-    label: 'Grapefruit'
-  }
+    label: 'Grapefruit',
+  },
 ];
 
 const StyledSelect = styled(Select)`
@@ -38,7 +38,7 @@ export const BasicSelect = () => {
       <StyledSelect
         value={select(
           'value',
-          options.map(option => option.value),
+          options.map((option) => option.value),
           'no_fruit_selected'
         )}
         options={options}
@@ -52,15 +52,15 @@ export const BasicSelect = () => {
 };
 
 BasicSelect.story = {
-  name: 'Basic select'
+  name: 'Basic select',
 };
 
 export default {
   title: 'UI Components/Form/Select',
   parameters: {
     docs: {
-      page: SelectDocs.parameters.docs.page().props.children.type
-    }
+      page: SelectDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Select
+  component: Select,
 };

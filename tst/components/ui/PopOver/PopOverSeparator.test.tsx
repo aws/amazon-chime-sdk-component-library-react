@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -9,7 +9,6 @@ import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 
 describe('PopOverSeparator', () => {
-
   it('should render a popover sepatator', () => {
     const component = <PopOverSeparator />;
     const { getByTestId } = renderWithTheme(lightTheme, component);
@@ -17,4 +16,4 @@ describe('PopOverSeparator', () => {
 
     expect(element).toBeInTheDocument();
   });
-})
+});

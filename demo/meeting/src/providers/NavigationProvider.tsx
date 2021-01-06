@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
@@ -47,11 +47,11 @@ const NavigationProvider = ({ children }: Props) => {
 
   useEffect(() => {
     if (location.pathname.includes(routes.MEETING)) {
-      return () => { 
+      return () => {
         meetingManager.leave();
-      }
+      };
     }
-  }, [location.pathname])
+  }, [location.pathname]);
 
   useEffect(() => {
     const handler = () => {

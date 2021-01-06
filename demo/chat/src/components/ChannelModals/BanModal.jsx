@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, useState } from 'react';
@@ -9,7 +9,7 @@ import {
   ModalButtonGroup,
   ModalButton,
   Input,
-  Checkbox
+  Checkbox,
 } from 'amazon-chime-sdk-component-library-react';
 
 import { createMemberArn } from '../../api/ChimeAPI';
@@ -24,7 +24,7 @@ export const BanModal = ({
   moderators,
   banList,
   banUser,
-  unbanUser
+  unbanUser,
 }) => {
   let timeout = null;
   const [userName, setUserName] = useState('');
@@ -33,17 +33,17 @@ export const BanModal = ({
 
   const getUserAttributeByName = (user, attribute) => {
     try {
-      return user.Attributes.filter(attr => attr.Name === attribute)[0].Value;
+      return user.Attributes.filter((attr) => attr.Name === attribute)[0].Value;
     } catch (err) {
       throw new Error(`Failed at getUserAttributeByName() with error: ${err}`);
     }
   };
 
-  const searchUsers = name => {
+  const searchUsers = (name) => {
     identityClient
       .searchByName(name)
-      .then(users => {
-        const list = users.map(user => {
+      .then((users) => {
+        const list = users.map((user) => {
           if (getUserAttributeByName(user, 'profile') !== 'none') {
             return user;
           }
@@ -52,7 +52,7 @@ export const BanModal = ({
 
         setUsersList(list);
       })
-      .catch(err => {
+      .catch((err) => {
         throw new Error(`Failed at searchUsers() with error: ${err}`);
       });
   };
@@ -60,8 +60,8 @@ export const BanModal = ({
   const getAllUsers = () => {
     identityClient
       .getUsers()
-      .then(users => {
-        const list = users.map(user => {
+      .then((users) => {
+        const list = users.map((user) => {
           if (getUserAttributeByName(user, 'profile') !== 'none') {
             return user;
           }
@@ -70,12 +70,12 @@ export const BanModal = ({
 
         setUsersList(list);
       })
-      .catch(err => {
+      .catch((err) => {
         throw new Error(`Failed at searchUsers() with error: ${err}`);
       });
   };
 
-  const handleUserFilter = event => {
+  const handleUserFilter = (event) => {
     const name = event.target.value;
     setUserName(name);
     if (timeout) clearTimeout(timeout);
@@ -91,21 +91,21 @@ export const BanModal = ({
     getAllUsers();
   }, [identityClient]);
 
-  const memberArns = members.map(mem => mem.Member.Arn);
+  const memberArns = members.map((mem) => mem.Member.Arn);
 
-  const formattedUsersList = usersList.map(user => {
+  const formattedUsersList = usersList.map((user) => {
     if (!user || !user.Attributes) {
       return;
     }
 
     const userArn = createMemberArn(
-      user.Attributes.filter(attr => attr.Name === 'profile')[0].Value
+      user.Attributes.filter((attr) => attr.Name === 'profile')[0].Value
     );
     return {
       arn: userArn,
       name: user.Username,
       role: memberArns.includes(userArn) ? 'Member' : '',
-      banned: banList.length ? banList.includes(userArn) : false
+      banned: banList.length ? banList.includes(userArn) : false,
     };
   });
 
@@ -113,15 +113,15 @@ export const BanModal = ({
     return a.role.length > b.role.length ? -1 : 1;
   });
 
-  const modArns = moderators.map(mod => mod.Moderator.Arn);
+  const modArns = moderators.map((mod) => mod.Moderator.Arn);
 
   const nonMods = sorttedUsers.filter(
-    user => user && modArns.indexOf(user.arn) === -1
+    (user) => user && modArns.indexOf(user.arn) === -1
   );
 
-  const handleCheckClick = e => {
+  const handleCheckClick = (e) => {
     const selected = sorttedUsers.filter(
-      user => user && user.arn === e.target.value
+      (user) => user && user.arn === e.target.value
     )[0];
 
     if (selected.banned) {
@@ -131,7 +131,7 @@ export const BanModal = ({
     }
   };
 
-  const userItems = nonMods.map(user => (
+  const userItems = nonMods.map((user) => (
     <div className="ban-row" key={user.arn}>
       <span className="ban-row-name">{user.name}</span>
       <span className="ban-row-role">{user.role}</span>
@@ -139,7 +139,7 @@ export const BanModal = ({
         <Checkbox
           value={user.arn}
           checked={user.banned}
-          onChange={e => handleCheckClick(e)}
+          onChange={(e) => handleCheckClick(e)}
         />
       </span>
     </div>
@@ -167,7 +167,7 @@ export const BanModal = ({
       </ModalBody>
       <ModalButtonGroup
         primaryButtons={[
-          <ModalButton label="OK" variant="secondary" closesModal />
+          <ModalButton label="OK" variant="secondary" closesModal />,
         ]}
       />
     </Modal>

@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,10 +12,14 @@ export default {
   title: 'UI Components/Icons/Clear',
   parameters: {
     docs: {
-      page: ClearIconDocs.parameters.docs.page().props.children.type
-    }
+      page: ClearIconDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Clear
+  component: Clear,
 };
 
-export const _Clear = () => <Flex layout="fill-space-centered"><Clear width={text('width', '2rem')} /></Flex>;
+export const _Clear = () => (
+  <Flex layout="fill-space-centered">
+    <Clear width={text('width', '2rem')} />
+  </Flex>
+);

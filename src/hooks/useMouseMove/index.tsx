@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import { useState, useEffect, useRef, RefObject } from 'react';
@@ -25,7 +25,6 @@ export function useMouseMove(el: RefObject<any>, delay = 3000) {
     return (): void => {
       el.current.removeEventListener('mousemove', onMouseMove);
     };
-
   }, [el]);
 
   return { isMouseMoving };

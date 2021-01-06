@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,10 +12,14 @@ export default {
   title: 'UI Components/Icons/Share',
   parameters: {
     docs: {
-      page: ShareIconDocs.parameters.docs.page().props.children.type
-    }
+      page: ShareIconDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Share
+  component: Share,
 };
 
-export const _Share = () => <Flex layout="fill-space-centered"><Share width={text('width', '2rem')} /></Flex>;
+export const _Share = () => (
+  <Flex layout="fill-space-centered">
+    <Share width={text('width', '2rem')} />
+  </Flex>
+);

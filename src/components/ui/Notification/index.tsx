@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, HTMLAttributes } from 'react';
@@ -13,7 +13,7 @@ enum Severity {
   ERROR = 'error',
   SUCCESS = 'success',
   INFO = 'info',
-  WARNING = 'warning'
+  WARNING = 'warning',
 }
 
 export interface NotificationProps
@@ -37,10 +37,10 @@ const iconMapping = {
   success: <CheckRound />,
   warning: <Clock />,
   error: <Caution />,
-  info: <Information />
+  info: <Information />,
 };
 
-export const Notification: React.FC<NotificationProps> = props => {
+export const Notification: React.FC<NotificationProps> = (props) => {
   const {
     tag,
     message,
@@ -48,7 +48,7 @@ export const Notification: React.FC<NotificationProps> = props => {
     autoClose = false,
     autoCloseDelay = DEFAULT_DELAY,
     severity = Severity.ERROR,
-    className
+    className,
   } = props;
 
   const ariaLive = severity === Severity.ERROR ? 'assertive' : 'polite';

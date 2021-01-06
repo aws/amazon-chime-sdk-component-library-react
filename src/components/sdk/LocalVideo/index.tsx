@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, useEffect, useRef } from 'react';
@@ -17,7 +17,7 @@ interface Props extends BaseSdkProps {
 }
 
 const StyledLocalVideo = styled<any>(VideoTile)`
-  ${props => (!props.active ? 'display: none' : '')};
+  ${(props) => (!props.active ? 'display: none' : '')};
 `;
 
 export const LocalVideo: React.FC<Props> = ({ nameplate, ...rest }) => {
@@ -63,7 +63,7 @@ export const LocalVideo: React.FC<Props> = ({ nameplate, ...rest }) => {
         if (tileState.active !== active) {
           setActive(tileState.active);
         }
-      }
+      },
     };
 
     audioVideo.addObserver(observer);

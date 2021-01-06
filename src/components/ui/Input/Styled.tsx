@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
@@ -25,7 +25,7 @@ export const StyledInputWrapper = styled.span<InputWrapperProps>`
   }
 
   > input {
-    padding: ${props => getPadding(props)};
+    padding: ${(props) => getPadding(props)};
   }
 `;
 
@@ -34,28 +34,28 @@ export const StyledInput = styled.input`
   display: flex;
   letter-spacing: -0.005625rem;
   transition: box-shadow 0.05s ease-in;
-  background-color: ${props => props.theme.inputs.bgd};
-  border: ${props => props.theme.inputs.border};
-  border-radius: ${props => props.theme.inputs.borderRadius};
-  box-shadow: ${props => props.theme.inputs.shadow};
-  color: ${props => props.theme.inputs.fontColor};
-  font-size: ${props => props.theme.fontSizes.text.fontSize};
-  line-height: ${props => props.theme.fontSizes.text.lineHeight};
+  background-color: ${(props) => props.theme.inputs.bgd};
+  border: ${(props) => props.theme.inputs.border};
+  border-radius: ${(props) => props.theme.inputs.borderRadius};
+  box-shadow: ${(props) => props.theme.inputs.shadow};
+  color: ${(props) => props.theme.inputs.fontColor};
+  font-size: ${(props) => props.theme.fontSizes.text.fontSize};
+  line-height: ${(props) => props.theme.fontSizes.text.lineHeight};
 
   &::placeholder {
-    color: ${props => props.theme.inputs.placeholder};
+    color: ${(props) => props.theme.inputs.placeholder};
   }
 
   &:focus,
   &[aria-invalid='true']:focus {
-    border: ${props => props.theme.inputs.focus.border};
-    box-shadow: ${props => props.theme.inputs.focus.shadow};
+    border: ${(props) => props.theme.inputs.focus.border};
+    box-shadow: ${(props) => props.theme.inputs.focus.shadow};
     outline: none;
   }
 
   &[aria-invalid='true'] {
-    border: ${props => props.theme.inputs.error.border};
-    box-shadow: ${props => props.theme.inputs.error.shadow};
+    border: ${(props) => props.theme.inputs.error.border};
+    box-shadow: ${(props) => props.theme.inputs.error.shadow};
   }
 
   // Hides native clear button
@@ -86,10 +86,10 @@ export const StyledClear = styled.button<ClearProps>`
   border: none;
   background: none;
   cursor: pointer;
-  display: ${props => (props.active ? 'block' : 'none')};
+  display: ${(props) => (props.active ? 'block' : 'none')};
 
   path {
-    fill: ${props => props.theme.inputs.clearBg};
+    fill: ${(props) => props.theme.inputs.clearBg};
   }
 
   &:active,

@@ -95,7 +95,7 @@
     "rollup": "^2.26.3",
     "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-typescript2": "^0.27.1",
-    "start-server-and-test": "^1.11.3",
+    "start-server-and-test": "^1.11.7",
     "storybook": "^6.1.6",
     "style-loader": "^0.23.1",
     "styled-components": "^5.1.0",

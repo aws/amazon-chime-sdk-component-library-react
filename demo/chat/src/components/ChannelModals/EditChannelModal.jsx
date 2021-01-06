@@ -1,5 +1,5 @@
 /* eslint-disable import/no-unresolved */
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
@@ -12,7 +12,7 @@ import {
   ModalButton,
   Input,
   RadioGroup,
-  useNotificationDispatch
+  useNotificationDispatch,
 } from 'amazon-chime-sdk-component-library-react';
 
 import { updateChannel } from '../../api/ChimeAPI';
@@ -24,11 +24,11 @@ export const EditChannelModal = ({ onClose, channel, userId }) => {
   const [newMode, setNewMode] = useState(channel.Mode);
   const dispatch = useNotificationDispatch();
 
-  const onChange = e => {
+  const onChange = (e) => {
     setNewName(e.target.value);
   };
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     try {
       updateChannel(channel.ChannelArn, newName, newMode, userId);
@@ -37,16 +37,16 @@ export const EditChannelModal = ({ onClose, channel, userId }) => {
         payload: {
           message: 'Successfully updated channel.',
           severity: 'success',
-          autoClose: true
-        }
+          autoClose: true,
+        },
       });
     } catch {
       dispatch({
         type: 0,
         payload: {
           message: 'Unable to update channel.',
-          severity: 'error'
-        }
+          severity: 'error',
+        },
       });
     }
     onClose();
@@ -56,7 +56,7 @@ export const EditChannelModal = ({ onClose, channel, userId }) => {
     <Modal onClose={onClose} className="edit-channel">
       <ModalHeader title={`Edit ${channel.Name}`} />
       <ModalBody>
-        <form onSubmit={e => onSubmit(e)} id="edit-channel">
+        <form onSubmit={(e) => onSubmit(e)} id="edit-channel">
           <Input
             className="input"
             onChange={onChange}
@@ -67,10 +67,10 @@ export const EditChannelModal = ({ onClose, channel, userId }) => {
             <RadioGroup
               options={[
                 { value: 'RESTRICTED', label: 'Restricted' },
-                { value: 'UNRESTRICTED', label: 'Unrestricted' }
+                { value: 'UNRESTRICTED', label: 'Unrestricted' },
               ]}
               value={newMode}
-              onChange={e => setNewMode(e.target.value)}
+              onChange={(e) => setNewMode(e.target.value)}
             />
           </div>
         </form>
@@ -83,7 +83,7 @@ export const EditChannelModal = ({ onClose, channel, userId }) => {
             form="edit-channel"
             variant="primary"
           />,
-          <ModalButton label="Cancel" variant="secondary" closesModal />
+          <ModalButton label="Cancel" variant="secondary" closesModal />,
         ]}
       />
     </Modal>

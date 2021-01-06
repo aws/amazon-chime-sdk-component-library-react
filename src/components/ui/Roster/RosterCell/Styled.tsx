@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
@@ -26,11 +26,11 @@ export const StyledCell = styled.div<RosterCellProps>`
   }
 
   .ch-menu {
-    color: ${props => props.theme.buttons.icon.hover.bgd};
+    color: ${(props) => props.theme.buttons.icon.hover.bgd};
 
     &:hover,
     &:focus {
-      color: ${props => props.theme.buttons.icon.hover.text};
+      color: ${(props) => props.theme.buttons.icon.hover.text};
     }
   }
 

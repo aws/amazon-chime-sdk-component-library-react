@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect, useState, useCallback } from 'react';
@@ -20,7 +20,9 @@ export function useToggleLocalMute() {
     setMuted(audioVideo?.realtimeIsLocalAudioMuted() || false);
 
     return (): void => {
-      audioVideo?.realtimeUnsubscribeToMuteAndUnmuteLocalAudio(muteUnmutecallback);
+      audioVideo?.realtimeUnsubscribeToMuteAndUnmuteLocalAudio(
+        muteUnmutecallback
+      );
     };
   }, [audioVideo]);
 

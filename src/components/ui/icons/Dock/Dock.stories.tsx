@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,10 +12,10 @@ export default {
   title: 'UI Components/Icons/Dock',
   parameters: {
     docs: {
-      page: DockIconDocs.parameters.docs.page().props.children.type
-    }
+      page: DockIconDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Dock
+  component: Dock,
 };
 
 export const _Dock = () => (
