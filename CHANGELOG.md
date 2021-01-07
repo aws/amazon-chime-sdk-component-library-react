@@ -50,6 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed content in ChatBubble
 - Removed showName in ChatBubble
 - Change control bar theme opacity to 1
+- Changed RosterHeader 'title' prop to all for elements as well as strings
 
 - Changed senderName to optional in ChatBubble
 - Moved children inside of a div in ChatBubble
