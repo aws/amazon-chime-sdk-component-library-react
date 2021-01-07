@@ -1,3 +1,5 @@
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
@@ -25,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Update Jest major version
+- Changed RosterHeader 'title' prop to all for elements as well as strings
 
 - Changed senderName to optional in ChatBubble
 - Moved children inside of a div in ChatBubble

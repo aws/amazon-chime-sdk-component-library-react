@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { baseSpacing, baseStyles } from '../Base';
 import { ellipsis } from '../../../utils/style';
 
-export const StyledRoster = styled.div`
+export const StyledRoster = styled.aside`
   width: 100%;
   height: 100%;
   padding-bottom: 1rem;
