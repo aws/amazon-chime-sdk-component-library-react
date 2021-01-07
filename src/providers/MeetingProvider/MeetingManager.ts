@@ -74,7 +74,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   devicePermissionStatus = DevicePermissionStatus.UNSET;
 
-  devicePermissionsObservers: ((permission: string) => void)[] = [];
+  devicePermissionsObservers: ((permission: DevicePermissionStatus) => void)[] = [];
 
   activeSpeakerListener: ((activeSpeakers: string[]) => void) | null = null;
 
@@ -418,13 +418,13 @@ export class MeetingManager implements AudioVideoObserver {
   };
 
   subscribeToDevicePermissionStatus = (
-    callback: (permission: string) => void
+    callback: (permission: DevicePermissionStatus) => void
   ): void => {
     this.devicePermissionsObservers.push(callback);
   };
 
   unsubscribeFromDevicePermissionStatus = (
-    callbackToRemove: (permission: string) => void
+    callbackToRemove: (permission: DevicePermissionStatus) => void
   ): void => {
     this.devicePermissionsObservers = this.devicePermissionsObservers.filter(
       callback => callback !== callbackToRemove

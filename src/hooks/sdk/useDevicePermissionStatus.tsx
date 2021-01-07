@@ -8,12 +8,12 @@ import { DevicePermissionStatus } from '../../types';
 
 export function useDevicePermissionStatus() {
   const meetingManager = useMeetingManager();
-  const [permission, setPermission] = useState<string>(
+  const [permission, setPermission] = useState<DevicePermissionStatus>(
     DevicePermissionStatus.UNSET
   );
 
   useEffect(() => {
-    const callback = (updatedPermission: string): void => {
+    const callback = (updatedPermission: DevicePermissionStatus): void => {
       setPermission(updatedPermission);
     };
     meetingManager.subscribeToDevicePermissionStatus(callback);
