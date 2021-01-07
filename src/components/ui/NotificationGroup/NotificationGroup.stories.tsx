@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -9,7 +9,7 @@ import {
   useNotificationDispatch,
   NotificationProvider,
   ActionType,
-  Severity
+  Severity,
 } from '../../../providers/NotificationProvider';
 import NotificationGroupDocs from './NotificationGroup.mdx';
 
@@ -20,10 +20,10 @@ export default {
   title: 'UI Components/NotificationGroup',
   parameters: {
     docs: {
-      page: NotificationGroupDocs.parameters.docs.page().props.children.type
-    }
+      page: NotificationGroupDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: NotificationGroup
+  component: NotificationGroup,
 };
 
 const StyledWrapper = styled.div`
@@ -41,29 +41,37 @@ const StorybookTestButton = ({ label, payload, variant }: any) => {
   const addNotification = (e: any) => {
     dispatch({
       type: ActionType.ADD,
-      payload: payload
+      payload: payload,
     });
-  }
+  };
 
-  return (
-    <Button onClick={addNotification} variant={variant} label={label}/>
-  );
+  return <Button onClick={addNotification} variant={variant} label={label} />;
 };
 
 const AddNotificationButtonGroup = () => {
   const payloadForSimpleNotification: any = {
     severity: Severity.INFO,
-    message:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.'
+    message:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.',
   };
   const payloadForAutoclosingNotification = {
     severity: Severity.ERROR,
-    message:'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.',
-    autoClose: true
+    message:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.',
+    autoClose: true,
   };
   return (
     <StyledWrapper>
-      <StorybookTestButton label='Add simple notification' payload={payloadForSimpleNotification} variant="primary"/>
-      <StorybookTestButton label='Add autoclosing notification' payload={payloadForAutoclosingNotification} variant="secondary"/>
+      <StorybookTestButton
+        label="Add simple notification"
+        payload={payloadForSimpleNotification}
+        variant="primary"
+      />
+      <StorybookTestButton
+        label="Add autoclosing notification"
+        payload={payloadForAutoclosingNotification}
+        variant="secondary"
+      />
     </StyledWrapper>
   );
 };
@@ -78,5 +86,5 @@ export const NotificationGroupStory = () => {
 };
 
 NotificationGroupStory.story = {
-  name: 'Notification group'
-}
+  name: 'Notification group',
+};

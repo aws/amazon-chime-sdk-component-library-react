@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -10,7 +10,7 @@ import { renderWithTheme } from '../../../test-helpers';
 
 describe('Label', () => {
   it('should render a Label', () => {
-    const component = <Label />
+    const component = <Label />;
     const { queryByTestId } = renderWithTheme(lightTheme, component);
 
     expect(queryByTestId('label')).toBeInTheDocument();

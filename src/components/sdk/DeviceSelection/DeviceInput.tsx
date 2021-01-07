@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { ChangeEvent } from 'react';
@@ -20,12 +20,11 @@ const DeviceInput: React.FC<Props> = ({
   label,
   devices,
   selectedDeviceId,
-  notFoundMsg
+  notFoundMsg,
 }) => {
-
-  const outputOptions = devices.map(device => ({
+  const outputOptions = devices.map((device) => ({
     value: device.deviceId,
-    label: device.label
+    label: device.label,
   }));
 
   const options = outputOptions.length
@@ -33,8 +32,8 @@ const DeviceInput: React.FC<Props> = ({
     : [
         {
           value: 'not-available',
-          label: notFoundMsg
-        }
+          label: notFoundMsg,
+        },
       ];
 
   async function selectDevice(e: ChangeEvent<HTMLSelectElement>) {

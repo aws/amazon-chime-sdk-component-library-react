@@ -11,13 +11,13 @@ export const StyledRoster = styled.aside`
   height: 100%;
   padding-bottom: 1rem;
   overflow-y: auto;
-  background-color: ${props => props.theme.roster.bgd};
+  background-color: ${(props) => props.theme.roster.bgd};
   box-shadow: 1rem 1rem 3.75rem 0 rgba(0, 0, 0, 0.1);
-  border-left: 0.0625rem solid ${props => props.theme.roster.containerBorder};
-  border-right: 0.0625rem solid ${props => props.theme.roster.containerBorder};
+  border-left: 0.0625rem solid ${(props) => props.theme.roster.containerBorder};
+  border-right: 0.0625rem solid ${(props) => props.theme.roster.containerBorder};
 
   ${({ theme }) => theme.mediaQueries.min.md} {
-    width: ${props => props.theme.roster.maxWidth};
+    width: ${(props) => props.theme.roster.maxWidth};
   }
 
   ${baseSpacing}
@@ -29,7 +29,7 @@ export const StyledTitle = styled.span`
   margin: 0 0.625rem 0 0;
   font-weight: 600;
   font-size: 0.675rem;
-  color: ${props => props.theme.roster.secondaryText};
+  color: ${(props) => props.theme.roster.secondaryText};
 `;
 
 export const StyledGroupWrapper = styled.div`
@@ -44,8 +44,8 @@ export const StyledGroupWrapper = styled.div`
 `;
 
 export const StyledGroup = styled.div`
-  background-color: ${props => props.theme.roster.fgd};
-  border-radius: ${props => props.theme.radii.default};
+  background-color: ${(props) => props.theme.roster.fgd};
+  border-radius: ${(props) => props.theme.radii.default};
 
   ${baseSpacing}
   ${baseStyles}
@@ -57,18 +57,18 @@ export const StyledHeader = styled.div<any>`
   align-items: center;
   padding: 0.75rem 1rem;
   margin-bottom: 0.5rem;
-  border-bottom: 0.0625rem solid ${props => props.theme.roster.headerBorder};
+  border-bottom: 0.0625rem solid ${(props) => props.theme.roster.headerBorder};
 
   .ch-title {
     font-size: 0.875rem;
-    color: ${props => props.theme.roster.primaryText};
-    ${props => (props.isSearching ? 'opacity: 0;' : '')}
+    color: ${(props) => props.theme.roster.primaryText};
+    ${(props) => (props.isSearching ? 'opacity: 0;' : '')}
     ${ellipsis};
   }
 
   .ch-badge {
     margin-left: 0.5rem;
-    ${props => (props.isSearching ? 'opacity: 0;' : '')}
+    ${(props) => (props.isSearching ? 'opacity: 0;' : '')}
   }
 
   .ch-buttons {
@@ -79,7 +79,7 @@ export const StyledHeader = styled.div<any>`
       margin-left: 0.5rem;
     }
 
-    ${props => (props.isSearching ? 'opacity: 0;' : '')}
+    ${(props) => (props.isSearching ? 'opacity: 0;' : '')}
   }
 
   .ch-search-wrapper {
@@ -122,12 +122,12 @@ export const StyledName = styled.div`
   .ch-name {
     ${ellipsis};
     font-size: 0.875rem;
-    color: ${props => props.theme.roster.primaryText};
+    color: ${(props) => props.theme.roster.primaryText};
   }
 
   .ch-subtitle {
     ${ellipsis};
     font-size: 0.65rem;
-    color: ${props => props.theme.roster.secondaryText};
+    color: ${(props) => props.theme.roster.secondaryText};
   }
 `;

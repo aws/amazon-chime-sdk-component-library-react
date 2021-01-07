@@ -24,8 +24,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added optional `timestamp` prop in ChatBubble
 - Added forwardRef for ChatBubbleContainer
 - Added optional img to MessageAttachment
+- Added a classname to PopOverMenu component for styling access
 
 ### Changed
+
 - Update Jest major version
 - Changed RosterHeader 'title' prop to all for elements as well as strings
 
@@ -78,6 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Attachment, Dock, and Emoji picker icons
 - Added HandRaise and ListHandRaise icons
 - Added ConnectionProblem icon
+- Added linkColors for incoming and outgoing chat in chatBubble
 
 ### Changed
 

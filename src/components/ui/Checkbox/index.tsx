@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, ChangeEvent, useRef } from 'react';
@@ -52,6 +52,5 @@ export const Checkbox: FC<CheckboxProps> = (props: CheckboxProps) => {
   );
 };
 Checkbox.displayName = 'Checkbox';
-
 
 export default Checkbox;

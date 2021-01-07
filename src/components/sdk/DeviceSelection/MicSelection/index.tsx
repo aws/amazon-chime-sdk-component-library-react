@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -16,7 +16,7 @@ interface Props {
 
 export const MicSelection: React.FC<Props> = ({
   notFoundMsg = 'No microphone devices found',
-  label = 'Microphone source'
+  label = 'Microphone source',
 }) => {
   const selectAudioInput = useSelectAudioInputDevice();
   const { devices, selectedDevice } = useAudioInputs();

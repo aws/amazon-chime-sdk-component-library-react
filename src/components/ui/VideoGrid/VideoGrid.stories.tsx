@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,10 +12,10 @@ export default {
   title: 'UI Components/Video/VideoGrid',
   parameters: {
     docs: {
-      page: VideoGridDocs.parameters.docs.page().props.children.type
-    }
+      page: VideoGridDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: VideoGrid
+  component: VideoGrid,
 };
 
 export const _VideoGrid = () => {
@@ -27,7 +27,7 @@ export const _VideoGrid = () => {
       <VideoTile
         style={{
           border: '1px solid grey',
-          gridArea: isFeatured ? 'ft' : ''
+          gridArea: isFeatured ? 'ft' : '',
         }}
         nameplate={isFeatured ? 'Featured tile' : `Tile ${index + 1}`}
         key={index}
@@ -43,5 +43,5 @@ export const _VideoGrid = () => {
 };
 
 _VideoGrid.story = {
-  name: 'VideoGrid'
+  name: 'VideoGrid',
 };

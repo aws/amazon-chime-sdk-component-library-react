@@ -1,7 +1,13 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useRef, useEffect, ChangeEvent, ReactNode } from 'react';
+import React, {
+  useState,
+  useRef,
+  useEffect,
+  ChangeEvent,
+  ReactNode,
+} from 'react';
 
 import Flex from '../Flex';
 import Badge from '../Badge';

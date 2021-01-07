@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -66,7 +66,7 @@ describe('ModalButtonGroup', () => {
     const {
       getByTestId,
       getByLabelText,
-      queryAllByLabelText
+      queryAllByLabelText,
     } = renderWithTheme(lightTheme, component);
     const el = getByTestId('modal-button-group');
     expect(el).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe('ModalButtonGroup', () => {
       <ModalContext.Provider value={testContext}>
         <ModalButtonGroup
           primaryButtons={[
-            <ModalButton label="close" closesModal onClick={onClose} />
+            <ModalButton label="close" closesModal onClick={onClose} />,
           ]}
         />
       </ModalContext.Provider>

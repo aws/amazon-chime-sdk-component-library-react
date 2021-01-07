@@ -59,10 +59,10 @@ You may need to create a [Docker Hub](https://hub.docker.com/) account and [auth
 
 > Error 2: Timeout when you run `npm run test:snapshots`
 
-You have 2 options: 
+You have 2 options:
+
 1. Set an environment variable `WAIT_ON_TIMEOUT=600000` (e.g. 10 minutes. By default, it's 5 minutes). It will wait for a longer time while checking for the server to respond.
 2. Start storybook server locally by running `npm start`, then run `npm run test:snapshots`.
-
 
 Run an individual snapshot test suite, make sure that storybook server is running locally before kicking off the test.
 
@@ -100,4 +100,4 @@ export class App extends React.Component {
 
 This project is licensed under the Apache-2.0 License.
 
-Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.

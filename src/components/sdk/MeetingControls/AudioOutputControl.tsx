@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -27,7 +27,7 @@ const AudioOutputControl: React.FC<Props> = ({ label = 'Speaker' }) => {
       children: <span>{device.label}</span>,
       checked: isOptionActive(selectedDevice, device.deviceId),
       onClick: (): Promise<void> =>
-        meetingManager.selectAudioOutputDevice(device.deviceId)
+        meetingManager.selectAudioOutputDevice(device.deviceId),
     })
   );
 

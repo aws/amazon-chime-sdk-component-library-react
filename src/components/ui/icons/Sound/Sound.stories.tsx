@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,12 +12,17 @@ export default {
   title: 'UI Components/Icons/Sound',
   parameters: {
     docs: {
-      page: SoundIconDocs.parameters.docs.page().props.children.type
-    }
+      page: SoundIconDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Sound
+  component: Sound,
 };
 
 export const _Sound = () => (
-  <Flex layout="fill-space-centered"><Sound disabled={boolean('disabled', false)} width={text('width', '2rem')} /></Flex>
+  <Flex layout="fill-space-centered">
+    <Sound
+      disabled={boolean('disabled', false)}
+      width={text('width', '2rem')}
+    />
+  </Flex>
 );

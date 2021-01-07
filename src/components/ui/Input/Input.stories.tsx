@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
@@ -14,10 +14,10 @@ export default {
   title: 'UI Components/Form/TextInputs',
   parameters: {
     docs: {
-      page: InputDocs.parameters.docs.page().props.children.type
-    }
+      page: InputDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Input
+  component: Input,
 };
 
 export const BasicInput = () => {
@@ -27,7 +27,7 @@ export const BasicInput = () => {
     <Flex layout="fill-space-centered" css="height: 100vh">
       <Input
         showClear={boolean('showClear', true)}
-        onChange={e => setInput(e.target.value)}
+        onChange={(e) => setInput(e.target.value)}
         sizing={select('size', { sm: 'sm', md: 'md' }, 'md')}
         value={input}
         placeholder="a basic input"
@@ -44,7 +44,7 @@ export const InputWithIcon = () => {
     <Flex layout="fill-space-centered" css="height: 100vh">
       <Input
         showClear={boolean('showClear', true)}
-        onChange={e => setInput(e.target.value)}
+        onChange={(e) => setInput(e.target.value)}
         value={input}
         placeholder="input with an icon"
         sizing={select('size', { sm: 'sm', md: 'md' }, 'md')}
@@ -56,7 +56,7 @@ export const InputWithIcon = () => {
 };
 
 InputWithIcon.story = {
-  name: 'Input With Icon'
+  name: 'Input With Icon',
 };
 
 export const _SearchInput = () => {
@@ -67,7 +67,7 @@ export const _SearchInput = () => {
       <SearchInput
         showClear={boolean('showClear', true)}
         value={search}
-        onChange={e => setSearch(e.target.value)}
+        onChange={(e) => setSearch(e.target.value)}
         placeholder="a search input"
       />
     </Flex>

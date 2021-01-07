@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
@@ -8,7 +8,7 @@ import React, {
   useContext,
   useEffect,
   useReducer,
-  useRef
+  useRef,
 } from 'react';
 import { DefaultModality, VideoTileState } from 'amazon-chime-sdk-js';
 
@@ -16,7 +16,7 @@ import {
   reducer,
   initialState,
   ContentShareState,
-  ContentActionType
+  ContentActionType,
 } from './state';
 import { ContentShareControlContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
@@ -70,8 +70,8 @@ const ContentShareProvider: React.FC = ({ children }) => {
           type: ContentActionType.UPDATE,
           payload: {
             tileState,
-            isLocalUser
-          }
+            isLocalUser,
+          },
         });
       },
       videoTileWasRemoved: (tileId: number) => {
@@ -81,15 +81,15 @@ const ContentShareProvider: React.FC = ({ children }) => {
 
         dispatch({
           type: ContentActionType.REMOVE,
-          payload: tileId
+          payload: tileId,
         });
-      }
+      },
     };
 
     const contentShareObserver = {
       contentShareDidStop: () => {
         dispatch({ type: ContentActionType.DID_STOP });
-      }
+      },
     };
 
     audioVideo.addObserver(videoObserver);
@@ -150,14 +150,14 @@ const ContentShareProvider: React.FC = ({ children }) => {
       isLocalUserSharing,
       isLocalShareLoading,
       toggleContentShare,
-      togglePauseContentShare
+      togglePauseContentShare,
     }),
     [
       paused,
       toggleContentShare,
       togglePauseContentShare,
       isLocalUserSharing,
-      isLocalShareLoading
+      isLocalShareLoading,
     ]
   );
 

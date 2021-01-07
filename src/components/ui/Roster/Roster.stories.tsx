@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
@@ -186,7 +186,7 @@ export const _RosterHeaderWithCustomElements = () => {
 
   const [search, setSearch] = useState('');
 
-  const handleSearch = e => setSearch(e.target.value);
+  const handleSearch = (e) => setSearch(e.target.value);
 
   return (
     <Flex container layout="fill-space-centered" css="height: 100vh;">
@@ -199,8 +199,8 @@ export const _RosterHeaderWithCustomElements = () => {
           onSearch={handleSearch}
           menu={<Menu />}
         >
-          <IconButton label="test" icon={<Cog />}/>
-          <IconButton label="test" icon={<SignalStrength />}/>
+          <IconButton label="test" icon={<Cog />} />
+          <IconButton label="test" icon={<SignalStrength />} />
         </RosterHeader>
         <RosterGroup>
           <RosterCell name="Michael Scarn" subtitle="FBI agent" />
@@ -214,7 +214,6 @@ export const _RosterHeaderWithCustomElements = () => {
 };
 
 _RosterHeaderWithCustomElements.story = '_RosterHeaderWithCustomElements';
-
 
 export const _RosterCell = () => {
   const name = text('name', 'Stanley Hudson');

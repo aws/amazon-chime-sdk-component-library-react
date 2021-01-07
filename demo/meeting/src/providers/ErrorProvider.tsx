@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState, ReactNode } from 'react';
@@ -9,7 +9,7 @@ type Props = {
 
 const context = React.createContext({
   errorMessage: '',
-  updateErrorMessage: (_: string) => {},
+  updateErrorMessage: (_: string) => {}
 });
 
 export function getErrorContext() {
@@ -26,7 +26,7 @@ export default function ErrorProvider({ children }: Props) {
 
   const providerValue = {
     errorMessage,
-    updateErrorMessage,
+    updateErrorMessage
   };
   return (
     <ErrorContext.Provider value={providerValue}>

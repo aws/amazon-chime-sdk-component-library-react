@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
@@ -20,9 +20,10 @@ export type Size = 'sm' | 'md';
 
 export interface InputProps
   extends Omit<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    'onChange' | 'value' | 'css'
-  >, BaseProps {
+      React.InputHTMLAttributes<HTMLInputElement>,
+      'onChange' | 'value' | 'css'
+    >,
+    BaseProps {
   /** The callback fired when the state is changed. */
   onChange(event: ChangeEvent): void;
   /** The callback fired when the input value is cleared. */

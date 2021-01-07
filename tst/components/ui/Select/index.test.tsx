@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -12,7 +12,6 @@ import { renderWithTheme } from '../../../test-helpers';
 let mockFunction: any;
 
 describe('Select', () => {
-
   const value = 'bananas';
   const selectOptions = [
     {
@@ -26,7 +25,7 @@ describe('Select', () => {
     {
       value: 'grapefruit',
       label: 'Grapefruit',
-    }
+    },
   ];
 
   beforeEach(() => {
@@ -34,33 +33,32 @@ describe('Select', () => {
   });
 
   it('should render a Select', () => {
-    const component = <Select value={value}
-                              onChange={mockFunction}
-                              options={selectOptions} />
+    const component = (
+      <Select value={value} onChange={mockFunction} options={selectOptions} />
+    );
     const { queryByTestId } = renderWithTheme(lightTheme, component);
 
     expect(queryByTestId('select')).toBeInTheDocument();
   });
 
   it('should render a Select with a display value', () => {
-    const component = <Select value={value}
-                              onChange={mockFunction}
-                              options={selectOptions} />
+    const component = (
+      <Select value={value} onChange={mockFunction} options={selectOptions} />
+    );
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const element = getByTestId('select');
 
     expect(element).toHaveDisplayValue('Bananas');
   });
 
-    it('should call onChange event handler once if selects one option', () => {
-      const component = <Select value={value}
-                              onChange={mockFunction}
-                              options={selectOptions} />
-      const { getByTestId } = renderWithTheme(lightTheme, component);
-      const select = getByTestId('select');
+  it('should call onChange event handler once if selects one option', () => {
+    const component = (
+      <Select value={value} onChange={mockFunction} options={selectOptions} />
+    );
+    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const select = getByTestId('select');
 
-      fireEvent.change(select, { target: { value: 'oranges' } });
-      expect(mockFunction).toHaveBeenCalledTimes(1);
-    });
-
+    fireEvent.change(select, { target: { value: 'oranges' } });
+    expect(mockFunction).toHaveBeenCalledTimes(1);
+  });
 });

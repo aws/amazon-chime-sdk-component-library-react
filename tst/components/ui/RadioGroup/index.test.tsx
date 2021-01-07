@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -15,16 +15,16 @@ describe('RadioGroup', () => {
   const options = [
     {
       value: 'bananas',
-      label: 'Bananas'
+      label: 'Bananas',
     },
     {
       value: 'oranges',
-      label: 'Oranges'
+      label: 'Oranges',
     },
     {
       value: 'grapefruit',
-      label: 'Grapefruit'
-    }
+      label: 'Grapefruit',
+    },
   ];
 
   beforeEach(() => {

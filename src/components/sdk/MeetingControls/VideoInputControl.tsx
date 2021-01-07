@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -18,7 +18,7 @@ interface Props {
 }
 
 const videoInputConfig: DeviceConfig = {
-  additionalDevices: true
+  additionalDevices: true,
 };
 
 const VideoInputControl: React.FC<Props> = ({ label = 'Video' }) => {
@@ -29,7 +29,7 @@ const VideoInputControl: React.FC<Props> = ({ label = 'Video' }) => {
   const dropdownOptions: PopOverItemProps[] = devices.map((device: any) => ({
     children: <span>{device.label}</span>,
     checked: isOptionActive(selectedDevice, device.deviceId),
-    onClick: () => selectDevice(device.deviceId)
+    onClick: () => selectDevice(device.deviceId),
   }));
 
   return (

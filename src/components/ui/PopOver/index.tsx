@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
@@ -160,6 +160,7 @@ export const PopOver: FC<PopOverProps> = ({
                 ref={ref}
                 style={style}
                 data-testid="menu"
+                className="ch-popover-menu"
               >
                 {children}
               </StyledPopOverMenu>

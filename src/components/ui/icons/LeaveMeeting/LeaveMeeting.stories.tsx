@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,12 +12,14 @@ export default {
   title: 'UI Components/Icons/LeaveMeeting',
   parameters: {
     docs: {
-      page: LeaveMeetingIconDocs.parameters.docs.page().props.children.type
-    }
+      page: LeaveMeetingIconDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: LeaveMeeting
+  component: LeaveMeeting,
 };
 
 export const _LeaveMeeting = () => (
-  <Flex layout="fill-space-centered"><LeaveMeeting width={text('width', '2rem')} /></Flex>
+  <Flex layout="fill-space-centered">
+    <LeaveMeeting width={text('width', '2rem')} />
+  </Flex>
 );

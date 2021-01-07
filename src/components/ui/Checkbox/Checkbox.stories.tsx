@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,10 +12,10 @@ export default {
   title: 'UI Components/Form/Checkbox',
   parameters: {
     docs: {
-      page: CheckboxDocs.parameters.docs.page().props.children.type
-    }
+      page: CheckboxDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: Checkbox
+  component: Checkbox,
 };
 
 export const _Checkbox = () => {
@@ -32,5 +32,5 @@ export const _Checkbox = () => {
 };
 
 _Checkbox.story = {
-  name: 'Checkbox'
+  name: 'Checkbox',
 };
