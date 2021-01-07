@@ -374,10 +374,18 @@ const chatBubble = {
   incoming: {
     bgd: colors.greys.grey80,
     fontColor: colors.greys.grey30,
+    linkColor: colors.primary.main,
+    linkColorHover: colors.primary.dark,
+    linkColorActive: colors.primary.darker,
+    linkColorVisited: colors.primary.darkest,
   },
   outgoing: {
     bgd: colors.primary.dark,
     fontColor: colors.greys.grey70,
+    linkColor: colors.greys.grey80,
+    linkColorHover: colors.greys.grey70,
+    linkColorActive: colors.greys.grey60,
+    linkColorVisited: colors.greys.grey50,
   },
   container: {
     fontColor: colors.greys.grey30,

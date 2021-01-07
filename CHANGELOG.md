@@ -67,6 +67,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Attachment, Dock, and Emoji picker icons
 - Added HandRaise and ListHandRaise icons
 - Added ConnectionProblem icon
+- Added linkColors for incoming and outgoing chat in chatBubble
 
 ### Changed
 
