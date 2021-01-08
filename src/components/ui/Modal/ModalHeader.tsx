@@ -35,7 +35,7 @@ export const ModalHeader: FC<ModalHeaderProps> = ({
         {title}
       </Tag>
 
-      {displayClose && (
+      {(displayClose && context?.dismissible) && (
         <IconButton
           label="Close"
           icon={<Remove />}

@@ -19,27 +19,30 @@ export interface ModalProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
     BaseProps {
   /** The callback fired when the modal is closed. */
-  onClose: () => void;
+  onClose?: () => void;
   /** The size of the modal. */
   size?: ModalSize;
   /** The rootId of the modal. */
   rootId?: string;
+  /** Optional prop to prevent the modal from closing. */
+  dismissible?: boolean;
 }
 
 export const Modal: FC<ModalProps> = ({
   size = 'md',
-  onClose,
+  onClose = () => null,
   children,
   rootId,
+  dismissible = true,
   ...rest
 }) => {
   const labelID = useUniqueId();
   const contentEl = useRef<HTMLDivElement>(null);
   const mainEl = useRef<HTMLDivElement>(null);
 
-  const modalContext = { onClose, labelID };
+  const modalContext = { onClose, labelID, dismissible };
 
-  useClickOutside(mainEl, onClose);
+  dismissible && useClickOutside(mainEl, onClose);
 
   useEffect(() => {
     // return focus to the element that triggered the
