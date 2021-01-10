@@ -20,12 +20,16 @@ export const MAX_REMOTE_VIDEOS = 16;
 
 export const AVAILABLE_AWS_REGIONS = {
   'us-east-1': 'United States (N. Virginia)',
+  'af-south-1': 'Africa (Cape Town)',
   'ap-northeast-1': 'Japan (Tokyo)',
+  'ap-northeast-2': 'Korea (Seoul)',
+  'ap-south-1': 'India (Mumbai)',
   'ap-southeast-1': 'Singapore',
   'ap-southeast-2': 'Australia (Sydney)',
   'ca-central-1': 'Canada',
   'eu-central-1': 'Germany (Frankfurt)',
   'eu-north-1': 'Sweden (Stockholm)',
+  'eu-south-1': 'Italy (Milan)',
   'eu-west-1': 'Ireland',
   'eu-west-2': 'United Kingdom (London)',
   'eu-west-3': 'France (Paris)',
