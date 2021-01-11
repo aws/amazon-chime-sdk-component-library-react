@@ -47,4 +47,30 @@ describe('Modal', () => {
     });
     expect(component.props.onClose).toBeCalledTimes(0);
   });
+
+  it(`will not close the modal using ESC key if "dismissible" prop is set to "false"`, () => {
+    const component = (
+      <Modal size="md" rootId="modal-root" onClose={jest.fn()} dismissible={false}>
+        <p>Dummy Content</p>
+      </Modal>
+    );
+    renderWithTheme(lightTheme, component);
+    fireEvent.keyDown(document.activeElement || document.body, {
+      key: 'space',
+      keyCode: 32,
+    });
+    expect(component.props.onClose).toBeCalledTimes(0);
+  });
+
+  it(`will close the modal by clicking the background if "dismissible" prop is set to "false"`, () => {
+    const component = (
+      <Modal size="md" rootId="modal-root" onClose={jest.fn()} dismissible={false}>
+        <p>Dummy Content</p>
+      </Modal>
+    );
+    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const bgd = getByTestId('modal');
+    fireEvent.click(bgd);
+    expect(component.props.onClose).toBeCalledTimes(0);
+  });
 });

@@ -18,8 +18,16 @@ describe('ModalHeader', () => {
     expect(el).toBeInTheDocument();
   });
 
-  it('renders a close button is displayClose !== false', () => {
-    const component = <ModalHeader title="Test Header" />;
+  it('renders a close button if displayClose !== false and "dismissable is true', () => {
+    const onClose = jest.fn();
+    const labelID = 'test-label';
+    const testContext = { onClose, labelID, dismissible: true };
+    const component = (
+      <ModalContext.Provider value={testContext}>
+        <ModalHeader title="Test Header" />
+      </ModalContext.Provider>
+    );
+   
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const closeButton = getByTestId('button');
     expect(closeButton).toBeInTheDocument();
@@ -28,7 +36,7 @@ describe('ModalHeader', () => {
   it('calls the onClose function from the context provider', () => {
     const onClose = jest.fn();
     const labelID = 'test-label';
-    const testContext = { onClose, labelID };
+    const testContext = { onClose, labelID, dismissible: true };
     const component = (
       <ModalContext.Provider value={testContext}>
         <ModalHeader title="Test Header" />
@@ -38,5 +46,19 @@ describe('ModalHeader', () => {
     const closeButton = getByTestId('button');
     fireEvent.click(closeButton);
     expect(component.props.value.onClose).toHaveBeenCalled();
+  });
+
+  it('does not render a close button if "dismissible" is false', () => {
+    const onClose = jest.fn();
+    const labelID = 'test-label';
+    const testContext = { onClose, labelID, dismissible: false };
+    const component = (
+      <ModalContext.Provider value={testContext}>
+        <ModalHeader title="Test Header" />
+      </ModalContext.Provider>
+    );
+    const { queryAllByText } = renderWithTheme(lightTheme, component);
+    const closeButton = queryAllByText('close');
+    expect(closeButton).toHaveLength(0);
   });
 });

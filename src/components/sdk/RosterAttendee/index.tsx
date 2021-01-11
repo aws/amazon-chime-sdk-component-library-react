@@ -27,8 +27,8 @@ export const RosterAttendee: React.FC<RosterAttendeeProps> = ({
       muted={muted}
       videoEnabled={videoEnabled}
       sharingContent={sharingContent}
-      {...rest}
       microphone={<MicrophoneActivity attendeeId={attendeeId} />}
+      {...rest}
     />
   );
 };
