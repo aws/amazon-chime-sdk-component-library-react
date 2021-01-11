@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix icon preventing clicks on `Select` components
 - Fix Github Actions build-storybook error
 - [Docs] Fix ContentShare docs
+- Fix non-overridable Mic prop in `RosterAttendee`
 
 ### Added
 
