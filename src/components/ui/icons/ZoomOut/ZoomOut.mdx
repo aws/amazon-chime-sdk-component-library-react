@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import ZoomOut from './';
+import { lightTheme } from '../../../../theme/';
+
+# ZoomOut Icon
+
+The ZoomOut component creates an icon. Typically, you can use it to represent a zoom out action.
+
+## Importing
+
+```javascript
+import { ZoomOut } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <ZoomOut width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<ZoomOut width="2rem" />
+```
+
+## Props
+
+<Props of={ZoomOut} />
