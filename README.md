@@ -2,6 +2,8 @@
 
 [Chime SDK UI Component Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/)
 
+[Migration to V2](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/migration-to-v2--page)
+
 <a href="https://www.npmjs.com/package/amazon-chime-sdk-component-library-react"><img src="https://img.shields.io/npm/v/amazon-chime-sdk-component-library-react?style=flat-square"></a>
 <a href="https://github.com/aws/amazon-chime-sdk-component-library-react"><img src="https://github.com/aws/amazon-chime-sdk-component-library-react/workflows/CI%20Workflow/badge.svg"></a>
 

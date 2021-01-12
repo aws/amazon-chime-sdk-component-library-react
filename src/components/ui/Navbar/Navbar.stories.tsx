@@ -28,7 +28,7 @@ export const _Navbar = () => {
 
   return (
     <Navbar flexDirection="column" container>
-      <NavbarHeader onClose={handleOnClose} />
+      <NavbarHeader title="My App" onClose={handleOnClose} />
       <Flex>
         <NavbarItem
           icon={<Information />}
