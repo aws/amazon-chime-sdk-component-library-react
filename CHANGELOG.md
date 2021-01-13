@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix Github Actions build-storybook error
 - [Docs] Fix ContentShare docs
 - Fix non-overridable Mic prop in `RosterAttendee`
+- Fix incorrect fill-rule property on `ZoomIn` and `ZoomOut`
 
 ### Added
 

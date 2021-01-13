@@ -6,7 +6,7 @@ import Svg, { SvgProps } from '../Svg';
 
 const ZoomOut: React.SFC<SvgProps> = (props) => (
   <Svg {...props}>
-    <g fill="none" fill-rule="evenodd">
+    <g fill="none" fillRule="evenodd">
       <g>
         <path d="M0 0H24V24H0z" />
         <path
