@@ -27,7 +27,7 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@babel/runtime": "^7.11.2",
-    "amazon-chime-sdk-js": "^2.1.0",
+    "amazon-chime-sdk-js": "^2.4.x",
     "aws-sdk": "^2.797.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^4.3.0",
