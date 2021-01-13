@@ -24,6 +24,15 @@ export const StyledInputWrapper = styled.span<InputWrapperProps>`
     transform: translateY(-50%);
   }
 
+  > .ch-right-icon {
+    position: absolute;
+    width: 1rem;
+    right: 0.4375rem;
+    position: absolute;
+    top: 54%;
+    transform: translateY(-50%);
+  }
+
   > input {
     padding: ${(props) => getPadding(props)};
   }

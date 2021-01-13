@@ -7,6 +7,7 @@ import { Size } from './';
 
 export interface InputWrapperProps {
   leadingIcon?: ReactNode;
+  endingIcon?: ReactNode;
   sizing?: Size;
   className?: string;
   children?: ReactNode | ReactNode[];
@@ -14,12 +15,13 @@ export interface InputWrapperProps {
 
 export const InputWrapper = forwardRef(
   (props: InputWrapperProps, ref: Ref<HTMLSpanElement>) => {
-    const { leadingIcon, children } = props;
+    const { leadingIcon, endingIcon, children } = props;
 
     return (
       <StyledInputWrapper ref={ref} {...props} data-testid="input-wrapper">
         {leadingIcon && <span className="ch-icon">{leadingIcon}</span>}
         {children}
+        {endingIcon && <span className="ch-right-icon">{endingIcon}</span>}
       </StyledInputWrapper>
     );
   }

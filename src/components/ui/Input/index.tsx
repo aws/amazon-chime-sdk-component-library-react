@@ -28,8 +28,10 @@ export interface InputProps
   onChange(event: ChangeEvent): void;
   /** The callback fired when the input value is cleared. */
   onClear?(): void;
-  /** The icon in the input. */
+  /** The icon in left of the input. */
   leadingIcon?: ReactNode;
+  /** The icon in right of the input. */
+  endingIcon?: ReactNode;
   /** The size of the input. */
   sizing?: Size;
   /** The value of the input. */
@@ -50,6 +52,7 @@ export const Input = forwardRef(
       onChange,
       className,
       leadingIcon,
+      endingIcon,
       showClear = true,
       ...rest
     } = props;
@@ -132,6 +135,7 @@ export const Input = forwardRef(
     return (
       <InputWrapper
         leadingIcon={leadingIcon}
+        endingIcon={endingIcon}
         sizing={sizing}
         className={`ch-input-wrapper ${className || ''}`}
       >
@@ -148,7 +152,7 @@ export const Input = forwardRef(
             setFocused(true);
           }}
         />
-        {showClear && (
+        {!endingIcon && showClear && (
           <StyledClear
             type="button"
             active={!!(onClear || (focused && value.length))}
