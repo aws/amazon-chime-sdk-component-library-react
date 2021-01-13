@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update Jest major version
+- Change control bar theme opacity to 1
 
 ### Removed
 
