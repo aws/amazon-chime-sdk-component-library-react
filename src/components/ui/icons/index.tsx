@@ -52,3 +52,5 @@ export { default as SignalStrength } from './SignalStrength';
 export { default as Sound } from './Sound';
 export { default as Spinner } from './Spinner';
 export { default as UpAndDownCaret } from './UpAndDownCaret';
+export { default as ZoomIn } from './ZoomIn';
+export { default as ZoomOut } from './ZoomOut';
