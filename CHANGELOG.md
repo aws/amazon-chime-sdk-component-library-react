@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Docs] Fix ContentShare docs
 - Fix non-overridable Mic prop in `RosterAttendee`
 - Fix incorrect fill-rule property on `ZoomIn` and `ZoomOut`
+- [Demo] Fix closing roster from stopping active speaker detection.
 
 ### Added
 
@@ -46,6 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Changed senderName to optional in ChatBubble
 - Moved children inside of a div in ChatBubble
 - Changed `MeetingManager` to strictly enforce `DevicePermissionStatus` type.
+- Update `realtimeUnsubscribeFromVolumeIndicator` interface to also accept a callback param.
 
 ### Removed
 

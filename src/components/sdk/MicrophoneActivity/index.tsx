@@ -26,13 +26,21 @@ export const MicrophoneActivity: React.FC<Props> = ({
       return;
     }
 
-    audioVideo.realtimeSubscribeToVolumeIndicator(attendeeId, (_, volume) => {
+    const callback = (
+      _: string,
+      volume: number | null,
+      __: boolean | null,
+      ___: number | null
+    ) => {
       if (bgEl.current) {
         bgEl.current.style.transform = `scaleY(${volume})`;
       }
-    });
+    };
 
-    return () => audioVideo.realtimeUnsubscribeFromVolumeIndicator(attendeeId);
+    audioVideo.realtimeSubscribeToVolumeIndicator(attendeeId, callback);
+
+    return () =>
+      audioVideo.realtimeUnsubscribeFromVolumeIndicator(attendeeId, callback);
   }, [attendeeId]);
 
   return (
