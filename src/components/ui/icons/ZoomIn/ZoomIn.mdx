@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import ZoomIn from './';
+import { lightTheme } from '../../../../theme/';
+
+# ZoomIn Icon
+
+The ZoomIn component creates an icon. Typically, you can use it to represent a zoom in action.
+
+## Importing
+
+```javascript
+import { ZoomIn } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <ZoomIn width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<ZoomIn width="2rem" />
+```
+
+## Props
+
+<Props of={ZoomIn} />
