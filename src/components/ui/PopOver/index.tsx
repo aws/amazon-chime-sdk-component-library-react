@@ -160,7 +160,6 @@ export const PopOver: FC<PopOverProps> = ({
                 ref={ref}
                 style={style}
                 data-testid="menu"
-                className="ch-popover-menu"
               >
                 {children}
               </StyledPopOverMenu>

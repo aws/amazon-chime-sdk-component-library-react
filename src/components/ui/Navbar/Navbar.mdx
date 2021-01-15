@@ -88,7 +88,7 @@ import {
 
 # NavbarHeader
 
-NavbarHeader component is displayed only in the mobile view with screen size less than `theme.mediaQueries.min.md` value defined in your theme (defaults to 768px).
+NavbarHeader component is displayed only in the mobile view with the `responsive` prop set to true and screen size less than `theme.mediaQueries.min.md` value defined in your theme (defaults to 768px).
 
 It gives a title to Navbar and also a close icon button to close the Navbar in mobile view.
 
@@ -103,9 +103,9 @@ It gives a title to Navbar and also a close icon button to close the Navbar in m
 
 # NavbarItem
 
-The NavbarItem component displays a single row in the Navbar. It is made up of `ControlBarItem` which acts as a button and a label.
+The NavbarItem component displays a single row in the Navbar. It is made up of `IconButton` which acts as a button and a label.
 
-The label is displayed only on smaller screens with width defined by `theme.mediaQueries.min.md` value in your theme (defaults to 768px), else only icon button is shown.
+The label is displayed optionally at larger breakpoints, and persists on smaller screens with width defined by `theme.mediaQueries.min.md` value in your theme (defaults to 768px), else only icon button is shown.
 
 # Example
 

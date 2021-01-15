@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+import { BaseProps } from '../../ui/Base';
 
-export interface SvgProps extends React.SVGAttributes<HTMLOrSVGElement> {
+export interface SvgProps extends React.SVGAttributes<HTMLOrSVGElement>  {
   /** CSS classname to apply custom styles. */
   className?: string;
   /** Defines the position and dimension of an SVG viewport. viewBox attribute is a list of four numbers: min-x, min-y, width and height. */
@@ -14,6 +15,7 @@ export interface SvgProps extends React.SVGAttributes<HTMLOrSVGElement> {
   height?: string;
   /** The title of a SVG component. */
   title?: string;
+  css?: string;
 }
 
 const Svg: React.FC<SvgProps> = ({

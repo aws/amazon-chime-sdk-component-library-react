@@ -8,6 +8,7 @@ import IconButton from '../../../../src/components/ui/Button/IconButton';
 import Meeting from '../../../../src/components/ui/icons/Meeting';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
+import Badge from '../../../../src/components/ui/Badge';
 
 describe('Icon Button', () => {
   it('should render an icon Button', () => {
@@ -34,5 +35,14 @@ describe('Icon Button', () => {
     const labelSpan = getByTestId('button-label');
 
     expect(labelSpan).toHaveStyle({ height: '1px', width: '1px' });
+  });
+
+  it('should render the value of the "badge" prop if that value exists', () => {
+    const badgeContent = <Badge className="test-badge" value={'test'} />;
+    const labelText = 'Icon Button';
+    const component = <IconButton label={labelText} badge={badgeContent} icon={<Meeting />} />;
+    const { getByText } = renderWithTheme(lightTheme, component);
+    const el = getByText('test');
+    expect(el).toBeInTheDocument();
   });
 });
