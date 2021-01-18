@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix Github Actions build-storybook error
 - [Docs] Fix ContentShare docs
 - Fix non-overridable Mic prop in `RosterAttendee`
+- Fix incorrect fill-rule property on `ZoomIn` and `ZoomOut`
 
 ### Added
 
@@ -22,10 +23,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added optional 'id' prop for ui components
 - Added a classname to PopOverMenu component for styling access
 - Added a "dismissible" prop to Modal to optionally allow persistent modals
+- Added ZoomIn and ZoomOut icons
 
 ### Changed
 
 - Update Jest major version
+- Change control bar theme opacity to 1
 
 ### Removed
 
