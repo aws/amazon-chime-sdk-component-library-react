@@ -49,6 +49,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a classname to PopOverMenu component for styling access
 - Added forwardRef for Textarea
 - Added `useDevicePermissionStatus` hook as an exported component from the library.
+- Added a "dismissible" prop to Modal to optionally allow persistent modals
+- Added ZoomIn and ZoomOut icons
+- Refactored NavBar to allow static width
+- Refactored NavBarItem to use IconButton directly
 
 ### Changed
 
