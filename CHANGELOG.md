@@ -32,6 +32,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- Remove playwright tests, scripts, and dependency
+
 ## [1.6.0] - 2020-12-14
 
 ### Fixed
