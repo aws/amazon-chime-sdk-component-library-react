@@ -48,10 +48,11 @@ export const _ChatBubbleContainer = () => {
         <ChatBubble
           variant="outgoing"
           senderName="Bruce Wayne"
-          content="This is an example ChatBubble in a ChatBubbleContainer."
           showTail={true}
           css={bubbleStyles}
-        />
+        >
+          This is an example ChatBubble in a ChatBubbleContainer.
+        </ChatBubble>
       </ChatBubbleContainer>
       <ChatBubbleContainer
         timestamp={formatTime('2020-10-05T21:51:26.569Z')}
@@ -60,10 +61,11 @@ export const _ChatBubbleContainer = () => {
         <ChatBubble
           variant="incoming"
           senderName="Barry Allen"
-          content="This is an example ChatBubble in a ChatBubbleContainer."
           showTail={true}
           css={bubbleStyles}
-        />
+        >
+          This is an example ChatBubble in a ChatBubbleContainer.
+        </ChatBubble>
       </ChatBubbleContainer>
     </Flex>
   );
