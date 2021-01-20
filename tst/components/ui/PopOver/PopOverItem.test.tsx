@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -9,7 +9,6 @@ import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 
 describe('', () => {
-
   it('should render a PopOver item', () => {
     const component = <PopOverItem />;
     const { getByTestId } = renderWithTheme(lightTheme, component);
@@ -19,7 +18,7 @@ describe('', () => {
   });
 
   it('should render as a "button" element with an button Aria role', () => {
-    const component = <PopOverItem as='button' />;
+    const component = <PopOverItem as="button" />;
     const { getByRole } = renderWithTheme(lightTheme, component);
     const element = getByRole('button');
 
@@ -27,7 +26,7 @@ describe('', () => {
   });
 
   it('should render as an "a" element with an Anchor Aria role', () => {
-    const component = <PopOverItem as='a' href='https://www.amazon.com'/>;
+    const component = <PopOverItem as="a" href="https://www.amazon.com" />;
     const { getByRole } = renderWithTheme(lightTheme, component);
     const element = getByRole('link');
 
@@ -35,7 +34,7 @@ describe('', () => {
   });
 
   it('should render a check icon if checked', () => {
-    const component = <PopOverItem checked/>;
+    const component = <PopOverItem checked />;
     const { queryByTestId } = renderWithTheme(lightTheme, component);
     const element = queryByTestId('popover-check');
 

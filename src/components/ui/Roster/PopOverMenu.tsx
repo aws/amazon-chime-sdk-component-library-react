@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -26,7 +26,7 @@ export const PopOverMenu = ({
       <IconButton
         {...buttonProps}
         {...props}
-        className={classNames("ch-menu", buttonProps?.className)}
+        className={classNames('ch-menu', buttonProps?.className)}
         icon={<Dots />}
         label={a11yMenuLabel}
       />

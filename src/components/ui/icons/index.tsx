@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 export { default as Add } from './Add';
@@ -52,3 +52,5 @@ export { default as SignalStrength } from './SignalStrength';
 export { default as Sound } from './Sound';
 export { default as Spinner } from './Spinner';
 export { default as UpAndDownCaret } from './UpAndDownCaret';
+export { default as ZoomIn } from './ZoomIn';
+export { default as ZoomOut } from './ZoomOut';

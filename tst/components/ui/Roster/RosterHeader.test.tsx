@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { ChangeEvent } from 'react';
@@ -65,7 +65,7 @@ describe('RosterCell', () => {
       getByLabelText('Open search'),
       new MouseEvent('click', {
         bubbles: true,
-        cancelable: true
+        cancelable: true,
       })
     );
     expect(getByLabelText('Search')).toBeInTheDocument();
@@ -73,7 +73,7 @@ describe('RosterCell', () => {
   it('should render children if they are available', () => {
     const component = (
       <RosterHeader title="Present" onSearch={() => {}}>
-        <IconBUtton label="presenter" icon={<Presenter/>} />
+        <IconBUtton label="presenter" icon={<Presenter />} />
       </RosterHeader>
     );
     const { getByLabelText } = renderWithTheme(lightTheme, component);

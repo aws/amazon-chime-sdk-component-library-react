@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, ReactElement } from 'react';
@@ -16,7 +16,7 @@ export interface ModalButtonGroupProps
 
 export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
   primaryButtons,
-  secondaryButtons
+  secondaryButtons,
 }) => {
   const context = useModalContext();
 
@@ -26,12 +26,13 @@ export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
         button.props.onClick && button.props.onClick();
         !!button.props.closesModal && context.onClose();
       },
-      key: button.props.label
+      key: button.props.label,
     });
   };
 
   const addCloseBehaviorToButtons = (buttons: JSX.Element[] | JSX.Element) => {
-    if (!buttons || (buttons instanceof Array && buttons.length === 0)) {
+    if (!context.dismissible || !buttons || (buttons instanceof Array && buttons.length === 0)) {
+      context.dismissible && console.warn("the 'dismissible prop prevents buttons from closing the modal");
       return buttons;
     }
     if (!(buttons instanceof Array)) {

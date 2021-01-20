@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -8,9 +8,7 @@ import Heading from '../../../../src/components/ui/Heading';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 
-
 describe('Heading', () => {
-
   it('should render a Heading with children', () => {
     const childrenContent = 'children-content';
     const component = <Heading level={1}>{childrenContent}</Heading>;
@@ -21,7 +19,11 @@ describe('Heading', () => {
   });
 
   it('should render as the tag passed', () => {
-    const component = <Heading level={1} tag='span'>Hello World</Heading>;
+    const component = (
+      <Heading level={1} tag="span">
+        Hello World
+      </Heading>
+    );
     renderWithTheme(lightTheme, component);
 
     expect(document.querySelectorAll('span')).toHaveLength(1);

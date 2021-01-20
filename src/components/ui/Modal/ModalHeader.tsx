@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, HTMLAttributes } from 'react';
@@ -35,7 +35,7 @@ export const ModalHeader: FC<ModalHeaderProps> = ({
         {title}
       </Tag>
 
-      {displayClose && (
+      {(displayClose && context?.dismissible) && (
         <IconButton
           label="Close"
           icon={<Remove />}

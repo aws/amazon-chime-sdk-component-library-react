@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -9,13 +9,13 @@ import {
   ModalHeader,
   ModalBody,
   ModalButtonGroup,
-  ModalButton
+  ModalButton,
 } from 'amazon-chime-sdk-component-library-react';
 
 import './ChannelModals.css';
 
 export const ViewChannelDetailsModal = ({ onClose, channel, moderators }) => {
-  const modNames = moderators.map(m => (
+  const modNames = moderators.map((m) => (
     <div key={m.Moderator.Arn}>{m.Moderator.Name}</div>
   ));
   return (
@@ -82,7 +82,7 @@ export const ViewChannelDetailsModal = ({ onClose, channel, moderators }) => {
       </ModalBody>
       <ModalButtonGroup
         primaryButtons={[
-          <ModalButton label="OK" variant="primary" closesModal />
+          <ModalButton label="OK" variant="primary" closesModal />,
         ]}
       />
     </Modal>

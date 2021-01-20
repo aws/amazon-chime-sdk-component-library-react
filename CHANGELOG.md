@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix icon preventing clicks on `Select` components
 - Fix Github Actions build-storybook error
 - [Docs] Fix ContentShare docs
+- Fix non-overridable Mic prop in `RosterAttendee`
+- Fix incorrect fill-rule property on `ZoomIn` and `ZoomOut`
 
 ### Added
 
@@ -20,11 +22,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Echo icon
 - Added poorConnection property to DeskPhone icon
 - Added optional 'id' prop for ui components
+- Added a classname to PopOverMenu component for styling access
+- Added a "dismissible" prop to Modal to optionally allow persistent modals
+- Added ZoomIn and ZoomOut icons
 
 ### Changed
+
 - Update Jest major version
+- Change control bar theme opacity to 1
 
 ### Removed
+
+- Remove playwright tests, scripts, and dependency
 
 ## [1.6.0] - 2020-12-14
 
@@ -67,6 +76,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added Attachment, Dock, and Emoji picker icons
 - Added HandRaise and ListHandRaise icons
 - Added ConnectionProblem icon
+- Added linkColors for incoming and outgoing chat in chatBubble
 
 ### Changed
 

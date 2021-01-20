@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -13,11 +13,11 @@ export default {
   title: 'UI Components/Grid',
   parameters: {
     docs: {
-      page: GridDocs.parameters.docs.page().props.children.type
-    }
+      page: GridDocs.parameters.docs.page().props.children.type,
+    },
   },
   component: Grid,
-  excludeStories: ['Child']
+  excludeStories: ['Child'],
 };
 
 export const Child: React.FC = ({ children }) => (
@@ -40,7 +40,7 @@ export const BasicGrid = () => {
     gridGap: text('gridGap', '.5rem'),
     gridAutoFlow: text('gridAutoFlow', ''),
     gridTemplateRows: text('gridTemplateRows', ''),
-    gridTemplateColumns: text('gridTemplateColumns', 'repeat(2, 1fr) 4fr')
+    gridTemplateColumns: text('gridTemplateColumns', 'repeat(2, 1fr) 4fr'),
   };
 
   return (
@@ -58,7 +58,7 @@ export const NamedGrid = () => {
         gridTemplateColumns={{
           xs: '1fr',
           md: '1fr 1fr 4rem',
-          lg: '1fr 1fr 7rem'
+          lg: '1fr 1fr 7rem',
         }}
         gridTemplateAreas={{
           md: `"other main sidebar"
@@ -69,7 +69,7 @@ export const NamedGrid = () => {
               "main main sidebar"`,
           xl: `"other main sidebar"
               "other main sidebar"
-              "other main sidebar"`
+              "other main sidebar"`,
         }}
       >
         <Child>Other</Child>
@@ -86,5 +86,5 @@ export const NamedGrid = () => {
 };
 
 NamedGrid.story = {
-  name: 'Named Areas Grid'
+  name: 'Named Areas Grid',
 };

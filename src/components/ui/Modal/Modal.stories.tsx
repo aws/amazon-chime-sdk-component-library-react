@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
@@ -14,6 +14,7 @@ import ModalButton from './ModalButton';
 import ModalButtonGroup from './ModalButtonGroup';
 import PrimaryButton from '../Button/PrimaryButton';
 import ModalDocs from './Modal.mdx';
+import Heading from '../Heading';
 
 export default {
   title: 'UI Components/Modal',
@@ -63,7 +64,7 @@ export const BasicExample = () => {
     <Flex layout="fill-space-centered">
       <div style={{ width: '30rem', textAlign: 'center' }}>
         <div>
-          <h1>Modal basic example</h1>
+          <Heading level={6}>Modal basic example</Heading>
           <PrimaryButton onClick={toggleModal} label="toggle modal" />
           {showModal && (
             <Modal
@@ -110,7 +111,7 @@ export const BasicExample = () => {
   );
 };
 
-BasicExample.story = 'Basic example';
+BasicExample.story = 'Basic Example';
 
 export const largeContent = () => {
   const [showModal, setShowModal] = useState(false);
@@ -120,7 +121,7 @@ export const largeContent = () => {
     <Flex layout="fill-space-centered">
       <div style={{ width: '30rem', textAlign: 'center' }}>
         <div>
-          <h1>Modal with scrollable content</h1>
+          <Heading level={6}>Modal with scrollable content</Heading>
           <PrimaryButton onClick={toggleModal} label="toggle modal" />
 
           {showModal && (
@@ -269,8 +270,66 @@ export const largeContent = () => {
 };
 
 largeContent.story = {
-  name: 'Large content example',
+  name: 'Large Content Example',
 };
+
+export const PersistentExample = () => {
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = () => setShowModal(!showModal);
+
+  return (
+    <Flex layout="fill-space-centered">
+      <div style={{ width: 'auto', textAlign: 'center' }}>
+        <div>
+          <Heading level={6}>Persistent Modal Example</Heading>
+          <PrimaryButton onClick={toggleModal} label="open modal" />
+          {showModal && (
+            <Modal
+              size={select('size', ['md', 'lg', 'fullscreen'], 'md')}
+              onClose={null}
+              rootId="modal-root"
+              dismissible={false}
+            >
+              <ModalHeader title="This content cannot be dismissed" />
+              <ModalBody>
+                <p style={{ margin: '0 0 1rem' }}>
+                  Vivamus nisi justo, sagittis eu dolor vel, pretium placerat
+                  dolor. Vestibulum ante ipsum primis in faucibus orci luctus
+                  et ultrices posuere cubilia curae; Nullam condimentum nisi
+                  velit, id pellentesque quam facilisis dapibus. Donec orci
+                  est, faucibus at dapibus sit amet, hendrerit vitae libero.
+                  Quisque sed pellentesque diam. Fusce vitae imperdiet nisi, a
+                  elementum ante. Lorem ipsum dolor sit amet, consectetur
+                  adipiscing elit. Sed fringilla pharetra nunc, sed ornare
+                  urna congue a.
+                </p>
+                <p style={{ margin: '0 0 1rem' }}>
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Suspendisse urna eros, vestibulum quis gravida quis, tempus
+                  in sapien. Sed aliquet velit lectus, ac tempus dui iaculis
+                  ac. Morbi ullamcorper laoreet magna ac commodo. Aenean
+                  pharetra nulla sapien, nec interdum dolor semper quis. Ut
+                  posuere libero at scelerisque iaculis. Phasellus eu arcu
+                  ullamcorper, ultrices turpis id, pretium tellus. Integer
+                  accumsan ultrices semper. Maecenas eu scelerisque metus, nec
+                  pulvinar odio. Nunc imperdiet efficitur vehicula. Curabitur
+                  laoreet ut tellus quis sagittis. Nulla auctor vitae felis
+                  quis convallis. Nunc hendrerit imperdiet elit at auctor.
+                  Integer condimentum euismod orci vitae venenatis. Proin
+                  maximus in sem vitae auctor. Aliquam egestas, lorem vel
+                  volutpat pharetra, dolor felis malesuada lorem, vitae
+                  fermentum eros erat tempor lacus.
+                </p>
+              </ModalBody>
+            </Modal>
+          )}
+        </div>
+      </div>
+    </Flex>
+  );
+};
+
+PersistentExample.story = 'Persistent Modal Example';
 
 export const ModalDemo = () => {
   const [isOpen, setIsOpen] = useState(false);

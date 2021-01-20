@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -21,20 +21,20 @@ interface Props {
 
 const AudioInputControl: React.FC<Props> = ({
   muteLabel = 'Mute',
-  unmuteLabel = 'Unmute'
+  unmuteLabel = 'Unmute',
 }) => {
   const meetingManager = useMeetingManager();
   const { muted, toggleMute } = useToggleLocalMute();
   const audioInputConfig: DeviceConfig = {
-    additionalDevices: true
+    additionalDevices: true,
   };
   const { devices, selectedDevice } = useAudioInputs(audioInputConfig);
 
-  const dropdownOptions: PopOverItemProps[] = devices.map(device => ({
+  const dropdownOptions: PopOverItemProps[] = devices.map((device) => ({
     children: <span>{device.label}</span>,
     checked: isOptionActive(selectedDevice, device.deviceId),
     onClick: (): Promise<void> =>
-      meetingManager.selectAudioInputDevice(device.deviceId)
+      meetingManager.selectAudioInputDevice(device.deviceId),
   }));
 
   return (

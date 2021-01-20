@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -10,7 +10,11 @@ import { renderWithTheme } from '../../../test-helpers';
 
 describe('Portal', () => {
   it('should render a Portal without rootId', () => {
-    const component = <Portal><span>Portal content</span></Portal>;
+    const component = (
+      <Portal>
+        <span>Portal content</span>
+      </Portal>
+    );
     renderWithTheme(lightTheme, component);
     const divs = document.querySelectorAll('div');
 
@@ -20,8 +24,10 @@ describe('Portal', () => {
   it('should render a Portal with rootId', () => {
     const component = (
       <>
-        <div id='root-div'>Root Div</div>
-        <Portal rootId='root-div'><div>Portal content</div></Portal>
+        <div id="root-div">Root Div</div>
+        <Portal rootId="root-div">
+          <div>Portal content</div>
+        </Portal>
       </>
     );
     const { getByText } = renderWithTheme(lightTheme, component);

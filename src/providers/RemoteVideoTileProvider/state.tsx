@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 type tileMap = {
@@ -19,7 +19,7 @@ export type State = {
 export enum VideoTileActionType {
   UPDATE,
   REMOVE,
-  RESET
+  RESET,
 }
 
 type UpdateAction = {
@@ -49,7 +49,7 @@ export const initialState: State = {
   tiles: [],
   tileIdToAttendeeId: {},
   attendeeIdToTileId: {},
-  size: 0
+  size: 0,
 };
 
 const removeProperty = (obj: { [key: string]: any }, property: string) => {
@@ -74,18 +74,18 @@ export function reducer(state: State, { type, payload }: Action): State {
       const newTiles = [...tiles, tileId];
       const tileIds = {
         ...tileIdToAttendeeId,
-        [tileStr]: attendeeId
+        [tileStr]: attendeeId,
       };
       const attendeeIds = {
         ...attendeeIdToTileId,
-        [attendeeId]: tileId
+        [attendeeId]: tileId,
       };
 
       return {
         tiles: newTiles,
         tileIdToAttendeeId: tileIds,
         attendeeIdToTileId: attendeeIds,
-        size: size + 1
+        size: size + 1,
       };
     }
     case VideoTileActionType.REMOVE: {
@@ -97,7 +97,7 @@ export function reducer(state: State, { type, payload }: Action): State {
         return state;
       }
 
-      const newTiles = tiles.filter(id => tileId !== id);
+      const newTiles = tiles.filter((id) => tileId !== id);
       const tileIds = removeProperty(tileIdToAttendeeId, tileStr);
       const attendeeIds = removeProperty(attendeeIdToTileId, attendeeId);
 
@@ -105,7 +105,7 @@ export function reducer(state: State, { type, payload }: Action): State {
         tiles: newTiles,
         tileIdToAttendeeId: tileIds,
         attendeeIdToTileId: attendeeIds,
-        size: size - 1
+        size: size - 1,
       };
     }
     case VideoTileActionType.RESET: {

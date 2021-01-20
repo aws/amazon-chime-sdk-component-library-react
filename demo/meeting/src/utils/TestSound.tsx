@@ -1,9 +1,9 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import {
   DefaultAudioMixController,
-  TimeoutScheduler,
+  TimeoutScheduler
 } from 'amazon-chime-sdk-js';
 
 class TestSound {
@@ -15,7 +15,8 @@ class TestSound {
     maxGainValue = 0.1
   ) {
     // @ts-ignore
-    const audioContext: AudioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const audioContext: AudioContext = new (window.AudioContext ||
+      window.webkitAudioContext)();
     const gainNode = audioContext.createGain();
     gainNode.gain.value = 0;
     const oscillatorNode = audioContext.createOscillator();

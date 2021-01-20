@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import defaultTheme from './default';
@@ -340,7 +340,7 @@ const controlBar = {
   shadow: shadows.large,
   bgd: colors.greys.white,
   border: `0.03125rem solid ${colors.greys.grey20}`,
-  opacity: 0.95,
+  opacity: 1,
   selected: {
     text: buttons.primary.selected.text,
     bgd: buttons.primary.selected.bgd,
@@ -374,10 +374,18 @@ const chatBubble = {
   incoming: {
     bgd: colors.greys.white,
     fontColor: colors.greys.grey60,
+    linkColor: colors.primary.main,
+    linkColorHover: colors.primary.dark,
+    linkColorActive: colors.primary.darker,
+    linkColorVisited: colors.primary.darkest,
   },
   outgoing: {
     bgd: colors.primary.light,
     fontColor: colors.greys.grey10,
+    linkColor: colors.greys.white,
+    linkColorHover: colors.greys.grey10,
+    linkColorActive: colors.greys.grey20,
+    linkColorVisited: colors.greys.grey30,
   },
   container: {
     fontColor: colors.greys.grey70,

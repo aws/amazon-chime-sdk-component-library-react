@@ -1,5 +1,5 @@
 /* eslint-disable no-restricted-properties */
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 const formatBytes = (bytes, decimals = 2) => {

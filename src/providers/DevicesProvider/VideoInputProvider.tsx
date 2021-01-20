@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
@@ -6,7 +6,7 @@ import React, {
   useEffect,
   useState,
   useContext,
-  useMemo
+  useMemo,
 } from 'react';
 import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
@@ -45,7 +45,7 @@ const VideoInputProvider: React.FC = ({ children }) => {
       videoInputsChanged: (newvideoInputs: MediaDeviceInfo[]) => {
         console.log('VideoInputProvider - video inputs updated');
         setVideoInputs(newvideoInputs);
-      }
+      },
     };
 
     async function initVideoInput() {
@@ -72,7 +72,7 @@ const VideoInputProvider: React.FC = ({ children }) => {
   const contextValue: DeviceTypeContext = useMemo(
     () => ({
       devices: videoInputs,
-      selectedDevice: selectedVideoInputDevice
+      selectedDevice: selectedVideoInputDevice,
     }),
     [videoInputs, selectedVideoInputDevice]
   );

@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
@@ -7,31 +7,31 @@ import {
   Input,
   Flex,
   Button,
-  Heading
+  Heading,
 } from 'amazon-chime-sdk-component-library-react';
 
 import './login.css';
 
-const Login = props => {
+const Login = (props) => {
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const { login, register } = props;
 
-  const onRegister = e => {
+  const onRegister = (e) => {
     e.preventDefault();
     register(userName, password, '');
   };
 
-  const onLogin = e => {
+  const onLogin = (e) => {
     e.preventDefault();
     login(userName, password);
   };
 
-  const onUserName = e => {
+  const onUserName = (e) => {
     setUsername(e.target.value);
   };
 
-  const onPassword = e => {
+  const onPassword = (e) => {
     setPassword(e.target.value);
   };
 
@@ -55,7 +55,7 @@ const Login = props => {
             field={Input}
             label="User name"
             className="input username-input"
-            onChange={e => onUserName(e)}
+            onChange={(e) => onUserName(e)}
             value={userName}
             type="text"
             showClear
@@ -66,7 +66,7 @@ const Login = props => {
             label="Password"
             fieldProps={{ type: 'password' }}
             className="input password-input"
-            onChange={e => onPassword(e)}
+            onChange={(e) => onPassword(e)}
             value={password}
             showClear
             layout="horizontal"

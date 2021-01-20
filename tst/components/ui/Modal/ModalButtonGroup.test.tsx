@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -16,7 +16,7 @@ describe('ModalButtonGroup', () => {
   const secondaryButtonLbl = 'test-secondary';
   const onClose = jest.fn();
   const labelID = 'test-label';
-  const testContext = { onClose, labelID };
+  const testContext = { onClose, labelID, dismissible: true, };
 
   it('renders a group with a primary Button', () => {
     const component = (
@@ -66,7 +66,7 @@ describe('ModalButtonGroup', () => {
     const {
       getByTestId,
       getByLabelText,
-      queryAllByLabelText
+      queryAllByLabelText,
     } = renderWithTheme(lightTheme, component);
     const el = getByTestId('modal-button-group');
     expect(el).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe('ModalButtonGroup', () => {
       <ModalContext.Provider value={testContext}>
         <ModalButtonGroup
           primaryButtons={[
-            <ModalButton label="close" closesModal onClick={onClose} />
+            <ModalButton label="close" closesModal onClick={onClose} />,
           ]}
         />
       </ModalContext.Provider>
@@ -110,5 +110,25 @@ describe('ModalButtonGroup', () => {
     fireEvent.click(modalButton);
     expect(component.props.value.onClose).toHaveBeenCalled();
     expect(getByLabelText('close')).toBeInTheDocument();
+  });
+
+  it('does not inject the onClose function into the ModalButton click handler when "dismissible" is false', () => {
+    const onClose = jest.fn();
+    const labelID = 'test-label';
+    const context = { onClose, labelID, dismissible: false };
+    const component = (
+      <ModalContext.Provider value={context}>
+        <ModalButtonGroup
+          primaryButtons={[<ModalButton label="close" closesModal />]}
+        />
+      </ModalContext.Provider>
+    );
+    const { getByTestId } = renderWithTheme(
+      lightTheme,
+      component
+    );
+    const modalButton = getByTestId('button');
+    fireEvent.click(modalButton);
+    expect(component.props.value.onClose).not.toHaveBeenCalled();
   });
 });

@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { Ref, forwardRef } from 'react';
@@ -12,7 +12,7 @@ export const SearchInput = forwardRef(
       ...props,
       sizing: 'sm',
       type: 'search',
-      leadingIcon: <Search data-testid="search-icon" />
+      leadingIcon: <Search data-testid="search-icon" />,
     };
 
     return <Input {...searchProps} ref={ref} />;

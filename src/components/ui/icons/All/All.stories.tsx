@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -56,6 +56,8 @@ import Eye from '../Eye';
 import EmojiPicker from '../EmojiPicker';
 import UpAndDownCaret from '../UpAndDownCaret';
 import Spinner from '../Spinner';
+import ZoomOut from '../ZoomOut';
+import ZoomIn from '../ZoomIn';
 
 export default {
   title: 'UI Components/Icons/All',
@@ -114,6 +116,8 @@ const icons = [
   Sound,
   Spinner,
   UpAndDownCaret,
+  ZoomOut,
+  ZoomIn,
 ];
 
 const IconWrapper = styled.div`

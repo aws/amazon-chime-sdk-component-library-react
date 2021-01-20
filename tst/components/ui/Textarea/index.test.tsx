@@ -1,16 +1,15 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
 import React from 'react';
-import userEvent from "@testing-library/user-event";
+import userEvent from '@testing-library/user-event';
 
 import Textarea from '../../../../src/components/ui/Textarea';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 
 describe('Textarea', () => {
-
   const value = 'test-value';
   const label = 'test-label';
   let mockFunction: any;
@@ -20,14 +19,18 @@ describe('Textarea', () => {
   });
 
   it('should render a Textarea', () => {
-    const component = <Textarea value={value} onChange={mockFunction} label={label} />;
+    const component = (
+      <Textarea value={value} onChange={mockFunction} label={label} />
+    );
     const { queryByTestId } = renderWithTheme(lightTheme, component);
 
     expect(queryByTestId('textarea')).toBeInTheDocument();
   });
 
   it('should render a Textarea with aria label = test-label', () => {
-    const component = <Textarea value={value} onChange={mockFunction} label={label} />;
+    const component = (
+      <Textarea value={value} onChange={mockFunction} label={label} />
+    );
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const textarea = getByTestId('textarea');
 
@@ -35,7 +38,9 @@ describe('Textarea', () => {
   });
 
   it('should render a Textarea with value = test-value', () => {
-    const component = <Textarea value={value} onChange={mockFunction} label={label} />;
+    const component = (
+      <Textarea value={value} onChange={mockFunction} label={label} />
+    );
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const textarea = getByTestId('textarea');
 
@@ -43,12 +48,13 @@ describe('Textarea', () => {
   });
 
   it('should call onChange event handler when input', () => {
-    const component = <Textarea value={value} onChange={mockFunction} label={label} />;
+    const component = (
+      <Textarea value={value} onChange={mockFunction} label={label} />
+    );
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const textarea = getByTestId('textarea');
 
     userEvent.type(textarea, 'updated content');
     expect(mockFunction).toHaveBeenCalledTimes(15);
   });
-
 });

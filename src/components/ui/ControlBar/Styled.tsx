@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled, { css } from 'styled-components';
@@ -19,12 +19,12 @@ const layoutMap = {
   top: 'flex-direction: row; width: 100%; top: 0; position: fixed;',
   bottom: 'flex-direction: row; width: 100%; bottom: 0; position: fixed;',
   right: 'flex-direction: column; height: 100%; right: 0; position: fixed;',
-  left: 'flex-direction: column; height: 100%; left: 0; position: fixed;'
+  left: 'flex-direction: column; height: 100%; left: 0; position: fixed;',
 };
 
 const gridTemplateColumnMap = {
   popOver: 'grid-template-columns: 2.5rem minmax(0.5rem, auto);',
-  'popOver&vertical': 'grid-template-columns: 1.5rem 1.5rem 1.5rem'
+  'popOver&vertical': 'grid-template-columns: 1.5rem 1.5rem 1.5rem',
 };
 
 export const isVertical = (layout: ControlBarLayout) => {
@@ -40,41 +40,44 @@ const unsetPosition = {
   top: 'unset;',
   bottom: 'unset;',
   right: 'unset;',
-  left: 'unset;'
+  left: 'unset;',
 };
 
-export const responsiveStyles = (props:StyledControlBarProps) => {
-  return css`  
+export const responsiveStyles = (props: StyledControlBarProps) => {
+  return css`
     ${({ theme }) => theme.mediaQueries.max.sm} {
       ${unsetPosition}
-      ${(props:StyledControlBarProps) =>
+      ${(props: StyledControlBarProps) =>
         isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
-      box-shadow: ${(props:StyledControlBarProps) => props.theme.controlBar.shadow};
+      box-shadow: ${(props: StyledControlBarProps) =>
+        props.theme.controlBar.shadow};
       border: none;
-      height: ${(props:StyledControlBarProps) => isVertical(props.layout) && '100%'};
-      width: ${(props:StyledControlBarProps) => !isVertical(props.layout) && '100%'};
+      height: ${(props: StyledControlBarProps) =>
+        isVertical(props.layout) && '100%'};
+      width: ${(props: StyledControlBarProps) =>
+        !isVertical(props.layout) && '100%'};
     }
 
     ${({ theme }) => theme.mediaQueries.max.xs} {
-      justify-content: ${(props:StyledControlBarProps) =>
+      justify-content: ${(props: StyledControlBarProps) =>
         isVertical(props.layout) ? 'center' : 'space-around'};
       ${unsetPosition}
-      ${(props:StyledControlBarProps) =>
+      ${(props: StyledControlBarProps) =>
         isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
       box-shadow: ${({ theme }) => theme.controlBar.shadow};
       border: none;
     }
   `;
 };
- 
+
 export const StyledControlBar = styled.div<StyledControlBarProps>`
   display: inline-flex;
   justify-content: center;
   align-items: center;
   border-radius: ${({ theme, layout }) =>
     isUndocked(layout) ? theme.radii.default : '0'};
-  background-color: ${props => props.theme.controlBar.bgd};
-  opacity: ${props => props.theme.controlBar.opacity};
+  background-color: ${(props) => props.theme.controlBar.bgd};
+  opacity: ${(props) => props.theme.controlBar.opacity};
   border: ${({ theme, layout }) =>
     isUndocked(layout) ? 'none' : theme.controlBar.border};
   box-shadow: ${({ theme, layout }) =>
@@ -103,16 +106,23 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
   justify-items: center;
   align-items: center;
   ${({ popOver, layout, children }) => `
-    ${(!isVertical(layout) && (popOver || children) && gridTemplateColumnMap['popOver']) ||
-      ''}
-    ${(isVertical(layout) &&
-      (popOver || children) &&
-      gridTemplateColumnMap['popOver&vertical']) ||
-      ''}
+    ${
+      (!isVertical(layout) &&
+        (popOver || children) &&
+        gridTemplateColumnMap['popOver']) ||
+      ''
+    }
+    ${
+      (isVertical(layout) &&
+        (popOver || children) &&
+        gridTemplateColumnMap['popOver&vertical']) ||
+      ''
+    }
   `};
 
   .ch-control-bar-item-iconButton {
-    grid-column-start: ${({ layout, popOver, children }) => isVertical(layout) && (popOver || children) ? '2' : '1'};
+    grid-column-start: ${({ layout, popOver, children }) =>
+      isVertical(layout) && (popOver || children) ? '2' : '1'};
 
     .ch-icon {
       width: 1.5rem;
@@ -122,37 +132,38 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
   }
 
   .ch-control-bar-item-caret {
-      width: 1.25rem;
-      height: 1.25rem;
-      padding: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    padding: 0;
 
-      .ch-icon {
-        width: 100%;
-        height: 100%;
-      }
-
-      // setting this transform on the shape so we 
-      // don't overwrite the rotate transform on the Caret
-      .Svg g {
-        transform: scale(1.333); 
-        transform-origin: 50% 50%;
-      }
+    .ch-icon {
+      width: 100%;
+      height: 100%;
     }
+
+    // setting this transform on the shape so we
+    // don't overwrite the rotate transform on the Caret
+    .Svg g {
+      transform: scale(1.333);
+      transform-origin: 50% 50%;
+    }
+  }
 
   .ch-control-bar-popover {
     background-color: inherit;
-    grid-column-start: ${({ layout, popOver, children }) => isVertical(layout) && (popOver || children) ? '2' : '1'};
+    grid-column-start: ${({ layout, popOver, children }) =>
+      isVertical(layout) && (popOver || children) ? '2' : '1'};
     color: ${({ theme }) => theme.controlBar.text};
 
     .isOpen.ch-control-bar-item-caret {
-      color: ${props => props.theme.colors.primary.main};
+      color: ${(props) => props.theme.colors.primary.main};
     }
   }
 
   .ch-control-bar-item-label {
     color: ${({ theme }) => theme.controlBar.text};
     grid-row-start: 2;
-    font-size: ${props =>
+    font-size: ${(props) =>
       props.theme.fontSizes.footnote
         .fontSize}; /* TODO: get updated font size from design */
     padding-top: 0.25rem;

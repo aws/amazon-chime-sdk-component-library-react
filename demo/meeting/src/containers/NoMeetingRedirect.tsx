@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect } from 'react';
@@ -7,7 +7,7 @@ import {
   useMeetingManager,
   useNotificationDispatch,
   Severity,
-  ActionType,
+  ActionType
 } from 'amazon-chime-sdk-component-library-react';
 
 import routes from '../constants/routes';
@@ -20,14 +20,14 @@ const NoMeetingRedirect: React.FC = ({ children }) => {
   const payload: any = {
     severity: Severity.INFO,
     message: 'No meeting found, please enter a valid meeting Id',
-    autoClose: true,
+    autoClose: true
   };
 
   useEffect(() => {
     if (!meetingManager.meetingSession) {
       dispatch({
         type: ActionType.ADD,
-        payload: payload,
+        payload: payload
       });
       history.push(routes.HOME);
     }

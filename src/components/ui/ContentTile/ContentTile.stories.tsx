@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -11,10 +11,10 @@ export default {
   title: 'UI Components/Video/ContentTile',
   parameters: {
     docs: {
-      page: ContentTileDocs.parameters.docs.page().props.children.type
-    }
+      page: ContentTileDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: ContentTile
+  component: ContentTile,
 };
 
 export const _ContentTile = () => {
@@ -28,5 +28,5 @@ export const _ContentTile = () => {
 };
 
 _ContentTile.story = {
-  name: 'ContentTile'
+  name: 'ContentTile',
 };

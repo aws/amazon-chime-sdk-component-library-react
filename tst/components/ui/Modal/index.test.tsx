@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
@@ -29,7 +29,7 @@ describe('Modal', () => {
     renderWithTheme(lightTheme, component);
     fireEvent.keyDown(document.activeElement || document.body, {
       key: 'escape',
-      keyCode: 27
+      keyCode: 27,
     });
     expect(component.props.onClose).toHaveBeenCalled();
   });
@@ -43,8 +43,34 @@ describe('Modal', () => {
     renderWithTheme(lightTheme, component);
     fireEvent.keyDown(document.activeElement || document.body, {
       key: 'space',
-      keyCode: 32
+      keyCode: 32,
     });
+    expect(component.props.onClose).toBeCalledTimes(0);
+  });
+
+  it(`will not close the modal using ESC key if "dismissible" prop is set to "false"`, () => {
+    const component = (
+      <Modal size="md" rootId="modal-root" onClose={jest.fn()} dismissible={false}>
+        <p>Dummy Content</p>
+      </Modal>
+    );
+    renderWithTheme(lightTheme, component);
+    fireEvent.keyDown(document.activeElement || document.body, {
+      key: 'space',
+      keyCode: 32,
+    });
+    expect(component.props.onClose).toBeCalledTimes(0);
+  });
+
+  it(`will close the modal by clicking the background if "dismissible" prop is set to "false"`, () => {
+    const component = (
+      <Modal size="md" rootId="modal-root" onClose={jest.fn()} dismissible={false}>
+        <p>Dummy Content</p>
+      </Modal>
+    );
+    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const bgd = getByTestId('modal');
+    fireEvent.click(bgd);
     expect(component.props.onClose).toBeCalledTimes(0);
   });
 });

@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
@@ -12,10 +12,14 @@ export default {
   title: 'UI Components/Icons/CheckRound',
   parameters: {
     docs: {
-      page: CheckRoundIconDocs.parameters.docs.page().props.children.type
-    }
+      page: CheckRoundIconDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: CheckRound
+  component: CheckRound,
 };
 
-export const _CheckRound = () => <Flex layout="fill-space-centered"><CheckRound width={text('width', '2rem')} /></Flex>;
+export const _CheckRound = () => (
+  <Flex layout="fill-space-centered">
+    <CheckRound width={text('width', '2rem')} />
+  </Flex>
+);

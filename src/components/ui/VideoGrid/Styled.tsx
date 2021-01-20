@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
@@ -19,7 +19,7 @@ const sortedRatios: AspectRatio[] = [
   'r1by1',
   'r4by3',
   'r3by2',
-  'r16by9'
+  'r16by9',
 ];
 
 const ratioStyles = {
@@ -217,7 +217,7 @@ const ratioStyles = {
       'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft';`,
   '17.r1by1.featured': `grid-template-areas:
       'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v'
-      'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft x';`
+      'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft x';`,
 };
 
 const responsiveStyles = {
@@ -281,7 +281,7 @@ const responsiveStyles = {
       grid-auto-columns: 25%;
       grid-auto-flow: column;
     }
-  `
+  `,
 };
 
 const portraitStyles = `
@@ -309,7 +309,7 @@ export const StyledGrid = styled.div<StyledGridProps>`
   height: 100%;
   width: 100%;
   overflow: auto;
-  background-color: ${props => props.theme.videoGrid.bgd};
+  background-color: ${(props) => props.theme.videoGrid.bgd};
 
   ${({ size, featured }) =>
     ratioStyles[`${size}${featured ? '.featured' : ''}`] || ''}

@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
@@ -17,13 +17,13 @@ export default {
   title: 'UI Components/Form/FormField',
   parameters: {
     docs: {
-      page: FormFieldDocs.parameters.docs.page().props.children.type
-    }
+      page: FormFieldDocs.parameters.docs.page().props.children.type,
+    },
   },
-  component: FormField
+  component: FormField,
 };
 
-const TestInput: React.FC<{}> = props => {
+const TestInput: React.FC<{}> = (props) => {
   const [name, setName] = useState('');
 
   function handleChange(evt: any) {
@@ -38,7 +38,7 @@ const TestInput: React.FC<{}> = props => {
       value={name}
       fieldProps={{
         name: 'firstName',
-        placeholder: 'Enter your first name'
+        placeholder: 'Enter your first name',
       }}
       onChange={handleChange}
       layout={select(
@@ -46,7 +46,7 @@ const TestInput: React.FC<{}> = props => {
         {
           stack: 'stack',
           horizontal: 'horizontal',
-          'input-only': 'input-only'
+          'input-only': 'input-only',
         },
         'stack'
       )}
@@ -67,27 +67,27 @@ export const BasicInputFormField = () => {
   );
 };
 
-const TestSelect: React.FC<{}> = props => {
+const TestSelect: React.FC<{}> = (props) => {
   const [value, setValue] = useState('');
   const handleChange = (e: any) => setValue(e.target.value);
 
   const options = [
     {
       value: 'no_framework_selected',
-      label: 'No Framework'
+      label: 'No Framework',
     },
     {
       value: 'react',
-      label: 'React'
+      label: 'React',
     },
     {
       value: 'angular',
-      label: 'Angular'
+      label: 'Angular',
     },
     {
       value: 'vue',
-      label: 'Vue'
-    }
+      label: 'Vue',
+    },
   ];
 
   return (
@@ -102,7 +102,7 @@ const TestSelect: React.FC<{}> = props => {
         {
           stack: 'stack',
           horizontal: 'horizontal',
-          'input-only': 'input-only'
+          'input-only': 'input-only',
         },
         'stack'
       )}
@@ -123,7 +123,7 @@ export const SelectFormField = () => {
   );
 };
 
-const TestTextarea: React.FC<{}> = props => {
+const TestTextarea: React.FC<{}> = (props) => {
   const [value, setValue] = useState('');
 
   const handleChange = (e: any) => {
@@ -142,7 +142,7 @@ const TestTextarea: React.FC<{}> = props => {
         {
           stack: 'stack',
           horizontal: 'horizontal',
-          'input-only': 'input-only'
+          'input-only': 'input-only',
         },
         'stack'
       )}
@@ -166,23 +166,23 @@ export const TextareaFormField = () => {
 const options = [
   {
     value: 'react',
-    label: 'React'
+    label: 'React',
   },
   {
     value: 'angular',
-    label: 'Angular'
+    label: 'Angular',
   },
   {
     value: 'vue',
-    label: 'Vue'
+    label: 'Vue',
   },
   {
     value: 'none',
-    label: 'None'
-  }
+    label: 'None',
+  },
 ];
 
-const TestRadioGroup: React.FC<{}> = props => {
+const TestRadioGroup: React.FC<{}> = (props) => {
   const [value, setValue] = useState('');
 
   const handleChange = (evt: any) => {
@@ -203,18 +203,18 @@ const TestRadioGroup: React.FC<{}> = props => {
   );
 };
 
-const TestCheckbox: React.FC<{}> = props => {
+const TestCheckbox: React.FC<{}> = (props) => {
   const [state, setState] = React.useState({
     react: false,
     angular: false,
-    vue: false
+    vue: false,
   });
 
   function handleChange(evt: any) {
     const value = evt.target.checked;
     setState({
       ...state,
-      [evt.target.value]: value
+      [evt.target.value]: value,
     });
   }
 
@@ -269,23 +269,23 @@ const radioOptions = [
   {
     value: 'tabs',
     label: 'Tabs',
-    name: 'tabs'
+    name: 'tabs',
   },
   {
     value: 'spaces',
     label: 'Spaces',
-    name: 'tabs'
-  }
+    name: 'tabs',
+  },
 ];
 
-const TestMixedInputs: React.FC<{}> = props => {
+const TestMixedInputs: React.FC<{}> = (props) => {
   const [state, setState] = useState({
     firstName: '',
     lastName: '',
     acknowledge: false,
     select: '',
     textarea: '',
-    tabs: 'spaces'
+    tabs: 'spaces',
   });
 
   function handleChange(evt: any) {
@@ -294,27 +294,27 @@ const TestMixedInputs: React.FC<{}> = props => {
 
     setState({
       ...state,
-      [evt.target.type === 'radio' ? 'tabs' : evt.target.name]: value
+      [evt.target.type === 'radio' ? 'tabs' : evt.target.name]: value,
     });
   }
 
   const options = [
     {
       value: 'no_fruit_selected',
-      label: 'Select an option'
+      label: 'Select an option',
     },
     {
       value: 'bananas',
-      label: 'Bananas'
+      label: 'Bananas',
     },
     {
       value: 'oranges',
-      label: 'Oranges'
+      label: 'Oranges',
     },
     {
       value: 'grapefruit',
-      label: 'Grapefruit'
-    }
+      label: 'Grapefruit',
+    },
   ];
 
   return (
@@ -325,7 +325,7 @@ const TestMixedInputs: React.FC<{}> = props => {
         value={state.firstName}
         fieldProps={{
           name: 'firstName',
-          placeholder: 'Enter your first name'
+          placeholder: 'Enter your first name',
         }}
         onChange={handleChange}
         layout={select(
@@ -333,7 +333,7 @@ const TestMixedInputs: React.FC<{}> = props => {
           {
             stack: 'stack',
             horizontal: 'horizontal',
-            'input-only': 'input-only'
+            'input-only': 'input-only',
           },
           'stack'
         )}
@@ -346,7 +346,7 @@ const TestMixedInputs: React.FC<{}> = props => {
           {
             stack: 'stack',
             horizontal: 'horizontal',
-            'input-only': 'input-only'
+            'input-only': 'input-only',
           },
           'stack'
         )}
@@ -364,7 +364,7 @@ const TestMixedInputs: React.FC<{}> = props => {
           {
             stack: 'stack',
             horizontal: 'horizontal',
-            'input-only': 'input-only'
+            'input-only': 'input-only',
           },
           'stack'
         )}
@@ -383,7 +383,7 @@ const TestMixedInputs: React.FC<{}> = props => {
           {
             stack: 'stack',
             horizontal: 'horizontal',
-            'input-only': 'input-only'
+            'input-only': 'input-only',
           },
           'stack'
         )}
@@ -392,7 +392,7 @@ const TestMixedInputs: React.FC<{}> = props => {
         value={state.textarea}
         fieldProps={{
           placeholder: 'Enter any additional comments',
-          name: 'textarea'
+          name: 'textarea',
         }}
         onChange={handleChange}
         errorText="This is invalid"
@@ -404,7 +404,7 @@ const TestMixedInputs: React.FC<{}> = props => {
           {
             stack: 'stack',
             horizontal: 'horizontal',
-            'input-only': 'input-only'
+            'input-only': 'input-only',
           },
           'stack'
         )}

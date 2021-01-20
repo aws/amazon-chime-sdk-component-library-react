@@ -1,4 +1,4 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
@@ -11,7 +11,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
   height: 100%;
   width: 100%;
   position: relative;
-  background: ${props => props.theme.colors.greys.grey100};
+  background: ${(props) => props.theme.colors.greys.grey100};
 
   video {
     position: absolute;
@@ -21,7 +21,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
     bottom: 0;
     width: 100%;
     height: 100%;
-    object-fit: ${props => props.objectFit || 'cover'}};
+    object-fit: ${(props) => props.objectFit || 'cover'}};
   }
 
   .ch-icon {
@@ -38,7 +38,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
     background-color: rgba(46, 47, 52, 0.85);
     border-radius: 0.25rem;
     bottom: 0.5rem;
-    color: ${props => props.theme.colors.greys.white};
+    color: ${(props) => props.theme.colors.greys.white};
     left: 0.5rem;
     max-width: calc(100% - 2rem);
     padding: 0.5rem;
@@ -51,7 +51,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
     }
 
     .ch-text {
-      font-size: ${props => props.theme.fontSizes.text.fontSize};
+      font-size: ${(props) => props.theme.fontSizes.text.fontSize};
       ${ellipsis};
       margin: 0;
     }

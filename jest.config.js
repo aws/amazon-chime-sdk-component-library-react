@@ -11,7 +11,7 @@ module.exports = {
       tsConfig: 'tsconfig.json'
     }
   },
-  testPathIgnorePatterns: ['node_modules', '/tst/snapshots/', '/tst/snapshots-playwright/'],
+  testPathIgnorePatterns: ['node_modules', '/tst/snapshots/',],
   testEnvironment: 'jsdom',
   collectCoverage: true,
   collectCoverageFrom: ['src/**/*.tsx', '!src/**/*.stories.tsx'],

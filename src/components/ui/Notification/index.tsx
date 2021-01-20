@@ -1,10 +1,11 @@
-// Copyright 2020 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, HTMLAttributes } from 'react';
+import React, { useEffect, HTMLAttributes, ReactNode } from 'react';
 
-import { StyledNotification, StyledCloseIconButton } from './Styled';
+import { StyledNotification, StyledCloseIconButton, StyledNotificationButton } from './Styled';
 import { Caution, CheckRound, Information, Remove, Clock } from '../icons';
+import { ButtonProps } from '../Button';
 import { BaseProps } from '../Base';
 
 export const DEFAULT_DELAY: number = 6000;
@@ -13,7 +14,7 @@ enum Severity {
   ERROR = 'error',
   SUCCESS = 'success',
   INFO = 'info',
-  WARNING = 'warning'
+  WARNING = 'warning',
 }
 
 export interface NotificationProps
@@ -31,16 +32,22 @@ export interface NotificationProps
   autoCloseDelay?: number;
   /** CSS classname to apply custom styles. */
   className?: string;
+  /** For rendering a button element adjacent to the message */
+  buttonProps?: ButtonProps;
+  /** optional icon to override the default */
+  icon?: ReactNode;
+  /** optional content to render in the body of the notification */
+  children?: ReactNode | ReactNode[];
 }
 
 const iconMapping = {
   success: <CheckRound />,
   warning: <Clock />,
   error: <Caution />,
-  info: <Information />
+  info: <Information />,
 };
 
-export const Notification: React.FC<NotificationProps> = props => {
+export const Notification: React.FC<NotificationProps> = (props) => {
   const {
     tag,
     message,
@@ -48,7 +55,10 @@ export const Notification: React.FC<NotificationProps> = props => {
     autoClose = false,
     autoCloseDelay = DEFAULT_DELAY,
     severity = Severity.ERROR,
-    className
+    className,
+    buttonProps,
+    icon,
+    children,
   } = props;
 
   const ariaLive = severity === Severity.ERROR ? 'assertive' : 'polite';
@@ -73,11 +83,13 @@ export const Notification: React.FC<NotificationProps> = props => {
       data-testid="notification"
     >
       <div className="ch-severity-icon" data-testid="severity-icon">
-        {iconMapping[severity]}
+        {icon ? icon : iconMapping[severity]}
       </div>
       <output className="ch-message" data-testid="message" role={ariaRole}>
         {message}
       </output>
+      {buttonProps && <StyledNotificationButton aria-hidden {...buttonProps}/>}
+      {children}
       {onClose && (
         <StyledCloseIconButton
           label="close"
