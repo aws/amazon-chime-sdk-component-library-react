@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix Github Actions build-storybook error
 - [Docs] Fix ContentShare docs
 - Fix non-overridable Mic prop in `RosterAttendee`
+- Fix incorrect fill-rule property on `ZoomIn` and `ZoomOut`
 
 ### Added
 
@@ -43,6 +44,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Removed content in ChatBubble
 - Removed showName in ChatBubble
+- Change control bar theme opacity to 1
+
+### Removed
+
+- Remove playwright tests, scripts, and dependency
 
 ## [1.6.0] - 2020-12-14
 

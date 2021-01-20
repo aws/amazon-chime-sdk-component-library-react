@@ -2,9 +2,8 @@
 name: New Pull Request Chime Notification
 
 on:
-  pull_request:
-    branches: [ master ]
-    types: opened
+  pull_request_target:
+    types: [opened]
     
 jobs:
   send_notification:
