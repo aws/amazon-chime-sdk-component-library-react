@@ -2,7 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { text, select } from '@storybook/addon-knobs';
+
+import { text } from '@storybook/addon-knobs';
 import Caution from './';
 import CautionIconDocs from './Caution.mdx';
 import Flex from '../../Flex';
@@ -19,6 +20,6 @@ export default {
 
 export const _Caution = () => (
   <Flex layout="fill-space-centered">
-    <Caution width={text('width', '2rem')} variant={select('displayStyle', ['default', 'fill-warning', 'fill-error'], 'default')} />
+    <Caution width={text('width', '2rem')} />
   </Flex>
 );
