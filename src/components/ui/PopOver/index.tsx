@@ -44,6 +44,8 @@ export interface PopOverProps
   a11yLabel: string;
   /** The elements that populate the menu */
   children: any;
+  /** Allow the popover to stay open for multiple clicks. */
+  closeOnClick?: boolean;
 }
 
 const getFocusableElements = (node: HTMLElement): NodeListOf<HTMLElement> => {
@@ -58,6 +60,7 @@ export const PopOver: FC<PopOverProps> = ({
   placement = 'bottom-start',
   a11yLabel,
   className,
+  closeOnClick = true,
   ...rest
 }) => {
   const menuRef = createRef<HTMLSpanElement>();
@@ -98,6 +101,9 @@ export const PopOver: FC<PopOverProps> = ({
   };
 
   const closePopover = (e: any) => {
+    if (!closeOnClick) {
+      return;
+    }
     const isSubMenuButton = e.target.closest("[data-menu='submenu']");
     return !isSubMenuButton ? setIsOpen(false) : false;
   };
