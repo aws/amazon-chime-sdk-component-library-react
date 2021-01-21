@@ -1,12 +1,25 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { FC } from 'react';
 import Svg, { SvgProps } from '../Svg';
 
-const Caution: React.SFC<SvgProps> = (props) => (
+export type CautionVariant = 'default' | 'fill-warning' | 'fill-error';
+
+import { StyledCaution } from './styled';
+
+export interface CautionProps extends SvgProps {
+  /** toggle the range of visual variants */
+  variant?: CautionVariant;
+}
+
+const Caution: FC<CautionProps> = (props) => (
   <Svg {...props}>
-    <path d="M12 6c.68 0 1.294.338 1.643.905l5.085 8.281c.35.571.365 1.258.039 1.841-.335.6-.98.972-1.682.972H6.915c-.701 0-1.345-.372-1.68-.972-.326-.583-.312-1.27.039-1.841l5.085-8.281C10.707 6.338 11.32 6 12 6zm.79 1.429c-.33-.538-1.25-.536-1.58 0L6.125 15.71c-.16.261-.167.563-.017.829.16.288.463.46.807.46h10.17c.346 0 .648-.172.809-.46.149-.266.143-.568-.018-.829zm-.218 7.18v1.219h-1.166v-1.219h1.166zm.023-5.388v1.83l-.288 2.727h-.597l-.305-2.727V9.22h1.19z" />
+    <StyledCaution fill="currentColor" variant={props.variant}>
+      <path className="ch-caution-background"  d="M18.728 15.186l-5.085-8.281C13.293 6.338 12.68 6 12 6c-.68 0-1.294.338-1.642.905l-5.085 8.281c-.351.571-.365 1.258-.04 1.841.336.6.98.972 1.68.972h10.17c.704 0 1.348-.372 1.683-.972.326-.583.312-1.27-.04-1.841"/>
+      <path className="ch-caution-exclamation"  d="M12.572 14.609v1.219h-1.166v-1.219h1.166zm.023-5.388v1.83l-.288 2.727h-.597l-.305-2.727V9.22h1.19z"/>
+      <path className="ch-caution-border"  d="M17.894 16.539c-.161.288-.463.46-.81.46H6.915c-.343 0-.645-.172-.806-.46-.15-.266-.143-.568.017-.829l5.085-8.281c.33-.536 1.25-.538 1.58 0l5.086 8.281c.16.261.167.563.018.829m.834-1.353l-5.085-8.281C13.293 6.338 12.68 6 12 6c-.68 0-1.294.338-1.642.905l-5.085 8.281c-.351.571-.365 1.258-.04 1.841.336.6.98.972 1.68.972h10.17c.704 0 1.348-.372 1.683-.972.326-.583.312-1.27-.04-1.841"/>
+    </StyledCaution>
   </Svg>
 );
 
