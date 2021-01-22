@@ -46,3 +46,8 @@ export const isOptionActive = (
   }
   return currentDeviceId === meetingManagerDeviceId;
 };
+
+// TODO: Remove this and use DefaultBrowserBehavior.supportsSetSinkId from JS SDK v2.x
+export const supportsSetSinkId = (): boolean => {
+  return 'setSinkId' in HTMLAudioElement.prototype;
+}
