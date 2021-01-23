@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix non-overridable Mic prop in `RosterAttendee`
 - Fix incorrect fill-rule property on `ZoomIn` and `ZoomOut`
 - [Demo] Fix closing roster from stopping active speaker detection.
+- Fix meeting manager to handle `setSinkId` error
 
 ### Added
 
