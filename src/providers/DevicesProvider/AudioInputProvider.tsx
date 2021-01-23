@@ -64,7 +64,11 @@ const AudioInputProvider: React.FC = ({ children }) => {
           console.log(
             `Audio devices updated and "default" device is selected. Reselecting input.`
           );
-          await audioVideo?.chooseAudioInputDevice(selectedInputRef.current);
+          try {
+            await audioVideo?.chooseAudioInputDevice(selectedInputRef.current);
+          } catch (e) {
+            console.error(`Error in selecting audio input device - ${e}`);
+          }
         }
 
         setAudioInputs(newAudioInputs);

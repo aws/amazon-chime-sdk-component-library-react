@@ -26,7 +26,13 @@ const LocalAudioOutputProvider: React.FC = ({ children }) => {
     }
 
     if (audioRef.current) {
-      audioVideo.bindAudioElement(audioRef.current);
+      (async (element: HTMLAudioElement) => {
+        try {
+          await audioVideo.bindAudioElement(element);
+        } catch (e) {
+          console.error('Failed to bind audio element.', e);
+        }
+      })(audioRef.current);
     }
     return (): void => {
       audioVideo.unbindAudioElement();
@@ -41,7 +47,13 @@ const LocalAudioOutputProvider: React.FC = ({ children }) => {
     if (isAudioOn) {
       audioVideo?.unbindAudioElement();
     } else {
-      audioVideo?.bindAudioElement(audioRef.current);
+      (async (element: HTMLAudioElement) => {
+        try {
+          await audioVideo?.bindAudioElement(element);
+        } catch (e) {
+          console.error('Failed to bind audio element.', e);
+        }
+      })(audioRef.current);
     }
   }, [audioRef, audioVideo, isAudioOn]);
 
