@@ -18,6 +18,7 @@ import {
 
 import {
   audioInputSelectionToDevice,
+  supportsSetSinkId,
   videoInputSelectionToDevice
 } from '../../utils/device-utils';
 import { MeetingStatus } from '../../types';
@@ -302,9 +303,13 @@ export class MeetingManager implements AudioVideoObserver {
       this.audioInputDevices.length
     ) {
       this.selectedAudioInputDevice = this.audioInputDevices[0].deviceId;
-      await this.audioVideo?.chooseAudioInputDevice(
-        this.audioInputDevices[0].deviceId
-      );
+      try {
+        await this.audioVideo?.chooseAudioInputDevice(
+          this.audioInputDevices[0].deviceId
+        );
+      } catch (e) {
+        console.error(`Error in selecting audio input device - ${e}`);
+      }
       this.publishSelectedAudioInputDevice();
     }
     if (
@@ -313,9 +318,15 @@ export class MeetingManager implements AudioVideoObserver {
       this.audioOutputDevices.length
     ) {
       this.selectedAudioOutputDevice = this.audioOutputDevices[0].deviceId;
-      await this.audioVideo?.chooseAudioOutputDevice(
-        this.audioOutputDevices[0].deviceId
-      );
+      if (supportsSetSinkId()) {
+        try {
+          await this.audioVideo?.chooseAudioOutputDevice(
+            this.audioOutputDevices[0].deviceId
+          );
+        } catch (e) {
+          console.error('Failed to choose audio output device.', e);
+        }
+      }
       this.publishSelectedAudioOutputDevice();
     }
     if (
@@ -332,10 +343,18 @@ export class MeetingManager implements AudioVideoObserver {
     try {
       const receivedDevice = audioInputSelectionToDevice(deviceId);
       if (receivedDevice === null) {
-        await this.audioVideo?.chooseAudioInputDevice(null);
+        try {
+          await this.audioVideo?.chooseAudioInputDevice(null);
+        } catch (e) {
+          console.error('Failed to choose audio input device.', e);
+        }
         this.selectedAudioInputDevice = null;
       } else {
-        await this.audioVideo?.chooseAudioInputDevice(receivedDevice);
+        try {
+          await this.audioVideo?.chooseAudioInputDevice(receivedDevice);
+        } catch (e) {
+          console.error('Failed to choose audio output device.', e);
+        }
         this.selectedAudioInputDevice = deviceId;
       }
       this.publishSelectedAudioInputDevice();
