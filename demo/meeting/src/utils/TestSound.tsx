@@ -15,8 +15,7 @@ class TestSound {
     maxGainValue = 0.1
   ) {
     // @ts-ignore
-    const audioContext: AudioContext = new (window.AudioContext ||
-      window.webkitAudioContext)();
+    const audioContext: AudioContext = new (window.AudioContext || window.webkitAudioContext)();
     const gainNode = audioContext.createGain();
     gainNode.gain.value = 0;
     const oscillatorNode = audioContext.createOscillator();
