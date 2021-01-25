@@ -6,11 +6,11 @@ import React from 'react';
 import {
   Modal,
   ModalBody,
-  ModalHeader
+  ModalHeader,
+  DevicePermissionStatus,
+  useDevicePermissionStatus
 } from 'amazon-chime-sdk-component-library-react';
 
-import useDevicePermissionStatus from '../hooks/useDevicePermissionStatus';
-import { DevicePermissionStatus } from '../enums';
 import Card from '../components/Card';
 
 // Show permission prompt when the user is granting the browser permissions

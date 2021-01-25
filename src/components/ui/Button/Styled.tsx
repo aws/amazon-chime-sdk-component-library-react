@@ -136,6 +136,12 @@ export const StyledSecondaryButton = css<ButtonProps>`
   }
 `;
 
+const badgeLayout = {
+  'sm': css`top: -15%; left: 76%;`,
+  'md': css`top: 4%; left: 76%;`,
+  'lg': css`top: 10%; left: 76%;`,
+};
+
 export const StyledIconButton = css<ButtonProps>`
   background-color: ${(props) =>
     props.selected
@@ -195,4 +201,16 @@ export const StyledIconButton = css<ButtonProps>`
     color: ${(props) => props.theme.buttons.icon.disabled.text};
     cursor: not-allowed;
   }
+
+  + * {
+    position: absolute;
+    font-size: 0.55rem;
+    z-index: 1;
+    ${({ iconSize }) => iconSize ? badgeLayout[iconSize] : badgeLayout['sm']}
+  }
+`;
+
+export const StyledIconButtonWrapper = styled.span`
+  display: inline-block;
+  position: relative;
 `;

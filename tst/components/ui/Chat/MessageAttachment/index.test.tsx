@@ -33,4 +33,17 @@ describe('MessageAttachment', () => {
 
     expect(message).toBeInTheDocument();
   });
+
+  it('should render a MessageAttachment with img', () => {
+    const props = {
+      name: 'File.txt',
+      downloadUrl: 'https://test.com/file.txt',
+      renderImg: true,
+    };
+    const component = <MessageAttachment {...props} />;
+    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const img = getByTestId('preview-img');
+
+    expect(img).toBeInTheDocument();
+  });
 });

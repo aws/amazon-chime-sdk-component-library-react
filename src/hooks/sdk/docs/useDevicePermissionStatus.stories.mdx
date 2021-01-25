@@ -1,0 +1,55 @@
+<Meta title="SDK Hooks/useDevicePermissionStatus" />
+
+# useDevicePermissionStatus
+
+The `useDevicePermissionStatus` hook returns the device permission status from the enum below.
+
+```javascript
+enum DevicePermissionStatus {
+  UNSET = 'UNSET',
+  IN_PROGRESS = 'IN_PROGRESS',
+  GRANTED = 'GRANTED',
+  DENIED = 'DENIED',
+}
+```
+
+### Return Value
+
+```javascript
+permission: DevicePermissionStatus;
+```
+
+## Importing
+
+```javascript
+import { useDevicePermissionStatus } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook depends on the `MeetingProvider`.
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useDevicePermissionStatus,
+  DevicePermissionStatus,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const meetingStatus = useMeetingStatus();
+
+  return <p>Meeting Status: {meetingStatus}</p>;
+};
+```
+
+### Dependencies
+
+- `MeetingProvider`

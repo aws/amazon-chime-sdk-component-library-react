@@ -9,6 +9,7 @@ import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 import { Information } from '../../../../src/components/ui/icons';
 import NavbarItem from '../../../../src/components/ui/Navbar/NavbarItem';
+import Badge from '../../../../src/components/ui/Badge';
 
 describe('NavbarItem', () => {
   it('should render a NavbarItem', () => {
@@ -24,12 +25,13 @@ describe('NavbarItem', () => {
     expect(navbarItem).toBeInTheDocument();
   });
 
-  it('should render a label when passed', () => {
+  it('should render a label when passed and prop "showLabel" is true', () => {
     const component = (
       <NavbarItem
         icon={<Information />}
         onClick={() => console.log('Information clicked')}
         label="Bridge Information"
+        showLabel
       />
     );
     const { getByTestId } = renderWithTheme(lightTheme, component);
@@ -37,7 +39,7 @@ describe('NavbarItem', () => {
     expect(navbarItem).toHaveTextContent('Bridge Information');
   });
 
-  it('should render a icon button', () => {
+  it('should render an iconButton', () => {
     const component = (
       <NavbarItem
         icon={<Information />}
@@ -46,7 +48,7 @@ describe('NavbarItem', () => {
       />
     );
     const { getByTestId } = renderWithTheme(lightTheme, component);
-    expect(getByTestId('control-bar-item')).toBeInTheDocument();
+    expect(getByTestId('button')).toBeInTheDocument();
   });
 
   it('should call onClick once if clicked on navbar label', () => {
@@ -55,6 +57,7 @@ describe('NavbarItem', () => {
         icon={<Information />}
         onClick={jest.fn()}
         label="Bridge Information"
+        showLabel
       />
     );
     const { getByTestId } = renderWithTheme(lightTheme, component);
@@ -67,5 +70,38 @@ describe('NavbarItem', () => {
       })
     );
     expect(component.props.onClick).toHaveBeenCalledTimes(1);
+  });
+
+  it('should render a PopOver component if there are children', () => {
+    const component = (
+      <NavbarItem
+        icon={<Information />}
+        onClick={jest.fn()}
+        label="Bridge Information"
+        showLabel
+      >
+        <p>Test Child</p>
+      </NavbarItem>
+    );
+    const { getByTestId } = renderWithTheme(lightTheme, component);
+    const popOver = getByTestId('popover');
+    expect(popOver).toBeInTheDocument();
+  });
+
+  it('should render an additional component via the "badge" prop', () => {
+    const badge = <Badge value="11" />;
+    const component = (
+      <NavbarItem
+        icon={<Information />}
+        onClick={jest.fn()}
+        label="Bridge Information"
+        showLabel
+        badge={badge}
+      >
+        <p>Test Child</p>
+      </NavbarItem>
+    );
+    const { getByTestId } = renderWithTheme(lightTheme, component);
+    expect(getByTestId('badge')).toBeInTheDocument();
   });
 });

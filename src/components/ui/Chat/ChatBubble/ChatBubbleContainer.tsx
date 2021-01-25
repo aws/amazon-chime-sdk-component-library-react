@@ -1,7 +1,7 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, HTMLAttributes, ReactNode } from 'react';
+import React, { FC, HTMLAttributes, ReactNode, Ref } from 'react';
 
 import { BaseProps } from '../../Base';
 import { StyledChatBubbleContainer, StyledChatBubbleInfo } from './Styled';
@@ -34,12 +34,13 @@ export interface ChatBubbleContainerProps
   actions?: ReactNode | ReactNode[];
 }
 
-export const ChatBubbleContainer: FC<ChatBubbleContainerProps> = (props) => {
+export const ChatBubbleContainer: FC<ChatBubbleContainerProps> = React.forwardRef((props, ref: Ref<HTMLDivElement>) => {
   const { timestamp, actions, ...rest } = props;
 
   return (
     <StyledChatBubbleContainer
       data-testid="chat-bubble-container"
+      ref={ref}
       actions={actions}
       {...rest}
     >
@@ -67,6 +68,6 @@ export const ChatBubbleContainer: FC<ChatBubbleContainerProps> = (props) => {
       </StyledChatBubbleInfo>
     </StyledChatBubbleContainer>
   );
-};
+});
 
 export default ChatBubbleContainer;
