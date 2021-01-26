@@ -380,7 +380,7 @@ const chatBubble = {
     linkColorVisited: colors.primary.darkest,
   },
   outgoing: {
-    bgd: colors.primary.light,
+    bgd: colors.primary.main,
     fontColor: colors.greys.grey10,
     linkColor: colors.greys.white,
     linkColorHover: colors.greys.grey10,

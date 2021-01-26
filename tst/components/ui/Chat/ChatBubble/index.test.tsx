@@ -11,11 +11,9 @@ import { renderWithTheme } from '../../../../test-helpers';
 describe('ChatBubble', () => {
   it('should render a ChatBubble component in the document', () => {
     const component = (
-      <ChatBubble
-        content="test message"
-        senderName="test user"
-        variant="outgoing"
-      />
+      <ChatBubble senderName="test user" variant="outgoing">
+        test message
+      </ChatBubble>
     );
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const message = getByTestId('chat-bubble');
@@ -25,11 +23,9 @@ describe('ChatBubble', () => {
 
   it('should render content in the ChatBubble component', () => {
     const component = (
-      <ChatBubble
-        content="test message"
-        senderName="test user"
-        variant="outgoing"
-      />
+      <ChatBubble senderName="test user" variant="outgoing">
+        test message
+      </ChatBubble>
     );
     const { getByText } = renderWithTheme(lightTheme, component);
     const content = getByText('test message');
@@ -39,41 +35,53 @@ describe('ChatBubble', () => {
 
   it('should render the name in the ChatBubble component', () => {
     const component = (
-      <ChatBubble
-        content="test message"
-        senderName="test user"
-        variant="outgoing"
-      />
+      <ChatBubble senderName="test user" variant="outgoing">
+        test message
+      </ChatBubble>
     );
-    const { getByText } = renderWithTheme(lightTheme, component);
-    const name = getByText('test user');
+    const { queryByTestId } = renderWithTheme(lightTheme, component);
+    const name = queryByTestId('chat-bubble-sender-name');
 
     expect(name).toBeInTheDocument();
   });
 
-  it('should not render the name in the ChatBubble component if showName is false', () => {
-    const component = (
-      <ChatBubble
-        content="test message"
-        senderName="test user"
-        variant="outgoing"
-        showName={false}
-      />
-    );
-    const { queryByText } = renderWithTheme(lightTheme, component);
-    const name = queryByText('test user');
+  it('should not render the name in the ChatBubble component if senderName is null', () => {
+    const component = <ChatBubble variant="outgoing">test message</ChatBubble>;
+    const { queryByTestId } = renderWithTheme(lightTheme, component);
+    const name = queryByTestId('chat-bubble-sender-name');
 
     expect(name).not.toBeInTheDocument();
   });
 
+  it('should render timestamp in the ChatBubble component', () => {
+    const component = (
+      <ChatBubble senderName="test user" timestamp="1:30 PM" variant="outgoing">
+        test message
+      </ChatBubble>
+    );
+    const { queryByTestId } = renderWithTheme(lightTheme, component);
+    const timestamp = queryByTestId('chat-bubble-timestamp');
+
+    expect(timestamp).toBeInTheDocument();
+  });
+
+  it('should not render timestamp in the ChatBubble component if timestamp is null', () => {
+    const component = (
+      <ChatBubble senderName="test user" variant="outgoing">
+        test message
+      </ChatBubble>
+    );
+    const { queryByTestId } = renderWithTheme(lightTheme, component);
+    const timestamp = queryByTestId('chat-bubble-timestamp');
+
+    expect(timestamp).not.toBeInTheDocument();
+  });
+
   it('should render a bubble tail in the ChatBubble component', () => {
     const component = (
-      <ChatBubble
-        content="test message"
-        senderName="test user"
-        variant="outgoing"
-        showTail={true}
-      />
+      <ChatBubble senderName="test user" variant="outgoing" showTail={true}>
+        test message
+      </ChatBubble>
     );
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const content = getByTestId('tail');
@@ -83,12 +91,9 @@ describe('ChatBubble', () => {
 
   it('should not render a bubble tail in the ChatBubble component if showTail is false', () => {
     const component = (
-      <ChatBubble
-        content="test message"
-        senderName="test user"
-        variant="outgoing"
-        showTail={false}
-      />
+      <ChatBubble senderName="test user" variant="outgoing" showTail={false}>
+        test message
+      </ChatBubble>
     );
     const { queryByTestId } = renderWithTheme(lightTheme, component);
     const name = queryByTestId('tail');
