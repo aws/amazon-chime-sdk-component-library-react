@@ -6,7 +6,6 @@ import React, { ReactNode } from 'react';
 import { StyledNavbarItem } from './Styled';
 import PopOver, { Placement } from '../PopOver';
 import IconButton, { IconButtonProps }  from '../Button/IconButton';
-import useUniqueId from '../../../hooks/useUniqueId';
 
 
 export interface NavbarItemProps extends IconButtonProps {

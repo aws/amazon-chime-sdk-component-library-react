@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { baseSpacing, baseStyles } from '../Base';
 import { NavbarProps } from '.';
 import { NavbarItemProps } from './NavbarItem';
-import { visuallyHidden } from '../../../utils/style';
 
 import Flex from '../Flex';
 
