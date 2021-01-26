@@ -54,6 +54,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Remove playwright tests, scripts, and dependency
 - Removed content in ChatBubble
 - Removed showName in ChatBubble
+- Removed unused import statements from NavBar
 
 ## [1.6.0] - 2020-12-14
 
