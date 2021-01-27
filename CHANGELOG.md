@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix incorrect fill-rule property on `ZoomIn` and `ZoomOut`
 - [Demo] Fix closing roster from stopping active speaker detection.
 - Fix serverless deploy script to work on Windows
+- [Tests] Update outdated snapshots
 
 ### Added
 
