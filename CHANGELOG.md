@@ -9,8 +9,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-- Fix serverless deploy script to work on Windows
-
 ### Fixed
 
 - Fix icon preventing clicks on `Select` components
@@ -19,7 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix non-overridable Mic prop in `RosterAttendee`
 - Fix incorrect fill-rule property on `ZoomIn` and `ZoomOut`
 - [Demo] Fix closing roster from stopping active speaker detection.
-- Fix meeting manager to handle `setSinkId` error
+- Fix serverless deploy script to work on Windows
 
 ### Added
 
@@ -55,6 +53,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Removed content in ChatBubble
 - Removed showName in ChatBubble
 - Removed unused import statements from NavBar
+
+## [1.6.1] - 2020-12-25
+
+### Fixed
+
+- Fix meeting manager to handle `setSinkId` error
 
 ## [1.6.0] - 2020-12-14
 
