@@ -1,0 +1,153 @@
+<Meta title="Migration to V2" />
+
+# Migration from 1.0 to 2.0
+
+Version 2 of the Amazon Chime React Component Library makes a small number of interface changes, as well as removing some deprecated interfaces.
+
+### IMPORTANT - Version 2 of the library also requires a dependency to version 2.4 or higher of the amazon-chime-sdk-js.
+
+In many cases you should not need to adjust your application code at all. This will be the case if:
+
+- You do not use the `ChatBubble` component or the `ChatBubbleContainer` component.
+- You do not use the `Roster` component.
+- You do not use the `Textarea` component.
+- You do not use the `NavBarItem` component.
+- You do not directly use any APIs from the Amazon Chime SDK. If you do, you should read this migration guide (https://aws.github.io/amazon-chime-sdk-js/modules/migrationto_2_0.html).
+
+If you do, read on.
+
+## Installation
+
+Installation involves adjusting your package.json to depend on version 2.x.x.
+
+```
+npm install --save amazon-chime-sdk-component-library-react@2
+```
+
+## What’s New
+
+- Updated interface for `ChatBubble` component.
+- Using `forwardRef` in `ChatBubbleContainer` component.
+- Using `forwardRef` in `Textarea` component.
+- New `useDevicePermissionStatus` hook exported.
+- A callback parameter has been added to `realtimeUnsubscribeFromVolumeIndicator` hook.
+- Add click handler and image preview to `MessageAttachment` component.
+- Add optional `badge` prop to icon `Button`.
+- Removed `popover` and `isSelected` optional props from `<NavBarItem>` component in favor of `children` and `selected` respectively.
+
+### ChatBubble design change
+
+The `ChatBubble` component no longer accepts a content prop, which was previously confined to type string. Now the `ChatBubble` component renders whatever is passed as its `children` prop. This allows for more flexible implementations beyond `string` type.
+
+If your code looks like this:
+
+```
+<ChatBubble
+    variant="incoming"
+    senderName="Jane Doe"
+    time="9:47 AM"
+   content="Hello"
+/>
+```
+
+change it to this:
+
+```
+<ChatBubble
+    variant="incoming"
+    senderName="Jane Doe"
+    time="9:47 AM"
+ >
+    Hello
+</ChatBubble>
+```
+
+### DevicePermissionStatus type change
+
+The library now strictly enforces the type of device permission status from `string` to `DevicePermissionStatus` enum which is now exported from the library.
+
+If your code looks like this:
+
+```
+const [permission, setPermission] = useState<string>('');
+```
+
+change it to this:
+
+```
+const [permission, setPermission] = useState<DevicePermissionStatus>(
+  DevicePermissionStatus.UNSET
+);
+```
+
+### IconButton design change
+
+The IconButton now has its’ own positioning context to accommodate the `badge` prop. This might mean that any absolute positioning for an IconButton would need to be updated, or you can use an element to wrap the IconButton, and use that element to create another positioning context.
+
+If your code looks like this:
+
+```
+<Button
+  variant="icon"
+  css="position: absolute;"
+  {...props}
+/>
+```
+
+change it to something like this:
+
+```
+<span style={{position: 'relative'}}>
+  <Button
+    variant="icon"
+    style="position: absolute"
+    {...props}
+  />
+</span>
+```
+
+### NavBar prop change
+
+The NavBarItem now uses the `children` prop to render a `PopOver` instead of the previously used `popver` prop. These should be more flexible. Additionally, `isSelected` prop was changed to `selected` and more optional props around labels and badges were added.
+
+If your code looks like this:
+
+```
+<NavBarItem
+  icon={<MyIcon/>}
+  onClick={myFn}
+  isSelected
+  popover={[{ label: 'Option 1' }, { label: 'Option 2' }]}
+/>
+```
+
+change it to something like this:
+
+```
+<NavBarItem
+  icon={<MyIcon/>}
+  onClick={myFn}
+  selected
+  children={
+    <PopOver
+      a11yLabel="Click me"
+      renderButton={(isOpen) => getButtonContents(isOpen)}
+    >
+      <PopOverItem
+        onClick={() => console.log('clicked')}
+        children={<span>Test content</span>}
+      />
+      <PopOverItem
+        onClick={() => console.log('clicked')}
+        children={<span>More test content</span>}
+      />
+    </PopOver>
+  }
+/>
+```
+
+### Other Changes
+
+The `ChatBubbleContainer` and `Textarea` components now includes the use of `React.forwardRef` and may have a new backwards-incompatible signature. [Link to source](https://reactjs.org/docs/forwarding-refs.html#note-for-component-library-maintainers).
+
+The `Roster` component has been changed from rendering as a `div` to a more semantic `aside` element.
