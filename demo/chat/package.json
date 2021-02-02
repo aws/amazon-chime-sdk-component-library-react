@@ -1,6 +1,6 @@
 {
   "name": "chime-sdk-chat-demo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Demo app for for Amazon Chime Chat SDK",
   "scripts": {
     "create": "webpack",

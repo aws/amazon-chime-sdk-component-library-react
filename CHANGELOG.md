@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Demo] Fix closing roster from stopping active speaker detection.
 - Fix serverless deploy script to work on Windows
 - [Tests] Update outdated snapshots
+- [Chat Demo] Fix double API calls on channel click.
 
 ### Added
 
@@ -47,6 +48,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored NavBar to allow static width
 - Refactored NavBarItem to use IconButton directly
 - Change control bar theme opacity to 1
+- [Chat Demo] Rename misspelled file names and imports
 
 ### Removed
 

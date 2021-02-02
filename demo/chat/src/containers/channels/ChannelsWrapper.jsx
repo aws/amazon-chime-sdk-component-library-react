@@ -560,7 +560,10 @@ const ChannelsWrapper = () => {
               name={channel.Name}
               actions={loadUserActions(userPermission.role)}
               isSelected={channel.ChannelArn === activeChannel.ChannelArn}
-              onClick={() => channelIdChangeHandler(channel.ChannelArn)}
+              onClick={e => {
+                e.stopPropagation();
+                channelIdChangeHandler(channel.ChannelArn);
+              }}
               unread={unreadChannels.includes(channel.ChannelArn)}
               unreadBadgeLabel="New"
             />

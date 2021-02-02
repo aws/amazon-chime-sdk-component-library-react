@@ -11,7 +11,7 @@ import Auth from '@aws-amplify/auth';
 export class IdentityService {
   /**
    * @param {region}  region AWS region.
-   * @param {userPoolId} userPoolId Congito User Pool Id.
+   * @param {userPoolId} userPoolId Cognito User Pool Id.
    */
   constructor(region, userPoolId) {
     this._userPoolId = userPoolId;
