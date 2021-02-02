@@ -180,7 +180,7 @@ const ChannelsWrapper = () => {
           dispatch({
             type: 0,
             payload: {
-              message: 'Error, could not retreive channel information.',
+              message: 'Error, could not retrieve channel information.',
               severity: 'error',
               autoClose: false,
             },
@@ -223,7 +223,7 @@ const ChannelsWrapper = () => {
       dispatch({
         type: 0,
         payload: {
-          message: 'Error occured. Unable to join channel.',
+          message: 'Error occurred. Unable to join channel.',
           severity: 'error',
           autoClose: true,
         },
@@ -266,7 +266,7 @@ const ChannelsWrapper = () => {
       dispatch({
         type: 0,
         payload: {
-          message: 'Error occured. Member not added to channel.',
+          message: 'Error occurred. Member not added to channel.',
           severity: 'error',
           autoClose: true,
         },
@@ -349,7 +349,7 @@ const ChannelsWrapper = () => {
       dispatch({
         type: 0,
         payload: {
-          message: 'Sucessfully removed members from the channel.',
+          message: 'Successfully removed members from the channel.',
           severity: 'success',
           autoClose: true,
         },
@@ -376,7 +376,7 @@ const ChannelsWrapper = () => {
       dispatch({
         type: 0,
         payload: {
-          message: `Sucessfully left ${activeChannel.Name}.`,
+          message: `Successfully left ${activeChannel.Name}.`,
           severity: 'success',
           autoClose: true,
         },

@@ -6,7 +6,7 @@ import Storage from '@aws-amplify/storage';
 /**
  * @class AttachmentService
  *
- * @description can be used to upload, download and remove attachements
+ * @description can be used to upload, download and remove attachments
  */
 class AttachmentService {
   /**
@@ -45,7 +45,7 @@ class AttachmentService {
    * Get a presigned URL of the file or the object data
    *
    * @param {string} fileKey - key of the object
-   * @param {string} userId - userId of the user who shared the attachement.
+   * @param {string} userId - userId of the user who shared the attachment.
    * @return {Promise}- A promise resolves to either a presigned url or the object
    */
   static download(fileKey, userId) {
