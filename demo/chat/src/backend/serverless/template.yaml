@@ -239,7 +239,7 @@ Resources:
       GenerateSecret: false
       UserPoolId: !Ref UserPool
 
-  #Creates a federeated Identity pool
+  #Creates a federated Identity pool
   IdentityPool:
     Type: "AWS::Cognito::IdentityPool"
     Properties:
@@ -249,7 +249,7 @@ Resources:
         - ClientId: !Ref UserPoolClient
           ProviderName: !GetAtt UserPool.ProviderName
 
-  # Create a role for unauthorized acces to AWS resources. Very limited access. Only allows users in the previously created Identity Pool
+  # Create a role for unauthorized access to AWS resources. Very limited access. Only allows users in the previously created Identity Pool
   CognitoUnAuthorizedRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -277,7 +277,7 @@ Resources:
                   - "cognito-sync:*"
                 Resource: "*"
 
-  # Create a role for authorized acces to AWS resources. Control what your user can access. 
+  # Create a role for authorized access to AWS resources. Control what your user can access. 
   # Allows users to access their s3 ChatBucket files 
   CognitoAuthorizedRole:
     Type: "AWS::IAM::Role"

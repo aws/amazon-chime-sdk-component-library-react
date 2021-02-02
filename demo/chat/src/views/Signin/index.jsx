@@ -14,7 +14,7 @@ const Signin = () => {
 
   return (
     <Grid
-      gridTempleteRows="3rem 100%"
+      gridTemplateRows="3rem 100%"
       gridTemplateAreas='
       "heading"
       "main"      

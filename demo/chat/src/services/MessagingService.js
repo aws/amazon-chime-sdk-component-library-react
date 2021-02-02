@@ -40,7 +40,7 @@ class MessagingService {
     }
   };
 
-  setMeessagintEndpoint() {
+  setMessagingEndpoint() {
     getMessagingSessionEndpoint()
       .then(async response => {
         this._endpoint = response?.Endpoint?.Url;
@@ -69,7 +69,7 @@ class MessagingService {
   connect(awsCredentials) {
     AWS.config.region = appConfig.region;
     AWS.config.credentials = awsCredentials;
-    this.setMeessagintEndpoint();
+    this.setMessagingEndpoint();
   }
 
   close() {

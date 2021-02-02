@@ -55,7 +55,7 @@ const MessagingProvider = ({ children }) => {
   useEffect(() => {
     if (!isAuthenticated || !awsCredentials) return;
 
-    // Start messagging service
+    // Start messaging service
     console.log('Calling messaging disperse');
     messagingService.connect(awsCredentials);
 
