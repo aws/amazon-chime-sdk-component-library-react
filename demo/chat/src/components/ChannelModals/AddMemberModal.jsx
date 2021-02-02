@@ -13,7 +13,7 @@ import {
 } from 'amazon-chime-sdk-component-library-react';
 
 import { createMemberArn } from '../../api/ChimeAPI';
-import { useIdentifyService } from '../../providers/IdentityProvider';
+import { useIdentityService } from '../../providers/IdentityProvider';
 import ContactPicker from '../ContactPicker';
 
 import './ChannelModals.css';
@@ -26,7 +26,7 @@ export const AddMemberModal = ({
   members,
 }) => {
   const [usersList, setUsersList] = useState([]);
-  const identityClient = useIdentifyService();
+  const identityClient = useIdentityService();
 
   const getUserAttributeByName = (user, attribute) => {
     try {

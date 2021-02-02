@@ -13,7 +13,7 @@ import {
 } from 'amazon-chime-sdk-component-library-react';
 
 import { createMemberArn } from '../../api/ChimeAPI';
-import { useIdentifyService } from '../../providers/IdentityProvider';
+import { useIdentityService } from '../../providers/IdentityProvider';
 
 import './ChannelModals.css';
 
@@ -29,7 +29,7 @@ export const BanModal = ({
   let timeout = null;
   const [userName, setUserName] = useState('');
   const [usersList, setUsersList] = useState([]);
-  const identityClient = useIdentifyService();
+  const identityClient = useIdentityService();
 
   const getUserAttributeByName = (user, attribute) => {
     try {

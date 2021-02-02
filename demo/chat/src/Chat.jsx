@@ -21,7 +21,7 @@ import Channels from './views/Channels';
 import { MessagingProvider } from './providers/ChatMessagesProvider';
 import { UserPermissionProvider } from './providers/UserPermissionProvider';
 import Authenticated from './components/Authenticated';
-import { IdentifyProvider } from './providers/IdentityProvider';
+import { IdentityProvider } from './providers/IdentityProvider';
 
 const Chat = () => (
   <Router>
@@ -31,7 +31,7 @@ const Chat = () => (
           <Notifications />
           <AuthProvider>
             <Authenticated />
-            <IdentifyProvider>
+            <IdentityProvider>
               <Switch>
                 <Route path={routes.CHAT}>
                   <MessagingProvider>
@@ -42,7 +42,7 @@ const Chat = () => (
                 </Route>
                 <Route exact path={routes.SIGNIN} component={Signin} />
               </Switch>
-            </IdentifyProvider>
+            </IdentityProvider>
           </AuthProvider>
         </NotificationProvider>
       </Theme>

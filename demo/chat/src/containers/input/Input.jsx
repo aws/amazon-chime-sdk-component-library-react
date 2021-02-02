@@ -38,7 +38,7 @@ const Input = ({ activeChannelArn, member, hasMembership }) => {
       })
       .catch((err) => {
         setUploadObj({
-          response: `Cannot delete file: ${err}`,
+          response: `Can't delete file: ${err}`,
           ...uploadObj,
         });
       });
@@ -95,7 +95,7 @@ const Input = ({ activeChannelArn, member, hasMembership }) => {
         uploadRef.current.value = '';
       } catch (err) {
         setUploadObj({
-          response: `Cannot uploading file: ${err}`,
+          response: `Can't upload file: ${err}`,
           ...uploadObj,
         });
         throw new Error(`Failed uploading... ${err}`);
@@ -165,7 +165,7 @@ const Input = ({ activeChannelArn, member, hasMembership }) => {
                 payload: {
                   message: `File (${file.name}) size (${formatBytes(
                     file.size
-                  )}) Maximum supported size is up to 5MB.`,
+                  )}) Maximum supported file size is up to 5MB.`,
                   severity: 'error',
                 },
               });

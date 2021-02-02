@@ -5,39 +5,39 @@
 import React, { useContext, useState, createContext, useEffect } from 'react';
 
 import appConfig from '../Config';
-import { IdentityService } from '../services/IdentifyService';
+import { IdentityService } from '../services/IdentityService';
 import { useAuthContext } from './AuthProvider';
 
-const IdentifyServiceContext = createContext(null);
+const IdentityServiceContext = createContext(null);
 
-export const IdentifyProvider = ({ children }) => {
+export const IdentityProvider = ({ children }) => {
   const { isAuthenticated } = useAuthContext();
-  const [identifyService] = useState(
+  const [identityService] = useState(
     () => new IdentityService(appConfig.region, appConfig.cognitoUserPoolId)
   );
 
   useEffect(() => {
-    if (!identifyService || !isAuthenticated) return;
-    identifyService.setupClient();
-  }, [identifyService, isAuthenticated]);
+    if (!identityService || !isAuthenticated) return;
+    identityService.setupClient();
+  }, [identityService, isAuthenticated]);
 
   return (
-    <IdentifyServiceContext.Provider value={identifyService}>
+    <IdentityServiceContext.Provider value={identityService}>
       {children}
-    </IdentifyServiceContext.Provider>
+    </IdentityServiceContext.Provider>
   );
 };
 
-export function useIdentifyService() {
-  const context = useContext(IdentifyServiceContext);
+export function useIdentityService() {
+  const context = useContext(IdentityServiceContext);
 
   if (context === undefined) {
     throw new Error(
-      'useIdentifyService must be used within a IdentifyServiceContext'
+      'useIdentityService must be used within a IdentityServiceContext'
     );
   }
 
   return context;
 }
 
-export default IdentifyProvider;
+export default IdentityProvider;

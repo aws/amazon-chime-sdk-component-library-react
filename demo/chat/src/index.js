@@ -4,7 +4,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Chat from './Chat';
-import configureAmplify from './services/servicesCongig';
+import configureAmplify from './services/servicesConfig';
 
 // Call services configuration
 configureAmplify();
