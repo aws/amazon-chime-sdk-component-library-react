@@ -4,7 +4,8 @@
 
 Version 2 of the Amazon Chime React Component Library makes a small number of interface changes, as well as removing some deprecated interfaces.
 
-### IMPORTANT - Version 2 of the library also requires a dependency to version 2.4 or higher of the amazon-chime-sdk-js.
+### IMPORTANT - Version 2 of the library also requires a dependency to version 2.4.1 or higher of the
+amazon-chime-sdk-js.
 
 In many cases you should not need to adjust your application code at all. This will be the case if:
 
@@ -18,10 +19,11 @@ If you do, read on.
 
 ## Installation
 
-Installation involves adjusting your package.json to depend on version 2.x.x.
+Installation involves adjusting your package.json to depend on version 2.x.x and its peer dependency amazon-chime-sdk-js
 
 ```
-npm install --save amazon-chime-sdk-component-library-react@2
+npm uninstall amazon-chime-sdk-js
+npm install --save amazon-chime-sdk-component-library-react@2 amazon-chime-sdk-js
 ```
 
 ## What’s New

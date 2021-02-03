@@ -49,6 +49,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored NavBarItem to use IconButton directly
 - Change control bar theme opacity to 1
 - [Chat Demo] Rename misspelled file names and imports
+- Set amazon-chime-sdk-js in package.json dependencies
 
 ### Removed
 

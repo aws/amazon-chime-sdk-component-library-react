@@ -6,3 +6,5 @@ coverage
 tst/snapshots/**/__diff_output__
 verdaccio_app
 .out
+demo/*/yalc.lock
+demo/*/.yalc

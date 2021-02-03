@@ -10,7 +10,7 @@ This is the SDK react meeting demo app. It shows how to use the Amazon Chime SDK
 
 3. Navigate to the meeting demo folder: `cd demo/meeting`
 
-4. Install dependencies: `npm install`
+4. Install [yalc](https://www.npmjs.com/package/yalc) to get the latest changes from the local component library: `npm i yalc -g`
 
 5. Start the webpack server and node server concurrently: `npm run start`
 
