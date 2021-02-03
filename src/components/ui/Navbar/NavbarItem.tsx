@@ -25,6 +25,8 @@ export interface NavbarItemProps extends IconButtonProps {
   placement?: Placement;
   /* Render the label text below the IconButton */
   showLabel?: boolean;
+  /* Unique identifier to target element */
+  testId?: string;
 }
 
 export const NavbarItem = ({
@@ -35,11 +37,12 @@ export const NavbarItem = ({
   showLabel = false,
   badge,
   onClick,
+  testId = 'navbar-item',
   ...rest
 }: NavbarItemProps) => {
 
   return (
-    <StyledNavbarItem data-testid="navbar-item" showLabel={showLabel}> 
+    <StyledNavbarItem data-testid={testId} showLabel={showLabel}>
       {children 
         ? 
         <PopOver
