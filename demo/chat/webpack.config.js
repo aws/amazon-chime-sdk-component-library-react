@@ -34,11 +34,7 @@ module.exports = {
     alias: {
       react: path.resolve('./node_modules/react'),
       'styled-components': path.resolve('../../node_modules/styled-components'),
-      'react-dom': path.resolve('./node_modules/react-dom'),
-      'amazon-chime-sdk-component-library-react': path.resolve(
-        __dirname,
-        '../../src/index.ts'
-      )
+      'react-dom': path.resolve('./node_modules/react-dom')
     }
   },
   output: {
