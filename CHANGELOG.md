@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix LocalVideo not rendering on initial attempt
+- [Docs] Fix mdx style rendering
 
 ### Added
 - Add JoinedFromAnotherDevice meeting status

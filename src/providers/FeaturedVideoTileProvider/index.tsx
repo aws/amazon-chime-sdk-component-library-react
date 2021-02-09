@@ -53,7 +53,7 @@ const FeaturedVideoTileProvider: React.FC = ({ children }) => {
 
       if (!tileId) {
         if (activeTileRef.current) {
-          timeout.current = setTimeout(() => {
+          timeout.current = window.setTimeout(() => {
             activeTileRef.current = null;
             setActiveTile(null);
           }, TILE_TRANSITION_DELAY);
@@ -72,7 +72,7 @@ const FeaturedVideoTileProvider: React.FC = ({ children }) => {
         activeTileRef.current = tileId;
         setActiveTile(tileId);
       } else {
-        timeout.current = setTimeout(() => {
+        timeout.current = window.setTimeout(() => {
           activeTileRef.current = tileId;
           setActiveTile(tileId);
         }, TILE_TRANSITION_DELAY);
