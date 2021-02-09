@@ -10,6 +10,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Fixed
+- Fix LocalVideo not rendering on initial attempt
+
+### Added
+- Add JoinedFromAnotherDevice meeting status
+
+### Changed
+- Allow property passthough to IconButton in NavbarItem
+
+### Removed
+
+## [2.0.0] - 2020-2-8
+
+### Fixed
 
 - Fix icon preventing clicks on `Select` components
 - Fix Github Actions build-storybook error
@@ -36,7 +49,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a "dismissible" prop to Modal to optionally allow persistent modals
 - Added ZoomIn and ZoomOut icons
 - Added style variants to Caution icon
-- Allow property passthough to IconButton in NavbarItem
 
 ### Changed
 

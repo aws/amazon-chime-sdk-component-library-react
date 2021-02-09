@@ -1,9 +1,8 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { VideoTileState } from 'amazon-chime-sdk-js';
 
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
@@ -25,9 +24,6 @@ export const LocalVideo: React.FC<Props> = ({ nameplate, ...rest }) => {
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);
   useApplyVideoObjectFit(videoEl);
-  const [active, setActive] = useState(() =>
-    audioVideo?.hasStartedLocalVideoTile()
-  );
 
   useEffect(() => {
     if (!audioVideo || !tileId || !videoEl.current || !isVideoEnabled) {
@@ -44,36 +40,9 @@ export const LocalVideo: React.FC<Props> = ({ nameplate, ...rest }) => {
     };
   }, [audioVideo, tileId, isVideoEnabled]);
 
-  useEffect(() => {
-    if (!audioVideo) {
-      return;
-    }
-
-    const observer = {
-      videoTileDidUpdate: (tileState: VideoTileState) => {
-        if (
-          !tileState.boundAttendeeId ||
-          !tileState.localTile ||
-          !tileState.tileId ||
-          !videoEl.current
-        ) {
-          return;
-        }
-
-        if (tileState.active !== active) {
-          setActive(tileState.active);
-        }
-      },
-    };
-
-    audioVideo.addObserver(observer);
-
-    return () => audioVideo.removeObserver(observer);
-  }, [audioVideo, active]);
-
   return (
     <StyledLocalVideo
-      active={active}
+      active={isVideoEnabled}
       nameplate={nameplate}
       ref={videoEl}
       {...rest}
