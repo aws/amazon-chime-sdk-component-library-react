@@ -33,10 +33,11 @@ This doc is intended for developers interested in the Amazon Chime Chat SDK, eve
 1. Ensure your workspace has node.js installed. Type `node -v` in your terminal to confirm, and it should return a version number.
 2. In the root directory of the downloaded `amazon-chime-sdk-component-library-react` repo, run `npm install` to install the required dependencies.
 3. Navigate to the root folder of Amazon Chime Sample App `demo/chat`
-4. Open `src/Config.js` with the editor of your choice and update the each missing config with the values from the previously created resources.
-5. In the root directory of `demo/chat`, run `npm install` to install the required dependencies
+4. Install [yalc](https://www.npmjs.com/package/yalc) to get the latest changes from the local component library: `npm i yalc -g`
+5. Open `src/Config.js` with the editor of your choice and update the each missing config with the values from the
+ previously created resources.
 6. In the root directory `demo/chat`, run `npm start` to start the client
-7. The Amazon Chime Sample App will automatically open in your browser if it successfully builds.
+7. Open https://0.0.0.0:9000/ in your browser
 
 ### Register a New User
 

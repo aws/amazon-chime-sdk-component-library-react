@@ -123,7 +123,6 @@ export class MeetingManager implements AudioVideoObserver {
     this.activeSpeakerListener = null;
     this.meetingStatus = MeetingStatus.Loading;
     this.publishMeetingStatus();
-    this.meetingStatusObservers = [];
     this.audioVideoObservers = {};
   }
 
@@ -232,6 +231,12 @@ export class MeetingManager implements AudioVideoObserver {
       console.log('[MeetingManager audioVideoDidStop] Meeting ended for all');
       this.meetingStatus = MeetingStatus.Ended;
       this.publishMeetingStatus();
+    } else if (sessionStatusCode === MeetingSessionStatusCode.AudioJoinedFromAnotherDevice) {
+      console.log('[MeetingManager audioVideoDidStop] Meeting joined from another device');
+      this.meetingStatus = MeetingStatus.JoinedFromAnotherDevice;
+      this.publishMeetingStatus();
+    } else {
+      console.log(`[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}`);
     }
     this.leave();
   };

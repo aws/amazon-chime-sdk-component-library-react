@@ -11,6 +11,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fix LocalVideo not rendering on initial attempt
+- Fix inconsistent snapshot for EditableChatBubble
+
+### Added
+
+- Add JoinedFromAnotherDevice meeting status
+
+### Changed
+
+- Allow property passthough to IconButton in NavbarItem
+
+### Removed
+
+## [2.0.0] - 2020-2-8
+
+### Fixed
+
 - Fix icon preventing clicks on `Select` components
 - Fix Github Actions build-storybook error
 - [Docs] Fix ContentShare docs
@@ -49,6 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Refactored NavBarItem to use IconButton directly
 - Change control bar theme opacity to 1
 - [Chat Demo] Rename misspelled file names and imports
+- Set amazon-chime-sdk-js in package.json dependencies
 
 ### Removed
 
