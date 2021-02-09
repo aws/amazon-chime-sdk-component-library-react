@@ -10,13 +10,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Fixed
+
 - Fix LocalVideo not rendering on initial attempt
+- Fix inconsistent snapshot for EditableChatBubble
 - [Docs] Fix mdx style rendering
 
 ### Added
+
 - Add JoinedFromAnotherDevice meeting status
 
 ### Changed
+
 - Allow property passthough to IconButton in NavbarItem
 
 ### Removed
