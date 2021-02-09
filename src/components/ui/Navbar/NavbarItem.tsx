@@ -39,45 +39,46 @@ export const NavbarItem = ({
 }: NavbarItemProps) => {
 
   return (
-    <StyledNavbarItem data-testid="navbar-item" showLabel={showLabel}> 
-      {children 
-        ? 
+    <StyledNavbarItem data-testid="navbar-item" showLabel={showLabel}>
+      {children
+        ?
         <PopOver
           placement={placement}
           a11yLabel={label}
           renderButtonWrapper={(isActive, props) => (
-            <IconButton  
+            <IconButton
               onClick={onClick}
-              selected={isActive} 
-              icon={icon} 
+              selected={isActive}
+              icon={icon}
               badge={badge}
               label={label}
+              {...rest}
               {...props}
             />
           )}
         >
           {children}
-        </PopOver> 
-        : 
+        </PopOver>
+        :
         <IconButton
-          icon={icon} 
+          icon={icon}
           label={label}
           onClick={onClick}
           badge={badge}
           {...rest}
         />
       }
-    
-      <label 
+
+      <label
         className="ch-navigation-bar-item-label"
         data-testid="navbar-label"
         onClick={onClick}
       >
         {label}
       </label>
-    
+
     </StyledNavbarItem>
-    
+
   );
 }
 
