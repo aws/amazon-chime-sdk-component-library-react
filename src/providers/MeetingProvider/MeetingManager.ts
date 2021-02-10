@@ -268,10 +268,16 @@ export class MeetingManager implements AudioVideoObserver {
       this.devicePermissionStatus = DevicePermissionStatus.IN_PROGRESS;
       this.publishDevicePermissionStatus();
       try {
+        const devices = await navigator.mediaDevices.enumerateDevices();
+        const hasVideoInput = devices.some(value => {
+          return value.kind === 'videoinput';
+        });
+
         const stream = await navigator.mediaDevices.getUserMedia({
           audio: true,
-          video: true
+          video: hasVideoInput
         });
+
         this.devicePermissionStatus = DevicePermissionStatus.GRANTED;
         this.publishDevicePermissionStatus();
         return stream;
