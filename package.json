@@ -15,7 +15,6 @@
   "scripts": {
     "build": "rollup -c",
     "check": "node scripts/check-codestyle.js",
-    "prerelease": "node scripts/verdaccio.js",
     "release": "node scripts/release.js",
     "prebuild:publish": "npm install && node scripts/prebuild.js --publish",
     "build:publish": "npm run check && npm run build && npm run test ",
