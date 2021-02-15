@@ -6,8 +6,11 @@ import React, { ReactNode } from 'react';
 import { StyledNavbarItem } from './Styled';
 import PopOver, { Placement } from '../PopOver';
 import IconButton, { IconButtonProps } from '../Button/IconButton';
+import { Tooltipable, WithTooltip } from '../WithTooltip';
 
-export interface NavbarItemProps extends IconButtonProps {
+const IconButtonWithToolTip = WithTooltip(IconButton);
+
+export interface NavbarItemProps extends IconButtonProps, Tooltipable {
   /* As part of IconButtonProps, any icon from the library for button in navbar item */
   icon: any;
   /* As part of IconButtonProps, The callback fired when the icon is clicked */
@@ -38,44 +41,50 @@ export const NavbarItem = ({
   onClick,
   testId = 'navbar-item',
   ...rest
-}: NavbarItemProps) => (
-  <StyledNavbarItem data-testid={testId} showLabel={showLabel}>
-    {children ? (
-      <PopOver
-        placement={placement}
-        a11yLabel={label}
-        renderButtonWrapper={(isActive, props) => (
-          <IconButton
-            onClick={onClick}
-            selected={isActive}
-            icon={icon}
-            badge={badge}
-            label={label}
-            {...rest}
-            {...props}
-          />
-        )}
-      >
-        {children}
-      </PopOver>
-    ) : (
-      <IconButton
-        icon={icon}
-        label={label}
-        onClick={onClick}
-        badge={badge}
-        {...rest}
-      />
-    )}
+}: NavbarItemProps) => {
+  const ButtonComponent = !!rest['data-tooltip']
+    ? IconButtonWithToolTip
+    : IconButton;
 
-    <label
-      className="ch-navigation-bar-item-label"
-      data-testid="navbar-label"
-      onClick={onClick}
-    >
-      {label}
-    </label>
-  </StyledNavbarItem>
-);
+  return (
+    <StyledNavbarItem data-testid={testId} showLabel={showLabel}>
+      {children ? (
+        <PopOver
+          placement={placement}
+          a11yLabel={label}
+          renderButtonWrapper={(isActive, props) => (
+            <ButtonComponent
+              onClick={onClick}
+              selected={isActive}
+              icon={icon}
+              badge={badge}
+              label={label}
+              {...rest}
+              {...props}
+            />
+          )}
+        >
+          {children}
+        </PopOver>
+      ) : (
+        <ButtonComponent
+          icon={icon}
+          label={label}
+          onClick={onClick}
+          badge={badge}
+          {...rest}
+        />
+      )}
+
+      <label
+        className="ch-navigation-bar-item-label"
+        data-testid="navbar-label"
+        onClick={onClick}
+      >
+        {label}
+      </label>
+    </StyledNavbarItem>
+  );
+};
 
 export default NavbarItem;

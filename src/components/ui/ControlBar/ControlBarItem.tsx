@@ -10,10 +10,14 @@ import PopOverItem, { PopOverItemProps } from '../PopOver/PopOverItem';
 import { useControlBarContext } from './ControlBarContext';
 import IconButton from '../Button/IconButton';
 import { BaseProps } from '../Base';
+import { Tooltipable, WithTooltip } from '../WithTooltip';
+
+const IconButtonWithToolTip = WithTooltip(IconButton);
 
 export interface ControlBarButtonProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'css'>,
-    BaseProps {
+    BaseProps,
+    Tooltipable {
   /** The icon of the control bar item. */
   icon: JSX.Element;
   /** The callback fired when the item is clicked. */
@@ -44,6 +48,13 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
   ...rest
 }) => {
   const context = useControlBarContext();
+
+  const ButtonComponent = !!rest['data-tooltip']
+    ? IconButtonWithToolTip
+    : IconButton;
+  const buttonComponentProps = !!rest['data-tooltip-position']
+    ? { tooltipPosition: rest['data-tooltip-position'] }
+    : {};
 
   const renderPopOver = () => (
     <PopOver
@@ -80,7 +91,8 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
       {...context}
       popOver={popOver}
     >
-      <IconButton
+      <ButtonComponent
+        {...buttonComponentProps}
         onClick={onClick}
         label={label}
         icon={icon}

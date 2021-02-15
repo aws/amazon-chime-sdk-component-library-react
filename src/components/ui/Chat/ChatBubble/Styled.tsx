@@ -30,10 +30,6 @@ export const StyledChatBubbleContainer = styled.div<
     padding-right: ${(props) => (props.actions ? '1rem' : '2.5rem')};
   }
 
-  .ch-popover-toggle {
-    height: 1.5rem;
-  }
-
   ${baseSpacing}
   ${baseStyles}
 `;

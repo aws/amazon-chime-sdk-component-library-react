@@ -55,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a "dismissible" prop to Modal to optionally allow persistent modals
 - Added ZoomIn and ZoomOut icons
 - Added style variants to Caution icon
+- Added WithTooltip() HOC and updated RosterHeader, RosterCell, PopOverMenu, PopOver, NavbarItem, ControlbarItem, and ChatBubbleConatiner to support tooltips
 
 ### Changed
 
