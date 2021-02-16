@@ -85,6 +85,7 @@ export const ChatBubbleContainer: FC<ChatBubbleContainerProps> = React.forwardRe
                   icon={<Dots width="1.5rem" height="1.5rem" />}
                   selected={isActive}
                   {...props}
+                  label={a11yLabel}
                 />
               )}
               children={actions}
