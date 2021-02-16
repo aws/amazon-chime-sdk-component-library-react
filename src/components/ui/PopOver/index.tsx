@@ -147,7 +147,12 @@ export const PopOver: FC<PopOverProps> = ({
             }
 
             if (renderButtonWrapper) {
-              return renderButtonWrapper(isOpen, props);
+              const { ref, ...rest } = props;
+              return (
+                <span ref={ref}>
+                  {renderButtonWrapper(isOpen, rest)}
+                </span>
+              );
             }
 
             return null;

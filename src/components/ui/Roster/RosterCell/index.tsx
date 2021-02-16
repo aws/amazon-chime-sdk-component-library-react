@@ -10,10 +10,14 @@ import { Microphone, Camera, ScreenShare } from '../../icons';
 import { StyledCell } from './Styled';
 import { PopOverMenu } from '../PopOverMenu';
 import { IconButtonProps } from '../../Button/IconButton';
+import { Tooltipable } from '../../WithTooltip';
 
 type MicPosition = 'leading' | 'grouped';
 
-export interface RosterCellProps extends BaseProps, FocusableProps {
+export interface RosterCellProps
+  extends BaseProps,
+    FocusableProps,
+    Tooltipable {
   /** The primary name in the roster cell. */
   name: string;
   /** The subtitle for the primary name. */
@@ -73,6 +77,7 @@ export const RosterCell: React.FC<RosterCellProps> = (props) => {
     a11yMenuLabel = '',
     extraIcon,
     buttonProps,
+    ...rest
   } = props;
 
   const videoIcon = getVideoIcon(videoEnabled, sharingContent);
@@ -80,6 +85,13 @@ export const RosterCell: React.FC<RosterCellProps> = (props) => {
   const mic = microphone || (
     <Microphone muted={muted} poorConnection={poorConnection} />
   );
+
+  const popOverMenuComponentProps = !!rest['data-tooltip']
+    ? {
+        ['data-tooltip-position']: rest['data-tooltip-position'],
+        ['data-tooltip']: rest['data-tooltip'],
+      }
+    : {};
 
   return (
     <StyledCell
@@ -100,6 +112,7 @@ export const RosterCell: React.FC<RosterCellProps> = (props) => {
       )}
       {menu && (
         <PopOverMenu
+          {...popOverMenuComponentProps}
           menu={menu}
           a11yMenuLabel={a11yMenuLabel}
           buttonProps={buttonProps}

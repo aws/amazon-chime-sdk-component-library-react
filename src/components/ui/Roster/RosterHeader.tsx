@@ -17,8 +17,14 @@ import IconButton from '../Button/IconButton';
 import { StyledHeader } from './Styled';
 import { PopOverMenu } from './PopOverMenu';
 import { BaseProps, FocusableProps } from '../Base';
+import { Tooltipable, WithTooltip } from '../WithTooltip';
 
-export interface RosterHeaderProps extends BaseProps, FocusableProps {
+const IconButtonWithToolTip = WithTooltip(IconButton);
+
+export interface RosterHeaderProps
+  extends BaseProps,
+    FocusableProps,
+    Tooltipable {
   /** The title of the roster header, or an element that can render in this area */
   title: string | ReactNode;
   /** The number of attendees in a meeing. */
@@ -35,6 +41,8 @@ export interface RosterHeaderProps extends BaseProps, FocusableProps {
   a11yMenuLabel?: string;
   /** Label shown for search icon button, by default it is "Open search" */
   searchLabel?: string;
+  /** Label shown for close icon button, by default it is "Close" */
+  closeLabel?: string;
   /** Use children to render custom elements in the RosterHeader */
   children?: ReactNode | ReactNode[];
 }
@@ -86,9 +94,22 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
   menu,
   a11yMenuLabel = '',
   searchLabel = 'Open search',
+  closeLabel = 'Close',
   children,
   ...rest
 }) => {
+  const ButtonComponent = !!rest['data-tooltip']
+    ? IconButtonWithToolTip
+    : IconButton;
+  const buttonComponentProps = !!rest['data-tooltip-position']
+    ? { tooltipPosition: rest['data-tooltip-position'] }
+    : {};
+  const popOverMenuComponentProps = !!rest['data-tooltip']
+    ? {
+        ['data-tooltip-position']: rest['data-tooltip-position'],
+        ['data-tooltip']: rest['data-tooltip'],
+      }
+    : {};
   const [isSearching, setIsSearching] = useState(false);
   const searchBtn = useRef<HTMLButtonElement>(null);
 
@@ -123,7 +144,8 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
 
       <div className="ch-buttons">
         {onSearch && (
-          <IconButton
+          <ButtonComponent
+            {...buttonComponentProps}
             ref={searchBtn}
             label={searchLabel}
             onClick={openSearch}
@@ -131,10 +153,21 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
           />
         )}
 
-        {menu && <PopOverMenu menu={menu} a11yMenuLabel={a11yMenuLabel} />}
+        {menu && (
+          <PopOverMenu
+            {...popOverMenuComponentProps}
+            menu={menu}
+            a11yMenuLabel={a11yMenuLabel}
+          />
+        )}
         {children}
         {onClose && (
-          <IconButton label="Close" onClick={onClose} icon={<Remove />} />
+          <ButtonComponent
+            {...buttonComponentProps}
+            label={closeLabel}
+            onClick={onClose}
+            icon={<Remove />}
+          />
         )}
       </div>
 
