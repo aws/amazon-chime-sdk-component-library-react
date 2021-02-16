@@ -86,6 +86,42 @@ BasicPopOverMenu.story = {
   name: 'Basic PopOver Menu',
 };
 
+export const PersistentPopOverMenu = () => (
+  <>
+    <Flex layout="fill-space-centered" flexDirection="column">
+      <Heading tag="p" level={6} mb={4}>
+        Click the button icon to trigger the popover
+      </Heading>
+      <PopOver
+        a11yLabel="Click me"
+        renderButton={(isOpen) => getButtonContents(isOpen)}
+        closeOnClick={false}
+      >
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked Option 1')}
+          children={<span>Option 1</span>}
+        />
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked Option 2')}
+          children={<span>Option 2</span>}
+        />
+
+        <PopOverItem
+          as="button"
+          onClick={() => console.log('clicked Option 3')}
+          children={<span>Option 3</span>}
+        />
+      </PopOver>
+    </Flex>
+  </>
+);
+
+PersistentPopOverMenu.story = {
+  name: 'Persistent PopOver Menu',
+};
+
 export const PopOverMenuWithHeader = () => (
   <Flex layout="fill-space-centered" flexDirection="column">
     <Heading tag="p" level={6} mb={4}>

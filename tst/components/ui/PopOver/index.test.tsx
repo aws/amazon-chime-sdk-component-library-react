@@ -134,6 +134,28 @@ describe('PopOver', () => {
     expect(menu).not.toBeInTheDocument();
   });
 
+  it('should NOT close the popper when an item is selected if closeOnClick is false', () => {
+    const component = (
+      <PopOver
+        renderButton={popOverButton}
+        a11yLabel="test-label"
+        closeOnClick={false}
+      >
+        <PopOverItem children={<span>Test Item</span>} />
+      </PopOver>
+    );
+    const { getByText, getByTestId, queryByTestId } = renderWithTheme(
+      lightTheme,
+      component
+    );
+    const toggle = getByTestId('popover-toggle');
+    fireEvent.click(toggle);
+    const menu = queryByTestId('menu');
+    const item = getByText('Test Item');
+    fireEvent.click(item);
+    expect(menu).toBeInTheDocument();
+  });
+
   it('should not close the popper when a submenu item is clicked', async () => {
     const component = (
       <PopOver renderButton={popOverButton} a11yLabel="test-label">
