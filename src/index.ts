@@ -55,6 +55,12 @@ export { ChatBubbleContainer } from './components/ui/Chat/ChatBubble/ChatBubbleC
 export { InfiniteList } from './components/ui/Chat/InfiniteList';
 export { MessageAttachment } from './components/ui/Chat/MessageAttachment';
 export { formatDate, formatTime } from './components/ui/Utilities';
+export {
+  WithTooltip,
+  Tooltipable,
+  ToolTipPositionType,
+  ToolTipProps,
+} from './components/ui/WithTooltip';
 
 // SDK components
 export {
