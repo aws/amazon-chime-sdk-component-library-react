@@ -127,3 +127,7 @@ logger.warn(`
 shouldContinuePrompt();
 
 spawnOrFail('git', ['push origin HEAD:release -f']);
+process.chdir(path.join(__dirname, '../demo/meeting/serverless'));
+logger.log("Deploying unique release candidate Meeting Demo URL...");
+const formattedVersion = versionString.replace(/\./g, "-");
+spawnOrFail('node', [`./deploy.js -r us-east-1 -b chime-sdk-components-demo-${formattedVersion} -s chime-sdk-components-demo-${formattedVersion}`]);
