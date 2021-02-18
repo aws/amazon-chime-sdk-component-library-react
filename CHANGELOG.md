@@ -51,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix serverless deploy script to work on Windows
 - [Tests] Update outdated snapshots
 - [Chat Demo] Fix double API calls on channel click.
+- NotificatonGroups don't accept pointer-events
 
 ### Added
 
