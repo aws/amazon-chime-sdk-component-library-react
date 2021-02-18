@@ -19,18 +19,19 @@ export interface MicVolumeIndicatorProps
 
 export const MicVolumeIndicator = forwardRef(
   (
-    { muted = false, signalStrength, ...rest }: MicVolumeIndicatorProps,
+    { muted = false, signalStrength, className: propClassName, ...rest }: MicVolumeIndicatorProps,
     bgRef: Ref<HTMLDivElement>
   ) => {
     const poorConnection =
       signalStrength !== undefined && signalStrength <= 0.5;
+    const className = propClassName ? `${propClassName} ch-mic-volume-indicator` : 'ch-mic-volume-indicator';
 
     return (
       <StyledMicVolumeIndicator
-        {...rest}
+        className={className}
         signalStrength={signalStrength}
         muted={muted}
-        className="ch-mic-volume-indicator"
+        {...rest}
       >
         <Microphone
           muted={muted}

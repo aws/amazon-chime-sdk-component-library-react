@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 ### Fixed
+- Fixed the `MicrophoneActivity` component's `className` prop
+  overridden by the `MicVolumeIndicator` component `className`.
 
 ### Added
 
