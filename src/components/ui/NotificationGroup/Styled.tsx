@@ -12,4 +12,5 @@ export const StyledNotificationGroup = styled.div`
   flex-direction: column;
   align-items: center;
   z-index: ${(props) => props.theme.zIndex.notificationGroup};
+  pointer-events: none;
 `;

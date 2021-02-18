@@ -28,6 +28,7 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
   border-radius: 0.25rem;
   margin: 0.75rem;
   max-width: 45rem;
+  pointer-events: auto;
 
   .ch-severity-icon {
     width: 1.5rem;
@@ -77,5 +78,3 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
   ${baseSpacing}
   ${baseStyles}
 `;
-
-
