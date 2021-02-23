@@ -12,8 +12,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fixed the `MicrophoneActivity` component's `className` prop
   overridden by the `MicVolumeIndicator` component `className`.
+- NotificatonGroups don't accept pointer-events.
+- Clean up timeouts when `useFocusIn` and `useMouseMove` hooks are unmounted.
 
 ### Added
+- Allow the `PopOver` UI component to stay open for multiple clicks.
+- Added `WithTooltip()` HOC and updated `RosterHeader`, `RosterCell`, `PopOverMenu`,
+  `PopOver`, `NavbarItem`, `ControlbarItem`, and `ChatBubbleConatiner` to support tooltips.
+- Added documentation for components that support tooltips, exposed `WithTooltip` component and related interfaces/types.
 
 ### Changed
 - Render roster without waiting for getAtendee callback.
@@ -72,8 +78,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a "dismissible" prop to Modal to optionally allow persistent modals
 - Added ZoomIn and ZoomOut icons
 - Added style variants to Caution icon
-- Added WithTooltip() HOC and updated RosterHeader, RosterCell, PopOverMenu, PopOver, NavbarItem, ControlbarItem, and ChatBubbleConatiner to support tooltips
-- Added documentation for components that support tooltips, exposed WithTooltip component and related interfaces/types
 
 ### Changed
 
