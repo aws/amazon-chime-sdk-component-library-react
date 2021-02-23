@@ -22,6 +22,10 @@ interface Props {
   postLogConfig?: PostLogConfig;
   /** Whether or not to enable simulcast for the meeting session */
   simulcastEnabled?: boolean;
+  /** Pass a `MeetingManager` instance if you want to share this instance 
+   * across multiple different `MeetingProvider`s.
+  */
+  meetingManager?: MeetingManager;
 }
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
@@ -30,10 +34,11 @@ export const MeetingProvider: React.FC<Props> = ({
   logLevel = LogLevel.WARN,
   postLogConfig,
   simulcastEnabled = false,
+  meetingManager: meetingManagerProp,
   children,
 }) => {
   const [meetingManager] = useState(
-    () => new MeetingManager({ logLevel, postLogConfig, simulcastEnabled })
+    () => meetingManagerProp || new MeetingManager({ logLevel, postLogConfig, simulcastEnabled })
   );
 
   return (

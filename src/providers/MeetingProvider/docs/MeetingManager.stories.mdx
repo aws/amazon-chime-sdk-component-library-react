@@ -4,6 +4,11 @@
 
 The `MeetingManager` is a class that helps integration with the SDK. It is tied to the `MeetingProvider` and is primarily responsible for joining, starting, and leaving your meeting.
 
+You can pass in the same `MeetingManager` instance to multiple different `MeetingProvider`s through props. This will override new `MeetingManager` instance creation inside
+the `MeetingProvider`. This is to support very specific cases where you may have different React trees within you applications. For example, you are migrating
+from an Angular application to a React application.
+
+
 You can access the `MeetingManager` instance with the `useMeetingManager` hook.
 
 ## Usage
@@ -84,6 +89,7 @@ interface AttendeeResponse {
 
 #### Example
 
+1. `MeetingManager` instance is created internally in the `MeetingProvider` and can be retrived using `useMeetingManager` hook.
 ```jsx
 import { MeetingProvider, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 
@@ -108,3 +114,28 @@ const MyApp = () => {
   }, [])
 }
 ```
+
+2. Share the same `MeetingManager` instance with multiple different `MeetingProvider`s.
+
+You can create a new `MeetingManager` instance and then pass it as a prop to your `MeetingProvider`s. If not passed,
+a new `MeetingManager` instance will be created internally with each `MeetingProvider` when rendered; and, 
+you will get the `MeetingManager` instance associated with that particular `MeetingProvider` when `useMeetingManager` hook is called.
+
+```jsx
+import { MeetingProvider, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const Root = () => {
+  const meetingManager = new MeetingManager({ logLevel: LogLevel.INFO });
+  
+  return (
+    <MeetingProvider meetingManager={meetingManager}>
+      <MyApp1 />
+    <MeetingProvider/>
+
+    <MeetingProvider meetingManager={meetingManager}>
+      <MyApp2 />
+    <MeetingProvider/>
+  ); 
+}
+```
+
