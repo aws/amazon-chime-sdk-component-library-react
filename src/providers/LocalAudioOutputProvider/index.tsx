@@ -36,6 +36,7 @@ const LocalAudioOutputProvider: React.FC = ({ children }) => {
     }
     return (): void => {
       audioVideo.unbindAudioElement();
+      setIsAudioOn(true);
     };
   }, [audioVideo]);
 
