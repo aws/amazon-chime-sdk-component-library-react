@@ -1,26 +1,28 @@
 # Chime SDK UI Component Library
 
 [Chime SDK UI Component Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/)
-[Migration to V2](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/migration-to-v2--page)
+[Migration from V1 to V2](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/migration-to-v2--page)
 
 <a href="https://www.npmjs.com/package/amazon-chime-sdk-component-library-react"><img src="https://img.shields.io/npm/v/amazon-chime-sdk-component-library-react?style=flat-square"></a>
 <a href="https://github.com/aws/amazon-chime-sdk-component-library-react"><img src="https://github.com/aws/amazon-chime-sdk-component-library-react/workflows/CI%20Workflow/badge.svg"></a>
 
 This contains reusable components written with React, TypeScript and styled components to be used to create UIs with Chime SDK JS.
 
-## To genereate dependencies
+## Contributing to the component library
+
+### To generate dependencies
 
 ```
 npm install
 ```
 
-## To run Storybook server locally
+### To run the Storybook server locally
 
 ```
 npm start
 ```
 
-## Build
+### Build
 
 ```
 npm run build
@@ -28,7 +30,7 @@ npm run build
 
 Once you build, check and resolve any warnings you may get like unresolved dependencies or circular dependencies. Remove these as it will help in bundling the library warning/error free.
 
-## Test
+### Test
 
 Run all unit test suites.
 
@@ -48,11 +50,13 @@ Run all unit test suites in watch mode
 npm run test -- --watch
 ```
 
-Run all snapshots test suites, [Docker](https://docs.docker.com/install/) installation is required to run puppeteer in docker container.
+Run all snapshot test suites. [Docker](https://docs.docker.com/install/) is required to run Puppeteer in a Docker container.
 
 ```
 npm run test:snapshots
 ```
+
+#### Troubleshooting
 
 > Error 1: Service 'chromium' failed to build : toomanyrequests: You have reached your pull rate limit
 
@@ -78,24 +82,6 @@ npm run test:snapshots-path -- <filepath> -u
 ```
 
 A code coverage summary will be printed at the end of each `npm run test` run. Full coverage including coverage for each file is generated in a `lcov-report` html file that can be rendered in the browser. This is generated in a `/coverage` directory on each test run.
-
-# Usage
-
-After publishing your lib (ie `my-react-lib`) you can use it by importing the styles in your App's entry point:
-
-Then you can import and use your components:
-
-```tsx
-//
-import React from 'react';
-import { Example } from 'my-react-lib';
-
-export class App extends React.Component {
-  render() {
-    return <Example />;
-  }
-}
-```
 
 ## License
 
