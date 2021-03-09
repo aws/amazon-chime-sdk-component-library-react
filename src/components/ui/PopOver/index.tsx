@@ -40,6 +40,8 @@ export interface PopOverProps
   renderButton?: (isActive: boolean) => {};
   /** Alternative to renderButton, defines the function to render the full popover button element (as opposed to just its contents). This is used if you want full control over the button rendering. The button must forwardRef */
   renderButtonWrapper?: (isActive: boolean, props: any) => {};
+  /** The callback fired when the render button is clicked. */
+  onPopOverClick?: (isOpen: boolean) => void;
   /** The label used for availability. */
   a11yLabel: string;
   /** The elements that populate the menu */
@@ -55,6 +57,7 @@ const getFocusableElements = (node: HTMLElement): NodeListOf<HTMLElement> => {
 export const PopOver: FC<PopOverProps> = ({
   renderButton,
   renderButtonWrapper,
+  onPopOverClick,
   children,
   isSubMenu = false,
   placement = 'bottom-start',
@@ -119,6 +122,13 @@ export const PopOver: FC<PopOverProps> = ({
     }
   };
 
+  const handlePopOverClick = () => {
+    setIsOpen(!isOpen);
+    if(onPopOverClick) {
+      onPopOverClick(isOpen);
+    }
+  };
+
   useClickOutside(menuRef, () => setIsOpen(false));
   useTabOutside(menuRef, () => setIsOpen(false));
 
@@ -130,7 +140,7 @@ export const PopOver: FC<PopOverProps> = ({
             const props = {
               ref,
               className: classnames(className, 'ch-popover-toggle'),
-              onClick: () => setIsOpen(!isOpen),
+              onClick: handlePopOverClick,
               'data-menu': isSubMenu ? 'submenu' : null,
               'aria-label': a11yLabel,
               'aria-haspopup': true,
