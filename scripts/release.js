@@ -25,7 +25,6 @@ Choose one of the following bumping version options:
     3. Major
     4. Manual`);
 const userInput = prompt('');
-// Get required selection.
 if (!userInput || !['1', '2', '3', '4'].includes(userInput)) {
   logger.error('Exiting...', 'You must make selection to proceed!');
   process.exit(1);
@@ -111,14 +110,38 @@ fs.writeFileSync(
 spawnOrFail('npm', [`version ${versionString} --no-git-tag-version`]);
 logger.log(`Updated package.json version to ${versionString}`);
 
+// Update the peer dependency to the most updated version of the SDK
+const updatedSdkVersion = spawnOrFail('npm', [`show amazon-chime-sdk-js version`]).trim();
+
+logger.log(`Installing SDK Version: ${updatedSdkVersion} into the meeting demo, chat demo, and as a peerDependency and devDependency of the react library.`);
+
+let componentsPackageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
+componentsPackageJson.peerDependencies['amazon-chime-sdk-js'] = `^${updatedSdkVersion}`;
+componentsPackageJson.devDependencies['amazon-chime-sdk-js'] = `^${updatedSdkVersion}`;
+
+fs.writeFileSync(
+  'package.json',
+  JSON.stringify(componentsPackageJson, null, 2)
+);
+
+logger.log("NPM Installing component library...")
+spawnOrFail('npm', [`install`]);
+
+// Udpate meeting demo to the most up to date version of the SDK
+process.chdir(path.join(__dirname, '../demo/meeting'));
+spawnOrFail('npm', [`install amazon-chime-sdk-js@${updatedSdkVersion}`]);
+
+// Update the chat demo to the most up to date version of the SDK
+process.chdir(path.join(__dirname, '../demo/chat'));
+spawnOrFail('npm', [`install amazon-chime-sdk-js@${updatedSdkVersion}`]);
+process.chdir(path.join(__dirname, '..'));
+
 spawnOrFail('git', ['add -A']);
 spawnOrFail('git', [`commit -m 'Publish ${tag}'`]);
 logger.log(`Created commit called: "Publish ${tag}"`);
 
 logger.log(`Running build:publish script`);
 spawnOrFail('npm', [`run build:publish`]);
-logger.log(`Running npm pack --dry-run, this can take a few minutes`);
-spawnOrFail('npm', ['pack --dry-run']);
 
 logger.warn(`
     Do you want to upload these files?
