@@ -23,6 +23,9 @@ export function useMouseMove(el: RefObject<any>, delay = 3000) {
     el.current.addEventListener('mousemove', onMouseMove);
 
     return (): void => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
       el.current.removeEventListener('mousemove', onMouseMove);
     };
   }, [el]);

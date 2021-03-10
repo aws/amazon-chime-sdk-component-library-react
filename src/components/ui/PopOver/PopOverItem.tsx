@@ -23,17 +23,20 @@ export interface PopOverItemProps {
   as?: PopOverItemType;
   /** Whether or not the item has a border. */
   border?: boolean;
+  /* Unique identifier to target element */
+  testId?: string;
 }
 
 export const PopOverItem: FC<PopOverItemProps> = ({
   as = 'button',
   children,
   checked,
+  testId = 'popover-item',
   ...rest
 }) => {
   let Tag = as;
   return (
-    <StyledPopOverItem data-testid="popover-item">
+    <StyledPopOverItem data-testid={testId}>
       {checked && <Check className="ch-check" data-testid="popover-check" />}
       <Tag className="ch-content" {...rest}>
         {children}

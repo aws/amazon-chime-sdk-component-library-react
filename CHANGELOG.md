@@ -7,7 +7,44 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## Unreleased
+## [Unreleased]
+
+### Fixed
+
+- Fix removeEventListener bug for WithTooltip.
+- Reset `isAudioOn` state to `true` when `LocalAudioOutputProvider` unmounts.
+
+### Added
+
+- Added an optional prop `onPopOverClick` to pass a callback function to the `PopOver` UI component. This callback will be called when the `PopOver` UI component is clicked.
+
+### Changed
+
+### Removed
+
+## [2.1.0] - 2021-02-24
+
+### Fixed
+- Fixed the `MicrophoneActivity` component's `className` prop
+  overridden by the `MicVolumeIndicator` component `className`.
+- NotificatonGroups don't accept pointer-events.
+- Clean up timeouts when `useFocusIn` and `useMouseMove` hooks are unmounted.
+
+### Added
+- Allow the `PopOver` UI component to stay open for multiple clicks.
+- Added `WithTooltip()` HOC and updated `RosterHeader`, `RosterCell`, `PopOverMenu`,
+  `PopOver`, `NavbarItem`, `ControlbarItem`, and `ChatBubbleConatiner` to support tooltips.
+- Added documentation for components that support tooltips, exposed `WithTooltip` component and related interfaces/types.
+
+### Changed
+- Render roster without waiting for getAtendee callback.
+- Update `MeetingProvider` and corresponding documentation to support
+  re-usable `MeetingManager` instance.
+
+
+### Removed
+
+## [2.0.1] - 2020-2-11
 
 ### Fixed
 
@@ -51,6 +88,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix serverless deploy script to work on Windows
 - [Tests] Update outdated snapshots
 - [Chat Demo] Fix double API calls on channel click.
+- NotificatonGroups don't accept pointer-events
 
 ### Added
 
@@ -67,8 +105,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a "dismissible" prop to Modal to optionally allow persistent modals
 - Added ZoomIn and ZoomOut icons
 - Added style variants to Caution icon
-- Added WithTooltip() HOC and updated RosterHeader, RosterCell, PopOverMenu, PopOver, NavbarItem, ControlbarItem, and ChatBubbleConatiner to support tooltips
-- Added documentation for components that support tooltips, exposed WithTooltip component and related interfaces/types
 
 ### Changed
 

@@ -1,0 +1,36 @@
+name: Deploy Components Demo App Workflow
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  deploy:
+    name: Deploy Demo App
+    runs-on: ubuntu-latest
+    env:
+        AWS_DEFAULT_REGION: us-east-1
+        AWS_DEFAULT_OUTPUT: text
+        AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY}}
+        AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+    steps:
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+      - name: Checkout Package
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Install SAM CLI
+        run: scripts/github-action-awscli-installation
+      - name: Install Yalc
+        run: sudo npm i yalc -g
+      - name: NPM Install
+        run: npm ci
+      - name: Deploy the Serverless Demo App
+        run: |
+          cd $GITHUB_WORKSPACE/demo/meeting/serverless
+          node ./deploy.js -r us-east-1 -b chime-sdk-components-demo-canary -s chime-sdk-components-demo-canary -l
