@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fix removeEventListener bug for WithTooltip.
+- Reset `isAudioOn` state to `true` when `LocalAudioOutputProvider` unmounts.
 
 ### Added
 
