@@ -13,7 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix removeEventListener bug for WithTooltip.
 - Reset `isAudioOn` state to `true` when `LocalAudioOutputProvider` unmounts.
-- Fix getAttendee populate name even after the attendee has left the meeting
 
 ### Added
 
@@ -22,6 +21,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
+
+## [2.1.1] - 2021-03-10
+
+### Fixed
+- Fix getAttendee populate name even after the attendee has left the meeting
 
 ## [2.1.0] - 2021-02-24
 
