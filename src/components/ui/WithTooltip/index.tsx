@@ -52,7 +52,7 @@ export const WithTooltip = <P extends object>(
 
   useEffect(() => {
     document.addEventListener('scroll', hideToolTip, true);
-    return () => document.removeEventListener('scroll', hideToolTip);
+    return () => document.removeEventListener('scroll', hideToolTip, true);
   }, []);
 
   const container = document.getElementById(container_id);

@@ -5,6 +5,7 @@
   "scripts": {
     "deps": "cd ../.. && npm run build && yalc publish",
     "start": "npm run deps && yalc add amazon-chime-sdk-component-library-react && npm install && npm run start:fast",
+    "start:release": "npm install && npm run start:fast",
     "start:fast": "webpack-dev-server"
   },
   "dependencies": {
