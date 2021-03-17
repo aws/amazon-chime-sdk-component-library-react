@@ -164,6 +164,7 @@ spawnOrFail('sam', [
   'CAPABILITY_IAM',
   '--region',
   `${region}`,
+  '--no-fail-on-empty-changeset'
 ], null, !disablePrintingLogs);
 if (!disablePrintingLogs) {
   console.log('Amazon Chime SDK Meeting Demo URL: ');
