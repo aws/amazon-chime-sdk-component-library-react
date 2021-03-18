@@ -71,6 +71,10 @@ const RosterProvider: React.FC = ({ children }) => {
           externalUserId
         );
 
+        // Make sure that the attendee is still on the roster
+        if (!rosterRef.current[attendeeId]) {
+          return;
+        }
         attendee = { ...attendee, ...externalData };
         setRoster((oldRoster) => ({
           ...oldRoster,

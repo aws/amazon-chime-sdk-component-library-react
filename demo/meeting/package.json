@@ -22,11 +22,13 @@
     "deps": "cd ../.. && npm run build && yalc publish",
     "build:fast": "webpack --config ./webpack.config.js --mode=production --devtool=false",
     "build": "npm run deps && yalc add amazon-chime-sdk-component-library-react && npm install && npm run build:fast",
+    "build:release": "npm run deps:release && npm install && npm run build:fast",
     "postbuild": "node check-version.js",
     "start:client": "npm run build:fast && webpack-dev-server",
     "start:backend": "node server.js",
     "start:fast": "concurrently \"npm run start:client\" \"npm run start:backend\"",
-    "start": "npm run deps && yalc add amazon-chime-sdk-component-library-react && npm install && npm run start:fast"
+    "start": "npm run deps && yalc add amazon-chime-sdk-component-library-react && npm install && npm run start:fast",
+    "start:release": "npm install && npm run start:fast"
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",

@@ -1,18 +1,55 @@
-# Chime SDK UI Component Library
+# Amazon Chime SDK React Components Library
+<a href="https://www.npmjs.com/package/amazon-chime-sdk-component-library-react"><img src="https://img.shields.io/npm/v/amazon-chime-sdk-component-library-react?style=flat-square"></a>
+<a href="https://github.com/aws/amazon-chime-sdk-component-library-react"><img src="https://github.com/aws/amazon-chime-sdk-component-library-react/workflows/CI%20Workflow/badge.svg"></a>
+
+[Amazon Chime SDK React Components Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/)
+[Amazon Chime SDK for JavaScript Library](https://github.com/aws/amazon-chime-sdk-js/)
+
+The Amazon Chime SDK makes it easy to add collaborative audio calling, video calling, and screen share features to web applications by using the same infrastructure services that power millions of Amazon Chime online meetings.
+
+The Amazon Chime SDK React Component Library supplies client-side state management and reusable UI components for common web interfaces used in audio and video conferencing applications, including: video tile grids, microphone activity indicators, and call controls. All components come with a simple, modern design, and can be used as-is or restyled with a custom theme. In addition to UI components, the library leverages Reacts' state management tools such as Providers and Hooks to connect to the Amazon Chime SDK for JavaScript and pass data to the UI layer, simplifying state synchronization so that developers can concentrate on building engaging experiences.
+
+The Amazon Chime React Component Library can be added to your web application codebase using npm.
+
+Documentation on these components and how to use them can be found on [Amazon Chime SDK React Component Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/).
+
+### To get started, see the following resources:
+
+[Amazon Chime SDK](https://aws.amazon.com/chime/chime-sdk/)
+
+[Amazon SDK Pricing](https://aws.amazon.com/chime/pricing/#Chime_SDK_)
+
+[Supported Browsers](https://docs.aws.amazon.com/chime/latest/dg/meetings-sdk.html#mtg-browsers)
+
+[Amazon Chime API Reference](https://docs.aws.amazon.com/chime/latest/APIReference/Welcome.html)
+
+[Amazon Chime SDK for JavaScript Documentation](https://aws.github.io/amazon-chime-sdk-js/#amazon-chime-sdk-for-javascript)
 
 [Chime SDK UI Component Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/)
 [Migration from V1 to V2](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/migration-to-v2--page)
 
-<a href="https://www.npmjs.com/package/amazon-chime-sdk-component-library-react"><img src="https://img.shields.io/npm/v/amazon-chime-sdk-component-library-react?style=flat-square"></a>
-<a href="https://github.com/aws/amazon-chime-sdk-component-library-react"><img src="https://github.com/aws/amazon-chime-sdk-component-library-react/workflows/CI%20Workflow/badge.svg"></a>
+## Examples
 
-This contains reusable components written with React, TypeScript and styled components to be used to create UIs with Chime SDK JS.
+[Meeting Demo](https://github.com/aws/amazon-chime-sdk-component-library-react/tree/master/demo/meeting)
+
+[Chat Demo](https://github.com/aws/amazon-chime-sdk-component-library-react/tree/master/demo/chat)
+
+## Installation and Development
+
+If you are adding this library to your existing application, add `amazon-chime-sdk-component-library-react` and the necessary peer dependencies to your project.
+
+```
+npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system 
+```
+
+Otherwise clone the repo and install the dependencies.
 
 ## Contributing to the component library
 
 ### To generate dependencies
 
 ```
+git clone https://github.com/aws/amazon-chime-sdk-component-library-react.git
 npm install
 ```
 
