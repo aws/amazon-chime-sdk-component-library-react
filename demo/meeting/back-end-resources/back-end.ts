@@ -126,7 +126,6 @@ export class BackEnd extends Construct {
         attendeeTable.grantReadWriteData(attendeeLambda);
 
         const api = new apigateway.RestApi(this, 'meetingApi', {
-            restApiName: 'Meeting BackEnd',
             endpointConfiguration: {
               types: [ apigateway.EndpointType.REGIONAL ]
             }
