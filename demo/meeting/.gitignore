@@ -1,2 +1,12 @@
-node_modules
-dist
+node_modules/
+package-lock.json
+cdk.out/
+index.js
+back-end-resources/back-end.js
+front-end-resources/front-end.js
+.eslintcache
+cdk.context.json
+cdk-outputs.json
+!/back-end-resources/lambda-layer/nodejs/node_modules/
+.DS_Store
+build/
