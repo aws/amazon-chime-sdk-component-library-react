@@ -14,6 +14,8 @@ export interface PopOverSubMenuProps
   children?: JSX.Element | JSX.Element[];
   /** The text shown in the item. */
   text: string;
+  /** Unique identifier to target PopOverToggle element **/
+  popoverToggleTestId?: string;
 }
 
 export const PopOverSubMenu: FC<PopOverSubMenuProps> = ({

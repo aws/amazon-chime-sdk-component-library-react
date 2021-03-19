@@ -48,6 +48,8 @@ export interface PopOverProps
   children: any;
   /** Allow the popover to stay open for multiple clicks. */
   closeOnClick?: boolean;
+  /** Unique identifier to target PopOverToggle element **/
+  popoverToggleTestId?: string;
 }
 
 const getFocusableElements = (node: HTMLElement): NodeListOf<HTMLElement> => {
@@ -64,6 +66,7 @@ export const PopOver: FC<PopOverProps> = ({
   a11yLabel,
   className,
   closeOnClick = true,
+  popoverToggleTestId = 'popover-toggle',
   ...rest
 }) => {
   const menuRef = createRef<HTMLSpanElement>();
@@ -145,7 +148,7 @@ export const PopOver: FC<PopOverProps> = ({
               'aria-label': a11yLabel,
               'aria-haspopup': true,
               'aria-expanded': isOpen,
-              'data-testid': 'popover-toggle',
+              'data-testid': popoverToggleTestId,
             };
 
             if (renderButton) {

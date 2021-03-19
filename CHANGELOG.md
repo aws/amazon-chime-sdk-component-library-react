@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added an optional prop `onPopOverClick` to pass a callback function to the `PopOver` UI component. This callback will be called when the `PopOver` UI component is clicked.
 - Add `--no-fail-on-empty-changeset` flag in deploy script to not fail for empty changeset
+- Added an optional prop `onMouseOver` to pass a callback function to the `PopOverItem` UI component. This callback will be called when the mouseover event is fired at `PopOverItem` UI component.
+- Added an optional prop `popoverToggleTestId` to pass `data-testid` to the `PopOverToggle` element.
 
 ### Changed
 

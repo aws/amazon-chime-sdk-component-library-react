@@ -11,6 +11,8 @@ export type PopOverItemType = 'a' | 'button';
 export interface PopOverItemProps {
   /** The callback fired when the item is clicked. */
   onClick?: () => void;
+  /** The callback fired when mouseover event is fired. */
+  onMouseOver?: () => void;
   /** Whether or not the item is checked. */
   checked?: boolean;
   /** The elements that populate the content of the item. */
@@ -31,12 +33,13 @@ export const PopOverItem: FC<PopOverItemProps> = ({
   as = 'button',
   children,
   checked,
+  onMouseOver,
   testId = 'popover-item',
   ...rest
 }) => {
   let Tag = as;
   return (
-    <StyledPopOverItem data-testid={testId}>
+    <StyledPopOverItem data-testid={testId} onMouseOver={onMouseOver}>
       {checked && <Check className="ch-check" data-testid="popover-check" />}
       <Tag className="ch-content" {...rest}>
         {children}
