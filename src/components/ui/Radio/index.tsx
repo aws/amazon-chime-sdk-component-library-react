@@ -25,10 +25,12 @@ export interface RadioProps {
   onChange: (event: any) => void;
   /** Other props of the radio. */
   radioProps?: InputHTMLAttributes<HTMLButtonElement>;
+  /* Unique identifier to target element */
+  testId?: string;
 }
 
 export const Radio: FC<RadioProps> = (props) => {
-  const { value, checked, label, icon, onChange, ...rest } = props;
+  const { value, checked, label, icon, onChange, testId, ...rest } = props;
   const radioNode = useRef<HTMLInputElement>(null);
   const labelId = useUniqueId();
 
@@ -38,7 +40,7 @@ export const Radio: FC<RadioProps> = (props) => {
   };
 
   return (
-    <StyledRadioWrapper className="ch-radio-wrapper">
+    <StyledRadioWrapper className="ch-radio-wrapper" data-testid={testId}>
       <HiddenRadio
         checked={checked}
         id={labelId}
