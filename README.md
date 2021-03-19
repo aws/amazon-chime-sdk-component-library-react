@@ -25,7 +25,8 @@ Documentation on these components and how to use them can be found on [Amazon Ch
 
 [Amazon Chime SDK for JavaScript Documentation](https://aws.github.io/amazon-chime-sdk-js/#amazon-chime-sdk-for-javascript)
 
-[Migration to V2](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/migration-to-v2--page)
+[Chime SDK UI Component Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/)
+[Migration from V1 to V2](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/migration-to-v2--page)
 
 ## Examples
 
@@ -43,13 +44,16 @@ npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js 
 
 Otherwise clone the repo and install the dependencies.
 
+## Contributing to the component library
+
+### To generate dependencies
 
 ```
 git clone https://github.com/aws/amazon-chime-sdk-component-library-react.git
 npm install
 ```
 
-### To run Storybook server locally
+### To run the Storybook server locally
 
 ```
 npm start
@@ -83,11 +87,13 @@ Run all unit test suites in watch mode
 npm run test -- --watch
 ```
 
-Run all snapshots test suites, [Docker](https://docs.docker.com/install/) installation is required to run puppeteer in docker container.
+Run all snapshot test suites. [Docker](https://docs.docker.com/install/) is required to run Puppeteer in a Docker container.
 
 ```
 npm run test:snapshots
 ```
+
+#### Troubleshooting
 
 > Error 1: Service 'chromium' failed to build : toomanyrequests: You have reached your pull rate limit
 
