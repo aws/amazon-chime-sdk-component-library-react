@@ -11,17 +11,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fix incorrect type definitions in date formatting.
+- Fix the Jest configuration to not use the deprecated `tsConfig` spelling of `tsconfig`.
 - Fix removeEventListener bug for WithTooltip.
 - Reset `isAudioOn` state to `true` when `LocalAudioOutputProvider` unmounts.
 
 ### Added
 
+- Added some key properties to `ModalButtonGroup`, which quiets some React warnings.
 - Added an optional prop `onPopOverClick` to pass a callback function to the `PopOver` UI component. This callback will be called when the `PopOver` UI component is clicked.
-- Add `--no-fail-on-empty-changeset` flag in deploy script to not fail for empty changeset
+- Added `--no-fail-on-empty-changeset` flag in deploy script to not fail for empty changeset.
 - Added an optional prop `onMouseOver` to pass a callback function to the `PopOverItem` UI component. This callback will be called when the mouseover event is fired at `PopOverItem` UI component.
 - Added an optional prop `popoverToggleTestId` to pass `data-testid` to the `PopOverToggle` element.
 
 ### Changed
+- Bumped react and react-dom version to 17.
+- Updated versions of testing-library family of packages.
+- Corrected the detection of `yesterday` in said code.
+- Wraped actions in tests with `act`, as React requests.
 
 ### Removed
 
