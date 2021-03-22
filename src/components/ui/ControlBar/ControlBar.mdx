@@ -2,7 +2,7 @@ import { Preview, Props } from '@storybook/addon-docs/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import ControlBar from '.';
-import ControlBarItem from './ControlBarItem';
+import ControlBarButton from './ControlBarButton';
 import { ControlBarForDocs } from './ControlBar.stories';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
@@ -13,16 +13,16 @@ The ControlBar component displays a section of controls with icons and labels.
 
 You can place ControlBar into the parent element according to the `layout` prop, e.g. `top`, `bottom`, `right`, `left`, `undocked-horizontal`, and `undocked-vertical`.
 
-The ControlBar component contains one or more `ControlBarItem` components, which can show a label and icon. You can add a dropdown list to each ControlBarItem by setting the [popOver props](/?path=/docs/ui-components-popover--basic-pop-over-menu).
+The ControlBar component contains one or more `ControlBarButton` components, which can show a label and icon. You can add a dropdown list to each ControlBarButton by setting the [popOver props](/?path=/docs/ui-components-popover--basic-pop-over-menu).
 
-ControlBars support tooltips on any buttons by adding a `data-tooltip` property. Adding a `data-tooltip-position` property controls the tooltip position
+`ControlBarButton` support tooltips on any buttons by adding a `data-tooltip` property. Adding a `data-tooltip-position` property controls the tooltip position. The tooltip will render the `label` passed, unless a `tooltipContent` prop is passed.
 
 ## Importing
 
 ```javascript
 import {
   ControlBar,
-  ControlBarItem
+  ControlBarButton
 } from 'amazon-chime-sdk-component-library-react';
 ```
 
@@ -99,12 +99,12 @@ const laptopButtonProps = {
 
 return (
   <ControlBar showLabels layout="left">
-    <ControlBarItem {...microphoneButtonProps} />
-    <ControlBarItem {...volumeButtonProps} />
-    <ControlBarItem {...cameraButtonProps} />
-    <ControlBarItem {...dialButtonProps} />
-    <ControlBarItem {...laptopButtonProps} />
-    <ControlBarItem {...hangUpButtonProps} />
+    <ControlBarButton {...microphoneButtonProps} />
+    <ControlBarButton {...volumeButtonProps} />
+    <ControlBarButton {...cameraButtonProps} />
+    <ControlBarButton {...dialButtonProps} />
+    <ControlBarButton {...laptopButtonProps} />
+    <ControlBarButton {...hangUpButtonProps} />
   </ControlBar>
 );
 ```
@@ -114,5 +114,5 @@ return (
 #### ControlBar Component
 <Props of={ControlBar} />
 
-#### ControlBarItem Component
-<Props of={ControlBarItem} />
+#### ControlBarButton Component
+<Props of={ControlBarButton} />

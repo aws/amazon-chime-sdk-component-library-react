@@ -1,14 +1,12 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 
 import { StyledNavbarItem } from './Styled';
 import PopOver, { Placement } from '../PopOver';
 import IconButton, { IconButtonProps } from '../Button/IconButton';
 import { Tooltipable, WithTooltip } from '../WithTooltip';
-
-const IconButtonWithToolTip = WithTooltip(IconButton);
 
 export interface NavbarItemProps extends IconButtonProps, Tooltipable {
   /* As part of IconButtonProps, any icon from the library for button in navbar item */
@@ -40,8 +38,13 @@ export const NavbarItem = ({
   badge,
   onClick,
   testId = 'navbar-item',
+  tooltipContainerId,
   ...rest
 }: NavbarItemProps) => {
+  const IconButtonWithToolTip = useMemo(
+    () => WithTooltip(IconButton, tooltipContainerId),
+  [tooltipContainerId]);
+
   const ButtonComponent = !!rest['data-tooltip']
     ? IconButtonWithToolTip
     : IconButton;
