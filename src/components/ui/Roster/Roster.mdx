@@ -14,7 +14,9 @@ import { GlobalStyles } from '../../../theme/GlobalStyles';
 The Roster component displays all the attendees in a meeting including their local statuses for audio, video, content share and if running late.
 It is made up of one RosterHeader component and multiple RosterGroup components.
 
-RosterHeaders and RosterCells support tooltips on any buttons by adding a `data-tooltip` property. Adding a `data-tooltip-position` property controls the tooltip position
+RosterHeaders and RosterCells support tooltips on any buttons by adding a `data-tooltip` property. Adding a `data-tooltip-position` property controls the tooltip position.
+- The RosterHeader will use the labels supplied for the tooltip text
+- The RosterCell will render the `a11yMenuLabel` as the tooltip text
 
 ## Importing
 

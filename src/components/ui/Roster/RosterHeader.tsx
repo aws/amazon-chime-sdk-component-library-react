@@ -7,6 +7,7 @@ import React, {
   useEffect,
   ChangeEvent,
   ReactNode,
+  useMemo
 } from 'react';
 
 import Flex from '../Flex';
@@ -18,8 +19,6 @@ import { StyledHeader } from './Styled';
 import { PopOverMenu } from './PopOverMenu';
 import { BaseProps, FocusableProps } from '../Base';
 import { Tooltipable, WithTooltip } from '../WithTooltip';
-
-const IconButtonWithToolTip = WithTooltip(IconButton);
 
 export interface RosterHeaderProps
   extends BaseProps,
@@ -95,9 +94,14 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
   a11yMenuLabel = '',
   searchLabel = 'Open search',
   closeLabel = 'Close',
+  tooltipContainerId,
   children,
   ...rest
 }) => {
+  const IconButtonWithToolTip = useMemo(
+    () => WithTooltip(IconButton, tooltipContainerId),
+  [tooltipContainerId]);
+
   const ButtonComponent = !!rest['data-tooltip']
     ? IconButtonWithToolTip
     : IconButton;
@@ -156,6 +160,7 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
         {menu && (
           <PopOverMenu
             {...popOverMenuComponentProps}
+            tooltipContainerId={tooltipContainerId}
             menu={menu}
             a11yMenuLabel={a11yMenuLabel}
           />
