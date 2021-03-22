@@ -8,7 +8,7 @@ import ControlBar from '../../../../src/components/ui/ControlBar';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 import ControlBarButton from '../../../../src/components/ui/ControlBar/ControlBarButton';
-import { controlBarItemProps } from './ControlBarItem.test';
+import { controlBarItemProps } from './ControlBarButton.test';
 
 describe('ControlBar', () => {
   it('renders a ControlBar', () => {
