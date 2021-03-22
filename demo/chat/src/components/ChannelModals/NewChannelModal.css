@@ -43,12 +43,12 @@
 }
 
 .ch-type-options span:nth-child(1)::after {
-  content: ' (non-members can read and send messages)';
+  content: ' (only members can read and send messages)';
   color: #9b9da5;
 }
 
 .ch-type-options span:nth-child(2)::after {
-  content: ' (only members can read and send messages)';
+  content: ' (non-members can read and send messages)';
   color: #9b9da5;
 }
 

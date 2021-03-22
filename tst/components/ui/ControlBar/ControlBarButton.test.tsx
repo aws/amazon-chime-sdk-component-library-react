@@ -1,11 +1,11 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
 import React from 'react';
 import { fireEvent } from '@testing-library/dom';
 
-import ControlBarItem from '../../../../src/components/ui/ControlBar/ControlBarItem';
+import ControlBarButton from '../../../../src/components/ui/ControlBar/ControlBarButton';
 import { Sound } from '../../../../src/components/ui/icons';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
@@ -30,14 +30,14 @@ export const controlBarItemWithPopOverProps = {
 
 describe('ControlBarButton', () => {
   it('renders a ControlBarButton', () => {
-    const component = <ControlBarItem {...controlBarItemProps} />;
+    const component = <ControlBarButton {...controlBarItemProps} />;
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const el = getByTestId('control-bar-item');
     expect(el).toBeInTheDocument();
   });
 
   it('should render a PopOver if multiple options are available', () => {
-    const component = <ControlBarItem {...controlBarItemWithPopOverProps} />;
+    const component = <ControlBarButton {...controlBarItemWithPopOverProps} />;
     const { getByTestId, getByText } = renderWithTheme(lightTheme, component);
     const button = getByTestId('control-bar-item-caret');
     fireEvent.click(button);
@@ -48,9 +48,9 @@ describe('ControlBarButton', () => {
 
   it('should render a PopOver if children are present', () => {
     const component = (
-      <ControlBarItem {...controlBarItemWithPopOverProps}>
+      <ControlBarButton {...controlBarItemWithPopOverProps}>
         <p>Child element</p>
-      </ControlBarItem>
+      </ControlBarButton>
     );
 
     const { getByTestId, getByText } = renderWithTheme(lightTheme, component);

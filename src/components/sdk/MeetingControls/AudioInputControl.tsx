@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Microphone } from '../../ui/icons';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { useAudioInputs } from '../../../providers/DevicesProvider';

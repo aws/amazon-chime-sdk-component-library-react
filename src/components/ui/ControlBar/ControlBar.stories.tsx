@@ -6,7 +6,7 @@ import { select, boolean } from '@storybook/addon-knobs';
 
 import { Microphone, Camera, Dialer, Sound, Phone, Laptop } from '../icons';
 import ControlBar from '.';
-import ControlBarItem from './ControlBarItem';
+import ControlBarButton from './ControlBarButton';
 import ControlBarDocs from './ControlBar.mdx';
 
 import PopOverItem from '../PopOver/PopOverItem';
@@ -88,7 +88,7 @@ export const ControlBarForDocs = () => {
 
   return (
     <ControlBar showLabels={true} layout="left" css="position: absolute;">
-      <ControlBarItem {...microphoneButtonProps}>
+      <ControlBarButton {...microphoneButtonProps}>
         <PopOverHeader title="Title text" subtitle="Subtitle text" />
         <PopOverItem as="button" onClick={() => console.log('clicked')}>
           <span>Also test content</span>
@@ -108,12 +108,12 @@ export const ControlBarForDocs = () => {
         <PopOverItem as="button" onClick={() => console.log('clicked')}>
           <span>This has very long text</span>
         </PopOverItem>
-      </ControlBarItem>
-      <ControlBarItem {...volumeButtonProps} />
-      <ControlBarItem {...cameraButtonProps} />
-      <ControlBarItem {...dialButtonProps} />
-      <ControlBarItem {...laptopButtonProps} />
-      <ControlBarItem {...hangUpButtonProps} />
+      </ControlBarButton>
+      <ControlBarButton {...volumeButtonProps} />
+      <ControlBarButton {...cameraButtonProps} />
+      <ControlBarButton {...dialButtonProps} />
+      <ControlBarButton {...laptopButtonProps} />
+      <ControlBarButton {...hangUpButtonProps} />
     </ControlBar>
   );
 };
@@ -196,16 +196,16 @@ export const _ControlBar = () => {
         'top'
       )}
     >
-      <ControlBarItem {...microphoneButtonProps} />
-      <ControlBarItem {...volumeButtonProps}>
+      <ControlBarButton {...microphoneButtonProps} />
+      <ControlBarButton {...volumeButtonProps}>
         <PopOverItem as="button" onClick={() => console.log('clicked')}>
           <span>This is more test content</span>
         </PopOverItem>
-      </ControlBarItem>
-      <ControlBarItem {...cameraButtonProps} />
-      <ControlBarItem {...dialButtonProps} />
-      <ControlBarItem {...laptopButtonProps} />
-      <ControlBarItem {...hangUpButtonProps} popOverPlacement="bottom-end">
+      </ControlBarButton>
+      <ControlBarButton {...cameraButtonProps} />
+      <ControlBarButton {...dialButtonProps} />
+      <ControlBarButton {...laptopButtonProps} />
+      <ControlBarButton {...hangUpButtonProps} popOverPlacement="bottom-end">
         <PopOverHeader title="Title text" subtitle="Subtitle text" />
         <PopOverItem as="button" onClick={() => console.log('clicked')}>
           <span>Also test content</span>
@@ -225,7 +225,7 @@ export const _ControlBar = () => {
         <PopOverItem as="button" onClick={() => console.log('clicked')}>
           <span>This is also a submenu component</span>
         </PopOverItem>
-      </ControlBarItem>
+      </ControlBarButton>
     </ControlBar>
   );
 };

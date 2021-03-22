@@ -63,7 +63,6 @@ export const _Roster = () => {
           a11yMenuLabel="Roster options"
           onMobileToggleClick={() => alert('Open Navigation')}
         />
-
         <RosterGroup>
           <RosterCell
             name="Michael Scott"

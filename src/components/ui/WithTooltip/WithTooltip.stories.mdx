@@ -1,0 +1,58 @@
+import { WithTooltip } from '.'
+
+<Meta title="UI Components/WithTooltip" />
+
+# WithTooltip
+
+Returns a higher order component (HOC) that renders a tooltip. Make sure to pass an existing element container ID and spread props of the wrapped component.
+
+The `WithTooltip` function takes a component to be wrapped, and an optional container ID used to insert the tooltip into.
+If no container ID is passed, it will fallback to `Tooltip__container`. If no portal is found, it will log a warning.
+
+The wrapped component takes a `tooltipPosition` prop for placing the tooltip, and a label prop for the tooltip text.
+
+```javascript
+  type `tooltipPosition` = 'top' | 'bottom' | 'right' | 'left';
+```
+
+**Please note** - This HOC will eventually be deprecated, as we plan to create a `<Tooltip/>` component in its place. We do not recommend using this HOC.
+
+## Importing
+
+```javascript
+import { WithTooltip } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+```jsx
+const MyComponent = (props) => {
+  return <div {...props}> hello world </div>;
+}
+
+const WrappedComponent = WithTooltip(MyComponent, "a-tooltip-container");
+
+// usage
+
+const App = () => (
+  <>
+    <WrappedComponent
+      label="Tooltip label"
+      tooltipPosition="bottom"
+    />
+    <div id="a-tooltip-container" />
+  </>
+)
+
+// Alternate usage
+
+const App = () => (
+  <>
+    <WrappedComponent
+      tooltipContent={<div>Hello world</div>}
+      tooltipPosition="bottom"
+    />
+    <div id="a-tooltip-container" />
+  </>
+)
+```

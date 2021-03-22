@@ -9,7 +9,7 @@ export { SecondaryButton } from './components/ui/Button/SecondaryButton';
 export { IconButton } from './components/ui/Button/IconButton';
 export { Checkbox } from './components/ui/Checkbox';
 export { ControlBar } from './components/ui/ControlBar';
-export { ControlBarButton } from './components/ui/ControlBar/ControlBarItem';
+export { ControlBarButton } from './components/ui/ControlBar/ControlBarButton';
 export { Flex } from './components/ui/Flex';
 export { FormField } from './components/ui/FormField';
 export { Heading } from './components/ui/Heading';
