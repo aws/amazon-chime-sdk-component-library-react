@@ -156,6 +156,19 @@ logger.warn(`
 
 shouldContinuePrompt();
 
+// Creates a new React test app, install the component app as dependency and build the test app to ensure no errors or build issues
+process.chdir(path.join(__dirname, '..'));
+spawnOrFail('yalc', ['publish']);
+process.chdir(path.join(__dirname, '../..'));
+spawnOrFail('npx', ['create-react-app dependency-check-app']);
+process.chdir(path.join(__dirname, '../../dependency-check-app'));
+spawnOrFail('yalc', ['add amazon-chime-sdk-component-library-react']);
+spawnOrFail('npm', [`install amazon-chime-sdk-js@${updatedSdkVersion}`]);
+spawnOrFail('npm', ['install --save styled-components styled-system']);
+spawnOrFail('npm', ['run build']);
+process.chdir(path.join(__dirname, '../..'));
+spawnOrFail('rm', ['-rf dependency-check-app']);
+
 if (release_option === '5') {
   spawnOrFail('git', ['push origin HEAD:hotfix -f']);
 } else {
