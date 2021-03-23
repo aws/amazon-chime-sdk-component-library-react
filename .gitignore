@@ -10,3 +10,4 @@ verdaccio_app
 .out
 demo/*/yalc.lock
 demo/*/.yalc
+demo/chat/src/Config.js

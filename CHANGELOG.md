@@ -62,6 +62,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- [Docs] Fix broken link in RosterAttendee story
+
+### Added
+
+### Changed
+
+### Removed
+
+## [2.0.0] - 2020-2-11
+
+### Fixed
+
 - Fix LocalVideo not rendering on initial attempt
 - Fix inconsistent snapshot for EditableChatBubble
 - [Docs] Fix mdx style rendering
