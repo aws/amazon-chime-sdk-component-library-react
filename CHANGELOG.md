@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated versions of testing-library family of packages.
 - Corrected the detection of `yesterday` in said code.
 - Wraped actions in tests with `act`, as React requests.
+- Toggle `ch-popover-active` class to highlight a focused or hovered popoverItem.
 
 ### Removed
 

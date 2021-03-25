@@ -50,8 +50,7 @@ export const StyledPopOverItem = styled.li`
     text-decoration: none;
     outline: 0;
 
-    &:hover,
-    &:focus {
+    &.ch-popover-active {
       background-color: ${(props) => props.theme.popOver.active.itemBgd};
       color: ${(props) => props.theme.popOver.active.itemText};
       outline: 0;

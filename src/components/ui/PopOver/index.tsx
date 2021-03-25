@@ -7,6 +7,7 @@ import React, {
   useState,
   HTMLAttributes,
   useEffect,
+  useRef,
 } from 'react';
 import { Manager, Reference, Popper } from 'react-popper';
 import classnames from 'classnames';
@@ -16,6 +17,7 @@ import useClickOutside from '../../../hooks/useClickOutside';
 import useTabOutside from '../../../hooks/useTabOutside';
 import { BaseProps } from '../Base';
 import { StyledPopOverMenu, StyledPopOverToggle } from './Styled';
+import PopOverItem from './PopOverItem';
 
 export type Placement =
   | 'top-start'
@@ -42,6 +44,10 @@ export interface PopOverProps
   renderButtonWrapper?: (isActive: boolean, props: any) => {};
   /** The callback fired when the render button is clicked. */
   onPopOverClick?: (isOpen: boolean) => void;
+  /** The callback fired when the mouseenter event is fired at the render button. */
+  onMouseEnter?: (e: any) => void
+  /** The callback fired when the mouseleave event is fired at the render button. */
+  onMouseLeave?: (e: any) => void
   /** The label used for availability. */
   a11yLabel: string;
   /** The elements that populate the menu */
@@ -58,6 +64,8 @@ export const PopOver: FC<PopOverProps> = ({
   renderButton,
   renderButtonWrapper,
   onPopOverClick,
+  onMouseEnter,
+  onMouseLeave,
   children,
   isSubMenu = false,
   placement = 'bottom-start',
@@ -68,13 +76,44 @@ export const PopOver: FC<PopOverProps> = ({
 }) => {
   const menuRef = createRef<HTMLSpanElement>();
   const [isOpen, setIsOpen] = useState(false);
+  const prevActiveRef = useRef<HTMLElement>();
 
   useEffect(() => {
     if (isOpen && !!menuRef.current) {
       const nodes = getFocusableElements(menuRef.current);
-      !!nodes && nodes[0].focus();
+      !!nodes && focusElement(nodes[0]);
     }
   }, [isOpen]);
+
+  const mouseEnter = (e: MouseEvent) => {
+    const currentElement = e.currentTarget;
+    if (currentElement instanceof HTMLElement && currentElement !== document.activeElement) {
+      active(currentElement);
+    }
+  }
+
+  const mouseLeave = (e: MouseEvent) => {
+    const activeElement = document.activeElement;
+    if (activeElement instanceof HTMLElement && activeElement !== e.currentTarget) {
+      active(activeElement);
+    }
+  }
+
+  const active = (node: HTMLElement) => {
+    if (!node) {
+      return;
+    }
+    node.classList.add('ch-popover-active');
+    if (prevActiveRef.current) {
+      prevActiveRef.current.classList.remove('ch-popover-active');
+    }
+    prevActiveRef.current = node;
+  }
+
+  const focusElement = (node: HTMLElement) => {
+    node.focus();
+    active(node);
+  }
 
   const move = (direction: string) => {
     const node = menuRef.current;
@@ -91,11 +130,11 @@ export const PopOver: FC<PopOverProps> = ({
       for (let i = 0; i < nodes.length; i++) {
         if (nodes[i] === currentElement) {
           if (direction === 'down' && i !== nodes.length - 1) {
-            return nodes[i + 1].focus();
+            return focusElement(nodes[i + 1]);
           }
 
           if (direction === 'up' && i > 0) {
-            return nodes[i - 1].focus();
+            return focusElement(nodes[i - 1]);
           }
           break;
         }
@@ -132,6 +171,20 @@ export const PopOver: FC<PopOverProps> = ({
   useClickOutside(menuRef, () => setIsOpen(false));
   useTabOutside(menuRef, () => setIsOpen(false));
 
+  const modifiedChildren = React.Children.map(children, (child: any) => {
+    if (!child) {
+      return;
+    }
+
+    if (child.type === PopOverItem || child.type?.name === 'PopOverSubMenu' ) {
+      return React.cloneElement(child as React.ReactElement<any>, {
+        onMouseEnter: mouseEnter,
+        onMouseLeave: mouseLeave,
+      });
+    }
+    return child;
+  });
+
   return (
     <span ref={menuRef} onKeyDown={handleKeyUp} data-testid="popover">
       <Manager>
@@ -141,6 +194,8 @@ export const PopOver: FC<PopOverProps> = ({
               ref,
               className: classnames(className, 'ch-popover-toggle'),
               onClick: handlePopOverClick,
+              onMouseEnter: onMouseEnter,
+              onMouseLeave: onMouseLeave,
               'data-menu': isSubMenu ? 'submenu' : null,
               'aria-label': a11yLabel,
               'aria-haspopup': true,
@@ -183,7 +238,7 @@ export const PopOver: FC<PopOverProps> = ({
                 data-testid="menu"
                 className="ch-popover-menu"
               >
-                {children}
+                {modifiedChildren}
               </StyledPopOverMenu>
             )}
           </Popper>
