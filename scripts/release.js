@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const prompt = require('prompt-sync')();
-const { logger, spawnOrFail, process, shouldContinuePrompt } = require('./utilities');
+const { logger, spawnOrFail, process, shouldContinuePrompt, checkWarning } = require('./utilities');
 const fs = require('fs');
 const path = require('path');
 const util = require('util');
@@ -156,16 +156,18 @@ logger.warn(`
 
 shouldContinuePrompt();
 
-// Creates a new React test app, install the component app as dependency and build the test app to ensure no errors or build issues
+// Creates a new React test app, install component and sdk and build the test app to ensure no peer dependency warnings, errors or build issues
+logger.log('Create a new npm package and install amazon-chime-sdk-component-library-react and amazon-chime-sdk-js sdk as dependencies, check if there is peer dependency warning for amazon-chime-sdk-component-library-react');
 process.chdir(path.join(__dirname, '..'));
 spawnOrFail('yalc', ['publish']);
 process.chdir(path.join(__dirname, '../..'));
-spawnOrFail('npx', ['create-react-app dependency-check-app']);
+spawnOrFail('mkdir', ['dependency-check-app']);
 process.chdir(path.join(__dirname, '../../dependency-check-app'));
+spawnOrFail('npm', ['init -y']);
+spawnOrFail('npm', ['install react react-dom']);
+spawnOrFail('npm', [`install amazon-chime-sdk-js@${updatedSdkVersion} styled-components styled-system`]);
 spawnOrFail('yalc', ['add amazon-chime-sdk-component-library-react']);
-spawnOrFail('npm', [`install amazon-chime-sdk-js@${updatedSdkVersion}`]);
-spawnOrFail('npm', ['install --save styled-components styled-system']);
-spawnOrFail('npm', ['run build']);
+checkWarning('npm', ['install -q'], null, 'amazon-chime-sdk-component-library-react');
 process.chdir(path.join(__dirname, '../..'));
 spawnOrFail('rm', ['-rf dependency-check-app']);
 
