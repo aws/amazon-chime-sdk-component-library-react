@@ -1,15 +1,13 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { Dots } from '../icons';
 import PopOver from '../PopOver';
 import IconButton, { IconButtonProps } from '../Button/IconButton';
 import classNames from 'classnames';
 import { Tooltipable, WithTooltip } from '../WithTooltip';
-
-const IconButtonWithToolTip = WithTooltip(IconButton);
 
 interface PopOverMenuProps extends Tooltipable {
   menu: React.ReactNode;
@@ -19,10 +17,15 @@ interface PopOverMenuProps extends Tooltipable {
 
 export const PopOverMenu = ({
   menu,
-  a11yMenuLabel = '',
   buttonProps,
+  tooltipContainerId,
+  a11yMenuLabel = '',
   ...rest
 }: PopOverMenuProps) => {
+  const IconButtonWithToolTip = useMemo(
+    () => WithTooltip(IconButton, tooltipContainerId),
+  [tooltipContainerId]);
+
   const ButtonComponent = !!rest['data-tooltip']
     ? IconButtonWithToolTip
     : IconButton;
@@ -38,6 +41,7 @@ export const PopOverMenu = ({
           {...buttonComponentProps}
           {...buttonProps}
           {...props}
+          {...rest}
           className={classNames('ch-menu', buttonProps?.className)}
           icon={<Dots />}
           label={a11yMenuLabel}

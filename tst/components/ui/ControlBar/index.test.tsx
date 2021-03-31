@@ -7,8 +7,8 @@ import React from 'react';
 import ControlBar from '../../../../src/components/ui/ControlBar';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
-import ControlBarItem from '../../../../src/components/ui/ControlBar/ControlBarItem';
-import { controlBarItemProps } from './ControlBarItem.test';
+import ControlBarButton from '../../../../src/components/ui/ControlBar/ControlBarButton';
+import { controlBarItemProps } from './ControlBarButton.test';
 
 describe('ControlBar', () => {
   it('renders a ControlBar', () => {
@@ -25,7 +25,7 @@ describe('ControlBar', () => {
   it('should pass showLabels prop to controlBarContext', async () => {
     const component = (
       <ControlBar layout="top" showLabels>
-        <ControlBarItem {...controlBarItemProps} />
+        <ControlBarButton {...controlBarItemProps} />
       </ControlBar>
     );
     const { findAllByText } = renderWithTheme(lightTheme, component);

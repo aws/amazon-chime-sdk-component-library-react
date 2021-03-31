@@ -10,6 +10,8 @@ export interface RadioProps {
   value: string;
   icon?: JSX.Element;
   inputProps?: InputHTMLAttributes<HTMLButtonElement>;
+  /* Unique identifier to target element */
+  testId?: string;
 }
 
 export interface RadioGroupProps {
@@ -34,6 +36,7 @@ export const RadioGroup: FC<RadioGroupProps> = (props) => {
             checked={option.value === value}
             icon={option.icon}
             onChange={onChange}
+            testId={option.testId}
             {...option.inputProps}
           />
         );

@@ -1,7 +1,7 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, HTMLAttributes, ReactNode, Ref } from 'react';
+import React, { FC, useMemo, HTMLAttributes, ReactNode, Ref } from 'react';
 
 import { BaseProps } from '../../Base';
 import { StyledChatBubbleContainer, StyledChatBubbleInfo } from './Styled';
@@ -10,8 +10,6 @@ import { Dots } from '../../icons';
 import { IconButton } from '../../../..';
 import { IconButtonProps } from '../../Button/IconButton';
 import { Tooltipable, WithTooltip } from '../../WithTooltip';
-
-const IconButtonWithToolTip = WithTooltip(IconButton);
 
 export type Message = {
   /** The displayed text of the message sent. */
@@ -47,9 +45,14 @@ export const ChatBubbleContainer: FC<ChatBubbleContainerProps> = React.forwardRe
     const {
       timestamp,
       actions,
+      tooltipContainerId,
       a11yLabel = 'Open channel options',
       ...rest
     } = props;
+
+    const IconButtonWithToolTip = useMemo(
+      () => WithTooltip(IconButton, tooltipContainerId),
+    [tooltipContainerId]);
 
     const ButtonComponent = !!rest['data-tooltip']
       ? IconButtonWithToolTip

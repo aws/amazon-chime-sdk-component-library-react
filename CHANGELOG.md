@@ -7,19 +7,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.2.0] - 2021-03-23
 
 ### Fixed
 
+- Fix incorrect type definitions in date formatting.
+- Fix the Jest configuration to not use the deprecated `tsConfig` spelling of `tsconfig`.
 - Fix removeEventListener bug for WithTooltip.
 - Reset `isAudioOn` state to `true` when `LocalAudioOutputProvider` unmounts.
 
 ### Added
 
+- Added some key properties to `ModalButtonGroup`, which quiets some React warnings.
 - Added an optional prop `onPopOverClick` to pass a callback function to the `PopOver` UI component. This callback will be called when the `PopOver` UI component is clicked.
-- Add `--no-fail-on-empty-changeset` flag in deploy script to not fail for empty changeset
+- Added `--no-fail-on-empty-changeset` flag in deploy script to not fail for empty changeset.
+- Add `WithTooltip` docs, warning log if no container is found, and some additional flexibility.
 
 ### Changed
+- Bumped react and react-dom version to 17.
+- Updated versions of testing-library family of packages.
+- Corrected the detection of `yesterday` in said code.
+- Wraped actions in tests with `act`, as React requests.
 
 ### Removed
 - [Demo] Removed call MeetingManager.leave() on endMeetingForAll button click. (duplicate)
@@ -52,6 +60,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ## [2.0.1] - 2020-2-11
+
+### Fixed
+
+- [Docs] Fix broken link in RosterAttendee story
+
+### Added
+
+### Changed
+
+### Removed
+
+## [2.0.0] - 2020-2-11
 
 ### Fixed
 
