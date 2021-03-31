@@ -34,6 +34,8 @@ Documentation on these components and how to use them can be found on [Amazon Ch
 
 [Chat Demo](https://github.com/aws/amazon-chime-sdk-component-library-react/tree/master/demo/chat)
 
+[Breakout Room Demo](https://aws.amazon.com/blogs/business-productivity/breakout-room-amazon-chime-sdk-react-component-library/)
+
 ## Installation and Development
 
 If you are adding this library to your existing application, add `amazon-chime-sdk-component-library-react` and the necessary peer dependencies to your project.
