@@ -243,7 +243,7 @@ Resources:
   IdentityPool:
     Type: "AWS::Cognito::IdentityPool"
     Properties:
-      IdentityPoolName: !Sub ${DemoName}-IdentityPool
+      IdentityPoolName: !Sub ${DemoName}_IdentityPool
       AllowUnauthenticatedIdentities: true
       CognitoIdentityProviders: 
         - ClientId: !Ref UserPoolClient
