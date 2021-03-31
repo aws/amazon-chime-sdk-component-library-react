@@ -30,6 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Wraped actions in tests with `act`, as React requests.
 
 ### Removed
+- [Demo] Removed call MeetingManager.leave() on endMeetingForAll button click. (duplicate)
 
 ## [2.1.1] - 2021-03-10
 
