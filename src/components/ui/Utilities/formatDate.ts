@@ -4,25 +4,32 @@
 import memoize from 'fast-memoize';
 
 export interface DateOptions {
-  weekday?: string;
-  year?: string;
-  month?: string;
-  day?: string;
+  weekday?: 'long' | 'short' | 'narrow';
+  year?: 'numeric' | '2-digit';
+  month?: 'long' | 'short' | 'narrow' | 'numeric' | '2-digit';
+  day?: 'numeric' | '2-digit';
 }
 
+const DEFAULT_DATE_OPTIONS: DateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
 const formatDateUnmemoized = (dateStr: string, locale?: string, dateOptions?: DateOptions, todayText?: string, yesterdayText?: string) => {
-  const options = dateOptions ? dateOptions : { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  const date = new Date(dateStr).toLocaleDateString(locale, options)
-  const today = new Date().toLocaleDateString(locale, options);
-  const yesterday = new Date(Date.now() - 24 * 60 * 60 * 1000).toLocaleDateString(locale, options)
-  if (date === yesterday) {
+  const options = dateOptions || DEFAULT_DATE_OPTIONS;
+  const dateString = new Date(dateStr).toLocaleDateString(locale, options)
+
+  // Get yesterday by subtracting 1 from the date, not by subtracting the number
+  // of milliseconds in a typical day -- not all days are exactly 86400000ms.
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const yesterdayString = yesterday.toLocaleDateString(locale, options)
+
+  if (dateString === yesterdayString) {
     return yesterdayText || 'Yesterday'
-  } else if (date === today) {
+  }
+  if (dateString === new Date().toLocaleDateString(locale, options)) {
     return todayText || 'Today'
   }
-  return (
-    date
-  )
+  return dateString;
 };
 
 export const formatDate = memoize(formatDateUnmemoized)

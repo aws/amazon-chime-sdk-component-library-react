@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { ScreenShare } from '../../ui/icons';
 import { useContentShareState } from '../../../providers/ContentShareProvider';
 import { useContentShareControls } from '../../../providers/ContentShareProvider';
