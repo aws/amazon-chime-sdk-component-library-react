@@ -1,3 +1,5 @@
+.*sw*
+*~
 node_modules
 .DS_Store
 lib
@@ -8,3 +10,4 @@ verdaccio_app
 .out
 demo/*/yalc.lock
 demo/*/.yalc
+demo/chat/src/Config.js

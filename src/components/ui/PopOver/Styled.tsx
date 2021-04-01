@@ -105,6 +105,7 @@ export const StyledSubMenu = styled(StyledPopOverItem)`
 export const StyledPopOverHeader = styled.header`
   border-bottom: 0.0625rem solid ${(props) => props.theme.popOver.separator};
   margin-bottom: 0.75rem;
+  max-width: 22rem;
 
   img {
     width: 100%;

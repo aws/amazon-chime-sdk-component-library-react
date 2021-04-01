@@ -8,6 +8,7 @@ import EditableChatBubble from '../../../../../src/components/ui/Chat/ChatBubble
 import lightTheme from '../../../../../src/theme/light';
 import { renderWithTheme } from '../../../../test-helpers';
 import { fireEvent } from '@testing-library/dom';
+import { act } from '@testing-library/react';
 
 describe('ChatBubble', () => {
   const save = jest.fn((e) => e.preventDefault());
@@ -125,7 +126,9 @@ describe('ChatBubble', () => {
     );
     const { getByLabelText } = renderWithTheme(lightTheme, component);
     const saveButton = getByLabelText('Save');
-    fireEvent.click(saveButton);
+    act(() => {
+      fireEvent.click(saveButton);
+    });
 
     expect(save).toHaveBeenCalled();
   });
@@ -142,9 +145,11 @@ describe('ChatBubble', () => {
       />
     );
     renderWithTheme(lightTheme, component);
-    fireEvent.keyDown(document.activeElement || document.body, {
-      key: 'enter',
-      keyCode: 13,
+    act(() => {
+      fireEvent.keyDown(document.activeElement || document.body, {
+        key: 'enter',
+        keyCode: 13,
+      });
     });
 
     expect(save).toHaveBeenCalled();
@@ -163,7 +168,9 @@ describe('ChatBubble', () => {
     );
     const { getByLabelText } = renderWithTheme(lightTheme, component);
     const cancelButton = getByLabelText('Cancel');
-    fireEvent.click(cancelButton);
+    act(() => {
+      fireEvent.click(cancelButton);
+    });
 
     expect(cancel).toHaveBeenCalled();
   });

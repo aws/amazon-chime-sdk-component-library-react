@@ -8,7 +8,7 @@ module.exports = {
   },
   globals: {
     'ts-jest': {
-      tsConfig: 'tsconfig.json'
+      tsconfig: 'tsconfig.json'
     }
   },
   testPathIgnorePatterns: ['node_modules', '/tst/snapshots/',],
