@@ -6,15 +6,37 @@ This is the SDK react meeting demo app. It shows how to use the Amazon Chime SDK
 
 1. If you haven't already, [configure your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html).
 
-2. Install root dependencies within the root directory: `npm install`
+2. Install [yalc](https://www.npmjs.com/package/yalc) to get the latest changes from the local component library.
+`npm i yalc -g`
 
-3. Navigate to the meeting demo folder: `cd demo/meeting`
+3. Clone the repo and change directory into the cloned repo.
+```
+git clone https://github.com/aws/amazon-chime-sdk-component-library-react.git
+cd amazon-chime-sdk-component-library-react
+```
 
-4. Install [yalc](https://www.npmjs.com/package/yalc) to get the latest changes from the local component library: `npm i yalc -g`
+4. Install root dependencies.
+```
+npm install
+```
 
-5. Start the webpack server and node server concurrently: `npm run start`
+5. Install peer dependencies for the `amazon-chime-sdk-component-library-react`.
+```
+npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system
+```
 
-6. Open https://0.0.0.0:9000/ in your browser
+6. Navigate to the meeting demo folder and build the demo.
+```
+cd demo/meeting
+npm run build
+```
+
+7. Start the webpack server and node server concurrently.
+```
+npm run start
+```
+
+8. Open https://0.0.0.0:9000/ in your browser
 
 ### Troubleshooting
 
@@ -38,8 +60,11 @@ This is the SDK react meeting demo app. It shows how to use the Amazon Chime SDK
 
 The following will create a CloudFormation stack containing a Lambda and API Gateway deployment that runs the demo. Note that S3 bucket name should be globally unique.
 
+Ensure that you have first performed steps until building the demo(Step 6) provided above [here](##to-run-the-demo-app-locally).
+
+Next, move to the `serverless` directory under `demo/meeting/` and run the deploy script.
 ```
-cd /serverless
+cd serverless
 node ./deploy.js -r us-east-1 -b <YOUR-S3-BUCKET-NAME> -s <YOUR-CLOUDFORMATION-STACK-NAME>
 ```
 
