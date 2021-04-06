@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added a step in release script to create a test react app, install latest version of component app as dependency and build the test app.
 - Added some key properties to `ModalButtonGroup`, which quiets some React warnings.
 - Added an optional prop `onPopOverClick` to pass a callback function to the `PopOver` UI component. This callback will be called when the `PopOver` UI component is clicked.
 - Added `--no-fail-on-empty-changeset` flag in deploy script to not fail for empty changeset.
@@ -31,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Wraped actions in tests with `act`, as React requests.
 
 ### Removed
+- [Demo] Removed call `await MeetingManager.leave()` on `endMeetingForAll` button click.
 
 ## [2.1.1] - 2021-03-10
 
