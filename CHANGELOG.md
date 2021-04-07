@@ -7,6 +7,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Add support for optional keys to pass extra data in the `AttendeeResponse`.
+
 ## [2.2.0] - 2021-03-23
 
 ### Fixed
@@ -23,7 +29,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added an optional prop `onPopOverClick` to pass a callback function to the `PopOver` UI component. This callback will be called when the `PopOver` UI component is clicked.
 - Added `--no-fail-on-empty-changeset` flag in deploy script to not fail for empty changeset.
 - Add `WithTooltip` docs, warning log if no container is found, and some additional flexibility.
-- Add support for optional keys to pass extra data in the `AttendeeResponse`.
 
 ### Changed
 - Bumped react and react-dom version to 17.
