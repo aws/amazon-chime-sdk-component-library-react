@@ -17,11 +17,17 @@ interface Props {
   muteLabel?: string;
   /** The label that will be shown when microphone is unmuted, it defaults to `Unmute`. */
   unmuteLabel?: string;
+  /** Title attribute for the icon when muted, it defaults to `Muted microphone` */
+  mutedTitle?: string;
+  /** Title attribute for the icon when unmuted, it defaults to `Microphone` */
+  unmutedTitle?: string;
 }
 
 const AudioInputControl: React.FC<Props> = ({
   muteLabel = 'Mute',
   unmuteLabel = 'Unmute',
+  mutedTitle,
+  unmutedTitle
 }) => {
   const meetingManager = useMeetingManager();
   const { muted, toggleMute } = useToggleLocalMute();
@@ -39,7 +45,7 @@ const AudioInputControl: React.FC<Props> = ({
 
   return (
     <ControlBarButton
-      icon={<Microphone muted={muted} />}
+      icon={<Microphone muted={muted} mutedTitle={mutedTitle} unmutedTitle={unmutedTitle} />}
       onClick={toggleMute}
       label={muted ? unmuteLabel : muteLabel}
       popOver={dropdownOptions}
