@@ -19,10 +19,11 @@ export default {
       sourcemap: true
     }
   ],
-  external: ['crypto'],
   plugins: [
     peerDepsExternal(),
-    resolve(),
+    resolve({
+        browser: true, // This instructs the plugin to use the "browser" field in a dependency's package.json
+    }),
     commonjs(),
     typescript({ useTsconfigDeclarationDir: true }),
   ]
