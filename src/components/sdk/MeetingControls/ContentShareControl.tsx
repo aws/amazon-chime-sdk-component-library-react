@@ -17,14 +17,14 @@ interface Props {
   /** The label that will be shown for unpausing content share button in content share control, it defaults to `Unpause`. */
   unpauseLabel?: string;
   /** Title attribute for the icon, it defaults to `Screen share`. */
-  title?: string;
+  iconTitle?: string;
 }
 
 const ContentShareControl: React.FC<Props> = ({
   label = 'Content',
   pauseLabel = 'Pause',
   unpauseLabel = 'Unpause',
-  title
+  iconTitle
 }) => {
   const { isLocalUserSharing } = useContentShareState();
   const {
@@ -43,7 +43,7 @@ const ContentShareControl: React.FC<Props> = ({
   return (
     <>
       <ControlBarButton
-        icon={<ScreenShare title={title} />}
+        icon={<ScreenShare title={iconTitle} />}
         onClick={toggleContentShare}
         label={label}
         popOver={isLocalUserSharing ? dropdownOptions : null}
