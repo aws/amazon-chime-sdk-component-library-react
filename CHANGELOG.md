@@ -13,6 +13,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added optional props to specify icon titles in the `AudioInputControl` and `ContentShareControl` components.
+- Added optional props to specify the dropdown text that shows when no video quality is selected, in the `QualitySelection` component.
+
+### Changed
+
+### Removed
+
+
+## [Unreleased]
+
+### Fixed
+
+### Added
+
 - Added support for optional keys to pass extra data in the `AttendeeResponse`.
 
 ### Changed
