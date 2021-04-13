@@ -24,6 +24,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- Add browser flag for node resolve in rollup config.
+
+### Added
+
+### Changed
+
+### Removed
+
+## [Unreleased]
+
+### Fixed
 
 ### Added
 
