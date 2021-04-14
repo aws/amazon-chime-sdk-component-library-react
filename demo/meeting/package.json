@@ -1,6 +1,6 @@
 {
-  "name": "static-site",
-  "version": "1.0.0",
+  "name": "chime-sdk-react-meeting",
+  "version": "2.0.0",
   "description": "Infrastructure for an HTTPS static site using S3 and CloudFront",
   "scripts": {
     "build": "tsc",
@@ -14,20 +14,21 @@
   },
   "license": "Apache-2.0",
   "devDependencies": {
-    "@types/node": "^10.17.0",
-    "typescript": "^3.9.7"
+    "@types/node": "^14.14.37",
+    "typescript": "^4.2.4"
   },
   "dependencies": {
-    "@aws-cdk/aws-apigateway": "^1.87.1",
-    "@aws-cdk/aws-certificatemanager": "^1.87.1",
-    "@aws-cdk/aws-cloudfront": "^1.87.1",
-    "@aws-cdk/aws-dynamodb": "^1.87.1",
-    "@aws-cdk/aws-iam": "^1.87.1",
-    "@aws-cdk/aws-lambda": "^1.87.1",
-    "@aws-cdk/aws-route53": "^1.87.1",
-    "@aws-cdk/aws-route53-targets": "^1.87.1",
-    "@aws-cdk/aws-s3": "^1.87.1",
-    "@aws-cdk/aws-s3-deployment": "^1.87.1",
-    "@aws-cdk/core": "^1.87.1"
+    "@aws-cdk/aws-apigateway": "^1.98.0",
+    "@aws-cdk/aws-certificatemanager": "^1.98.0",
+    "@aws-cdk/aws-cloudfront": "^1.98.0",
+    "@aws-cdk/aws-dynamodb": "^1.98.0",
+    "@aws-cdk/aws-iam": "^1.98.0",
+    "@aws-cdk/aws-lambda": "^1.98.0",
+    "@aws-cdk/aws-logs": "^1.98.0",
+    "@aws-cdk/aws-route53": "^1.98.0",
+    "@aws-cdk/aws-route53-targets": "^1.98.0",
+    "@aws-cdk/aws-s3": "^1.98.0",
+    "@aws-cdk/aws-s3-deployment": "^1.98.0",
+    "@aws-cdk/core": "^1.98.0"
   }
 }

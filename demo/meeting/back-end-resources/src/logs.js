@@ -7,10 +7,32 @@ const utils = require('utils');
 chime.endpoint = new AWS.Endpoint('https://service.chime.aws.amazon.com/console');
 const meetingsTableName = process.env.MEETINGS_TABLE_NAME;
 const attendeesTableName = process.env.ATTENDEES_TABLE_NAME;
+const logGroupName = process.env.BROWSER_LOG_GROUP_NAME;
+
+async function ensureLogStream(cloudWatchClient, logStreamName) {
+  var describeLogStreamsParams = {
+    "logGroupName": logGroupName,
+    "logStreamNamePrefix": logStreamName
+  };
+  var response = await cloudWatchClient.describeLogStreams(describeLogStreamsParams).promise();
+  var foundStream = response.logStreams.find(s => s.logStreamName === logStreamName);
+  if (foundStream) {
+    return foundStream.uploadSequenceToken;
+  }
+  var putLogEventsInput = {
+    "logGroupName": logGroupName,
+    "logStreamName": logStreamName
+  };
+  await cloudWatchClient.createLogStream(putLogEventsInput).promise();
+  return null;
+}
+
 exports.handler = async (event, context) => {
     var response = {
       "statusCode": 200,
-      "headers": {},
+      "headers": { 
+        "Access-Control-Allow-Origin": "*", 
+        "Access-Control-Allow-Credentials": false },
       "body": '',
       "isBase64Encoded": false
     };

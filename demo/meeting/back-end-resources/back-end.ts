@@ -7,6 +7,7 @@ import { Construct } from '@aws-cdk/core';
 import cdk = require('@aws-cdk/core');
 import apigateway = require('@aws-cdk/aws-apigateway'); 
 import iam = require('@aws-cdk/aws-iam')
+import loggroup = require('@aws-cdk/aws-logs');
 
 export class BackEnd extends Construct {
     constructor(parent: Construct, name: string) {
@@ -105,7 +106,12 @@ export class BackEnd extends Construct {
             layers: [layer],
             role: lambdaChimeRole
         });
+      
+        const logGroup = new loggroup.LogGroup(this, 'LogGroup', {
+          retention: loggroup.RetentionDays.ONE_WEEK,
+        });
 
+        
       const logsLambda = new lambda.Function(this, 'logMeeting', {
           code: lambda.Code.fromAsset("back-end-resources/src", {exclude: ["**", "!logs.js"]}),
           handler: 'logs.handler',
@@ -113,6 +119,7 @@ export class BackEnd extends Construct {
           environment: {
             MEETINGS_TABLE_NAME: meetingsTable.tableName,
             ATTENDEES_TABLE_NAME: attendeeTable.tableName,
+            BROWSER_LOG_GROUP_NAME: logGroup.logGroupName
           },
           layers: [layer],
           role: lambdaLogsRole
