@@ -90,7 +90,7 @@
   },
   "scripts": {
     "start": "npm run deps && yalc add amazon-chime-sdk-component-library-react && node scripts/start.js",
-    "deps": "cd ../../../../ && npm run build && yalc publish",
+    "deps": "cd ../../../../ && npm install --legacy-peer-deps && npm run build && yalc publish",
     "build": "npm run deps && yalc add amazon-chime-sdk-component-library-react && npm install && node scripts/build.js",
     "test": "node scripts/test.js"
   },

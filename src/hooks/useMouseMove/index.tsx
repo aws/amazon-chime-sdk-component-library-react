@@ -8,7 +8,6 @@ export function useMouseMove(el: RefObject<any>, delay = 3000) {
   const [isMouseMoving, setIsMouseActive] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log("mouse move" + el.current)
     if (!el.current) {
       return;
     }
