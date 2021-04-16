@@ -7,6 +7,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2021-04-12
+
+### Fixed
+- Add browser flag for node resolve in rollup config.
+
+### Added
+
+- Added support for optional keys to pass extra data in the `AttendeeResponse`.
+
+### Changed
+
+### Removed
+
 ## [2.2.0] - 2021-03-23
 
 ### Fixed
@@ -25,34 +38,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `WithTooltip` docs, warning log if no container is found, and some additional flexibility.
 
 ### Changed
+
 - Bumped react and react-dom version to 17.
 - Updated versions of testing-library family of packages.
 - Corrected the detection of `yesterday` in said code.
 - Wraped actions in tests with `act`, as React requests.
 
 ### Removed
+
 - [Demo] Removed call `await MeetingManager.leave()` on `endMeetingForAll` button click.
 
 ## [2.1.1] - 2021-03-10
 
 ### Fixed
+
 - Fix getAttendee populate name even after the attendee has left the meeting
 
 ## [2.1.0] - 2021-02-24
 
 ### Fixed
+
 - Fixed the `MicrophoneActivity` component's `className` prop
   overridden by the `MicVolumeIndicator` component `className`.
 - NotificatonGroups don't accept pointer-events.
 - Clean up timeouts when `useFocusIn` and `useMouseMove` hooks are unmounted.
 
 ### Added
+
 - Allow the `PopOver` UI component to stay open for multiple clicks.
 - Added `WithTooltip()` HOC and updated `RosterHeader`, `RosterCell`, `PopOverMenu`,
   `PopOver`, `NavbarItem`, `ControlbarItem`, and `ChatBubbleConatiner` to support tooltips.
 - Added documentation for components that support tooltips, exposed `WithTooltip` component and related interfaces/types.
 
 ### Changed
+
 - Render roster without waiting for getAtendee callback.
 - Update `MeetingProvider` and corresponding documentation to support
   re-usable `MeetingManager` instance.

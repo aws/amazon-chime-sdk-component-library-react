@@ -72,7 +72,7 @@ Stops the meeting session and performs cleanup. This should be called anytime a 
 
 ### `meetingManager.getAttendee`
 
-This method is expected to be supplied by the developer. You may call this function with the Chime user ID and external user ID anytime an attendee joins the meeting, and expect to be resolved with an object that has a `name` property that will be used for video nameplates and roster state.
+This method is expected to be supplied by the developer. You may call this function with the Chime user ID and external user ID anytime an attendee joins the meeting, and expect to be resolved with an object that has a `name` property that will be used for video nameplates and roster state. We also add support for optional keys, so you can also pass any other data except `name`.
 
 For example - you may want to fetch the attendee from the database, or get the name from some local application state. This is up to the developer.
 
@@ -84,6 +84,7 @@ For example - you may want to fetch the attendee from the database, or get the n
 
 interface AttendeeResponse {
   name?: string;
+  [attribute: string]: any;
 }
 ```
 
