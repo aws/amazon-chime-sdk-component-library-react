@@ -364,7 +364,7 @@ export class MeetingManager implements AudioVideoObserver {
         try {
           await this.audioVideo?.chooseAudioInputDevice(receivedDevice);
         } catch (e) {
-          console.error('Failed to choose audio output device.', e);
+          console.error('Failed to choose audio input device.', e);
         }
         this.selectedAudioInputDevice = deviceId;
       }
