@@ -11,6 +11,10 @@ export interface MicrophoneProps extends SvgProps {
   muted?: boolean;
   /** Whether or not should show poor connected status. */
   poorConnection?: boolean;
+  /** Title attribute for the icon when muted, it defaults to `Muted microphone` */
+  mutedTitle?: string;
+  /** Title attribute for the icon when unmuted, it defaults to `Microphone` */
+  unmutedTitle?: string;
 }
 
 function getPath(
@@ -31,6 +35,8 @@ function getPath(
 const Microphone: React.SFC<MicrophoneProps> = ({
   muted = false,
   poorConnection = false,
+  mutedTitle = 'Muted microphone',
+  unmutedTitle = 'Microphone',
   ...rest
 }) => {
   const iconPath = getPath(muted, poorConnection);
@@ -40,7 +46,7 @@ const Microphone: React.SFC<MicrophoneProps> = ({
       {...rest}
       muted={muted}
       poorConnection={poorConnection}
-      title={muted ? 'Muted microphone' : 'Microphone'}
+      title={muted ? mutedTitle : unmutedTitle}
       data-testid={
         poorConnection ? 'poor-connection-mic' : 'good-connection-mic'
       }
