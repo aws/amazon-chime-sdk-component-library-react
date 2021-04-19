@@ -27,6 +27,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added support for optional keys to pass extra data in the `AttendeeResponse`.
+
 ### Changed
 
 ### Removed
