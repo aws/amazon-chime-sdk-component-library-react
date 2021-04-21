@@ -4,7 +4,7 @@
 import React from 'react';
 import {
   Flex,
-  SecondaryButton
+  SecondaryButton,
 } from 'amazon-chime-sdk-component-library-react';
 
 import MeetingForm from '../MeetingForm';
@@ -27,9 +27,9 @@ const MeetingFormSelector: React.FC = () => {
   return (
     <StyledWrapper>
       <StyledDiv>{formToShow}</StyledDiv>
-      {/*<Flex container layout="fill-space-centered" style={{ padding: '2rem' }}>*/}
-      {/*  <SecondaryButton label={buttonText} onClick={toggle} />*/}
-      {/*</Flex>*/}
+      <Flex container layout="fill-space-centered" style={{ padding: '2rem' }}>
+        <SecondaryButton label={buttonText} onClick={toggle} />
+      </Flex>
     </StyledWrapper>
   );
 };
