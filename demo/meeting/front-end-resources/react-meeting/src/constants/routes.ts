@@ -3,7 +3,7 @@
 
 import cdkExports from '../cdk-outputs.json';
 
-const apiPath = cdkExports.MeetingBackEnd.breakoutAPI
+const apiPath = cdkExports.MeetingBackEnd.apiURL
 
 const awsPath = '/prod';
 export const rootPath: string = window.location.href.includes(awsPath)
@@ -19,7 +19,6 @@ const routes = {
   DEVICE: `${rootPath}devices`,
   MEETING: `${rootPath}meeting`,
   JOIN: `${rootPath}join`,
-  JOIN_BREAKOUT: `${rootPath}joinbreakout`
 };
 
 export default routes;

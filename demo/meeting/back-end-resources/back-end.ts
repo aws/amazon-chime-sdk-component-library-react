@@ -7,6 +7,7 @@ import { Construct } from '@aws-cdk/core';
 import cdk = require('@aws-cdk/core');
 import apigateway = require('@aws-cdk/aws-apigateway'); 
 import iam = require('@aws-cdk/aws-iam')
+import loggroup = require('@aws-cdk/aws-logs');
 
 export class BackEnd extends Construct {
     constructor(parent: Construct, name: string) {
@@ -40,8 +41,6 @@ export class BackEnd extends Construct {
         lambdaChimeRole.addToPolicy(new iam.PolicyStatement({
           resources: ['*'],
           actions: ['chime:CreateMeeting',
-                    'chime:CreateMeeting',
-                    'chime:CreateMeeting',
                     'chime:DeleteMeeting',
                     'chime:GetMeeting',
                     'chime:ListMeetings',
@@ -82,7 +81,7 @@ export class BackEnd extends Construct {
             role: lambdaChimeRole
         });
 
-        const attendeeLambda = new lambda.Function(this, 'attendeeMeeting', {
+        const attendeeLambda = new lambda.Function(this, 'attendee', {
             code: lambda.Code.fromAsset("back-end-resources/src", {exclude: ["**", "!attendee.js"]}),
             handler: 'attendee.handler',
             runtime: lambda.Runtime.NODEJS_12_X,
@@ -105,7 +104,12 @@ export class BackEnd extends Construct {
             layers: [layer],
             role: lambdaChimeRole
         });
+      
+        const logGroup = new loggroup.LogGroup(this, 'LogGroup', {
+          retention: loggroup.RetentionDays.ONE_WEEK,
+        });
 
+        
       const logsLambda = new lambda.Function(this, 'logMeeting', {
           code: lambda.Code.fromAsset("back-end-resources/src", {exclude: ["**", "!logs.js"]}),
           handler: 'logs.handler',
@@ -113,6 +117,7 @@ export class BackEnd extends Construct {
           environment: {
             MEETINGS_TABLE_NAME: meetingsTable.tableName,
             ATTENDEES_TABLE_NAME: attendeeTable.tableName,
+            BROWSER_LOG_GROUP_NAME: logGroup.logGroupName
           },
           layers: [layer],
           role: lambdaLogsRole
@@ -131,12 +136,12 @@ export class BackEnd extends Construct {
             }
         });
 
-        const breakoutAPI = new cdk.CfnOutput(this, 'BreakoutAPIURL', { 
+        const apiURL = new cdk.CfnOutput(this, 'apiURL', { 
           value: api.url,
-          exportName: "BreakoutAPIURL"
+          exportName: "APIURL"
         });        
 
-        breakoutAPI.overrideLogicalId('breakoutAPI')
+        apiURL.overrideLogicalId('apiURL')
 
         const join = api.root.addResource('join');
         const joinIntegration = new apigateway.LambdaIntegration(joinLambda);

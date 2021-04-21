@@ -19,7 +19,7 @@ import { getErrorContext } from '../../providers/ErrorProvider';
 import routes from '../../constants/routes';
 import Card from '../../components/Card';
 import Spinner from '../../components/Spinner';
-// import DevicePermissionPrompt from '../DevicePermissionPrompt';
+import DevicePermissionPrompt from '../DevicePermissionPrompt';
 import RegionSelection from './RegionSelection';
 import { fetchMeeting, createGetAttendeeCallback } from '../../utils/api';
 import { useAppState } from '../../providers/AppStateProvider';
