@@ -11,12 +11,17 @@ export type ToolTipPositionType = 'top' | 'bottom' | 'right' | 'left';
 export interface Tooltipable {
   /* Put tooltips on any buttons */
   ['data-tooltip']?: boolean;
-  /* Tooltips locaiton on any buttons */
+  /* Tooltips location on any buttons */
   ['data-tooltip-position']?: ToolTipPositionType;
+  /* The element ID of an existing element to render tooltips into */
+  tooltipContainerId?: string;
+  /* Content for tooltip. Falls back to the label */
+  tooltipContent?: React.ReactNode;
 }
 
 export interface ToolTipProps {
-  label: string;
+  label?: string;
+  tooltipContent?: React.ReactNode;
   tooltipPosition?: ToolTipPositionType;
 }
 
@@ -29,9 +34,10 @@ const initialState: WithTooltipState = { show: false, bounds: null };
 
 export const WithTooltip = <P extends object>(
   Component: React.ComponentType<P>,
-  container_id = 'Tooltip__container'
+  container_id?: string
 ) => (props: P & ToolTipProps) => {
   const [{ show, bounds }, setShow] = useState<WithTooltipState>(initialState);
+  const [container, setContainer] = useState<HTMLElement | null>(null);
   const position = props.tooltipPosition ?? 'top';
 
   const showToolTip = useCallback((e: Event) => {
@@ -55,7 +61,19 @@ export const WithTooltip = <P extends object>(
     return () => document.removeEventListener('scroll', hideToolTip, true);
   }, []);
 
-  const container = document.getElementById(container_id);
+  useEffect(() => {
+    const container = document.getElementById(container_id || 'Tooltip__container');
+
+    if (!container) {
+      console.warn(`
+        Attempted to use 'WithTooltip' but could not find container element.
+        Pass a valid element ID or add 'Tooltip__container' ID to existing element
+      `);
+      return;
+    }
+
+    setContainer(container)
+  }, [container_id]);
 
   return (
     <>
@@ -64,7 +82,7 @@ export const WithTooltip = <P extends object>(
         container &&
         ReactDOM.createPortal(
           <StyledTooltip position={position} bounds={bounds}>
-            {props.label}
+            {props.tooltipContent || props.label}
           </StyledTooltip>,
           container
         )}

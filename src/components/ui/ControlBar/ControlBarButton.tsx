@@ -1,7 +1,7 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, ReactNode } from 'react';
+import React, { FC, ReactNode, useMemo } from 'react';
 
 import Caret from '../icons/Caret';
 import { StyledControlBarItem, isVertical } from './Styled';
@@ -11,8 +11,6 @@ import { useControlBarContext } from './ControlBarContext';
 import IconButton from '../Button/IconButton';
 import { BaseProps } from '../Base';
 import { Tooltipable, WithTooltip } from '../WithTooltip';
-
-const IconButtonWithToolTip = WithTooltip(IconButton);
 
 export interface ControlBarButtonProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'css'>,
@@ -44,16 +42,22 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
   popOver = null,
   popOverPlacement,
   popOverLabel,
+  tooltipContainerId,
+  tooltipContent,
   children,
   ...rest
 }) => {
   const context = useControlBarContext();
 
+  const IconButtonWithToolTip = useMemo(
+    () => WithTooltip(IconButton, tooltipContainerId),
+  [tooltipContainerId]);
+
   const ButtonComponent = !!rest['data-tooltip']
     ? IconButtonWithToolTip
     : IconButton;
   const buttonComponentProps = !!rest['data-tooltip-position']
-    ? { tooltipPosition: rest['data-tooltip-position'] }
+    ? { tooltipPosition: rest['data-tooltip-position'], tooltipContent }
     : {};
 
   const renderPopOver = () => (

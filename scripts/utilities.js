@@ -36,6 +36,35 @@ const spawnOrFail = (command, args, options) => {
   return output;
 };
 
+// automatically catch peer dependency warnings and error out
+const checkWarning = (command, args, options, dependency) => {
+  options = {
+    ...options,
+    shell: true
+  };
+  const cmd = exec(command, args, options);
+  if (cmd.stderr.toString().match(`npm WARN ${dependency}`)) {
+    logger.log(`Command ${command} failed with incompatible peer dependency for ${dependency}`);
+  
+      process.exit(255);
+  }
+  if (cmd.error) {
+    logger.log(`Command ${command} failed with ${cmd.error.code}`);
+
+    process.exit(255);
+  }
+  const output = cmd.stdout.toString();
+  logger.log(output);
+  if (cmd.status !== 0) {
+    logger.log(
+      `Command ${command} failed with exit code ${cmd.status} signal ${cmd.signal}`
+    );
+    logger.log(cmd.stderr.toString());
+    process.exit(cmd.status);
+  }
+  return output;
+};
+
 // Will prompt user for input before continue
 // Exptected input 'yes' to continue
 // Optinal callback(): instead of terminating process will run passed cb.
@@ -58,5 +87,6 @@ module.exports = {
   logger,
   spawnOrFail,
   process,
-  shouldContinuePrompt
+  shouldContinuePrompt,
+  checkWarning
 };

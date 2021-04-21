@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import { ControlBarButton } from '../../ui/ControlBar/ControlBarItem';
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Microphone } from '../../ui/icons';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
@@ -17,11 +17,17 @@ interface Props {
   muteLabel?: string;
   /** The label that will be shown when microphone is unmuted, it defaults to `Unmute`. */
   unmuteLabel?: string;
+  /** Title attribute for the icon when muted, it defaults to `Muted microphone` */
+  mutedIconTitle?: string;
+  /** Title attribute for the icon when unmuted, it defaults to `Microphone` */
+  unmutedIconTitle?: string;
 }
 
 const AudioInputControl: React.FC<Props> = ({
   muteLabel = 'Mute',
   unmuteLabel = 'Unmute',
+  mutedIconTitle,
+  unmutedIconTitle
 }) => {
   const meetingManager = useMeetingManager();
   const { muted, toggleMute } = useToggleLocalMute();
@@ -39,7 +45,7 @@ const AudioInputControl: React.FC<Props> = ({
 
   return (
     <ControlBarButton
-      icon={<Microphone muted={muted} />}
+      icon={<Microphone muted={muted} mutedTitle={mutedIconTitle} unmutedTitle={unmutedIconTitle} />}
       onClick={toggleMute}
       label={muted ? unmuteLabel : muteLabel}
       popOver={dropdownOptions}
