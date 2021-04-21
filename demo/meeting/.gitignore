@@ -10,4 +10,9 @@ cdk-outputs.json
 !/back-end-resources/lambda-layer/nodejs/node_modules/
 .DS_Store
 build/
+<<<<<<< HEAD
 .yalc/
+=======
+.yalc/
+yalc.lock
+>>>>>>> 6f3b02427116cd13a78768be4885282615b74007

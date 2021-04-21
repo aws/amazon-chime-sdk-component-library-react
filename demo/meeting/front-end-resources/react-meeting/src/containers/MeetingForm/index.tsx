@@ -147,7 +147,7 @@ const MeetingForm: React.FC = () => {
           </ModalBody>
         </Modal>
       )}
-      {/* <DevicePermissionPrompt /> */}
+      <DevicePermissionPrompt />
     </form>
   );
 };
