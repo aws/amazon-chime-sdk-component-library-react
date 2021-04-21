@@ -4,7 +4,7 @@
 import React from 'react';
 import {
   Flex,
-  SecondaryButton
+  SecondaryButton,
 } from 'amazon-chime-sdk-component-library-react';
 
 import MeetingForm from '../MeetingForm';
