@@ -10,7 +10,7 @@ const AWS = require('aws-sdk');
 /* eslint-enable */
 
 let hostname = '127.0.0.1';
-let port = 8080;
+let port = 8081;
 let protocol = 'http';
 let options = {};
 
@@ -143,6 +143,15 @@ const server = require(protocol).createServer(
           })
           .promise();
         response.statusCode = 200;
+        response.end();
+      } else if (
+        request.method === 'GET' &&
+        request.url.startsWith('/meetings')
+      ) {
+        // console.log('here')
+        response.statusCode = 200;
+        response.setHeader('Content-Type', 'application/json');
+        response.write(JSON.stringify(meetingCache), 'utf8');
         response.end();
       } else if (request.method === 'POST' && request.url.startsWith('/logs')) {
         console.log('Writing logs to cloudwatch');
