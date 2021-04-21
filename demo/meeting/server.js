@@ -148,7 +148,6 @@ const server = require(protocol).createServer(
         request.method === 'GET' &&
         request.url.startsWith('/meetings')
       ) {
-        // console.log('here')
         response.statusCode = 200;
         response.setHeader('Content-Type', 'application/json');
         response.write(JSON.stringify(meetingCache), 'utf8');
