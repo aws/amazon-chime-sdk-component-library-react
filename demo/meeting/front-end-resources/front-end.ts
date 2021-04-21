@@ -21,7 +21,7 @@ export class FrontEnd extends Construct {
         // Content bucket
         const siteBucket = new s3.Bucket(this, 'SiteBucket', {
             websiteIndexDocument: 'index.html',
-            websiteErrorDocument: 'error.html',
+            websiteErrorDocument: 'index.html',
             publicReadAccess: false,
 
             // The default removal policy is RETAIN, which means that cdk destroy will not attempt to delete

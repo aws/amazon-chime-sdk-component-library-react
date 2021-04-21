@@ -41,8 +41,6 @@ export class BackEnd extends Construct {
         lambdaChimeRole.addToPolicy(new iam.PolicyStatement({
           resources: ['*'],
           actions: ['chime:CreateMeeting',
-                    'chime:CreateMeeting',
-                    'chime:CreateMeeting',
                     'chime:DeleteMeeting',
                     'chime:GetMeeting',
                     'chime:ListMeetings',
@@ -83,7 +81,7 @@ export class BackEnd extends Construct {
             role: lambdaChimeRole
         });
 
-        const attendeeLambda = new lambda.Function(this, 'attendeeMeeting', {
+        const attendeeLambda = new lambda.Function(this, 'attendee', {
             code: lambda.Code.fromAsset("back-end-resources/src", {exclude: ["**", "!attendee.js"]}),
             handler: 'attendee.handler',
             runtime: lambda.Runtime.NODEJS_12_X,
@@ -138,12 +136,12 @@ export class BackEnd extends Construct {
             }
         });
 
-        const breakoutAPI = new cdk.CfnOutput(this, 'BreakoutAPIURL', { 
+        const apiURL = new cdk.CfnOutput(this, 'apiURL', { 
           value: api.url,
-          exportName: "BreakoutAPIURL"
+          exportName: "APIURL"
         });        
 
-        breakoutAPI.overrideLogicalId('breakoutAPI')
+        apiURL.overrideLogicalId('apiURL')
 
         const join = api.root.addResource('join');
         const joinIntegration = new apigateway.LambdaIntegration(joinLambda);
