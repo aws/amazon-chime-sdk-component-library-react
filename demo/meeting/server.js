@@ -83,7 +83,7 @@ const server = require(protocol).createServer(
             ).Attendee
           }
         };
-        attendeeCache[title][joinInfo.JoinInfo.Attendee.AttendeeId] = name;
+        name && (attendeeCache[title][joinInfo.JoinInfo.Attendee.AttendeeId] = name);
         response.statusCode = 201;
         response.setHeader('Content-Type', 'application/json');
         response.write(JSON.stringify(joinInfo), 'utf8');

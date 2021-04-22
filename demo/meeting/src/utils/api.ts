@@ -12,6 +12,23 @@ interface MeetingResponse {
   };
 }
 
+export async function getAllMeetings(): Promise<any> {
+  const url = `${BASE_URL}meetings`;
+  const response = await fetch(url, {
+    method: 'GET',
+    // body: JSON.stringify(body),
+    headers: {
+      'Content-type': 'application/json; charset=UTF-8',
+      Accept: 'application/json',
+    },
+  });
+  const result = await response.json();
+  if (!response.ok) {
+    return Promise.reject(result);
+  }
+  return result;
+}
+
 export async function fetchMeeting(
   meetingId: string,
   name: string,
@@ -24,7 +41,7 @@ export async function fetchMeeting(
       region ? `&region=${encodeURIComponent(region)}` : ''
     }`,
     {
-      method: 'POST'
+      method: 'POST',
     }
   );
   const data = await response.json();
@@ -42,7 +59,7 @@ export function createGetAttendeeCallback(meetingId: string) {
       meetingId
     )}&attendee=${encodeURIComponent(chimeAttendeeId)}`;
     const res = await fetch(attendeeUrl, {
-      method: 'GET'
+      method: 'GET',
     });
 
     if (!res.ok) {
@@ -52,7 +69,7 @@ export function createGetAttendeeCallback(meetingId: string) {
     const data = await res.json();
 
     return {
-      name: data.AttendeeInfo.Name
+      name: data.AttendeeInfo.Name,
     };
   };
 }
@@ -61,7 +78,7 @@ export async function endMeeting(meetingId: string) {
   const res = await fetch(
     `${BASE_URL}end?title=${encodeURIComponent(meetingId)}`,
     {
-      method: 'POST'
+      method: 'POST',
     }
   );
 
