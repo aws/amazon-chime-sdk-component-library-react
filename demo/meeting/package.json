@@ -28,7 +28,8 @@
     "start:backend": "node server.js",
     "start:fast": "concurrently \"npm run start:client\" \"npm run start:backend\"",
     "start": "npm run deps && yalc add amazon-chime-sdk-component-library-react && npm install --legacy-peer-deps && npm run start:fast",
-    "start:release": "npm install && npm run start:fast"
+    "start:release": "npm install && npm run start:fast",
+    "watch": "concurrently \"nodemon --config ./nodemon.server.json\" \"nodemon --config ./nodemon.client.json\""
   },
   "devDependencies": {
     "@babel/core": "^7.11.1",
