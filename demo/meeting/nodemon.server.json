@@ -1,0 +1,4 @@
+{
+  "watch": ["./server.js"],
+  "exec": "node ./server.js"
+}
