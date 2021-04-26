@@ -26,6 +26,10 @@ jobs:
           fetch-depth: 0
       - name: Install SAM CLI
         run: scripts/github-action-awscli-installation
+      - name: Setup Node environment
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15
       - name: Install Yalc
         run: sudo npm i yalc -g
       - name: NPM Install
