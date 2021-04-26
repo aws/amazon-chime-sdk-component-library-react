@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added optional props to specify the dropdown text that shows when no video quality is selected, in the `QualitySelection` component.
 
 ### Changed
+- Change `package-lock` to V2 to support NPM 7.
 
 ### Removed
 

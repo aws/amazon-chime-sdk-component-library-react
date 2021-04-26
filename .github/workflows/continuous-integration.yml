@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [15.x]
 
     steps:
       - name: Checkout Package
@@ -29,7 +29,7 @@ jobs:
         run: npm ci
       - name: Build
         run: npm run build:release --if-present
-      
+
   require-snapshot-test:
     name: Check if Snapshot Tests are required
     needs: build
@@ -38,7 +38,7 @@ jobs:
       GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [15.x]
     steps:
       - name: Checkout Package
         uses: actions/checkout@v2

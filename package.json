@@ -7,6 +7,10 @@
   "files": [
     "lib"
   ],
+  "engines": {
+    "node": "^12 || ^14 || ^15",
+    "npm": "^6 || ^7"
+  },
   "repository": {
     "type": "git",
     "url": "git://github.com/aws/amazon-chime-sdk-component-library"
