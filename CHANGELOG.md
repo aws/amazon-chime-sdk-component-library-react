@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- Add or remove event listener only when `el.current` reference is valid
+  in `useFocusIn` and `useMouseMove` hooks.
 
 ### Added
 
