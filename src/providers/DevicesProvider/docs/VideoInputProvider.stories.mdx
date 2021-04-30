@@ -2,7 +2,7 @@
 
 # VideoInputProvider
 
-Provides a list of the user's available `video-input` devices and the currently selected device.
+Provides a list of the user's available `video-input` devices, the currently selected device, and the error if device selection fails.
 
 ## State
 
@@ -15,6 +15,9 @@ Provides a list of the user's available `video-input` devices and the currently 
 
   // The device ID of the currently selected device
   selectedDevice: string | null
+  
+  // The error if device selection fails
+  selectDeviceError?: Error | null
 }
 
 ```
@@ -33,7 +36,10 @@ If you are using `MeetingProvider`, `VideoInputProvider` is rendered by default.
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useVideoInputs } from 'amazon-chime-sdk-component-library-react';
+import { 
+  MeetingProvider,
+  useVideoInputs 
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -42,19 +48,20 @@ const App = () => (
 );
 
 const MyChild = () => {
-  const { devices, selectedDevice } = useVideoInputs();
-  const items = devices.map((device) => <li key={device.deviceId}>{device.label}</li>)
+  const { devices, selectedDevice, selectDeviceError } = useVideoInputs();
+  const items = devices.map(device => (
+    <li key={device.deviceId}>{device.label}</li>
+  ));
 
   return (
     <div>
       <p>Current Selected DeviceId: {selectedDevice}</p>
       <p>Devices</p>
-      <ul>
-        {items}
-      </ul>
+      <ul>{items}</ul>
+      {selectDeviceError && (<p>{selectDeviceError.message}<p/>)}
     </div>
   );
-}
+};
 ```
 
 ### Dependencies

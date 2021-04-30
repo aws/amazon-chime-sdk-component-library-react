@@ -17,8 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added optional props to specify icon titles in the `AudioInputControl` and `ContentShareControl` components.
 - Added optional props to specify the dropdown text that shows when no video quality is selected, in the `QualitySelection` component.
-
+- Added observer to `selectAudioInputDeviceError` and `selectVideoInputDeviceError` to deliver the error from SDK level to client application level.
+  
 ### Changed
+
 - Change `package-lock` to V2 to support NPM 7.
 - Update `engines` field in `package.json` to include Node 16
 
@@ -27,6 +29,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.3.0] - 2021-04-12
 
 ### Fixed
+
 - Add browser flag for node resolve in rollup config.
 
 ### Added

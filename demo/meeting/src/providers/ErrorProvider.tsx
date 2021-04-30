@@ -17,11 +17,11 @@ export function getErrorContext() {
 }
 
 export default function ErrorProvider({ children }: Props) {
-  const [errorMessage, setErrorMesage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const ErrorContext = getErrorContext();
 
   const updateErrorMessage = (message: string): void => {
-    setErrorMesage(message);
+    setErrorMessage(message);
   };
 
   const providerValue = {
