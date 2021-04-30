@@ -5,7 +5,8 @@ import { PreviewVideo } from './';
 
 # PreviewVideo
 
-The `PreviewVideo` component renders a preview of the local user's video. If there is no available video input, the video will be blank.
+The `PreviewVideo` component renders a preview of the local user's video. If there is no available video input, the video will be blank. 
+When the `PreviewVideo` component is unmounted, it will release the media streams associated with the video element it references.
 
 A `PreviewVideo` is typically used on a pre-meeting view, or a device settings page.
 
