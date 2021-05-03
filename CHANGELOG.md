@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Add or remove event listener only when `el.current` reference is valid
   in `useFocusIn` and `useMouseMove` hooks.
+- Fix bug related to `PreviewVideo` component not releasing media stream when unmounted.
 
 ### Added
 
