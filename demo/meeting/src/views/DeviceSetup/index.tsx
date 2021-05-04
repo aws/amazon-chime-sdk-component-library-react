@@ -3,8 +3,7 @@
 
 import React from 'react';
 import { Heading } from 'amazon-chime-sdk-component-library-react';
-
-import JoinMeetingDetails from '../../containers/MeetingJoinDetails';
+import MeetingJoinDetails from '../../containers/MeetingJoinDetails';
 import { StyledLayout } from './Styled';
 import DeviceSelection from '../../components/DeviceSelection';
 
@@ -14,7 +13,7 @@ const DeviceSetup: React.FC = () => (
       Device settings
     </Heading>
     <DeviceSelection />
-    <JoinMeetingDetails />
+    <MeetingJoinDetails />
   </StyledLayout>
 );
 
