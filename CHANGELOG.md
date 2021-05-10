@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Change `package-lock` to V2 to support NPM 7.
 - Update `engines` field in `package.json` to include Node 16
+- Bump `hosted-git-info` version
 
 ### Removed
 
