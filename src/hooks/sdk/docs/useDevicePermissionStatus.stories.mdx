@@ -44,9 +44,9 @@ const App = () => (
 );
 
 const MyChild = () => {
-  const meetingStatus = useMeetingStatus();
+  const permission = useDevicePermissionStatus();
 
-  return <p>Meeting Status: {meetingStatus}</p>;
+  return <p>Device Permission Status: {permission}</p>;
 };
 ```
 

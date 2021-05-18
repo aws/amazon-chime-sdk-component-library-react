@@ -34,6 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Add browser flag for node resolve in rollup config.
+- Fix device permission doc to remove reference to meetingStatus
 
 ### Added
 
