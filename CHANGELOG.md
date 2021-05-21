@@ -7,6 +7,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+- [Demo] Fix post logging in the demo meeting app.
+
+### Added
+- [Doc] Add documentaion in introduction on how to use `MeetingSessionPostLogger` to post
+  Amazon Chime JS SDK logs.
+
+### Changed
+
+### Removed
+
 ## [2.4.0] - 2021-05-12
 
 ### Fixed
