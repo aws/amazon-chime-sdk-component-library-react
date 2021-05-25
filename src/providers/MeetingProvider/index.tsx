@@ -23,7 +23,8 @@ interface Props {
   /** Whether or not to enable simulcast for the meeting session */
   simulcastEnabled?: boolean;
   /** Pass a `MeetingManager` instance if you want to share this instance 
-   * across multiple different `MeetingProvider`s.
+   * across multiple different `MeetingProvider`s. This approach has limitations.
+   * Check `meetingManager` prop documentation for more information.
   */
   meetingManager?: MeetingManager;
 }
