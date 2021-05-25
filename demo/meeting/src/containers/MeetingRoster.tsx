@@ -7,11 +7,10 @@ import {
   RosterHeader,
   RosterGroup,
   useRosterState,
-  RosterAttendee
 } from 'amazon-chime-sdk-component-library-react';
 
 import { useNavigation } from '../providers/NavigationProvider';
-import VideoStreamMetrics from './VideoStreamMetrics';
+import RosterAttendeeWrapper from '../components/RosterAttendeeWrapper';
 
 const MeetingRoster = () => {
   const { roster } = useRosterState();
@@ -33,10 +32,8 @@ const MeetingRoster = () => {
   const attendeeItems = attendees.map((attendee: any) => {
     const { chimeAttendeeId } = attendee || {};
     return (
-      <RosterAttendee
-        key={chimeAttendeeId}
+      <RosterAttendeeWrapper
         attendeeId={chimeAttendeeId}
-        menu={<VideoStreamMetrics attendeeId={chimeAttendeeId} />}
       />
     );
   });

@@ -7,7 +7,7 @@ import {
   useMediaStreamMetrics,
   useAudioVideo,
   PopOverHeader,
-  useMeetingManager,
+  useMeetingManager
 } from 'amazon-chime-sdk-component-library-react';
 
 import { MediaStatsList } from '../../components/MediaStatsList';
@@ -16,6 +16,9 @@ import { StyledMediaMetricsWrapper } from '../../components/MediaStatsList/Style
 
 export const LocalMediaStreamMetrics: React.FC = () => {
   const audioVideo = useAudioVideo();
+  if (!audioVideo) {
+    return null;
+  }
   const {
     audioPacketsSentFractionLossPercent,
     audioPacketsReceivedFractionLossPercent,
@@ -25,16 +28,20 @@ export const LocalMediaStreamMetrics: React.FC = () => {
   } = useMediaStreamMetrics();
 
   const isLocalAudioActive =
-  audioVideo &&
-  audioPacketsSentFractionLossPercent !== null &&
-  audioPacketsReceivedFractionLossPercent !== null;
+    audioPacketsSentFractionLossPercent !== null &&
+    audioPacketsReceivedFractionLossPercent !== null;
 
   const meetingManager = useMeetingManager();
-  const localAttendeeId = meetingManager.meetingSession?.configuration.credentials?.attendeeId;
-  const localVideoStreamMetrics = localAttendeeId ? videoStreamMetrics[localAttendeeId] : {};
-  const ssrcArray = localVideoStreamMetrics ? Object.keys(localVideoStreamMetrics) : [];
+  const localAttendeeId =
+    meetingManager.meetingSession?.configuration.credentials?.attendeeId;
+  const localVideoStreamMetrics = localAttendeeId
+    ? videoStreamMetrics[localAttendeeId]
+    : {};
+  const ssrcArray = localVideoStreamMetrics
+    ? Object.keys(localVideoStreamMetrics)
+    : [];
 
-  const isLocalVideoActive = audioVideo && ssrcArray.length !== 0;
+  const isLocalVideoActive = ssrcArray.length !== 0;
   const hasBandwidthInfo =
     availableIncomingBandwidth !== null && availableOutgoingBandwidth !== null;
   return (
@@ -47,8 +54,12 @@ export const LocalMediaStreamMetrics: React.FC = () => {
             <MetricItem
               metricName="1s Loss"
               metricValues={[
-                audioPacketsSentFractionLossPercent !== null ? audioPacketsSentFractionLossPercent.toString() : "",
-                audioPacketsReceivedFractionLossPercent !== null ? audioPacketsReceivedFractionLossPercent.toString(): ""
+                audioPacketsSentFractionLossPercent !== null
+                  ? audioPacketsSentFractionLossPercent.toString()
+                  : '',
+                audioPacketsReceivedFractionLossPercent !== null
+                  ? audioPacketsReceivedFractionLossPercent.toString()
+                  : ''
               ]}
             />
           </MediaStatsList>
@@ -60,92 +71,75 @@ export const LocalMediaStreamMetrics: React.FC = () => {
           <MediaStatsList>
             <MetricItem
               metricName="Bit rate (kbps)"
-              metricValues={
-                ssrcArray.map(ssrc => {
-                  return localVideoStreamMetrics[ssrc].videoUpstreamBitrate
-                    ? Math.trunc(
-                        localVideoStreamMetrics[ssrc].videoUpstreamBitrate /
-                          1000
-                      ).toString()
-                    : '';
-                })
-              }
+              metricValues={ssrcArray.map(ssrc => {
+                return localVideoStreamMetrics[ssrc].videoUpstreamBitrate
+                  ? Math.trunc(
+                      localVideoStreamMetrics[ssrc].videoUpstreamBitrate / 1000
+                    ).toString()
+                  : '';
+              })}
             />
             <MetricItem
               metricName="Packets Sent"
-              metricValues={
-                ssrcArray &&
-                ssrcArray.map(ssrc => {
-                  return localVideoStreamMetrics[ssrc].videoUpstreamPacketsSent
-                    ? localVideoStreamMetrics[
-                        ssrc
-                      ].videoUpstreamPacketsSent.toString()
-                    : '';
-                })
-              }
+              metricValues={ssrcArray.map(ssrc => {
+                return localVideoStreamMetrics[ssrc].videoUpstreamPacketsSent
+                  ? localVideoStreamMetrics[
+                      ssrc
+                    ].videoUpstreamPacketsSent.toString()
+                  : '';
+              })}
             />
             <MetricItem
               metricName="Frame Rate"
-              metricValues={
-                ssrcArray.map(ssrc => {
-                  return localVideoStreamMetrics[ssrc]
-                    .videoUpstreamFramesEncodedPerSecond
-                    ? localVideoStreamMetrics[
-                        ssrc
-                      ].videoUpstreamFramesEncodedPerSecond.toString()
-                    : '';
-                })
-              }
+              metricValues={ssrcArray.map(ssrc => {
+                return localVideoStreamMetrics[ssrc]
+                  .videoUpstreamFramesEncodedPerSecond
+                  ? localVideoStreamMetrics[
+                      ssrc
+                    ].videoUpstreamFramesEncodedPerSecond.toString()
+                  : '';
+              })}
             />
             <MetricItem
               metricName="Frame Height"
-              metricValues={
-                ssrcArray.map(ssrc => {
-                  return localVideoStreamMetrics[ssrc].videoUpstreamFrameHeight
-                    ? localVideoStreamMetrics[
-                        ssrc
-                      ].videoUpstreamFrameHeight.toString()
-                    : '';
-                })
-              }
+              metricValues={ssrcArray.map(ssrc => {
+                return localVideoStreamMetrics[ssrc].videoUpstreamFrameHeight
+                  ? localVideoStreamMetrics[
+                      ssrc
+                    ].videoUpstreamFrameHeight.toString()
+                  : '';
+              })}
             />
             <MetricItem
               metricName="Frame Width"
-              metricValues={
-                ssrcArray.map(ssrc => {
-                  return localVideoStreamMetrics[ssrc].videoUpstreamFrameWidth
-                    ? localVideoStreamMetrics[
-                        ssrc
-                      ].videoUpstreamFrameWidth.toString()
-                    : '';
-                })
-              }
+              metricValues={ssrcArray.map(ssrc => {
+                return localVideoStreamMetrics[ssrc].videoUpstreamFrameWidth
+                  ? localVideoStreamMetrics[
+                      ssrc
+                    ].videoUpstreamFrameWidth.toString()
+                  : '';
+              })}
             />
             <MetricItem
               metricName="Frame Height"
-              metricValues={
-                ssrcArray.map(ssrc => {
-                  return localVideoStreamMetrics[ssrc]
-                    .videoUpstreamGoogFrameHeight
-                    ? localVideoStreamMetrics[
-                        ssrc
-                      ].videoUpstreamGoogFrameHeight.toString()
-                    : '';
-                })
-              }
+              metricValues={ssrcArray.map(ssrc => {
+                return localVideoStreamMetrics[ssrc]
+                  .videoUpstreamGoogFrameHeight
+                  ? localVideoStreamMetrics[
+                      ssrc
+                    ].videoUpstreamGoogFrameHeight.toString()
+                  : '';
+              })}
             />
             <MetricItem
               metricName="Frame Width"
-              metricValues={
-                ssrcArray.map(ssrc => {
-                  return localVideoStreamMetrics[ssrc]
-                    .videoUpstreamGoogFrameWidth
-                    ? localVideoStreamMetrics[
-                        ssrc
-                      ].videoUpstreamGoogFrameWidth.toString()
-                    : '';
-                })
-              }
+              metricValues={ssrcArray.map(ssrc => {
+                return localVideoStreamMetrics[ssrc].videoUpstreamGoogFrameWidth
+                  ? localVideoStreamMetrics[
+                      ssrc
+                    ].videoUpstreamGoogFrameWidth.toString()
+                  : '';
+              })}
             />
           </MediaStatsList>
         </>
@@ -158,8 +152,12 @@ export const LocalMediaStreamMetrics: React.FC = () => {
             <MetricItem
               metricName="Bandwidth (kbps)"
               metricValues={[
-                availableOutgoingBandwidth !== null ? availableOutgoingBandwidth.toString() : "",
-                availableIncomingBandwidth !== null ? availableIncomingBandwidth.toString() : ""
+                availableOutgoingBandwidth !== null
+                  ? availableOutgoingBandwidth.toString()
+                  : '',
+                availableIncomingBandwidth !== null
+                  ? availableIncomingBandwidth.toString()
+                  : ''
               ]}
             />
           </MediaStatsList>
