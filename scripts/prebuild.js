@@ -94,6 +94,8 @@ When bot submits PR two git context parameters are set.
 
 if (!process.env.GITHUB_ACTIONS) {
   // Pull in npm audit fixes automatically
+  logger.log("Running npm install");
+  spawnOrFail('npm', ['install']);
   logger.log("Running npm audit fix");
   spawnOrFail('npm', ['audit', 'fix']);
   logger.log("Completed npm audit fix");
