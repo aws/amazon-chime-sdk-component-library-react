@@ -7,13 +7,11 @@ import { StyledItemMetricName, StyledItemMetricValue } from './Styled';
 export interface MetricItemProps {
   metricName: string;
   metricValues: string[];
-  metricValuesAlert?: boolean;
 }
 
 export const MetricItem: React.FC<MetricItemProps> = ({
   metricName,
   metricValues,
-  metricValuesAlert,
 }) => {
   const showMetricItem = metricValues[0] !== '';
   return (

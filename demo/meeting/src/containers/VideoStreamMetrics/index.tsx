@@ -40,7 +40,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Bit rate (kbps)"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoDownstreamBitrate)
                     ? Math.trunc(streamMetric[ssrc].videoDownstreamBitrate/1000).toString()
@@ -51,7 +50,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Packet Loss"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoDownstreamPacketLossPercent)
                     ? Math.trunc(streamMetric[ssrc].videoDownstreamPacketLossPercent).toString()
@@ -62,7 +60,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Frame Rate"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoDownstreamFramesDecodedPerSecond)
                     ? streamMetric[
@@ -75,7 +72,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Frame Height"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoDownstreamFrameHeight)
                     ? streamMetric[ssrc].videoDownstreamFrameHeight.toString()
@@ -86,7 +82,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Frame Width"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoDownstreamFrameWidth)
                     ? streamMetric[ssrc].videoDownstreamFrameWidth.toString()
@@ -97,7 +92,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Frame Height"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoDownstreamGoogFrameHeight)
                     ? streamMetric[ssrc].videoDownstreamGoogFrameHeight.toString()
@@ -108,7 +102,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Frame Width"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoDownstreamGoogFrameWidth)
                     ? streamMetric[ssrc].videoDownstreamGoogFrameWidth.toString()
@@ -119,7 +112,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Bit rate (kbps)"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoUpstreamBitrate)
                     ? Math.trunc(streamMetric[ssrc].videoUpstreamBitrate/1000).toString()
@@ -130,7 +122,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Packets Sent"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoUpstreamPacketsSent)
                     ? streamMetric[ssrc].videoUpstreamPacketsSent.toString()
@@ -141,7 +132,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Frame Rate"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoUpstreamFramesEncodedPerSecond)
                     ? streamMetric[
@@ -154,7 +144,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Frame Height"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoUpstreamFrameHeight)
                     ? streamMetric[ssrc].videoUpstreamFrameHeight.toString()
@@ -165,7 +154,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Frame Width"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoUpstreamFrameWidth)
                     ? streamMetric[ssrc].videoUpstreamFrameWidth.toString()
@@ -176,7 +164,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Frame Height"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoUpstreamGoogFrameHeight)
                     ? streamMetric[ssrc].videoUpstreamGoogFrameHeight.toString()
@@ -187,7 +174,6 @@ export const VideoStreamMetrics: React.FC<Props> = ({ attendeeId }) => {
             <MetricItem
               metricName="Frame Width"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map((ssrc) => {
                   return isValidMetric(streamMetric[ssrc].videoUpstreamGoogFrameWidth)
                     ? streamMetric[ssrc].videoUpstreamGoogFrameWidth.toString()

@@ -6,17 +6,16 @@ import React from 'react';
 import {
   useMediaStreamMetrics,
   useAudioVideo,
-  PopOverHeader
+  PopOverHeader,
+  useMeetingManager,
 } from 'amazon-chime-sdk-component-library-react';
 
-import MediaStatsList from '../../components/MediaStatsList/index';
+import { MediaStatsList } from '../../components/MediaStatsList';
 import MetricItem from '../../components/MediaStatsList/MetricItem';
 import { StyledMediaMetricsWrapper } from '../../components/MediaStatsList/Styled';
 
 export const LocalMediaStreamMetrics: React.FC = () => {
   const audioVideo = useAudioVideo();
-  const localAttendeeId = (audioVideo as any).audioVideoController
-    ?.realtimeController?.state?.localAttendeeId;
   const {
     audioPacketsSentFractionLossPercent,
     audioPacketsReceivedFractionLossPercent,
@@ -24,14 +23,17 @@ export const LocalMediaStreamMetrics: React.FC = () => {
     availableOutgoingBandwidth,
     videoStreamMetrics
   } = useMediaStreamMetrics();
-  const localVideoStreamMetrics = videoStreamMetrics[localAttendeeId];
-  const ssrcArray = localVideoStreamMetrics
-    ? Object.keys(localVideoStreamMetrics)
-    : [];
+
   const isLocalAudioActive =
-    audioVideo &&
-    audioPacketsSentFractionLossPercent !== null &&
-    audioPacketsReceivedFractionLossPercent !== null;
+  audioVideo &&
+  audioPacketsSentFractionLossPercent !== null &&
+  audioPacketsReceivedFractionLossPercent !== null;
+
+  const meetingManager = useMeetingManager();
+  const localAttendeeId = meetingManager.meetingSession?.configuration.credentials?.attendeeId;
+  const localVideoStreamMetrics = localAttendeeId ? videoStreamMetrics[localAttendeeId] : {};
+  const ssrcArray = localVideoStreamMetrics ? Object.keys(localVideoStreamMetrics) : [];
+
   const isLocalVideoActive = audioVideo && ssrcArray.length !== 0;
   const hasBandwidthInfo =
     availableIncomingBandwidth !== null && availableOutgoingBandwidth !== null;
@@ -59,7 +61,6 @@ export const LocalMediaStreamMetrics: React.FC = () => {
             <MetricItem
               metricName="Bit rate (kbps)"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map(ssrc => {
                   return localVideoStreamMetrics[ssrc].videoUpstreamBitrate
                     ? Math.trunc(
@@ -86,7 +87,6 @@ export const LocalMediaStreamMetrics: React.FC = () => {
             <MetricItem
               metricName="Frame Rate"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map(ssrc => {
                   return localVideoStreamMetrics[ssrc]
                     .videoUpstreamFramesEncodedPerSecond
@@ -100,7 +100,6 @@ export const LocalMediaStreamMetrics: React.FC = () => {
             <MetricItem
               metricName="Frame Height"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map(ssrc => {
                   return localVideoStreamMetrics[ssrc].videoUpstreamFrameHeight
                     ? localVideoStreamMetrics[
@@ -113,7 +112,6 @@ export const LocalMediaStreamMetrics: React.FC = () => {
             <MetricItem
               metricName="Frame Width"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map(ssrc => {
                   return localVideoStreamMetrics[ssrc].videoUpstreamFrameWidth
                     ? localVideoStreamMetrics[
@@ -126,7 +124,6 @@ export const LocalMediaStreamMetrics: React.FC = () => {
             <MetricItem
               metricName="Frame Height"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map(ssrc => {
                   return localVideoStreamMetrics[ssrc]
                     .videoUpstreamGoogFrameHeight
@@ -140,7 +137,6 @@ export const LocalMediaStreamMetrics: React.FC = () => {
             <MetricItem
               metricName="Frame Width"
               metricValues={
-                ssrcArray &&
                 ssrcArray.map(ssrc => {
                   return localVideoStreamMetrics[ssrc]
                     .videoUpstreamGoogFrameWidth

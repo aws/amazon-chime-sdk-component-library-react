@@ -1,4 +1,4 @@
-<Meta title="SDK Hooks/useBandwidthMetrics" />
+<Meta title="SDK Hooks/useMediaStreamMetrics" />
 
 # useMediaStreamMetrics
 
@@ -14,7 +14,7 @@ This hook re-renders frequently. You should avoid using it high in your app tree
   audioPacketsReceivedFractionLossPercent: number | null;
   availableOutgoingBandwidth: number | null;
   availableIncomingBandwidth: number | null;
-  videoStreamMetrics: { [key: string]: { [key: string]: {[key: string]: number} } }
+  videoStreamMetrics: { [attendeeId: string]: { [ssrc: string]: {[key: string]: number} } }
 }
 }
 ```
@@ -27,7 +27,7 @@ import { audioPacketsSentFractionLossPercent } from 'amazon-chime-sdk-component-
 
 ## Usage
 
-The hook depends on the `AudioVideoProvider` being rendered. If you are using the MeetingProvider, it is rendered by default.
+The hook depends on the `AudioVideoProvider` being rendered. If you are using the `MeetingProvider`, it is rendered by default.
 
 ```jsx
 import React from 'react';

@@ -15,12 +15,12 @@ interface MediaStreamMetrics {
   audioPacketsReceivedFractionLossPercent: number | null; // Percentage of audio packets lost from server to client
   availableOutgoingBandwidth: number | null;
   availableIncomingBandwidth: number | null;
-  videoStreamMetrics: { [key: string]: { [key: string]: {[key: string]: number} } }
+  videoStreamMetrics: { [attendeeId: string]: { [ssrc: string]: {[key: string]: number} } }
 }
 
 export function useMediaStreamMetrics() {
   const audioVideo = useAudioVideo();
-  const [mediaStreamMetrics, setMetrics] = useState<MediaStreamMetrics>({
+  const [mediaStreamMetrics, setMediaStreamMetrics] = useState<MediaStreamMetrics>({
     audioPacketsSentFractionLossPercent: null,
     audioPacketsReceivedFractionLossPercent: null,
     availableOutgoingBandwidth: null,
@@ -35,7 +35,7 @@ export function useMediaStreamMetrics() {
 
     const observer = {
       metricsDidReceive(clientMetricReport: ClientMetricReport): void {
-        const metricReport = clientMetricReport.getObservableMetrics();
+        const {audioPacketLossPercent, audioPacketsReceivedFractionLoss, availableSendBandwidth, availableReceiveBandwidth, availableOutgoingBitrate, availableIncomingBitrate } = clientMetricReport.getObservableMetrics();
 
         let videoStreamMetrics = {};
         let availableOutgoingBandwidth = 0;
@@ -43,36 +43,36 @@ export function useMediaStreamMetrics() {
         let audioPacketsSentFractionLossPercent = 0;
         let audioPacketsReceivedFractionLossPercent = 0;
 
-        if (isValidMetric(metricReport.audioPacketLossPercent)) {
+        if (isValidMetric(audioPacketLossPercent)) {
           audioPacketsSentFractionLossPercent =
-            Math.trunc(metricReport.audioPacketLossPercent);
+            Math.trunc(audioPacketLossPercent);
         }
 
-        if (isValidMetric(metricReport.audioPacketsReceivedFractionLoss)) {
+        if (isValidMetric(audioPacketsReceivedFractionLoss)) {
           audioPacketsReceivedFractionLossPercent =
-            Math.trunc(metricReport.audioPacketsReceivedFractionLoss);
+            Math.trunc(audioPacketsReceivedFractionLoss);
         }
 
         if (clientMetricReport.getObservableVideoMetrics) {
           videoStreamMetrics = clientMetricReport.getObservableVideoMetrics();
         }
 
-        if (isValidMetric(metricReport.availableSendBandwidth)) {
+        if (isValidMetric(availableSendBandwidth)) {
           availableOutgoingBandwidth =
-            metricReport.availableSendBandwidth / 1000;
-        } else if (isValidMetric(metricReport.availableOutgoingBitrate)) {
+            availableSendBandwidth / 1000;
+        } else if (isValidMetric(availableOutgoingBitrate)) {
           availableOutgoingBandwidth =
-            metricReport.availableOutgoingBitrate / 1000;
+            availableOutgoingBitrate / 1000;
         }
 
-        if (isValidMetric(metricReport.availableReceiveBandwidth)) {
+        if (isValidMetric(availableReceiveBandwidth)) {
           availableIncomingBandwidth =
-            metricReport.availableReceiveBandwidth / 1000;
-        } else if (isValidMetric(metricReport.availableIncomingBitrate)) {
+            availableReceiveBandwidth / 1000;
+        } else if (isValidMetric(availableIncomingBitrate)) {
           availableIncomingBandwidth =
-            metricReport.availableIncomingBitrate / 1000;
+            availableIncomingBitrate / 1000;
         }
-        setMetrics({
+        setMediaStreamMetrics({
           audioPacketsSentFractionLossPercent,
           audioPacketsReceivedFractionLossPercent,
           availableOutgoingBandwidth,
