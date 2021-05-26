@@ -6,7 +6,7 @@ import {
   Roster,
   RosterHeader,
   RosterGroup,
-  useRosterState,
+  useRosterState
 } from 'amazon-chime-sdk-component-library-react';
 
 import { useNavigation } from '../providers/NavigationProvider';
@@ -31,11 +31,7 @@ const MeetingRoster = () => {
 
   const attendeeItems = attendees.map((attendee: any) => {
     const { chimeAttendeeId } = attendee || {};
-    return (
-      <RosterAttendeeWrapper
-        attendeeId={chimeAttendeeId}
-      />
-    );
+    return <RosterAttendeeWrapper attendeeId={chimeAttendeeId} />;
   });
 
   return (

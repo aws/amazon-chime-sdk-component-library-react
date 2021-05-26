@@ -10,29 +10,12 @@ function isValidMetric(metric: any) {
   return typeof metric === 'number' && !Number.isNaN(metric);
 }
 
-interface VideoMetrics {
-  videoDownstreamBitrate: number;
-  videoDownstreamPacketLossPercent: number;
-  videoDownstreamFramesDecodedPerSecond: number;
-  videoDownstreamFrameHeight: number;
-  videoDownstreamFrameWidth: number;
-  videoDownstreamGoogFrameHeight: number;
-  videoDownstreamGoogFrameWidth: number;
-  videoUpstreamBitrate: number;
-  videoUpstreamPacketsSent: number;
-  videoUpstreamFramesEncodedPerSecond: number;
-  videoUpstreamFrameHeight: number;
-  videoUpstreamFrameWidth: number;
-  videoUpstreamGoogFrameHeight: number;
-  videoUpstreamGoogFrameWidth: number;
-}
-
 interface MediaStreamMetrics {
   audioPacketsSentFractionLossPercent: number | null; // Percentage of audio packets lost (1s) from client to server
   audioPacketsReceivedFractionLossPercent: number | null; // Percentage of audio packets lost from server to client
   availableOutgoingBandwidth: number | null;
   availableIncomingBandwidth: number | null;
-  videoStreamMetrics: { [attendeeId: string]: { [ssrc: string]: VideoMetrics } };
+  videoStreamMetrics: { [attendeeId: string]: { [ssrc: string]: {[key: string]: number} } };
 }
 
 export function useMediaStreamMetrics() {

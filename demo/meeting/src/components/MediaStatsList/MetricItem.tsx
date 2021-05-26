@@ -13,7 +13,7 @@ export const MetricItem: React.FC<MetricItemProps> = ({
   metricName,
   metricValues
 }) => {
-  const showMetricItem = metricValues[0] !== '';
+  const showMetricItem = metricValues[0] && metricValues[0] !== '';
   return (
     <>
       {showMetricItem && (

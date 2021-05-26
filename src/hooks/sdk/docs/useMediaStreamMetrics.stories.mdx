@@ -10,12 +10,11 @@ This hook re-renders frequently. You should avoid using it high in your app tree
 
 ```javascript
 {
-  audioPacketsSentFractionLossPercent: number | null; 
+  audioPacketsSentFractionLossPercent: number | null;
   audioPacketsReceivedFractionLossPercent: number | null;
   availableOutgoingBandwidth: number | null;
   availableIncomingBandwidth: number | null;
   videoStreamMetrics: { [attendeeId: string]: { [ssrc: string]: {[key: string]: number} } }
-}
 }
 ```
 
@@ -29,11 +28,41 @@ import { audioPacketsSentFractionLossPercent } from 'amazon-chime-sdk-component-
 
 The hook depends on the `AudioVideoProvider` being rendered. If you are using the `MeetingProvider`, it is rendered by default.
 
+The videoStreamMetrics in return value is a map of attendee to stream of VideoMetrics mappings. The format of videoStreamMetrics will be
+
+```
+videoStreamMetrics {
+  attendeeId:{ // remote attendees will have downstream metrics
+    ssrc: {
+      videoDownstreamBitrate: number;
+      videoDownstreamPacketLossPercent: number;
+      videoDownstreamFramesDecodedPerSecond: number;
+      videoDownstreamFrameHeight: number;
+      videoDownstreamFrameWidth: number;
+      videoDownstreamGoogFrameHeight: number;
+      videoDownstreamGoogFrameWidth: number;
+    }
+  }
+  attendeeId: { // local attendee will have upstream metrics
+    ssrc: {
+      videoUpstreamBitrate: number;
+      videoUpstreamPacketsSent: number;
+      videoUpstreamFramesEncodedPerSecond: number;
+      videoUpstreamFrameHeight: number;
+      videoUpstreamFrameWidth: number;
+      videoUpstreamGoogFrameHeight: number;
+      videoUpstreamGoogFrameWidth: number;
+    }
+  }
+}
+
+```
+
 ```jsx
 import React from 'react';
 import {
   MeetingProvider,
-  useMediaStreamMetrics
+  useMediaStreamMetrics,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -48,12 +77,15 @@ const MyChild = () => {
   return (
     <>
       <p>Audio Uplink 1s loss: {metrics.audioPacketsSentFractionLossPercent}</p>
-      <p>Audio Downlink 1s loss: {metrics.audioPacketsReceivedFractionLossPercent}</p>
-      <p>Bandwidth Incoming: {metrics.availableIncomingBandwidth}</p>  
-      <p>Bandwidth Outgoing: {metrics.availableOutgoingBandwidth}</p> 
-      <p>Video Metrics: {metrics.videoStreamMetrics}</p>  
+      <p>
+        Audio Downlink 1s loss:{' '}
+        {metrics.audioPacketsReceivedFractionLossPercent}
+      </p>
+      <p>Bandwidth Incoming: {metrics.availableIncomingBandwidth}</p>
+      <p>Bandwidth Outgoing: {metrics.availableOutgoingBandwidth}</p>
+      <p>Video Metrics: {metrics.videoStreamMetrics}</p>
     </>
-  )
+  );
 };
 ```
 
