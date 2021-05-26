@@ -16,14 +16,12 @@ import routes from '../constants/routes';
 export type NavigationContextType = {
   showNavbar: boolean;
   showRoster: boolean;
-  showMetrics: boolean;
   toggleRoster: () => void;
   toggleNavbar: () => void;
   openRoster: () => void;
   closeRoster: () => void;
   openNavbar: () => void;
   closeNavbar: () => void;
-  toggleMetrics: () => void;
 };
 
 type Props = {
@@ -39,7 +37,6 @@ const isDesktop = () => window.innerWidth > 768;
 const NavigationProvider = ({ children }: Props) => {
   const [showNavbar, setShowNavbar] = useState(() => isDesktop());
   const [showRoster, setShowRoster] = useState(() => isDesktop());
-  const [showMetrics, setShowMetrics] = useState(false);
   const isDesktopView = useRef(isDesktop());
 
   const location = useLocation();
@@ -82,10 +79,6 @@ const NavigationProvider = ({ children }: Props) => {
     setShowNavbar(!showNavbar);
   };
 
-  const toggleMetrics = () => {
-    setShowMetrics(currentState => !currentState);
-  };
-
   const openNavbar = (): void => {
     setShowNavbar(true);
   };
@@ -105,10 +98,8 @@ const NavigationProvider = ({ children }: Props) => {
   const providerValue = {
     showNavbar,
     showRoster,
-    showMetrics,
     toggleRoster,
     toggleNavbar,
-    toggleMetrics,
     openRoster,
     closeRoster,
     openNavbar,

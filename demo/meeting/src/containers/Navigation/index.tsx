@@ -9,14 +9,15 @@ import {
   NavbarItem,
   Attendees,
   Eye,
-  Information
+  SignalStrength
 } from 'amazon-chime-sdk-component-library-react';
 
 import { useNavigation } from '../../providers/NavigationProvider';
 import { useAppState } from '../../providers/AppStateProvider';
+import LocalMediaStreamMetrics from '../LocalMediaStreamMetrics';
 
 const Navigation = () => {
-  const { toggleRoster, toggleMetrics, closeNavbar } = useNavigation();
+  const { toggleRoster, closeNavbar } = useNavigation();
   const { theme, toggleTheme } = useAppState();
 
   return (
@@ -33,10 +34,12 @@ const Navigation = () => {
         label={theme === 'light' ? 'Dark mode' : 'Light mode'}
       />
       <NavbarItem
-        icon={<Information />}
-        onClick={toggleMetrics}
-        label="Meeting metrics"
-      />
+        icon={<SignalStrength />}
+        onClick={() => {}}
+        label="Media metrics"
+      >
+        <LocalMediaStreamMetrics />
+      </NavbarItem>
     </Navbar>
   );
 };

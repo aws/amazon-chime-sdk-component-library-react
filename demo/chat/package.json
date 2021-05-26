@@ -13,7 +13,7 @@
     "@aws-amplify/core": "^3.8.12",
     "@aws-amplify/storage": "^3.3.20",
     "amazon-chime-sdk-component-library-react": "file:.yalc/amazon-chime-sdk-component-library-react",
-    "amazon-chime-sdk-js": "^2.9.0",
+    "amazon-chime-sdk-js": "^2.10.0",
     "aws-amplify": "^3.3.17",
     "babel-eslint": "^9.0.0",
     "react": "^17.0.1",
