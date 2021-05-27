@@ -114,11 +114,11 @@ fs.writeFileSync(
 spawnOrFail('npm', [`version ${versionString} --no-git-tag-version`]);
 logger.log(`Updated package.json version to ${versionString}`);
 
+const updatedSdkVersion = spawnOrFail('npm', [`show amazon-chime-sdk-js version`]).trim();
+
 // Skip updating peer dependencies for hotfix
 if (release_option !== '5') {
   // Update the peer dependency to the most updated version of the SDK
-  const updatedSdkVersion = spawnOrFail('npm', [`show amazon-chime-sdk-js version`]).trim();
-
   logger.log(`Installing SDK Version: ${updatedSdkVersion} into the meeting demo, chat demo, and as a peerDependency and devDependency of the react library.`);
 
   let componentsPackageJson = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
