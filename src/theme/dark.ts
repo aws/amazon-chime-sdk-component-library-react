@@ -175,7 +175,7 @@ const buttons = {
     shadow: shadows.none,
     static: {
       bgd: 'transparent',
-      border: `0 solid ${colors.greys.black}`,
+      border: `0.03125rem solid transparent`,
       text: colors.greys.grey20,
       shadow: 'none'
     },

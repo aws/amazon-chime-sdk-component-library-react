@@ -31,8 +31,8 @@ export function useFocusIn(el: RefObject<any>, delay = 3000) {
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
       }
-      el.current.removeEventListener('focusin', onFocusIn);
-      el.current.removeEventListener('focusout', onFocusOut);
+      el.current?.removeEventListener('focusin', onFocusIn);
+      el.current?.removeEventListener('focusout', onFocusOut);
     };
   }, [el]);
 

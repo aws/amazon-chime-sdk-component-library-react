@@ -25,6 +25,21 @@ const VideoInputProvider: React.FC = ({ children }) => {
   const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState(
     meetingManager.selectedVideoInputDevice
   );
+  const [selectVideoInputDeviceError, setSelectVideoInputDeviceError] = useState(
+    meetingManager.selectVideoInputDeviceError
+  );
+
+  useEffect(() => {
+    const callback = (selectVideoInputDeviceError: Error | null): void => {
+      setSelectVideoInputDeviceError(selectVideoInputDeviceError);
+    };
+
+    meetingManager.subscribeToSelectVideoInputDeviceError(callback);
+
+    return (): void => {
+      meetingManager.unsubscribeFromSelectVideoInputDeviceError(callback);
+    };
+  }, []);
 
   useEffect(() => {
     const callback = (updatedVideoInputDevice: string | null): void => {
@@ -42,9 +57,9 @@ const VideoInputProvider: React.FC = ({ children }) => {
     let isMounted = true;
 
     const observer: DeviceChangeObserver = {
-      videoInputsChanged: (newvideoInputs: MediaDeviceInfo[]) => {
+      videoInputsChanged: (newVideoInputs: MediaDeviceInfo[]) => {
         console.log('VideoInputProvider - video inputs updated');
-        setVideoInputs(newvideoInputs);
+        setVideoInputs(newVideoInputs);
       },
     };
 
@@ -73,8 +88,9 @@ const VideoInputProvider: React.FC = ({ children }) => {
     () => ({
       devices: videoInputs,
       selectedDevice: selectedVideoInputDevice,
+      selectDeviceError: selectVideoInputDeviceError,
     }),
-    [videoInputs, selectedVideoInputDevice]
+    [videoInputs, selectedVideoInputDevice, selectVideoInputDeviceError]
   );
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
@@ -91,7 +107,8 @@ const useVideoInputs = (props?: DeviceConfig): DeviceTypeContext => {
 
   let { devices } = context;
   const { selectedDevice } = context;
-
+  const { selectDeviceError } = context;
+  
   if (needAdditionalIO) {
     const additionalVideoInputs = getFormattedDropdownDeviceOptions(
       additionalIOJSON
@@ -100,7 +117,7 @@ const useVideoInputs = (props?: DeviceConfig): DeviceTypeContext => {
       devices = [...devices, ...additionalVideoInputs];
     }
   }
-  return { devices, selectedDevice };
+  return { devices, selectedDevice, selectDeviceError };
 };
 
 export { VideoInputProvider, useVideoInputs };
