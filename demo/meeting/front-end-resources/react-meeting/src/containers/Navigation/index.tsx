@@ -38,7 +38,7 @@ const Navigation = () => {
         onClick={() => {}}
         label="Media metrics"
       >
-        <LocalMediaStreamMetrics />
+        {/* <LocalMediaStreamMetrics /> */}
       </NavbarItem>
     </Navbar>
   );
