@@ -24,6 +24,12 @@ cd front-end-resources/react-meeting
 npm run start
 ```
 
+## Resources
+
+Please note that this demo uses ```yalc``` to publish the amazon-chime-sdk-component-library-react locally and will use this in either local or hosted mode.  
+
+Back end resources used by this demo will be deployed to AWS as Lambda Functions and Dynamo DBs.  These resources will be used in both local and hosted modes.  
+
 ## Cleanup
 
 `cdk destroy --all`
