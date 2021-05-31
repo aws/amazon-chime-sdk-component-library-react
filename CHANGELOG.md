@@ -7,23 +7,48 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.5.0] - 2021-05-27
 
 ### Fixed
+- [Demo] Fix post logging in the demo meeting app.
+
+### Added
+- [Doc] Add documentaion in introduction on how to use `MeetingSessionPostLogger` to post
+  Amazon Chime JS SDK logs.
+- Add `useMediaStreamMetrics` hook to expose audio, video and bandwidth data.
+
+### Changed
+
+### Removed
+
+## [2.4.0] - 2021-05-12
+
+### Fixed
+- Add or remove event listener only when `el.current` reference is valid
+  in `useFocusIn` and `useMouseMove` hooks.
+- Fix bug related to `PreviewVideo` component not releasing media stream when unmounted.
+- Correct `IconButton` border in dark theme.
 
 ### Added
 
 - Added optional props to specify icon titles in the `AudioInputControl` and `ContentShareControl` components.
 - Added optional props to specify the dropdown text that shows when no video quality is selected, in the `QualitySelection` component.
-
+- Added observer to `selectAudioInputDeviceError` and `selectVideoInputDeviceError` to deliver the error from SDK level to client application level.
+  
 ### Changed
+
+- Change `package-lock` to V2 to support NPM 7.
+- Update `engines` field in `package.json` to include Node 16
+- Bump `hosted-git-info` version
 
 ### Removed
 
 ## [2.3.0] - 2021-04-12
 
 ### Fixed
+
 - Add browser flag for node resolve in rollup config.
+- Fix device permission doc to remove reference to meetingStatus
 
 ### Added
 
