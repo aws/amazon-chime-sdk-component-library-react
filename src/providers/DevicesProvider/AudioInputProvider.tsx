@@ -28,27 +28,11 @@ const AudioInputProvider: React.FC = ({ children }) => {
   );
   const selectedInputRef = useRef(selectedAudioInputDevice);
   selectedInputRef.current = selectedAudioInputDevice;
-  const [selectAudioInputDeviceError, setSelectAudioInputDeviceError] = useState(
-    meetingManager.selectAudioInputDeviceError
-  );
-
-  useEffect(() => {
-    const callback = (selectAudioInputDeviceError: Error | null): void => {
-      setSelectAudioInputDeviceError(selectAudioInputDeviceError);
-    };
-
-    meetingManager.subscribeToSelectAudioInputDeviceError(callback);
-
-    return (): void => {
-      meetingManager.unsubscribeFromSelectAudioInputDeviceError(callback);
-    };
-  }, []);
 
   useEffect(() => {
     const callback = (updatedAudioInputDevice: string | null): void => {
       setSelectedAudioInputDevice(updatedAudioInputDevice);
     };
-
     meetingManager.subscribeToSelectedAudioInputDevice(callback);
 
     return (): void => {
@@ -116,9 +100,8 @@ const AudioInputProvider: React.FC = ({ children }) => {
     () => ({
       devices: audioInputs,
       selectedDevice: selectedAudioInputDevice,
-      selectDeviceError: selectAudioInputDeviceError,
     }),
-    [audioInputs, selectedAudioInputDevice, selectAudioInputDeviceError]
+    [audioInputs, selectedAudioInputDevice]
   );
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
@@ -134,8 +117,7 @@ const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
 
   let { devices } = context;
   const { selectedDevice } = context;
-  const { selectDeviceError } = context;
-  
+
   if (needAdditionalIO) {
     const additionalAudioInputs = getFormattedDropdownDeviceOptions(
       AUDIO_INPUT
@@ -145,7 +127,7 @@ const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
     }
   }
 
-  return { devices, selectedDevice, selectDeviceError };
+  return { devices, selectedDevice };
 };
 
 export { AudioInputProvider, useAudioInputs };

@@ -16,7 +16,6 @@ interface BandwidthMetrics {
 }
 
 export function useBandwidthMetrics() {
-  console.log('This hook is deprecated and will be removed in future version, please use useMediaStreamMetrics hook instead.');
   const audioVideo = useAudioVideo();
   const [metrics, setMetrics] = useState<BandwidthMetrics>({
     availableOutgoingBandwidth: null,

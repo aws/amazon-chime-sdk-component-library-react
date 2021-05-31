@@ -28,8 +28,8 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
     if (!audioVideo || !selectedDevice || !videoEl.current) {
       return;
     }
+
     let mounted = true;
-    const videoElement = videoEl.current;
 
     async function startPreview() {
       if (!audioVideo) {
@@ -47,8 +47,8 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
     return () => {
       mounted = false;
 
-      if (videoElement) {
-        audioVideo.stopVideoPreviewForVideoInput(videoElement);
+      if (videoEl.current) {
+        audioVideo.stopVideoPreviewForVideoInput(videoEl.current);
       }
     };
   }, [audioVideo, selectedDevice]);

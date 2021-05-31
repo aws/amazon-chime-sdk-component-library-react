@@ -143,7 +143,6 @@ export { useLocalAudioInputActivity } from './hooks/sdk/useLocalAudioInputActivi
 export { useLocalAudioInputActivityPreview } from './hooks/sdk/useLocalAudioInputActivityPreview';
 export { useBandwidthMetrics } from './hooks/sdk/useBandwidthMetrics';
 export { useDevicePermissionStatus } from './hooks/sdk/useDevicePermissionStatus';
-export { useMediaStreamMetrics } from './hooks/sdk/useMediaStreamMetrics';
 
 // Providers
 export { NotificationProvider } from './providers/NotificationProvider';

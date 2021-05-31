@@ -106,43 +106,7 @@ const MyApp = () => {
 }
 ```
 
-6. Optional - How to enable a meeting to post logs to a URL?
-
-By default, `MeetingManager` provided by `MeetingProvider` uses [`ConsoleLogger`](https://aws.github.io/amazon-chime-sdk-js/classes/consolelogger.html) to log JS SDK logs.
-You can enable posting your logs to a URL by using Amazon Chime JS SDK's [`MeetingSessionPostLogger`](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionpostlogger.html). You can pass `logLevel` and `postLogConfig` as props to the `MeetingProvider`.
-
-Check JS SDK [LogLevel](https://aws.github.io/amazon-chime-sdk-js/enums/loglevel.html) for more details on log levels.
-
-```jsx
-import { MeetingProvider } from 'amazon-chime-sdk-component-library-react';
-import { LogLevel } from 'amazon-chime-sdk-js';
-
-const postLogConfig: PostLogConfig = {
-  name: 'SDK_LOGS',
-  batchSize: 85,
-  intervalMs: 2000,
-  url: url, // JS SDK's `MeetingSessionPostLogger` will POST logs to this URL.
-  logLevel: LogLevel.INFO
-};
-
-const meetingConfig = {
-  logLevel, // Default is LogLevel.WARN.
-  postLogConfig
-};
-
-const Root = () => (
-  <MeetingProvider {...meetingConfig}>
-    <MyApp />
-  </MeetingProvider>
-);
-```
-
-> The component library's [meeting demo](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/src/meetingConfig.ts) showcases above example.
-We post the JS SDK logs to AWS CloudWatch once the demo is deployed. Check the serverless handlers [log](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/src/handlers.js#L252)
-function and AWS CloudWatch [access policy](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/template.yaml#L49) in our serverless template for more details.
-
-
-## FAQ
+### FAQ
 
 #### How do I build out my own UI using the existing providers?
 

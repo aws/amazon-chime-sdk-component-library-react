@@ -32,14 +32,6 @@ const App = () => (
 
 2. Render two `MeetingProvider`s near the root of your application with the same `MeetingManager` instance.
 
-**IMPORTANT NOTE**
-This approach has limitations. This should be used only in very specific cases where you want to share the meeting manager instance
-variable values or you will not use video, roster and audio at both places. Still, the hooks and providers may not work as expected as `MeetingProvider` wraps all the other providers.
-The video will not work due to limitations of JS SDK to bind a video stream to a single video tile only. Please check [this](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/492#issuecomment-846317339) issue for more details.
-
-Please make sure your app calls `meetingManager.join()` only once with the same `attendeeInfo`.
-Otherwise,  the previous attendee who joined the meeting will leave the meeting with [AudioJoinedFromAnotherDevice](https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice).
-
 ```jsx
 import { MeetingProvider, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 
@@ -99,10 +91,3 @@ There may be use cases to re-use the same `MeetingManager` instance accross mult
 Hence, you can create a new `MeetingManager` instance and then pass it as a prop to your `MeetingProvider`s. If not passed,
 a new `MeetingManager` instance will be created internally with each `MeetingProvider` when rendered; and, 
 you will get the `MeetingManager` instance associated with that particular `MeetingProvider` when `useMeetingManager` hook is called.
-
-This approach has limitations. This should be used only in very specific cases where you want to share the meeting manager instance
-variable values and you will not use video, roster and audio at both places. Still, the hooks and providers may not work as expected as `MeetingProvider` wraps all the other providers.
-The video will not work due to limitations of JS SDK to bind a video stream to a single video tile only. Please check [this](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/492#issuecomment-846317339) issue for more details.
-
-Please make sure your app calls `meetingManager.join()` only once with the same `attendeeInfo`.
-Otherwise,  the previous attendee who joined the meeting will leave the meeting with [AudioJoinedFromAnotherDevice](https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice).

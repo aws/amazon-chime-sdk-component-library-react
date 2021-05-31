@@ -1,46 +1,31 @@
-# README - React Meeting Demo
-
-This is the SDK react meeting demo app. It shows how to use the Amazon Chime SDK and Chime SDK UI Component Library to build a react meeting app.
-
-## To run the demo app locally:
-
-1. If you haven't already, [configure your AWS credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html).
-
-2. Install root dependencies within the root directory: `npm install`
-
-3. Navigate to the meeting demo folder: `cd demo/meeting`
-
-4. Install [yalc](https://www.npmjs.com/package/yalc) to get the latest changes from the local component library: `npm i yalc -g`
-
-5. Start the webpack server and node server concurrently: `npm run start`
-
-6. Open https://0.0.0.0:9000/ in your browser
-
-### Troubleshooting
-
-- You can change the `amazon-chime-sdk-js` [log level](https://aws.github.io/amazon-chime-sdk-js/enums/loglevel.html) by providing `logLevel` through URL as a query parameter with value 'warn' | 'error' | 'info' | 'debug' | 'off'.
-   ```
-    https://0.0.0.0:9000/?logLevel=debug
-    ```
-
-- `UnrecognizedClientException: The security token included in the request is invalid.` when trying to join a meeting
-
-  This likely means that your AWS credentials are invalid. Refer to the [AWS Configuration docs](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-quickstart.html) for setting up your credentials.
-
-## To deploy the serverless device demo
-
-### Install aws and sam command line tools
-
-- [Install the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv1.html)
-- [Install the AWS SAM CLI](https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/serverless-sam-cli-install.html)
-
-### Run deployment script
-
-The following will create a CloudFormation stack containing a Lambda and API Gateway deployment that runs the demo. Note that S3 bucket name should be globally unique.
+## Using the Chime SDK React Meeting Demo
+### Requirements
+- npm [installed](https://docs.npmjs.com/cli/v7/commands/npm-install)
+- AWS CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
+- AWS CDK [installed](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html#getting_started_install) and [Bootstrapped](https://docs.aws.amazon.com/cdk/latest/guide/bootstrapping.html)
+- - Install: `npm install -g aws-cdk`
+- - Be sure to have the latest version installed.  If you need to upgrade, uninstall `npm uninstall -g aws-cdk` and reinstall.
+- yalc [Installed](https://www.npmjs.com/package/yalc) - `npm i yalc -g'
+## Deploy
 
 ```
-cd /serverless
-node ./deploy.js -r us-east-1 -b <YOUR-S3-BUCKET-NAME> -s <YOUR-CLOUDFORMATION-STACK-NAME>
+chmod +x deploy.sh
+./deploy.sh
+```
+This will deploy a serverless backend and a CloudFront + S3 frontend.  The Output of the CDK will contain a CloudFront URL that can be used to test the Chime SDK React Meeting.  
+
+## Using Locally
+
+While backend resources are required to run this demo, the front end can be run in a hosted model or locally.  To run the front end locally without hosting:
+`./deploy.sh backend-only`
+Once the backend resources are deployed, the demo can be run from:
+```
+cd front-end-resources/react-meeting
+npm run start
 ```
 
-The script will create an S3 bucket and CloudFormation stack with Lambda and API Gateway resources required to run the demo. After the script finishes, it will output a URL that can be opened in a browser.
+## Cleanup
+
+`cdk destroy --all`
+
+This will destoy all components created with this CDK, including the S3 bucket used for hosting.

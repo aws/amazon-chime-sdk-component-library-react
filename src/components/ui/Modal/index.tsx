@@ -63,8 +63,8 @@ export const Modal: FC<ModalProps> = ({
       }
     };
 
-    window.addEventListener('keydown', onKeydown);
-    return () => window.removeEventListener('keydown', onKeydown);
+    window.addEventListener('keydown', (e) => onKeydown(e));
+    return () => window.removeEventListener('keydown', (e) => onKeydown(e));
   }, []);
 
   return (
