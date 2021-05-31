@@ -62,13 +62,6 @@ export class BackEnd extends Construct {
                     'logs:DescribeLogStreams']
         }));
 
-        // const layer = new lambda.LayerVersion(this, 'MeetingUtilsLayer', {
-        //     code: new lambda.AssetCode('back-end-resources/lambda-layer'),
-        //     compatibleRuntimes: [lambda.Runtime.NODEJS_12_X],
-        //     license: 'Apache-2.0',
-        //     description: 'Meeting Utils Layer',
-        // });
-
         const joinLambda = new lambda.Function(this, 'joinMeeting', {
             code: lambda.Code.fromAsset("back-end-resources/src", {exclude: ["**", "!utils.js", "!join.js"]}),
             handler: 'join.handler',
@@ -77,7 +70,6 @@ export class BackEnd extends Construct {
               MEETINGS_TABLE_NAME: meetingsTable.tableName,
               ATTENDEES_TABLE_NAME: attendeeTable.tableName,
             },
-            // layers: [layer],
             role: lambdaChimeRole
         });
 
@@ -89,7 +81,6 @@ export class BackEnd extends Construct {
               MEETINGS_TABLE_NAME: meetingsTable.tableName,
               ATTENDEES_TABLE_NAME: attendeeTable.tableName,
             },
-            // layers: [layer],
             role: lambdaChimeRole
         });
 
@@ -101,7 +92,6 @@ export class BackEnd extends Construct {
               MEETINGS_TABLE_NAME: meetingsTable.tableName,
               ATTENDEES_TABLE_NAME: attendeeTable.tableName,
             },
-            // layers: [layer],
             role: lambdaChimeRole
         });
       
@@ -119,7 +109,6 @@ export class BackEnd extends Construct {
             ATTENDEES_TABLE_NAME: attendeeTable.tableName,
             BROWSER_LOG_GROUP_NAME: logGroup.logGroupName
           },
-          // layers: [layer],
           role: lambdaLogsRole
         });
 
