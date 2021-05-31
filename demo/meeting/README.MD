@@ -1,4 +1,5 @@
-## Using the Chime SDK React Meeting Demo+6### Requirements
+## Using the Chime SDK React Meeting Demo
+### Requirements
 - npm [installed](https://docs.npmjs.com/cli/v7/commands/npm-install)
 - AWS CLI [installed](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html)
 - AWS CDK [installed](https://docs.aws.amazon.com/cdk/latest/guide/getting_started.html#getting_started_install) and [Bootstrapped](https://docs.aws.amazon.com/cdk/latest/guide/bootstrapping.html)
