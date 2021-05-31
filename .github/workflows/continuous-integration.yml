@@ -28,3 +28,4 @@ jobs:
       - name: Clean Install
         run: npm ci
       - name: Build
+        run: npm run build:release --if-present
