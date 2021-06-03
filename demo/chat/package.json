@@ -33,7 +33,7 @@
     "@babel/runtime": "^7.11.2",
     "aws-sdk": "^2.797.0",
     "babel-loader": "^8.1.0",
-    "css-loader": "^4.3.0",
+    "css-loader": "^5.2.6",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.1",
     "eslint-config-prettier": "^4.3.0",
