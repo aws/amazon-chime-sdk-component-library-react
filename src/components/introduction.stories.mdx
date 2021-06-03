@@ -4,13 +4,13 @@
 
 React components for building realtime meeting applications with Amazon Chime.
 
-- [UI Components](/?path=/docs/ui-components-badge--basic-badge)
-- [SDK Components](/?path=/docs/sdk-components-introduction--page)
-- [UI Providers](/?path=/docs/ui-providers-notificationprovider--page)
-- [SDK Providers](/?path=/docs/sdk-providers-introduction--page)
-- [UI Hooks](/?path=/docs/ui-hooks-notification-usenotificationdispatch--page)
-- [SDK Hooks](/?path=/docs/ui-hooks-notification-usenotificationdispatch--page)
-- [Themes](/?path=/docs/themes--page)
+- [UI Components](/story/ui-components-badge--basic-badge)
+- [SDK Components](/story/sdk-components-introduction--page)
+- [UI Providers](/story/ui-providers-notificationprovider--page)
+- [SDK Providers](/story/sdk-providers-introduction--page)
+- [UI Hooks](/story/ui-hooks-notification-usenotificationdispatch--page)
+- [SDK Hooks](/story/ui-hooks-notification-usenotificationdispatch--page)
+- [Themes](/story/themes--page)
 
 ## Getting Started
 
@@ -26,7 +26,7 @@ You can pass in the default theme, or you can customize it to match your app's d
 import { ThemeProvider } from 'styled-components';
 import {
   MeetingProvider,
-  lightTheme
+  lightTheme,
 } from 'amazon-chime-sdk-component-library-react';
 
 const Root = () => (
@@ -55,7 +55,7 @@ const MyApp = () => {
 
     const joinData = {
       meetingInfo: data.Meeting,
-      attendeeInfo: data.Attendee
+      attendeeInfo: data.Attendee,
     };
 
     // Use the join API to create a meeting session
@@ -122,12 +122,12 @@ const postLogConfig: PostLogConfig = {
   batchSize: 85,
   intervalMs: 2000,
   url: url, // JS SDK's `MeetingSessionPostLogger` will POST logs to this URL.
-  logLevel: LogLevel.INFO
+  logLevel: LogLevel.INFO,
 };
 
 const meetingConfig = {
   logLevel, // Default is LogLevel.WARN.
-  postLogConfig
+  postLogConfig,
 };
 
 const Root = () => (
@@ -138,9 +138,8 @@ const Root = () => (
 ```
 
 > The component library's [meeting demo](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/src/meetingConfig.ts) showcases above example.
-We post the JS SDK logs to AWS CloudWatch once the demo is deployed. Check the serverless handlers [log](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/src/handlers.js#L252)
-function and AWS CloudWatch [access policy](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/template.yaml#L49) in our serverless template for more details.
-
+> We post the JS SDK logs to AWS CloudWatch once the demo is deployed. Check the serverless handlers [log](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/src/handlers.js#L252)
+> function and AWS CloudWatch [access policy](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/template.yaml#L49) in our serverless template for more details.
 
 ## FAQ
 
