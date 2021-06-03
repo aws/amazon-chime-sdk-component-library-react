@@ -32,7 +32,7 @@ Documentation on these components and how to use them can be found on [Amazon Ch
 
 [Meeting Demo](https://github.com/aws/amazon-chime-sdk-component-library-react/tree/master/demo/meeting)
 
-[Chat Demo](https://github.com/aws/amazon-chime-sdk-component-library-react/tree/master/demo/chat)
+[Chat Demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/chat)
 
 [Breakout Room Demo](https://aws.amazon.com/blogs/business-productivity/breakout-room-amazon-chime-sdk-react-component-library/)
 
