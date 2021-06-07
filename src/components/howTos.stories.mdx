@@ -1,0 +1,35 @@
+<Meta title="How-tos" />
+
+# How-to guides
+
+You can refer to the usage and some examples below.
+
+## Enabling content share in Electron applications
+
+In an Electron application, you should create a custom screen picker to retrieve the screen's source ID and pass it to the `toggleContentShare` method from `useContentShareControls` hook to start sharing your screen.
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useContentShareControls,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  const { toggleContentShare } = useContentShareControls();
+
+  return (
+    <MeetingProvider>
+      <YourScreenPicker
+        onClickShareButton={async (selectedSourceId) => {
+          try {
+            await toggleContentShare(selectedSourceId);
+          } catch (error) {
+            console.error(error);
+          }
+        }}
+      />
+    </MeetingProvider>
+  );
+};
+```

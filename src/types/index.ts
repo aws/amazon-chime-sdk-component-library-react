@@ -34,7 +34,7 @@ export type LocalVideoContextType = {
 
 export type ContentShareControlContextType = {
   paused: boolean;
-  toggleContentShare: () => Promise<void>;
+  toggleContentShare: (sourceId?: string) => Promise<void>;
   togglePauseContentShare: () => void;
 };
 
@@ -43,7 +43,7 @@ export enum MeetingStatus {
   Succeeded,
   Failed,
   Ended,
-  JoinedFromAnotherDevice
+  JoinedFromAnotherDevice,
 }
 
 export type RosterAttendeeType = {
@@ -61,4 +61,4 @@ export enum DevicePermissionStatus {
   IN_PROGRESS = 'IN_PROGRESS',
   GRANTED = 'GRANTED',
   DENIED = 'DENIED',
-};
+}

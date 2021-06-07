@@ -1,4 +1,5 @@
 # Amazon Chime SDK React Components Library
+
 <a href="https://www.npmjs.com/package/amazon-chime-sdk-component-library-react"><img src="https://img.shields.io/npm/v/amazon-chime-sdk-component-library-react?style=flat-square"></a>
 <a href="https://github.com/aws/amazon-chime-sdk-component-library-react"><img src="https://github.com/aws/amazon-chime-sdk-component-library-react/workflows/CI%20Workflow/badge.svg"></a>
 
@@ -13,6 +14,8 @@ The Amazon Chime SDK React Component Library supplies client-side state manageme
 The Amazon Chime React Component Library can be added to your web application codebase using npm.
 
 Documentation on these components and how to use them can be found on [Amazon Chime SDK React Component Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/).
+
+Please check use-cases in our [How-to guide](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/how-tos--page) for more information.
 
 ### To get started, see the following resources:
 
@@ -41,7 +44,7 @@ Documentation on these components and how to use them can be found on [Amazon Ch
 If you are adding this library to your existing application, add `amazon-chime-sdk-component-library-react` and the necessary peer dependencies to your project.
 
 ```
-npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system 
+npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system
 ```
 
 Otherwise clone the repo and install the dependencies.
