@@ -16,7 +16,6 @@ This hook re-renders frequently. You should avoid using it high in your app tree
   availableOutgoingBandwidth: number | null;
   availableIncomingBandwidth: number | null;
 }
-}
 ```
 
 ## Importing
@@ -33,7 +32,7 @@ The hook depends on the `AudioVideoProvider` being rendered. If you are using th
 import React from 'react';
 import {
   MeetingProvider,
-  useBandwidthMetrics
+  useBandwidthMetrics,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -48,9 +47,9 @@ const MyChild = () => {
   return (
     <>
       <p>Incoming: {metrics.availableIncomingBandwidth}</p>
-      <p>Outgoing: {metrics.availableOutgoingBandwidth}</p>    
+      <p>Outgoing: {metrics.availableOutgoingBandwidth}</p>
     </>
-  )
+  );
 };
 ```
 

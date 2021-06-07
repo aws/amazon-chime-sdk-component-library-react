@@ -14,7 +14,8 @@ The `useContentShareControls` hook returns the state and functionality around st
   // A function to toggle content share.
   // If the user is sharing, it will stop the content share.
   // If a user is not sharing, it will start the content share workflow.
-  toggleContentShare: () => void;
+  // You can also provide a sourceId to share a specific screen.
+  toggleContentShare: (sourceId?: string) => Promise<void>;
 
   // A function to toggle the local user's content share's pause status.
   togglePauseContentShare: () => void;
@@ -35,7 +36,7 @@ The hook depends on the `ContentShareProvider`. If you are using `MeetingProvide
 import React from 'react';
 import {
   MeetingProvider,
-  useContentShareControls
+  useContentShareControls,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (

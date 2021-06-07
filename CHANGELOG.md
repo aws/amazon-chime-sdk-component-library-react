@@ -7,12 +7,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+### Added
+
+- Add `sourceId` as an optional parameter in the `toggleContentShare` function to specify which screen to share.
+- [Doc] Add a new page, a "How-tos" section in the story book to show use-cases with sample code.
+
+### Changed
+
+### Removed
+
 ## [2.5.0] - 2021-05-27
 
 ### Fixed
+
 - [Demo] Fix post logging in the demo meeting app.
 
 ### Added
+
 - [Doc] Add documentaion in introduction on how to use `MeetingSessionPostLogger` to post
   Amazon Chime JS SDK logs.
 - Add `useMediaStreamMetrics` hook to expose audio, video and bandwidth data.
@@ -24,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.4.0] - 2021-05-12
 
 ### Fixed
+
 - Add or remove event listener only when `el.current` reference is valid
   in `useFocusIn` and `useMouseMove` hooks.
 - Fix bug related to `PreviewVideo` component not releasing media stream when unmounted.
@@ -34,7 +50,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added optional props to specify icon titles in the `AudioInputControl` and `ContentShareControl` components.
 - Added optional props to specify the dropdown text that shows when no video quality is selected, in the `QualitySelection` component.
 - Added observer to `selectAudioInputDeviceError` and `selectVideoInputDeviceError` to deliver the error from SDK level to client application level.
-  
+
 ### Changed
 
 - Change `package-lock` to V2 to support NPM 7.
@@ -113,7 +129,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Render roster without waiting for getAtendee callback.
 - Update `MeetingProvider` and corresponding documentation to support
   re-usable `MeetingManager` instance.
-
 
 ### Removed
 
