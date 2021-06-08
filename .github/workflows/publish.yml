@@ -13,7 +13,7 @@ jobs:
       - name: Setup Node environment
         uses: actions/setup-node@v1
         with:
-          node-version: 15
+          node-version: 16
           registry-url: https://registry.npmjs.org/
       - name: NPM Install
         run: npm install
@@ -23,7 +23,3 @@ jobs:
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
-      - name: Publish Storybook Documentation
-        run: npm run deploy-storybook -- --ci
-        env:
-          GH_TOKEN: chime-sdk-component-bot:${{ secrets.GITHUBPAGES}}
