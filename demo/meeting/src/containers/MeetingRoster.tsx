@@ -31,7 +31,7 @@ const MeetingRoster = () => {
 
   const attendeeItems = attendees.map((attendee: any) => {
     const { chimeAttendeeId } = attendee || {};
-    return <RosterAttendeeWrapper attendeeId={chimeAttendeeId} />;
+    return <RosterAttendeeWrapper key={chimeAttendeeId} attendeeId={chimeAttendeeId} />;
   });
 
   return (
