@@ -61,4 +61,13 @@ export enum DevicePermissionStatus {
   IN_PROGRESS = 'IN_PROGRESS',
   GRANTED = 'GRANTED',
   DENIED = 'DENIED',
-}
+};
+
+export enum DeviceLabels {
+  None,
+  Audio,
+  Video,
+  AudioAndVideo,
+};
+
+export type DeviceLabelTrigger = () => Promise<MediaStream>;

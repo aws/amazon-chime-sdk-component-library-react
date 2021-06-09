@@ -39,7 +39,7 @@ const App: FC = () => (
                   </Route>
                   <Route path={routes.MEETING}>
                     <NoMeetingRedirect>
-                      <Meeting />
+                      <MeetingModeSelector />
                     </NoMeetingRedirect>
                   </Route>
                 </Switch>
@@ -60,6 +60,14 @@ const Theme: React.FC = ({ children }) => {
       <GlobalStyles />
       {children}
     </ThemeProvider>
+  );
+};
+
+const MeetingModeSelector: React.FC = () => {
+  const { meetingMode } = useAppState();
+
+  return (
+    <Meeting mode={meetingMode} />
   );
 };
 

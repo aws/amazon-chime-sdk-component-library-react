@@ -13,7 +13,8 @@ import {
   MeetingSessionStatusCode,
   AudioVideoObserver,
   MultiLogger,
-  MeetingSessionPOSTLogger
+  MeetingSessionPOSTLogger,
+  TimeoutScheduler
 } from 'amazon-chime-sdk-js';
 
 import {
@@ -21,7 +22,7 @@ import {
   supportsSetSinkId,
   videoInputSelectionToDevice
 } from '../../utils/device-utils';
-import { MeetingStatus } from '../../types';
+import { DeviceLabels, DeviceLabelTrigger, MeetingStatus } from '../../types';
 import {
   DevicePermissionStatus,
   MeetingJoinData,
@@ -30,6 +31,10 @@ import {
   PostLogConfig,
   ManagerConfig
 } from './types';
+
+function noOpDeviceLabelHook(): Promise<MediaStream> {
+  return Promise.resolve(new MediaStream());
+}
 
 export class MeetingManager implements AudioVideoObserver {
   meetingSession: DefaultMeetingSession | null = null;
@@ -72,6 +77,8 @@ export class MeetingManager implements AudioVideoObserver {
   selectVideoInputDeviceError: Error | null = null;
 
   selectVideoInputDeviceErrorObservers: ((selectVideoInputDeviceError: Error | null) => void)[] = [];
+
+  deviceLabelTriggerChangeObservers: (() => void)[] = [];
 
   audioInputDevices: MediaDeviceInfo[] | null = null;
 
@@ -134,7 +141,7 @@ export class MeetingManager implements AudioVideoObserver {
     this.audioVideoObservers = {};
   }
 
-  async join({ meetingInfo, attendeeInfo }: MeetingJoinData) {
+  async join({ meetingInfo, attendeeInfo, deviceLabels = DeviceLabels.AudioAndVideo, }: MeetingJoinData) {
     this.configuration = new MeetingSessionConfiguration(
       meetingInfo,
       attendeeInfo
@@ -147,7 +154,7 @@ export class MeetingManager implements AudioVideoObserver {
 
     this.meetingRegion = meetingInfo.MediaRegion;
     this.meetingId = this.configuration.meetingId;
-    await this.initializeMeetingSession(this.configuration);
+    await this.initializeMeetingSession(this.configuration, deviceLabels);
   }
 
   async start(): Promise<void> {
@@ -183,7 +190,8 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   async initializeMeetingSession(
-    configuration: MeetingSessionConfiguration
+    configuration: MeetingSessionConfiguration,
+    deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo,
   ): Promise<any> {
     const logger = this.createLogger(configuration);
     const deviceController = new DefaultDeviceController(logger);
@@ -196,7 +204,7 @@ export class MeetingManager implements AudioVideoObserver {
 
     this.audioVideo = this.meetingSession.audioVideo;
     this.setupAudioVideoObservers();
-    this.setupDeviceLabelTrigger();
+    this.setupDeviceLabelTrigger(deviceLabels);
     await this.listAndSelectDevices();
     this.publishAudioVideo();
     this.setupActiveSpeakerDetection();
@@ -269,31 +277,52 @@ export class MeetingManager implements AudioVideoObserver {
       (await this.audioVideo?.listAudioOutputDevices()) || [];
   }
 
-  setupDeviceLabelTrigger(): void {
-    const callback = async (): Promise<MediaStream> => {
-      this.devicePermissionStatus = DevicePermissionStatus.IN_PROGRESS;
-      this.publishDevicePermissionStatus();
-      try {
-        const devices = await navigator.mediaDevices.enumerateDevices();
-        const hasVideoInput = devices.some(value => {
-          return value.kind === 'videoinput';
-        });
+  setupDeviceLabelTrigger(deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo): void {
+    let callback: DeviceLabelTrigger;
 
-        const stream = await navigator.mediaDevices.getUserMedia({
-          audio: true,
-          video: hasVideoInput
-        });
+    if (typeof deviceLabels === 'function') {
+      callback = deviceLabels;
+    } else if (deviceLabels === DeviceLabels.None) {
+      callback = noOpDeviceLabelHook;
+    } else {
+      const constraints: MediaStreamConstraints = {};
 
-        this.devicePermissionStatus = DevicePermissionStatus.GRANTED;
-        this.publishDevicePermissionStatus();
-        return stream;
-      } catch (error) {
-        console.error('Failed to get device permissions');
-        this.devicePermissionStatus = DevicePermissionStatus.DENIED;
-        this.publishDevicePermissionStatus();
-        throw new Error(error);
+      switch (deviceLabels) {
+        case DeviceLabels.Audio:
+          constraints.audio = true;
+          break;
+        case DeviceLabels.Video:
+          constraints.video = true;
+          break;
+        case DeviceLabels.AudioAndVideo:
+          constraints.audio = true;
+          constraints.video = true;
+          break;
       }
-    };
+
+      callback = async (): Promise<MediaStream> => {
+        this.devicePermissionStatus = DevicePermissionStatus.IN_PROGRESS;
+        this.publishDevicePermissionStatus();
+        try {
+          const devices = await navigator.mediaDevices.enumerateDevices();
+          const hasVideoInput = devices.some(value => value.kind === 'videoinput');
+
+          const stream = await navigator.mediaDevices.getUserMedia({
+            audio: constraints.audio,
+            video: constraints.video && hasVideoInput,
+          });
+
+          this.devicePermissionStatus = DevicePermissionStatus.GRANTED;
+          this.publishDevicePermissionStatus();
+          return stream;
+        } catch (error) {
+          console.error('Failed to get device permissions');
+          this.devicePermissionStatus = DevicePermissionStatus.DENIED;
+          this.publishDevicePermissionStatus();
+          throw new Error(error);
+        }
+      };
+    }
 
     this.audioVideo?.setDeviceLabelTrigger(callback);
   }
@@ -314,7 +343,19 @@ export class MeetingManager implements AudioVideoObserver {
 
   async listAndSelectDevices(): Promise<void> {
     await this.updateDeviceLists();
+
+    let hasAudioInput = false, hasAudioOutput = false, hasVideoInput = false;
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    for (const device of devices) {
+      if (device.label) {
+        if (device.kind === "audioinput") hasAudioInput = true;
+        if (device.kind === "audiooutput") hasAudioOutput = true;
+        if (device.kind === "videoinput") hasVideoInput = true;
+      }
+    }
+
     if (
+      hasAudioInput &&
       !this.selectedAudioInputDevice &&
       this.audioInputDevices &&
       this.audioInputDevices.length
@@ -330,6 +371,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.publishSelectedAudioInputDevice();
     }
     if (
+      hasAudioOutput &&
       !this.selectedAudioOutputDevice &&
       this.audioOutputDevices &&
       this.audioOutputDevices.length
@@ -347,6 +389,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.publishSelectedAudioOutputDevice();
     }
     if (
+      hasVideoInput &&
       !this.selectedVideoInputDevice &&
       this.videoInputDevices &&
       this.videoInputDevices.length
@@ -414,6 +457,11 @@ export class MeetingManager implements AudioVideoObserver {
     }
     this.publishSelectedVideoInputDevice();
     this.publishSelectVideoInputDeviceError();
+  };
+
+  invokeDeviceProvider = (deviceLabels: DeviceLabels) => {
+    this.setupDeviceLabelTrigger(deviceLabels);
+    this.publishDeviceLabelTriggerChange();
   };
 
   /**
@@ -613,6 +661,27 @@ export class MeetingManager implements AudioVideoObserver {
       callback(this.selectVideoInputDeviceError);
     }
   };
+
+  subscribeToDeviceLabelTriggerChange = (
+    callback: () => void
+  ): void => {
+    this.deviceLabelTriggerChangeObservers.push(callback);
+  };
+
+  unsubscribeFromDeviceLabelTriggerChange = (
+    callbackToRemove: () => void
+  ): void => {
+    this.deviceLabelTriggerChangeObservers = this.deviceLabelTriggerChangeObservers.filter(
+      callback => callback !== callbackToRemove
+    );
+  };
+
+  private publishDeviceLabelTriggerChange = (): void => {
+    for (const callback of this.deviceLabelTriggerChangeObservers) {
+      callback();
+    }
+  };
+
 }
 
 export default MeetingManager;

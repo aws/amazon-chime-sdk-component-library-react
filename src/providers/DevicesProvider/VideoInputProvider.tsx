@@ -76,11 +76,18 @@ const VideoInputProvider: React.FC = ({ children }) => {
       }
     }
 
+    const callback = (): void => {
+      initVideoInput();
+    };
+
+    meetingManager.subscribeToDeviceLabelTriggerChange(callback);
+
     initVideoInput();
 
     return () => {
       isMounted = false;
       audioVideo?.removeDeviceChangeObserver(observer);
+      meetingManager.unsubscribeFromDeviceLabelTriggerChange(callback);
     };
   }, [audioVideo]);
 
@@ -108,7 +115,7 @@ const useVideoInputs = (props?: DeviceConfig): DeviceTypeContext => {
   let { devices } = context;
   const { selectedDevice } = context;
   const { selectDeviceError } = context;
-  
+
   if (needAdditionalIO) {
     const additionalVideoInputs = getFormattedDropdownDeviceOptions(
       additionalIOJSON

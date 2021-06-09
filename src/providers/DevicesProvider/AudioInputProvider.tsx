@@ -104,11 +104,18 @@ const AudioInputProvider: React.FC = ({ children }) => {
       }
     }
 
+    const callback = (): void => {
+      initAudioInput();
+    };
+
+    meetingManager.subscribeToDeviceLabelTriggerChange(callback);
+
     initAudioInput();
 
     return () => {
       isMounted = false;
       audioVideo?.removeDeviceChangeObserver(observer);
+      meetingManager.unsubscribeFromDeviceLabelTriggerChange(callback);
     };
   }, [audioVideo]);
 
@@ -135,7 +142,7 @@ const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
   let { devices } = context;
   const { selectedDevice } = context;
   const { selectDeviceError } = context;
-  
+
   if (needAdditionalIO) {
     const additionalAudioInputs = getFormattedDropdownDeviceOptions(
       AUDIO_INPUT

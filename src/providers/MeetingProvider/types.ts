@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { LogLevel } from 'amazon-chime-sdk-js';
+import { DeviceLabels, DeviceLabelTrigger } from '../../types';
 
 export enum DevicePermissionStatus {
   UNSET = 'UNSET',
@@ -13,6 +14,7 @@ export enum DevicePermissionStatus {
 export interface MeetingJoinData {
   meetingInfo: any;
   attendeeInfo: any;
+  deviceLabels?: DeviceLabels | DeviceLabelTrigger;
 }
 
 export interface AttendeeResponse {
