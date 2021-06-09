@@ -137,9 +137,6 @@ if (release_option !== '5') {
   process.chdir(path.join(__dirname, '../demo/meeting'));
   spawnOrFail('npm', [`install amazon-chime-sdk-js@${updatedSdkVersion}`]);
 
-  // Update the chat demo to the most up to date version of the SDK
-  process.chdir(path.join(__dirname, '../demo/chat'));
-  spawnOrFail('npm', [`install amazon-chime-sdk-js@${updatedSdkVersion}`]);
   process.chdir(path.join(__dirname, '..'));
 }
 
@@ -160,15 +157,20 @@ shouldContinuePrompt();
 logger.log('Create a new npm package and install amazon-chime-sdk-component-library-react and amazon-chime-sdk-js sdk as dependencies, check if there is peer dependency warning for amazon-chime-sdk-component-library-react');
 process.chdir(path.join(__dirname, '..'));
 spawnOrFail('yalc', ['publish']);
-process.chdir(path.join(__dirname, '../..'));
-spawnOrFail('mkdir', ['dependency-check-app']);
-process.chdir(path.join(__dirname, '../../dependency-check-app'));
+process.chdir(path.join(__dirname, '..'));
+if (!fs.existsSync('dependency-check-app')){
+  spawnOrFail('mkdir', ['dependency-check-app']);
+} else {
+  spawnOrFail('rm', ['-rf dependency-check-app']);
+  spawnOrFail('mkdir', ['dependency-check-app']);
+}
+process.chdir(path.join(__dirname, '../dependency-check-app'));
 spawnOrFail('npm', ['init -y']);
 spawnOrFail('npm', ['install react react-dom']);
 spawnOrFail('npm', [`install amazon-chime-sdk-js@${updatedSdkVersion} styled-components styled-system`]);
 spawnOrFail('yalc', ['add amazon-chime-sdk-component-library-react']);
 checkWarning('npm', ['install -q'], null, 'amazon-chime-sdk-component-library-react');
-process.chdir(path.join(__dirname, '../..'));
+process.chdir(path.join(__dirname, '..'));
 spawnOrFail('rm', ['-rf dependency-check-app']);
 
 if (release_option === '5') {
