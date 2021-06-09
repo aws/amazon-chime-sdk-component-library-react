@@ -18,7 +18,6 @@ const RosterAttendeeWrapper: React.FC<Props> = ({ attendeeId }) => {
   const { videoEnabled } = useAttendeeStatus(attendeeId);
   return (
     <RosterAttendee
-      key={attendeeId}
       attendeeId={attendeeId}
       menu={
         videoEnabled ? <VideoStreamMetrics attendeeId={attendeeId} /> : null
