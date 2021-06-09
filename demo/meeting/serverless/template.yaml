@@ -117,13 +117,13 @@ Resources:
   ChimeKMSAlias:
     Type: AWS::KMS::Alias
     Properties:
-      AliasName: alias/ChimeKMS
+      AliasName: !Sub alias/ChimeKMS-${AWS::StackName}
       TargetKeyId:
         Ref: ChimeKMSKey
   MeetingNotificationsQueue:
     Type: AWS::SQS::Queue
     Properties:
-      KmsMasterKeyId: alias/ChimeKMS
+      KmsMasterKeyId: !Sub alias/ChimeKMS-${AWS::StackName}
   ChimeSdkIndexLambda:
     Type: AWS::Serverless::Function
     Properties:
