@@ -93,8 +93,37 @@ Resources:
       KeySchema:
         - AttributeName: "AttendeeId"
           KeyType: HASH
+  ChimeKMSKey:
+    Type: AWS::KMS::Key
+    Properties:
+      Description: Custom KMS Key with Chime access
+      KeyPolicy:
+        Version: '2012-10-17'
+        Statement:
+        - Sid: Allow access for Chime Service
+          Effect: Allow
+          Principal:
+            Service: chime.amazonaws.com
+          Action:
+            - kms:GenerateDataKey
+            - kms:Decrypt
+          Resource: '*'
+        - Sid: Enable IAM User Permissions
+          Effect: Allow
+          Principal:
+            AWS: !Sub arn:aws:iam::${AWS::AccountId}:root
+          Action: kms:*
+          Resource: '*'
+  ChimeKMSAlias:
+    Type: AWS::KMS::Alias
+    Properties:
+      AliasName: alias/ChimeKMS
+      TargetKeyId:
+        Ref: ChimeKMSKey
   MeetingNotificationsQueue:
     Type: AWS::SQS::Queue
+    Properties:
+      KmsMasterKeyId: alias/ChimeKMS
   ChimeSdkIndexLambda:
     Type: AWS::Serverless::Function
     Properties:
@@ -189,6 +218,13 @@ Resources:
           Properties:
             Queue: !GetAtt MeetingNotificationsQueue.Arn
             BatchSize: 10
+      Policies:
+        - Statement:
+          - Sid: ChimeSQSQueueLambdaPolicy
+            Effect: Allow
+            Action:
+              - kms:Decrypt
+            Resource: '*'
   ChimeEventBridgeLambda:
     Type: AWS::Serverless::Function
     Condition: ShouldUseEventBridge
