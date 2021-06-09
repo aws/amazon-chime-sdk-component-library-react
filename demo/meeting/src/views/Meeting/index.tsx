@@ -13,8 +13,10 @@ import { useNavigation } from '../../providers/NavigationProvider';
 import MeetingDetails from '../../containers/MeetingDetails';
 import MeetingControls from '../../containers/MeetingControls';
 import useMeetingEndRedirect from '../../hooks/useMeetingEndRedirect';
+import DynamicMeetingControls from '../../containers/DynamicMeetingControls';
+import { MeetingMode } from '../../types';
 
-const MeetingView = () => {
+const MeetingView = (props: { mode: MeetingMode, }) => {
   useMeetingEndRedirect();
   const { showNavbar, showRoster } = useNavigation();
 
@@ -26,7 +28,10 @@ const MeetingView = () => {
             className="videos"
             noRemoteVideoView={<MeetingDetails />}
           />
-          <MeetingControls />
+          {props.mode === MeetingMode.Spectator ?
+            <DynamicMeetingControls /> :
+            <MeetingControls />
+          }
         </StyledContent>
         <NavigationControl />
       </StyledLayout>

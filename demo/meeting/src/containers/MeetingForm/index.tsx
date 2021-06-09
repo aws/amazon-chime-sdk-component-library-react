@@ -5,6 +5,7 @@ import React, { useState, useContext, ChangeEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
   Input,
+  Checkbox,
   Flex,
   Heading,
   FormField,
@@ -23,6 +24,8 @@ import DevicePermissionPrompt from '../DevicePermissionPrompt';
 import RegionSelection from './RegionSelection';
 import { fetchMeeting, createGetAttendeeCallback } from '../../utils/api';
 import { useAppState } from '../../providers/AppStateProvider';
+import { MeetingMode } from '../../types';
+import { DeviceLabels } from 'amazon-chime-sdk-component-library-react/lib/types';
 
 const MeetingForm: React.FC = () => {
   const meetingManager = useMeetingManager();
@@ -37,8 +40,10 @@ const MeetingForm: React.FC = () => {
   const [nameErr, setNameErr] = useState(false);
   const [region, setRegion] = useState(appRegion);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSpectatorModeSelected, setIsSpectatorModeSelected] = useState(false)
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
   const history = useHistory();
+  const { setMeetingMode } = useAppState();
 
   const handleJoinMeeting = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -66,11 +71,19 @@ const MeetingForm: React.FC = () => {
 
       await meetingManager.join({
         meetingInfo: JoinInfo.Meeting,
-        attendeeInfo: JoinInfo.Attendee
+        attendeeInfo: JoinInfo.Attendee,
+        deviceLabels: isSpectatorModeSelected === true ? DeviceLabels.None : DeviceLabels.AudioAndVideo,
       });
 
       setAppMeetingInfo(id, attendeeName, region);
-      history.push(routes.DEVICE);
+      if (isSpectatorModeSelected === true) {
+        setMeetingMode(MeetingMode.Spectator);
+        await meetingManager.start();
+        history.push(`${routes.MEETING}/${meetingId}`);
+      } else {
+        setMeetingMode(MeetingMode.Attendee);
+        history.push(routes.DEVICE);
+      }
     } catch (error) {
       updateErrorMessage(error.message);
     }
@@ -124,6 +137,15 @@ const MeetingForm: React.FC = () => {
         }}
       />
       <RegionSelection setRegion={setRegion} region={region} />
+      <FormField
+        field={Checkbox}
+        label="Join w/o Audio and Video"
+        value=""
+        checked={isSpectatorModeSelected}
+        onChange={() => (
+          setIsSpectatorModeSelected(!isSpectatorModeSelected)
+        )}
+      />
       <Flex
         container
         layout="fill-space-centered"
