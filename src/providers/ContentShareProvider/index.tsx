@@ -125,7 +125,7 @@ const ContentShareProvider: React.FC = ({ children }) => {
       if (isLocalUserSharing || isLocalShareLoading) {
         audioVideo.stopContentShare();
       } else {
-        if (sourceId) {
+        if (sourceId && typeof sourceId === 'string') {
           audioVideo.startContentShareFromScreenCapture(sourceId);
         } else {
           audioVideo.startContentShareFromScreenCapture();
