@@ -13,13 +13,13 @@ import {
   Dots,
   useDevicePermissionStatus,
   DevicePermissionStatus,
+  DeviceLabels,
 } from 'amazon-chime-sdk-component-library-react';
 
 import EndMeetingControl from '../EndMeetingControl';
 import { useNavigation } from '../../providers/NavigationProvider';
 import { StyledControls } from './Styled';
 import DevicePermissionControl from '../DevicePermissionControl/DevicePermissionControl';
-import { DeviceLabels } from 'amazon-chime-sdk-component-library-react/lib/types';
 
 const DynamicMeetingControls = () => {
   const { toggleNavbar, closeRoster, showRoster } = useNavigation();

@@ -13,7 +13,8 @@ import {
   useMeetingManager,
   Modal,
   ModalBody,
-  ModalHeader
+  ModalHeader,
+  DeviceLabels,
 } from 'amazon-chime-sdk-component-library-react';
 
 import { getErrorContext } from '../../providers/ErrorProvider';
@@ -25,7 +26,6 @@ import RegionSelection from './RegionSelection';
 import { fetchMeeting, createGetAttendeeCallback } from '../../utils/api';
 import { useAppState } from '../../providers/AppStateProvider';
 import { MeetingMode } from '../../types';
-import { DeviceLabels } from 'amazon-chime-sdk-component-library-react/lib/types';
 
 const MeetingForm: React.FC = () => {
   const meetingManager = useMeetingManager();
