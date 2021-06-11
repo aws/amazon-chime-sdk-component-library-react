@@ -344,15 +344,9 @@ export class MeetingManager implements AudioVideoObserver {
   async listAndSelectDevices(): Promise<void> {
     await this.updateDeviceLists();
 
-    let hasAudioInput = false, hasAudioOutput = false, hasVideoInput = false;
-    const devices = await navigator.mediaDevices.enumerateDevices();
-    for (const device of devices) {
-      if (device.label) {
-        if (device.kind === "audioinput") hasAudioInput = true;
-        if (device.kind === "audiooutput") hasAudioOutput = true;
-        if (device.kind === "videoinput") hasVideoInput = true;
-      }
-    }
+    const hasAudioInput = this.audioInputDevices?.some(value => value.label) || false;
+    const hasAudioOutput = this.audioOutputDevices?.some(value => value.label) || false;
+    const hasVideoInput = this.videoInputDevices?.some(value => value.label) || false;
 
     if (
       hasAudioInput &&
