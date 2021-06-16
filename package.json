@@ -1,6 +1,6 @@
 {
   "name": "amazon-chime-sdk-component-library-react",
-  "version": "2.5.0",
+  "version": "2.6.0",
   "description": "Amazon Chime SDK Component Library - React",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -72,7 +72,7 @@
     "@types/throttle-debounce": "^2.1.0",
     "@types/uuid": "^7.0.3",
     "add": "^2.0.6",
-    "amazon-chime-sdk-js": "^2.10.0",
+    "amazon-chime-sdk-js": "^2.11.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^2.1.1",
     "jest": "^26.6.3",
@@ -106,7 +106,7 @@
     "webpack-cli": "^3.3.2"
   },
   "peerDependencies": {
-    "amazon-chime-sdk-js": "^2.10.0",
+    "amazon-chime-sdk-js": "^2.11.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "styled-components": "^5.0.0",
