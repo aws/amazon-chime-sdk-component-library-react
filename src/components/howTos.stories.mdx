@@ -33,3 +33,12 @@ const App = () => {
   );
 };
 ```
+
+## Enabling video and audio stream quality indicator
+
+You can use useMediaStreamMetrics hook to get video and audio stream quality metrics
+An [example](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/de22a537d6437073f72d69da30f1703ef4cf40b3/demo/meeting/src/containers/VideoStreamMetrics/index.tsx#L27) of using the hook to show video quality metrics for every attendee in the meeting roster.
+
+An [example](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/de22a537d6437073f72d69da30f1703ef4cf40b3/demo/meeting/src/containers/LocalMediaStreamMetrics/index.tsx#L22-L28) of using the hook to show video and audio quality metrics for local attendee.
+
+The [Storybook](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/sdk-hooks-usemediastreammetrics--page) has more details about return value and usage of the hook.
