@@ -106,7 +106,7 @@ const MyApp = () => {
 }
 ```
 
-6. Optional - How to enable a meeting to post logs to a URL?
+6. _Optional_ - How to enable a meeting to post logs to a URL?
 
 By default, `MeetingManager` provided by `MeetingProvider` uses [`ConsoleLogger`](https://aws.github.io/amazon-chime-sdk-js/classes/consolelogger.html) to log JS SDK logs.
 You can enable posting your logs to a URL by using Amazon Chime JS SDK's [`MeetingSessionPostLogger`](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionpostlogger.html). You can pass `logLevel` and `postLogConfig` as props to the `MeetingProvider`.
@@ -140,6 +140,51 @@ const Root = () => (
 > The component library's [meeting demo](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/src/meetingConfig.ts) showcases above example.
 > We post the JS SDK logs to AWS CloudWatch once the demo is deployed. Check the serverless handlers [log](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/src/handlers.js#L252)
 > function and AWS CloudWatch [access policy](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/template.yaml#L49) in our serverless template for more details.
+
+7. _Optional_ - Opt-out of client event ingestion
+The Amazon Chime SDK Component library for React depends on Amazon Chime SDK for JavaScript. The Amazon Chime SDK for JavaScript sends meeting events to the Amazon Chime backend to analyze meeting health trends or identify common failures.
+This helps to improve your meeting experience. For more information, check the [client event ingestion guide](https://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.htmlhttps://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.html)
+in the Amazon Chime SDK for JavaScript guides.
+
+To opt out of event ingestion from the Amazon Chime SDK for JavaScript, provide the `NoOpEventReporter` as the `eventReporter` while joining the meeting.
+
+```jsx
+import React from 'react';
+import { EventReporter, NoOpEventReporter } from 'amazon-chime-sdk-js';
+import {
+  MeetingProvider,
+  useMeetingManager
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyApp />
+  </MeetingProvider>
+);
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+
+  const joinMeeting = async () => {
+    const response = await fetch('/my-meetings-endpoint');
+    const data = await response.json();
+    const noOpEventReporter: EventReporter = new NoOpEventReporter();
+    const joinData = {
+      meetingInfo: data.Meeting,
+      attendeeInfo: data.Attendee,
+      eventReporter: noOpEventReporter
+    };
+
+    try {
+      await meetingManager.join(joinData);
+    } catch {
+      console.error('Something went wrong');
+    }
+  };
+
+  <button onClick={joinMeeting}>Join Meeting</button>;
+};
+```
 
 ## FAQ
 

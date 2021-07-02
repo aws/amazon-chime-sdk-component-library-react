@@ -43,6 +43,8 @@ Accepts a config object of `logLevel`, `postLogConfig`, and `simulcastEnabled` t
 Creates a meeting session using the meeting and attendee data passed. It will attempt to select default devices for the user.
 
 ```javascript
+import { EventReporter } from 'amazon-chime-sdk-js';
+
 (data: MeetingJoinData) => Promise<void>
 
 interface MeetingJoinData {
@@ -51,6 +53,10 @@ interface MeetingJoinData {
 
   // The response of calling chime:CreateAttendee from your server
   attendeeInfo: any;
+
+  // Pass event reporter instance to override default event reporter instance creation
+  // when the Amazon Chime SDK for JavaScript's meeting session is created.
+  eventReporter: EventReporter;
 }
 ```
 
@@ -148,3 +154,36 @@ const Root = () => {
 }
 ```
 
+3. Opt-out of client event ingestion.
+The Amazon Chime SDK Component library for React depends on Amazon Chime SDK for JavaScript. The Amazon Chime SDK for JavaScript sends meeting events to the Amazon Chime backend to analyze meeting health trends or identify common failures.
+This helps to improve your meeting experience. For more information, check the [client event ingestion guide](https://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.htmlhttps://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.html)
+in the Amazon Chime SDK for JavaScript guides.
+
+To opt out of event ingestion from the Amazon Chime SDK for JavaScript, provide the `NoOpEventReporter` as the `eventReporter` while joining the meeting.
+
+```jsx
+import React from 'react';
+import { EventReporter, NoOpEventReporter } from 'amazon-chime-sdk-js';
+import { MeetingProvider } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MeetingForm />
+  </MeetingProvider>
+);
+
+const MeetingForm = () => {
+  const meetingManager = useMeetingManager();
+  const handleJoinMeeting = async (event) => {
+    const noOpEventReporter: EventReporter = new NoOpEventReporter();
+    await meetingManager.join({
+      meetingInfo,
+      attendeeInfo,
+      eventReporter: noOpEventReporter
+    });
+  }
+  return (
+    <PrimaryButton label="Continue" onClick={handleJoinMeeting} />
+  )
+}
+```

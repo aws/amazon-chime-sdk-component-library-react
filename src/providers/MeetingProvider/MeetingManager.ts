@@ -14,7 +14,7 @@ import {
   AudioVideoObserver,
   MultiLogger,
   MeetingSessionPOSTLogger,
-  TimeoutScheduler
+  EventReporter
 } from 'amazon-chime-sdk-js';
 
 import {
@@ -106,6 +106,8 @@ export class MeetingManager implements AudioVideoObserver {
 
   postLoggerConfig: PostLogConfig | null = null;
 
+  eventReporter: EventReporter;
+
   simulcastEnabled: boolean = false;
 
   constructor(config: ManagerConfig) {
@@ -141,7 +143,7 @@ export class MeetingManager implements AudioVideoObserver {
     this.audioVideoObservers = {};
   }
 
-  async join({ meetingInfo, attendeeInfo, deviceLabels = DeviceLabels.AudioAndVideo, }: MeetingJoinData) {
+  async join({ meetingInfo, attendeeInfo, deviceLabels = DeviceLabels.AudioAndVideo, eventReporter}: MeetingJoinData) {
     this.configuration = new MeetingSessionConfiguration(
       meetingInfo,
       attendeeInfo
@@ -154,6 +156,9 @@ export class MeetingManager implements AudioVideoObserver {
 
     this.meetingRegion = meetingInfo.MediaRegion;
     this.meetingId = this.configuration.meetingId;
+    if (eventReporter) {
+      this.eventReporter = eventReporter;
+    }
     await this.initializeMeetingSession(this.configuration, deviceLabels);
   }
 
@@ -195,11 +200,11 @@ export class MeetingManager implements AudioVideoObserver {
   ): Promise<any> {
     const logger = this.createLogger(configuration);
     const deviceController = new DefaultDeviceController(logger);
-
     this.meetingSession = new DefaultMeetingSession(
       configuration,
       logger,
-      deviceController
+      deviceController,
+      this.eventReporter
     );
 
     this.audioVideo = this.meetingSession.audioVideo;

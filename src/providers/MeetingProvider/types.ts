@@ -1,7 +1,7 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { LogLevel } from 'amazon-chime-sdk-js';
+import { EventReporter, LogLevel } from 'amazon-chime-sdk-js';
 import { DeviceLabels, DeviceLabelTrigger } from '../../types';
 
 export enum DevicePermissionStatus {
@@ -15,6 +15,7 @@ export interface MeetingJoinData {
   meetingInfo: any;
   attendeeInfo: any;
   deviceLabels?: DeviceLabels | DeviceLabelTrigger;
+  eventReporter?: EventReporter;
 }
 
 export interface AttendeeResponse {

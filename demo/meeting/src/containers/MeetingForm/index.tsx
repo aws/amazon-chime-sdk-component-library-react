@@ -4,6 +4,10 @@
 import React, { useState, useContext, ChangeEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 import {
+  EventReporter,
+  NoOpEventReporter
+} from 'amazon-chime-sdk-js';
+import {
   Input,
   Checkbox,
   Flex,
@@ -44,6 +48,7 @@ const MeetingForm: React.FC = () => {
   const { errorMessage, updateErrorMessage } = useContext(getErrorContext());
   const history = useHistory();
   const { setMeetingMode } = useAppState();
+  const [enableEventReporting, setEnableEventReporting] = useState<boolean>(true);
 
   const handleJoinMeeting = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -68,12 +73,22 @@ const MeetingForm: React.FC = () => {
 
     try {
       const { JoinInfo } = await fetchMeeting(id, attendeeName, region);
-
-      await meetingManager.join({
-        meetingInfo: JoinInfo.Meeting,
-        attendeeInfo: JoinInfo.Attendee,
-        deviceLabels: isSpectatorModeSelected === true ? DeviceLabels.None : DeviceLabels.AudioAndVideo,
-      });
+      if (!enableEventReporting) {
+        const noOpEventReporter: EventReporter = new NoOpEventReporter();
+        await meetingManager.join({
+          meetingInfo: JoinInfo.Meeting,
+          attendeeInfo: JoinInfo.Attendee,
+          deviceLabels: isSpectatorModeSelected === true ? DeviceLabels.None : DeviceLabels.AudioAndVideo,
+          eventReporter: noOpEventReporter
+        });
+      } else {
+        await meetingManager.join({
+          meetingInfo: JoinInfo.Meeting,
+          attendeeInfo: JoinInfo.Attendee,
+          deviceLabels: isSpectatorModeSelected === true ? DeviceLabels.None : DeviceLabels.AudioAndVideo,
+        });
+      }
+      
 
       setAppMeetingInfo(id, attendeeName, region);
       if (isSpectatorModeSelected === true) {
@@ -144,6 +159,15 @@ const MeetingForm: React.FC = () => {
         checked={isSpectatorModeSelected}
         onChange={() => (
           setIsSpectatorModeSelected(!isSpectatorModeSelected)
+        )}
+      />
+      <FormField
+        field={Checkbox}
+        label="Enable event reporting"
+        value=""
+        checked={enableEventReporting}
+        onChange={() => (
+          setEnableEventReporting(!enableEventReporting)
         )}
       />
       <Flex
