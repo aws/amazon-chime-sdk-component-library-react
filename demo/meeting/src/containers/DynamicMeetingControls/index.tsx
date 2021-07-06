@@ -47,14 +47,16 @@ const DynamicMeetingControls = () => {
           onClick={handleToggle}
           label="Menu"
         />
-        {permission === DevicePermissionStatus.GRANTED ?
+        {permission === DevicePermissionStatus.GRANTED ? (
           <>
             <AudioInputControl />
             <VideoInputControl />
             <ContentShareControl />
             <AudioOutputControl />
           </>
-          : <DevicePermissionControl deviceLabels={DeviceLabels.AudioAndVideo} />}
+        ) : (
+          <DevicePermissionControl deviceLabels={DeviceLabels.AudioAndVideo} />
+        )}
 
         <EndMeetingControl />
       </ControlBar>
