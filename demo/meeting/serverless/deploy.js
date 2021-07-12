@@ -133,6 +133,7 @@ function ensureTools() {
 parseArgs();
 ensureTools();
 ensureApp();
+spawnOrFail('npm', ['install'], {cwd: path.join(__dirname, 'src')});
 
 if (!fs.existsSync('build')) {
   fs.mkdirSync('build');

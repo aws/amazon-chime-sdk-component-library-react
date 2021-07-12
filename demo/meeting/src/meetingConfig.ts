@@ -4,8 +4,8 @@
 import { SDK_LOG_LEVELS } from './constants';
 
 const urlParams = new URLSearchParams(window.location.search);
-const queryLogLevel = urlParams.get('logLevel') || 'warn';
-const logLevel = SDK_LOG_LEVELS[queryLogLevel] || SDK_LOG_LEVELS.warn;
+const queryLogLevel = urlParams.get('logLevel') || 'info';
+const logLevel = SDK_LOG_LEVELS[queryLogLevel] || SDK_LOG_LEVELS.info;
 
 
 const BASE_URL: string = [

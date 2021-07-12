@@ -1,0 +1,14 @@
+{
+  "name": "amazon-chime-sdk-react-serverless-demos-lambda",
+  "version": "0.1.0",
+  "description": "Amazon Chime SDK React Serverless Demos Lambda Handler",
+  "dependencies": {
+    "aws-sdk": "^2.939.0",
+    "uuid": "^8.3.2"
+  },
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aws/amazon-chime-sdk-component-library-react.git"
+  }
+}
