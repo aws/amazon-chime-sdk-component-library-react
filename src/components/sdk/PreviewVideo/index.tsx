@@ -9,6 +9,7 @@ import VideoTile from '../../ui/VideoTile';
 import styled from 'styled-components';
 import { BaseSdkProps } from '../Base';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
+import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 
 const StyledPreview = styled(VideoTile)`
   height: auto;
@@ -23,6 +24,7 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);
   const { selectedDevice } = useVideoInputs();
+  const { isVideoEnabled, setIsVideoEnabled } = useLocalVideo();
 
   useEffect(() => {
     if (!audioVideo || !selectedDevice || !videoEl.current) {
@@ -49,6 +51,7 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
 
       if (videoElement) {
         audioVideo.stopVideoPreviewForVideoInput(videoElement);
+        if (isVideoEnabled) setIsVideoEnabled(false);
       }
     };
   }, [audioVideo, selectedDevice]);
