@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [Doc] Add how-to doc for view-only mode in storybook.
 - Add support to override event reporter for client event ingestion once enabled in the Amazon Chime SDK for JavaScript. For more information check the [Client Event Ingestion guide](https://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.html) in the Amazon Chime SDK for JavaScript.
 - Add new function `setIsVideoEnabled` in `useLocalVideo` hook.
+- [Doc] Add how-to doc for `useMediaStreamMetrics` hook in storybook.
 
 ### Changed
 
