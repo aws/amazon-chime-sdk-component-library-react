@@ -4,6 +4,8 @@
 
 The `useDevicePermissionStatus` hook returns the device permission status from the enum below.
 
+This hook cannot read the device permissions from the browser due to browsers' lack of support of such a querying function. Hence, the `permission` will be always set to `UNSET` when the application starts.
+
 ```javascript
 enum DevicePermissionStatus {
   UNSET = 'UNSET',

@@ -2,7 +2,12 @@
 
 # useLocalVideo
 
-The `useLocalVideo` hook returns the video state of the local user, and a function to toggle their video.
+The `useLocalVideo` hook returns video tile id associated with the local user's video, `isVideoEnabled` specifying the local video status, a function to set the value of `isVideoEnabled` and a function to toggle user's local video.
+
+The React SDK depends on the Amazon Chime SDK for JavaScript, wherein, a single video stream is attached to a video element at a time. Hence, if `PreviewVideo` and `LocalVideo` component both are rendered on the same page and if both are enabled, stopping the video preview in `PreviewVideo` component will result into disconnecting the video stream for `LocalVideo` as well showing a black screen.
+
+To start/stop a video preview, please check `PreviewVideo` component [documentation](/?path=/story/sdk-components-previewvideo--page).
+To start/stop user's local video, use `toggleVideo` function from the `LocalVideoProvider`.
 
 ### Return Value
 
@@ -12,7 +17,11 @@ The `useLocalVideo` hook returns the video state of the local user, and a functi
   tileId: null | number;
 
   // Whether or not the local user has video enabled
+  // This does not tell whether the video preview from `PreviewVideo` component is enabled or not.
   isVideoEnabled: boolean;
+
+  // A function to set the value of `isVideoEnabled`
+  setIsVideoEnabled: (isEnabled: boolean) => void;
 
   // A function that toggles the local user's video
   toggleVideo: () => Promise<void>;
@@ -43,9 +52,19 @@ const App = () => (
 );
 
 const MyChild = () => {
-  const { isVideoEnabled, toggleVideo } = useLocalVideo();
+  const { tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo } = useLocalVideo();
 
   return (
+    <p>Tile ID: {tileId}</p>
+
+    <p>
+      {setIsVideoEnabled ? 'LocalVideo is enabled' : 'LocalVideo is disabled'}
+    </p>
+
+    <button onClick={() => setIsVideoEnabled(true)}>
+      Set isVideoEnabled to true
+    </button>
+    
     <button onClick={toggleVideo}>
       {isVideoEnabled ? 'Stop your video' : 'Start your video'}
     </button>

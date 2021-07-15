@@ -29,6 +29,7 @@ export type LocalAudioOutputContextType = {
 export type LocalVideoContextType = {
   tileId: null | number;
   isVideoEnabled: boolean;
+  setIsVideoEnabled: (isEnabled: boolean) => void;
   toggleVideo: () => Promise<void>;
 };
 
@@ -44,7 +45,7 @@ export enum MeetingStatus {
   Failed,
   Ended,
   JoinedFromAnotherDevice,
-}
+};
 
 export type RosterAttendeeType = {
   chimeAttendeeId: string;

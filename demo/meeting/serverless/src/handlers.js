@@ -1,8 +1,9 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-var AWS = require('aws-sdk');
-var ddb = new AWS.DynamoDB();
+const AWS = require('aws-sdk');
+const { v4: uuidv4 } = require('uuid');
+const ddb = new AWS.DynamoDB();
 const chime = new AWS.Chime({ region: 'us-east-1' });
 chime.endpoint = new AWS.Endpoint('https://service.chime.aws.amazon.com/console');
 
@@ -14,14 +15,6 @@ const attendeesTableName = process.env.ATTENDEES_TABLE_NAME;
 const sqsQueueArn = process.env.SQS_QUEUE_ARN;
 const provideQueueArn = process.env.USE_EVENT_BRIDGE === 'false';
 const logGroupName = process.env.BROWSER_LOG_GROUP_NAME;
-
-// Create a unique id
-function uuid() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
-}
 
 // Retrieve meeting from the meeting table by meeting title
 const getMeeting = async (meetingTitle) => {
@@ -112,7 +105,7 @@ exports.createMeeting = async (event, context, callback) => {
   let meetingInfo = await getMeeting(title);
   if (!meetingInfo) {
     const request = {
-      ClientRequestToken: uuid(),
+      ClientRequestToken: uuidv4(),
       MediaRegion: region,
       NotificationsConfiguration: getNotificationsConfig(),
     };
@@ -153,7 +146,7 @@ exports.join = async (event, context, callback) => {
   let meetingInfo = await getMeeting(title);
   if (!meetingInfo) {
     const request = {
-      ClientRequestToken: uuid(),
+      ClientRequestToken: uuidv4(),
       MediaRegion: region,
       NotificationsConfiguration: getNotificationsConfig(),
     };
@@ -165,7 +158,7 @@ exports.join = async (event, context, callback) => {
   console.info('Adding new attendee');
   const attendeeInfo = (await chime.createAttendee({
       MeetingId: meetingInfo.Meeting.MeetingId,
-      ExternalUserId: uuid(),
+      ExternalUserId: uuidv4(),
     }).promise());
   putAttendee(title, attendeeInfo.Attendee.AttendeeId, name);
 

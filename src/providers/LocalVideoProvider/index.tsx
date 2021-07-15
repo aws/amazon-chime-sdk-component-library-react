@@ -74,11 +74,12 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     });
   }, [audioVideo, tileId]);
 
-  const value = useMemo(() => ({ isVideoEnabled, toggleVideo, tileId }), [
-    isVideoEnabled,
-    toggleVideo,
+  const value = useMemo(() => ({ tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo, }), [
     tileId,
-  ]);
+    isVideoEnabled,
+    setIsVideoEnabled,
+    toggleVideo,
+    ]);
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
