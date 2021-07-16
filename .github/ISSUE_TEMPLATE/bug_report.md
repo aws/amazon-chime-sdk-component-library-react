@@ -1,10 +1,9 @@
 ---
 name: Bug report
-about: 'Report unexpected behavior with our components or demos. '
+about: 'Report unexpected behavior with our components. '
 title: ''
 labels: Bug
 assignees: ''
-
 ---
 
 **Describe the bug**

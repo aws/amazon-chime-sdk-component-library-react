@@ -1,5 +1,7 @@
 // Helper modules for commont functions.
 
+const fs = require('fs');
+const path = require('path');
 const exec = require('child_process').spawnSync;
 const process = require('process');
 const util = require('util');
@@ -83,10 +85,39 @@ function shouldContinuePrompt(callback = null) {
   }
 }
 
+// Udpate the meeting demo to the most up to date version of the SDK
+const updateJSSdk = (args) => {
+  const updatedSdkVersion = spawnOrFail('npm', [`show amazon-chime-sdk-js version`]).trim();
+  logger.log(`Installing SDK Version: ${updatedSdkVersion} into the meeting demo.`);
+  process.chdir(path.join(__dirname, args));
+  spawnOrFail('npm', [`install amazon-chime-sdk-js@${updatedSdkVersion}`]);
+};
+
+// Pack the latest version of React library and install it in meeting demo
+const updateReactSdk = (args, versionString, directory) => {
+  // Get the version of the tar file
+  if (!versionString) {
+    process.chdir(path.join(__dirname, '..'));
+    let package_json = JSON.parse(fs.readFileSync('package.json', 'utf-8'));
+    versionString = package_json['version'];
+    console.log(`The current version of React library is ${versionString}`);
+  }
+
+  // Pack the latest version of React library and install it in meeting demo
+  process.chdir(path.join(__dirname, '..'));
+  spawnOrFail('npm', ['install']);
+  spawnOrFail('npm', ['run build']);
+  spawnOrFail('npm', ['pack']);
+  process.chdir(path.join(__dirname, args));
+  spawnOrFail('npm', [`install ../../../${directory ? directory : ''}amazon-chime-sdk-component-library-react-${versionString}.tgz`]);
+};
+
 module.exports = {
   logger,
   spawnOrFail,
   process,
   shouldContinuePrompt,
-  checkWarning
+  checkWarning,
+  updateJSSdk,
+  updateReactSdk,
 };

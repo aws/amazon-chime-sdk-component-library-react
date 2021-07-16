@@ -33,7 +33,7 @@ Please check use-cases in our [How-to guide](https://aws.github.io/amazon-chime-
 
 ## Examples
 
-[Meeting Demo](https://github.com/aws/amazon-chime-sdk-component-library-react/tree/master/demo/meeting)
+[Meeting Demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting)
 
 [Chat Demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/chat)
 

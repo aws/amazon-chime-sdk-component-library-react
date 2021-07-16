@@ -7,6 +7,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+### Added
+
+### Changed
+
+### Removed
+
+- Migrate Meeting Demo app to amazon-chime-sdk repo under aws-sample. The new meeting demo is [here](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting).
+
 ## [2.7.0] - 2021-07-14
 
 ### Fixed
