@@ -76,7 +76,7 @@ const MeetingForm: React.FC = () => {
         meetingInfo: JoinInfo.Meeting,
         attendeeInfo: JoinInfo.Attendee,
         deviceLabels: isSpectatorModeSelected === true ? DeviceLabels.None : DeviceLabels.AudioAndVideo,
-        ...(!enableEventReporting ? {} : {
+        ...(enableEventReporting ? {} : {
           eventReporter: new NoOpEventReporter()
         })
       });
