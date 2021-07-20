@@ -13,6 +13,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add optional parameter `deviceLabels: DeviceLabels | DeviceLabelTrigger` in `meetingManager.listAndSelectDevices()` to let builder indicate the type of devices they want to select.
+
+### Changed
+
+- The `listAndSelectDevices()` method in `MeetingManager` now selects the devices based on its parameter `deviceLabels` instead of the existence of device label.
+
+### Removed
+
+## [2.7.0] - 2021-07-14
+
+### Fixed
+
+### Added
+
 - [Doc] Add explanation for the limitation of the `useDevicePermissionStatus` hook in storybook.
 - [Doc] Add how-to doc for view-only mode in storybook.
 - Add support to override event reporter for client event ingestion once enabled in the Amazon Chime SDK for JavaScript. For more information check the [Client Event Ingestion guide](https://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.html) in the Amazon Chime SDK for JavaScript.
@@ -33,7 +47,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add `sourceId` as an optional parameter in the `toggleContentShare` function to specify which screen to share.
 - [Doc] Add a new page, a "How-tos" section in the story book to show use-cases with sample code.
-- Added optional parameter `deviceLabels: DeviceLabels | DeviceLabelTrigger` in `meetingManager.join()`, and `invokeDeviceProvider(deviceLabels: DeviceLabels)` function to control the device permission request. Builder could pass a `deviceLabels` of type `DeviceLabels` to select the devices from which the browser requests permission when joining the meeting. Builder could also pass a `deviceLabels` of `DeviceLabelTrigger` type, to set their customized `deviceLabelTrigger` which is triggered to get the device info. Builder could call `invokeDeviceProvider(deviceLabels: DeviceLabels)` to trigger the device permission prompts. For example, builder wants to implement a view-only mode and no device permission prompts are triggered during the whole process. Builder could just call `meetingManager.join(DeviceLabels.None)` to join a meeting. Later they trigger the device permission prompts by calling `meetingManager.invokeDeviceProvider(DeviceLabels.AudioAndVideo)` to get the full access to devices.
+- In `MeetingManager`, add optional parameter `deviceLabels: DeviceLabels | DeviceLabelTrigger` in `join()` method, and add `invokeDeviceProvider(deviceLabels: DeviceLabels)` method to control the device permission request. Builder could pass a `deviceLabels` of type `DeviceLabels` to select the devices from which the browser requests permission when joining the meeting. Builder could also pass a `deviceLabels` of `DeviceLabelTrigger` type, to set their customized `deviceLabelTrigger` which is triggered to get the device info. Builder could call `invokeDeviceProvider(deviceLabels: DeviceLabels)` to trigger the device permission prompts. For example, builder wants to implement a view-only mode and no device permission prompts are triggered during the whole process. Builder could first call `meetingManager.join(DeviceLabels.None)` to join a meeting. Later they can trigger the device permission prompts by calling `meetingManager.invokeDeviceProvider(DeviceLabels.AudioAndVideo)` to get the full access to devices.
 
 ### Changed
 
