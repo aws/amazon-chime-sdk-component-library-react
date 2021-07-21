@@ -6,7 +6,9 @@ import {
   Roster,
   RosterHeader,
   RosterGroup,
-  useRosterState
+  useRosterState,
+  PopOverItem,
+  useMeetingManager
 } from 'amazon-chime-sdk-component-library-react';
 
 import { useNavigation } from '../providers/NavigationProvider';
@@ -16,6 +18,7 @@ const MeetingRoster = () => {
   const { roster } = useRosterState();
   const [filter, setFilter] = useState('');
   const { closeRoster } = useNavigation();
+  const meetingManager = useMeetingManager();
 
   let attendees = Object.values(roster);
 
@@ -34,6 +37,17 @@ const MeetingRoster = () => {
     return <RosterAttendeeWrapper key={chimeAttendeeId} attendeeId={chimeAttendeeId} />;
   });
 
+  const sendMessage = async (topic: string, data: string) => {
+    const DATA_MESSAGE_LIFETIME_MS = 30000;
+  
+    const payload = {
+      data: data,
+    };
+  
+    meetingManager.audioVideo &&
+      meetingManager.audioVideo.realtimeSendDataMessage(topic, payload, DATA_MESSAGE_LIFETIME_MS);
+  }
+
   return (
     <Roster className="roster">
       <RosterHeader
@@ -42,6 +56,18 @@ const MeetingRoster = () => {
         onClose={closeRoster}
         title="Present"
         badge={attendees.length}
+        menu={
+          <><PopOverItem
+            children={<span>Mute All</span>}
+            onClick={() => {
+              sendMessage("RosterActions", "MUTEALL");
+            } } />
+            <PopOverItem
+              children={<span>Unmute All</span>}
+              onClick={() => {
+                sendMessage("RosterActions", "UNMUTEALL");
+              }} /></>
+        }
       />
       <RosterGroup>{attendeeItems}</RosterGroup>
     </Roster>
