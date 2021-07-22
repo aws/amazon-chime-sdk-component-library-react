@@ -1,0 +1,85 @@
+name: Bug Report Form
+description: Report unexpected behavior during a meeting session here
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened and what did you expect to happen?
+      description: |
+        Observed problem and expected result.
+    validations:
+      required: true
+  - type: checkboxes
+    id: existing-resources-check
+    attributes:
+      label: Have you reviewed our existing documentation?
+      description: Please check all resources as your issue may have been addressed before.
+      options:
+      - label: Amazon Chime SDK for JavaScript GitHub [issues](https://github.com/aws/amazon-chime-sdk-js/issues)
+        required: true
+      - label: Amazon Chime SDK React Components Library GitHub [issues](https://github.com/aws/amazon-chime-sdk-component-library-react/issues)
+        required: true
+      - label: Storybook [documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/introduction--page)
+        required: true
+      - label: README [page](https://github.com/aws/amazon-chime-sdk-component-library-react#readme)
+        required: true
+      - label: How-to [documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/how-tos--page)
+        required: true
+      - label: React SDK meeting [demo](https://github.com/aws/amazon-chime-sdk-component-library-react/tree/master/demo/meeting#readme---react-meeting-demo)
+        required: true
+  - type: textarea
+    id: reproduction-steps
+    attributes:
+      label: Reproduction steps
+      description: Steps to reproduce this issue.
+    validations:
+      required: true
+  - type: input
+    id: amazon-chime-sdk-component-library-react
+    attributes:
+      label: Amazon Chime SDK React Components Library version
+      description: What version of the Amazon Chime SDK React Components Library are you running?
+    validations:
+      required: true
+  - type: input
+    id: browsers
+    attributes:
+      label: What browsers are you seeing the problem on?
+    validations:
+      required: true
+  - type: input
+    id: browser-version
+    attributes:
+      label: Browser version
+      description: What is the browser version?
+    validations:
+      required: true
+  - type: input
+    id: device-information
+    attributes:
+      label: Device Information
+      description: Provide OS, Mobile or Desktop information here.
+    validations:
+      required: true
+  - type: textarea
+    id: meeting-attendee-ids
+    attributes:
+      label: Meeting and Attendee ID Information.
+      description: Provide specific meeting and attendee ID if you have.
+  - type: textarea
+    id: logs
+    attributes:
+      label: Browser console logs
+      description: |
+        Please attach INFO-level logs with timestamps to the report from *before* the session started up until the point at which the unexpected behavior occurred.
+        For multi-participant calls, attach a log file for each participant if possible. If applicable, add screenshots to help explain your problem.
+    validations:
+      required: true
+  - type: textarea
+    id: additional-context
+    attributes:
+      label: Add any other context about the problem here.
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to fill out this bug report!
