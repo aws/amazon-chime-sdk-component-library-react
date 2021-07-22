@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Exclude the uuid module from the Rollup bundle so that the Chime SDK React Components Library uses the uuid module from the builder's node_modules
+
 ### Added
 
 - Add optional parameter `deviceLabels: DeviceLabels | DeviceLabelTrigger` in `meetingManager.listAndSelectDevices()` to let builder indicate the type of devices they want to select.
