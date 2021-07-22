@@ -7,8 +7,8 @@ const {
   process,
   shouldContinuePrompt,
   checkWarning,
-  updateJSSdk,
-  updateReactSdk,
+  packDependency,
+  updateDependency
 } = require('./utilities');
 const fs = require('fs');
 const path = require('path');
@@ -160,9 +160,7 @@ shouldContinuePrompt();
 // Creates a new React test app, install component and sdk and build the test app to ensure no peer dependency warnings, errors or build issues
 logger.log('Create a new npm package and install amazon-chime-sdk-component-library-react and amazon-chime-sdk-js sdk as dependencies, check if there is peer dependency warning for amazon-chime-sdk-component-library-react');
 process.chdir(path.join(__dirname, '..'));
-spawnOrFail('npm', ['run build']);
-spawnOrFail('npm', ['pack']);
-process.chdir(path.join(__dirname, '..'));
+packDependency();
 if (!fs.existsSync('dependency-check-app')){
   spawnOrFail('mkdir', ['dependency-check-app']);
 } else {
@@ -173,7 +171,7 @@ process.chdir(path.join(__dirname, '../dependency-check-app'));
 spawnOrFail('npm', ['init -y']);
 spawnOrFail('npm', ['install react react-dom']);
 spawnOrFail('npm', [`install amazon-chime-sdk-js@${updatedSdkVersion} styled-components styled-system`]);
-checkWarning('npm', [`install ../amazon-chime-sdk-component-library-react-${versionString}.tgz`], null, 'amazon-chime-sdk-component-library-react');
+checkWarning('npm', [`install -q ../amazon-chime-sdk-component-library-react-${versionString}.tgz`], null, 'amazon-chime-sdk-component-library-react');
 process.chdir(path.join(__dirname, '..'));
 spawnOrFail('rm', ['-rf dependency-check-app']);
 spawnOrFail('rm', [`-rf amazon-chime-sdk-component-library-react-${versionString}.tgz`]);
@@ -193,9 +191,14 @@ if (!fs.existsSync('amazon-chime-sdk')) {
   spawnOrFail('git', ['clone https://github.com/aws-samples/amazon-chime-sdk.git']);
 }
 
-// udpate the demo to the most up to date version of JS SDK and React library
-updateJSSdk('../../amazon-chime-sdk/apps/meeting');
-updateReactSdk('../../amazon-chime-sdk/apps/meeting', versionString, 'amazon-chime-sdk-component-library-react/');
+// Udpate the demo to the most up to date version of JS SDK 
+process.chdir(path.join(__dirname, '../../amazon-chime-sdk/apps/meeting'));
+updateDependency(`amazon-chime-sdk-js@${updatedSdkVersion}`);
+// Udpate the demo to the most up to date version of React library
+process.chdir(path.join(__dirname, '..'));
+packDependency();
+process.chdir(path.join(__dirname, '../../amazon-chime-sdk/apps/meeting'));
+updateDependency('amazon-chime-sdk-component-library-react', `../../../amazon-chime-sdk-component-library-react/amazon-chime-sdk-component-library-react-${versionString}.tgz`);
 
 process.chdir(path.join(__dirname, '../../amazon-chime-sdk/apps/meeting/serverless'));
 logger.log('Deploying unique release candidate Meeting Demo URL...');

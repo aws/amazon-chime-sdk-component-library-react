@@ -3,6 +3,8 @@
 <a href="https://www.npmjs.com/package/amazon-chime-sdk-component-library-react"><img src="https://img.shields.io/npm/v/amazon-chime-sdk-component-library-react?style=flat-square"></a>
 <a href="https://github.com/aws/amazon-chime-sdk-component-library-react"><img src="https://github.com/aws/amazon-chime-sdk-component-library-react/workflows/CI%20Workflow/badge.svg"></a>
 
+[Amazon Chime SDK Project Board](https://github.com/orgs/aws/projects/12)
+
 [Amazon Chime SDK React Components Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/)
 
 [Amazon Chime SDK for JavaScript Library](https://github.com/aws/amazon-chime-sdk-js/)
@@ -11,11 +13,9 @@ The Amazon Chime SDK makes it easy to add collaborative audio calling, video cal
 
 The Amazon Chime SDK React Component Library supplies client-side state management and reusable UI components for common web interfaces used in audio and video conferencing applications, including: video tile grids, microphone activity indicators, and call controls. All components come with a simple, modern design, and can be used as-is or restyled with a custom theme. In addition to UI components, the library leverages Reacts' state management tools such as Providers and Hooks to connect to the Amazon Chime SDK for JavaScript and pass data to the UI layer, simplifying state synchronization so that developers can concentrate on building engaging experiences.
 
-The Amazon Chime React Component Library can be added to your web application codebase using npm.
+Guidance on consuming these SDK Components is available at [Amazon Chime SDK React Component Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/). Our Storybook documentation also captures a [Quick Start Guide](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/how-tos--page).
 
-Documentation on these components and how to use them can be found on [Amazon Chime SDK React Component Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/).
-
-Please check use-cases in our [How-to guide](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/how-tos--page) for more information.
+The [Amazon Chime SDK Project Board](https://github.com/orgs/aws/projects/12) captures the status of community feature requests across all our repositories. The descriptions of the columns on the board are captured in this [guide](https://aws.github.io/amazon-chime-sdk-js/modules/projectboard.html).
 
 ### To get started, see the following resources:
 
@@ -33,11 +33,13 @@ Please check use-cases in our [How-to guide](https://aws.github.io/amazon-chime-
 
 ## Examples
 
-[Meeting Demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting)
+[Amazon Chime Meeting Demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting)
 
-[Chat Demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/chat)
+[Messaging Demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/chat)
 
-[Breakout Room Demo](https://aws.amazon.com/blogs/business-productivity/breakout-room-amazon-chime-sdk-react-component-library/)
+[Building Breakout Room Experiences with the Amazon Chime SDK React Component Library](https://aws.amazon.com/blogs/business-productivity/breakout-room-amazon-chime-sdk-react-component-library/)
+
+[Quickly launch an Amazon Chime SDK application with AWS Amplify](https://aws.amazon.com/blogs/business-productivity/quickly-launch-an-amazon-chime-sdk-application-with-aws-amplify/)
 
 ## Installation and Development
 
@@ -124,6 +126,11 @@ npm run test:snapshots-path -- <filepath> -u
 ```
 
 A code coverage summary will be printed at the end of each `npm run test` run. Full coverage including coverage for each file is generated in a `lcov-report` html file that can be rendered in the browser. This is generated in a `/coverage` directory on each test run.
+
+## Troubleshooting and Support
+Review the resources given in the ReadMe and use our [client documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/) for guidance on how to develop on this library. Additionally, search our [issues database](https://github.com/aws/amazon-chime-sdk-component-library-react/issues) to see if your issue is already addressed. If not please cut us an [issue](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/new/choose) using the provided templates.
+
+If you have more questions, or require support for your business, you can reach out to [AWS Customer support](https://pages.awscloud.com/GLOBAL-aware-GC-Amazon-Chime-SDK-2020-reg.html). You can review our support plans [here](https://aws.amazon.com/premiumsupport/plans/?nc=sn&loc=1).
 
 ## License
 

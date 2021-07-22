@@ -143,7 +143,7 @@ export class MeetingManager implements AudioVideoObserver {
     this.audioVideoObservers = {};
   }
 
-  async join({ meetingInfo, attendeeInfo, deviceLabels = DeviceLabels.AudioAndVideo, eventReporter}: MeetingJoinData) {
+  async join({ meetingInfo, attendeeInfo, deviceLabels = DeviceLabels.AudioAndVideo, eventReporter }: MeetingJoinData) {
     this.configuration = new MeetingSessionConfiguration(
       meetingInfo,
       attendeeInfo
@@ -210,7 +210,7 @@ export class MeetingManager implements AudioVideoObserver {
     this.audioVideo = this.meetingSession.audioVideo;
     this.setupAudioVideoObservers();
     this.setupDeviceLabelTrigger(deviceLabels);
-    await this.listAndSelectDevices();
+    await this.listAndSelectDevices(deviceLabels);
     this.publishAudioVideo();
     this.setupActiveSpeakerDetection();
     this.meetingStatus = MeetingStatus.Loading;
@@ -346,15 +346,33 @@ export class MeetingManager implements AudioVideoObserver {
     );
   }
 
-  async listAndSelectDevices(): Promise<void> {
+  async listAndSelectDevices(deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo): Promise<void> {
     await this.updateDeviceLists();
 
-    const hasAudioInput = this.audioInputDevices?.some(value => value.label) || false;
-    const hasAudioOutput = this.audioOutputDevices?.some(value => value.label) || false;
-    const hasVideoInput = this.videoInputDevices?.some(value => value.label) || false;
+    // If `deviceLabels` is of `DeviceLabelTrigger` type, no device will be selected.
+    // In this case, you need to handle the device selection yourself.
+    if (typeof deviceLabels === 'function') return;
+
+    let isAudioDeviceRequested: boolean = false;
+    let isVideoDeviceRequested: boolean = false;
+
+    switch (deviceLabels) {
+      case DeviceLabels.None:
+        break;
+      case DeviceLabels.Audio:
+        isAudioDeviceRequested = true;
+        break;
+      case DeviceLabels.Video:
+        isVideoDeviceRequested = true;
+        break;
+      case DeviceLabels.AudioAndVideo:
+        isAudioDeviceRequested = true;
+        isVideoDeviceRequested = true;
+        break;
+    }
 
     if (
-      hasAudioInput &&
+      isAudioDeviceRequested &&
       !this.selectedAudioInputDevice &&
       this.audioInputDevices &&
       this.audioInputDevices.length
@@ -370,7 +388,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.publishSelectedAudioInputDevice();
     }
     if (
-      hasAudioOutput &&
+      isAudioDeviceRequested &&
       !this.selectedAudioOutputDevice &&
       this.audioOutputDevices &&
       this.audioOutputDevices.length
@@ -388,7 +406,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.publishSelectedAudioOutputDevice();
     }
     if (
-      hasVideoInput &&
+      isVideoDeviceRequested &&
       !this.selectedVideoInputDevice &&
       this.videoInputDevices &&
       this.videoInputDevices.length
