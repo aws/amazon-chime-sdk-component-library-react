@@ -10,11 +10,12 @@ SDK components are aimed at accelerating your Amazon Chime SDK application devel
 
 1. Add amazon-chime-sdk-component-library-react and the necessary peer dependencies to your project
 
-`npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system`
+```sh
+npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system
+```
 
-2. Render a `ThemeProvider` and `MeetingProvider` in the root of your application
-
-You can pass a default theme that we provide, or a customized theme that adheres to our theme's structure.
+2. Render a `ThemeProvider` and a `MeetingProvider` in the root of your application
+   * You can pass a default theme that we provide, or a customized theme that adheres to our theme's structure.
 
 ```jsx
 import { ThemeProvider } from 'styled-components';
@@ -34,7 +35,7 @@ const Root = () => (
 
 3. Use the SDK components to build your app
 
-_Note_ - Some components won't render anything unless there is an active meeting. To join a meeting, you need to use the `join` and `start` APIs that are provided through the [useMeetingManager](/?path=/docs/sdk-hooks-usemeetingmanager--page) hook.
+_Note_ - Some components won't render anything unless there is an active meeting. To join a meeting, you need to use the `join` and `start` APIs that are provided through the [useMeetingManager](/docs/sdk-hooks-usemeetingmanager--page) hook.
 
 ```jsx
 import {
@@ -46,7 +47,7 @@ const MyApp = () => {
   const meetingManager = useMeetingManager();
 
   const joinMeeting = async () => {
-    // Fetch the meeting and attendee data from your server
+    // Fetch the meeting and attendee data from your server application
     const response = await fetch('/my-server');
     const data = await response.json();
 
@@ -55,10 +56,15 @@ const MyApp = () => {
       attendeeInfo: data.Attendee
     };
 
-    // Use the join API to create a meeting session
+    // Use the join API to create a meeting session using the above data
     await meetingManager.join(joinData);
 
-    // At this point you can let users setup their devices, or start the session immediately
+    // At this point you could let users setup their devices, or by default 
+    // the SDK will select the first device in the list for the s indicated
+    // by `deviceLabels` (the default value is DeviceLabels.AudioAndVideo)
+    ...
+
+    // Start the session to join the meeting
     await meetingManager.start();
   };
 
