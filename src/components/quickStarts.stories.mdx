@@ -1,0 +1,472 @@
+<Meta title="Quick Starts" />
+
+import { linkTo } from '@storybook/addon-links';
+
+# Getting Started
+
+## Setup the Environment
+
+1. Add amazon-chime-sdk-component-library-react and the necessary peer dependencies to your project
+
+```sh
+npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system
+```
+
+2. Render a `ThemeProvider` and a `MeetingProvider` in the root of your application
+   * You can pass a default theme that we provide, or a customized theme that adheres to our theme's structure.
+
+```jsx
+import { ThemeProvider } from 'styled-components';
+import {
+  MeetingProvider,
+  lightTheme,
+} from 'amazon-chime-sdk-component-library-react';
+
+const Root = () => (
+  <ThemeProvider theme={lightTheme}>
+    <MeetingProvider>
+      <MyApp />
+    </MeetingProvider>
+  </ThemeProvider>
+);
+```
+
+## Join a Meeting
+
+To join a meeting, you need to:
+
+1. Fetch the meeting and attendee data from Chime's [`CreateAttendee`](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateAttendee.html) and [`CreateMeeting`](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) APIs
+    * See the [meeting join example](https://github.com/aws-samples/amazon-chime-sdk/blob/daefd28611a577877146a46aa189958c5bd0234b/apps/meeting/src/containers/MeetingForm/index.tsx#L70-L85), the [API calls example](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js), and [server application example](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js)
+2. Create a `MeetingSession` using the above data
+3. Start the `MeetingSession` to join a meeting
+
+For example, a simple App to join a meeting.
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+
+  const joinMeeting = async () => {
+    // Fetch the meeting and attendee data from your server application
+    const response = await fetch('/my-server');
+    const data = await response.json();
+
+    const joinData = {
+      meetingInfo: data.Meeting,
+      attendeeInfo: data.Attendee,
+    };
+    
+    // Use join API to create a MeetingSession using the above data
+    await meetingManager.join(joinData);
+
+    // At this point you could let users setup their devices, or by default 
+    // the SDK will select the first device in the list for the kind indicated
+    // by `deviceLabels` (the default value is DeviceLabels.AudioAndVideo)
+    ...
+
+    // Start the session to join the meeting
+    await meetingManager.start();
+  };
+
+  return <button onClick={joinMeeting}>Join</button>;
+};
+```
+
+## Join a Meeting in view-only mode
+
+To implement a view-only experience, you just need to:
+
+1. On the basis of normal meeting join, pass an additional `deviceLabels` parameter `DeviceLabels.None` to `join()`
+    * See the [join in view-only mode example](https://github.com/aws-samples/amazon-chime-sdk/blob/daefd28611a577877146a46aa189958c5bd0234b/apps/meeting/src/containers/MeetingForm/index.tsx#L72-L85)
+
+For example, a simple App to join the meeting in view-only mode.
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+
+  const joinMeeting = async () => {
+    // Fetch the meeting and attendee data from your server application
+    const response = await fetch('/my-server');
+    const data = await response.json();
+
+    const joinData = {
+      meetingInfo: data.Meeting,
+      attendeeInfo: data.Attendee,
+      // SDK doesn't choose any device
+      deviceLabels: DeviceLabels.None,
+    };
+
+    // Use the join API to create a meeting session using the above data
+    await meetingManager.join(joinData);
+
+    // Skip devices setup
+
+    // Start the session to join the meeting
+    await meetingManager.start();
+  };
+
+  return <button onClick={joinMeeting}>Join</button>;
+};
+```
+
+_Note_ - The view-only mode doesn't impact the ability to view content or listen to audio in your meeting experience.
+
+## Handle Device Permission
+
+By default, after `join()` method is called, `MeetingManager` will:
+
+1. Trigger the device permission prompt using `deviceLabelTrigger`
+2. Read the device lists of `AudioInput`, `AudioOutput` and `VideoInput` devices
+    * In any case, SDK will read the device list of all three device kinds
+    * For a device kind without permission, it may get a device list with blank labels. This result depends on the design of device permission of different browsers
+
+3. Select a device for each kind
+
+### Suppress Device Permission Prompt
+
+`MeetingManager` provides an optional parameter `deviceLabels: DeviceLabels | DeviceLabelTrigger` in its `join()` method to suppress device permission prompt.
+
+You could either use preset options or customize your own device label trigger.
+
+#### To use the preset options
+
+1. Call `join()` method with a `deviceLabels` parameter of `DeviceLabels` type to select the devices from which the browser requests permission when joining the meeting
+    * The SDK reads the device list of all kinds of devices, but only selects the device for the kind indicated by `DeviceLabels`
+
+```js
+enum DeviceLabels {
+  None,
+  Audio,
+  Video,
+  AudioAndVideo,
+};
+```
+
+For example, a simple App to join a meeting that only requires camera using preset option.
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+
+  const joinMeeting = async () => {
+    // Fetch the meeting and attendee data from your server application
+    const response = await fetch('/my-server');
+    const data = await response.json();
+
+    const joinData = {
+      meetingInfo: data.Meeting,
+      attendeeInfo: data.Attendee,
+      // Use preset options from `DeviceLabels` enum
+      deviceLabels: DeviceLabels.Video,
+    };
+
+    // Use the join API to create a meeting session using the above data
+    await meetingManager.join(joinData);
+
+    // At this point you can let users setup their camera device
+    // Or by default the SDK selects the first device in the list for the kind indicated by `deviceLabels`
+    ...
+
+    // Start the session to join the meeting
+    await meetingManager.start();
+  };
+
+  return <button onClick={joinMeeting}>Join</button>;
+};
+```
+
+Result:
+
+1. Browser asks permission for camera
+2. The SDK reads the device lists for `AudioInput`, `AudioOutput` and `VideoInput` devices
+    * `AudioInput` and `AudioOutput` device may get a device list with blank labels due to no permission
+3. The SDK selects a device for `VideoInput` kind
+
+#### To customize your own device label trigger
+
+1. Pass a `deviceLabels` parameter of `DeviceLabelTrigger` type to `join()` method to set your customized `deviceLabelTrigger` which triggers the device permission prompt
+    * The SDK reads the device list of all kinds of devices, but does not select any device. You need to handle the device selection yourself
+
+```js
+type DeviceLabelTrigger = () => Promise<MediaStream>;
+```
+
+For example, a simple App to join a meeting that only requires camera permission using customized `deviceLabelTrigger`.
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+
+  const joinMeeting = async () => {
+    // Fetch the meeting and attendee data from your server application
+    const response = await fetch('/my-server');
+    const data = await response.json();
+
+    const joinData = {
+      meetingInfo: data.Meeting,
+      attendeeInfo: data.Attendee,
+      // Customize your own `DeviceLabelTrigger`
+      deviceLabels: async () => {
+          // Do something
+          const stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+          });
+          // Do something
+          return stream;
+        },
+    };
+
+    // Use the join API to create a meeting session using the above data
+    await meetingManager.join(joinData);
+
+    // At this point you can let users setup their camera
+    ...
+
+    // Start the session to join the meeting
+    await meetingManager.start();
+  };
+
+  return <button onClick={joinMeeting}>Join</button>;
+};
+```
+
+Result:
+
+1. Browser asks permission for camera
+2. The SDK reads the device lists for `AudioInput`, `AudioOutput`, `VideoInput` devices
+
+    * `AudioInput` and `AudioOutput` device may get a device list with empty labels due to no permission
+
+3. The SDK doesn’t select any device
+
+## Invoke Device Permission
+
+MeetingManager provides an invokeDeviceProvider(deviceLabels: DeviceLabels) method to invoke the device permission prompt. It accepts a parameter of DeviceLabels type to let you indicate the kind of device to be invoked.
+
+To invoke device permission:
+
+1. Call invokeDeviceProvider() method with a parameter of DeviceLabels type
+    * See the [invoke device permission example](https://github.com/aws-samples/amazon-chime-sdk/blob/daefd28611a577877146a46aa189958c5bd0234b/apps/meeting/src/containers/DevicePermissionControl/DevicePermissionControl.tsx)
+
+For example, join a meeting that doesn't require any device permission, and obtain the full access to devices later.
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+
+  const joinMeeting = async () => {
+    // Fetch the meeting and attendee data from your server application
+    const response = await fetch('/my-server');
+    const data = await response.json();
+
+    const joinData = {
+      meetingInfo: data.Meeting,
+      attendeeInfo: data.Attendee,
+      // Join a meeting without triggering any device permission prompt
+      deviceLabels: DeviceLabels.None,
+    };
+
+    // Use join API to create a MeetingSession using the above data
+    await meetingManager.join(joinData);
+
+    // Skip devices setup
+
+    // Start the session to join the meeting
+    await meetingManager.start();
+  };
+
+  return <button onClick={joinMeeting}>Join</button>;
+};
+```
+
+Click a button to trigger `invokeDeviceProvider()` method.
+
+```js
+const handleClick = async () => {
+  meetingManager.invokeDeviceProvider(DeviceLabels.AudioAndVideo);
+};
+```
+
+Result:
+
+1. Join a meeting without triggering any device permission prompt
+2. After clicking the button, browser asks permission for microphone and camera
+3. The SDK reads the device lists of all kinds of devices
+4. The SDK doesn’t select any device
+    * You need to handle the device selection yourself
+
+## Handle device selection error
+
+We expose `selectAudioInputDeviceError` in [`useAudioInput`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-useaudioinputs--page) hook and `selectVideoInputDeviceError` in [`useVideoInput`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-usevideoinputs--page) hook to deliver the device selection error from the SDK level to client application level.
+
+The initial values of `selectAudioInputDeviceError` and `selectVideoInputDeviceError` are `null`. Once the device selection triggers an error, the error will be passed to `selectAudioInputDeviceError` and `selectVideoInputDeviceError`. A successful device selection will reset their values to `null`.
+
+To handle device selection error:
+
+1. List and select devices using `MicSelection` and `CameraSelection` from SDK components
+2. Use the [`useAudioInput`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-useaudioinputs--page) hook to get `selectAudioInputDeviceError` and [`useVideoInput`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-usevideoinputs--page) hook to get `selectVideoInputDeviceError`
+3. Handle device selection error by checking whether the values of `selectAudioInputDeviceError` and `selectVideoInputDeviceError` are null
+4. Reset the `selectAudioInputDeviceError` and `selectVideoInputDeviceError` to null by a successful device selection
+
+For example, a simple component to list and select microphone and camera.
+
+```jsx
+import {
+  MicSelection,
+  CameraSelection,
+  useAudioInputs,
+  useVideoInputs,
+} from 'amazon-chime-sdk-component-library-react';
+
+const DeviceSelection = () => {
+  return (
+    <>
+      <AudioInputDeviceSelection />
+      <VideoInputDeviceSelection />
+    </>
+  );
+};
+
+const AudioInputDeviceSelection = () => {
+  const { selectDeviceError } = useAudioInputs();
+  return (
+    <>
+      <h2>Select your microphone</h2>
+      <MicSelection />
+      {selectDeviceError && <p>{selectDeviceError?.message}</p>}
+    </>
+  );
+};
+
+const VideoInputDeviceSelection = () => {
+  const { selectDeviceError } = useVideoInputs();
+  return (
+    <>
+      <h2>Select your camera</h2>
+      <CameraSelection />
+      {selectDeviceError && <p>{selectDeviceError?.message}</p>}
+    </>
+  );
+};
+```
+
+## Enable camera and display the video stream in the grid
+
+The [`VideoTileGrid`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-components-videotilegrid--page) component renders all meeting session video tiles in a responsive grid layout. This includes the local tile, remote tiles, and content share tile. By default a user joins without video, so in order to see the `VideoTileGrid`, there must be at least one video tile being shared.
+
+To enable your camera and display the stream:
+
+1. Use `VideoTileGrid` in SDK components to render your camera stream
+2. Use the `toggleVideo()` function returned by [`useLocalVideo`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-uselocalvideo--page) hook to enable your camera
+
+    * You could also use [`VideoInputControl`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-components-meetingcontrols-videoinputcontrol--page) component which is also dependent on `useLocalVideo` hook
+        * See the [`VideoInputControl` usage example](https://github.com/aws-samples/amazon-chime-sdk/blob/daefd28611a577877146a46aa189958c5bd0234b/apps/meeting/src/containers/MeetingControls/index.tsx#L46)
+
+For example, a simple component to enable the camera and display the video stream.
+
+```jsx
+import { VideoTileGrid } from 'amazon-chime-sdk-component-library-react';
+
+const MeetingView = () => {
+  const { toggleVideo } = useLocalVideo();
+  return (
+    <>
+      <VideoTileGrid />
+      <button onClick={toggleVideo}></button>
+    </>
+  );
+};
+```
+
+## Access the features of the Chime JS SDK
+
+To use the features of Chime JS SDK in React SDK:
+
+1. Use `useMeetingManager` hook to get the instance of `MeetingManager`
+2. Use [`meetingSession`](https://aws.github.io/amazon-chime-sdk-js/interfaces/meetingsession.html) property of this instance to access the features of Chime JS SDK
+    * You could use [`useAudioVideo`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-useaudiovideo--page) to directly access the [`audioVideo`](https://aws.github.io/amazon-chime-sdk-js/interfaces/audiovideofacade.html) of current `MeetingSession` as well
+
+For example, to enable camera and display the video stream, in addition to using the `toggleVideo()` method returned by `useLocalVideo` hook, you can directly use the `audioVideo` of the Chime JS SDK to achieve the same effect.
+
+```jsx
+import {
+  useLocalVideo,
+  useMeetingManager,
+  VideoTileGrid
+} from 'amazon-chime-sdk-component-library-react';
+
+const MeetingView = () => {
+  const meetingManager = useMeetingManager();
+  const { isVideoEnabled, setIsVideoEnabled } = useLocalVideo();
+
+  const toggleCamera = async () => {
+    if (isVideoEnabled || !meetingManager.selectedVideoInputDevice) {
+      meetingManager.meetingSession?.audioVideo?.stopLocalVideoTile();
+      // Change the state to hide the `LocalVideo` tile
+      setIsVideoEnabled(false);
+    } else {
+      await meetingManager.meetingSession?.audioVideo?.chooseVideoInputDevice(
+        meetingManager.selectedVideoInputDevice
+      );
+      meetingManager.meetingSession?.audioVideo?.startLocalVideoTile();
+      // Change the state to display the `LocalVideo` tile
+      setIsVideoEnabled(true);
+    }
+  };
+  return (
+    <>
+      <VideoTileGrid />
+      <button onClick={toggleCamera}>Toggle Camera</button>
+    </>
+  );
+};
+```
+
+## Enabling content share in Electron applications
+
+In an Electron application, you should create a custom screen picker to retrieve the screen's source ID and pass it to the `toggleContentShare` method from `useContentShareControls` hook to start sharing your screen.
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useContentShareControls,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  const { toggleContentShare } = useContentShareControls();
+
+  return (
+    <MeetingProvider>
+      <YourScreenPicker
+        onClickShareButton={async (selectedSourceId) => {
+          try {
+            await toggleContentShare(selectedSourceId);
+          } catch (error) {
+            console.error(error);
+          }
+        }}
+      />
+    </MeetingProvider>
+  );
+};
+```
+
+## Enabling video and audio stream quality indicator
+
+You can use `useMediaStreamMetrics` hook to get video and audio stream quality metrics.
+
+You can find examples and usage of the hook from [`useMediaStreamMetrics` storybook](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-usemediastreammetrics--page).
+
+For UI implementation, check the [`LocalMediaStreamMetrics`](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/de22a537d6437073f72d69da30f1703ef4cf40b3/demo/meeting/src/containers/LocalMediaStreamMetrics/index.tsx#L22-L28) and [`VideoStreamMetrics`](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/de22a537d6437073f72d69da30f1703ef4cf40b3/demo/meeting/src/containers/VideoStreamMetrics/index.tsx#L27) components in meeting demo for more details.

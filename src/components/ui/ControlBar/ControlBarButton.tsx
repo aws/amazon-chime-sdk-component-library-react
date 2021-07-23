@@ -22,7 +22,7 @@ export interface ControlBarButtonProps
   onClick: () => void;
   /** The label of an control bar item. */
   label: string;
-  /** The items to render in a popover menu. When passed, the button will render an arrow to open or close a popover menu. Refer to [PopOverItem](/?path=/docs/ui-components-popover--basic-pop-over-menu) */
+  /** The items to render in a popover menu. When passed, the button will render an arrow to open or close a popover menu. Refer to [PopOverItem](/docs/ui-components-popover--basic-pop-over-menu) */
   popOver?: PopOverItemProps[] | null;
   /** Defines the placement of PopOver menu. */
   popOverPlacement?: Placement;
