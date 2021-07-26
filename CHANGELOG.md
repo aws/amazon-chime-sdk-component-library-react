@@ -26,6 +26,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
+- Migrate Meeting Demo app to amazon-chime-sdk repo under aws-sample. The new meeting demo is [here](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting).
+
+### Removed
+
 ## [2.7.0] - 2021-07-14
 
 ### Fixed

@@ -83,10 +83,28 @@ function shouldContinuePrompt(callback = null) {
   }
 }
 
+const packDependency = () => {
+  spawnOrFail('npm', ['install']);
+  spawnOrFail('npm', ['run build']);
+  spawnOrFail('npm', ['pack']);
+}
+
+const updateDependency = (name, path) => {
+  if(path) {
+    logger.log(`Installing ${name} from local file`);
+    spawnOrFail('npm', [`install ${path}`]);
+  }else{
+    logger.log(`Installing ${name} from npm`);
+    spawnOrFail('npm', [`install ${name}`]);
+  }
+}
+
 module.exports = {
   logger,
   spawnOrFail,
   process,
   shouldContinuePrompt,
-  checkWarning
+  checkWarning,
+  packDependency,
+  updateDependency
 };

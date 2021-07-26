@@ -48,11 +48,7 @@ let allFiles = function() {
     file => file.endsWith('.ts') || file.endsWith('.tsx')
   );
 
-  const demosMeetingFiles = walk('demo/meeting/src').filter(
-    file =>
-      file.endsWith('.ts') || file.endsWith('.tsx') || file.endsWith('.js')
-  );
-  return srcFiles.concat(tests()).concat(demosMeetingFiles);
+  return srcFiles.concat(tests());
 };
 
 let joinYears = function(years) {
@@ -172,7 +168,6 @@ allFiles().forEach(file => {
   // Check source files for console.log() and skip check for non-prod code.
   for (let i = 0; i < fileLines.length; i++) {
     if (
-      file.includes('demo/') ||
       file.includes('tst/') ||
       file.includes('.stories.') ||
       file.includes('providers/') ||
