@@ -13,11 +13,11 @@ The Amazon Chime SDK makes it easy to add collaborative audio calling, video cal
 
 The Amazon Chime SDK React Component Library supplies client-side state management and reusable UI components for common web interfaces used in audio and video conferencing applications, including: video tile grids, microphone activity indicators, and call controls. All components come with a simple, modern design, and can be used as-is or restyled with a custom theme. In addition to UI components, the library leverages Reacts' state management tools such as Providers and Hooks to connect to the Amazon Chime SDK for JavaScript and pass data to the UI layer, simplifying state synchronization so that developers can concentrate on building engaging experiences.
 
-Guidance on consuming these SDK Components is available at [Amazon Chime SDK React Component Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/). Our Storybook documentation also captures a [Quick Start Guide](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/how-tos--page).
+Guidance on consuming these SDK Components is available at [Amazon Chime SDK React Component Library Documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/). Our Storybook documentation also captures a [Quick Start Guide](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/quick-starts--page).
 
 The [Amazon Chime SDK Project Board](https://github.com/orgs/aws/projects/12) captures the status of community feature requests across all our repositories. The descriptions of the columns on the board are captured in this [guide](https://aws.github.io/amazon-chime-sdk-js/modules/projectboard.html).
 
-### To get started, see the following resources:
+### To get started, see the following resources
 
 [Amazon Chime SDK](https://aws.amazon.com/chime/chime-sdk/)
 
