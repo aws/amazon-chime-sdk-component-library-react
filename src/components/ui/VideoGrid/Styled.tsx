@@ -224,10 +224,12 @@ const ratioStyles = {
   '18.r1by2': 'grid-template: repeat(6,1fr) / repeat(4,1fr);',
   '18.r1by1': 'grid-template: repeat(4,1fr) / repeat(5,1fr);',
 
-  '18.featured': `grid-template-areas:
+  '18.featured': `grid-template: repeat(8,1fr) / repeat(9,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft'
       'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft';`,
-  '18.r1by1.featured': `grid-template-areas:
+  '18.r1by1.featured': `grid-template: repeat(9,1fr) / repeat(9,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v'
       'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft x';`,
 
@@ -236,10 +238,12 @@ const ratioStyles = {
   '19.r1by2': 'grid-template: repeat(6,1fr) / repeat(4,1fr);',
   '19.r1by1': 'grid-template: repeat(4,1fr) / repeat(5,1fr);',
 
-  '19.featured': `grid-template-areas:
+  '19.featured': `grid-template: repeat(8,1fr) / repeat(9,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft'
       'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft';`,
-  '19.r1by1.featured': `grid-template-areas:
+  '19.r1by1.featured': `grid-template: repeat(9,1fr) / repeat(10,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft v' 
       'ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft v' 
       'ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft x';`,
@@ -249,10 +253,12 @@ const ratioStyles = {
   '20.r1by2': 'grid-template: repeat(6,1fr) / repeat(4,1fr);',
   '20.r1by1': 'grid-template: repeat(4,1fr) / repeat(5,1fr);',
 
-  '20.featured': `grid-template-areas:
+  '20.featured': `grid-template: repeat(11,1fr) / repeat(7,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 
       'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft';`,
-  '20.r1by1.featured': `grid-template-areas:
+  '20.r1by1.featured': `grid-template: repeat(10,1fr) / repeat(10,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft v' 
       'ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft v' 
       'ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft x';`,
@@ -262,83 +268,84 @@ const ratioStyles = {
   '21.r1by2': 'grid-template: repeat(6,1fr) / repeat(4,1fr);',
   '21.r1by1': 'grid-template: repeat(5,1fr) / repeat(5,1fr);',
 
-  '21.featured': `grid-template-areas:
+  '21.featured': `grid-template: repeat(11,1fr) / repeat(7,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 
       'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft';`,
-  '21.r1by1.featured': `grid-template-areas:
-      'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft x';`,
+  '21.r1by1.featured': `grid-template: repeat(8,1fr) / repeat(7,1fr);
+    grid-template-areas:
+      'ft ft ft ft ft ft v' 'ft ft ft ft ft ft v' 'ft ft ft ft ft ft v'  
+      'ft ft ft ft ft ft v' 'ft ft ft ft ft ft v' 'ft ft ft ft ft ft x';`,
 
   '22': 'grid-template: repeat(5,1fr) / repeat(5,1fr);',
   '22.slim': 'grid-template: repeat(8,1fr) / repeat(3,1fr);',
   '22.r1by2': 'grid-template: repeat(6,1fr) / repeat(4,1fr);',
   '22.r1by1': 'grid-template: repeat(5,1fr) / repeat(5,1fr);',
 
-  '22.featured': `grid-template-areas:
+  '22.featured': `grid-template: repeat(11,1fr) / repeat(7,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 
       'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft';`,
-  '22.r1by1.featured': `grid-template-areas:
-      'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft x';`,
+  '22.r1by1.featured': `grid-template: repeat(9,1fr) / repeat(7,1fr);
+    grid-template-areas:
+      'ft ft ft ft ft ft v' 'ft ft ft ft ft ft v' 'ft ft ft ft ft ft v' 'ft ft ft ft ft ft v' 
+      'ft ft ft ft ft ft v' 'ft ft ft ft ft ft v' 'ft ft ft ft ft ft x';`,
 
   '23': 'grid-template: repeat(5,1fr) / repeat(5,1fr);',
   '23.slim': 'grid-template: repeat(8,1fr) / repeat(3,1fr);',
   '23.r1by2': 'grid-template: repeat(6,1fr) / repeat(4,1fr);',
   '23.r1by1': 'grid-template: repeat(5,1fr) / repeat(5,1fr);',
 
-  '23.featured': `grid-template-areas:
+  '23.featured': `grid-template: repeat(11,1fr) / repeat(8,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 
       'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft';`,
-  '23.r1by1.featured': `grid-template-areas:
-      'ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft x';`,
+  '23.r1by1.featured': `grid-template: repeat(8,1fr) / repeat(8,1fr);
+    grid-template-areas:
+      'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v'  
+      'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft x';`,
 
   '24': 'grid-template: repeat(5,1fr) / repeat(5,1fr);',
   '24.slim': 'grid-template: repeat(8,1fr) / repeat(3,1fr);',
   '24.r1by2': 'grid-template: repeat(6,1fr) / repeat(4,1fr);',
   '24.r1by1': 'grid-template: repeat(5,1fr) / repeat(5,1fr);',
 
-  '24.featured': `grid-template-areas:
+  '24.featured': `grid-template: repeat(11,1fr) / repeat(8,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 
       'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft';`,
-  '24.r1by1.featured': `grid-template-areas:
-      'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft ft x';`,
+  '24.r1by1.featured': `grid-template: repeat(9,1fr) / repeat(8,1fr);
+    grid-template-areas:
+      'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 
+      'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft x';`,
 
   '25': 'grid-template: repeat(5,1fr) / repeat(5,1fr);',
   '25.slim': 'grid-template: repeat(9,1fr) / repeat(3,1fr);',
   '25.r1by2': 'grid-template: repeat(7,1fr) / repeat(4,1fr);',
   '25.r1by1': 'grid-template: repeat(5,1fr) / repeat(5,1fr);',
 
-  '25.featured': `grid-template-areas:
+  '25.featured': `grid-template: repeat(11,1fr) / repeat(8,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 
       'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft';`,
-  '25.r1by1.featured': `grid-template-areas:
-      'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft x';`,
+  '25.r1by1.featured': `grid-template: repeat(10,1fr) / repeat(8,1fr);
+    grid-template-areas:
+      'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 
+      'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft x';`,
 
   '26': 'grid-template: repeat(6,1fr) / repeat(5,1fr);',
   '26.slim': 'grid-template: repeat(9,1fr) / repeat(3,1fr);',
   '26.r1by2': 'grid-template: repeat(7,1fr) / repeat(4,1fr);',
   '26.r1by1': 'grid-template: repeat(6,1fr) / repeat(5,1fr);',
 
-  '26.featured': `grid-template-areas:
+  '26.featured': `grid-template: repeat(11,1fr) / repeat(9,1fr);
+    grid-template-areas:
       'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft'
       'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft' 'ft ft ft ft ft ft ft ft ft';`,
-  '26.r1by1.featured': `grid-template-areas:
-      'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 
-      'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft ft ft ft ft x';`,
+  '26.r1by1.featured': `grid-template: repeat(9,1fr) / repeat(9,1fr);
+    grid-template-areas:
+      'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 
+      'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft v' 'ft ft ft ft ft ft ft ft x';`,
 };
 
 const responsiveStyles = {
