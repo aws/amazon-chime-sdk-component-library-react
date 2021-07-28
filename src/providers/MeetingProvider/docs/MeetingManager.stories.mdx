@@ -34,7 +34,7 @@ const MyApp = () => {
 
 ## Constructor
 
-Accepts a config object of `logLevel`, `postLogConfig`, and `simulcastEnabled` that will be used when initializing a meeting session. See [MeetingProvider](/docs/sdk-providers-meetingprovider--page) documentation for more details.
+Accepts a config object of `logLevel`, `postLogConfig`, `simulcastEnabled`, `logger` and `videoDownlinkBandwidthPolicy` that will be used when initializing a meeting session. See [MeetingProvider](/docs/sdk-providers-meetingprovider--page) documentation for more details.
 
 ## Interface
 
@@ -53,6 +53,10 @@ interface MeetingJoinData {
 
   // The response of calling chime:CreateAttendee from your server.
   attendeeInfo: any;
+
+  // The kind of device for which the browser requests permission.
+  // Or override the default device label trigger in the Amazon Chime SDK for JavaScript.
+  deviceLabels?: DeviceLabels | DeviceLabelTrigger;
 
   // Override the default event reporter in the Amazon Chime SDK for JavaScript.
   eventReporter: EventReporter;

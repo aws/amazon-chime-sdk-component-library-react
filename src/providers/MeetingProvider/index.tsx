@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useContext, useState, createContext } from 'react';
-import { LogLevel } from 'amazon-chime-sdk-js';
+import { Logger, LogLevel, VideoDownlinkBandwidthPolicy } from 'amazon-chime-sdk-js';
 
 import MeetingManager from './MeetingManager';
 import { PostLogConfig } from './types';
@@ -22,10 +22,18 @@ interface Props {
   postLogConfig?: PostLogConfig;
   /** Whether or not to enable simulcast for the meeting session */
   simulcastEnabled?: boolean;
+  /** The `Logger` object you want to use in meeting session.
+   * If you pass in a `Logger` object using this parameter, 
+   * the `MeetingManager` will use this object instead of creating a logger 
+   * based on `logLevel` and `postLogConfig` to initialize the meeting session.
+   */
+  logger?: Logger;
+  /** The `VideoDownlinkBandwidthPolicy` object you want to use in meeting session */
+  videoDownlinkBandwidthPolicy?: VideoDownlinkBandwidthPolicy;
   /** Pass a `MeetingManager` instance if you want to share this instance 
    * across multiple different `MeetingProvider`s. This approach has limitations.
    * Check `meetingManager` prop documentation for more information.
-  */
+   */
   meetingManager?: MeetingManager;
 }
 
@@ -35,11 +43,13 @@ export const MeetingProvider: React.FC<Props> = ({
   logLevel = LogLevel.WARN,
   postLogConfig,
   simulcastEnabled = false,
+  logger,
+  videoDownlinkBandwidthPolicy,
   meetingManager: meetingManagerProp,
   children,
 }) => {
   const [meetingManager] = useState(
-    () => meetingManagerProp || new MeetingManager({ logLevel, postLogConfig, simulcastEnabled })
+    () => meetingManagerProp || new MeetingManager({ logLevel, postLogConfig, simulcastEnabled, logger, videoDownlinkBandwidthPolicy })
   );
 
   return (
