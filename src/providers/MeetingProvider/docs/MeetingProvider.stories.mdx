@@ -65,6 +65,7 @@ const Root = () => {
 ### Prop values
 
 #### logLevel
+
 The level of logging you want with your meeting session. It is defined by the [LogLevel](https://aws.github.io/amazon-chime-sdk-js/enums/loglevel.html) enum in `amazon-chime-sdk-js`.
 
 ```javascript
@@ -77,7 +78,8 @@ enum LogLevel {
 }
 ```
 
-#### postLogger
+#### postLogConfig
+
 Configuration for setting up a [MeetingSessionPOSTLogger](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionpostlogger.html).
 
 ```javascript
@@ -91,11 +93,50 @@ interface PostLogConfig = {
 ```
 
 #### simulcastEnabled
+
 To enable simulcast for the meeting pass the `simulcastEnabled` prop with value set to `true`. By default, it is `false`.
 For more information on Simulcast, check Amazon Chime JS SDK [simulcast guide](https://github.com/aws/amazon-chime-sdk-js/blob/master/guides/05_Simulcast.md).
 
+#### logger
+
+The `Logger` object that you want to be used in the meeting session.
+If you pass in a `Logger` object using this parameter, the `MeetingManager` will use this object instead of creating a logger based on `logLevel` and `postLogConfig` to initialize the meeting session.
+
+#### videoDownlinkBandwidthPolicy
+
+The `VideoDownlinkBandwidthPolicy` object that you want to be used in the meeting session.
+For more information on `VideoDownlinkBandwidthPolicy`, check Amazon Chime JS SDK [priority downlink policy guide](https://aws.github.io/amazon-chime-sdk-js/modules/prioritybased_downlink_policy.html).
+
+For example, to use the `VideoPriorityBasedPolicy` in the meeting:
+
+```jsx
+import {
+  LogLevel,
+  ConsoleLogger,
+  VideoPriorityBasedPolicy,
+} from 'amazon-chime-sdk-js';
+import { MeetingProvider } from 'amazon-chime-sdk-component-library-react';
+
+const Root = () => {
+  const logger = new ConsoleLogger('SDK', LogLevel.INFO);
+  const videoDownlinkBandwidthPolicy = new VideoPriorityBasedPolicy(logger);
+
+  const meetingConfig = {
+    logger,
+    videoDownlinkBandwidthPolicy,
+  };
+
+  return (
+    <MeetingProvider {...meetingConfig}>
+      <MyApp />
+    </MeetingProvider>
+  );
+};
+```
+
 #### meetingManager
-There may be use cases to re-use the same `MeetingManager` instance accross multiple different `MeetingProvider`s.
+
+There may be use cases to re-use the same `MeetingManager` instance across multiple different `MeetingProvider`s.
 Hence, you can create a new `MeetingManager` instance and then pass it as a prop to your `MeetingProvider`s. If not passed,
 a new `MeetingManager` instance will be created internally with each `MeetingProvider` when rendered; and, 
 you will get the `MeetingManager` instance associated with that particular `MeetingProvider` when `useMeetingManager` hook is called.

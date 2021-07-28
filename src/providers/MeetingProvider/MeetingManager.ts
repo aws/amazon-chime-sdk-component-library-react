@@ -14,7 +14,9 @@ import {
   AudioVideoObserver,
   MultiLogger,
   MeetingSessionPOSTLogger,
-  EventReporter
+  EventReporter,
+  VideoDownlinkBandwidthPolicy,
+  Logger,
 } from 'amazon-chime-sdk-js';
 
 import {
@@ -110,15 +112,26 @@ export class MeetingManager implements AudioVideoObserver {
 
   simulcastEnabled: boolean = false;
 
-  constructor(config: ManagerConfig) {
-    this.logLevel = config.logLevel;
+  videoDownlinkBandwidthPolicy: VideoDownlinkBandwidthPolicy | undefined;
 
+  logger: Logger | undefined;
+
+  constructor(config: ManagerConfig) {
     if (config.simulcastEnabled) {
       this.simulcastEnabled = config.simulcastEnabled;
     }
 
-    if (config.postLogConfig) {
-      this.postLoggerConfig = config.postLogConfig;
+    if (config.logger) {
+      this.logger = config.logger;
+    } else {
+      this.logLevel = config.logLevel;
+      if (config.postLogConfig) {
+        this.postLoggerConfig = config.postLogConfig;
+      }
+    }
+
+    if (config.videoDownlinkBandwidthPolicy) {
+      this.videoDownlinkBandwidthPolicy = config.videoDownlinkBandwidthPolicy;
     }
   }
 
@@ -141,6 +154,8 @@ export class MeetingManager implements AudioVideoObserver {
     this.meetingStatus = MeetingStatus.Loading;
     this.publishMeetingStatus();
     this.audioVideoObservers = {};
+    this.videoDownlinkBandwidthPolicy = undefined;
+    this.logger = undefined;
   }
 
   async join({ meetingInfo, attendeeInfo, deviceLabels = DeviceLabels.AudioAndVideo, eventReporter }: MeetingJoinData) {
@@ -149,16 +164,18 @@ export class MeetingManager implements AudioVideoObserver {
       attendeeInfo
     );
 
+    this.meetingRegion = meetingInfo.MediaRegion;
+    this.meetingId = this.configuration.meetingId;
+
     if (this.simulcastEnabled) {
       this.configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
       this.configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = true;
     };
 
-    this.meetingRegion = meetingInfo.MediaRegion;
-    this.meetingId = this.configuration.meetingId;
     if (eventReporter) {
       this.eventReporter = eventReporter;
     }
+
     await this.initializeMeetingSession(this.configuration, deviceLabels);
   }
 
@@ -198,7 +215,12 @@ export class MeetingManager implements AudioVideoObserver {
     configuration: MeetingSessionConfiguration,
     deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo,
   ): Promise<any> {
-    const logger = this.createLogger(configuration);
+    const logger = this.logger ? this.logger : this.createLogger(configuration);
+
+    if (this.videoDownlinkBandwidthPolicy) {
+      configuration.videoDownlinkBandwidthPolicy = this.videoDownlinkBandwidthPolicy;
+    }
+
     const deviceController = new DefaultDeviceController(logger);
     this.meetingSession = new DefaultMeetingSession(
       configuration,
