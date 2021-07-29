@@ -38,11 +38,14 @@ interface Props extends BaseProps {
   noRemoteVideoView?: React.ReactNode;
   /** The layout of the grid. */
   layout?: Layout;
+  /** add local user name in localtile */
+  localuserName?:string;
 }
 
 export const VideoTileGrid: React.FC<Props> = ({
   noRemoteVideoView,
   layout = 'featured',
+  localuserName='You',
   ...rest
 }) => {
   const { tileId: featureTileId } = useFeaturedTileState();
@@ -60,7 +63,7 @@ export const VideoTileGrid: React.FC<Props> = ({
       <ContentShare css="grid-area: ft;" />
       {layout === 'featured' ? <FeaturedRemoteVideos /> : <RemoteVideos />}
       <LocalVideo
-        nameplate="Me"
+        nameplate={localuserName}
         css={gridSize > 1 ? fluidStyles : staticStyles}
       />
       {remoteSize === 0 && noRemoteVideoView}
