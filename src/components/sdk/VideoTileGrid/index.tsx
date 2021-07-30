@@ -45,7 +45,7 @@ interface Props extends BaseProps {
 export const VideoTileGrid: React.FC<Props> = ({
   noRemoteVideoView,
   layout = 'featured',
-  localuserName='You',
+  localuserName='Me',
   ...rest
 }) => {
   const { tileId: featureTileId } = useFeaturedTileState();
