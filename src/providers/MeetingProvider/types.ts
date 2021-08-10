@@ -44,6 +44,7 @@ export interface ManagerConfig {
   logLevel: LogLevel;
   postLogConfig?: PostLogConfig;
   simulcastEnabled?: boolean;
+  enableWebAudio?: boolean;
   logger?: Logger;
   videoDownlinkBandwidthPolicy?: VideoDownlinkBandwidthPolicy;
 }

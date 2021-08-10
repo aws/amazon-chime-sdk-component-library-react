@@ -30,26 +30,18 @@ const VideoInputProvider: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
-    const callback = (selectVideoInputDeviceError: Error | null): void => {
-      setSelectVideoInputDeviceError(selectVideoInputDeviceError);
-    };
-
-    meetingManager.subscribeToSelectVideoInputDeviceError(callback);
+    meetingManager.subscribeToSelectVideoInputDeviceError(setSelectVideoInputDeviceError);
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectVideoInputDeviceError(callback);
+      meetingManager.unsubscribeFromSelectVideoInputDeviceError(setSelectVideoInputDeviceError);
     };
   }, []);
 
   useEffect(() => {
-    const callback = (updatedVideoInputDevice: string | null): void => {
-      setSelectedVideoInputDevice(updatedVideoInputDevice);
-    };
-
-    meetingManager.subscribeToSelectedVideoInputDevice(callback);
+    meetingManager.subscribeToSelectedVideoInputDevice(setSelectedVideoInputDevice);
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedVideoInputDevice(callback);
+      meetingManager.unsubscribeFromSelectedVideoInputDevice(setSelectedVideoInputDevice);
     };
   }, []);
 

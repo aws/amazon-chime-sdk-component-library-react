@@ -13,12 +13,9 @@ export function useDevicePermissionStatus() {
   );
 
   useEffect(() => {
-    const callback = (updatedPermission: DevicePermissionStatus): void => {
-      setPermission(updatedPermission);
-    };
-    meetingManager.subscribeToDevicePermissionStatus(callback);
+    meetingManager.subscribeToDevicePermissionStatus(setPermission);
     return () => {
-      meetingManager.unsubscribeFromDevicePermissionStatus(callback);
+      meetingManager.unsubscribeFromDevicePermissionStatus(setPermission);
     };
   }, [meetingManager]);
 

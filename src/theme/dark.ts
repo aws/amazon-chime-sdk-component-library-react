@@ -260,9 +260,10 @@ const popOver = {
   titleText: colors.greys.white,
   active: {
     itemBgd: colors.primary.dark,
-    itemText: colors.greys.grey80
+    itemText: colors.greys.grey80,
   },
-  separator: colors.greys.grey100
+  disabled: colors.greys.grey40,
+  separator: colors.greys.grey100,
 };
 
 const notification = {

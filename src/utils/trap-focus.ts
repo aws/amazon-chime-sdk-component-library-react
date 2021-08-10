@@ -3,7 +3,7 @@
 
 import { KEY_CODES } from '../constants';
 
-const trapFocus = (e:KeyboardEvent, content: HTMLElement) => {
+const trapFocus = (e: KeyboardEvent, content: HTMLElement) => {
     if (!content) {
       return
     }

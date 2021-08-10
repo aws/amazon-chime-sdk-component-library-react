@@ -1,0 +1,63 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import AudioInputVFControl from '../AudioInputVFControl';
+
+<Meta title="SDK Components/MeetingControls/AudioInputVFControl" />
+
+# AudioInputVFControl
+
+The `AudioInputVFControl` component renders a `ControlBarButton` with pop over menu options to select through multiple audio input options,
+and provides the option of Amazon Voice Focus on the bottom. This component should be used within `VoiceFocusProvider` and `MeetingProvider`.
+Make sure you have set `enableWebAudio` as `true` in the meeting config or Amazon Voice Focus feature won't work.
+
+When you click the device button, the local audio input toggles between muted/unmuted state. When you click Amazon Voice Focus button,
+Amazon Voice Focus feature toggles between on/off state.
+
+There is a known issue with `440 Hz` and `None` as input audio device. When Amazon Voice Focus is enabled and then you click `440 Hz` or `None`,
+the current device will be an Amazon Voice Focus device, but the `440 Hz` or `None` label will not be checked. And if the current device is `440 Hz`,
+and then you enable Amazon Voice Focus, the check box infront of `440 Hz` will disappear. After you disable Amazon Voice Focus feature and click
+`440 Hz` again, the device label will be checked.
+
+If you want to apply Amazon Voice Focus feature, try this `AudioInputVFControl`. If not, `AudioInputControl` is a better choice.
+
+You can use it in the [ControlBar component](/docs/ui-components-controlbar--control-bar) to build the meeting controls bar.
+
+## Importing
+
+```javascript
+import { AudioInputVFControl } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  VoiceFocusProvider,
+  AudioInputVFControl
+} from 'amazon-chime-sdk-component-library-react';
+
+const enableWebAudio = true;
+const meetingConfig = { enableWebAudio };
+
+const App = () => {
+  return (
+    <VoiceFocusProvider>
+      <MeetingProvider {...meetingConfig}>
+        <AudioInputVFControl />
+      </MeetingProvider>
+    <VoiceFocusProvider />
+  );
+};
+```
+
+## Props
+
+<Props of={AudioInputVFControl} />
+
+### Dependencies
+
+- `MeetingProvider`
+- `VoiceFocusProvider`
+- `useToggleLocalMute`
+- `useAudioInputs`

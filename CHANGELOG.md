@@ -12,9 +12,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Added
+
 - Add [MeetingEventProvider](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/sdk-providers-meetingeventprovider--page) and [useMeetingEvent](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/sdk-hooks-usemeetingevent--page) hook to receive meeting events from `amazon-chime-sdk-js`. Please check [Amazon Chime SDK for JavaScript meeting events guide](https://aws.github.io/amazon-chime-sdk-js/modules/meetingevents.html) for more information on meeting events.
+- Add optional parameter `enableWebAudio: boolean` in the config of meeting manager to decide whether to enable Web Audio in the device controller.
+- Extend the ability to accept `Device` and `AudioTransformDevice` as audio input in meeting manager.
+- Add a new provider [VoiceFocusProvider](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/sdk-providers-voicefocusprovider--page) to initialize noise suppression and transform a normal audio input device to an Amazon Voice Focus transform device.
+- Add a new UI component [AudioInputVFControl](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/sdk-components-meetingcontrols-audioinputvfcontrol--page) to provide Amazon Voice Focus option to users.
+- Add CSS for `disabled` props on `PopOverItem`.
+- [Doc] Add documentation for `AudioInputVFControl` component within `MeetingControls` in the story book.
+- [Doc] Add documentation for `VoiceFocusProvider` provider in the story book.
+- [Doc] Add documentation for [useVoiceFocus](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/sdk-hooks-usevoicefocus--page) hook in the story book.
 
 ### Changed
+
+- Change the input type of `useSelectAudioInputDevice` hook from string to `Device` and `AudioTransformDevice`.
 - Add `meetingManagerConfig: ManagerConfig` object to `MeetingManager` and use it in `initializeMeetingSession` method. We will use values from `meetingManagerConfig: ManagerConfig` directly instead of class level variables.
 
 ### Removed
@@ -40,8 +51,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Migrate Meeting Demo app to amazon-chime-sdk repo under aws-sample. The new meeting demo is [here](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting).
-
-### Removed
 
 ## [2.7.0] - 2021-07-14
 

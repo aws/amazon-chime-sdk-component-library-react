@@ -260,9 +260,10 @@ const popOver = {
   titleText: colors.greys.grey60,
   active: {
     itemBgd: colors.primary.dark,
-    itemText: colors.greys.white
+    itemText: colors.greys.white,
   },
-  separator: `${hexTorgba(colors.greys.grey40, 0.3)}`
+  disabled: colors.greys.grey40,
+  separator: `${hexTorgba(colors.greys.grey40, 0.3)}`,
 };
 
 const notification = {

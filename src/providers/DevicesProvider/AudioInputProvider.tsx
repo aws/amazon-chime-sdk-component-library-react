@@ -33,26 +33,18 @@ const AudioInputProvider: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
-    const callback = (selectAudioInputDeviceError: Error | null): void => {
-      setSelectAudioInputDeviceError(selectAudioInputDeviceError);
-    };
-
-    meetingManager.subscribeToSelectAudioInputDeviceError(callback);
+    meetingManager.subscribeToSelectAudioInputDeviceError(setSelectAudioInputDeviceError);
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectAudioInputDeviceError(callback);
+      meetingManager.unsubscribeFromSelectAudioInputDeviceError(setSelectAudioInputDeviceError);
     };
   }, []);
 
   useEffect(() => {
-    const callback = (updatedAudioInputDevice: string | null): void => {
-      setSelectedAudioInputDevice(updatedAudioInputDevice);
-    };
-
-    meetingManager.subscribeToSelectedAudioInputDevice(callback);
+    meetingManager.subscribeToSelectedAudioInputDevice(setSelectedAudioInputDevice);
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedAudioInputDevice(callback);
+      meetingManager.unsubscribeFromSelectedAudioInputDevice(setSelectedAudioInputDevice);
     };
   }, []);
 
