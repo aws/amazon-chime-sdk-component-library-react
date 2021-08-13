@@ -1,0 +1,31 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import SpeakerLayout from './';
+import { lightTheme } from '../../../../theme/';
+
+# SpeakerLayout Icon
+
+The SpeakerLayout component creates an icon using inline SVG. Typically, you can use it to indicate the layout of `VideoTileGrid`.
+
+## Importing
+
+```javascript
+import { SpeakerLayout } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <Preview>
+    <SpeakerLayout width="2rem" />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<SpeakerLayout width="2rem" />
+```
+
+## Props
+
+<Props of={SpeakerLayout} />

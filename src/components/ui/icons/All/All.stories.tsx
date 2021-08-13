@@ -58,6 +58,8 @@ import UpAndDownCaret from '../UpAndDownCaret';
 import Spinner from '../Spinner';
 import ZoomOut from '../ZoomOut';
 import ZoomIn from '../ZoomIn';
+import GalleryLayout from '../GalleryLayout';
+import SpeakerLayout from '../SpeakerLayout';
 
 export default {
   title: 'UI Components/Icons/All',
@@ -118,6 +120,8 @@ const icons = [
   UpAndDownCaret,
   ZoomOut,
   ZoomIn,
+  GalleryLayout,
+  SpeakerLayout,
 ];
 
 const IconWrapper = styled.div`
