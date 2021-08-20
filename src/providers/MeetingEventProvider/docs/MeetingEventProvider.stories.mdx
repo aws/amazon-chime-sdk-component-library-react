@@ -1,0 +1,42 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import { MeetingEventProvider } from '../';
+
+<Meta title="SDK Providers/MeetingEventProvider" />
+
+# MeetingEventProvider
+
+The `MeetingEventProvider` is responsible to provide the latest meeting event posted by Amazon Chime SDK for JavaScript.
+Please note that, this provides only the latest meeting event posted, hence olders event will be overriden as new event is received.
+For more information on meeting events, please check [Amazon Chime SDK meeting events guide](https://aws.github.io/amazon-chime-sdk-js/modules/meetingevents.html).
+
+You can access the provided event data with [useMeetingEventData](/story/sdk-hooks-usemeetingeventdata--page) hook.
+
+## Importing
+
+```jsx
+import { MeetingEventProvider } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+If you are using `MeetingProvider`, the `MeetingEventProvider` is rendered by default and you don't need to do anything else.
+
+```jsx
+import React from 'react';
+import { MeetingProvider, useMeetingEventData } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MeetingEventReceiver />
+  </MeetingProvider>
+);
+
+const MeetingEventReceiver = () => {
+  const eventData = useMeetingEventData();
+  console.log('Event Data', eventData);
+  return null;
+}
+```
+
+### Dependencies
+- [MeetingProvider](/story/sdk-providers-meetingprovider--page)

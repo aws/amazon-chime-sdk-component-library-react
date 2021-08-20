@@ -1,0 +1,49 @@
+<Meta title="SDK Hooks/useMeetingEventData" />
+
+# useMeetingEventData
+
+The `useMeetingEventData` hook returns the event data provided by `MeetingEventProvider`.
+Please note that, this provides only the latest meeting event posted, hence olders event will be overriden as new event is received.
+
+### Return Value
+
+Return value will be `undefined` unless any Amazon Chime SDK meeting event is received.
+> Note: [EventName](https://aws.github.io/amazon-chime-sdk-js/globals.html#eventname) and [EventAttributes](https://aws.github.io/amazon-chime-sdk-js/interfaces/eventattributes.html) are types from [Amazon Chime SDK for JavaScript](https://github.com/aws/amazon-chime-sdk-js).
+
+```typescript
+{
+  name: EventName;
+  attributes: EventAttributes;
+}
+```
+
+## Importing
+
+```javascript
+import { useMeetingEventData } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+This hook depends on the `MeetingEventProvider`.
+
+```jsx
+import React from 'react';
+import { MeetingProvider, useMeetingEventData } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MeetingEventReceiver />
+  </MeetingProvider>
+);
+
+const MeetingEventReceiver = () => {
+  const eventData = useMeetingEventData();
+  console.log('Event Data', eventData);
+  return null;
+}
+```
+
+### Dependencies
+- [MeetingProvider](/story/sdk-providers-meetingprovider--page)
+- [MeetingEventProvider](/story/sdk-providers-meetingeventprovider--page)

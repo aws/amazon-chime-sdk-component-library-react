@@ -1,7 +1,7 @@
 // Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useContext, useState, createContext } from 'react';
+import React, { useContext, useState, createContext, ReactNode } from 'react';
 import { Logger, LogLevel, VideoDownlinkBandwidthPolicy } from 'amazon-chime-sdk-js';
 
 import MeetingManager from './MeetingManager';
@@ -14,6 +14,7 @@ import { LocalVideoProvider } from '../LocalVideoProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
 import { LocalAudioOutputProvider } from '../LocalAudioOutputProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
+import { MeetingEventProvider } from '../MeetingEventProvider';
 
 interface Props {
   /** Determines how verbose the logging statements will be */
@@ -35,6 +36,10 @@ interface Props {
    * Check `meetingManager` prop documentation for more information.
    */
   meetingManager?: MeetingManager;
+  /**
+   * Whether or not to enable Amazon Chime SDK for JavaScript meeting events.
+   */
+  enableMeetingEvents?: boolean;
 }
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
@@ -46,31 +51,47 @@ export const MeetingProvider: React.FC<Props> = ({
   logger,
   videoDownlinkBandwidthPolicy,
   meetingManager: meetingManagerProp,
+  enableMeetingEvents = false,
   children,
 }) => {
   const [meetingManager] = useState(
     () => meetingManagerProp || new MeetingManager({ logLevel, postLogConfig, simulcastEnabled, logger, videoDownlinkBandwidthPolicy })
   );
 
+  const wrapProviders = (children: ReactNode) => 
+    <AudioVideoProvider>
+      <DevicesProvider>
+        <RosterProvider>
+          <RemoteVideoTileProvider>
+            <LocalVideoProvider>
+              <LocalAudioOutputProvider>
+                <ContentShareProvider>
+                  <FeaturedVideoTileProvider>
+                    {children}
+                  </FeaturedVideoTileProvider>
+                </ContentShareProvider>
+              </LocalAudioOutputProvider>
+            </LocalVideoProvider>
+          </RemoteVideoTileProvider>
+        </RosterProvider>
+      </DevicesProvider>
+    </AudioVideoProvider>;
+
+  const wrapMeetingEventProvider = (children: ReactNode) => {
+    const wrappedProviders = wrapProviders(children);
+    if (enableMeetingEvents) {
+      return (
+        <MeetingEventProvider>
+          {wrappedProviders}
+        </MeetingEventProvider>
+      );
+    }
+    return wrappedProviders;
+  }
+
   return (
     <MeetingContext.Provider value={meetingManager}>
-      <AudioVideoProvider>
-        <DevicesProvider>
-          <RosterProvider>
-            <RemoteVideoTileProvider>
-              <LocalVideoProvider>
-                <LocalAudioOutputProvider>
-                  <ContentShareProvider>
-                    <FeaturedVideoTileProvider>
-                      {children}
-                    </FeaturedVideoTileProvider>
-                  </ContentShareProvider>
-                </LocalAudioOutputProvider>
-              </LocalVideoProvider>
-            </RemoteVideoTileProvider>
-          </RosterProvider>
-        </DevicesProvider>
-      </AudioVideoProvider>
+      {wrapMeetingEventProvider(children)}
     </MeetingContext.Provider>
   );
 };
