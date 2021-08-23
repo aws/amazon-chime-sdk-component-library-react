@@ -161,7 +161,7 @@ export {
   UserActivityProvider,
   useUserActivityState,
 } from './providers/UserActivityProvider';
-export { useMeetingEventData, MeetingEventProvider } from './providers/MeetingEventProvider';
+export { useMeetingEvent, MeetingEventProvider } from './providers/MeetingEventProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';

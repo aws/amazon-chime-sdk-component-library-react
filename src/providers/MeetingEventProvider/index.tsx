@@ -6,7 +6,7 @@ import { EventName, EventAttributes } from 'amazon-chime-sdk-js';
 
 import { useMeetingManager } from '../MeetingProvider';
 
-export type MeetingEventProviderContextType = {
+type MeetingEventProviderContextType = {
   name: EventName;
   attributes: EventAttributes;
 } | undefined;
@@ -14,31 +14,31 @@ export type MeetingEventProviderContextType = {
 export const MeetingEventProviderContext = createContext<MeetingEventProviderContextType>(undefined);
 
 const MeetingEventProvider: React.FC = ({ children }) => {
-  const [eventData, setEventData] = useState<MeetingEventProviderContextType>();
+  const [meetingEvent, setMeetingEvent] = useState<MeetingEventProviderContextType>();
   const meetingManager = useMeetingManager();
 
   useEffect(() => {
-    function eventDataUpdateCb(name: EventName, attributes: EventAttributes) {
-      setEventData({name, attributes});
+    function meetingEventUpdateCallback(name: EventName, attributes: EventAttributes) {
+      setMeetingEvent({name, attributes});
     }
 
-    meetingManager.subscribeToEventDidReceive(eventDataUpdateCb);
+    meetingManager.subscribeToEventDidReceive(meetingEventUpdateCallback);
 
     return () => {
-      meetingManager.unsubscribeFromEventDidReceive(eventDataUpdateCb);
+      meetingManager.unsubscribeFromEventDidReceive(meetingEventUpdateCallback);
     };
   }, []);
 
   return (
-    <MeetingEventProviderContext.Provider value={eventData}>
+    <MeetingEventProviderContext.Provider value={meetingEvent}>
       {children}
     </MeetingEventProviderContext.Provider>
   );
 };
 
-const useMeetingEventData = (): MeetingEventProviderContextType => {
-  const eventData = useContext(MeetingEventProviderContext);
-  return eventData;
+const useMeetingEvent = (): MeetingEventProviderContextType => {
+  const meetingEvent = useContext(MeetingEventProviderContext);
+  return meetingEvent;
 };
 
-export { useMeetingEventData, MeetingEventProvider };
+export { useMeetingEvent, MeetingEventProvider };

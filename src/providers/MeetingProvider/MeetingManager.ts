@@ -118,7 +118,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   logger: Logger | undefined;
 
-  meetingEventObservers: ((name: EventName, attributes: EventAttributes) => void)[] = [];
+  private meetingEventObserverSet = new Set<(name: EventName, attributes: EventAttributes) => void>();
 
   constructor(config: ManagerConfig) {
     if (config.simulcastEnabled) {
@@ -217,7 +217,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   eventDidReceive = (name: EventName, attributes: EventAttributes) => {
     this.publishEventDidReceiveUpdate(name, attributes);
-  }
+  };
 
   async initializeMeetingSession(
     configuration: MeetingSessionConfiguration,
@@ -240,7 +240,7 @@ export class MeetingManager implements AudioVideoObserver {
     this.audioVideo = this.meetingSession.audioVideo;
     
     // When an attendee leaves, we remove AudioVideoObservers and nullify AudioVideoFacade and MeetingSession object.
-    // This results into missing few meetingEvents triggered with audioVideoDidStop such as meetingEnded, meetingFailed and meetingStartFailed.
+    // This results into missing few meeting events triggered with audioVideoDidStop such as meetingEnded, meetingFailed and meetingStartFailed.
     // We may also loose audioInputUnselected and videoInputUnselected events as we choose null devices when an attendee leaves.
     // When a new AudioVideoFacade object is created remove and re-add the eventDidReceive observer which wont leak.
     this.audioVideo.removeObserver({ eventDidReceive: this.eventDidReceive });
@@ -737,21 +737,17 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
-  subscribeToEventDidReceive(callback: (name: EventName, attributes: EventAttributes) => void): void {
-    this.meetingEventObservers.push(callback);
-  }
+  subscribeToEventDidReceive = (callback: (name: EventName, attributes: EventAttributes) => void): void => {
+    this.meetingEventObserverSet.add(callback);
+  };
 
-  unsubscribeFromEventDidReceive(callbackToRemove: (name: EventName, attributes: EventAttributes) => void): void {
-    this.meetingEventObservers = this.meetingEventObservers.filter(
-      callback => callback !== callbackToRemove
-    );
+  unsubscribeFromEventDidReceive = (callbackToRemove: (name: EventName, attributes: EventAttributes) => void): void => {
+    this.meetingEventObserverSet.delete(callbackToRemove);
   };
 
   private publishEventDidReceiveUpdate = (name: EventName, attributes: EventAttributes) => {
-    for (const callback of this.meetingEventObservers) {
-      callback(name, attributes); 
-    }
-  }
+    this.meetingEventObserverSet.forEach((callback) => callback(name, attributes));
+  };
 
 }
 

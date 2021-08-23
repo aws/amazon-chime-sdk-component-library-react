@@ -194,41 +194,35 @@ const MyApp = () => {
   <button onClick={joinMeeting}>Join Meeting</button>;
 };
 
-8. _Optional_ - Enable Amazon Chime SDK Meeting Events
-
-You can receive Amazon Chime SDK meeting events in your application by using the `MeetingProvider` and the `useMeetingEventData` hook.
-For more information, please check documentation on below components:
-- [MeetingEventProvider](/story/sdk-providers-meetingeventprovider--page)
-- [useMeetingEventData](/story/sdk-hooks-usemeetingeventdata--page)
-
-```jsx
-import React from 'react';
-import { MeetingProvider, useMeetingEventData } from 'amazon-chime-sdk-component-library-react';
-
-const meetingConfig = {
-  enableMeetingEvents: true, // Default is false.
-};
-
-const MyApp = () => (
-  <MeetingProvider {...meetingConfig}>
-    <MeetingEventReceiver />
-  </MeetingProvider>
-);
-
-const MeetingEventReceiver = () => {
-  const eventData = useMeetingEventData();
-  console.log('Event Data', eventData);
-  return null;
-}
-```
-
-
-
 const App = () => (
   <MeetingProvider>
     <MyApp />
   </MeetingProvider>
 );
+```
+
+8. _Optional_ - Receive Amazon Chime SDK Meeting Events
+
+You can receive Amazon Chime SDK meeting events in your application by using the `MeetingProvider` and the `useMeetingEvent` hook.
+For more information, please check the documentation on the following components:
+- [MeetingEventProvider](/story/sdk-providers-meetingeventprovider--page)
+- [useMeetingEvent](/story/sdk-hooks-usemeetingevent--page)
+
+```jsx
+import React from 'react';
+import { MeetingProvider, useMeetingEvent } from 'amazon-chime-sdk-component-library-react';
+
+const MyApp = () => (
+  <MeetingProvider>
+    <MeetingEventReceiver />
+  </MeetingProvider>
+);
+
+const MeetingEventReceiver = () => {
+  const meetingEvent = useMeetingEvent();
+  console.log('Received a meeting event', meetingEvent);
+  return null;
+};
 ```
 
 ## FAQ
