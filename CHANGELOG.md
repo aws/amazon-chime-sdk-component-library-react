@@ -12,9 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Added
+
 - Add `MeetingEventProvider` and `useMeetingEvent` hook to receive meeting events from `amazon-chime-sdk-js`. Please check [Amazon Chime SDK for JavaScript meeting events guide](https://aws.github.io/amazon-chime-sdk-js/modules/meetingevents.html) for more information on meeting events.
 
 ### Changed
+
+- In `MeetingManager` add a private property `config` to store the `config` object passed in and remove `logLevel`, `postLoggerConfig`, `simulcastEnabled`, `videoDownlinkBandwidthPolicy` and `logger` properties. Use the newly added property `config` instead of the removed properties to initialize the `MeetingSession`.
 
 ### Removed
 
