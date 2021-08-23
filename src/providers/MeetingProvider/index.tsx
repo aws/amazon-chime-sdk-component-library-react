@@ -14,6 +14,7 @@ import { LocalVideoProvider } from '../LocalVideoProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
 import { LocalAudioOutputProvider } from '../LocalAudioOutputProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
+import { MeetingEventProvider } from '../MeetingEventProvider';
 
 interface Props {
   /** Determines how verbose the logging statements will be */
@@ -54,23 +55,25 @@ export const MeetingProvider: React.FC<Props> = ({
 
   return (
     <MeetingContext.Provider value={meetingManager}>
-      <AudioVideoProvider>
-        <DevicesProvider>
-          <RosterProvider>
-            <RemoteVideoTileProvider>
-              <LocalVideoProvider>
-                <LocalAudioOutputProvider>
-                  <ContentShareProvider>
-                    <FeaturedVideoTileProvider>
-                      {children}
-                    </FeaturedVideoTileProvider>
-                  </ContentShareProvider>
-                </LocalAudioOutputProvider>
-              </LocalVideoProvider>
-            </RemoteVideoTileProvider>
-          </RosterProvider>
-        </DevicesProvider>
-      </AudioVideoProvider>
+      <MeetingEventProvider>
+        <AudioVideoProvider>
+          <DevicesProvider>
+            <RosterProvider>
+              <RemoteVideoTileProvider>
+                <LocalVideoProvider>
+                  <LocalAudioOutputProvider>
+                    <ContentShareProvider>
+                      <FeaturedVideoTileProvider>
+                        {children}
+                      </FeaturedVideoTileProvider>
+                    </ContentShareProvider>
+                  </LocalAudioOutputProvider>
+                </LocalVideoProvider>
+              </RemoteVideoTileProvider>
+            </RosterProvider>
+          </DevicesProvider>
+        </AudioVideoProvider>
+      </MeetingEventProvider>
     </MeetingContext.Provider>
   );
 };

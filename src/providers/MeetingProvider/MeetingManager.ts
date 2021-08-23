@@ -17,6 +17,8 @@ import {
   EventReporter,
   VideoDownlinkBandwidthPolicy,
   Logger,
+  EventName,
+  EventAttributes,
 } from 'amazon-chime-sdk-js';
 
 import {
@@ -116,6 +118,8 @@ export class MeetingManager implements AudioVideoObserver {
 
   logger: Logger | undefined;
 
+  private meetingEventObserverSet = new Set<(name: EventName, attributes: EventAttributes) => void>();
+
   constructor(config: ManagerConfig) {
     if (config.simulcastEnabled) {
       this.simulcastEnabled = config.simulcastEnabled;
@@ -211,6 +215,10 @@ export class MeetingManager implements AudioVideoObserver {
     this.publishActiveSpeaker();
   }
 
+  eventDidReceive = (name: EventName, attributes: EventAttributes) => {
+    this.publishEventDidReceiveUpdate(name, attributes);
+  };
+
   async initializeMeetingSession(
     configuration: MeetingSessionConfiguration,
     deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo,
@@ -230,10 +238,18 @@ export class MeetingManager implements AudioVideoObserver {
     );
 
     this.audioVideo = this.meetingSession.audioVideo;
+    
+    // When an attendee leaves, we remove AudioVideoObservers and nullify AudioVideoFacade and MeetingSession object.
+    // This results into missing few meeting events triggered with audioVideoDidStop such as meetingEnded, meetingFailed and meetingStartFailed.
+    // We may also loose audioInputUnselected and videoInputUnselected events as we choose null devices when an attendee leaves.
+    // When a new AudioVideoFacade object is created remove and re-add the eventDidReceive observer which wont leak.
+    this.audioVideo.removeObserver({ eventDidReceive: this.eventDidReceive });
+    this.audioVideo.addObserver({ eventDidReceive: this.eventDidReceive });
+    
+    this.publishAudioVideo();
     this.setupAudioVideoObservers();
     this.setupDeviceLabelTrigger(deviceLabels);
     await this.listAndSelectDevices(deviceLabels);
-    this.publishAudioVideo();
     this.setupActiveSpeakerDetection();
     this.meetingStatus = MeetingStatus.Loading;
     this.publishMeetingStatus();
@@ -719,6 +735,18 @@ export class MeetingManager implements AudioVideoObserver {
     for (const callback of this.deviceLabelTriggerChangeObservers) {
       callback();
     }
+  };
+
+  subscribeToEventDidReceive = (callback: (name: EventName, attributes: EventAttributes) => void): void => {
+    this.meetingEventObserverSet.add(callback);
+  };
+
+  unsubscribeFromEventDidReceive = (callbackToRemove: (name: EventName, attributes: EventAttributes) => void): void => {
+    this.meetingEventObserverSet.delete(callbackToRemove);
+  };
+
+  private publishEventDidReceiveUpdate = (name: EventName, attributes: EventAttributes) => {
+    this.meetingEventObserverSet.forEach((callback) => callback(name, attributes));
   };
 
 }

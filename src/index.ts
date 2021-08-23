@@ -102,6 +102,7 @@ export {
   useNotificationDispatch,
 } from './providers/NotificationProvider';
 export { AudioVideoContext } from './providers/AudioVideoProvider';
+export { MeetingEventProviderContext } from './providers/MeetingEventProvider';
 
 // Hooks
 export { useClickOutside } from './hooks/useClickOutside';
@@ -160,6 +161,7 @@ export {
   UserActivityProvider,
   useUserActivityState,
 } from './providers/UserActivityProvider';
+export { useMeetingEvent, MeetingEventProvider } from './providers/MeetingEventProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';
