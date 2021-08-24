@@ -6,6 +6,7 @@ import {
   ConsoleLogger,
   DefaultDeviceController,
   DefaultMeetingSession,
+  LogLevel,
   MeetingSessionConfiguration,
   DefaultActiveSpeakerPolicy,
   MeetingSessionStatus,
@@ -14,6 +15,8 @@ import {
   MultiLogger,
   MeetingSessionPOSTLogger,
   EventReporter,
+  VideoDownlinkBandwidthPolicy,
+  Logger,
   EventName,
   EventAttributes,
 } from 'amazon-chime-sdk-js';
@@ -29,6 +32,7 @@ import {
   MeetingJoinData,
   AttendeeResponse,
   FullDeviceInfoType,
+  PostLogConfig,
   ManagerConfig
 } from './types';
 
@@ -102,11 +106,57 @@ export class MeetingManager implements AudioVideoObserver {
     fullDeviceInfo: FullDeviceInfoType
   ) => void)[] = [];
 
+  // This variable will be deprecated in favor of `meetingManagerConfig`.
+  // Please use `meetingManagerConfig` to use `ManagerConfig` values.
+  logLevel: LogLevel = LogLevel.WARN;
+
+  // This variable will be deprecated in favor of `meetingManagerConfig`.
+  // Please use `meetingManagerConfig` to use `ManagerConfig` values.
+  postLoggerConfig: PostLogConfig | null = null;
+
   eventReporter: EventReporter;
+
+  // This variable will be deprecated in favor of `meetingManagerConfig`.
+  // Please use `meetingManagerConfig` to use `ManagerConfig` values.
+  simulcastEnabled: boolean = false;
+
+  // This variable will be deprecated in favor of `meetingManagerConfig`.
+  // Please use `meetingManagerConfig` to use `ManagerConfig` values.
+  videoDownlinkBandwidthPolicy: VideoDownlinkBandwidthPolicy | undefined;
+
+  // This variable will be deprecated in favor of `meetingManagerConfig`.
+  // Please use `meetingManagerConfig` to use `ManagerConfig` values.
+  logger: Logger | undefined;
 
   private meetingEventObserverSet = new Set<(name: EventName, attributes: EventAttributes) => void>();
 
-  constructor(private config: ManagerConfig) { }
+  constructor(private meetingManagerConfig: ManagerConfig) {
+    const {
+      simulcastEnabled,
+      logger: configLogger,
+      logLevel,
+      postLogConfig,
+      videoDownlinkBandwidthPolicy
+    } = this.meetingManagerConfig;
+
+    // We are assigning the values from the `meetingManagerConfig` to preserve backward compatibility.
+    // Please use `this.meetingManagerConfig` for any values going forward.
+    if (simulcastEnabled) {
+      this.simulcastEnabled = simulcastEnabled;
+    }
+    if (configLogger) {
+      this.logger = configLogger;
+    } else {
+      this.logLevel = logLevel;
+      if (postLogConfig) {
+        this.postLoggerConfig = postLogConfig;
+      }
+    }
+
+    if (videoDownlinkBandwidthPolicy) {
+      this.videoDownlinkBandwidthPolicy = videoDownlinkBandwidthPolicy;
+    }
+  }
 
   initializeMeetingManager(): void {
     this.meetingSession = null;
@@ -185,13 +235,19 @@ export class MeetingManager implements AudioVideoObserver {
     configuration: MeetingSessionConfiguration,
     deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo,
   ): Promise<any> {
-    const { logger: inputLogger, simulcastEnabled, videoDownlinkBandwidthPolicy } = this.config;
-    const logger = inputLogger ? inputLogger : this.createLogger(configuration);
-
+    const {
+      simulcastEnabled,
+      logger: configLogger,
+      videoDownlinkBandwidthPolicy
+    } = this.meetingManagerConfig;
+    
+    // We are assigning the values from the `meetingManagerConfig` to preserve backward compatibility.
+    // Please use `this.meetingManagerConfig` for any values going forward.
     if (simulcastEnabled) {
       configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
       configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = true;
-    };
+    }
+    const logger = configLogger ? configLogger : this.createLogger(configuration);
 
     if (videoDownlinkBandwidthPolicy) {
       configuration.videoDownlinkBandwidthPolicy = videoDownlinkBandwidthPolicy;
@@ -206,15 +262,13 @@ export class MeetingManager implements AudioVideoObserver {
     );
 
     this.audioVideo = this.meetingSession.audioVideo;
-
+    this.publishAudioVideo();
     // When an attendee leaves, we remove AudioVideoObservers and nullify AudioVideoFacade and MeetingSession object.
     // This results into missing few meeting events triggered with audioVideoDidStop such as meetingEnded, meetingFailed and meetingStartFailed.
     // We may also loose audioInputUnselected and videoInputUnselected events as we choose null devices when an attendee leaves.
     // When a new AudioVideoFacade object is created remove and re-add the eventDidReceive observer which wont leak.
     this.audioVideo.removeObserver({ eventDidReceive: this.eventDidReceive });
     this.audioVideo.addObserver({ eventDidReceive: this.eventDidReceive });
-
-    this.publishAudioVideo();
     this.setupAudioVideoObservers();
     this.setupDeviceLabelTrigger(deviceLabels);
     await this.listAndSelectDevices(deviceLabels);
@@ -224,20 +278,21 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   createLogger(configuration: MeetingSessionConfiguration) {
-    const { logLevel, postLogConfig } = this.config;
+    const { logLevel, postLogConfig } = this.meetingManagerConfig;
     const consoleLogger = new ConsoleLogger('SDK', logLevel);
     let logger: ConsoleLogger | MultiLogger = consoleLogger;
 
     if (postLogConfig) {
+      const { name, batchSize, intervalMs, url, logLevel } = postLogConfig;
       logger = new MultiLogger(
         consoleLogger,
         new MeetingSessionPOSTLogger(
-          postLogConfig.name,
+          name,
           configuration,
-          postLogConfig.batchSize,
-          postLogConfig.intervalMs,
-          postLogConfig.url,
-          postLogConfig.logLevel
+          batchSize,
+          intervalMs,
+          url,
+          logLevel
         )
       );
     }
