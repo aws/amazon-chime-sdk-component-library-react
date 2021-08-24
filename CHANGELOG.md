@@ -12,9 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Added
-- Add `MeetingEventProvider` and `useMeetingEvent` hook to receive meeting events from `amazon-chime-sdk-js`. Please check [Amazon Chime SDK for JavaScript meeting events guide](https://aws.github.io/amazon-chime-sdk-js/modules/meetingevents.html) for more information on meeting events.
+- Add [MeetingEventProvider](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/sdk-providers-meetingeventprovider--page) and [useMeetingEvent](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/sdk-hooks-usemeetingevent--page) hook to receive meeting events from `amazon-chime-sdk-js`. Please check [Amazon Chime SDK for JavaScript meeting events guide](https://aws.github.io/amazon-chime-sdk-js/modules/meetingevents.html) for more information on meeting events.
 
 ### Changed
+- Add `meetingManagerConfig: ManagerConfig` object to `MeetingManager` and use it in `initializeMeetingSession` method. We will use values from `meetingManagerConfig: ManagerConfig` directly instead of class level variables.
 
 ### Removed
 
