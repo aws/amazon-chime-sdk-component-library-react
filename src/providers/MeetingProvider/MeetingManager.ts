@@ -6,7 +6,6 @@ import {
   ConsoleLogger,
   DefaultDeviceController,
   DefaultMeetingSession,
-  LogLevel,
   MeetingSessionConfiguration,
   DefaultActiveSpeakerPolicy,
   MeetingSessionStatus,
@@ -15,8 +14,6 @@ import {
   MultiLogger,
   MeetingSessionPOSTLogger,
   EventReporter,
-  VideoDownlinkBandwidthPolicy,
-  Logger,
   EventName,
   EventAttributes,
 } from 'amazon-chime-sdk-js';
@@ -32,7 +29,6 @@ import {
   MeetingJoinData,
   AttendeeResponse,
   FullDeviceInfoType,
-  PostLogConfig,
   ManagerConfig
 } from './types';
 
@@ -106,38 +102,11 @@ export class MeetingManager implements AudioVideoObserver {
     fullDeviceInfo: FullDeviceInfoType
   ) => void)[] = [];
 
-  logLevel: LogLevel = LogLevel.WARN;
-
-  postLoggerConfig: PostLogConfig | null = null;
-
   eventReporter: EventReporter;
-
-  simulcastEnabled: boolean = false;
-
-  videoDownlinkBandwidthPolicy: VideoDownlinkBandwidthPolicy | undefined;
-
-  logger: Logger | undefined;
 
   private meetingEventObserverSet = new Set<(name: EventName, attributes: EventAttributes) => void>();
 
-  constructor(config: ManagerConfig) {
-    if (config.simulcastEnabled) {
-      this.simulcastEnabled = config.simulcastEnabled;
-    }
-
-    if (config.logger) {
-      this.logger = config.logger;
-    } else {
-      this.logLevel = config.logLevel;
-      if (config.postLogConfig) {
-        this.postLoggerConfig = config.postLogConfig;
-      }
-    }
-
-    if (config.videoDownlinkBandwidthPolicy) {
-      this.videoDownlinkBandwidthPolicy = config.videoDownlinkBandwidthPolicy;
-    }
-  }
+  constructor(private config: ManagerConfig) { }
 
   initializeMeetingManager(): void {
     this.meetingSession = null;
@@ -158,8 +127,6 @@ export class MeetingManager implements AudioVideoObserver {
     this.meetingStatus = MeetingStatus.Loading;
     this.publishMeetingStatus();
     this.audioVideoObservers = {};
-    this.videoDownlinkBandwidthPolicy = undefined;
-    this.logger = undefined;
   }
 
   async join({ meetingInfo, attendeeInfo, deviceLabels = DeviceLabels.AudioAndVideo, eventReporter }: MeetingJoinData) {
@@ -170,11 +137,6 @@ export class MeetingManager implements AudioVideoObserver {
 
     this.meetingRegion = meetingInfo.MediaRegion;
     this.meetingId = this.configuration.meetingId;
-
-    if (this.simulcastEnabled) {
-      this.configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
-      this.configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = true;
-    };
 
     if (eventReporter) {
       this.eventReporter = eventReporter;
@@ -223,10 +185,16 @@ export class MeetingManager implements AudioVideoObserver {
     configuration: MeetingSessionConfiguration,
     deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo,
   ): Promise<any> {
-    const logger = this.logger ? this.logger : this.createLogger(configuration);
+    const { logger: inputLogger, simulcastEnabled, videoDownlinkBandwidthPolicy } = this.config;
+    const logger = inputLogger ? inputLogger : this.createLogger(configuration);
 
-    if (this.videoDownlinkBandwidthPolicy) {
-      configuration.videoDownlinkBandwidthPolicy = this.videoDownlinkBandwidthPolicy;
+    if (simulcastEnabled) {
+      configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
+      configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = true;
+    };
+
+    if (videoDownlinkBandwidthPolicy) {
+      configuration.videoDownlinkBandwidthPolicy = videoDownlinkBandwidthPolicy;
     }
 
     const deviceController = new DefaultDeviceController(logger);
@@ -238,14 +206,14 @@ export class MeetingManager implements AudioVideoObserver {
     );
 
     this.audioVideo = this.meetingSession.audioVideo;
-    
+
     // When an attendee leaves, we remove AudioVideoObservers and nullify AudioVideoFacade and MeetingSession object.
     // This results into missing few meeting events triggered with audioVideoDidStop such as meetingEnded, meetingFailed and meetingStartFailed.
     // We may also loose audioInputUnselected and videoInputUnselected events as we choose null devices when an attendee leaves.
     // When a new AudioVideoFacade object is created remove and re-add the eventDidReceive observer which wont leak.
     this.audioVideo.removeObserver({ eventDidReceive: this.eventDidReceive });
     this.audioVideo.addObserver({ eventDidReceive: this.eventDidReceive });
-    
+
     this.publishAudioVideo();
     this.setupAudioVideoObservers();
     this.setupDeviceLabelTrigger(deviceLabels);
@@ -256,19 +224,20 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   createLogger(configuration: MeetingSessionConfiguration) {
-    const consoleLogger = new ConsoleLogger('SDK', this.logLevel);
+    const { logLevel, postLogConfig } = this.config;
+    const consoleLogger = new ConsoleLogger('SDK', logLevel);
     let logger: ConsoleLogger | MultiLogger = consoleLogger;
 
-    if (this.postLoggerConfig) {
+    if (postLogConfig) {
       logger = new MultiLogger(
         consoleLogger,
         new MeetingSessionPOSTLogger(
-          this.postLoggerConfig.name,
+          postLogConfig.name,
           configuration,
-          this.postLoggerConfig.batchSize,
-          this.postLoggerConfig.intervalMs,
-          this.postLoggerConfig.url,
-          this.postLoggerConfig.logLevel
+          postLogConfig.batchSize,
+          postLogConfig.intervalMs,
+          postLogConfig.url,
+          postLogConfig.logLevel
         )
       );
     }
