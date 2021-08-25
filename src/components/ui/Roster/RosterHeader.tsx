@@ -34,6 +34,8 @@ export interface RosterHeaderProps
   onSearch?: (e: ChangeEvent<HTMLInputElement>) => void;
   /** The callback fired when roster is closed. */
   onClose?: () => void;
+  /** The callback fired when the modile toggler is clicked*/
+  onMobileToggleClick?: () => void;
   /** The PopOver menu for more options. */
   menu?: React.ReactNode;
   /** The label for availability. */
@@ -89,6 +91,7 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
   searchValue,
   onClose,
   onSearch,
+  onMobileToggleClick,
   className,
   menu,
   a11yMenuLabel = '',
