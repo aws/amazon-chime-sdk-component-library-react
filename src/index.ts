@@ -71,6 +71,7 @@ export {
 } from './components/sdk/DeviceSelection';
 export {
   AudioInputControl,
+  AudioInputVFControl,
   AudioOutputControl,
   ContentShareControl,
   VideoInputControl,
@@ -114,6 +115,7 @@ export { useApplyVideoObjectFit } from './hooks/useApplyVideoObjectFit';
 export { useElementAspectRatio } from './hooks/useElementAspectRatio';
 
 export { useMeetingManager } from './providers/MeetingProvider';
+export { VoiceFocusProvider } from './providers/VoiceFocusProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRosterState } from './providers/RosterProvider';
 export { useRemoteVideoTileState } from './providers/RemoteVideoTileProvider';

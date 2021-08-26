@@ -56,6 +56,10 @@ export const StyledPopOverItem = styled.li`
       color: ${(props) => props.theme.popOver.active.itemText};
       outline: 0;
     }
+
+    &:disabled {
+      color: ${(props) => props.theme.popOver.disabled};
+    }
   }
 
   a {

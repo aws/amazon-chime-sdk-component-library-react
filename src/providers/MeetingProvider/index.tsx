@@ -23,6 +23,8 @@ interface Props {
   postLogConfig?: PostLogConfig;
   /** Whether or not to enable simulcast for the meeting session */
   simulcastEnabled?: boolean;
+  /** Whether or not to enable Web Audio for the meeting session */
+  enableWebAudio?: boolean;
   /** The `Logger` object you want to use in meeting session.
    * If you pass in a `Logger` object using this parameter, 
    * the `MeetingManager` will use this object instead of creating a logger 
@@ -44,13 +46,14 @@ export const MeetingProvider: React.FC<Props> = ({
   logLevel = LogLevel.WARN,
   postLogConfig,
   simulcastEnabled = false,
+  enableWebAudio = false,
   logger,
   videoDownlinkBandwidthPolicy,
   meetingManager: meetingManagerProp,
   children,
 }) => {
   const [meetingManager] = useState(
-    () => meetingManagerProp || new MeetingManager({ logLevel, postLogConfig, simulcastEnabled, logger, videoDownlinkBandwidthPolicy })
+    () => meetingManagerProp || new MeetingManager({ logLevel, postLogConfig, simulcastEnabled, enableWebAudio, logger, videoDownlinkBandwidthPolicy })
   );
 
   return (
