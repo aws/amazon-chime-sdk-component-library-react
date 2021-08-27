@@ -85,7 +85,6 @@ function shouldContinuePrompt(callback = null) {
 
 const packDependency = () => {
   spawnOrFail('npm', ['install']);
-  spawnOrFail('npm', ['run build']);
   spawnOrFail('npm', ['pack']);
 }
 
