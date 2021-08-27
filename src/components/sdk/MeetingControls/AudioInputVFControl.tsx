@@ -143,7 +143,7 @@ const AudioInputVFControl: React.FC<Props> = ({
     }
 
     onVFCheckboxChange();
-  }, [isVoiceFocusOn, addVoiceFocus]);
+  }, [isVoiceFocusOn]);
 
   return (
     <ControlBarButton
