@@ -47,7 +47,7 @@ const AudioInputVFControl: React.FC<Props> = ({
   const [isVoiceFocusEnabled, setIsVoiceFocusEnabled] = useState(false);
   const [dropdownWithVFOptions, setDropdownWithVFOptions] = useState<ReactNode[] | null>(null);
   const { muted, toggleMute } = useToggleLocalMute();
-  const [device, setDevice] = useState<Device | AudioTransformDevice | null>(meetingManager.selectedAudioInputTransformDevice);
+  const [device, setDevice] = useState<Device | AudioTransformDevice | null>(meetingManager.selectedAudioInputDevice);
   const { isVoiceFocusSupported, addVoiceFocus } = useVoiceFocus();
   const audioInputConfig: DeviceConfig = {
     additionalDevices: true,
@@ -118,6 +118,7 @@ const AudioInputVFControl: React.FC<Props> = ({
     // the click handler.
     addVoiceFocus,
     device,
+    devices.length,
     isLoading,
     isVoiceFocusEnabled,
     isVoiceFocusOn,
