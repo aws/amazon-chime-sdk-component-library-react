@@ -115,7 +115,7 @@ export { useApplyVideoObjectFit } from './hooks/useApplyVideoObjectFit';
 export { useElementAspectRatio } from './hooks/useElementAspectRatio';
 
 export { useMeetingManager } from './providers/MeetingProvider';
-export { VoiceFocusProvider } from './providers/VoiceFocusProvider';
+export { VoiceFocusProvider, useVoiceFocus } from './providers/VoiceFocusProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRosterState } from './providers/RosterProvider';
 export { useRemoteVideoTileState } from './providers/RemoteVideoTileProvider';
@@ -170,6 +170,7 @@ export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';
 
 // Types
 export { VideoQuality } from './hooks/sdk/useSelectVideoQuality';
+export { RosterAttendeeType, RosterType } from './types';
 
 // enums
 export {
@@ -177,7 +178,7 @@ export {
   DevicePermissionStatus,
   DeviceLabels,
   DeviceLabelTrigger,
-} from './types/index';
+} from './types';
 export { Severity, ActionType } from './providers/NotificationProvider';
 
 // Class
