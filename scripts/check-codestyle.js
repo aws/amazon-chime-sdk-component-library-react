@@ -51,36 +51,6 @@ let allFiles = function() {
   return srcFiles.concat(tests());
 };
 
-let joinYears = function(years) {
-  let prevYear = null;
-  let rangeEnd = null;
-  let out = '';
-  for (const year of years) {
-    if (parseInt(prevYear) + 1 === parseInt(year)) {
-      rangeEnd = year;
-    } else {
-      if (rangeEnd) {
-        out += `-${rangeEnd}`;
-        rangeEnd = null;
-      }
-      if (out !== '') {
-        out += ', ';
-      }
-      out += year;
-    }
-    prevYear = year;
-  }
-  if (rangeEnd) {
-    out += `-${rangeEnd}`;
-    rangeEnd = null;
-  }
-  return out;
-};
-
-let unique = function(value, index, self) {
-  return self.indexOf(value) === index;
-};
-
 tests().forEach(file => {
   if (
     file.includes(`.DS_Store`) ||
@@ -119,24 +89,8 @@ allFiles().forEach(file => {
   if (file.endsWith('.d.ts') || file.includes('.DS_Store')) {
     return;
   }
-  let yearsForFileInGitHistory = [];
-  const stdout = exec(`git log --pretty=format:'%ad' --date=short ${file}`);
 
-  const dates = [];
-  for (const line of stdout
-    .toString()
-    .trim()
-    .split('\n')) {
-    const year = line.replace(/[-].*/, '').replace(`'`, '');
-    dates.push(year);
-    allYears.push(year);
-  }
-
-  yearsForFileInGitHistory = dates.sort().filter(unique);
-
-  const copyright = `// Copyright ${joinYears(
-    yearsForFileInGitHistory
-  )} Amazon.com, Inc. or its affiliates. All Rights Reserved.`;
+  const copyright = `// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.`;
   const fileLines = fs
     .readFileSync(file)
     .toString()
@@ -185,9 +139,7 @@ allFiles().forEach(file => {
   }
 });
 
-const footerCopyright = `\nCopyright ${joinYears(
-  allYears.sort().filter(unique)
-)} Amazon.com, Inc. or its affiliates. All Rights Reserved.\n`;
+const footerCopyright = `\nCopyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\n`;
 
 for (const file of ['README.md', 'NOTICE']) {
   if (
