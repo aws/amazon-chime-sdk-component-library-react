@@ -1,6 +1,6 @@
 {
   "name": "amazon-chime-sdk-component-library-react",
-  "version": "2.9.0",
+  "version": "2.9.1",
   "description": "Amazon Chime SDK Component Library - React",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
