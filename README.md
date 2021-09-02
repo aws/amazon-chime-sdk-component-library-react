@@ -136,4 +136,4 @@ If you have more questions, or require support for your business, you can reach 
 
 This project is licensed under the Apache-2.0 License.
 
-Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
