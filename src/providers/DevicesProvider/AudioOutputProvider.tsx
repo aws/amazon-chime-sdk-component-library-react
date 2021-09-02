@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
@@ -25,14 +25,10 @@ const AudioOutputProvider: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
-    const callback = (updatedAudioOutputDevice: string | null): void => {
-      setSelectedAudioOutputDevice(updatedAudioOutputDevice);
-    };
-
-    meetingManager.subscribeToSelectedAudioOutputDevice(callback);
+    meetingManager.subscribeToSelectedAudioOutputDevice(setSelectedAudioOutputDevice);
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedAudioOutputDevice(callback);
+      meetingManager.unsubscribeFromSelectedAudioOutputDevice(setSelectedAudioOutputDevice);
     };
   }, []);
 

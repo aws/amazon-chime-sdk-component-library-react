@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 // Components
@@ -71,6 +71,7 @@ export {
 } from './components/sdk/DeviceSelection';
 export {
   AudioInputControl,
+  AudioInputVFControl,
   AudioOutputControl,
   ContentShareControl,
   VideoInputControl,
@@ -102,6 +103,7 @@ export {
   useNotificationDispatch,
 } from './providers/NotificationProvider';
 export { AudioVideoContext } from './providers/AudioVideoProvider';
+export { MeetingEventProviderContext } from './providers/MeetingEventProvider';
 
 // Hooks
 export { useClickOutside } from './hooks/useClickOutside';
@@ -113,6 +115,7 @@ export { useApplyVideoObjectFit } from './hooks/useApplyVideoObjectFit';
 export { useElementAspectRatio } from './hooks/useElementAspectRatio';
 
 export { useMeetingManager } from './providers/MeetingProvider';
+export { VoiceFocusProvider, useVoiceFocus } from './providers/VoiceFocusProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRosterState } from './providers/RosterProvider';
 export { useRemoteVideoTileState } from './providers/RemoteVideoTileProvider';
@@ -160,12 +163,14 @@ export {
   UserActivityProvider,
   useUserActivityState,
 } from './providers/UserActivityProvider';
+export { useMeetingEvent, MeetingEventProvider } from './providers/MeetingEventProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';
 
 // Types
 export { VideoQuality } from './hooks/sdk/useSelectVideoQuality';
+export { RosterAttendeeType, RosterType } from './types';
 
 // enums
 export {
@@ -173,7 +178,7 @@ export {
   DevicePermissionStatus,
   DeviceLabels,
   DeviceLabelTrigger,
-} from './types/index';
+} from './types';
 export { Severity, ActionType } from './providers/NotificationProvider';
 
 // Class

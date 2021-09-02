@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import { EventReporter, LogLevel, VideoDownlinkBandwidthPolicy, Logger } from 'amazon-chime-sdk-js';
@@ -44,6 +44,7 @@ export interface ManagerConfig {
   logLevel: LogLevel;
   postLogConfig?: PostLogConfig;
   simulcastEnabled?: boolean;
+  enableWebAudio?: boolean;
   logger?: Logger;
   videoDownlinkBandwidthPolicy?: VideoDownlinkBandwidthPolicy;
 }

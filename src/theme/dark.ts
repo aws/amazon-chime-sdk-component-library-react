@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import defaultTheme from './default';
@@ -260,9 +260,10 @@ const popOver = {
   titleText: colors.greys.white,
   active: {
     itemBgd: colors.primary.dark,
-    itemText: colors.greys.grey80
+    itemText: colors.greys.grey80,
   },
-  separator: colors.greys.grey100
+  disabled: colors.greys.grey40,
+  separator: colors.greys.grey100,
 };
 
 const notification = {

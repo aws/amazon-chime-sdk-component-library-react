@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 export class Versioning {
@@ -13,6 +13,6 @@ export class Versioning {
    * Return string representation of SDK version
    */
   static get sdkVersion(): string {
-    return '2.8.0';
+    return '2.9.1';
   }
 }

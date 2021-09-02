@@ -1,4 +1,4 @@
-// Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import { useEffect, useState } from 'react';
@@ -13,12 +13,9 @@ export function useDevicePermissionStatus() {
   );
 
   useEffect(() => {
-    const callback = (updatedPermission: DevicePermissionStatus): void => {
-      setPermission(updatedPermission);
-    };
-    meetingManager.subscribeToDevicePermissionStatus(callback);
+    meetingManager.subscribeToDevicePermissionStatus(setPermission);
     return () => {
-      meetingManager.unsubscribeFromDevicePermissionStatus(callback);
+      meetingManager.unsubscribeFromDevicePermissionStatus(setPermission);
     };
   }, [meetingManager]);
 

@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useContext, useState, createContext } from 'react';
@@ -14,6 +14,7 @@ import { LocalVideoProvider } from '../LocalVideoProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
 import { LocalAudioOutputProvider } from '../LocalAudioOutputProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
+import { MeetingEventProvider } from '../MeetingEventProvider';
 
 interface Props {
   /** Determines how verbose the logging statements will be */
@@ -22,6 +23,8 @@ interface Props {
   postLogConfig?: PostLogConfig;
   /** Whether or not to enable simulcast for the meeting session */
   simulcastEnabled?: boolean;
+  /** Whether or not to enable Web Audio for the meeting session */
+  enableWebAudio?: boolean;
   /** The `Logger` object you want to use in meeting session.
    * If you pass in a `Logger` object using this parameter, 
    * the `MeetingManager` will use this object instead of creating a logger 
@@ -43,34 +46,37 @@ export const MeetingProvider: React.FC<Props> = ({
   logLevel = LogLevel.WARN,
   postLogConfig,
   simulcastEnabled = false,
+  enableWebAudio = false,
   logger,
   videoDownlinkBandwidthPolicy,
   meetingManager: meetingManagerProp,
   children,
 }) => {
   const [meetingManager] = useState(
-    () => meetingManagerProp || new MeetingManager({ logLevel, postLogConfig, simulcastEnabled, logger, videoDownlinkBandwidthPolicy })
+    () => meetingManagerProp || new MeetingManager({ logLevel, postLogConfig, simulcastEnabled, enableWebAudio, logger, videoDownlinkBandwidthPolicy })
   );
 
   return (
     <MeetingContext.Provider value={meetingManager}>
-      <AudioVideoProvider>
-        <DevicesProvider>
-          <RosterProvider>
-            <RemoteVideoTileProvider>
-              <LocalVideoProvider>
-                <LocalAudioOutputProvider>
-                  <ContentShareProvider>
-                    <FeaturedVideoTileProvider>
-                      {children}
-                    </FeaturedVideoTileProvider>
-                  </ContentShareProvider>
-                </LocalAudioOutputProvider>
-              </LocalVideoProvider>
-            </RemoteVideoTileProvider>
-          </RosterProvider>
-        </DevicesProvider>
-      </AudioVideoProvider>
+      <MeetingEventProvider>
+        <AudioVideoProvider>
+          <DevicesProvider>
+            <RosterProvider>
+              <RemoteVideoTileProvider>
+                <LocalVideoProvider>
+                  <LocalAudioOutputProvider>
+                    <ContentShareProvider>
+                      <FeaturedVideoTileProvider>
+                        {children}
+                      </FeaturedVideoTileProvider>
+                    </ContentShareProvider>
+                  </LocalAudioOutputProvider>
+                </LocalVideoProvider>
+              </RemoteVideoTileProvider>
+            </RosterProvider>
+          </DevicesProvider>
+        </AudioVideoProvider>
+      </MeetingEventProvider>
     </MeetingContext.Provider>
   );
 };
