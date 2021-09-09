@@ -82,12 +82,14 @@ When bot submits PR two git context parameters are set.
   labels.filter(lbl => lbl.name === 'dependencies').length === 1
 ) {
   logger.log('Skipping CHANGELOG.md verification.');
-} else if (!commit_files.includes('./src')) {
+} else {
+  if (commit_files.filter(file => file.includes('src/')).length) {
+    logger.error(
+      `Error: Does not contain CHANGELOG.md in the commit ${commits[0]}\nPlease add CHANGELOG for library src changes.
+    `);
+    return process.exit(1);
+  }
   // Only require a changelog change for changes to the component library
   logger.log('Skipping CHANGELOG.md verification.');
-} else {
-  logger.error(
-    `Error: Does not contain CHANGELOG.md in the commit ${commits[0]}`
-  );
-  return process.exit(1);
+  return process.exit(0);
 }
