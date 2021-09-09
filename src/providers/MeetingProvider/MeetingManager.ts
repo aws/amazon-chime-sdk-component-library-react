@@ -229,7 +229,6 @@ export class MeetingManager implements AudioVideoObserver {
       }
 
       this.audioVideo.stop();
-      this.audioVideo.removeObserver(this.audioVideoObservers);
     }
     this.initializeMeetingManager();
     this.publishAudioVideo();
@@ -329,6 +328,11 @@ export class MeetingManager implements AudioVideoObserver {
     } else {
       console.log(`[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}`);
     }
+    
+    if (this.audioVideo) {
+      this.audioVideo.removeObserver(this.audioVideoObservers);
+    }
+    
     this.leave();
   };
 
