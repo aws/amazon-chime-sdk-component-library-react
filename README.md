@@ -132,6 +132,12 @@ Review the resources given in the ReadMe and use our [client documentation](http
 
 If you have more questions, or require support for your business, you can reach out to [AWS Customer support](https://pages.awscloud.com/GLOBAL-aware-GC-Amazon-Chime-SDK-2020-reg.html). You can review our support plans [here](https://aws.amazon.com/premiumsupport/plans/?nc=sn&loc=1).
 
+## Notice
+
+The use of Amazon Voice Focus via this SDK involves the downloading and execution of code at runtime by end users.
+
+The use of Amazon Voice Focus runtime code is subject to additional notices. See [this NOTICES file](https://static.sdkassets.chime.aws/workers/NOTICES.txt) for details. You agree to make these additional notices available to all end users who use Amazon Voice Focus runtime code via this SDK.
+
 ## License
 
 This project is licensed under the Apache-2.0 License.
