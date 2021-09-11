@@ -7,8 +7,13 @@ const {
   updateDependency
 } = require('./utilities');
 
-// Install the latest version of JS SDK 
+// Install the latest version of JS SDK
 process.chdir(path.join(__dirname, '../amazon-chime-sdk/apps/meeting'));
+
+// Remove package-lock to avoid running into fsevents bad platform issue.
+// https://github.com/fsevents/fsevents/issues/336
+// We use Node 16 and it is not stable which breaks the package installation.
+fs.rmSync('./package-lock.json');
 updateDependency('amazon-chime-sdk-js');
 
 // Get the version of the React library tar file
