@@ -1,3 +1,6 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import { VoiceFocusProvider } from '../';
+
 <Meta title="SDK Providers/VoiceFocusProvider" />
 
 # VoiceFocusProvider
@@ -21,6 +24,10 @@ This provider is independent from `MeetingProvider`. You can put `VoiceFocusProv
 
 You can access the state by using the [useVoiceFocus](/docs/sdk-hooks-usevoicefocus--page) hook.
 
+## Props
+
+<Props of={VoiceFocusProvider} />
+
 ## Importing
 
 ```javascript
@@ -31,6 +38,7 @@ import { VoiceFocusProvider } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
+import { VoiceFocusTransformDevice } from 'amazon-chime-sdk-js';
 import {
   MeetingProvider,
   VoiceFocusProvider,
@@ -50,7 +58,7 @@ const MyChild = () => {
   const meetingManager = useMeetingManager();
   const [isVoiceFocusOn, setIsVoiceFocusOn] = useState(false);
   const [isVoiceFocusEnabled, setIsVoiceFocusEnabled] = useState(false);
-  const [device, setDevice] = useState(meetingManager.selectedAudioInputTransformDevice)
+  const [device, setDevice] = useState(meetingManager.selectedAudioInputDevice);
   const {isVoiceFocusSupported, addVoiceFocus} = useVoiceFocus();
 
   useEffect(() => {
@@ -71,17 +79,22 @@ const MyChild = () => {
   }, [device]);
 
   useEffect(() => {
-    let current = device;
-    if (isVoiceFocusOn) {
-      const currentDevice = audioInputSelectionToDevice(device);
-      current = addVoiceFocus(currentDevice);
-    } else {
-      if (device instanceof VoiceFocusTransformDevice) {
-        current = device.getInnerDevice();
+    async function onVFCheckboxChange() {
+      let current = device;
+      if (isVoiceFocusOn) {
+        if (typeof (device) === 'string') {
+          current = await addVoiceFocus(device);
+        }
+      } else {
+        if (device instanceof VoiceFocusTransformDevice) {
+          current = device.getInnerDevice();
+        }
       }
+      await meetingManager.selectAudioInputDevice(current);
     }
-    meetingManager.selectAudioInputDevice(current);
-  }, [isVoiceFocusOn];
+    
+    onVFCheckboxChange();
+  }, [isVoiceFocusOn]);
 
   const onClick = () => {
     setIsVoiceFocusOn(current => !current);

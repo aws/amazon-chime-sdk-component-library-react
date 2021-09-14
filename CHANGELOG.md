@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Remove the audio video observers in the `audioVideoDidStop()` function instead of `leave()` function in the `MeetingManager`.
+- Update `VoiceFocusProvider` and `useVoiceFocus` documentation in the storybook.
 
 ### Removed
 
