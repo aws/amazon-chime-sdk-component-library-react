@@ -15,10 +15,12 @@ import { useMeetingManager } from '../MeetingProvider';
 import { DeviceTypeContext, DeviceConfig } from '../../types';
 import { VIDEO_INPUT } from '../../constants/additional-audio-video-devices';
 import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
+import { useLogger } from '../LoggerProvider';
 
 const Context = createContext<DeviceTypeContext | null>(null);
 
 const VideoInputProvider: React.FC = ({ children }) => {
+  const logger = useLogger();
   const audioVideo = useAudioVideo();
   const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);
   const meetingManager = useMeetingManager();
@@ -50,7 +52,7 @@ const VideoInputProvider: React.FC = ({ children }) => {
 
     const observer: DeviceChangeObserver = {
       videoInputsChanged: (newVideoInputs: MediaDeviceInfo[]) => {
-        console.log('VideoInputProvider - video inputs updated');
+        logger?.info('VideoInputProvider - video inputs updated');
         setVideoInputs(newVideoInputs);
       },
     };

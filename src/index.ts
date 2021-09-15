@@ -164,6 +164,7 @@ export {
   useUserActivityState,
 } from './providers/UserActivityProvider';
 export { useMeetingEvent, MeetingEventProvider } from './providers/MeetingEventProvider';
+export { LoggerContext, useLogger, LoggerProvider } from './providers/LoggerProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';

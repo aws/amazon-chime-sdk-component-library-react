@@ -9,6 +9,7 @@ import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
 import { useApplyVideoObjectFit } from '../../../hooks/useApplyVideoObjectFit';
+import { useLogger } from '../../../providers/LoggerProvider';
 
 interface Props extends BaseSdkProps {
   id?: string;
@@ -20,11 +21,17 @@ const StyledLocalVideo = styled<any>(VideoTile)`
 `;
 
 export const LocalVideo: React.FC<Props> = ({ nameplate, ...rest }) => {
+  const logger = useLogger();
   const { tileId, isVideoEnabled } = useLocalVideo();
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);
   useApplyVideoObjectFit(videoEl);
 
+  useEffect(() => {
+    logger?.info('LocalVideo mounted');
+    return () => logger?.info('LocalVideo unmounted');
+  }, []);
+  
   useEffect(() => {
     if (!audioVideo || !tileId || !videoEl.current || !isVideoEnabled) {
       return;

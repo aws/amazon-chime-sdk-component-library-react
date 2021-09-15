@@ -38,6 +38,7 @@ import {
   PostLogConfig,
   ManagerConfig
 } from './types';
+import { useLogger } from '../LoggerProvider';
 
 function noOpDeviceLabelHook(): Promise<MediaStream> {
   return Promise.resolve(new MediaStream());
@@ -136,6 +137,7 @@ export class MeetingManager implements AudioVideoObserver {
   logger: Logger | undefined;
 
   private meetingEventObserverSet = new Set<(name: EventName, attributes: EventAttributes) => void>();
+  private componentLogger = useLogger();
 
   constructor(private meetingManagerConfig: ManagerConfig) {
     const {
@@ -219,7 +221,7 @@ export class MeetingManager implements AudioVideoObserver {
         await this.audioVideo.chooseAudioInputDevice(null);
         await this.audioVideo.chooseAudioOutputDevice(null);
       } catch (error) {
-        console.log('Unable to set device to null on leave.');
+        this.componentLogger?.error('Unable to set device to null on leave.');
       }
 
       if (this.activeSpeakerListener) {
@@ -310,23 +312,24 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   audioVideoDidStart = () => {
-    console.log('[MeetingManager audioVideoDidStart] Meeting started successfully');
+    this.componentLogger?.info('[MeetingManager audioVideoDidStart] Meeting started successfully');
     this.meetingStatus = MeetingStatus.Succeeded;
     this.publishMeetingStatus();
   };
 
   audioVideoDidStop = (sessionStatus: MeetingSessionStatus) => {
     const sessionStatusCode = sessionStatus.statusCode();
+    this.componentLogger?.info(`MeetingManager audioVideoDidStop Received ${sessionStatusCode}`);
     if (sessionStatusCode === MeetingSessionStatusCode.AudioCallEnded) {
-      console.log('[MeetingManager audioVideoDidStop] Meeting ended for all');
+      this.componentLogger?.info('[MeetingManager audioVideoDidStop] Meeting ended for all');
       this.meetingStatus = MeetingStatus.Ended;
       this.publishMeetingStatus();
     } else if (sessionStatusCode === MeetingSessionStatusCode.AudioJoinedFromAnotherDevice) {
-      console.log('[MeetingManager audioVideoDidStop] Meeting joined from another device');
+      this.componentLogger?.info('[MeetingManager audioVideoDidStop] Meeting joined from another device');
       this.meetingStatus = MeetingStatus.JoinedFromAnotherDevice;
       this.publishMeetingStatus();
     } else {
-      console.log(`[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}`);
+      this.componentLogger?.info(`[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}`);
     }
     
     if (this.audioVideo) {
@@ -397,7 +400,7 @@ export class MeetingManager implements AudioVideoObserver {
           this.publishDevicePermissionStatus();
           return stream;
         } catch (error) {
-          console.error('Failed to get device permissions');
+          this.componentLogger?.error('Failed to get device permissions');
           this.devicePermissionStatus = DevicePermissionStatus.DENIED;
           this.publishDevicePermissionStatus();
           throw new Error(error);
@@ -459,7 +462,7 @@ export class MeetingManager implements AudioVideoObserver {
           this.audioInputDevices[0].deviceId
         );
       } catch (error) {
-        console.error(`Error in selecting audio input device - ${error}`);
+        this.componentLogger?.error(`Error in selecting audio input device - ${error}`);
       }
       this.publishSelectedAudioInputDevice();
     }
@@ -476,7 +479,7 @@ export class MeetingManager implements AudioVideoObserver {
             this.audioOutputDevices[0].deviceId
           );
         } catch (error) {
-          console.error('Failed to choose audio output device.', error);
+          this.componentLogger?.error(`Failed to choose audio output device. ${error}`);
         }
       }
       this.publishSelectedAudioOutputDevice();
@@ -503,7 +506,7 @@ export class MeetingManager implements AudioVideoObserver {
         this.selectAudioInputDeviceError = null;
       } catch (error) {
         this.selectAudioInputDeviceError = error;
-        console.error('Failed to choose audio input device.', error);
+        this.componentLogger?.error(`Failed to choose audio input device. ${error}`);
       }
       this.selectedAudioInputTransformDevice = null;
       this.selectedAudioInputDevice = null;
@@ -513,7 +516,7 @@ export class MeetingManager implements AudioVideoObserver {
         this.selectAudioInputDeviceError = null;
       } catch (error) {
         this.selectAudioInputDeviceError = error;
-        console.error('Failed to choose audio input device.', error);
+        this.componentLogger?.error(`Failed to choose audio input device. ${error}`);
       }
 
       let innerDevice = null;
@@ -568,7 +571,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedAudioOutputDevice = deviceId;
       this.publishSelectedAudioOutputDevice();
     } catch (error) {
-      console.error(`Error setting audio output - ${error}`);
+      this.componentLogger?.error(`Error setting audio output - ${error}`);
     }
   };
 
@@ -580,7 +583,7 @@ export class MeetingManager implements AudioVideoObserver {
         this.selectVideoInputDeviceError = null;
       } catch (error) {
         this.selectVideoInputDeviceError = error;
-        console.error('Failed to choose video input device.', error);
+        this.componentLogger?.error(`Failed to choose video input device. ${error}`);
       }
       this.selectedVideoInputDevice = null;
     } else {
@@ -589,7 +592,7 @@ export class MeetingManager implements AudioVideoObserver {
         this.selectVideoInputDeviceError = null;
       } catch (error) {
         this.selectVideoInputDeviceError = error;
-        console.error('Failed to choose video input device.', error);
+        this.componentLogger?.error(`Failed to choose video input device. ${error}`);
       }
       this.selectedVideoInputDevice = deviceId;
     }

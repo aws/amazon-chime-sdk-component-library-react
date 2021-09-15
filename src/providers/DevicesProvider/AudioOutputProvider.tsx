@@ -13,10 +13,12 @@ import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useMeetingManager } from '../MeetingProvider';
 import { DeviceTypeContext } from '../../types';
+import { useLogger } from '../LoggerProvider';
 
 const AudioOutputContext = createContext<DeviceTypeContext | null>(null);
 
 const AudioOutputProvider: React.FC = ({ children }) => {
+  const logger = useLogger();
   const audioVideo = useAudioVideo();
   const [audioOutputs, setAudioOutputs] = useState<MediaDeviceInfo[]>([]);
   const meetingManager = useMeetingManager();
@@ -37,7 +39,7 @@ const AudioOutputProvider: React.FC = ({ children }) => {
 
     const observer: DeviceChangeObserver = {
       audioOutputsChanged: (newAudioOutputs: MediaDeviceInfo[]) => {
-        console.log('AudioOutputProvider - audio outputs updated');
+        logger?.info('AudioOutputProvider - audio outputs updated');
         setAudioOutputs(newAudioOutputs);
       },
     };

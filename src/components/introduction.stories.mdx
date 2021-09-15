@@ -123,7 +123,12 @@ const MyApp = () => {
 }
 ```
 
-6. _Optional_ - How to enable a meeting to post logs to a URL?
+6. _Optional_ - How to enable logging in Chime React Component Library?
+
+You have to use `LoggerProvider` to enable logging from Chime React Component Library. Please check [LoggerProvider](/story/sdk-providers-loggerprovider--page)
+and [useLogger](/story/sdk-hooks-uselogger--page) documentation for more information.
+
+7. _Optional_ - How to enable a meeting to post Amazon Chime SDK for JavaScript logs to a URL?
 
 By default, `MeetingManager` provided by `MeetingProvider` uses [`ConsoleLogger`](https://aws.github.io/amazon-chime-sdk-js/classes/consolelogger.html) to log JS SDK logs.
 You can enable posting your logs to a URL by using Amazon Chime JS SDK's [`MeetingSessionPostLogger`](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionpostlogger.html). You can pass `logLevel` and `postLogConfig` as props to the `MeetingProvider`.
@@ -158,7 +163,7 @@ const Root = () => (
 > We post the JS SDK logs to AWS CloudWatch once the demo is deployed. Check the serverless handlers [log](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/src/handlers.js#L252)
 > function and AWS CloudWatch [access policy](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/template.yaml#L49) in our serverless template for more details.
 
-7. _Optional_ - Opt-out of client event ingestion
+8. _Optional_ - Opt-out of client event ingestion
 
 The Amazon Chime SDK for JavaScript sends meeting events to the Amazon Chime backend to analyze meeting health trends or identify common failures.
 This helps to improve your meeting experience. For more information, check the [client event ingestion guide](https://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.html) in the Amazon Chime SDK for JavaScript guides.
@@ -201,7 +206,7 @@ const App = () => (
 );
 ```
 
-8. _Optional_ - Receive Amazon Chime SDK Meeting Events
+9. _Optional_ - Receive Amazon Chime SDK Meeting Events
 
 You can receive Amazon Chime SDK meeting events in your application by using the `MeetingProvider` and the `useMeetingEvent` hook.
 For more information, please check the documentation on the following components:

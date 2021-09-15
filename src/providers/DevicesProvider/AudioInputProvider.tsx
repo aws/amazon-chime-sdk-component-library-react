@@ -16,10 +16,12 @@ import { useMeetingManager } from '../MeetingProvider';
 import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
 import { DeviceTypeContext, DeviceConfig } from '../../types';
 import { AUDIO_INPUT } from '../../constants/additional-audio-video-devices';
+import { useLogger } from '../LoggerProvider';
 
 const Context = createContext<DeviceTypeContext | null>(null);
 
 const AudioInputProvider: React.FC = ({ children }) => {
+  const logger = useLogger();
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
@@ -53,7 +55,7 @@ const AudioInputProvider: React.FC = ({ children }) => {
 
     const observer: DeviceChangeObserver = {
       audioInputsChanged: async (newAudioInputs: MediaDeviceInfo[]) => {
-        console.log('AudioInputProvider - audio inputs updated');
+        logger?.info('AudioInputProvider - audio inputs updated');
 
         const hasSelectedDevice = newAudioInputs.some(
           (device) => device.deviceId === selectedInputRef.current
@@ -64,18 +66,18 @@ const AudioInputProvider: React.FC = ({ children }) => {
           !hasSelectedDevice &&
           newAudioInputs.length
         ) {
-          console.log(
+          logger?.info(
             'Previously selected audio input lost. Selecting a default device.'
           );
           meetingManager.selectAudioInputDevice(newAudioInputs[0].deviceId);
         } else if (selectedInputRef.current === 'default') {
-          console.log(
+          logger?.info(
             `Audio devices updated and "default" device is selected. Reselecting input.`
           );
           try {
             await audioVideo?.chooseAudioInputDevice(selectedInputRef.current);
           } catch (e) {
-            console.error(`Error in selecting audio input device - ${e}`);
+            logger?.error(`Error in selecting audio input device - ${e}`);
           }
         }
 

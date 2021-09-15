@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { ClientMetricReport } from 'amazon-chime-sdk-js';
 
 import { useAudioVideo } from '../../providers/AudioVideoProvider';
+import { useLogger } from '../../providers/LoggerProvider';
 
 function isValidMetric(metric: any) {
   return typeof metric === 'number' && !Number.isNaN(metric);
@@ -16,7 +17,8 @@ interface BandwidthMetrics {
 }
 
 export function useBandwidthMetrics() {
-  console.log('This hook is deprecated and will be removed in future version, please use useMediaStreamMetrics hook instead.');
+  const logger = useLogger();
+  logger?.info('This hook is deprecated and will be removed in future version, please use useMediaStreamMetrics hook instead.');
   const audioVideo = useAudioVideo();
   const [metrics, setMetrics] = useState<BandwidthMetrics>({
     availableOutgoingBandwidth: null,

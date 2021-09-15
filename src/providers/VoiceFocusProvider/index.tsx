@@ -17,6 +17,7 @@ import {
 } from 'amazon-chime-sdk-js';
 
 import useMemoCompare from '../../utils/use-memo-compare';
+import { useLogger } from '../LoggerProvider';
 
 interface Props {
   /** Determines how you want Amazon Voice Focus to behave. This spec is used to derive a runtime configuration when a transformer is created. */
@@ -41,6 +42,7 @@ const VoiceFocusProvider: React.FC<Props> = ({
   options,
   children
 }) => {
+  const logger = useLogger();
   const [isVoiceFocusSupported, setIsVoiceFocusSupported] = useState<boolean | undefined>(undefined);
   const [voiceFocusDevice, setVoiceFocusDevice] = useState<VoiceFocusTransformDevice | null>(null);
   const [voiceFocusTransformer, setVoiceFocusTransformer] = useState<VoiceFocusDeviceTransformer | null>(null);
@@ -74,7 +76,7 @@ const VoiceFocusProvider: React.FC<Props> = ({
     }
 
     if (!isVoiceFocusSupported) {
-      console.debug('Not supported, not creating device.');
+      logger?.debug('Not supported, not creating device.');
       return device;
     }
 
@@ -86,7 +88,7 @@ const VoiceFocusProvider: React.FC<Props> = ({
         return vf;
       }
     } catch (e) {
-      console.warn('Amazon Voice Focus is not supported.', e);
+      logger?.warn(`Amazon Voice Focus is not supported. ${e}`);
     }
 
     return device;
@@ -159,9 +161,9 @@ const VoiceFocusProvider: React.FC<Props> = ({
     }
 
     if (isVoiceFocusSupported) {
-      console.debug('Amazon Voice Focus is supported.');
+      logger?.debug('Amazon Voice Focus is supported.');
     } else {
-      console.warn('Amazon Voice Focus is not supported.');
+      logger?.warn('Amazon Voice Focus is not supported.');
     }
   }, [isVoiceFocusSupported]);
 

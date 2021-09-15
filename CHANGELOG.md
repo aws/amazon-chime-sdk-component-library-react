@@ -12,10 +12,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Added
+- Add `LoggerProvider` and `useLogger` components to enable logging from Chime React Component Library.
 
 ### Changed
 
 - Remove the audio video observers in the `audioVideoDidStop()` function instead of `leave()` function in the `MeetingManager`.
+- Replace console logs to logger.(info|debug|error|warn) from `useLogger` hook.
 
 ### Removed
 

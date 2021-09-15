@@ -1,0 +1,105 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import { LoggerProvider } from '../';
+
+<Meta title="SDK Providers/LoggerProvider" />
+
+# LoggerProvider
+
+The `LoggerProvider` provides a `Logger` to log component state changes and lifecycle events such as mounting and unmounting.
+Use the logger to log at various levels governed by [LogLevel](https://aws.github.io/amazon-chime-sdk-js/enums/loglevel.html) from the `amazon-chime-sdk-js`.
+Currently, it supports logging only to the browser console.
+
+Note that, this logger is different from the one you pass to [MeetingProvider](/story/sdk-providers-meetingprovider--page) props.
+The logger passed to `MeetingProvider` logs `amazon-chime-sdk-js` related logs.
+
+## Provides
+```typescript
+logger: Logger | undefined;
+```
+You can access the value provided using the [useLogger](/story/sdk-hooks-uselogger--page) hook.
+
+## Importing
+
+```jsx
+import { LoggerProvider } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Props
+
+<Props of={LoggerProvider} />
+
+## Usage
+
+### Default
+
+```jsx
+import React, { useEffect } from 'react';
+import { MeetingProvider, LoggerProvider, useLogger } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <LoggerProvider>
+    <MyApp />
+  </LoggerProvider>
+);
+
+const MyApp = () => {
+  const logger = useLogger();
+  logger.info('This is an info log');
+  // To see debug level logs, pass the logLevel as LogLevel.DEBUG
+  // By default, the logLevel is set to LogLevel.INFO which omits debug logs.
+  logger.debug('This is a debug log');
+  logger.error('This is an error log');
+  logger.warn('This is a warning log');
+  return (
+    <MeetingProvider>
+      <SubComponent />
+    </MeetingProvider>
+  )
+};
+
+const SubComponent = () => {
+  const logger = useLogger();
+  useEffect(() => {
+    logger.info('SubComponent mounted');
+    return () => logger.info('SubComponent unmounted');
+  }, []);
+};
+```
+
+### Custom
+
+Provide `name` and `logLevel` props to customize the `Logger`.
+
+```jsx
+import React, { useEffect } from 'react';
+import { MeetingProvider, LoggerProvider, useLogger } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <LoggerProvider name={'ChimeReactLogger'} logLevel={LogLevel.DEBUG}>
+    <MyApp />
+  </LoggerProvider>
+);
+
+const MyApp = () => {
+  const logger = useLogger();
+  logger.info('This is an info log');
+  // To see debug level logs, pass the logLevel as LogLevel.DEBUG
+  // By default, the logLevel is set to LogLevel.INFO which omits debug logs.
+  logger.debug('This is a debug log');
+  logger.error('This is an error log');
+  logger.warn('This is a warning log');
+  return (
+    <MeetingProvider>
+      <SubComponent />
+    </MeetingProvider>
+  )
+};
+
+const SubComponent = () => {
+  const logger = useLogger();
+  useEffect(() => {
+    logger.info('SubComponent mounted');
+    return () => logger.info('SubComponent unmounted');
+  }, []);
+};
+```
