@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- Fix the issue that Amazon Voice Focus does not get applied on new devices in the middle of meeting
 
 ### Added
 - Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` in `MeetingManagerConfig` to allow builders to pass in 
