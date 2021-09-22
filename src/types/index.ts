@@ -44,6 +44,7 @@ export enum MeetingStatus {
   Succeeded,
   Failed,
   Ended,
+  Left,
   JoinedFromAnotherDevice,
 };
 

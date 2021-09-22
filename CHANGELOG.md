@@ -11,16 +11,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 - Fix the issue that Amazon Voice Focus does not get applied on new devices mid-meeting
+- Fix the issue where we call `meetingManager.leave` an additional time when we call `meetingManager.leave`
 
 ### Added
 - Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` in `MeetingManagerConfig` to allow builders to pass in 
   custom policies.
 - For more flexibility, allow passing `MeetingManagerConfig` to `meetingManager.join` method. Passing the config here would override config passed through `MeetingProvider` props.
+- Add `MeetingStatus.Left` and set it when explicitly leaving the meeting
+- Publish `MeetingStatus.Failed` when `audioVideoDidStop` gets triggered with one of the Failure types of `MeetingSessionStatus` 
+
 
 ### Changed
 - Remove the audio video observers in the `audioVideoDidStop()` function instead of `leave()` function in the `MeetingManager`.
 
 ### Removed
+- Remove setting the `MeetingStatus` to `MeetingStatus.Loading` when we call `meetingManager.leave`
 
 ## [2.9.1] - 2021-09-02
 
