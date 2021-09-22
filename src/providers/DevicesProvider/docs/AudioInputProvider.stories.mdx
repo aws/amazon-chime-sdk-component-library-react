@@ -4,6 +4,11 @@
 
 The `AudioInputProvider` provides a list of the user's available `audio-input` devices, the currently selected device, and the error if device selection fails.
 
+NOTE: If user chooses the default device as the current audio input device in Chrome, and plugs in a new device during the meeting that becomes the new default device, 
+`selectedDevice` will not be updated since `selectedDevice` stands for the deviceId, and the value of deviceId remains the same, still being `default`. If you want to get 
+the update when switching to a new audio device, it would be better to use `devices`. When a new 'default' device is added, the `devices` list will have changed. 
+We suggest you to watch for changes to `devices[0]` - this will indicate when the default device has changed. 
+
 ## State
 
 ```javascript
