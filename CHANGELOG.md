@@ -17,9 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` in `MeetingManagerConfig` to allow builders to pass in 
   custom policies.
 - For more flexibility, allow passing `MeetingManagerConfig` to `meetingManager.join` method. Passing the config here would override config passed through `MeetingProvider` props.
+- Add more details in the `AudioInputProvider` on storybook.
 - Add `MeetingStatus.Left` and set it when explicitly leaving the meeting
 - Publish `MeetingStatus.Failed` when `audioVideoDidStop` gets triggered with one of the Failure types of `MeetingSessionStatus` 
-
 
 ### Changed
 - Remove the audio video observers in the `audioVideoDidStop()` function instead of `leave()` function in the `MeetingManager`.

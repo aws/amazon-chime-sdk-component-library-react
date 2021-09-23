@@ -5,7 +5,8 @@ import { VoiceFocusProvider } from '../';
 
 # VoiceFocusProvider
 
-The `VoiceFocusProvider` provides a function transforming a normal device to an Amazon Voice Focus device, and whether Amazon Voice Focus is supported.
+The `VoiceFocusProvider` provides a function transforming a normal audio device to an Amazon Voice Focus device, and whether Amazon Voice Focus is supported. 
+Amazon Voice Focus related logs can be found in the browser developer tools when Amazon Voice Focus is enabled.
 
 This provider is independent from `MeetingProvider`. You can put `VoiceFocusProvider` wherever you want in the component tree to control the workflow of Voice Focus.
 
@@ -59,7 +60,7 @@ const MyChild = () => {
   const [isVoiceFocusOn, setIsVoiceFocusOn] = useState(false);
   const [isVoiceFocusEnabled, setIsVoiceFocusEnabled] = useState(false);
   const [device, setDevice] = useState(meetingManager.selectedAudioInputDevice);
-  const {isVoiceFocusSupported, addVoiceFocus} = useVoiceFocus();
+  const { isVoiceFocusSupported, addVoiceFocus } = useVoiceFocus();
 
   useEffect(() => {
     meetingManager.subscribeToSelectedAudioInputTransformDevice(setDevice);
@@ -69,8 +70,6 @@ const MyChild = () => {
   }, []);
 
   useEffect(() => {
-    // Only when the current input audio device is an Amazon Voice Focus transform device,
-    // Amazon Voice Focus button will be checked.
     if (device instanceof VoiceFocusTransformDevice) {
       setIsVoiceFocusEnabled(true);
     } else {
@@ -79,7 +78,7 @@ const MyChild = () => {
   }, [device]);
 
   useEffect(() => {
-    async function onVFCheckboxChange() {
+    async function toggleVoiceFocus() {
       let current = device;
       if (isVoiceFocusOn) {
         if (typeof (device) === 'string') {
@@ -93,7 +92,7 @@ const MyChild = () => {
       await meetingManager.selectAudioInputDevice(current);
     }
     
-    onVFCheckboxChange();
+    toggleVoiceFocus();
   }, [isVoiceFocusOn]);
 
   const onClick = () => {
