@@ -45,7 +45,7 @@ import { MeetingProvider, useMeetingManager } from 'amazon-chime-sdk-component-l
 
 const Root = () => {
   const meetingManager = new MeetingManager({ logLevel: LogLevel.INFO });
-  
+
   return (
     <MeetingProvider meetingManager={meetingManager}>
       <MyApp1 />
@@ -54,7 +54,7 @@ const Root = () => {
     <MeetingProvider meetingManager={meetingManager}>
       <MyApp2 />
     <MeetingProvider/>
-  ); 
+  );
 }
 ```
 
@@ -105,10 +105,51 @@ If you want to enable Amazon Voice Focus feature, you should enable Web Audio fo
 The `Logger` object that you want to be used in the meeting session.
 If you pass in a `Logger` object using this parameter, the `MeetingManager` will use this object instead of creating a logger based on `logLevel` and `postLogConfig` to initialize the meeting session.
 
-#### videoDownlinkBandwidthPolicy
+#### activeSpeakerPolicy
 
-The `VideoDownlinkBandwidthPolicy` object that you want to be used in the meeting session.
-For more information on `VideoDownlinkBandwidthPolicy`, check Amazon Chime JS SDK [priority downlink policy guide](https://aws.github.io/amazon-chime-sdk-js/modules/prioritybased_downlink_policy.html).
+The `ActiveSpeakerPolicy` object that you want to be used in the meeting session.
+For more information on `ActiveSpeakerPolicy`, check Amazon Chime JS SDK [ActiveSpeakerPolicy](https://aws.github.io/amazon-chime-sdk-js/interfaces/activespeakerpolicy.html).
+
+For example, if you do not want to prioritize the active speaker during a call you can override the
+`DefaultActiveSpeakerPolicy`:
+```jsx
+import {
+  LogLevel,
+  ConsoleLogger,
+  DefaultActiveSpeakerPolicy,
+  VideoPriorityBasedPolicy,
+} from 'amazon-chime-sdk-js';
+import { MeetingProvider } from 'amazon-chime-sdk-component-library-react';
+
+class MyActiveSpeakerPolicy extends DefaultActiveSpeakerPolicy {
+  prioritizeVideoSendBandwidthForActiveSpeaker() {
+    return false;
+  }
+}
+
+const Root = () => {
+  const logger = new ConsoleLogger('SDK', LogLevel.INFO);
+  const activeSpeakerPolicy = new MyActiveSpeakerPolicy();
+  const meetingConfig = {
+    logger,
+    activeSpeakerPolicy,
+  };
+
+  return (
+    <MeetingProvider {...meetingConfig}>
+      <MyApp />
+    </MeetingProvider>
+  );
+};
+```
+
+#### videoUplinkBandwidthPolicy and videoDownlinkBandwidthPolicy
+
+The `VideoUplinkBandwidthPolicy` and `VideoDownlinkBandwidthPolicy` object that you want to be used in the meeting
+session.
+For more information on `VideoUplinkBandwidthPolicy` and `VideoDownlinkBandwidthPolicy`, check Amazon Chime JS SDK
+[VideoUplinkBandwidthPolicy](https://aws.github.io/amazon-chime-sdk-js/interfaces/videouplinkbandwidthpolicy.html)
+and [VideoDownlinkBandwidthPolicy](https://aws.github.io/amazon-chime-sdk-js/interfaces/videodownlinkbandwidthpolicy.html).
 
 For example, to use the `VideoPriorityBasedPolicy` in the meeting:
 
@@ -136,12 +177,13 @@ const Root = () => {
   );
 };
 ```
+For more information on `VideoPriorityBasedPolicy`, check Amazon Chime JS SDK [priority downlink policy guide](https://aws.github.io/amazon-chime-sdk-js/modules/prioritybased_downlink_policy.html).
 
 #### meetingManager
 
 There may be use cases to re-use the same `MeetingManager` instance across multiple different `MeetingProvider`s.
 Hence, you can create a new `MeetingManager` instance and then pass it as a prop to your `MeetingProvider`s. If not passed,
-a new `MeetingManager` instance will be created internally with each `MeetingProvider` when rendered; and, 
+a new `MeetingManager` instance will be created internally with each `MeetingProvider` when rendered; and,
 you will get the `MeetingManager` instance associated with that particular `MeetingProvider` when `useMeetingManager` hook is called.
 
 This approach has limitations. This should be used only in very specific cases where you want to share the meeting manager instance

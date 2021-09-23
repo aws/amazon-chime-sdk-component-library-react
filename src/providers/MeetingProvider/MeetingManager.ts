@@ -36,7 +36,7 @@ import {
   AttendeeResponse,
   FullDeviceInfoType,
   PostLogConfig,
-  ManagerConfig
+  MeetingManagerConfig
 } from './types';
 
 function noOpDeviceLabelHook(): Promise<MediaStream> {
@@ -114,30 +114,30 @@ export class MeetingManager implements AudioVideoObserver {
   ) => void)[] = [];
 
   // This variable will be deprecated in favor of `meetingManagerConfig`.
-  // Please use `meetingManagerConfig` to use `ManagerConfig` values.
+  // Please use `meetingManagerConfig` to use `MeetingManagerConfig` values.
   logLevel: LogLevel = LogLevel.WARN;
 
   // This variable will be deprecated in favor of `meetingManagerConfig`.
-  // Please use `meetingManagerConfig` to use `ManagerConfig` values.
+  // Please use `meetingManagerConfig` to use `MeetingManagerConfig` values.
   postLoggerConfig: PostLogConfig | null = null;
 
   eventReporter: EventReporter;
 
   // This variable will be deprecated in favor of `meetingManagerConfig`.
-  // Please use `meetingManagerConfig` to use `ManagerConfig` values.
+  // Please use `meetingManagerConfig` to use `MeetingManagerConfig` values.
   simulcastEnabled: boolean = false;
 
   // This variable will be deprecated in favor of `meetingManagerConfig`.
-  // Please use `meetingManagerConfig` to use `ManagerConfig` values.
+  // Please use `meetingManagerConfig` to use `MeetingManagerConfig` values.
   videoDownlinkBandwidthPolicy: VideoDownlinkBandwidthPolicy | undefined;
 
   // This variable will be deprecated in favor of `meetingManagerConfig`.
-  // Please use `meetingManagerConfig` to use `ManagerConfig` values.
+  // Please use `meetingManagerConfig` to use `MeetingManagerConfig` values.
   logger: Logger | undefined;
 
   private meetingEventObserverSet = new Set<(name: EventName, attributes: EventAttributes) => void>();
 
-  constructor(private meetingManagerConfig: ManagerConfig) {
+  constructor(private meetingManagerConfig: MeetingManagerConfig) {
     const {
       simulcastEnabled,
       logger: configLogger,
@@ -183,12 +183,13 @@ export class MeetingManager implements AudioVideoObserver {
     this.videoInputDevices = [];
     this.activeSpeakers = [];
     this.activeSpeakerListener = null;
-    this.meetingStatus = MeetingStatus.Loading;
-    this.publishMeetingStatus();
     this.audioVideoObservers = {};
   }
 
-  async join({ meetingInfo, attendeeInfo, deviceLabels = DeviceLabels.AudioAndVideo, eventReporter }: MeetingJoinData) {
+  async join({ meetingInfo, attendeeInfo, deviceLabels = DeviceLabels.AudioAndVideo, eventReporter, meetingManagerConfig }: MeetingJoinData) {
+    if (meetingManagerConfig) {
+      this.meetingManagerConfig = meetingManagerConfig;
+    }
     this.configuration = new MeetingSessionConfiguration(
       meetingInfo,
       attendeeInfo
@@ -247,6 +248,7 @@ export class MeetingManager implements AudioVideoObserver {
       simulcastEnabled,
       enableWebAudio,
       logger: configLogger,
+      videoUplinkBandwidthPolicy,
       videoDownlinkBandwidthPolicy
     } = this.meetingManagerConfig;
 
@@ -257,6 +259,10 @@ export class MeetingManager implements AudioVideoObserver {
       configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = true;
     }
     const logger = configLogger ? configLogger : this.createLogger(configuration);
+
+    if (videoUplinkBandwidthPolicy) {
+      configuration.videoUplinkBandwidthPolicy = videoUplinkBandwidthPolicy;
+    }
 
     if (videoDownlinkBandwidthPolicy) {
       configuration.videoDownlinkBandwidthPolicy = videoDownlinkBandwidthPolicy;
@@ -317,23 +323,40 @@ export class MeetingManager implements AudioVideoObserver {
 
   audioVideoDidStop = (sessionStatus: MeetingSessionStatus) => {
     const sessionStatusCode = sessionStatus.statusCode();
-    if (sessionStatusCode === MeetingSessionStatusCode.AudioCallEnded) {
-      console.log('[MeetingManager audioVideoDidStop] Meeting ended for all');
-      this.meetingStatus = MeetingStatus.Ended;
-      this.publishMeetingStatus();
-    } else if (sessionStatusCode === MeetingSessionStatusCode.AudioJoinedFromAnotherDevice) {
-      console.log('[MeetingManager audioVideoDidStop] Meeting joined from another device');
-      this.meetingStatus = MeetingStatus.JoinedFromAnotherDevice;
-      this.publishMeetingStatus();
-    } else {
-      console.log(`[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}`);
+
+
+    switch (sessionStatusCode) {
+      case MeetingSessionStatusCode.AudioCallEnded: 
+        console.log('[MeetingManager audioVideoDidStop] Meeting ended for all');
+        this.meetingStatus = MeetingStatus.Ended;
+        this.publishMeetingStatus();
+        this.leave();
+        break;
+      case MeetingSessionStatusCode.Left:
+        console.log('[MeetingManager audioVideoDidStop] Left the meeting');
+        this.meetingStatus = MeetingStatus.Left;
+        this.publishMeetingStatus();
+        // No need to call leave() here, since we already called meetingManager.leave() to get here
+        break;
+      case MeetingSessionStatusCode.AudioJoinedFromAnotherDevice:
+        console.log('[MeetingManager audioVideoDidStop] Meeting joined from another device');
+        this.meetingStatus = MeetingStatus.JoinedFromAnotherDevice;
+        this.publishMeetingStatus();
+        this.leave();
+        break;
+      default:
+        // The following status codes are Failures according to MeetingSessionStatus
+        if (sessionStatus.isFailure()) {
+          this.meetingStatus = MeetingStatus.Failed;
+          this.publishMeetingStatus();
+        }
+        console.log('[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}');
+        this.leave();
     }
-    
+
     if (this.audioVideo) {
       this.audioVideo.removeObserver(this.audioVideoObservers);
     }
-    
-    this.leave();
   };
 
   setupAudioVideoObservers() {
@@ -409,6 +432,8 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   setupActiveSpeakerDetection(): void {
+    const activeSpeakerPolicy  = this.meetingManagerConfig.activeSpeakerPolicy;
+
     this.publishActiveSpeaker();
 
     this.activeSpeakerListener = (activeSpeakers: string[]) => {
@@ -417,7 +442,7 @@ export class MeetingManager implements AudioVideoObserver {
     };
 
     this.audioVideo?.subscribeToActiveSpeakerDetector(
-      new DefaultActiveSpeakerPolicy(),
+      activeSpeakerPolicy ? activeSpeakerPolicy : new DefaultActiveSpeakerPolicy(),
       this.activeSpeakerListener
     );
   }
