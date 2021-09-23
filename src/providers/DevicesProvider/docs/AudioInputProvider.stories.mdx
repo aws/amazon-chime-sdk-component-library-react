@@ -4,11 +4,6 @@
 
 The `AudioInputProvider` provides a list of the user's available `audio-input` devices, the currently selected device, and the error if device selection fails.
 
-NOTE: If user chooses the default device as the current audio input device in Chrome, and plugs in a new device during the meeting that becomes the new default device, 
-`selectedDevice` will not be updated since `selectedDevice` stands for the deviceId, and the value of deviceId remains the same, still being `default`. If you want to get 
-the update when switching to a new audio device, it would be better to use `devices`. When a new 'default' device is added, the `devices` list will have changed. 
-We suggest you to watch for changes to `devices[0]` - this will indicate when the default device has changed. 
-
 ## State
 
 ```javascript
@@ -26,6 +21,14 @@ We suggest you to watch for changes to `devices[0]` - this will indicate when th
 }
 
 ```
+
+NOTE: In Chrome, there is a "default" device which can used as the current audio input device. When a new device is added during the 
+meeting, the new device will become the current audio input device also the new "default" device. If you want to get this device change, 
+it would be better to use `devices`. When a new "default" device is added, the `devices` list will have changed. We suggest you to 
+watch for changes to `devices[0]` - this will indicate when the "default" device has changed. `selectedDevice` will not be updated when 
+switching to a new audio device since it stands for the deviceId, and the value of deviceId remains the same, still being `default`. 
+The deviceId that was previously in use was `default`. When you switch to a new device, that device becomes "default" device. Since the old 
+deviceId was `default` and the new deviceId is still `default`, so `selectedDevice` does not change. But actually they correspond to different physical devices. 
 
 You can access the state by using the [useAudioInputs](/docs/sdk-hooks-useaudioinputs--page) hook.
 
