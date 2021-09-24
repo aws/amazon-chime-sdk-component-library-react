@@ -323,23 +323,21 @@ export class MeetingManager implements AudioVideoObserver {
 
   audioVideoDidStop = (sessionStatus: MeetingSessionStatus) => {
     const sessionStatusCode = sessionStatus.statusCode();
-
-
     switch (sessionStatusCode) {
       case MeetingSessionStatusCode.AudioCallEnded: 
-        console.log('[MeetingManager audioVideoDidStop] Meeting ended for all');
+        console.log(`[MeetingManager audioVideoDidStop] Meeting ended for all: ${sessionStatusCode}`);
         this.meetingStatus = MeetingStatus.Ended;
         this.publishMeetingStatus();
         this.leave();
         break;
       case MeetingSessionStatusCode.Left:
-        console.log('[MeetingManager audioVideoDidStop] Left the meeting');
+        console.log(`[MeetingManager audioVideoDidStop] Left the meeting: ${sessionStatusCode}`);
         this.meetingStatus = MeetingStatus.Left;
         this.publishMeetingStatus();
-        // No need to call leave() here, since we already called meetingManager.leave() to get here
+        this.leave();
         break;
       case MeetingSessionStatusCode.AudioJoinedFromAnotherDevice:
-        console.log('[MeetingManager audioVideoDidStop] Meeting joined from another device');
+        console.log(`[MeetingManager audioVideoDidStop] Meeting joined from another device: ${sessionStatusCode}`);
         this.meetingStatus = MeetingStatus.JoinedFromAnotherDevice;
         this.publishMeetingStatus();
         this.leave();
@@ -347,13 +345,15 @@ export class MeetingManager implements AudioVideoObserver {
       default:
         // The following status codes are Failures according to MeetingSessionStatus
         if (sessionStatus.isFailure()) {
+          console.log(`[MeetingManager audioVideoDidStop] Non-Terminal failure occured: ${sessionStatusCode}`);
           this.meetingStatus = MeetingStatus.Failed;
           this.publishMeetingStatus();
         } else if (sessionStatus.isTerminal()) {
+          console.log(`[MeetingManager audioVideoDidStop] Terminal failure occured: ${sessionStatusCode}`);
           this.meetingStatus = MeetingStatus.TerminalFailure;
           this.publishMeetingStatus();
         }
-        console.log('[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}');
+        console.log(`[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}`);
         this.leave();
     }
 
