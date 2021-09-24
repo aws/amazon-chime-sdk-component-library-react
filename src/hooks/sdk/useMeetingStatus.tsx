@@ -24,3 +24,5 @@ export const useMeetingStatus = () => {
 
   return meetingStatus;
 };
+
+export default useMeetingStatus;

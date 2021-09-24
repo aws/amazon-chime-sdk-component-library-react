@@ -349,6 +349,9 @@ export class MeetingManager implements AudioVideoObserver {
         if (sessionStatus.isFailure()) {
           this.meetingStatus = MeetingStatus.Failed;
           this.publishMeetingStatus();
+        } else if (sessionStatus.isTerminal()) {
+          this.meetingStatus = MeetingStatus.TerminalFailure;
+          this.publishMeetingStatus();
         }
         console.log('[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}');
         this.leave();
