@@ -159,11 +159,17 @@ const VoiceFocusProvider: React.FC<Props> = ({
     }
 
     if (isVoiceFocusSupported) {
-      console.debug('Amazon Voice Focus is supported.');
+      console.info('Amazon Voice Focus is supported.');
     } else {
       console.warn('Amazon Voice Focus is not supported.');
     }
   }, [isVoiceFocusSupported]);
+
+  useEffect(() => {
+    if (voiceFocusDevice) {
+      console.info('Amazon Voice Focus transform device: ', voiceFocusDevice);
+    } 
+  }, [voiceFocusDevice]);
 
   const value: VoiceFocusState = {
     isVoiceFocusSupported,

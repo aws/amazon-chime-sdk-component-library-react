@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add `MeetingStatus.Left` and set it when explicitly leaving the meeting
 - Publish `MeetingStatus.Failed` when `audioVideoDidStop` gets triggered with one of the Failure types of `MeetingSessionStatus` 
 - Add `Terminal Failure` Meeting Status
+- Add more logs for Amazon Voice Focus components.
 
 ### Changed
 - Remove the audio video observers in the `audioVideoDidStop()` function instead of `leave()` function in the `MeetingManager`.

@@ -42,7 +42,7 @@ const AudioInputVFControl: React.FC<Props> = ({
   const meetingManager = useMeetingManager();
   const [isLoading, setIsLoading] = useState(false);
   // When the user click on Amazon Voice Focus option, the state will change.
-  const [isVoiceFocusOn, setIsVoiceFocusOn] = useState(false);
+  const [isVoiceFocusOn, setIsVoiceFocusOn] = useState<boolean | undefined>(undefined);
   // Only when the current input audio device is an Amazon Voice Focus device, the state will be true. Otherwise, it will be false.
   const [isVoiceFocusEnabled, setIsVoiceFocusEnabled] = useState(false);
   const [dropdownWithVFOptions, setDropdownWithVFOptions] = useState<ReactNode[] | null>(null);
@@ -60,6 +60,13 @@ const AudioInputVFControl: React.FC<Props> = ({
       meetingManager.unsubscribeFromSelectedAudioInputTransformDevice(setDevice);
     };
   }, []);
+
+  useEffect(() => {
+    if (isVoiceFocusOn === undefined) {
+      return;
+    }
+    console.info('Updating Amazon Voice Focus display state: ', isVoiceFocusOn)
+  }, [isVoiceFocusOn]);
 
   useEffect(() => {
     // Only when the current input audio device is an Amazon Voice Focus transform device,
