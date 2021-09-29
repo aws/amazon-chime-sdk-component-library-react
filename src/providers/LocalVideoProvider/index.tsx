@@ -72,6 +72,12 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     audioVideo.addObserver({
       videoTileDidUpdate,
     });
+
+    return () => {
+      audioVideo.removeObserver({
+        videoTileDidUpdate,
+      })
+    }
   }, [audioVideo, tileId]);
 
   const value = useMemo(() => ({ tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo, }), [
@@ -79,7 +85,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     isVideoEnabled,
     setIsVideoEnabled,
     toggleVideo,
-    ]);
+  ]);
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };
