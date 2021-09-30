@@ -9,7 +9,7 @@ import React, {
   useCallback,
   useMemo,
 } from 'react';
-import { VideoTileState } from 'amazon-chime-sdk-js';
+import { AudioVideoObserver, VideoTileState } from 'amazon-chime-sdk-js';
 
 import { useMeetingManager } from '../MeetingProvider';
 import { useAudioVideo } from '../AudioVideoProvider';
@@ -57,27 +57,22 @@ const LocalVideoProvider: React.FC = ({ children }) => {
       return;
     }
 
-    const videoTileDidUpdate = (tileState: VideoTileState) => {
-      if (
-        !tileState.localTile ||
-        !tileState.tileId ||
-        tileId === tileState.tileId
-      ) {
-        return;
-      }
+    const observer: AudioVideoObserver = {
+      videoTileDidUpdate: (tileState: VideoTileState) => {
+        if (
+          !tileState.localTile ||
+          !tileState.tileId ||
+          tileId === tileState.tileId
+        ) {
+          return;
+        }
 
-      setTileId(tileState.tileId);
+        setTileId(tileState.tileId);
+      },
     };
+    audioVideo.addObserver(observer);
 
-    audioVideo.addObserver({
-      videoTileDidUpdate,
-    });
-
-    return () => {
-      audioVideo.removeObserver({
-        videoTileDidUpdate,
-      })
-    }
+    return () => audioVideo.removeObserver(observer);
   }, [audioVideo, tileId]);
 
   const value = useMemo(() => ({ tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo, }), [
