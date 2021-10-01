@@ -11,6 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fix the issue that `AudioVideoObserver` was not removed as expected in `LocalVideoProvider`.
+- Fix `eventDidReceive` observer removal in `MeetingManager`.
+
+### Added
+
+### Changed
+
+### Removed
+
+## [2.10.0] - 2021-09-29
+
+### Fixed
+
 - Fix the issue that Amazon Voice Focus does not get applied on new devices mid-meeting.
 - Fix the issue where we call `meetingManager.leave` an additional time when we call `meetingManager.leave`.
 - Remove the observer in `LocalVideoProvider` when it is unmounted to fix memory leak.
