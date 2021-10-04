@@ -118,6 +118,7 @@ const AudioInputVFControl: React.FC<Props> = ({
     // the click handler.
     addVoiceFocus,
     device,
+    // devices,
     devices.length,
     devices[0].label,
     isLoading,

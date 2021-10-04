@@ -156,8 +156,13 @@ const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
       AUDIO_INPUT
     );
     if (additionalAudioInputs !== null) {
-      devices = [...devices, ...additionalAudioInputs];
-      _.isEqual();
+      const newDevices = [...devices, ...additionalAudioInputs];
+      console.log('is equal', _.isEqual(newDevices, devices));
+      console.log('new devices: ', newDevices);
+      console.log('devices: ', devices);
+      if (!_.isEqual(newDevices, devices)) {
+        devices = newDevices;
+      }
     }
   }
 
