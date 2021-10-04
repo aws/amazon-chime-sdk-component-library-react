@@ -137,6 +137,8 @@ export class MeetingManager implements AudioVideoObserver {
 
   private meetingEventObserverSet = new Set<(name: EventName, attributes: EventAttributes) => void>();
 
+  private eventDidReceiveRef: AudioVideoObserver;
+
   constructor(private meetingManagerConfig: MeetingManagerConfig) {
     const {
       simulcastEnabled,
@@ -164,6 +166,10 @@ export class MeetingManager implements AudioVideoObserver {
     if (videoDownlinkBandwidthPolicy) {
       this.videoDownlinkBandwidthPolicy = videoDownlinkBandwidthPolicy;
     }
+
+    this.eventDidReceiveRef = { eventDidReceive: (name: EventName, attributes: EventAttributes) => {
+      this.publishEventDidReceiveUpdate(name, attributes);
+    }};
   }
 
   initializeMeetingManager(): void {
@@ -236,10 +242,6 @@ export class MeetingManager implements AudioVideoObserver {
     this.publishActiveSpeaker();
   }
 
-  eventDidReceive = (name: EventName, attributes: EventAttributes) => {
-    this.publishEventDidReceiveUpdate(name, attributes);
-  };
-
   async initializeMeetingSession(
     configuration: MeetingSessionConfiguration,
     deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo,
@@ -278,12 +280,14 @@ export class MeetingManager implements AudioVideoObserver {
 
     this.audioVideo = this.meetingSession.audioVideo;
     this.publishAudioVideo();
+    
     // When an attendee leaves, we remove AudioVideoObservers and nullify AudioVideoFacade and MeetingSession object.
     // This results into missing few meeting events triggered with audioVideoDidStop such as meetingEnded, meetingFailed and meetingStartFailed.
     // We may also loose audioInputUnselected and videoInputUnselected events as we choose null devices when an attendee leaves.
     // When a new AudioVideoFacade object is created remove and re-add the eventDidReceive observer which wont leak.
-    this.audioVideo.removeObserver({ eventDidReceive: this.eventDidReceive });
-    this.audioVideo.addObserver({ eventDidReceive: this.eventDidReceive });
+    this.audioVideo.removeObserver(this.eventDidReceiveRef);
+    this.audioVideo.addObserver(this.eventDidReceiveRef);
+
     this.setupAudioVideoObservers();
     this.setupDeviceLabelTrigger(deviceLabels);
     await this.listAndSelectDevices(deviceLabels);
@@ -323,23 +327,21 @@ export class MeetingManager implements AudioVideoObserver {
 
   audioVideoDidStop = (sessionStatus: MeetingSessionStatus) => {
     const sessionStatusCode = sessionStatus.statusCode();
-
-
     switch (sessionStatusCode) {
       case MeetingSessionStatusCode.AudioCallEnded: 
-        console.log('[MeetingManager audioVideoDidStop] Meeting ended for all');
+        console.log(`[MeetingManager audioVideoDidStop] Meeting ended for all: ${sessionStatusCode}`);
         this.meetingStatus = MeetingStatus.Ended;
         this.publishMeetingStatus();
         this.leave();
         break;
       case MeetingSessionStatusCode.Left:
-        console.log('[MeetingManager audioVideoDidStop] Left the meeting');
+        console.log(`[MeetingManager audioVideoDidStop] Left the meeting: ${sessionStatusCode}`);
         this.meetingStatus = MeetingStatus.Left;
         this.publishMeetingStatus();
-        // No need to call leave() here, since we already called meetingManager.leave() to get here
+        this.leave();
         break;
       case MeetingSessionStatusCode.AudioJoinedFromAnotherDevice:
-        console.log('[MeetingManager audioVideoDidStop] Meeting joined from another device');
+        console.log(`[MeetingManager audioVideoDidStop] Meeting joined from another device: ${sessionStatusCode}`);
         this.meetingStatus = MeetingStatus.JoinedFromAnotherDevice;
         this.publishMeetingStatus();
         this.leave();
@@ -347,10 +349,15 @@ export class MeetingManager implements AudioVideoObserver {
       default:
         // The following status codes are Failures according to MeetingSessionStatus
         if (sessionStatus.isFailure()) {
+          console.log(`[MeetingManager audioVideoDidStop] Non-Terminal failure occured: ${sessionStatusCode}`);
           this.meetingStatus = MeetingStatus.Failed;
           this.publishMeetingStatus();
+        } else if (sessionStatus.isTerminal()) {
+          console.log(`[MeetingManager audioVideoDidStop] Terminal failure occured: ${sessionStatusCode}`);
+          this.meetingStatus = MeetingStatus.TerminalFailure;
+          this.publishMeetingStatus();
         }
-        console.log('[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}');
+        console.log(`[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}`);
         this.leave();
     }
 

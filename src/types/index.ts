@@ -44,8 +44,9 @@ export enum MeetingStatus {
   Succeeded,
   Failed,
   Ended,
-  Left,
   JoinedFromAnotherDevice,
+  Left,
+  TerminalFailure
 };
 
 export type RosterAttendeeType = {
