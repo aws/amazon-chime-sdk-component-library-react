@@ -10,20 +10,13 @@ import React, {
   useMemo,
   useRef,
 } from 'react';
-
-import { 
-  DeviceChangeObserver, 
-  isAudioTransformDevice, 
-  Device, 
-  VoiceFocusTransformDevice,
-} from 'amazon-chime-sdk-js';
+import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useMeetingManager } from '../MeetingProvider';
 import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
 import { DeviceTypeContext, DeviceConfig } from '../../types';
 import { AUDIO_INPUT } from '../../constants/additional-audio-video-devices';
-import { useVoiceFocus } from '../VoiceFocusProvider';
 
 const Context = createContext<DeviceTypeContext | null>(null);
 
@@ -39,7 +32,6 @@ const AudioInputProvider: React.FC = ({ children }) => {
   const [selectAudioInputDeviceError, setSelectAudioInputDeviceError] = useState(
     meetingManager.selectAudioInputDeviceError
   );
-  const { addVoiceFocus } = useVoiceFocus();
 
   useEffect(() => {
     meetingManager.subscribeToSelectAudioInputDeviceError(setSelectAudioInputDeviceError);
@@ -85,11 +77,7 @@ const AudioInputProvider: React.FC = ({ children }) => {
             `Audio devices updated and "default" device is selected. Reselecting input.`
           );
           try {
-            let currentDevice: Device | VoiceFocusTransformDevice   = 'default'
-            if (isAudioTransformDevice(meetingManager.selectedAudioInputTransformDevice)) {
-              currentDevice = await addVoiceFocus(newAudioInputs[0].deviceId);
-            }
-            await audioVideo?.chooseAudioInputDevice(currentDevice);
+            await audioVideo?.chooseAudioInputDevice(selectedInputRef.current);
           } catch (e) {
             console.error(`Error in selecting audio input device - ${e}`);
           }
