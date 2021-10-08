@@ -1,0 +1,5 @@
+scripts/*
+jest-puppeteer.config.js
+jest-snapshot.config.js
+jest.config.js
+rollup.config.js
