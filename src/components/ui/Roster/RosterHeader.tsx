@@ -7,7 +7,7 @@ import React, {
   useEffect,
   ChangeEvent,
   ReactNode,
-  useMemo
+  useMemo,
 } from 'react';
 
 import Flex from '../Flex';
@@ -100,15 +100,16 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
 }) => {
   const IconButtonWithToolTip = useMemo(
     () => WithTooltip(IconButton, tooltipContainerId),
-  [tooltipContainerId]);
+    [tooltipContainerId]
+  );
 
-  const ButtonComponent = !!rest['data-tooltip']
+  const ButtonComponent = rest['data-tooltip']
     ? IconButtonWithToolTip
     : IconButton;
-  const buttonComponentProps = !!rest['data-tooltip-position']
+  const buttonComponentProps = rest['data-tooltip-position']
     ? { tooltipPosition: rest['data-tooltip-position'] }
     : {};
-  const popOverMenuComponentProps = !!rest['data-tooltip']
+  const popOverMenuComponentProps = rest['data-tooltip']
     ? {
         ['data-tooltip-position']: rest['data-tooltip-position'],
         ['data-tooltip']: rest['data-tooltip'],

@@ -7,9 +7,9 @@ import { Device, DefaultDeviceController } from 'amazon-chime-sdk-js';
 export const getFormattedDropdownDeviceOptions = (
   jsonObject: any
 ): DeviceType[] => {
-  const formattedJSONObject = Object.entries(jsonObject).map(entry => ({
+  const formattedJSONObject = Object.entries(jsonObject).map((entry) => ({
     deviceId: entry[0].toLowerCase(),
-    label: entry[1] as string
+    label: entry[1] as string,
   }));
   return formattedJSONObject;
 };
@@ -50,4 +50,4 @@ export const isOptionActive = (
 // TODO: Remove this and use DefaultBrowserBehavior.supportsSetSinkId from JS SDK v2.x
 export const supportsSetSinkId = (): boolean => {
   return 'setSinkId' in HTMLAudioElement.prototype;
-}
+};

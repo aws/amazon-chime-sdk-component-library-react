@@ -40,7 +40,9 @@ describe('Icon Button', () => {
   it('should render the value of the "badge" prop if that value exists', () => {
     const badgeContent = <Badge className="test-badge" value={'test'} />;
     const labelText = 'Icon Button';
-    const component = <IconButton label={labelText} badge={badgeContent} icon={<Meeting />} />;
+    const component = (
+      <IconButton label={labelText} badge={badgeContent} icon={<Meeting />} />
+    );
     const { getByText } = renderWithTheme(lightTheme, component);
     const el = getByText('test');
     expect(el).toBeInTheDocument();

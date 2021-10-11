@@ -25,23 +25,30 @@ const VideoInputProvider: React.FC = ({ children }) => {
   const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState(
     meetingManager.selectedVideoInputDevice
   );
-  const [selectVideoInputDeviceError, setSelectVideoInputDeviceError] = useState(
-    meetingManager.selectVideoInputDeviceError
-  );
+  const [selectVideoInputDeviceError, setSelectVideoInputDeviceError] =
+    useState(meetingManager.selectVideoInputDeviceError);
 
   useEffect(() => {
-    meetingManager.subscribeToSelectVideoInputDeviceError(setSelectVideoInputDeviceError);
+    meetingManager.subscribeToSelectVideoInputDeviceError(
+      setSelectVideoInputDeviceError
+    );
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectVideoInputDeviceError(setSelectVideoInputDeviceError);
+      meetingManager.unsubscribeFromSelectVideoInputDeviceError(
+        setSelectVideoInputDeviceError
+      );
     };
   }, []);
 
   useEffect(() => {
-    meetingManager.subscribeToSelectedVideoInputDevice(setSelectedVideoInputDevice);
+    meetingManager.subscribeToSelectedVideoInputDevice(
+      setSelectedVideoInputDevice
+    );
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedVideoInputDevice(setSelectedVideoInputDevice);
+      meetingManager.unsubscribeFromSelectedVideoInputDevice(
+        setSelectedVideoInputDevice
+      );
     };
   }, []);
 
@@ -109,9 +116,8 @@ const useVideoInputs = (props?: DeviceConfig): DeviceTypeContext => {
   const { selectDeviceError } = context;
 
   if (needAdditionalIO) {
-    const additionalVideoInputs = getFormattedDropdownDeviceOptions(
-      additionalIOJSON
-    );
+    const additionalVideoInputs =
+      getFormattedDropdownDeviceOptions(additionalIOJSON);
     if (additionalVideoInputs !== null) {
       devices = [...devices, ...additionalVideoInputs];
     }

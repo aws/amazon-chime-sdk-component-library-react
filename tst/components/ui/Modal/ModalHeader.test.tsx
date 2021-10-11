@@ -27,7 +27,7 @@ describe('ModalHeader', () => {
         <ModalHeader title="Test Header" />
       </ModalContext.Provider>
     );
-   
+
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const closeButton = getByTestId('button');
     expect(closeButton).toBeInTheDocument();

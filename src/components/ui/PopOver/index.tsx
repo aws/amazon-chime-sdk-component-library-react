@@ -84,7 +84,7 @@ export const PopOver: FC<PopOverProps> = ({
       // child nodes and manage focused elements
       return;
     }
-    if (!!node) {
+    if (node) {
       const nodes = getFocusableElements(node);
       const currentElement = document.activeElement;
 
@@ -124,7 +124,7 @@ export const PopOver: FC<PopOverProps> = ({
 
   const handlePopOverClick = () => {
     setIsOpen(!isOpen);
-    if(onPopOverClick) {
+    if (onPopOverClick) {
       onPopOverClick(isOpen);
     }
   };
@@ -158,11 +158,7 @@ export const PopOver: FC<PopOverProps> = ({
 
             if (renderButtonWrapper) {
               const { ref, ...rest } = props;
-              return (
-                <span ref={ref}>
-                  {renderButtonWrapper(isOpen, rest)}
-                </span>
-              );
+              return <span ref={ref}>{renderButtonWrapper(isOpen, rest)}</span>;
             }
 
             return null;

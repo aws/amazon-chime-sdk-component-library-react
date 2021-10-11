@@ -75,12 +75,10 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     return () => audioVideo.removeObserver(observer);
   }, [audioVideo, tileId]);
 
-  const value = useMemo(() => ({ tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo, }), [
-    tileId,
-    isVideoEnabled,
-    setIsVideoEnabled,
-    toggleVideo,
-  ]);
+  const value = useMemo(
+    () => ({ tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo }),
+    [tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo]
+  );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

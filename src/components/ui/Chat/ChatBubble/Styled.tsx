@@ -15,9 +15,7 @@ interface StyledChatBubbleProps extends BaseProps {
   editable?: boolean;
 }
 
-export const StyledChatBubbleContainer = styled.div<
-  StyledChatBubbleContainerProps
->`
+export const StyledChatBubbleContainer = styled.div<StyledChatBubbleContainerProps>`
   display: flex;
   flex-direction: row;
   font-size: 0.65rem;

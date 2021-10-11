@@ -7,7 +7,7 @@ import {
   VideoDownlinkBandwidthPolicy,
   Logger,
   ActiveSpeakerPolicy,
-  VideoUplinkBandwidthPolicy
+  VideoUplinkBandwidthPolicy,
 } from 'amazon-chime-sdk-js';
 import { DeviceLabels, DeviceLabelTrigger } from '../../types';
 

@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef, RefObject } from 'react';
 
 export function useMouseMove(el: RefObject<any>, delay = 3000) {
-  let timeoutRef: any = useRef(null);
+  const timeoutRef: any = useRef(null);
   const [isMouseMoving, setIsMouseActive] = useState<boolean>(false);
 
   useEffect(() => {

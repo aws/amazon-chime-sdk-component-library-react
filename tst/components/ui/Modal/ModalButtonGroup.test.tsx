@@ -16,7 +16,7 @@ describe('ModalButtonGroup', () => {
   const secondaryButtonLbl = 'test-secondary';
   const onClose = jest.fn();
   const labelID = 'test-label';
-  const testContext = { onClose, labelID, dismissible: true, };
+  const testContext = { onClose, labelID, dismissible: true };
 
   it('renders a group with a primary Button', () => {
     const component = (
@@ -63,11 +63,8 @@ describe('ModalButtonGroup', () => {
         />
       </ModalContext.Provider>
     );
-    const {
-      getByTestId,
-      getByLabelText,
-      queryAllByLabelText,
-    } = renderWithTheme(lightTheme, component);
+    const { getByTestId, getByLabelText, queryAllByLabelText } =
+      renderWithTheme(lightTheme, component);
     const el = getByTestId('modal-button-group');
     expect(el).toBeInTheDocument();
     expect(getByLabelText('close')).toBeInTheDocument();
@@ -123,10 +120,7 @@ describe('ModalButtonGroup', () => {
         />
       </ModalContext.Provider>
     );
-    const { getByTestId } = renderWithTheme(
-      lightTheme,
-      component
-    );
+    const { getByTestId } = renderWithTheme(lightTheme, component);
     const modalButton = getByTestId('button');
     fireEvent.click(modalButton);
     expect(component.props.value.onClose).not.toHaveBeenCalled();

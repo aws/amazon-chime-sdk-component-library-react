@@ -25,10 +25,14 @@ const AudioOutputProvider: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
-    meetingManager.subscribeToSelectedAudioOutputDevice(setSelectedAudioOutputDevice);
+    meetingManager.subscribeToSelectedAudioOutputDevice(
+      setSelectedAudioOutputDevice
+    );
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedAudioOutputDevice(setSelectedAudioOutputDevice);
+      meetingManager.unsubscribeFromSelectedAudioOutputDevice(
+        setSelectedAudioOutputDevice
+      );
     };
   }, []);
 

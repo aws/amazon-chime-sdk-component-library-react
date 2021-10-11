@@ -18,6 +18,6 @@ const ZoomOut: React.SFC<SvgProps> = (props) => (
   </Svg>
 );
 
-ZoomOut.displayName = "ZoomOut";
+ZoomOut.displayName = 'ZoomOut';
 
 export default ZoomOut;

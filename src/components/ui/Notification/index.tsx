@@ -3,7 +3,11 @@
 
 import React, { useEffect, HTMLAttributes, ReactNode } from 'react';
 
-import { StyledNotification, StyledCloseIconButton, StyledNotificationButton } from './Styled';
+import {
+  StyledNotification,
+  StyledCloseIconButton,
+  StyledNotificationButton,
+} from './Styled';
 import { Caution, CheckRound, Information, Remove, Clock } from '../icons';
 import { ButtonProps } from '../Button';
 import { BaseProps } from '../Base';
@@ -88,7 +92,7 @@ export const Notification: React.FC<NotificationProps> = (props) => {
       <output className="ch-message" data-testid="message" role={ariaRole}>
         {message}
       </output>
-      {buttonProps && <StyledNotificationButton aria-hidden {...buttonProps}/>}
+      {buttonProps && <StyledNotificationButton aria-hidden {...buttonProps} />}
       {children}
       {onClose && (
         <StyledCloseIconButton

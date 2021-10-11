@@ -4,7 +4,7 @@
 import { useState, useEffect, useRef, RefObject } from 'react';
 
 export function useFocusIn(el: RefObject<any>, delay = 3000) {
-  let timeoutRef: any = useRef(null);
+  const timeoutRef: any = useRef(null);
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
   useEffect(() => {
@@ -12,12 +12,12 @@ export function useFocusIn(el: RefObject<any>, delay = 3000) {
       return;
     }
 
-    const onFocusIn = () => {
+    const onFocusIn = (): void => {
       clearTimeout(timeoutRef.current);
       setIsFocused(true);
     };
 
-    const onFocusOut = () => {
+    const onFocusOut = (): void => {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = setTimeout(() => {
         setIsFocused(false);

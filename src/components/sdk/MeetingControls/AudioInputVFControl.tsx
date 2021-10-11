@@ -2,11 +2,18 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, useState, ReactNode } from 'react';
-import { Device, AudioTransformDevice, VoiceFocusTransformDevice } from 'amazon-chime-sdk-js';
+import {
+  Device,
+  AudioTransformDevice,
+  VoiceFocusTransformDevice,
+} from 'amazon-chime-sdk-js';
 
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { DeviceConfig } from '../../../types';
-import { isOptionActive, audioInputSelectionToDevice } from '../../../utils/device-utils';
+import {
+  isOptionActive,
+  audioInputSelectionToDevice,
+} from '../../../utils/device-utils';
 import { Microphone } from '../../ui/icons';
 import { PopOverItem } from '../../ui/PopOver/PopOverItem';
 import { PopOverSeparator } from '../../..';
@@ -45,9 +52,13 @@ const AudioInputVFControl: React.FC<Props> = ({
   const [isVoiceFocusOn, setIsVoiceFocusOn] = useState(false);
   // Only when the current input audio device is an Amazon Voice Focus device, the state will be true. Otherwise, it will be false.
   const [isVoiceFocusEnabled, setIsVoiceFocusEnabled] = useState(false);
-  const [dropdownWithVFOptions, setDropdownWithVFOptions] = useState<ReactNode[] | null>(null);
+  const [dropdownWithVFOptions, setDropdownWithVFOptions] = useState<
+    ReactNode[] | null
+  >(null);
   const { muted, toggleMute } = useToggleLocalMute();
-  const [device, setDevice] = useState<Device | AudioTransformDevice | null>(meetingManager.selectedAudioInputDevice);
+  const [device, setDevice] = useState<Device | AudioTransformDevice | null>(
+    meetingManager.selectedAudioInputDevice
+  );
   const { isVoiceFocusSupported, addVoiceFocus } = useVoiceFocus();
   const audioInputConfig: DeviceConfig = {
     additionalDevices: true,
@@ -57,7 +68,9 @@ const AudioInputVFControl: React.FC<Props> = ({
   useEffect(() => {
     meetingManager.subscribeToSelectedAudioInputTransformDevice(setDevice);
     return (): void => {
-      meetingManager.unsubscribeFromSelectedAudioInputTransformDevice(setDevice);
+      meetingManager.unsubscribeFromSelectedAudioInputTransformDevice(
+        setDevice
+      );
     };
   }, []);
 
@@ -94,20 +107,22 @@ const AudioInputVFControl: React.FC<Props> = ({
     if (isVoiceFocusSupported) {
       const vfOption: ReactNode = (
         <PopOverItem
-          key='voicefocus'
+          key="voicefocus"
           children={
             <>
               {isLoading && <Spinner width="1.5rem" height="1.5rem" />}
               {isVoiceFocusEnabled ? voiceFocusOnLabel : voiceFocusOffLabel}
-            </>}
+            </>
+          }
           checked={isVoiceFocusEnabled}
           disabled={isLoading}
           onClick={() => {
             setIsLoading(true);
-            setIsVoiceFocusOn(current => !current);
-          }} />
-      )
-      dropdownOptions?.push(<PopOverSeparator key = 'separator' />);
+            setIsVoiceFocusOn((current) => !current);
+          }}
+        />
+      );
+      dropdownOptions?.push(<PopOverSeparator key="separator" />);
       dropdownOptions?.push(vfOption);
     }
 
@@ -131,7 +146,7 @@ const AudioInputVFControl: React.FC<Props> = ({
     async function onVFCheckboxChange() {
       let current = device;
       if (isVoiceFocusOn) {
-        if (typeof (device) === 'string') {
+        if (typeof device === 'string') {
           const currentDevice = audioInputSelectionToDevice(device);
           current = await addVoiceFocus(currentDevice);
         }
@@ -149,7 +164,13 @@ const AudioInputVFControl: React.FC<Props> = ({
 
   return (
     <ControlBarButton
-      icon={<Microphone muted={muted} mutedTitle={mutedIconTitle} unmutedTitle={unmutedIconTitle} />}
+      icon={
+        <Microphone
+          muted={muted}
+          mutedTitle={mutedIconTitle}
+          unmutedTitle={unmutedIconTitle}
+        />
+      }
       onClick={toggleMute}
       label={muted ? unmuteLabel : muteLabel}
       children={dropdownWithVFOptions}

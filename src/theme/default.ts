@@ -4,8 +4,7 @@
 import { Breakpoints } from './styled';
 
 export const fonts = {
-  body:
-    "'Ember', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;",
+  body: "'Ember', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;",
   monospace: 'Menlo, monospace',
 };
 
@@ -23,11 +22,11 @@ export const zIndex = {
 };
 
 const breakpoints = [
-  '20rem',    // 320px
-  '35.5rem',  // 568px
-  '48rem',    // 768px
-  '64rem',    // 1024px
-  '90rem',    // 1440px
+  '20rem', // 320px
+  '35.5rem', // 568px
+  '48rem', // 768px
+  '64rem', // 1024px
+  '90rem', // 1440px
 ] as Breakpoints;
 
 breakpoints.xs = breakpoints[0];
@@ -69,14 +68,14 @@ const fontSizes = {
   },
 
   h2: {
-    fontSize: "3.925rem",
-    fontWeight: "normal",
-    lineHeight: "3.75rem",
+    fontSize: '3.925rem',
+    fontWeight: 'normal',
+    lineHeight: '3.75rem',
     mobile: {
-      fontSize: "3.05rem",
-      fontWeight: "normal",
-      lineHeight: "4.5rem",
-    }
+      fontSize: '3.05rem',
+      fontWeight: 'normal',
+      lineHeight: '4.5rem',
+    },
   },
 
   h3: {
@@ -162,7 +161,7 @@ const iconButtonSizes = {
   sm: '1.5rem',
   md: '2.5rem',
   lg: '4rem',
-}
+};
 
 export const defaultTheme = {
   breakpoints,

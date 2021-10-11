@@ -99,7 +99,7 @@ describe('NotificationGroup', () => {
         'Add simple INFO notification'
       );
       fireEvent.click(addInfoNotificationButtonEl);
-      let notifications = getAllByTestId('notification');
+      const notifications = getAllByTestId('notification');
       expect(notifications).toHaveLength(1);
     });
 
@@ -110,7 +110,7 @@ describe('NotificationGroup', () => {
         'Add simple INFO notification'
       );
       fireEvent.click(addInfoNotificationButtonEl);
-      let notifications = getAllByTestId('notification');
+      const notifications = getAllByTestId('notification');
       const infoNotificationEl = notifications[0];
       expect(infoNotificationEl).toBeInTheDocument();
     });
@@ -122,7 +122,7 @@ describe('NotificationGroup', () => {
         'Add simple INFO notification'
       );
       fireEvent.click(addInfoNotificationButtonEl);
-      let notifications = getAllByTestId('notification');
+      const notifications = getAllByTestId('notification');
       const infoNotificationEl = notifications[0];
       expect(infoNotificationEl).toContainElement(
         getByText('Info notification')
@@ -142,7 +142,7 @@ describe('NotificationGroup', () => {
       fireEvent.click(addErrorNotificationButtonEl);
       let notifications = getAllByTestId('notification');
       const infoNotificationEl = notifications[0];
-      let closeButton = within(infoNotificationEl).getByTestId('button');
+      const closeButton = within(infoNotificationEl).getByTestId('button');
       fireEvent.click(closeButton);
       notifications = getAllByTestId('notification');
       expect(infoNotificationEl).not.toBeInTheDocument();

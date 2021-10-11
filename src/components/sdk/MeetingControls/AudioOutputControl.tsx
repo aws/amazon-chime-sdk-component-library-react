@@ -25,7 +25,7 @@ const AudioOutputControl: React.FC<Props> = ({ label = 'Speaker' }) => {
     if (supportsSetSinkId()) {
       await meetingManager.selectAudioOutputDevice(deviceId);
     }
-  }
+  };
 
   const dropdownOptions: PopOverItemProps[] = devices.map(
     (device: DeviceType) => ({

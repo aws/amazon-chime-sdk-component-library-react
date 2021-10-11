@@ -7,7 +7,6 @@ import { StyledNavbar } from './Styled';
 import { FlexProps } from '../Flex';
 import { FocusableProps, BaseProps } from '../Base';
 
-
 export interface NavbarProps extends FlexProps, BaseProps, FocusableProps {
   /** Classname to apply custom CSS styles */
   className?: string;

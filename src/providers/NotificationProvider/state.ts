@@ -8,7 +8,7 @@ export enum Severity {
   SUCCESS = 'success',
   INFO = 'info',
   WARNING = 'warning',
-};
+}
 
 export interface NotificationType {
   id?: string;
@@ -17,22 +17,22 @@ export interface NotificationType {
   autoClose?: boolean;
   autoCloseDelay?: number;
   replaceAll?: boolean;
-};
+}
 
 export interface StateType {
   notifications: NotificationType[];
-};
+}
 
 export enum ActionType {
   ADD,
   REMOVE,
   REMOVE_ALL,
-};
+}
 
 export interface Action {
   type: ActionType;
   payload?: any;
-};
+}
 
 export const initialState: StateType = {
   notifications: [],
@@ -41,20 +41,20 @@ export const initialState: StateType = {
 export const reducer = (state: StateType, action: Action): StateType => {
   const { type, payload } = action;
 
-  switch(type) {
+  switch (type) {
     case ActionType.ADD: {
       const notification = { id: uuidv4(), ...payload };
-      const notifications = notification?.replaceAll 
+      const notifications = notification?.replaceAll
         ? [notification]
         : [...state.notifications, notification];
       return {
         ...state,
         notifications,
-      }              
+      };
     }
     case ActionType.REMOVE: {
       const notifications = state.notifications.filter(
-        notification => notification?.id !== payload
+        (notification) => notification?.id !== payload
       );
       return {
         ...state,

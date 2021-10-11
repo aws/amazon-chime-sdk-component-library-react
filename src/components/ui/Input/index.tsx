@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -56,9 +57,8 @@ export const Input = forwardRef(
     const [focused, setFocused] = useState(false);
     const focusedRef = useRef(false);
     const internalRef = useRef(null);
-    const inputRef = (externalRef || internalRef) as React.MutableRefObject<
-      HTMLInputElement
-    >;
+    const inputRef = (externalRef ||
+      internalRef) as React.MutableRefObject<HTMLInputElement>;
     const clearRef = useRef<HTMLButtonElement>(null);
 
     const label = props['aria-label']
@@ -104,7 +104,7 @@ export const Input = forwardRef(
         }
       };
 
-      const onFocusOut = (e: any) => {
+      const onFocusOut = (): void => {
         if (!focusedRef.current) {
           return;
         }

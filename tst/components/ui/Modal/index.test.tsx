@@ -50,7 +50,12 @@ describe('Modal', () => {
 
   it(`will not close the modal using ESC key if "dismissible" prop is set to "false"`, () => {
     const component = (
-      <Modal size="md" rootId="modal-root" onClose={jest.fn()} dismissible={false}>
+      <Modal
+        size="md"
+        rootId="modal-root"
+        onClose={jest.fn()}
+        dismissible={false}
+      >
         <p>Dummy Content</p>
       </Modal>
     );
@@ -64,7 +69,12 @@ describe('Modal', () => {
 
   it(`will close the modal by clicking the background if "dismissible" prop is set to "false"`, () => {
     const component = (
-      <Modal size="md" rootId="modal-root" onClose={jest.fn()} dismissible={false}>
+      <Modal
+        size="md"
+        rootId="modal-root"
+        onClose={jest.fn()}
+        dismissible={false}
+      >
         <p>Dummy Content</p>
       </Modal>
     );

@@ -195,7 +195,7 @@ export const StyledFormField = styled.div<FieldWrapperProps>`
     font-size: ${(props) => props.theme.fontSizes.small.fontSize};
     margin-top: 0.5rem;
     color: ${(props) =>
-      !!props.error
+      props.error
         ? props.theme.inputs.error.fontColor
         : props.theme.inputs.fontColor};
   }

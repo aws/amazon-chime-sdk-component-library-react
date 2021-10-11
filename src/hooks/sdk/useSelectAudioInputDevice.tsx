@@ -9,9 +9,12 @@ import { useMeetingManager } from '../../providers/MeetingProvider';
 export const useSelectAudioInputDevice = () => {
   const meetingManager = useMeetingManager();
 
-  const selectDevice = useCallback(async (device: Device | AudioTransformDevice) => {
-    await meetingManager.selectAudioInputDevice(device);
-  }, []);
+  const selectDevice = useCallback(
+    async (device: Device | AudioTransformDevice) => {
+      await meetingManager.selectAudioInputDevice(device);
+    },
+    []
+  );
 
   return selectDevice;
 };

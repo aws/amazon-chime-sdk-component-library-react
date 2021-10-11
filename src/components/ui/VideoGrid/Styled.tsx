@@ -456,7 +456,7 @@ export const StyledGrid = styled.div<StyledGridProps>`
       styles += baseStyles || '';
     }
 
-    let mobileStyles =
+    const mobileStyles =
       responsiveStyles[`${size}.${ratio}${featured ? '.featured' : ''}`] ||
       responsiveStyles[`${size}${featured ? '.featured' : ''}`];
 

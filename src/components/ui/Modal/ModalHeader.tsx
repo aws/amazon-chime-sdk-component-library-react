@@ -35,13 +35,9 @@ export const ModalHeader: FC<ModalHeaderProps> = ({
         {title}
       </Tag>
 
-      {(displayClose && context?.dismissible) && (
+      {displayClose && context?.dismissible && (
         <span className="ch-close-button">
-          <IconButton
-            label="Close"
-            icon={<Remove />}
-            onClick={handleClick}
-          />
+          <IconButton label="Close" icon={<Remove />} onClick={handleClick} />
         </span>
       )}
     </StyledModalHeader>

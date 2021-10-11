@@ -126,7 +126,6 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
   }
 
   .ch-control-bar-item-iconButton {
-
     .ch-icon {
       width: 1.5rem;
       height: 1.5rem;

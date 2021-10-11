@@ -28,23 +28,30 @@ const AudioInputProvider: React.FC = ({ children }) => {
   );
   const selectedInputRef = useRef(selectedAudioInputDevice);
   selectedInputRef.current = selectedAudioInputDevice;
-  const [selectAudioInputDeviceError, setSelectAudioInputDeviceError] = useState(
-    meetingManager.selectAudioInputDeviceError
-  );
+  const [selectAudioInputDeviceError, setSelectAudioInputDeviceError] =
+    useState(meetingManager.selectAudioInputDeviceError);
 
   useEffect(() => {
-    meetingManager.subscribeToSelectAudioInputDeviceError(setSelectAudioInputDeviceError);
+    meetingManager.subscribeToSelectAudioInputDeviceError(
+      setSelectAudioInputDeviceError
+    );
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectAudioInputDeviceError(setSelectAudioInputDeviceError);
+      meetingManager.unsubscribeFromSelectAudioInputDeviceError(
+        setSelectAudioInputDeviceError
+      );
     };
   }, []);
 
   useEffect(() => {
-    meetingManager.subscribeToSelectedAudioInputDevice(setSelectedAudioInputDevice);
+    meetingManager.subscribeToSelectedAudioInputDevice(
+      setSelectedAudioInputDevice
+    );
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedAudioInputDevice(setSelectedAudioInputDevice);
+      meetingManager.unsubscribeFromSelectedAudioInputDevice(
+        setSelectedAudioInputDevice
+      );
     };
   }, []);
 
@@ -139,9 +146,8 @@ const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
   const { selectDeviceError } = context;
 
   if (needAdditionalIO) {
-    const additionalAudioInputs = getFormattedDropdownDeviceOptions(
-      AUDIO_INPUT
-    );
+    const additionalAudioInputs =
+      getFormattedDropdownDeviceOptions(AUDIO_INPUT);
     if (additionalAudioInputs !== null) {
       devices = [...devices, ...additionalAudioInputs];
     }

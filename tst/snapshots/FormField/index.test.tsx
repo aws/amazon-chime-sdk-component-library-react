@@ -35,7 +35,7 @@ describe('FormField', () => {
   tests.forEach((test) => {
     const baseUrl = `http://host.docker.internal:9009/iframe.html?id=ui-components-form-formfield--${test.field}-form-field`;
     let urls = [];
-    if (!!test.layouts) {
+    if (test.layouts) {
       urls = test.layouts.map((layout) => `${baseUrl}&knob-layout=${layout}`);
     }
     urls.length || urls.push(baseUrl);

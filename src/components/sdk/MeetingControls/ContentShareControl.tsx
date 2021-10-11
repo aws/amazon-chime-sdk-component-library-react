@@ -24,14 +24,11 @@ const ContentShareControl: React.FC<Props> = ({
   label = 'Content',
   pauseLabel = 'Pause',
   unpauseLabel = 'Unpause',
-  iconTitle
+  iconTitle,
 }) => {
   const { isLocalUserSharing } = useContentShareState();
-  const {
-    paused,
-    toggleContentShare,
-    togglePauseContentShare,
-  } = useContentShareControls();
+  const { paused, toggleContentShare, togglePauseContentShare } =
+    useContentShareControls();
 
   const dropdownOptions: PopOverItemProps[] = [
     {

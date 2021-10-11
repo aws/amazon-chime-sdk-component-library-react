@@ -22,9 +22,8 @@ import { ContentShareControlContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
 
 const ContentShareContext = createContext<ContentShareState | null>(null);
-const ContentShareControlContext = createContext<ContentShareControlContextType | null>(
-  null
-);
+const ContentShareControlContext =
+  createContext<ContentShareControlContextType | null>(null);
 
 const ContentShareProvider: React.FC = ({ children }) => {
   const audioVideo = useAudioVideo();
@@ -117,23 +116,25 @@ const ContentShareProvider: React.FC = ({ children }) => {
     return () => window.removeEventListener('unhandledrejection', cb);
   }, [isLocalShareLoading]);
 
-  const toggleContentShare = useCallback(async (sourceId?: string): Promise<void> => {
-      if (!audioVideo) {
-        return;
-      }
-  
-      if (isLocalUserSharing || isLocalShareLoading) {
-        audioVideo.stopContentShare();
+  const toggleContentShare = useCallback(
+    async (sourceId?: string): Promise<void> => {
+    if (!audioVideo) {
+      return;
+    }
+
+    if (isLocalUserSharing || isLocalShareLoading) {
+      audioVideo.stopContentShare();
+    } else {
+      if (sourceId && typeof sourceId === 'string') {
+        audioVideo.startContentShareFromScreenCapture(sourceId);
       } else {
-        if (sourceId && typeof sourceId === 'string') {
-          audioVideo.startContentShareFromScreenCapture(sourceId);
-        } else {
-          audioVideo.startContentShareFromScreenCapture();
-        }
-        dispatch({ type: ContentActionType.STARTING });
+        audioVideo.startContentShareFromScreenCapture();
       }
-    }, [audioVideo, isLocalUserSharing, isLocalShareLoading]);
-  
+      dispatch({ type: ContentActionType.STARTING });
+    }
+  },
+    [audioVideo, isLocalUserSharing, isLocalShareLoading]
+
 
   const togglePauseContentShare = useCallback((): void => {
     if (!audioVideo || !isLocalUserSharing) {

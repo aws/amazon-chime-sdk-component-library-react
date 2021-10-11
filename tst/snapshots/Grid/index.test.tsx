@@ -14,7 +14,7 @@ describe('Grid Snapshots', () => {
 
   // GridGap test
   for (let i = 2; i <= 4; i++) {
-    let gap = i * 10;
+    const gap = i * 10;
     it(`Basic GridGap test with GtidGap=.${gap}rem`, async () => {
       await page.goto(
         `http://host.docker.internal:9009/iframe.html?id=ui-components-grid--basic-grid&knob-gridGap=.${gap}rem`

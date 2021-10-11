@@ -115,7 +115,10 @@ export { useApplyVideoObjectFit } from './hooks/useApplyVideoObjectFit';
 export { useElementAspectRatio } from './hooks/useElementAspectRatio';
 
 export { useMeetingManager } from './providers/MeetingProvider';
-export { VoiceFocusProvider, useVoiceFocus } from './providers/VoiceFocusProvider';
+export {
+  VoiceFocusProvider,
+  useVoiceFocus,
+} from './providers/VoiceFocusProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRosterState } from './providers/RosterProvider';
 export { useRemoteVideoTileState } from './providers/RemoteVideoTileProvider';
@@ -163,7 +166,10 @@ export {
   UserActivityProvider,
   useUserActivityState,
 } from './providers/UserActivityProvider';
-export { useMeetingEvent, MeetingEventProvider } from './providers/MeetingEventProvider';
+export {
+  useMeetingEvent,
+  MeetingEventProvider,
+} from './providers/MeetingEventProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';

@@ -6,20 +6,27 @@ import { EventName, EventAttributes } from 'amazon-chime-sdk-js';
 
 import { useMeetingManager } from '../MeetingProvider';
 
-type MeetingEventProviderContextType = {
-  name: EventName;
-  attributes: EventAttributes;
-} | undefined;
+type MeetingEventProviderContextType =
+  | {
+      name: EventName;
+      attributes: EventAttributes;
+    }
+  | undefined;
 
-export const MeetingEventProviderContext = createContext<MeetingEventProviderContextType>(undefined);
+export const MeetingEventProviderContext =
+  createContext<MeetingEventProviderContextType>(undefined);
 
 const MeetingEventProvider: React.FC = ({ children }) => {
-  const [meetingEvent, setMeetingEvent] = useState<MeetingEventProviderContextType>();
+  const [meetingEvent, setMeetingEvent] =
+    useState<MeetingEventProviderContextType>();
   const meetingManager = useMeetingManager();
 
   useEffect(() => {
-    function meetingEventUpdateCallback(name: EventName, attributes: EventAttributes) {
-      setMeetingEvent({name, attributes});
+    function meetingEventUpdateCallback(
+      name: EventName,
+      attributes: EventAttributes
+    ) {
+      setMeetingEvent({ name, attributes });
     }
 
     meetingManager.subscribeToEventDidReceive(meetingEventUpdateCallback);

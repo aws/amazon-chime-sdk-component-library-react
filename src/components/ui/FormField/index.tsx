@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
@@ -75,7 +76,7 @@ export const FormField = forwardRef(
     const displayName = Field.displayName?.toLowerCase() || '';
     const labelId = useUniqueId();
     const descriptionId = useUniqueId();
-    let helpText = (error && errorText) || infoText;
+    const helpText = (error && errorText) || infoText;
 
     const renderLabel = () => {
       if (layout === 'input-only' && displayName !== 'checkbox') {

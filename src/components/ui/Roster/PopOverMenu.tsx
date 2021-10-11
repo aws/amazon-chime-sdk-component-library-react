@@ -24,12 +24,13 @@ export const PopOverMenu = ({
 }: PopOverMenuProps) => {
   const IconButtonWithToolTip = useMemo(
     () => WithTooltip(IconButton, tooltipContainerId),
-  [tooltipContainerId]);
+    [tooltipContainerId]
+  );
 
-  const ButtonComponent = !!rest['data-tooltip']
+  const ButtonComponent = rest['data-tooltip']
     ? IconButtonWithToolTip
     : IconButton;
-  const buttonComponentProps = !!rest['data-tooltip-position']
+  const buttonComponentProps = rest['data-tooltip-position']
     ? { tooltipPosition: rest['data-tooltip-position'] }
     : {};
   return (

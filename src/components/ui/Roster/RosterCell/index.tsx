@@ -86,7 +86,7 @@ export const RosterCell: React.FC<RosterCellProps> = (props) => {
     <Microphone muted={muted} poorConnection={poorConnection} />
   );
 
-  const popOverMenuComponentProps = !!rest['data-tooltip']
+  const popOverMenuComponentProps = rest['data-tooltip']
     ? {
         ['data-tooltip-position']: rest['data-tooltip-position'],
         ['data-tooltip']: rest['data-tooltip'],

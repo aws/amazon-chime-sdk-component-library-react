@@ -17,13 +17,13 @@ const getNotificationComponent = () => (
 
 const getNotificationWithOptionalProps = () => (
   <Notification
-    icon={<Echo />} 
+    icon={<Echo />}
     onClose={jest.fn()}
     severity={Severity.SUCCESS}
-    message='Hello'
-    buttonProps={{ 
-      label: 'click me', 
-      onClick: jest.fn(), 
+    message="Hello"
+    buttonProps={{
+      label: 'click me',
+      onClick: jest.fn(),
     }}
   >
     <p>This is custom content</p>
@@ -82,7 +82,7 @@ describe('Notification', () => {
 describe('Notification with optional props', () => {
   it('renders a notification with a button', () => {
     const notificationComponent = getNotificationWithOptionalProps();
-    const {  getByText } = renderWithTheme(lightTheme, notificationComponent);
+    const { getByText } = renderWithTheme(lightTheme, notificationComponent);
     const button = getByText('click me');
     expect(button).toBeInTheDocument();
   });
@@ -91,7 +91,7 @@ describe('Notification with optional props', () => {
     const notificationComponent = getNotificationWithOptionalProps();
     const { getByTestId } = renderWithTheme(lightTheme, notificationComponent);
     const severityIconEl = getByTestId('severity-icon');
-    expect(severityIconEl.children[0].classList.contains('Svg')).toBe(true)
+    expect(severityIconEl.children[0].classList.contains('Svg')).toBe(true);
     expect(severityIconEl).toBeInTheDocument();
   });
 

@@ -18,6 +18,6 @@ const ZoomIn: React.SFC<SvgProps> = (props) => (
   </Svg>
 );
 
-ZoomIn.displayName = "ZoomIn";
+ZoomIn.displayName = 'ZoomIn';
 
 export default ZoomIn;

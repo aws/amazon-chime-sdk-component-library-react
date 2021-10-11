@@ -45,7 +45,7 @@ export const MessageAttachment: FC<MessageAttachmentProps> = ({
         </div>
 
         <div className="ch-attachment-name">
-          <a target="_blank" href={downloadUrl}>
+          <a target="_blank" href={downloadUrl} rel="noreferrer">
             {name}
           </a>
           <span className="ch-attachment-size">{size}</span>

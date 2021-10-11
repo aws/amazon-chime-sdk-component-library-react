@@ -29,14 +29,8 @@ export interface ChannelItemProps
 }
 
 export const ChannelItem: FC<ChannelItemProps> = (props) => {
-  const {
-    name,
-    actions,
-    isSelected,
-    onClick,
-    unread,
-    unreadBadgeLabel,
-  } = props;
+  const { name, actions, isSelected, onClick, unread, unreadBadgeLabel } =
+    props;
   return (
     <StyledChannelItem
       {...props}
