@@ -1,8 +1,12 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import { VoiceFocusProvider } from '../';
+
 <Meta title="SDK Providers/VoiceFocusProvider" />
 
 # VoiceFocusProvider
 
-The `VoiceFocusProvider` provides a function transforming a normal device to an Amazon Voice Focus device, and whether Amazon Voice Focus is supported.
+The `VoiceFocusProvider` provides a function transforming a normal audio device to an Amazon Voice Focus device, and whether Amazon Voice Focus is supported. 
+Amazon Voice Focus related logs can be found in the browser developer tools when Amazon Voice Focus is enabled.
 
 This provider is independent from `MeetingProvider`. You can put `VoiceFocusProvider` wherever you want in the component tree to control the workflow of Voice Focus.
 
@@ -25,6 +29,10 @@ Amazon Voice Focus is supported on your device and browser. For more information
 
 You can access the state by using the [useVoiceFocus](/docs/sdk-hooks-usevoicefocus--page) hook.
 
+## Props
+
+<Props of={VoiceFocusProvider} />
+
 ## Importing
 
 ```javascript
@@ -35,6 +43,7 @@ import { VoiceFocusProvider } from 'amazon-chime-sdk-component-library-react';
 
 ```jsx
 import React from 'react';
+import { VoiceFocusTransformDevice } from 'amazon-chime-sdk-js';
 import {
   MeetingProvider,
   VoiceFocusProvider,
@@ -54,8 +63,8 @@ const MyChild = () => {
   const meetingManager = useMeetingManager();
   const [isVoiceFocusOn, setIsVoiceFocusOn] = useState(false);
   const [isVoiceFocusEnabled, setIsVoiceFocusEnabled] = useState(false);
-  const [device, setDevice] = useState(meetingManager.selectedAudioInputTransformDevice)
-  const {isVoiceFocusSupported, addVoiceFocus} = useVoiceFocus();
+  const [device, setDevice] = useState(meetingManager.selectedAudioInputDevice);
+  const { isVoiceFocusSupported, addVoiceFocus } = useVoiceFocus();
 
   useEffect(() => {
     meetingManager.subscribeToSelectedAudioInputTransformDevice(setDevice);
@@ -65,8 +74,6 @@ const MyChild = () => {
   }, []);
 
   useEffect(() => {
-    // Only when the current input audio device is an Amazon Voice Focus transform device,
-    // Amazon Voice Focus button will be checked.
     if (device instanceof VoiceFocusTransformDevice) {
       setIsVoiceFocusEnabled(true);
     } else {
@@ -75,17 +82,22 @@ const MyChild = () => {
   }, [device]);
 
   useEffect(() => {
-    let current = device;
-    if (isVoiceFocusOn) {
-      const currentDevice = audioInputSelectionToDevice(device);
-      current = addVoiceFocus(currentDevice);
-    } else {
-      if (device instanceof VoiceFocusTransformDevice) {
-        current = device.getInnerDevice();
+    async function toggleVoiceFocus() {
+      let current = device;
+      if (isVoiceFocusOn) {
+        if (typeof (device) === 'string') {
+          current = await addVoiceFocus(device);
+        }
+      } else {
+        if (device instanceof VoiceFocusTransformDevice) {
+          current = device.getInnerDevice();
+        }
       }
+      await meetingManager.selectAudioInputDevice(current);
     }
-    meetingManager.selectAudioInputDevice(current);
-  }, [isVoiceFocusOn];
+    
+    toggleVoiceFocus();
+  }, [isVoiceFocusOn]);
 
   const onClick = () => {
     setIsVoiceFocusOn(current => !current);

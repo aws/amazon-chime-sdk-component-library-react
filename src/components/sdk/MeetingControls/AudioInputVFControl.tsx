@@ -42,7 +42,7 @@ const AudioInputVFControl: React.FC<Props> = ({
   const meetingManager = useMeetingManager();
   const [isLoading, setIsLoading] = useState(false);
   // When the user click on Amazon Voice Focus option, the state will change.
-  const [isVoiceFocusCheckboxOn, setIsVoiceFocusCheckboxOn] = useState<boolean | undefined>(undefined);
+  const [isVoiceFocusChecked, setIsVoiceFocusChecked] = useState(false);
   // Only when the current input audio device is an Amazon Voice Focus device, the state will be true. Otherwise, it will be false.
   const [isVoiceFocusEnabled, setIsVoiceFocusEnabled] = useState(false);
   const [dropdownWithVFOptions, setDropdownWithVFOptions] = useState<ReactNode[] | null>(null);
@@ -82,7 +82,7 @@ const AudioInputVFControl: React.FC<Props> = ({
         children={<span>{device.label}</span>}
         checked={isOptionActive(selectedDevice, device.deviceId)}
         onClick={async (): Promise<void> => {
-          if (isVoiceFocusCheckboxOn && !isLoading) {
+          if (isVoiceFocusChecked && !isLoading) {
             setIsLoading(true);
             const receivedDevice = audioInputSelectionToDevice(device.deviceId);
             const currentDevice = await addVoiceFocus(receivedDevice);
@@ -108,7 +108,7 @@ const AudioInputVFControl: React.FC<Props> = ({
           disabled={isLoading}
           onClick={() => {
             setIsLoading(true);
-            setIsVoiceFocusCheckboxOn(current => !current);
+            setIsVoiceFocusChecked(current => !current);
           }} />
       )
       dropdownOptions?.push(<PopOverSeparator key = 'separator' />);
@@ -126,26 +126,22 @@ const AudioInputVFControl: React.FC<Props> = ({
     devices[0].label,
     isLoading,
     isVoiceFocusEnabled,
-    isVoiceFocusCheckboxOn,
+    isVoiceFocusChecked,
     isVoiceFocusSupported,
     selectedDevice,
   ]);
 
   useEffect(() => {
     async function onVFCheckboxChange() {
-      if (isVoiceFocusCheckboxOn === undefined) {
-        return;
-      }
-
       let current = device;
-      if (isVoiceFocusCheckboxOn) {
+      if (isVoiceFocusChecked) {
         console.info('User turned on Amazon Voice Focus.')
         if (typeof (device) === 'string') {
           const currentDevice = audioInputSelectionToDevice(device);
           current = await addVoiceFocus(currentDevice);
         }
       } else {
-        console.info('User turned off Amazon Voice Focus.')
+        console.info('Amazon Voice Focus is off by default or user turned off Amazon Voice Focus.')
         if (device instanceof VoiceFocusTransformDevice) {
           current = device.getInnerDevice();
         }
@@ -155,7 +151,7 @@ const AudioInputVFControl: React.FC<Props> = ({
     }
 
     onVFCheckboxChange();
-  }, [isVoiceFocusCheckboxOn]);
+  }, [isVoiceFocusChecked]);
 
   return (
     <ControlBarButton
