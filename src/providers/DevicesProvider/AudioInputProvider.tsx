@@ -1,6 +1,5 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
-import _ from 'lodash';
 
 import React, {
   createContext,
@@ -145,12 +144,6 @@ const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
     );
     if (additionalAudioInputs !== null) {
       const newDevices = [...devices, ...additionalAudioInputs];
-      console.log('is equal', _.isEqual(newDevices, devices));
-      console.log('new devices: ', newDevices);
-      console.log('devices: ', devices);
-      if (!_.isEqual(newDevices, devices)) {
-        devices = newDevices;
-      }
     }
   }
 
