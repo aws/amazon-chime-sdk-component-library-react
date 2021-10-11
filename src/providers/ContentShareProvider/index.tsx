@@ -118,23 +118,23 @@ const ContentShareProvider: React.FC = ({ children }) => {
 
   const toggleContentShare = useCallback(
     async (sourceId?: string): Promise<void> => {
-    if (!audioVideo) {
-      return;
-    }
-
-    if (isLocalUserSharing || isLocalShareLoading) {
-      audioVideo.stopContentShare();
-    } else {
-      if (sourceId && typeof sourceId === 'string') {
-        audioVideo.startContentShareFromScreenCapture(sourceId);
-      } else {
-        audioVideo.startContentShareFromScreenCapture();
+      if (!audioVideo) {
+        return;
       }
-      dispatch({ type: ContentActionType.STARTING });
-    }
-  },
-    [audioVideo, isLocalUserSharing, isLocalShareLoading]
 
+      if (isLocalUserSharing || isLocalShareLoading) {
+        audioVideo.stopContentShare();
+      } else {
+        if (sourceId && typeof sourceId === 'string') {
+          audioVideo.startContentShareFromScreenCapture(sourceId);
+        } else {
+          audioVideo.startContentShareFromScreenCapture();
+        }
+        dispatch({ type: ContentActionType.STARTING });
+      }
+    },
+    [audioVideo, isLocalUserSharing, isLocalShareLoading]
+  );
 
   const togglePauseContentShare = useCallback((): void => {
     if (!audioVideo || !isLocalUserSharing) {
