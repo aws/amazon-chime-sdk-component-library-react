@@ -18,7 +18,7 @@
   "types": "lib/index.d.ts",
   "scripts": {
     "build": "rollup -c",
-    "lint": "eslint src tst --ext .ts,.tsx,.js .",
+    "lint": "eslint src tst --ext .ts,.tsx,.js . --fix",
     "check": "node scripts/check-codestyle.js",
     "release": "node scripts/release.js",
     "prebuild:publish": "npm install && node scripts/prebuild.js --publish",
