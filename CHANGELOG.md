@@ -16,7 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+
 - Add Eslint rules to enforce code style and fix Issues.
+- Add logs for Amazon Voice Focus components.
 
 ### Changed
 
