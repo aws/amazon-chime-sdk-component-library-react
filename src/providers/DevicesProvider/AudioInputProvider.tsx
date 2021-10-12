@@ -143,7 +143,7 @@ const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
       AUDIO_INPUT
     );
     if (additionalAudioInputs !== null) {
-      const newDevices = [...devices, ...additionalAudioInputs];
+      devices = [...devices, ...additionalAudioInputs];
     }
   }
 
