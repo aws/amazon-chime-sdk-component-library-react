@@ -67,8 +67,11 @@ const VoiceFocusProvider: React.FC<Props> = ({
   });
 
   const addVoiceFocus = async (device: Device): Promise<Device | VoiceFocusTransformDevice> => {
+    console.info('Add Amazon Voice Focus to the following audio input device', device);
+
     if (voiceFocusDevice) {
       const vf = await voiceFocusDevice.chooseNewInnerDevice(device);
+      console.info('Re-used the same internal state to create an Amazon Voice Focus transform device.');
       setVoiceFocusDevice(vf);
       return vf;
     }
@@ -82,6 +85,7 @@ const VoiceFocusProvider: React.FC<Props> = ({
       const transformer = await getVoiceFocusDeviceTransformer();
       const vf = await transformer?.createTransformDevice(device);
       if (vf) {
+        console.info('Created a new Amazon Voice Focus transform device.');
         setVoiceFocusDevice(vf);
         return vf;
       }
@@ -159,11 +163,17 @@ const VoiceFocusProvider: React.FC<Props> = ({
     }
 
     if (isVoiceFocusSupported) {
-      console.debug('Amazon Voice Focus is supported.');
+      console.info('Amazon Voice Focus is supported.');
     } else {
       console.warn('Amazon Voice Focus is not supported.');
     }
   }, [isVoiceFocusSupported]);
+
+  useEffect(() => {
+    if (voiceFocusDevice) {
+      console.info('Current Amazon Voice Focus transform device: ', voiceFocusDevice);
+    } 
+  }, [voiceFocusDevice]);
 
   const value: VoiceFocusState = {
     isVoiceFocusSupported,
