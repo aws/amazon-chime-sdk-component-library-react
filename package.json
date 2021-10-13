@@ -40,6 +40,7 @@
   "dependencies": {
     "@popperjs/core": "^2.2.2",
     "fast-memoize": "^2.5.2",
+    "lodash.isequal": "^4.5.0",
     "react-popper": "^2.2.4",
     "throttle-debounce": "^2.3.0",
     "uuid": "^8.0.0"
@@ -61,6 +62,7 @@
     "@testing-library/user-event": "^12.8.0",
     "@types/classnames": "^2.2.10",
     "@types/jest": "^25.2.1",
+    "@types/lodash.isequal": "^4.5.5",
     "@types/puppeteer": "^5.4.3",
     "@types/react": "^17.0.1",
     "@types/react-dom": "^17.0.1",

@@ -1,11 +1,13 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import isEqual from 'lodash.isequal';
+
 import React, { useEffect, useState, ReactNode } from 'react';
 import { Device, AudioTransformDevice, VoiceFocusTransformDevice } from 'amazon-chime-sdk-js';
 
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
-import { DeviceConfig } from '../../../types';
+import { DeviceType, DeviceConfig } from '../../../types';
 import { isOptionActive, audioInputSelectionToDevice } from '../../../utils/device-utils';
 import { Microphone } from '../../ui/icons';
 import { PopOverItem } from '../../ui/PopOver/PopOverItem';
@@ -15,6 +17,7 @@ import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
 import { useVoiceFocus } from '../../../providers/VoiceFocusProvider';
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
+import useMemoCompare from '../../../utils/use-memo-compare';
 
 interface Props {
   /** The label that will be shown when microphone is muted, it defaults to `Mute`. */
@@ -54,6 +57,10 @@ const AudioInputVFControl: React.FC<Props> = ({
   };
   const { devices, selectedDevice } = useAudioInputs(audioInputConfig);
 
+  const audioInputDevices: DeviceType[] = useMemoCompare(devices, (prev: DeviceType[], next: DeviceType[]): boolean => {
+    return isEqual(prev, next)
+  });
+
   useEffect(() => {
     meetingManager.subscribeToSelectedAudioInputTransformDevice(setDevice);
     return (): void => {
@@ -76,7 +83,7 @@ const AudioInputVFControl: React.FC<Props> = ({
   }, [device]);
 
   useEffect(() => {
-    const dropdownOptions: ReactNode[] = devices.map((device) => (
+    const dropdownOptions: ReactNode[] = audioInputDevices.map((device) => (
       <PopOverItem
         key={device.deviceId}
         children={<span>{device.label}</span>}
@@ -122,8 +129,7 @@ const AudioInputVFControl: React.FC<Props> = ({
     // the click handler.
     addVoiceFocus,
     device,
-    devices.length,
-    devices[0].label,
+    audioInputDevices,
     isLoading,
     isVoiceFocusEnabled,
     isVoiceFocusChecked,
