@@ -1,12 +1,12 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import classNames from 'classnames';
 import React, { useMemo } from 'react';
 
+import IconButton, { IconButtonProps } from '../Button/IconButton';
 import { Dots } from '../icons';
 import PopOver from '../PopOver';
-import IconButton, { IconButtonProps } from '../Button/IconButton';
-import classNames from 'classnames';
 import { Tooltipable, WithTooltip } from '../WithTooltip';
 
 interface PopOverMenuProps extends Tooltipable {

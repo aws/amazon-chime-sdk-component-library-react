@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { forwardRef, ReactNode, Ref } from 'react';
-import { StyledInputWrapper } from './Styled';
+
 import { Size } from './';
+import { StyledInputWrapper } from './Styled';
 
 export interface InputWrapperProps {
   leadingIcon?: ReactNode;

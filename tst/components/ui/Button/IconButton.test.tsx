@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
+
 import React from 'react';
 
+import Badge from '../../../../src/components/ui/Badge';
 import IconButton from '../../../../src/components/ui/Button/IconButton';
 import Meeting from '../../../../src/components/ui/icons/Meeting';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
-import Badge from '../../../../src/components/ui/Badge';
 
 describe('Icon Button', () => {
   it('should render an icon Button', () => {

@@ -1,8 +1,9 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { DefaultDeviceController, Device } from 'amazon-chime-sdk-js';
+
 import { DeviceType } from '../types';
-import { Device, DefaultDeviceController } from 'amazon-chime-sdk-js';
 
 export const getFormattedDropdownDeviceOptions = (
   jsonObject: any

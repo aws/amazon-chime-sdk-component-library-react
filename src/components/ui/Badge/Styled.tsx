@@ -3,8 +3,8 @@
 
 import styled from 'styled-components';
 
+import { baseSpacing, baseStyles } from '../Base';
 import { BadgeProps } from './';
-import { baseStyles, baseSpacing } from '../Base';
 
 export const StyledBadge = styled.span<Partial<BadgeProps>>`
   ${(props) => {

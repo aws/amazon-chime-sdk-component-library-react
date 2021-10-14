@@ -3,18 +3,18 @@
 
 import React, {
   ChangeEvent,
-  ReactNode,
   forwardRef,
+  ReactNode,
   Ref,
+  useEffect,
   useRef,
   useState,
-  useEffect,
 } from 'react';
 
-import InputWrapper from './InputWrapper';
-import { StyledInput, StyledClear } from './Styled';
-import { Clear } from '../icons';
 import { BaseProps } from '../Base';
+import { Clear } from '../icons';
+import InputWrapper from './InputWrapper';
+import { StyledClear, StyledInput } from './Styled';
 
 export type Size = 'sm' | 'md';
 

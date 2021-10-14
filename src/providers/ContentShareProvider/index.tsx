@@ -1,25 +1,25 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { DefaultModality, VideoTileState } from 'amazon-chime-sdk-js';
 import React, {
-  useCallback,
-  useMemo,
   createContext,
+  useCallback,
   useContext,
   useEffect,
+  useMemo,
   useReducer,
   useRef,
 } from 'react';
-import { DefaultModality, VideoTileState } from 'amazon-chime-sdk-js';
 
-import {
-  reducer,
-  initialState,
-  ContentShareState,
-  ContentActionType,
-} from './state';
 import { ContentShareControlContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
+import {
+  ContentActionType,
+  ContentShareState,
+  initialState,
+  reducer,
+} from './state';
 
 const ContentShareContext = createContext<ContentShareState | null>(null);
 const ContentShareControlContext =

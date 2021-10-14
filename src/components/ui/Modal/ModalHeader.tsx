@@ -3,11 +3,11 @@
 
 import React, { FC, HTMLAttributes } from 'react';
 
+import { BaseProps } from '../Base';
 import IconButton from '../Button/IconButton';
 import Remove from '../icons/Remove';
 import { useModalContext } from './ModalContext';
 import { StyledModalHeader } from './Styled';
-import { BaseProps } from '../Base';
 
 export interface ModalHeaderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,

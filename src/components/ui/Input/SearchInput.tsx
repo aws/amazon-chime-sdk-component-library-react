@@ -1,10 +1,10 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { Ref, forwardRef } from 'react';
+import React, { forwardRef, Ref } from 'react';
 
-import Input, { InputProps } from './';
 import Search from '../icons/Search';
+import Input, { InputProps } from './';
 
 export const SearchInput = forwardRef(
   (props: InputProps, ref: Ref<HTMLInputElement>) => {

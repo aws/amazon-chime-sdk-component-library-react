@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, ReactElement } from 'react';
-import { useModalContext } from './ModalContext';
 
+import { useModalContext } from './ModalContext';
 import { StyledModalButtonGroup } from './Styled';
 
 export interface ModalButtonGroupProps

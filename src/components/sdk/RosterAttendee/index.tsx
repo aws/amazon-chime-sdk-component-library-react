@@ -3,10 +3,10 @@
 
 import React from 'react';
 
+import useAttendeeStatus from '../../../hooks/sdk/useAttendeeStatus';
+import { useRosterState } from '../../../providers/RosterProvider';
 import RosterCell, { RosterCellProps } from '../../ui/Roster/RosterCell';
 import MicrophoneActivity from '../MicrophoneActivity';
-import { useRosterState } from '../../../providers/RosterProvider';
-import useAttendeeStatus from '../../../hooks/sdk/useAttendeeStatus';
 
 export interface RosterAttendeeProps extends Omit<RosterCellProps, 'name'> {
   /** The ID of a Chime meeting attendee. */

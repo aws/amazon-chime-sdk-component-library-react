@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC } from 'react';
+
 import Svg, { SvgProps } from '../Svg';
 
 export type CautionVariant = 'default' | 'fill-warning' | 'fill-error';

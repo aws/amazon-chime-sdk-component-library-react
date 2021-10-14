@@ -1,15 +1,14 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useContext, createContext } from 'react';
-
 import {
   Device,
-  VoiceFocusTransformDevice,
+  VoiceFocusDeviceOptions,
   VoiceFocusDeviceTransformer,
   VoiceFocusSpec,
-  VoiceFocusDeviceOptions,
+  VoiceFocusTransformDevice,
 } from 'amazon-chime-sdk-js';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import useMemoCompare from '../../utils/use-memo-compare';
 
@@ -71,12 +70,19 @@ const VoiceFocusProvider: React.FC<Props> = ({ spec, options, children }) => {
     }
   );
 
-  const addVoiceFocus = async (device: Device): Promise<Device | VoiceFocusTransformDevice> => {
-    console.info('Add Amazon Voice Focus to the following audio input device', device);
+  const addVoiceFocus = async (
+    device: Device
+  ): Promise<Device | VoiceFocusTransformDevice> => {
+    console.info(
+      'Add Amazon Voice Focus to the following audio input device',
+      device
+    );
 
     if (voiceFocusDevice) {
       const vf = await voiceFocusDevice.chooseNewInnerDevice(device);
-      console.info('Re-used the same internal state to create an Amazon Voice Focus transform device.');
+      console.info(
+        'Re-used the same internal state to create an Amazon Voice Focus transform device.'
+      );
       setVoiceFocusDevice(vf);
       return vf;
     }
@@ -189,8 +195,11 @@ const VoiceFocusProvider: React.FC<Props> = ({ spec, options, children }) => {
 
   useEffect(() => {
     if (voiceFocusDevice) {
-      console.info('Current Amazon Voice Focus transform device: ', voiceFocusDevice);
-    } 
+      console.info(
+        'Current Amazon Voice Focus transform device: ',
+        voiceFocusDevice
+      );
+    }
   }, [voiceFocusDevice]);
 
   const value: VoiceFocusState = {

@@ -4,11 +4,11 @@
 import React, { FC, HTMLAttributes } from 'react';
 
 import { BaseProps } from '../../Base';
+import { Document } from '../../icons';
 import {
   StyledMessageAttachment,
   StyledMessageAttachmentContent,
 } from './Styled';
-import { Document } from '../../icons';
 
 export interface MessageAttachmentProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,

@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import { useAudioOutputs } from '../../../../providers/DevicesProvider';
 import useSelectAudioOutputDevice from '../../../../hooks/sdk/useSelectAudioOutputDevice';
+import { useAudioOutputs } from '../../../../providers/DevicesProvider';
 import DeviceInput from '../DeviceInput';
 
 interface Props {

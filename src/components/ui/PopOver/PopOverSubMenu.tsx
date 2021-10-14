@@ -3,10 +3,10 @@
 
 import React, { FC, HTMLAttributes } from 'react';
 
+import { BaseProps } from '../Base';
+import Caret from '../icons/Caret';
 import PopOver from './';
 import { StyledSubMenu } from './Styled';
-import Caret from '../icons/Caret';
-import { BaseProps } from '../Base';
 
 export interface PopOverSubMenuProps
   extends Omit<HTMLAttributes<HTMLUListElement>, 'css'>,

@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 
-import { baseStyles, baseSpacing } from '../Base';
+import { baseSpacing, baseStyles } from '../Base';
 
 export const StyledLabel = styled.label`
   color: ${(props) => props.theme.inputs.fontColor};

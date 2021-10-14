@@ -1,15 +1,15 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import classnames from 'classnames';
 import React, {
-  FC,
   createRef,
-  useState,
+  FC,
   HTMLAttributes,
   useEffect,
+  useState,
 } from 'react';
-import { Manager, Reference, Popper } from 'react-popper';
-import classnames from 'classnames';
+import { Manager, Popper, Reference } from 'react-popper';
 
 import { KEY_CODES } from '../../../constants';
 import useClickOutside from '../../../hooks/useClickOutside';

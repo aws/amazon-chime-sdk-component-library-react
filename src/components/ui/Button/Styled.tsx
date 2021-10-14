@@ -3,8 +3,8 @@
 
 import styled, { css } from 'styled-components';
 
-import { baseStyles, baseSpacing } from '../Base';
 import { visuallyHidden } from '../../../utils/style';
+import { baseSpacing, baseStyles } from '../Base';
 import { ButtonProps } from './';
 
 export const StyledButton = styled.button<ButtonProps>`

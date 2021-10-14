@@ -1,11 +1,11 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { HTMLAttributes, Ref, forwardRef } from 'react';
+import React, { forwardRef, HTMLAttributes, Ref } from 'react';
 
+import { BaseProps } from '../Base';
 import Microphone from '../icons/Microphone';
 import { StyledMicVolumeIndicator } from './Styled';
-import { BaseProps } from '../Base';
 
 export interface MicVolumeIndicatorProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,

@@ -1,30 +1,29 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import isEqual from 'lodash.isequal';
-
-import React, { useEffect, useState, ReactNode } from 'react';
 import {
-  Device,
   AudioTransformDevice,
+  Device,
   VoiceFocusTransformDevice,
 } from 'amazon-chime-sdk-js';
+import isEqual from 'lodash.isequal';
+import React, { ReactNode, useEffect, useState } from 'react';
 
-import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
-import { DeviceType, DeviceConfig } from '../../../types';
-import {
-  isOptionActive,
-  audioInputSelectionToDevice,
-} from '../../../utils/device-utils';
-import { Microphone } from '../../ui/icons';
-import { PopOverItem } from '../../ui/PopOver/PopOverItem';
 import { PopOverSeparator } from '../../..';
-import { Spinner } from '../../ui/icons';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
-import { useAudioInputs } from '../../../providers/DevicesProvider';
-import { useVoiceFocus } from '../../../providers/VoiceFocusProvider';
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
+import { useAudioInputs } from '../../../providers/DevicesProvider';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
+import { useVoiceFocus } from '../../../providers/VoiceFocusProvider';
+import { DeviceConfig, DeviceType } from '../../../types';
+import {
+  audioInputSelectionToDevice,
+  isOptionActive,
+} from '../../../utils/device-utils';
 import useMemoCompare from '../../../utils/use-memo-compare';
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
+import { Microphone } from '../../ui/icons';
+import { Spinner } from '../../ui/icons';
+import { PopOverItem } from '../../ui/PopOver/PopOverItem';
 
 interface Props {
   /** The label that will be shown when microphone is muted, it defaults to `Mute`. */
@@ -68,9 +67,12 @@ const AudioInputVFControl: React.FC<Props> = ({
   };
   const { devices, selectedDevice } = useAudioInputs(audioInputConfig);
 
-  const audioInputDevices: DeviceType[] = useMemoCompare(devices, (prev: DeviceType[], next: DeviceType[]): boolean => {
-    return isEqual(prev, next)
-  });
+  const audioInputDevices: DeviceType[] = useMemoCompare(
+    devices,
+    (prev: DeviceType[], next: DeviceType[]): boolean => {
+      return isEqual(prev, next);
+    }
+  );
 
   useEffect(() => {
     meetingManager.subscribeToSelectedAudioInputTransformDevice(setDevice);
@@ -82,7 +84,9 @@ const AudioInputVFControl: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    console.info(`Amazon Voice Focus is ${isVoiceFocusEnabled ? 'enabled' : 'disabled'}.`);
+    console.info(
+      `Amazon Voice Focus is ${isVoiceFocusEnabled ? 'enabled' : 'disabled'}.`
+    );
   }, [isVoiceFocusEnabled]);
 
   useEffect(() => {
@@ -129,10 +133,11 @@ const AudioInputVFControl: React.FC<Props> = ({
           disabled={isLoading}
           onClick={() => {
             setIsLoading(true);
-            setIsVoiceFocusChecked(current => !current);
-          }} />
-      )
-      dropdownOptions?.push(<PopOverSeparator key = 'separator' />);
+            setIsVoiceFocusChecked((current) => !current);
+          }}
+        />
+      );
+      dropdownOptions?.push(<PopOverSeparator key="separator" />);
       dropdownOptions?.push(vfOption);
     }
 
@@ -155,13 +160,15 @@ const AudioInputVFControl: React.FC<Props> = ({
     async function onVFCheckboxChange() {
       let current = device;
       if (isVoiceFocusChecked) {
-        console.info('User turned on Amazon Voice Focus.')
-        if (typeof (device) === 'string') {
+        console.info('User turned on Amazon Voice Focus.');
+        if (typeof device === 'string') {
           const currentDevice = audioInputSelectionToDevice(device);
           current = await addVoiceFocus(currentDevice);
         }
       } else {
-        console.info('Amazon Voice Focus is off by default or user turned off Amazon Voice Focus.')
+        console.info(
+          'Amazon Voice Focus is off by default or user turned off Amazon Voice Focus.'
+        );
         if (device instanceof VoiceFocusTransformDevice) {
           current = device.getInnerDevice();
         }

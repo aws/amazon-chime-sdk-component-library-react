@@ -2,17 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
-  useRef,
-  useEffect,
-  useState,
-  HTMLAttributes,
   FC,
+  HTMLAttributes,
   ReactNode,
+  useEffect,
+  useRef,
+  useState,
 } from 'react';
 
-import { StyledInfiniteList } from './Styled';
 import { BaseProps } from '../../Base';
 import { Spinner } from '../../icons';
+import { StyledInfiniteList } from './Styled';
 
 export interface InfiniteListProps
   extends Omit<HTMLAttributes<HTMLUListElement>, 'css'>,

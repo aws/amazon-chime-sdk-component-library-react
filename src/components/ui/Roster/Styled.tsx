@@ -3,8 +3,8 @@
 
 import styled from 'styled-components';
 
-import { baseSpacing, baseStyles } from '../Base';
 import { ellipsis } from '../../../utils/style';
+import { baseSpacing, baseStyles } from '../Base';
 
 export const StyledRoster = styled.aside`
   width: 100%;

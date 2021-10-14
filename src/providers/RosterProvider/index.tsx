@@ -1,12 +1,12 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, useEffect, useRef, useMemo, useContext } from 'react';
 import { DefaultModality } from 'amazon-chime-sdk-js';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 
-import { useMeetingManager } from '../MeetingProvider';
+import { RosterAttendeeType, RosterType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
-import { RosterType, RosterAttendeeType } from '../../types';
+import { useMeetingManager } from '../MeetingProvider';
 
 interface RosterContextValue {
   roster: RosterType;

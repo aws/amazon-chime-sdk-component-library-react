@@ -3,9 +3,9 @@
 
 import React, { useEffect, useRef } from 'react';
 
+import useAttendeeAudioStatus from '../../../hooks/sdk/useAttendeeAudioStatus';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import MicVolumeIndicator from '../../ui/MicVolumeIndicator';
-import useAttendeeAudioStatus from '../../../hooks/sdk/useAttendeeAudioStatus';
 import { BaseSdkProps } from '../Base';
 
 interface Props extends BaseSdkProps {

@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, HTMLAttributes } from 'react';
+
 import { BaseProps } from '../Base';
 import { StyledModalBody } from './Styled';
 

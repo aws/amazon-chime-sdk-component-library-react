@@ -3,8 +3,8 @@
 
 import styled from 'styled-components';
 
-import { VideoGridProps } from './';
 import { AspectRatio } from '../../../hooks/useElementAspectRatio';
+import { VideoGridProps } from './';
 
 interface StyledGridProps extends VideoGridProps {
   ratio?: AspectRatio | null;

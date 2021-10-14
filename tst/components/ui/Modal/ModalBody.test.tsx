@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
+
 import React from 'react';
 
 import ModalBody from '../../../../src/components/ui/Modal/ModalBody';

@@ -2,41 +2,41 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
+  AudioTransformDevice,
   AudioVideoFacade,
+  AudioVideoObserver,
   ConsoleLogger,
+  DefaultActiveSpeakerPolicy,
   DefaultDeviceController,
   DefaultMeetingSession,
+  Device,
+  EventAttributes,
+  EventName,
+  EventReporter,
+  isAudioTransformDevice,
+  Logger,
   LogLevel,
   MeetingSessionConfiguration,
-  DefaultActiveSpeakerPolicy,
+  MeetingSessionPOSTLogger,
   MeetingSessionStatus,
   MeetingSessionStatusCode,
-  AudioVideoObserver,
   MultiLogger,
-  MeetingSessionPOSTLogger,
-  EventReporter,
   VideoDownlinkBandwidthPolicy,
-  Logger,
-  EventName,
-  EventAttributes,
-  Device,
-  AudioTransformDevice,
-  isAudioTransformDevice,
 } from 'amazon-chime-sdk-js';
 
+import { DeviceLabels, DeviceLabelTrigger, MeetingStatus } from '../../types';
 import {
   audioInputSelectionToDevice,
   supportsSetSinkId,
   videoInputSelectionToDevice,
 } from '../../utils/device-utils';
-import { DeviceLabels, DeviceLabelTrigger, MeetingStatus } from '../../types';
 import {
-  DevicePermissionStatus,
-  MeetingJoinData,
   AttendeeResponse,
+  DevicePermissionStatus,
   FullDeviceInfoType,
-  PostLogConfig,
+  MeetingJoinData,
   MeetingManagerConfig,
+  PostLogConfig,
 } from './types';
 
 function noOpDeviceLabelHook(): Promise<MediaStream> {

@@ -1,24 +1,24 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useContext, useState, createContext } from 'react';
 import {
   Logger,
   LogLevel,
   VideoDownlinkBandwidthPolicy,
 } from 'amazon-chime-sdk-js';
+import React, { createContext, useContext, useState } from 'react';
 
-import MeetingManager from './MeetingManager';
-import { PostLogConfig } from './types';
 import { AudioVideoProvider } from '../AudioVideoProvider';
-import { RosterProvider } from '../RosterProvider';
+import { ContentShareProvider } from '../ContentShareProvider';
 import { DevicesProvider } from '../DevicesProvider';
-import { RemoteVideoTileProvider } from '../RemoteVideoTileProvider';
-import { LocalVideoProvider } from '../LocalVideoProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
 import { LocalAudioOutputProvider } from '../LocalAudioOutputProvider';
-import { ContentShareProvider } from '../ContentShareProvider';
+import { LocalVideoProvider } from '../LocalVideoProvider';
 import { MeetingEventProvider } from '../MeetingEventProvider';
+import { RemoteVideoTileProvider } from '../RemoteVideoTileProvider';
+import { RosterProvider } from '../RosterProvider';
+import MeetingManager from './MeetingManager';
+import { PostLogConfig } from './types';
 
 interface Props {
   /** Determines how verbose the logging statements will be */

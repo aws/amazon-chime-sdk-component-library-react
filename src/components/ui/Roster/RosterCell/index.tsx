@@ -3,14 +3,14 @@
 
 import React from 'react';
 
+import { BaseProps, FocusableProps } from '../../Base';
+import { IconButtonProps } from '../../Button/IconButton';
+import { Camera, Microphone, ScreenShare } from '../../icons';
+import { Tooltipable } from '../../WithTooltip';
+import { PopOverMenu } from '../PopOverMenu';
 import RosterName from '../RosterName';
 import LateMessage from './LateMessage';
-import { BaseProps, FocusableProps } from '../../Base';
-import { Microphone, Camera, ScreenShare } from '../../icons';
 import { StyledCell } from './Styled';
-import { PopOverMenu } from '../PopOverMenu';
-import { IconButtonProps } from '../../Button/IconButton';
-import { Tooltipable } from '../../WithTooltip';
 
 type MicPosition = 'leading' | 'grouped';
 

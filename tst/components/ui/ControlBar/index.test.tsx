@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
+
 import React from 'react';
 
 import ControlBar from '../../../../src/components/ui/ControlBar';
+import ControlBarButton from '../../../../src/components/ui/ControlBar/ControlBarButton';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
-import ControlBarButton from '../../../../src/components/ui/ControlBar/ControlBarButton';
 import { controlBarItemProps } from './ControlBarButton.test';
 
 describe('ControlBar', () => {

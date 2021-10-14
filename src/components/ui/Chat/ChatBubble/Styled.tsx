@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 
-import { baseStyles, baseSpacing, BaseProps } from '../../Base';
+import { BaseProps, baseSpacing, baseStyles } from '../../Base';
 import { MessageVariant } from './ChatBubbleContainer';
 
 interface StyledChatBubbleContainerProps extends BaseProps {

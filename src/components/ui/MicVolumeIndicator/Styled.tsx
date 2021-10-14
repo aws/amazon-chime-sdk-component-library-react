@@ -3,8 +3,8 @@
 
 import styled from 'styled-components';
 
-import { MicVolumeIndicatorProps } from '.';
 import { baseStyles } from '../Base';
+import { MicVolumeIndicatorProps } from '.';
 
 export const StyledMicVolumeIndicator = styled.div<MicVolumeIndicatorProps>`
   position: relative;

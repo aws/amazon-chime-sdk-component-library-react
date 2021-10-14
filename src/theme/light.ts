@@ -1,8 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import defaultTheme from './default';
 import { hexTorgba } from '../utils/style';
+import defaultTheme from './default';
 
 const colors = {
   primary: {

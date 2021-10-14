@@ -2,8 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
-import React from 'react';
+
 import { fireEvent } from '@testing-library/dom';
+import React from 'react';
+
 import Modal from '../../../../src/components/ui/Modal';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';

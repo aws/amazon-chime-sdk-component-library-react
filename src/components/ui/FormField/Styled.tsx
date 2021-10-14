@@ -3,8 +3,8 @@
 
 import styled, { css } from 'styled-components';
 
+import { baseSpacing, baseStyles } from '../Base';
 import { FieldWrapperProps } from './';
-import { baseStyles, baseSpacing } from '../Base';
 
 export const stack = css`
   &.ch-form-field-input,

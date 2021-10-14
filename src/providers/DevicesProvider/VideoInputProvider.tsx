@@ -1,20 +1,20 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
-  useEffect,
-  useState,
   useContext,
+  useEffect,
   useMemo,
+  useState,
 } from 'react';
-import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
+import { VIDEO_INPUT } from '../../constants/additional-audio-video-devices';
+import { DeviceConfig, DeviceTypeContext } from '../../types';
+import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useMeetingManager } from '../MeetingProvider';
-import { DeviceTypeContext, DeviceConfig } from '../../types';
-import { VIDEO_INPUT } from '../../constants/additional-audio-video-devices';
-import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
 
 const Context = createContext<DeviceTypeContext | null>(null);
 

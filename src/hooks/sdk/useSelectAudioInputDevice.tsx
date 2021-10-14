@@ -1,8 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { AudioTransformDevice, Device } from 'amazon-chime-sdk-js';
 import { useCallback } from 'react';
-import { Device, AudioTransformDevice } from 'amazon-chime-sdk-js';
 
 import { useMeetingManager } from '../../providers/MeetingProvider';
 

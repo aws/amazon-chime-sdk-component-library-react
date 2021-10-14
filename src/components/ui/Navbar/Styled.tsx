@@ -4,10 +4,9 @@
 import styled from 'styled-components';
 
 import { baseSpacing, baseStyles } from '../Base';
+import Flex from '../Flex';
 import { NavbarProps } from '.';
 import { NavbarItemProps } from './NavbarItem';
-
-import Flex from '../Flex';
 
 export const StyledHeader = styled.div`
   display: flex;

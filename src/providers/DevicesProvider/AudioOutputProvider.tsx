@@ -1,18 +1,18 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
-  useEffect,
-  useState,
   useContext,
+  useEffect,
   useMemo,
+  useState,
 } from 'react';
-import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
+import { DeviceTypeContext } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useMeetingManager } from '../MeetingProvider';
-import { DeviceTypeContext } from '../../types';
 
 const AudioOutputContext = createContext<DeviceTypeContext | null>(null);
 

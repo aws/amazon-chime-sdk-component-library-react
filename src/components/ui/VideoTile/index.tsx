@@ -3,8 +3,8 @@
 
 import React, { forwardRef, HTMLAttributes } from 'react';
 
-import { StyledVideoTile } from './Styled';
 import { BaseProps } from '../Base';
+import { StyledVideoTile } from './Styled';
 
 type ObjectFit = 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 

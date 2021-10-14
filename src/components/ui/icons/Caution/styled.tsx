@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled, { css } from 'styled-components';
+
 import { CautionProps } from './';
 
 const defaultStyle = css`
