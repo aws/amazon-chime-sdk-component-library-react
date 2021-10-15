@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update `useSelectVideoInputDevice` hook documentation and usage example.
+- Update package.json to include NPM 8.
 
 ### Removed
 
