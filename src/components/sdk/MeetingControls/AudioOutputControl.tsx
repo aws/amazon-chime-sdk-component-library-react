@@ -3,13 +3,13 @@
 
 import React from 'react';
 
-import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
-import { Sound } from '../../ui/icons';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { useAudioOutputs } from '../../../providers/DevicesProvider';
 import { useLocalAudioOutput } from '../../../providers/LocalAudioOutputProvider';
-import { isOptionActive, supportsSetSinkId } from '../../../utils/device-utils';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { DeviceType } from '../../../types';
+import { isOptionActive, supportsSetSinkId } from '../../../utils/device-utils';
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
+import { Sound } from '../../ui/icons';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
 interface Props {
@@ -25,7 +25,7 @@ const AudioOutputControl: React.FC<Props> = ({ label = 'Speaker' }) => {
     if (supportsSetSinkId()) {
       await meetingManager.selectAudioOutputDevice(deviceId);
     }
-  }
+  };
 
   const dropdownOptions: PopOverItemProps[] = devices.map(
     (device: DeviceType) => ({

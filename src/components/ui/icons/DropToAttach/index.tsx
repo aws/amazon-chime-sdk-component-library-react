@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+
 import Svg, { SvgProps } from '../Svg';
 
 const DropToAttach: React.SFC<SvgProps> = (props) => (

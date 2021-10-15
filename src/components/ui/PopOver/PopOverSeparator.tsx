@@ -4,7 +4,6 @@
 import React, { FC, HTMLAttributes } from 'react';
 
 import { BaseProps } from '../Base';
-
 import { StyledPopOverSeparator } from './Styled';
 
 export interface PopOverSeparatorProps

@@ -1,11 +1,11 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useContext, useEffect, useReducer, createContext } from 'react';
 import { AudioVideoObserver } from 'amazon-chime-sdk-js';
+import React, { createContext, useContext, useEffect, useReducer } from 'react';
 
 import { useAudioVideo } from '../AudioVideoProvider';
-import { State, initialState, reducer, VideoTileActionType } from './state';
+import { initialState, reducer, State, VideoTileActionType } from './state';
 
 const Context = createContext<State | null>(null);
 

@@ -3,13 +3,13 @@
 
 import React from 'react';
 
-import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
-import { Microphone } from '../../ui/icons';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
-import { useAudioInputs } from '../../../providers/DevicesProvider';
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
+import { useAudioInputs } from '../../../providers/DevicesProvider';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { DeviceConfig } from '../../../types';
 import { isOptionActive } from '../../../utils/device-utils';
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
+import { Microphone } from '../../ui/icons';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 
 interface Props {
@@ -27,7 +27,7 @@ const AudioInputControl: React.FC<Props> = ({
   muteLabel = 'Mute',
   unmuteLabel = 'Unmute',
   mutedIconTitle,
-  unmutedIconTitle
+  unmutedIconTitle,
 }) => {
   const meetingManager = useMeetingManager();
   const { muted, toggleMute } = useToggleLocalMute();
@@ -45,7 +45,13 @@ const AudioInputControl: React.FC<Props> = ({
 
   return (
     <ControlBarButton
-      icon={<Microphone muted={muted} mutedTitle={mutedIconTitle} unmutedTitle={unmutedIconTitle} />}
+      icon={
+        <Microphone
+          muted={muted}
+          mutedTitle={mutedIconTitle}
+          unmutedTitle={unmutedIconTitle}
+        />
+      }
       onClick={toggleMute}
       label={muted ? unmuteLabel : muteLabel}
       popOver={dropdownOptions}

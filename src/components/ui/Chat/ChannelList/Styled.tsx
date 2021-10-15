@@ -3,8 +3,8 @@
 
 import styled from 'styled-components';
 
+import { baseSpacing, baseStyles } from '../../Base';
 import { ChannelListProps } from '.';
-import { baseStyles, baseSpacing } from '../../Base';
 import { ChannelItemProps } from './ChannelItem';
 
 export const StyledChannelList = styled.ul<ChannelListProps>`

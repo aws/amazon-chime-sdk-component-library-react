@@ -15,11 +15,11 @@ export const Portal: FC<PortalProps> = ({ children, rootId }) => {
   const [mount, setMount] = useState<any>();
 
   useEffect(() => {
-    if (!!rootId) {
+    if (rootId) {
       el = document.getElementById(rootId);
     }
 
-    if (!!el) {
+    if (el) {
       setMount(el);
     } else {
       newRoot = document.createElement('div');

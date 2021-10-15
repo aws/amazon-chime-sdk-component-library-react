@@ -3,13 +3,13 @@
 
 import React, { FC, InputHTMLAttributes, useRef } from 'react';
 
-import Label from '../Label';
 import useUniqueId from '../../../hooks/useUniqueId';
+import Label from '../Label';
 import {
-  StyledRadioLabel,
   HiddenRadio,
-  StyledRadioWrapper,
   StyledRadioIcon,
+  StyledRadioLabel,
+  StyledRadioWrapper,
 } from './Styled';
 
 export interface RadioProps {

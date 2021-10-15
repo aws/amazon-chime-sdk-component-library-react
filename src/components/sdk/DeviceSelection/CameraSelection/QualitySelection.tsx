@@ -1,15 +1,15 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useState, ChangeEvent } from 'react';
+import React, { ChangeEvent, useState } from 'react';
 
-import { FormField } from '../../../ui/FormField';
-import { Select } from '../../../ui/Select';
+import { VIDEO_INPUT_QUALITY } from '../../../../constants';
 import {
   useSelectVideoQuality,
   VideoQuality,
 } from '../../../../hooks/sdk/useSelectVideoQuality';
-import { VIDEO_INPUT_QUALITY } from '../../../../constants';
+import { FormField } from '../../../ui/FormField';
+import { Select } from '../../../ui/Select';
 
 interface Props {
   /** Label shown for video quality selection, by default it is "Video quality" */
@@ -18,10 +18,9 @@ interface Props {
   labelForUnselected?: string;
 }
 
-
 export const QualitySelection: React.FC<Props> = ({
   label = 'Video quality',
-  labelForUnselected = 'Select video quality'
+  labelForUnselected = 'Select video quality',
 }) => {
   const selectVideoQuality = useSelectVideoQuality();
   const [videoQuality, setVideoQuality] = useState('unselected');

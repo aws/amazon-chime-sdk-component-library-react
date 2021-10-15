@@ -3,11 +3,11 @@
 
 import styled from 'styled-components';
 
-import { NotificationProps } from '.';
 import { Severity } from '../../../providers/NotificationProvider';
+import { baseSpacing, baseStyles } from '../Base';
 import IconButton from '../Button/IconButton';
 import SecondaryButton from '../Button/SecondaryButton';
-import { baseStyles, baseSpacing } from '../Base';
+import { NotificationProps } from '.';
 
 interface StyledNotificationProps extends NotificationProps {
   severity: Severity;

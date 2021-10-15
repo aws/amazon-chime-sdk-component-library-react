@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
+
 import React from 'react';
 
+import Crown from '../../../../src/components/ui/icons/Crown';
 import InputWrapper from '../../../../src/components/ui/Input/InputWrapper';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
-import Crown from '../../../../src/components/ui/icons/Crown';
 
 describe('InputWrapper', () => {
   it('should render an InputWrapper', () => {

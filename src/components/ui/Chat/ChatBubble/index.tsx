@@ -4,8 +4,8 @@
 import React, { FC, HTMLAttributes, ReactNode } from 'react';
 
 import { BaseProps } from '../../Base';
-import { StyledChatBubble } from './Styled';
 import { MessageVariant } from './ChatBubbleContainer';
+import { StyledChatBubble } from './Styled';
 
 export interface ChatBubbleProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,

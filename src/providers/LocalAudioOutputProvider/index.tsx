@@ -2,14 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
-  useState,
-  useEffect,
-  useRef,
   createContext,
-  useMemo,
   useCallback,
   useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from 'react';
+
 import { LocalAudioOutputContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
 
@@ -58,10 +59,10 @@ const LocalAudioOutputProvider: React.FC = ({ children }) => {
     }
   }, [audioRef, audioVideo, isAudioOn]);
 
-  const value = useMemo(() => ({ isAudioOn, toggleAudio }), [
-    isAudioOn,
-    toggleAudio,
-  ]);
+  const value = useMemo(
+    () => ({ isAudioOn, toggleAudio }),
+    [isAudioOn, toggleAudio]
+  );
 
   return (
     <Context.Provider value={value}>

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-export interface SvgProps extends React.SVGAttributes<HTMLOrSVGElement>  {
+export interface SvgProps extends React.SVGAttributes<HTMLOrSVGElement> {
   /** CSS classname to apply custom styles. */
   className?: string;
   /** Defines the position and dimension of an SVG viewport. viewBox attribute is a list of four numbers: min-x, min-y, width and height. */

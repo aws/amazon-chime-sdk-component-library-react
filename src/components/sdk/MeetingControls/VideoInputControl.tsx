@@ -3,14 +3,14 @@
 
 import React from 'react';
 
-import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
-import { Camera } from '../../ui/icons';
+import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { DeviceConfig } from '../../../types';
 import { isOptionActive } from '../../../utils/device-utils';
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
+import { Camera } from '../../ui/icons';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
-import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 
 interface Props {
   /** The label that will be shown for video input control, it defaults to `Video`. */

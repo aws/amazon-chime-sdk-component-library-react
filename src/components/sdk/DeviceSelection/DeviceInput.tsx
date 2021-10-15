@@ -3,9 +3,9 @@
 
 import React, { ChangeEvent } from 'react';
 
+import { DeviceType, SelectedDeviceId } from '../../../types';
 import { FormField } from '../../ui/FormField';
 import { Select } from '../../ui/Select';
-import { DeviceType, SelectedDeviceId } from '../../../types';
 
 interface Props {
   label: string;

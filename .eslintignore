@@ -1,0 +1,7 @@
+# TODO 
+# Apply ESlinting to scripts folder for this we need to remove scripts from exluded section in tsconfig.json.
+scripts/*
+jest-puppeteer.config.js
+jest-snapshot.config.js
+jest.config.js
+rollup.config.js

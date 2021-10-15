@@ -3,14 +3,14 @@
 
 import React from 'react';
 
+import { BaseProps, FocusableProps } from '../../Base';
+import { IconButtonProps } from '../../Button/IconButton';
+import { Camera, Microphone, ScreenShare } from '../../icons';
+import { Tooltipable } from '../../WithTooltip';
+import { PopOverMenu } from '../PopOverMenu';
 import RosterName from '../RosterName';
 import LateMessage from './LateMessage';
-import { BaseProps, FocusableProps } from '../../Base';
-import { Microphone, Camera, ScreenShare } from '../../icons';
 import { StyledCell } from './Styled';
-import { PopOverMenu } from '../PopOverMenu';
-import { IconButtonProps } from '../../Button/IconButton';
-import { Tooltipable } from '../../WithTooltip';
 
 type MicPosition = 'leading' | 'grouped';
 
@@ -86,7 +86,7 @@ export const RosterCell: React.FC<RosterCellProps> = (props) => {
     <Microphone muted={muted} poorConnection={poorConnection} />
   );
 
-  const popOverMenuComponentProps = !!rest['data-tooltip']
+  const popOverMenuComponentProps = rest['data-tooltip']
     ? {
         ['data-tooltip-position']: rest['data-tooltip-position'],
         ['data-tooltip']: rest['data-tooltip'],

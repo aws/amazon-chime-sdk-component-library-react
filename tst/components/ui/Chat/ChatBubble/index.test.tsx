@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
+
 import React from 'react';
 
 import ChatBubble from '../../../../../src/components/ui/Chat/ChatBubble';

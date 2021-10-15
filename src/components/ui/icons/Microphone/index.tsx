@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { SvgProps } from '../Svg';
 
+import { SvgProps } from '../Svg';
 import { StyledSvg } from './Styled';
 
 export interface MicrophoneProps extends SvgProps {

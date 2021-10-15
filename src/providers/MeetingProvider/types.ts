@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
+  ActiveSpeakerPolicy,
   EventReporter,
+  Logger,
   LogLevel,
   VideoDownlinkBandwidthPolicy,
-  Logger,
-  ActiveSpeakerPolicy,
-  VideoUplinkBandwidthPolicy
+  VideoUplinkBandwidthPolicy,
 } from 'amazon-chime-sdk-js';
+
 import { DeviceLabels, DeviceLabelTrigger } from '../../types';
 
 export enum DevicePermissionStatus {

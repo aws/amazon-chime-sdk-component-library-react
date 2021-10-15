@@ -3,18 +3,18 @@
 
 import React, {
   ChangeEvent,
-  ReactNode,
   forwardRef,
+  ReactNode,
   Ref,
+  useEffect,
   useRef,
   useState,
-  useEffect,
 } from 'react';
 
-import InputWrapper from './InputWrapper';
-import { StyledInput, StyledClear } from './Styled';
-import { Clear } from '../icons';
 import { BaseProps } from '../Base';
+import { Clear } from '../icons';
+import InputWrapper from './InputWrapper';
+import { StyledClear, StyledInput } from './Styled';
 
 export type Size = 'sm' | 'md';
 
@@ -56,9 +56,8 @@ export const Input = forwardRef(
     const [focused, setFocused] = useState(false);
     const focusedRef = useRef(false);
     const internalRef = useRef(null);
-    const inputRef = (externalRef || internalRef) as React.MutableRefObject<
-      HTMLInputElement
-    >;
+    const inputRef = (externalRef ||
+      internalRef) as React.MutableRefObject<HTMLInputElement>;
     const clearRef = useRef<HTMLButtonElement>(null);
 
     const label = props['aria-label']
@@ -104,7 +103,7 @@ export const Input = forwardRef(
         }
       };
 
-      const onFocusOut = (e: any) => {
+      const onFocusOut = (): void => {
         if (!focusedRef.current) {
           return;
         }

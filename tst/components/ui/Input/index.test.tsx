@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
-import React, { useState } from 'react';
-import userEvent from '@testing-library/user-event';
 
+import userEvent from '@testing-library/user-event';
+import React, { useState } from 'react';
+
+import Crown from '../../../../src/components/ui/icons/Crown';
 import Input from '../../../../src/components/ui/Input';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
-import Crown from '../../../../src/components/ui/icons/Crown';
 
 describe('Input', () => {
   const value = 'input-value';

@@ -1,15 +1,16 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
 import '@testing-library/jest-dom';
-import { fireEvent } from '@testing-library/dom';
 
-import lightTheme from '../../../../src/theme/light';
-import { renderWithTheme } from '../../../test-helpers';
+import { fireEvent } from '@testing-library/dom';
+import React from 'react';
+
+import Badge from '../../../../src/components/ui/Badge';
 import { Information } from '../../../../src/components/ui/icons';
 import NavbarItem from '../../../../src/components/ui/Navbar/NavbarItem';
-import Badge from '../../../../src/components/ui/Badge';
+import lightTheme from '../../../../src/theme/light';
+import { renderWithTheme } from '../../../test-helpers';
 
 describe('NavbarItem', () => {
   it('should render a NavbarItem', () => {

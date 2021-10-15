@@ -1,8 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
 import { ClientMetricReport } from 'amazon-chime-sdk-js';
+import { useEffect, useState } from 'react';
 
 import { useAudioVideo } from '../../providers/AudioVideoProvider';
 
@@ -16,7 +16,9 @@ interface BandwidthMetrics {
 }
 
 export function useBandwidthMetrics() {
-  console.log('This hook is deprecated and will be removed in future version, please use useMediaStreamMetrics hook instead.');
+  console.log(
+    'This hook is deprecated and will be removed in future version, please use useMediaStreamMetrics hook instead.'
+  );
   const audioVideo = useAudioVideo();
   const [metrics, setMetrics] = useState<BandwidthMetrics>({
     availableOutgoingBandwidth: null,

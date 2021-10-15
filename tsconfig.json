@@ -31,7 +31,6 @@
     "src/internal",
     "src/**/*.test.tsx",
     "src/**/*.stories.tsx",
-    "tst",
     "coverage",
   ]
 }

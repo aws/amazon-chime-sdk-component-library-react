@@ -3,8 +3,8 @@
 
 import styled, { css } from 'styled-components';
 
+import { baseSpacing, baseStyles } from '../Base';
 import { FlexProps } from './';
-import { baseStyles, baseSpacing } from '../Base';
 
 export const fillSpace = css`
   display: flex;

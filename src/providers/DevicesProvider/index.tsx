@@ -5,7 +5,7 @@ import React from 'react';
 
 import { AudioInputProvider, useAudioInputs } from './AudioInputProvider';
 import { AudioOutputProvider, useAudioOutputs } from './AudioOutputProvider';
-import { VideoInputProvider, useVideoInputs } from './VideoInputProvider';
+import { useVideoInputs, VideoInputProvider } from './VideoInputProvider';
 
 const DevicesProvider: React.FC = ({ children }) => (
   <AudioInputProvider>

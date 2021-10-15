@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { useVideoInputs } from '../../../../providers/DevicesProvider';
+import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import DeviceInput from '../DeviceInput';
 
 interface Props {

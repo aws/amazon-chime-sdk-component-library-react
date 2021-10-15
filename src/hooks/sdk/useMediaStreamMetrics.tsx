@@ -1,8 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
 import { ClientMetricReport } from 'amazon-chime-sdk-js';
+import { useEffect, useState } from 'react';
 
 import { useAudioVideo } from '../../providers/AudioVideoProvider';
 
@@ -15,18 +15,21 @@ interface MediaStreamMetrics {
   audioPacketsReceivedFractionLossPercent: number | null; // Percentage of audio packets lost from server to client
   availableOutgoingBandwidth: number | null;
   availableIncomingBandwidth: number | null;
-  videoStreamMetrics: { [attendeeId: string]: { [ssrc: string]: {[key: string]: number} } };
+  videoStreamMetrics: {
+    [attendeeId: string]: { [ssrc: string]: { [key: string]: number } };
+  };
 }
 
 export function useMediaStreamMetrics() {
   const audioVideo = useAudioVideo();
-  const [mediaStreamMetrics, setMediaStreamMetrics] = useState<MediaStreamMetrics>({
-    audioPacketsSentFractionLossPercent: null,
-    audioPacketsReceivedFractionLossPercent: null,
-    availableOutgoingBandwidth: null,
-    availableIncomingBandwidth: null,
-    videoStreamMetrics: {},
-  });
+  const [mediaStreamMetrics, setMediaStreamMetrics] =
+    useState<MediaStreamMetrics>({
+      audioPacketsSentFractionLossPercent: null,
+      audioPacketsReceivedFractionLossPercent: null,
+      availableOutgoingBandwidth: null,
+      availableIncomingBandwidth: null,
+      videoStreamMetrics: {},
+    });
 
   useEffect(() => {
     if (!audioVideo) {
@@ -50,13 +53,15 @@ export function useMediaStreamMetrics() {
         let audioPacketsReceivedFractionLossPercent = 0;
 
         if (isValidMetric(audioPacketLossPercent)) {
-          audioPacketsSentFractionLossPercent =
-            Math.trunc(audioPacketLossPercent);
+          audioPacketsSentFractionLossPercent = Math.trunc(
+            audioPacketLossPercent
+          );
         }
 
         if (isValidMetric(audioPacketsReceivedFractionLoss)) {
-          audioPacketsReceivedFractionLossPercent =
-            Math.trunc(audioPacketsReceivedFractionLoss);
+          audioPacketsReceivedFractionLossPercent = Math.trunc(
+            audioPacketsReceivedFractionLoss
+          );
         }
 
         if (clientMetricReport.getObservableVideoMetrics) {
@@ -64,19 +69,15 @@ export function useMediaStreamMetrics() {
         }
 
         if (isValidMetric(availableSendBandwidth)) {
-          availableOutgoingBandwidth =
-            availableSendBandwidth / 1000;
+          availableOutgoingBandwidth = availableSendBandwidth / 1000;
         } else if (isValidMetric(availableOutgoingBitrate)) {
-          availableOutgoingBandwidth =
-            availableOutgoingBitrate / 1000;
+          availableOutgoingBandwidth = availableOutgoingBitrate / 1000;
         }
 
         if (isValidMetric(availableReceiveBandwidth)) {
-          availableIncomingBandwidth =
-            availableReceiveBandwidth / 1000;
+          availableIncomingBandwidth = availableReceiveBandwidth / 1000;
         } else if (isValidMetric(availableIncomingBitrate)) {
-          availableIncomingBandwidth =
-            availableIncomingBitrate / 1000;
+          availableIncomingBandwidth = availableIncomingBitrate / 1000;
         }
         setMediaStreamMetrics({
           audioPacketsSentFractionLossPercent,

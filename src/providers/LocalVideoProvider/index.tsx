@@ -1,21 +1,20 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { AudioVideoObserver, VideoTileState } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
-  useState,
-  useEffect,
-  useContext,
   useCallback,
+  useContext,
+  useEffect,
   useMemo,
+  useState,
 } from 'react';
-import { AudioVideoObserver, VideoTileState } from 'amazon-chime-sdk-js';
 
-import { useMeetingManager } from '../MeetingProvider';
-import { useAudioVideo } from '../AudioVideoProvider';
-
-import { videoInputSelectionToDevice } from '../../utils/device-utils';
 import { LocalVideoContextType } from '../../types';
+import { videoInputSelectionToDevice } from '../../utils/device-utils';
+import { useAudioVideo } from '../AudioVideoProvider';
+import { useMeetingManager } from '../MeetingProvider';
 
 const Context = createContext<LocalVideoContextType | null>(null);
 
@@ -75,12 +74,10 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     return () => audioVideo.removeObserver(observer);
   }, [audioVideo, tileId]);
 
-  const value = useMemo(() => ({ tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo, }), [
-    tileId,
-    isVideoEnabled,
-    setIsVideoEnabled,
-    toggleVideo,
-  ]);
+  const value = useMemo(
+    () => ({ tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo }),
+    [tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo]
+  );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

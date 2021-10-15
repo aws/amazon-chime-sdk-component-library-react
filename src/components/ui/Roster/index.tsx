@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import { StyledRoster } from './Styled';
 import { BaseProps, FocusableProps } from '../Base';
+import { StyledRoster } from './Styled';
 
 export interface RosterProps extends BaseProps, FocusableProps {}
 

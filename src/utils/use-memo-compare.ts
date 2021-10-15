@@ -3,7 +3,10 @@
 
 import { useEffect, useRef } from 'react';
 
-function useMemoCompare<T>(next: any, compare: (prev: T | undefined, next: T | undefined) => boolean) {
+function useMemoCompare<T>(
+  next: any,
+  compare: (prev: T | undefined, next: T | undefined) => boolean
+) {
   const previousRef = useRef();
   const previous = previousRef.current;
   const isEqual = compare(previous, next);

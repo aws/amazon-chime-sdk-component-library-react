@@ -1,8 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import defaultTheme from './default';
 import { hexTorgba } from '../utils/style';
+import defaultTheme from './default';
 
 const colors = {
   primary: {
@@ -12,13 +12,13 @@ const colors = {
     main: '#075fff',
     dark: '#004ddb',
     darker: '#0042bb',
-    darkest: '#002f85'
+    darkest: '#002f85',
   },
 
   secondary: {
     light: '#ff8e74',
     main: '#ff7654',
-    dark: '#e86c4d'
+    dark: '#e86c4d',
   },
 
   error: {
@@ -28,7 +28,7 @@ const colors = {
     primary: '#C52000',
     dark: '#9E3319',
     darker: '#89301A',
-    darkest: '#791800'
+    darkest: '#791800',
   },
 
   success: {
@@ -38,7 +38,7 @@ const colors = {
     primary: '#067000',
     dark: '#305D1D',
     darker: '#2C511D',
-    darkest: '#184206'
+    darkest: '#184206',
   },
 
   info: {
@@ -48,7 +48,7 @@ const colors = {
     primary: '#2555A0',
     dark: '#264A82',
     darker: '#243F6B',
-    darkest: '#123366'
+    darkest: '#123366',
   },
 
   warning: {
@@ -58,7 +58,7 @@ const colors = {
     primary: '#F9CC09',
     dark: '#665A2A',
     darker: '#584E26',
-    darkest: '#534201'
+    darkest: '#534201',
   },
 
   greys: {
@@ -73,21 +73,21 @@ const colors = {
     grey30: '#d4d5d8',
     grey20: '#e4e9f2',
     grey10: '#f0f1f2',
-    white: '#ffffff'
-  }
+    white: '#ffffff',
+  },
 };
 
 const global = {
   bgd: colors.greys.white,
   text: colors.greys.grey80,
-  fontSize: defaultTheme.fontSizes.baseFontSize
+  fontSize: defaultTheme.fontSizes.baseFontSize,
 };
 
 const shadows = {
   none: 'none',
   small: `0 0.09375rem 0.0625rem 0 ${hexTorgba(colors.greys.grey100, 0.15)}`,
   medium: `0 0.5rem 0.85rem 0 ${hexTorgba(colors.greys.black, 0.15)}`,
-  large: `0 0.75rem 1.875rem 0 ${hexTorgba(colors.greys.black, 0.15)}`
+  large: `0 0.75rem 1.875rem 0 ${hexTorgba(colors.greys.black, 0.15)}`,
 };
 
 const buttons = {
@@ -109,13 +109,13 @@ const buttons = {
       bgd: colors.primary.dark,
       border: `0.03125rem solid ${colors.primary.darker}`,
       text: colors.greys.white,
-      shadow: `0 0 0 0.25rem ${colors.primary.lightest}`  
+      shadow: `0 0 0 0.25rem ${colors.primary.lightest}`,
     },
     active: {
       bgd: colors.primary.darker,
       border: `0.03125rem solid ${colors.greys.black}`,
       text: colors.greys.white,
-      shadow: `0 0 0 0.25rem ${colors.primary.lightest}`  
+      shadow: `0 0 0 0.25rem ${colors.primary.lightest}`,
     },
     selected: {
       bgd: colors.primary.light,
@@ -128,7 +128,7 @@ const buttons = {
       border: `0.03125rem solid ${colors.greys.grey10}`,
       text: colors.greys.grey40,
       shadow: `none`,
-    }
+    },
   },
 
   secondary: {
@@ -149,13 +149,13 @@ const buttons = {
       bgd: colors.greys.grey10,
       border: `0.03125rem solid ${colors.primary.dark}`,
       text: colors.greys.grey80,
-      shadow: `0 0 0 0.25rem ${colors.primary.light}` 
+      shadow: `0 0 0 0.25rem ${colors.primary.light}`,
     },
     active: {
       bgd: colors.greys.grey20,
       border: `0.03125rem solid ${colors.greys.grey40}`,
       text: colors.greys.grey80,
-      shadow: `0 0 0 0.25rem ${colors.primary.dark}` 
+      shadow: `0 0 0 0.25rem ${colors.primary.dark}`,
     },
     selected: {
       bgd: colors.greys.grey10,
@@ -167,8 +167,8 @@ const buttons = {
       bgd: colors.greys.white,
       border: `0.03125rem solid ${colors.greys.grey10}`,
       text: colors.greys.grey40,
-      shadow: 'none'
-    }
+      shadow: 'none',
+    },
   },
 
   icon: {
@@ -189,13 +189,13 @@ const buttons = {
       bgd: 'transparent',
       border: `0.03125rem  solid ${colors.primary.darker}`,
       text: colors.greys.grey80,
-      shadow: `0 0 0 0.25rem ${colors.primary.lightest}` 
+      shadow: `0 0 0 0.25rem ${colors.primary.lightest}`,
     },
     active: {
       bgd: colors.primary.darker,
       border: `0.03125rem  solid ${colors.primary.darker}`,
       text: colors.greys.white,
-      shadow: `0 0 0 0.25rem ${colors.primary.lightest}` 
+      shadow: `0 0 0 0.25rem ${colors.primary.lightest}`,
     },
     selected: {
       bgd: colors.primary.light,
@@ -208,8 +208,8 @@ const buttons = {
       border: 'none',
       text: colors.greys.grey40,
       shadow: 'none',
-    }
-  }
+    },
+  },
 };
 
 const inputs = {
@@ -224,21 +224,21 @@ const inputs = {
   focus: {
     bgd: colors.greys.white,
     border: `solid 0.03125rem ${colors.primary.lighter}`,
-    shadow: `0 0 0 0.125rem ${colors.primary.lightest}`
+    shadow: `0 0 0 0.125rem ${colors.primary.lightest}`,
   },
 
   error: {
     border: `0.03125rem solid ${colors.error.dark}`,
     fontColor: colors.error.primary,
-    shadow: `0 0 0 0.125rem ${colors.error.light}`
+    shadow: `0 0 0 0.125rem ${colors.error.light}`,
   },
 
   checked: {
     bgd: colors.primary.main,
     border: `solid 0.03125rem ${colors.primary.main}`,
     fontColor: colors.greys.white,
-    shadow: `0 0.03125rem 0.03125rem 0 ${hexTorgba(colors.primary.dark, 0.7)}`
-  }
+    shadow: `0 0.03125rem 0.03125rem 0 ${hexTorgba(colors.primary.dark, 0.7)}`,
+  },
 };
 
 const modal = {
@@ -248,7 +248,7 @@ const modal = {
   titleSize: defaultTheme.fontSizes.h5.fontSize,
   titleWeight: 'normal',
   shadow: shadows.large,
-  border: colors.greys.grey30
+  border: colors.greys.grey30,
 };
 
 const popOver = {
@@ -274,13 +274,13 @@ const notification = {
       text: colors.error.lighter,
       hover: {
         bgd: colors.error.lighter,
-        text: colors.error.dark
+        text: colors.error.dark,
       },
       active: {
         bgd: colors.error.lightest,
-        text: colors.error.darker
-      }
-    }
+        text: colors.error.darker,
+      },
+    },
   },
 
   success: {
@@ -289,13 +289,13 @@ const notification = {
       text: colors.success.lighter,
       hover: {
         bgd: colors.success.lighter,
-        text: colors.success.dark
+        text: colors.success.dark,
       },
       active: {
         bgd: colors.success.lightest,
-        text: colors.success.darker
-      }
-    }
+        text: colors.success.darker,
+      },
+    },
   },
 
   info: {
@@ -304,13 +304,13 @@ const notification = {
       text: colors.info.lighter,
       hover: {
         bgd: colors.info.lighter,
-        text: colors.info.dark
+        text: colors.info.dark,
       },
       active: {
         bgd: colors.info.lightest,
-        text: colors.info.darker
-      }
-    }
+        text: colors.info.darker,
+      },
+    },
   },
 
   warning: {
@@ -319,21 +319,21 @@ const notification = {
       text: colors.warning.dark,
       hover: {
         bgd: colors.warning.dark,
-        text: colors.greys.white
+        text: colors.greys.white,
       },
       active: {
         bgd: colors.warning.darker,
-        text: colors.greys.white
-      }
-    }
-  }
+        text: colors.greys.white,
+      },
+    },
+  },
 };
 
 const links = {
   fontColor: colors.primary.main,
   fontColorHover: colors.primary.dark,
   fontColorActive: colors.primary.darker,
-  fontColorVisited: colors.primary.darkest
+  fontColorVisited: colors.primary.darkest,
 };
 
 const controlBar = {
@@ -357,18 +357,18 @@ const roster = {
   bgd: colors.greys.grey10,
   fgd: colors.greys.white,
   shadow: shadows.large,
-  maxWidth: '18.5rem'
+  maxWidth: '18.5rem',
 };
 
 const navbar = {
   text: colors.greys.grey80,
   bgd: colors.greys.grey10,
   headerBorder: colors.greys.grey40,
-  wrapperBgd: hexTorgba(colors.greys.grey50, 0.9)
+  wrapperBgd: hexTorgba(colors.greys.grey50, 0.9),
 };
 
 const videoGrid = {
-  bgd: colors.greys.white
+  bgd: colors.greys.white,
 };
 
 const chatBubble = {
@@ -391,8 +391,8 @@ const chatBubble = {
   container: {
     fontColor: colors.greys.grey70,
     bgd: colors.greys.grey10,
-  }
-}
+  },
+};
 
 const messageAttachment = {
   size: {
@@ -400,21 +400,21 @@ const messageAttachment = {
     bgd: colors.greys.white,
     letterSpacing: '-0.07px',
     lineHight: '16px',
-    fontSize: '10.4px'
+    fontSize: '10.4px',
   },
   icon: {
     bgd: colors.greys.grey10,
-    color: colors.greys.grey80
+    color: colors.greys.grey80,
   },
   name: {
-    fontColor: colors.greys.grey80
+    fontColor: colors.greys.grey80,
   },
   content: {
     letterSpacing: '-0.09px',
     bgd: colors.greys.white,
-    fontColor: colors.greys.grey80
-  }
-}
+    fontColor: colors.greys.grey80,
+  },
+};
 
 const channelList = {
   bgd: colors.greys.white,
@@ -437,13 +437,13 @@ const channelList = {
   },
   iconButton: {
     activeBgd: colors.greys.white,
-  }
-}
+  },
+};
 
 const chatDateHeader = {
   bgd: colors.greys.grey60,
-  fontColor: colors.greys.white
-}
+  fontColor: colors.greys.white,
+};
 
 export const lightTheme = {
   name: 'Light Theme',
@@ -464,7 +464,7 @@ export const lightTheme = {
   channelList,
   chatDateHeader,
   messageAttachment,
-  ...defaultTheme
+  ...defaultTheme,
 };
 
 export default lightTheme;

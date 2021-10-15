@@ -3,8 +3,8 @@
 
 import styled from 'styled-components';
 
+import { baseSpacing, baseStyles } from '../Base';
 import { HeadingProps } from './';
-import { baseStyles, baseSpacing } from '../Base';
 
 export const StyledHeading = styled.h1<HeadingProps>`
   display: block;

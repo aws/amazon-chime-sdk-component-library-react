@@ -2,41 +2,41 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
+  AudioTransformDevice,
   AudioVideoFacade,
+  AudioVideoObserver,
   ConsoleLogger,
+  DefaultActiveSpeakerPolicy,
   DefaultDeviceController,
   DefaultMeetingSession,
+  Device,
+  EventAttributes,
+  EventName,
+  EventReporter,
+  isAudioTransformDevice,
+  Logger,
   LogLevel,
   MeetingSessionConfiguration,
-  DefaultActiveSpeakerPolicy,
+  MeetingSessionPOSTLogger,
   MeetingSessionStatus,
   MeetingSessionStatusCode,
-  AudioVideoObserver,
   MultiLogger,
-  MeetingSessionPOSTLogger,
-  EventReporter,
   VideoDownlinkBandwidthPolicy,
-  Logger,
-  EventName,
-  EventAttributes,
-  Device,
-  AudioTransformDevice,
-  isAudioTransformDevice,
 } from 'amazon-chime-sdk-js';
 
+import { DeviceLabels, DeviceLabelTrigger, MeetingStatus } from '../../types';
 import {
   audioInputSelectionToDevice,
   supportsSetSinkId,
-  videoInputSelectionToDevice
+  videoInputSelectionToDevice,
 } from '../../utils/device-utils';
-import { DeviceLabels, DeviceLabelTrigger, MeetingStatus } from '../../types';
 import {
-  DevicePermissionStatus,
-  MeetingJoinData,
   AttendeeResponse,
+  DevicePermissionStatus,
   FullDeviceInfoType,
+  MeetingJoinData,
+  MeetingManagerConfig,
   PostLogConfig,
-  MeetingManagerConfig
 } from './types';
 
 function noOpDeviceLabelHook(): Promise<MediaStream> {
@@ -67,19 +67,25 @@ export class MeetingManager implements AudioVideoObserver {
 
   selectedAudioOutputDevice: string | null = null;
 
-  selectedAudioOutputDeviceObservers: ((deviceId: string | null) => void)[] = [];
+  selectedAudioOutputDeviceObservers: ((deviceId: string | null) => void)[] =
+    [];
 
   selectedAudioInputDevice: string | null = null;
 
-  selectedAudioInputTransformDevice: Device | AudioTransformDevice | null = null;
+  selectedAudioInputTransformDevice: Device | AudioTransformDevice | null =
+    null;
 
   selectedAudioInputDeviceObservers: ((deviceId: string | null) => void)[] = [];
 
-  selectedAudioInputTransformDeviceObservers: ((device: Device | AudioTransformDevice | null) => void)[] = [];
+  selectedAudioInputTransformDeviceObservers: ((
+    device: Device | AudioTransformDevice | null
+  ) => void)[] = [];
 
   selectAudioInputDeviceError: Error | null = null;
 
-  selectAudioInputDeviceErrorObservers: ((selectAudioInputDeviceError: Error | null) => void)[] = [];
+  selectAudioInputDeviceErrorObservers: ((
+    selectAudioInputDeviceError: Error | null
+  ) => void)[] = [];
 
   selectedVideoInputDevice: string | null = null;
 
@@ -87,7 +93,9 @@ export class MeetingManager implements AudioVideoObserver {
 
   selectVideoInputDeviceError: Error | null = null;
 
-  selectVideoInputDeviceErrorObservers: ((selectVideoInputDeviceError: Error | null) => void)[] = [];
+  selectVideoInputDeviceErrorObservers: ((
+    selectVideoInputDeviceError: Error | null
+  ) => void)[] = [];
 
   deviceLabelTriggerChangeObservers: (() => void)[] = [];
 
@@ -99,7 +107,8 @@ export class MeetingManager implements AudioVideoObserver {
 
   devicePermissionStatus = DevicePermissionStatus.UNSET;
 
-  devicePermissionsObservers: ((permission: DevicePermissionStatus) => void)[] = [];
+  devicePermissionsObservers: ((permission: DevicePermissionStatus) => void)[] =
+    [];
 
   activeSpeakerListener: ((activeSpeakers: string[]) => void) | null = null;
 
@@ -109,9 +118,8 @@ export class MeetingManager implements AudioVideoObserver {
 
   audioVideoCallbacks: ((audioVideo: AudioVideoFacade | null) => void)[] = [];
 
-  devicesUpdatedCallbacks: ((
-    fullDeviceInfo: FullDeviceInfoType
-  ) => void)[] = [];
+  devicesUpdatedCallbacks: ((fullDeviceInfo: FullDeviceInfoType) => void)[] =
+    [];
 
   // This variable will be deprecated in favor of `meetingManagerConfig`.
   // Please use `meetingManagerConfig` to use `MeetingManagerConfig` values.
@@ -135,7 +143,9 @@ export class MeetingManager implements AudioVideoObserver {
   // Please use `meetingManagerConfig` to use `MeetingManagerConfig` values.
   logger: Logger | undefined;
 
-  private meetingEventObserverSet = new Set<(name: EventName, attributes: EventAttributes) => void>();
+  private meetingEventObserverSet = new Set<
+    (name: EventName, attributes: EventAttributes) => void
+  >();
 
   private eventDidReceiveRef: AudioVideoObserver;
 
@@ -145,7 +155,7 @@ export class MeetingManager implements AudioVideoObserver {
       logger: configLogger,
       logLevel,
       postLogConfig,
-      videoDownlinkBandwidthPolicy
+      videoDownlinkBandwidthPolicy,
     } = this.meetingManagerConfig;
 
     // We are assigning the values from the `meetingManagerConfig` to preserve backward compatibility.
@@ -167,9 +177,11 @@ export class MeetingManager implements AudioVideoObserver {
       this.videoDownlinkBandwidthPolicy = videoDownlinkBandwidthPolicy;
     }
 
-    this.eventDidReceiveRef = { eventDidReceive: (name: EventName, attributes: EventAttributes) => {
-      this.publishEventDidReceiveUpdate(name, attributes);
-    }};
+    this.eventDidReceiveRef = {
+      eventDidReceive: (name: EventName, attributes: EventAttributes) => {
+        this.publishEventDidReceiveUpdate(name, attributes);
+      },
+    };
   }
 
   initializeMeetingManager(): void {
@@ -192,7 +204,13 @@ export class MeetingManager implements AudioVideoObserver {
     this.audioVideoObservers = {};
   }
 
-  async join({ meetingInfo, attendeeInfo, deviceLabels = DeviceLabels.AudioAndVideo, eventReporter, meetingManagerConfig }: MeetingJoinData) {
+  async join({
+    meetingInfo,
+    attendeeInfo,
+    deviceLabels = DeviceLabels.AudioAndVideo,
+    eventReporter,
+    meetingManagerConfig,
+  }: MeetingJoinData) {
     if (meetingManagerConfig) {
       this.meetingManagerConfig = meetingManagerConfig;
     }
@@ -244,14 +262,14 @@ export class MeetingManager implements AudioVideoObserver {
 
   async initializeMeetingSession(
     configuration: MeetingSessionConfiguration,
-    deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo,
+    deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo
   ): Promise<any> {
     const {
       simulcastEnabled,
       enableWebAudio,
       logger: configLogger,
       videoUplinkBandwidthPolicy,
-      videoDownlinkBandwidthPolicy
+      videoDownlinkBandwidthPolicy,
     } = this.meetingManagerConfig;
 
     // We are assigning the values from the `meetingManagerConfig` to preserve backward compatibility.
@@ -260,7 +278,9 @@ export class MeetingManager implements AudioVideoObserver {
       configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
       configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = true;
     }
-    const logger = configLogger ? configLogger : this.createLogger(configuration);
+    const logger = configLogger
+      ? configLogger
+      : this.createLogger(configuration);
 
     if (videoUplinkBandwidthPolicy) {
       configuration.videoUplinkBandwidthPolicy = videoUplinkBandwidthPolicy;
@@ -270,7 +290,9 @@ export class MeetingManager implements AudioVideoObserver {
       configuration.videoDownlinkBandwidthPolicy = videoDownlinkBandwidthPolicy;
     }
 
-    const deviceController = new DefaultDeviceController(logger, { enableWebAudio });
+    const deviceController = new DefaultDeviceController(logger, {
+      enableWebAudio,
+    });
     this.meetingSession = new DefaultMeetingSession(
       configuration,
       logger,
@@ -280,7 +302,7 @@ export class MeetingManager implements AudioVideoObserver {
 
     this.audioVideo = this.meetingSession.audioVideo;
     this.publishAudioVideo();
-    
+
     // When an attendee leaves, we remove AudioVideoObservers and nullify AudioVideoFacade and MeetingSession object.
     // This results into missing few meeting events triggered with audioVideoDidStop such as meetingEnded, meetingFailed and meetingStartFailed.
     // We may also loose audioInputUnselected and videoInputUnselected events as we choose null devices when an attendee leaves.
@@ -320,7 +342,9 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   audioVideoDidStart = () => {
-    console.log('[MeetingManager audioVideoDidStart] Meeting started successfully');
+    console.log(
+      '[MeetingManager audioVideoDidStart] Meeting started successfully'
+    );
     this.meetingStatus = MeetingStatus.Succeeded;
     this.publishMeetingStatus();
   };
@@ -328,20 +352,26 @@ export class MeetingManager implements AudioVideoObserver {
   audioVideoDidStop = (sessionStatus: MeetingSessionStatus) => {
     const sessionStatusCode = sessionStatus.statusCode();
     switch (sessionStatusCode) {
-      case MeetingSessionStatusCode.AudioCallEnded: 
-        console.log(`[MeetingManager audioVideoDidStop] Meeting ended for all: ${sessionStatusCode}`);
+      case MeetingSessionStatusCode.AudioCallEnded:
+        console.log(
+          `[MeetingManager audioVideoDidStop] Meeting ended for all: ${sessionStatusCode}`
+        );
         this.meetingStatus = MeetingStatus.Ended;
         this.publishMeetingStatus();
         this.leave();
         break;
       case MeetingSessionStatusCode.Left:
-        console.log(`[MeetingManager audioVideoDidStop] Left the meeting: ${sessionStatusCode}`);
+        console.log(
+          `[MeetingManager audioVideoDidStop] Left the meeting: ${sessionStatusCode}`
+        );
         this.meetingStatus = MeetingStatus.Left;
         this.publishMeetingStatus();
         this.leave();
         break;
       case MeetingSessionStatusCode.AudioJoinedFromAnotherDevice:
-        console.log(`[MeetingManager audioVideoDidStop] Meeting joined from another device: ${sessionStatusCode}`);
+        console.log(
+          `[MeetingManager audioVideoDidStop] Meeting joined from another device: ${sessionStatusCode}`
+        );
         this.meetingStatus = MeetingStatus.JoinedFromAnotherDevice;
         this.publishMeetingStatus();
         this.leave();
@@ -349,15 +379,21 @@ export class MeetingManager implements AudioVideoObserver {
       default:
         // The following status codes are Failures according to MeetingSessionStatus
         if (sessionStatus.isFailure()) {
-          console.log(`[MeetingManager audioVideoDidStop] Non-Terminal failure occured: ${sessionStatusCode}`);
+          console.log(
+            `[MeetingManager audioVideoDidStop] Non-Terminal failure occured: ${sessionStatusCode}`
+          );
           this.meetingStatus = MeetingStatus.Failed;
           this.publishMeetingStatus();
         } else if (sessionStatus.isTerminal()) {
-          console.log(`[MeetingManager audioVideoDidStop] Terminal failure occured: ${sessionStatusCode}`);
+          console.log(
+            `[MeetingManager audioVideoDidStop] Terminal failure occured: ${sessionStatusCode}`
+          );
           this.meetingStatus = MeetingStatus.TerminalFailure;
           this.publishMeetingStatus();
         }
-        console.log(`[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}`);
+        console.log(
+          `[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}`
+        );
         this.leave();
     }
 
@@ -373,7 +409,7 @@ export class MeetingManager implements AudioVideoObserver {
 
     this.audioVideoObservers = {
       audioVideoDidStart: this.audioVideoDidStart,
-      audioVideoDidStop: this.audioVideoDidStop
+      audioVideoDidStop: this.audioVideoDidStop,
     };
 
     this.audioVideo.addObserver(this.audioVideoObservers);
@@ -388,7 +424,9 @@ export class MeetingManager implements AudioVideoObserver {
       (await this.audioVideo?.listAudioOutputDevices()) || [];
   }
 
-  setupDeviceLabelTrigger(deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo): void {
+  setupDeviceLabelTrigger(
+    deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo
+  ): void {
     let callback: DeviceLabelTrigger;
 
     if (typeof deviceLabels === 'function') {
@@ -416,7 +454,9 @@ export class MeetingManager implements AudioVideoObserver {
         this.publishDevicePermissionStatus();
         try {
           const devices = await navigator.mediaDevices.enumerateDevices();
-          const hasVideoInput = devices.some(value => value.kind === 'videoinput');
+          const hasVideoInput = devices.some(
+            (value) => value.kind === 'videoinput'
+          );
 
           const stream = await navigator.mediaDevices.getUserMedia({
             audio: constraints.audio,
@@ -439,22 +479,26 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   setupActiveSpeakerDetection(): void {
-    const activeSpeakerPolicy  = this.meetingManagerConfig.activeSpeakerPolicy;
+    const activeSpeakerPolicy = this.meetingManagerConfig.activeSpeakerPolicy;
 
     this.publishActiveSpeaker();
 
     this.activeSpeakerListener = (activeSpeakers: string[]) => {
       this.activeSpeakers = activeSpeakers;
-      this.activeSpeakerCallbacks.forEach(cb => cb(activeSpeakers));
+      this.activeSpeakerCallbacks.forEach((cb) => cb(activeSpeakers));
     };
 
     this.audioVideo?.subscribeToActiveSpeakerDetector(
-      activeSpeakerPolicy ? activeSpeakerPolicy : new DefaultActiveSpeakerPolicy(),
+      activeSpeakerPolicy
+        ? activeSpeakerPolicy
+        : new DefaultActiveSpeakerPolicy(),
       this.activeSpeakerListener
     );
   }
 
-  async listAndSelectDevices(deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo): Promise<void> {
+  async listAndSelectDevices(
+    deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo
+  ): Promise<void> {
     await this.updateDeviceLists();
 
     // If `deviceLabels` is of `DeviceLabelTrigger` type, no device will be selected.
@@ -524,7 +568,9 @@ export class MeetingManager implements AudioVideoObserver {
     }
   }
 
-  selectAudioInputDevice = async (device: Device | AudioTransformDevice): Promise<void> => {
+  selectAudioInputDevice = async (
+    device: Device | AudioTransformDevice
+  ): Promise<void> => {
     let receivedDevice = device;
     if (typeof device === 'string') {
       receivedDevice = audioInputSelectionToDevice(device);
@@ -573,13 +619,15 @@ export class MeetingManager implements AudioVideoObserver {
     this.publishSelectedAudioInputTransformDevice();
   };
 
-  private getDeviceID = (innerDevice: MediaTrackConstraints | MediaTrackConstraintSet): string => {
+  private getDeviceID = (
+    innerDevice: MediaTrackConstraints | MediaTrackConstraintSet
+  ): string => {
     if (Array.isArray(innerDevice)) {
       innerDevice = innerDevice[0];
     }
 
     const deviceId = innerDevice.deviceId;
-    if (typeof (deviceId) === 'string') {
+    if (typeof deviceId === 'string') {
       return deviceId;
     }
     if (Array.isArray(deviceId)) {
@@ -588,11 +636,11 @@ export class MeetingManager implements AudioVideoObserver {
     if (Array.isArray(deviceId?.exact) && deviceId?.exact) {
       return deviceId.exact[0];
     }
-    if (typeof (deviceId?.exact) === 'string') {
+    if (typeof deviceId?.exact === 'string') {
       return deviceId.exact;
     }
     return '';
-  }
+  };
 
   selectAudioOutputDevice = async (deviceId: string): Promise<void> => {
     try {
@@ -650,12 +698,12 @@ export class MeetingManager implements AudioVideoObserver {
     callbackToRemove: (av: AudioVideoFacade | null) => void
   ): void => {
     this.audioVideoCallbacks = this.audioVideoCallbacks.filter(
-      callback => callback !== callbackToRemove
+      (callback) => callback !== callbackToRemove
     );
   };
 
   publishAudioVideo = () => {
-    this.audioVideoCallbacks.forEach(callback => {
+    this.audioVideoCallbacks.forEach((callback) => {
       callback(this.audioVideo);
     });
   };
@@ -671,12 +719,12 @@ export class MeetingManager implements AudioVideoObserver {
     callbackToRemove: (activeSpeakers: string[]) => void
   ): void => {
     this.activeSpeakerCallbacks = this.activeSpeakerCallbacks.filter(
-      callback => callback !== callbackToRemove
+      (callback) => callback !== callbackToRemove
     );
   };
 
   publishActiveSpeaker = () => {
-    this.activeSpeakerCallbacks.forEach(callback => {
+    this.activeSpeakerCallbacks.forEach((callback) => {
       callback(this.activeSpeakers);
     });
   };
@@ -691,7 +739,7 @@ export class MeetingManager implements AudioVideoObserver {
     callbackToRemove: (permission: DevicePermissionStatus) => void
   ): void => {
     this.devicePermissionsObservers = this.devicePermissionsObservers.filter(
-      callback => callback !== callbackToRemove
+      (callback) => callback !== callbackToRemove
     );
   };
 
@@ -710,9 +758,10 @@ export class MeetingManager implements AudioVideoObserver {
   unsubscribeFromSelectedVideoInputDevice = (
     callbackToRemove: (deviceId: string | null) => void
   ): void => {
-    this.selectedVideoInputDeviceObservers = this.selectedVideoInputDeviceObservers.filter(
-      callback => callback !== callbackToRemove
-    );
+    this.selectedVideoInputDeviceObservers =
+      this.selectedVideoInputDeviceObservers.filter(
+        (callback) => callback !== callbackToRemove
+      );
   };
 
   private publishSelectedVideoInputDevice = (): void => {
@@ -736,17 +785,19 @@ export class MeetingManager implements AudioVideoObserver {
   unsubscribeFromSelectedAudioInputDevice = (
     callbackToRemove: (deviceId: string | null) => void
   ): void => {
-    this.selectedAudioInputDeviceObservers = this.selectedAudioInputDeviceObservers.filter(
-      callback => callback !== callbackToRemove
-    );
+    this.selectedAudioInputDeviceObservers =
+      this.selectedAudioInputDeviceObservers.filter(
+        (callback) => callback !== callbackToRemove
+      );
   };
 
   unsubscribeFromSelectedAudioInputTransformDevice = (
     callbackToRemove: (device: Device | AudioTransformDevice | null) => void
   ): void => {
-    this.selectedAudioInputTransformDeviceObservers = this.selectedAudioInputTransformDeviceObservers.filter(
-      callback => callback !== callbackToRemove
-    );
+    this.selectedAudioInputTransformDeviceObservers =
+      this.selectedAudioInputTransformDeviceObservers.filter(
+        (callback) => callback !== callbackToRemove
+      );
   };
 
   private publishSelectedAudioInputDevice = (): void => {
@@ -770,9 +821,10 @@ export class MeetingManager implements AudioVideoObserver {
   unsubscribeFromSelectedAudioOutputDevice = (
     callbackToRemove: (deviceId: string | null) => void
   ): void => {
-    this.selectedAudioOutputDeviceObservers = this.selectedAudioOutputDeviceObservers.filter(
-      callback => callback !== callbackToRemove
-    );
+    this.selectedAudioOutputDeviceObservers =
+      this.selectedAudioOutputDeviceObservers.filter(
+        (callback) => callback !== callbackToRemove
+      );
   };
 
   private publishSelectedAudioOutputDevice = (): void => {
@@ -792,12 +844,12 @@ export class MeetingManager implements AudioVideoObserver {
     callbackToRemove: (meetingStatus: MeetingStatus) => void
   ): void => {
     this.meetingStatusObservers = this.meetingStatusObservers.filter(
-      callback => callback !== callbackToRemove
+      (callback) => callback !== callbackToRemove
     );
   };
 
   private publishMeetingStatus = () => {
-    this.meetingStatusObservers.forEach(callback => {
+    this.meetingStatusObservers.forEach((callback) => {
       callback(this.meetingStatus);
     });
   };
@@ -811,9 +863,10 @@ export class MeetingManager implements AudioVideoObserver {
   unsubscribeFromSelectAudioInputDeviceError = (
     callbackToRemove: (errorMessage: Error | null) => void
   ): void => {
-    this.selectAudioInputDeviceErrorObservers = this.selectAudioInputDeviceErrorObservers.filter(
-      callback => callback !== callbackToRemove
-    );
+    this.selectAudioInputDeviceErrorObservers =
+      this.selectAudioInputDeviceErrorObservers.filter(
+        (callback) => callback !== callbackToRemove
+      );
   };
 
   private publishSelectAudioInputDeviceError = (): void => {
@@ -831,9 +884,10 @@ export class MeetingManager implements AudioVideoObserver {
   unsubscribeFromSelectVideoInputDeviceError = (
     callbackToRemove: (errorMessage: Error | null) => void
   ): void => {
-    this.selectVideoInputDeviceErrorObservers = this.selectVideoInputDeviceErrorObservers.filter(
-      callback => callback !== callbackToRemove
-    );
+    this.selectVideoInputDeviceErrorObservers =
+      this.selectVideoInputDeviceErrorObservers.filter(
+        (callback) => callback !== callbackToRemove
+      );
   };
 
   private publishSelectVideoInputDeviceError = (): void => {
@@ -842,18 +896,17 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
-  subscribeToDeviceLabelTriggerChange = (
-    callback: () => void
-  ): void => {
+  subscribeToDeviceLabelTriggerChange = (callback: () => void): void => {
     this.deviceLabelTriggerChangeObservers.push(callback);
   };
 
   unsubscribeFromDeviceLabelTriggerChange = (
     callbackToRemove: () => void
   ): void => {
-    this.deviceLabelTriggerChangeObservers = this.deviceLabelTriggerChangeObservers.filter(
-      callback => callback !== callbackToRemove
-    );
+    this.deviceLabelTriggerChangeObservers =
+      this.deviceLabelTriggerChangeObservers.filter(
+        (callback) => callback !== callbackToRemove
+      );
   };
 
   private publishDeviceLabelTriggerChange = (): void => {
@@ -862,18 +915,26 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
-  subscribeToEventDidReceive = (callback: (name: EventName, attributes: EventAttributes) => void): void => {
+  subscribeToEventDidReceive = (
+    callback: (name: EventName, attributes: EventAttributes) => void
+  ): void => {
     this.meetingEventObserverSet.add(callback);
   };
 
-  unsubscribeFromEventDidReceive = (callbackToRemove: (name: EventName, attributes: EventAttributes) => void): void => {
+  unsubscribeFromEventDidReceive = (
+    callbackToRemove: (name: EventName, attributes: EventAttributes) => void
+  ): void => {
     this.meetingEventObserverSet.delete(callbackToRemove);
   };
 
-  private publishEventDidReceiveUpdate = (name: EventName, attributes: EventAttributes) => {
-    this.meetingEventObserverSet.forEach((callback) => callback(name, attributes));
+  private publishEventDidReceiveUpdate = (
+    name: EventName,
+    attributes: EventAttributes
+  ) => {
+    this.meetingEventObserverSet.forEach((callback) =>
+      callback(name, attributes)
+    );
   };
-
 }
 
 export default MeetingManager;

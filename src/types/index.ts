@@ -46,8 +46,8 @@ export enum MeetingStatus {
   Ended,
   JoinedFromAnotherDevice,
   Left,
-  TerminalFailure
-};
+  TerminalFailure,
+}
 
 export type RosterAttendeeType = {
   chimeAttendeeId: string;
@@ -64,13 +64,13 @@ export enum DevicePermissionStatus {
   IN_PROGRESS = 'IN_PROGRESS',
   GRANTED = 'GRANTED',
   DENIED = 'DENIED',
-};
+}
 
 export enum DeviceLabels {
   None,
   Audio,
   Video,
   AudioAndVideo,
-};
+}
 
 export type DeviceLabelTrigger = () => Promise<MediaStream>;

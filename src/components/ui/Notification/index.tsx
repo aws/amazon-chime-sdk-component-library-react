@@ -1,12 +1,16 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, HTMLAttributes, ReactNode } from 'react';
+import React, { HTMLAttributes, ReactNode, useEffect } from 'react';
 
-import { StyledNotification, StyledCloseIconButton, StyledNotificationButton } from './Styled';
-import { Caution, CheckRound, Information, Remove, Clock } from '../icons';
-import { ButtonProps } from '../Button';
 import { BaseProps } from '../Base';
+import { ButtonProps } from '../Button';
+import { Caution, CheckRound, Clock, Information, Remove } from '../icons';
+import {
+  StyledCloseIconButton,
+  StyledNotification,
+  StyledNotificationButton,
+} from './Styled';
 
 export const DEFAULT_DELAY: number = 6000;
 
@@ -88,7 +92,7 @@ export const Notification: React.FC<NotificationProps> = (props) => {
       <output className="ch-message" data-testid="message" role={ariaRole}>
         {message}
       </output>
-      {buttonProps && <StyledNotificationButton aria-hidden {...buttonProps}/>}
+      {buttonProps && <StyledNotificationButton aria-hidden {...buttonProps} />}
       {children}
       {onClose && (
         <StyledCloseIconButton

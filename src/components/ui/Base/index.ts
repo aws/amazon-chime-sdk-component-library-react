@@ -3,6 +3,7 @@
 
 import { SpaceProps } from 'styled-system';
 import { space } from 'styled-system';
+
 import { BaseSdkProps } from '../../sdk/Base';
 
 export interface BaseProps extends SpaceProps, BaseSdkProps {

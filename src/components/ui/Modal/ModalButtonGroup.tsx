@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, ReactElement } from 'react';
-import { useModalContext } from './ModalContext';
 
+import { useModalContext } from './ModalContext';
 import { StyledModalButtonGroup } from './Styled';
 
 export interface ModalButtonGroupProps
@@ -31,8 +31,15 @@ export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
   };
 
   const addCloseBehaviorToButtons = (buttons: JSX.Element[] | JSX.Element) => {
-    if (!context.dismissible || !buttons || (buttons instanceof Array && buttons.length === 0)) {
-      context.dismissible && console.warn("the 'dismissible prop prevents buttons from closing the modal");
+    if (
+      !context.dismissible ||
+      !buttons ||
+      (buttons instanceof Array && buttons.length === 0)
+    ) {
+      context.dismissible &&
+        console.warn(
+          "the 'dismissible prop prevents buttons from closing the modal"
+        );
       return buttons;
     }
     if (!(buttons instanceof Array)) {
@@ -43,9 +50,13 @@ export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
 
   return (
     <StyledModalButtonGroup data-testid="modal-button-group">
-      <div key="primarybuttons">{addCloseBehaviorToButtons(primaryButtons)}</div>
+      <div key="primarybuttons">
+        {addCloseBehaviorToButtons(primaryButtons)}
+      </div>
       {secondaryButtons && (
-        <div key="secondarybuttons">{addCloseBehaviorToButtons(secondaryButtons)}</div>
+        <div key="secondarybuttons">
+          {addCloseBehaviorToButtons(secondaryButtons)}
+        </div>
       )}
     </StyledModalButtonGroup>
   );

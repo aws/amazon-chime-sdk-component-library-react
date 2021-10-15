@@ -1,7 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, ChangeEvent, InputHTMLAttributes, Ref } from 'react';
+import React, { ChangeEvent, FC, InputHTMLAttributes, Ref } from 'react';
+
 import { StyledTextarea } from './Styled';
 
 export interface TextareaProps

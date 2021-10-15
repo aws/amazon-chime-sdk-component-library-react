@@ -3,8 +3,8 @@
 
 import styled from 'styled-components';
 
+import { baseSpacing, baseStyles } from '../../Base';
 import { RosterCellProps } from '.';
-import { baseStyles, baseSpacing } from '../../Base';
 
 export const StyledCell = styled.div<RosterCellProps>`
   display: flex;

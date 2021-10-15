@@ -3,14 +3,14 @@
 
 import React, { FC, ReactNode, useMemo } from 'react';
 
+import { BaseProps } from '../Base';
+import IconButton from '../Button/IconButton';
 import Caret from '../icons/Caret';
-import { StyledControlBarItem, isVertical } from './Styled';
 import PopOver, { Placement } from '../PopOver';
 import PopOverItem, { PopOverItemProps } from '../PopOver/PopOverItem';
-import { useControlBarContext } from './ControlBarContext';
-import IconButton from '../Button/IconButton';
-import { BaseProps } from '../Base';
 import { Tooltipable, WithTooltip } from '../WithTooltip';
+import { useControlBarContext } from './ControlBarContext';
+import { isVertical, StyledControlBarItem } from './Styled';
 
 export interface ControlBarButtonProps
   extends Omit<React.HTMLAttributes<HTMLDivElement>, 'css'>,
@@ -51,12 +51,13 @@ export const ControlBarButton: FC<ControlBarButtonProps> = ({
 
   const IconButtonWithToolTip = useMemo(
     () => WithTooltip(IconButton, tooltipContainerId),
-  [tooltipContainerId]);
+    [tooltipContainerId]
+  );
 
-  const ButtonComponent = !!rest['data-tooltip']
+  const ButtonComponent = rest['data-tooltip']
     ? IconButtonWithToolTip
     : IconButton;
-  const buttonComponentProps = !!rest['data-tooltip-position']
+  const buttonComponentProps = rest['data-tooltip-position']
     ? { tooltipPosition: rest['data-tooltip-position'], tooltipContent }
     : {};
 

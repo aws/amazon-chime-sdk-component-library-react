@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { forwardRef } from 'react';
+
 import Button, { ButtonProps } from './';
 
 export const PrimaryButton = forwardRef(

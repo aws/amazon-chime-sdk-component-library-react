@@ -1,8 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import defaultTheme from './default';
 import { hexTorgba } from '../utils/style';
+import defaultTheme from './default';
 
 const colors = {
   primary: {
@@ -12,13 +12,13 @@ const colors = {
     main: '#4FE2F8',
     dark: '#29DCF8',
     darker: '#22B6CB',
-    darkest: '#1FA1B5'
+    darkest: '#1FA1B5',
   },
 
   secondary: {
     light: '#FF8B70',
     main: '#FF9B83',
-    dark: '#FFB4A1'
+    dark: '#FFB4A1',
   },
 
   error: {
@@ -28,7 +28,7 @@ const colors = {
     primary: '#FF8B8A',
     dark: '#583A39',
     darker: '#452F2E',
-    darkest: '#302020'
+    darkest: '#302020',
   },
 
   success: {
@@ -38,7 +38,7 @@ const colors = {
     primary: '#A3E881',
     dark: '#4F6444',
     darker: '#46573D',
-    darkest: '#324129'
+    darkest: '#324129',
   },
 
   info: {
@@ -48,7 +48,7 @@ const colors = {
     primary: '#BAD4FF',
     dark: '#555B69',
     darker: '#494F59',
-    darkest: '#343C48'
+    darkest: '#343C48',
   },
 
   warning: {
@@ -58,7 +58,7 @@ const colors = {
     primary: '#FBDF64',
     dark: '#6D653C',
     darker: '#5E5736',
-    darkest: '#47422D'
+    darkest: '#47422D',
   },
 
   greys: {
@@ -73,21 +73,21 @@ const colors = {
     grey30: '#d4d5d8',
     grey20: '#e4e9f2',
     grey10: '#f0f1f2',
-    white: '#ffffff'
-  }
+    white: '#ffffff',
+  },
 };
 
 const global = {
   bgd: colors.greys.grey80,
   text: colors.greys.white,
-  fontSize: defaultTheme.fontSizes.baseFontSize
+  fontSize: defaultTheme.fontSizes.baseFontSize,
 };
 
 const shadows = {
   none: 'none',
   small: '',
   medium: '',
-  large: `0 0.75rem 1.875rem 0 ${hexTorgba(colors.greys.black, 0.15)}`
+  large: `0 0.75rem 1.875rem 0 ${hexTorgba(colors.greys.black, 0.15)}`,
 };
 
 const buttons = {
@@ -97,13 +97,13 @@ const buttons = {
       bgd: colors.primary.main,
       border: `0.03125rem solid ${colors.greys.black}`,
       text: colors.greys.grey80,
-      shadow: 'none'
+      shadow: 'none',
     },
     hover: {
       bgd: colors.primary.dark,
       border: `0.03125rem solid ${colors.greys.black}`,
       text: colors.greys.grey80,
-      shadow: 'none'
+      shadow: 'none',
     },
     focus: {
       bgd: colors.primary.dark,
@@ -115,19 +115,19 @@ const buttons = {
       bgd: colors.primary.darker,
       border: `0.03125rem solid ${colors.greys.black}`,
       text: colors.greys.grey80,
-      shadow: 'none'
+      shadow: 'none',
     },
     selected: {
       bgd: colors.primary.light,
       border: `0.03125rem solid ${colors.greys.black}`,
       text: colors.greys.grey80,
-      shadow: 'none'
+      shadow: 'none',
     },
     disabled: {
       bgd: colors.greys.grey80,
       border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.4)}`,
       text: colors.greys.grey40,
-      shadow: 'none'
+      shadow: 'none',
     },
   },
 
@@ -137,13 +137,13 @@ const buttons = {
       bgd: colors.greys.grey50,
       border: `0.03125rem solid ${colors.greys.black}`,
       text: colors.greys.white,
-      shadow: 'none'
+      shadow: 'none',
     },
     hover: {
       bgd: colors.greys.grey60,
       border: `0.03125rem solid ${colors.greys.black}`,
       text: colors.greys.white,
-      shadow: 'none'
+      shadow: 'none',
     },
     focus: {
       bgd: colors.greys.grey60,
@@ -155,19 +155,19 @@ const buttons = {
       bgd: colors.greys.grey70,
       border: `0.03125rem solid ${colors.greys.black}`,
       text: colors.greys.white,
-      shadow: 'none'
+      shadow: 'none',
     },
     selected: {
       bgd: colors.greys.grey60,
       border: `0.03125rem solid ${colors.greys.black}`,
       text: colors.greys.white,
-      shadow: 'none'
+      shadow: 'none',
     },
     disabled: {
       bgd: colors.greys.grey80,
       border: `0.03125rem solid ${hexTorgba(colors.greys.black, 0.6)}`,
       text: colors.greys.grey40,
-      shadow: 'none'
+      shadow: 'none',
     },
   },
 
@@ -177,39 +177,39 @@ const buttons = {
       bgd: 'transparent',
       border: `0.03125rem solid transparent`,
       text: colors.greys.grey20,
-      shadow: 'none'
+      shadow: 'none',
     },
     hover: {
       bgd: colors.primary.dark,
       border: `0.03125rem  solid ${colors.greys.black}`,
       text: colors.greys.grey80,
-      shadow: 'none'
+      shadow: 'none',
     },
     focus: {
       bgd: 'transparent',
       border: `0.03125rem solid ${colors.greys.black}`,
       text: colors.greys.grey80,
-      shadow: `0 0 0 0.25rem ${colors.primary.darker}` 
+      shadow: `0 0 0 0.25rem ${colors.primary.darker}`,
     },
     active: {
       bgd: colors.primary.darker,
       border: `0.03125rem solid ${colors.greys.black}`,
       text: colors.greys.grey80,
-      shadow: 'none'
+      shadow: 'none',
     },
     selected: {
       bgd: colors.primary.light,
       border: `0 solid ${colors.greys.black}`,
       text: colors.greys.grey80,
-      shadow: 'none'
+      shadow: 'none',
     },
     disabled: {
       bgd: 'transparent',
       border: 'none',
       text: colors.greys.grey40,
-      shadow: 'none'
+      shadow: 'none',
     },
-  }
+  },
 };
 
 const inputs = {
@@ -224,21 +224,21 @@ const inputs = {
   focus: {
     bgd: colors.greys.white,
     border: `solid 0.03125rem ${colors.primary.main}`,
-    shadow: `0 0 0 0.125rem ${colors.primary.lighter}`
+    shadow: `0 0 0 0.125rem ${colors.primary.lighter}`,
   },
 
   error: {
     border: `0.03125rem solid ${colors.error.primary}`,
     fontColor: colors.error.primary,
-    shadow: `0 0 0 0.125rem ${colors.error.light}`
+    shadow: `0 0 0 0.125rem ${colors.error.light}`,
   },
 
   checked: {
     bgd: colors.primary.main,
     border: `solid 0.03125rem ${colors.primary.dark}`,
     fontColor: colors.greys.grey80,
-    shadow: `inset 0 0.03125rem 0 0 ${hexTorgba(colors.greys.white, 0.1)}`
-  }
+    shadow: `inset 0 0.03125rem 0 0 ${hexTorgba(colors.greys.white, 0.1)}`,
+  },
 };
 
 const modal = {
@@ -248,7 +248,7 @@ const modal = {
   titleSize: defaultTheme.fontSizes.h5.fontSize,
   titleWeight: 'normal',
   shadow: `0 1rem 2rem 0 rgba(0, 0, 0, ${hexTorgba(colors.greys.black, 0.15)})`,
-  border: colors.greys.black
+  border: colors.greys.black,
 };
 
 const popOver = {
@@ -274,13 +274,13 @@ const notification = {
       text: colors.error.dark,
       hover: {
         bgd: colors.error.dark,
-        text: colors.greys.white
+        text: colors.greys.white,
       },
       active: {
         bgd: colors.error.darker,
-        text: colors.greys.white
-      }
-    }
+        text: colors.greys.white,
+      },
+    },
   },
 
   success: {
@@ -289,13 +289,13 @@ const notification = {
       text: colors.success.dark,
       hover: {
         bgd: colors.success.dark,
-        text: colors.greys.white
+        text: colors.greys.white,
       },
       active: {
         bgd: colors.success.darker,
-        text: colors.greys.white
-      }
-    }
+        text: colors.greys.white,
+      },
+    },
   },
 
   info: {
@@ -304,13 +304,13 @@ const notification = {
       text: colors.info.dark,
       hover: {
         bgd: colors.info.dark,
-        text: colors.greys.white
+        text: colors.greys.white,
       },
       active: {
         bgd: colors.info.darker,
-        text: colors.greys.white
-      }
-    }
+        text: colors.greys.white,
+      },
+    },
   },
 
   warning: {
@@ -319,21 +319,21 @@ const notification = {
       text: colors.warning.dark,
       hover: {
         bgd: colors.warning.dark,
-        text: colors.greys.white
+        text: colors.greys.white,
       },
       active: {
         bgd: colors.warning.darker,
-        text: colors.greys.white
-      }
-    }
-  }
+        text: colors.greys.white,
+      },
+    },
+  },
 };
 
 const links = {
   fontColor: colors.primary.main,
   fontColorHover: colors.primary.dark,
   fontColorActive: colors.primary.darker,
-  fontColorVisited: colors.primary.darkest
+  fontColorVisited: colors.primary.darkest,
 };
 
 const controlBar = {
@@ -357,18 +357,18 @@ const roster = {
   bgd: colors.greys.grey100,
   fgd: colors.greys.grey60,
   shadow: shadows.large,
-  maxWidth: '18.5rem'
+  maxWidth: '18.5rem',
 };
 
 const navbar = {
   text: colors.greys.white,
   bgd: colors.greys.grey100,
   headerBorder: colors.greys.black,
-  wrapperBgd: hexTorgba(colors.greys.grey60, 0.9)
+  wrapperBgd: hexTorgba(colors.greys.grey60, 0.9),
 };
 
 const videoGrid = {
-  bgd: colors.greys.grey90
+  bgd: colors.greys.grey90,
 };
 
 const chatBubble = {
@@ -391,8 +391,8 @@ const chatBubble = {
   container: {
     fontColor: colors.greys.grey30,
     bgd: colors.greys.black,
-  }
-}
+  },
+};
 
 const messageAttachment = {
   size: {
@@ -400,21 +400,21 @@ const messageAttachment = {
     bgd: colors.greys.grey10,
     letterSpacing: '-0.07px',
     lineHight: '16px',
-    fontSize: '10.4px'
+    fontSize: '10.4px',
   },
   icon: {
     bgd: colors.greys.grey40,
-    color: colors.greys.grey10
+    color: colors.greys.grey10,
   },
   name: {
-    fontColor: colors.greys.white
+    fontColor: colors.greys.white,
   },
   content: {
     letterSpacing: '-0.09px',
     bgd: colors.greys.grey60,
-    fontColor: colors.greys.white
-  }
-}
+    fontColor: colors.greys.white,
+  },
+};
 
 const channelList = {
   bgd: colors.greys.grey80,
@@ -437,13 +437,13 @@ const channelList = {
   },
   iconButton: {
     activeBgd: colors.greys.grey80,
-  }
-}
+  },
+};
 
 const chatDateHeader = {
   bgd: colors.greys.grey10,
-  fontColor: colors.greys.grey80
-}
+  fontColor: colors.greys.grey80,
+};
 
 export const darkTheme = {
   name: 'Dark Theme',
@@ -464,7 +464,7 @@ export const darkTheme = {
   channelList,
   chatDateHeader,
   messageAttachment,
-  ...defaultTheme
+  ...defaultTheme,
 };
 
 export default darkTheme;

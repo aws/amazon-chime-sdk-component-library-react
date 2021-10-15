@@ -1,11 +1,11 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useRef, useEffect, HTMLAttributes } from 'react';
+import React, { HTMLAttributes, useEffect, useRef } from 'react';
 
-import { VideoTile } from '../../ui/VideoTile';
-import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { useApplyVideoObjectFit } from '../../../hooks/useApplyVideoObjectFit';
+import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { VideoTile } from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
 
 interface Props

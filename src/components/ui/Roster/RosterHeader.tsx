@@ -2,23 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
-  useState,
-  useRef,
-  useEffect,
   ChangeEvent,
   ReactNode,
-  useMemo
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
 } from 'react';
 
-import Flex from '../Flex';
 import Badge from '../Badge';
-import SearchInput from '../Input/SearchInput';
-import { Search, Remove } from '../icons';
-import IconButton from '../Button/IconButton';
-import { StyledHeader } from './Styled';
-import { PopOverMenu } from './PopOverMenu';
 import { BaseProps, FocusableProps } from '../Base';
+import IconButton from '../Button/IconButton';
+import Flex from '../Flex';
+import { Remove, Search } from '../icons';
+import SearchInput from '../Input/SearchInput';
 import { Tooltipable, WithTooltip } from '../WithTooltip';
+import { PopOverMenu } from './PopOverMenu';
+import { StyledHeader } from './Styled';
 
 export interface RosterHeaderProps
   extends BaseProps,
@@ -100,15 +100,16 @@ export const RosterHeader: React.FC<RosterHeaderProps> = ({
 }) => {
   const IconButtonWithToolTip = useMemo(
     () => WithTooltip(IconButton, tooltipContainerId),
-  [tooltipContainerId]);
+    [tooltipContainerId]
+  );
 
-  const ButtonComponent = !!rest['data-tooltip']
+  const ButtonComponent = rest['data-tooltip']
     ? IconButtonWithToolTip
     : IconButton;
-  const buttonComponentProps = !!rest['data-tooltip-position']
+  const buttonComponentProps = rest['data-tooltip-position']
     ? { tooltipPosition: rest['data-tooltip-position'] }
     : {};
-  const popOverMenuComponentProps = !!rest['data-tooltip']
+  const popOverMenuComponentProps = rest['data-tooltip']
     ? {
         ['data-tooltip-position']: rest['data-tooltip-position'],
         ['data-tooltip']: rest['data-tooltip'],

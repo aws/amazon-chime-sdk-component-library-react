@@ -1,15 +1,15 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, HTMLAttributes, ReactNode } from 'react';
 import classnames from 'classnames';
+import React, { FC, HTMLAttributes, ReactNode } from 'react';
 
-import { StyledChannelItem } from './Styled';
-import PopOver from '../../PopOver';
-import Button from '../../Button';
-import { BaseProps } from '../../Base';
-import { Dots } from '../../icons';
 import Badge from '../../Badge';
+import { BaseProps } from '../../Base';
+import Button from '../../Button';
+import { Dots } from '../../icons';
+import PopOver from '../../PopOver';
+import { StyledChannelItem } from './Styled';
 
 export interface ChannelItemProps
   extends Omit<HTMLAttributes<HTMLLIElement & HTMLLIElement>, 'css'>,
@@ -29,14 +29,8 @@ export interface ChannelItemProps
 }
 
 export const ChannelItem: FC<ChannelItemProps> = (props) => {
-  const {
-    name,
-    actions,
-    isSelected,
-    onClick,
-    unread,
-    unreadBadgeLabel,
-  } = props;
+  const { name, actions, isSelected, onClick, unread, unreadBadgeLabel } =
+    props;
   return (
     <StyledChannelItem
       {...props}

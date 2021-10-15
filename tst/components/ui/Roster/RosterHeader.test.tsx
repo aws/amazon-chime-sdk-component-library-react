@@ -1,13 +1,14 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { ChangeEvent } from 'react';
 import '@testing-library/jest-dom';
-import { fireEvent } from '@testing-library/dom';
 
-import RosterHeader from '../../../../src/components/ui/Roster/RosterHeader';
+import { fireEvent } from '@testing-library/dom';
+import React, { ChangeEvent } from 'react';
+
 import IconBUtton from '../../../../src/components/ui/Button/IconButton';
 import Presenter from '../../../../src/components/ui/icons/Presenter';
+import RosterHeader from '../../../../src/components/ui/Roster/RosterHeader';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 

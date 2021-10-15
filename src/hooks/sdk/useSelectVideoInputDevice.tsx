@@ -3,8 +3,8 @@
 
 import { useCallback } from 'react';
 
-import { useMeetingManager } from '../../providers/MeetingProvider';
 import { useLocalVideo } from '../../providers/LocalVideoProvider';
+import { useMeetingManager } from '../../providers/MeetingProvider';
 
 export const useSelectVideoInputDevice = () => {
   const { isVideoEnabled, toggleVideo } = useLocalVideo();

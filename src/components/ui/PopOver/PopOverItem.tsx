@@ -34,7 +34,7 @@ export const PopOverItem: FC<PopOverItemProps> = ({
   testId = 'popover-item',
   ...rest
 }) => {
-  let Tag = as;
+  const Tag = as;
   return (
     <StyledPopOverItem data-testid={testId}>
       {checked && <Check className="ch-check" data-testid="popover-check" />}
