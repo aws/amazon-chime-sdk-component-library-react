@@ -105,6 +105,9 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
     showLabels ? '1.5rem 1rem' : '1.5rem'};
   justify-items: center;
   align-items: center;
+  &:focus {
+    outline: 0;
+  }
   ${({ popOver, layout, children }) => `
     ${
       (!isVertical(layout) &&
