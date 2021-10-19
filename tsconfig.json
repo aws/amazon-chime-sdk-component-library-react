@@ -26,6 +26,7 @@
     "node_modules",
     "build",
     "demo",
+    "tst/snapshots",
     "scripts",
     ".storybook",
     "src/internal",
