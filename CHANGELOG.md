@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Add Eslint rules to enforce code style and fix issues.
 - Add logs for Amazon Voice Focus components.
+- Add FAQ link on audio outputs not available in FireFox and Safari.
 
 ### Changed
 
