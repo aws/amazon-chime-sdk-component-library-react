@@ -1,0 +1,62 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import VideoInputBackgroundBlurControl from '../VideoInputBackgroundBlurControl';
+
+<Meta title="SDK Components/MeetingControls/VideoInputBackgroundBlurControl" />
+
+# VideoInputBackgroundBlurControl
+
+The `VideoInputBackgroundBlurControl` component renders a `ControlBarButton` with pop over menu options to select through multiple video input sources.
+These video input sources are provided by the `useVideoInputs` hook.
+The `VideoInputBackgroundBlurControl` component also has a button that will enable or disable background blur on the chosen video input source. A checkmark icon
+next to the background blur button will indicate whether or not background blur is active. If you want to apply background blur to your video input device stream,
+try this `VideoInputBackgroundBlurControl`. If not, `VideoInputControl` is a better choice.
+
+This component must be used within `BackgroundBlurProvider` and `MeetingProvider`.
+
+When you click the button, the local video input toggles between on/off state.
+
+You can use it in the [ControlBar component](/docs/ui-components-controlbar--control-bar) to build the meeting controls bar.
+
+## Importing
+
+```javascript
+import { VideoInputBackgroundBlurControl } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  BackgroundBlurProvider,
+  MeetingProvider,
+  VideoInputBackgroundBlurControl,
+  ControlBar,
+  AudioInputControl,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  return (
+    <BackgroundBlurProvider>
+      <MeetingProvider>
+        <ControlBar
+          layout="undocked-horizontal"
+          showLabels
+        >
+          <AudioInputControl />
+          <VideoInputBackgroundBlurControl />
+        </ControlBar>
+      </MeetingProvider>
+    </BackgroundBlurProvider>
+  );
+};
+```
+
+## Props
+
+<Props of={VideoInputBackgroundBlurControl} />
+
+### Dependencies
+
+- `MeetingProvider`
+- `BackgroundBlurProvider`

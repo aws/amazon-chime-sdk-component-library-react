@@ -1,8 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { EventAttributes,EventName } from 'amazon-chime-sdk-js';
-import React, { createContext, useContext, useEffect,useState } from 'react';
+import { EventAttributes, EventName } from 'amazon-chime-sdk-js';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { useMeetingManager } from '../MeetingProvider';
 

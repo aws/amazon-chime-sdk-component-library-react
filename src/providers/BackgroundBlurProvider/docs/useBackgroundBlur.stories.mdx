@@ -1,0 +1,105 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import { useBackgroundBlur } from '../';
+
+<Meta title="SDK Hooks/useBackgroundBlur" />
+
+# useBackgroundBlur
+
+The `useBackgroundBlur` hook returns a function transforming a normal video device to a `DefaultVideoTransformDevice`, and also a 
+state called `isBackgroundBlurSupported` which indicates whether or not background blur processor is fully loaded and ready to be used. 
+
+You should check whether or not the processor has been loaded correctly by checking the state of `isBackgroundBlurSupported` before calling `createBackgroundBlurDevice`.
+`createBackgroundBlurDevice` may throw an error if the processor has not been loaded yet. 
+
+Background blur related logs can be found in the browser developer tools when the `BackgroundBlurProvider` is used within the app component tree.
+
+## Return Value
+
+```typescript
+{
+  // Whether background blur is finished loading the processor. The default value is undefined, then changes to true or false.
+  isBackgroundBlurSupported: boolean | undefined;
+
+  // A function to transform a video input device to a DefaultVideoTransformDevice.
+  createBackgroundBlurDevice: (device: Device) => Promise<DefaultVideoTransformDevice>;
+}
+
+```
+
+## Importing
+
+```javascript
+import { useBackgroundBlur } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook depends on the `BackgroundBlurProvider`. You can use it with `MeetingProvider`.
+
+```jsx
+import React from 'react';
+import { VideoTransformDevice } from 'amazon-chime-sdk-js';
+import {
+  MeetingProvider,
+  BackgroundBlurProvider,
+  useMeetingManager,
+  useBackgroundBlur,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <BackgroundBlurProvider>
+    <MeetingProvider>
+      <MyChild />
+    </MeetingProvider>
+  </BackgroundBlurProvider>
+);
+
+const MyChild = () => {
+  const meetingManager = useMeetingManager();
+  const [isVideoTransformCheckBoxOn, setisVideoTransformCheckBoxOn] = useState(false);
+  const [device, setDevice] = useState(meetingManager.selectedVideoInputDevice);
+  const { isBackgroundBlurSupported, createBackgroundBlurDevice } = useBackgroundBlur();
+
+  useEffect(() => {
+    meetingManager.subscribeToSelectedVideoInputTransformDevice(setDevice);
+    return () => {
+      meetingManager.unsubscribeToSelectedVideoInputTransformDevice(setDevice);
+    };
+  }, []);
+
+  useEffect(() => {
+    async function toggleBackgroundBlur() {
+      let current = device;
+      if (isVideoTransformCheckBoxOn) {
+        current = await createBackgroundBlurDevice(device);
+      } else {
+        if (isVideoTransformDevice(device)) {
+          current = await device.intrinsicDevice();
+        }
+      }
+      await meetingManager.selectVideoInputDevice(current);
+    }
+    
+    toggleBackgroundBlur();
+  }, [isVideoTransformCheckBoxOn]);
+
+  const onClick = () => {
+    setisVideoTransformCheckBoxOn(current => !current);
+  };
+
+  return (
+    <div>
+      {isBackgroundBlurSupported && (
+        <button onClick={onClick}>
+          {isVideoTranformDevice(device) ? 'Background Blur Enabled' : 'Enable Background Blur'}
+        </button>
+      )}
+    </div>
+  );
+};
+```
+
+### Dependencies
+
+- `MeetingProvider`
+- `BackgroundBlurProvider`
