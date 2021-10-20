@@ -75,6 +75,7 @@ export {
   AudioOutputControl,
   ContentShareControl,
   VideoInputControl,
+  VideoInputBackgroundBlurControl,
 } from './components/sdk/MeetingControls';
 export { ContentShare } from './components/sdk/ContentShare';
 export { LocalVideo } from './components/sdk/LocalVideo';
@@ -115,10 +116,8 @@ export { useApplyVideoObjectFit } from './hooks/useApplyVideoObjectFit';
 export { useElementAspectRatio } from './hooks/useElementAspectRatio';
 
 export { useMeetingManager } from './providers/MeetingProvider';
-export {
-  VoiceFocusProvider,
-  useVoiceFocus,
-} from './providers/VoiceFocusProvider';
+export { useVoiceFocus } from './providers/VoiceFocusProvider';
+export { useBackgroundBlur } from './providers/BackgroundBlurProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRosterState } from './providers/RosterProvider';
 export { useRemoteVideoTileState } from './providers/RemoteVideoTileProvider';
@@ -162,6 +161,9 @@ export { RosterProvider } from './providers/RosterProvider';
 export { DevicesProvider } from './providers/DevicesProvider';
 export { RemoteVideoTileProvider } from './providers/RemoteVideoTileProvider';
 export { FeaturedVideoTileProvider } from './providers/FeaturedVideoTileProvider';
+export { VoiceFocusProvider } from './providers/VoiceFocusProvider';
+export { BackgroundBlurProvider } from './providers/BackgroundBlurProvider';
+
 export {
   UserActivityProvider,
   useUserActivityState,
