@@ -1,0 +1,117 @@
+import { Props } from '@storybook/addon-docs/blocks';
+import { BackgroundBlurProvider } from '../';
+
+<Meta title="SDK Providers/BackgroundBlurProvider" />
+
+# BackgroundBlurProvider
+
+The `BackgroundBlurProvider` provides a function transforming a normal video device to a `DefaultVideoTransformDevice`, and also whether or not the background blur feature is supported.
+Background blur related logs can be found in the browser developer tools when the `BackgroundBlurProvider` is used within the app component tree.
+
+This provider is independent from `MeetingProvider`. You can put `BackgroundBlurProvider` wherever you want in the component tree so long as any component that relies on 
+`BackgroundBlurProvider` is nested within `BackgroundBlurProvider`. The `BackgroundBlurProvider` loads the required worker assets
+when mounted, which may impact performance.
+
+## State
+
+```typescript
+{
+  // Whether background blur is supported. The default value is undefined, then changes to true or false.
+  isBackgroundBlurSupported: boolean | undefined;
+
+  // A function to transform a video input device to a DefaultVideoTransformDevice.
+  createBackgroundBlurDevice: (device: Device) => Promise<DefaultVideoTransformDevice>;
+}
+
+```
+
+You should see either "processor is supported" or "processor is not supported" in your browser developer tools based on whether or not
+background blur is supported on your device and browser version. For more information on if background blur is supported, refer
+to [Amazon Chime JS SDK Background Blur Guide](https://github.com/aws/amazon-chime-sdk-js/blob/master/guides/15_Background_Filter_Video_Processor.md#integrating-background-blur-into-your-amazon-chime-sdk-for-javascript-application).
+
+You should check whether or not the processor has been loaded correctly by checking the state of `isBackgroundBlurSupported` before calling `createBackgroundBlurDevice`.
+`createBackgroundBlurDevice` may throw an error if the processor has not been loaded yet. 
+
+You can access the state by using the [useBackgroundBlur](/docs/sdk-hooks-usebackgroundblur--page) hook.
+
+## Props
+
+<Props of={BackgroundBlurProvider} />
+
+## Importing
+
+```javascript
+import { BackgroundBlurProvider } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  isVideoTranformDevice,
+  VideoTransformDevice
+} from 'amazon-chime-sdk-js';
+import {
+  MeetingProvider,
+  BackgroundBlurProvider,
+  useMeetingManager,
+  useBackgroundBlur,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <BackgroundBlurProvider>
+    <MeetingProvider>
+      <MyChild />
+    </MeetingProvider>
+  </BackgroundBlurProvider>
+);
+
+const MyChild = () => {
+  const meetingManager = useMeetingManager();
+  const [isVideoTransformChecked, setIsVideoTransformCheckOn] = useState(false);
+  const [device, setDevice] = useState(meetingManager.selectedVideoInputDevice);
+  const { isBackgroundBlurSupported, createBackgroundBlurDevice } = useBackgroundBlur();
+
+  useEffect(() => {
+    meetingManager.subscribeToSelectedVideoInputTransformDevice(setDevice);
+    return () => {
+      meetingManager.unsubscribeToSelectedVideoInputTransformDevice(setDevice);
+    };
+  }, []);
+
+  useEffect(() => {
+    async function toggleBackgroundBlur() {
+      let current = device;
+      if (isVideoTransformChecked) {
+        current = await createBackgroundBlurDevice(device);
+      } else {
+        if (isVideoTransformDevice(device)) {
+          current = await device.intrinsicDevice();
+        }
+      }
+      await meetingManager.selectVideoInputDevice(current);
+    }
+    
+    toggleBackgroundBlur();
+  }, [isVideoTransformChecked]);
+
+  const onClick = () => {
+    setisVideoTransformCheckOn(current => !current);
+  };
+
+  return (
+    <div>
+      {isBackgroundBlurSupported && (
+        <button onClick={onClick}>
+          {isVideoTranformDevice(device) ? 'Background Blur Enabled' : 'Enable Background Blur'}
+        </button>
+      )}
+    </div>
+  );
+};
+```
+### Dependencies
+
+- `MeetingProvider`
+- `BackgroundBlurProvider`

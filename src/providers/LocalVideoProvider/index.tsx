@@ -12,7 +12,6 @@ import React, {
 } from 'react';
 
 import { LocalVideoContextType } from '../../types';
-import { videoInputSelectionToDevice } from '../../utils/device-utils';
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
@@ -39,17 +38,21 @@ const LocalVideoProvider: React.FC = ({ children }) => {
   }, [audioVideo]);
 
   const toggleVideo = useCallback(async (): Promise<void> => {
-    if (isVideoEnabled || !meetingManager.selectedVideoInputDevice) {
+    if (isVideoEnabled || !meetingManager.selectedVideoInputTransformDevice) {
       audioVideo?.stopLocalVideoTile();
       setIsVideoEnabled(false);
     } else {
       await audioVideo?.chooseVideoInputDevice(
-        videoInputSelectionToDevice(meetingManager.selectedVideoInputDevice)
+        meetingManager.selectedVideoInputTransformDevice
       );
       audioVideo?.startLocalVideoTile();
       setIsVideoEnabled(true);
     }
-  }, [audioVideo, isVideoEnabled, meetingManager.selectedVideoInputDevice]);
+  }, [
+    audioVideo,
+    isVideoEnabled,
+    meetingManager.selectedVideoInputTransformDevice,
+  ]);
 
   useEffect(() => {
     if (!audioVideo) {
