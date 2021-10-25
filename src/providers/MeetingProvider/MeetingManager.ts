@@ -311,7 +311,6 @@ export class MeetingManager implements AudioVideoObserver {
     );
 
     this.audioVideo = this.meetingSession.audioVideo;
-    this.publishAudioVideo();
 
     // When an attendee leaves, we remove AudioVideoObservers and nullify AudioVideoFacade and MeetingSession object.
     // This results into missing few meeting events triggered with audioVideoDidStop such as meetingEnded, meetingFailed and meetingStartFailed.
@@ -323,6 +322,7 @@ export class MeetingManager implements AudioVideoObserver {
     this.setupAudioVideoObservers();
     this.setupDeviceLabelTrigger(deviceLabels);
     await this.listAndSelectDevices(deviceLabels);
+    this.publishAudioVideo();
     this.setupActiveSpeakerDetection();
     this.meetingStatus = MeetingStatus.Loading;
     this.publishMeetingStatus();
