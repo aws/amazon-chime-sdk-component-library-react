@@ -32,6 +32,9 @@ to [Amazon Chime JS SDK Background Blur Guide](https://github.com/aws/amazon-chi
 You should check whether or not the processor has been loaded correctly by checking the state of `isBackgroundBlurSupported` before calling `createBackgroundBlurDevice`.
 `createBackgroundBlurDevice` may throw an error if the processor has not been loaded yet. 
 
+One thing to note is that calling `meetingManager.selectVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
+will automatically stop any video processor that was previously running.
+
 You can access the state by using the [useBackgroundBlur](/docs/sdk-hooks-usebackgroundblur--page) hook.
 
 ## Props
