@@ -468,3 +468,20 @@ You can use `useMediaStreamMetrics` hook to get video and audio stream quality m
 You can find examples and usage of the hook from [`useMediaStreamMetrics` storybook](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-usemediastreammetrics--page).
 
 For UI implementation, check the [`LocalMediaStreamMetrics`](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/de22a537d6437073f72d69da30f1703ef4cf40b3/demo/meeting/src/containers/LocalMediaStreamMetrics/index.tsx#L22-L28) and [`VideoStreamMetrics`](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/de22a537d6437073f72d69da30f1703ef4cf40b3/demo/meeting/src/containers/VideoStreamMetrics/index.tsx#L27) components in meeting demo for more details.
+
+## Enabling background blur
+
+You can enable background blur on your video stream by using the provider called `BackgroundBlurProvider`. The `BackgroundBlurProvider` provides
+a `createBackgroundBlurDevice` function that takes in a `Device` type and returns a `VideoTransformDevice`. Once you have the `VideoTransformDevice`,
+you may call `meetingManager.selectVideoInputDevice(videoTransformedDevice)` with the `VideoTransformDevice` just as you would with a regular device.
+
+Optionally, you may use the `VideoInputBackgroundBlurControl` component - it is similar to the `VideoInputControl` component, except it has an
+additional button to enable background blur. If you'd like to create your own background blur control component, you may look at the [`VideoInputBackgroundBlurControl`](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/src/components/sdk/MeetingControls/VideoInputBackgroundBlurControl.tsx)
+as an example.
+
+One thing to note is that calling `meetingManager.selectVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
+will automatically stop any video processor that was previously running.
+
+You may also refer to the storybook documentation for other examples on how to use [`BackgroundBlurProvider`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-providers-backgroundblurprovider--page) and `createBackgroundBlurDevice`.
+
+For more documentation on creating a `VideoTransformDevice`, you can refer to the [Background Filter Video Processor Guide](https://github.com/aws/amazon-chime-sdk-js/blob/master/guides/15_Background_Filter_Video_Processor.md).
