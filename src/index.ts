@@ -68,6 +68,7 @@ export {
   MicSelection,
   SpeakerSelection,
   QualitySelection,
+  VideoFilterSelection,
 } from './components/sdk/DeviceSelection';
 export {
   AudioInputControl,
