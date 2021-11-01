@@ -39,7 +39,6 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
   const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } = useBackgroundBlur();
-  const [isVideoTransformChecked, setIsVideoTransformChecked] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [dropdownWithVideoTransformOptions, setDropdownWithVideoTransformOptions] = useState<ReactNode[] | null>(null);
   const [activeVideoDevice, setDevice] = useState<Device | VideoTransformDevice | null>(meetingManager.selectedVideoInputDevice);
@@ -53,6 +52,27 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
       meetingManager.unsubscribeFromSelectedVideoInputTranformDevice(setDevice);
     };
   }, []);
+
+  async function toggleBackgroundBlur() {
+    let current = activeVideoDevice;
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true);
+    if (!isVideoTransformDevice(current)) {
+      // Enable video transform on the non-transformed device
+      current = await createBackgroundBlurDevice(current);
+      meetingManager.logger?.info('Video filter turned on - selecting video transform device: ' + JSON.stringify(current));
+    } else {
+      // switch back to the inner device
+      current = await current.intrinsicDevice();
+      meetingManager.logger?.info('Video filter was turned off - selecting inner device: ' + JSON.stringify(current));
+    }
+    // If we're currently using a video transform device, and a non-video transform device is selected
+    // then the video transform device will be stopped automatically
+    await meetingManager.selectVideoInputDevice(current);
+    setIsLoading(false);
+  }
 
   useEffect(() => {
     const deviceOptions: ReactNode[] = videoDevices.map((option) => (
@@ -92,10 +112,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
           }
           checked={isVideoTransformDevice(activeVideoDevice)}
           disabled={isLoading}
-          onClick={() => {
-            setIsLoading(true);
-            setIsVideoTransformChecked((current) => !current);
-          }}
+          onClick={toggleBackgroundBlur}
         />
       );
       deviceOptions.push(<PopOverSeparator key="separator" />);
@@ -106,39 +123,10 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
     createBackgroundBlurDevice,
     activeVideoDevice,
     videoDevices,
-    isVideoTransformChecked,
     isLoading,
     selectedDevice,
     isBackgroundBlurSupported,
   ]);
-
-  useEffect(() => {
-    async function onVideoTransformCheckboxChange() {
-      let current = activeVideoDevice;
-      if (isVideoTransformChecked) {
-        // Enable video transform on the non-transformed device
-        if (!isVideoTransformDevice(current)) {
-          current = await createBackgroundBlurDevice(current);
-          meetingManager.logger?.info('Video filter turned on - selecting video transform device: ' + JSON.stringify(current));
-        } else {
-          meetingManager.logger?.info('Video Filter is already on.');
-        }
-      } else {
-        // switch back to the inner device
-        if (isVideoTransformDevice(activeVideoDevice)) {
-          current = await activeVideoDevice.intrinsicDevice();
-          meetingManager.logger?.info('Video filter was turned off - selecting inner device: ' + JSON.stringify(current));
-        } else {
-          meetingManager.logger?.info('Video Filter is already off.');
-        }
-      }
-      // If we're currently using a video transform device, and a non-video transform device is selected
-      // then the video transform device will be stopped automatically
-      await meetingManager.selectVideoInputDevice(current);
-      setIsLoading(false);
-    }
-    onVideoTransformCheckboxChange();
-  }, [isVideoTransformChecked]);
 
   return (
     <ControlBarButton

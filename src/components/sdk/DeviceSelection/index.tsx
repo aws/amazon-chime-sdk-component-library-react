@@ -5,5 +5,6 @@ import CameraSelection from './CameraSelection';
 import QualitySelection from './CameraSelection/QualitySelection';
 import MicSelection from './MicSelection';
 import SpeakerSelection from './SpeakerSelection';
+import VideoFilterSelection from './CameraSelection/VideoFilterSelection';
 
-export { SpeakerSelection, MicSelection, CameraSelection, QualitySelection };
+export { SpeakerSelection, MicSelection, CameraSelection, QualitySelection, VideoFilterSelection };

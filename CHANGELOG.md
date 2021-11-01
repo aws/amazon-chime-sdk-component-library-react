@@ -13,8 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Add quickstart guide for background blur feature.
+- Add `VideoFilterSelection` component to allow selecting background blur video filter for the `PreviewVideo` component.
 
 ### Changed
+- The `PreviewVideo` component will listen to the `selectedVideoInputTransform` state, which means it can display regular `Device` video streams, along with `VideoTransformDevice` video streams as well. 
 
 ### Removed
 
