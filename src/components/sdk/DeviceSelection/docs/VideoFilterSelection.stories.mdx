@@ -1,18 +1,19 @@
 import { Props } from '@storybook/addon-docs/blocks';
-import VideoFilterSelection from '../CameraSelection/VideoFilterSelection';
+import BackgroundBlurCheckbox from '../CameraSelection/BackgroundBlurCheckbox';
 
-<Meta title="SDK Components/DeviceSelection/Camera/VideoFilterSelection" />
+<Meta title="SDK Components/DeviceSelection/Camera/BackgroundBlurCheckbox" />
 
-# VideoFilterSelection
+# BackgroundBlurCheckbox
 
-The `VideoFilterSelection` component renders a `Checkbox FormField` to select a background blur device. Currently, the only option is background blur.
+The `BackgroundBlurCheckbox` component renders a `Checkbox FormField` to select a background blur device. You can use this along with the `PreviewVideo` to 
+add background blur onto the currently selected video device.
 
 The component depends on the `DevicesProvider`. If you are using `MeetingProvider`, `DevicesProvider` is rendered by default.
 
 ## Importing
 
 ```javascript
-import { VideoFilterSelection } from 'amazon-chime-sdk-component-library-react';
+import { BackgroundBlurCheckbox } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Usage
@@ -22,14 +23,16 @@ import React from 'react';
 import {
   BackgroundBlurProvider,
   MeetingProvider,
-  VideoFilterSelection
+  BackgroundBlurCheckbox,
+  PreviewVideo
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {
   return (
     <BackgroundBlurProvider >
       <MeetingProvider>
-        <VideoFilterSelection />
+        <PreviewVideo />
+        <BackgroundBlurCheckbox />
       </MeetingProvider>
     </BackgroundBlurProvider >
   );
@@ -38,7 +41,7 @@ const App = () => {
 
 ## Props
 
-<Props of={VideoFilterSelection} />
+<Props of={BackgroundBlurCheckbox} />
 
 ### Dependencies
 
