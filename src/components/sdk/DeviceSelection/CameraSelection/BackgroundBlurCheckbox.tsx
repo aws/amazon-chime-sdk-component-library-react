@@ -18,7 +18,7 @@ interface Props {
   label?: string;
 }
 
-export const VideoFilterSelection: React.FC<Props> = ({
+export const BackgroundBlurCheckbox: React.FC<Props> = ({
   label = 'Blur my background',
 }) => {
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
@@ -74,4 +74,4 @@ export const VideoFilterSelection: React.FC<Props> = ({
   );
 };
 
-export default VideoFilterSelection;
+export default BackgroundBlurCheckbox;
