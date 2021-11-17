@@ -12,18 +12,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Added
-- Add quickstart guide for background blur feature.
+
 - Add `BackgroundBlurCheckbox` component to allow selecting background blur video filter for the `PreviewVideo` component.
 
 ### Changed
-- The `PreviewVideo` component will listen to the `selectedVideoInputTransform` state, which means it can display regular `Device` video streams, along with `VideoTransformDevice` video streams as well. 
+
+- The `PreviewVideo` component will listen to the `selectedVideoInputTransform` state, which means it can display regular `Device` video streams, along with `VideoTransformDevice` video streams as well.
 
 ### Removed
-
 
 ## [2.11.1] - 2021-10-25
 
 ### Fixed
+
 - Revert back to publishing `audioVideo` update after listing devices. Publishing earlier before listing devices breaks `useAudioInputs`, `useAudioOutputs` and `useVideoInputs` hooks. The reason is device change observers may fail to get added to `audioVideo` based on builders implementation. Hence, falling back to what existed earlier.
 
 ### Added
@@ -31,7 +32,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Removed
-
 
 ## [2.11.0] - 2021-10-21
 
@@ -41,7 +41,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Fix `eventDidReceive` observer removal in `MeetingManager`.
 
 ### Added
-
 
 - Add Eslint rules to enforce code style and fix issues.
 - Add logs for Amazon Voice Focus components.
