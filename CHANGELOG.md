@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - The `PreviewVideo` component will listen to the `selectedVideoInputTransform` state, which means it can display regular `Device` video streams, along with `VideoTransformDevice` video streams as well.
+- `VideoInputBackgroundBlurControl` component is initialized with the `selectedVideoInputTransformDevice`.
 
 ### Removed
 
