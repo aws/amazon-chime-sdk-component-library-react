@@ -98,12 +98,21 @@ To enable simulcast for the meeting pass the `simulcastEnabled` prop with value 
 For more information on Simulcast, check Amazon Chime JS SDK [simulcast guide](https://github.com/aws/amazon-chime-sdk-js/blob/master/guides/05_Simulcast.md).
 
 #### enableWebAudio
+
 If you want to enable Amazon Voice Focus feature, you should enable Web Audio for the meeting and pass the `enableWebAudio` prop with value set to `true`. By default, it is `false`.
 
 #### logger
 
 The `Logger` object that you want to be used in the meeting session.
 If you pass in a `Logger` object using this parameter, the `MeetingManager` will use this object instead of creating a logger based on `logLevel` and `postLogConfig` to initialize the meeting session.
+
+#### onDeviceReplacement
+
+When a selected device is disconnected, or when the Operating System (OS) default device is selected and is changed by the OS (e.g., if a Bluetooth headset is disconnected), 
+the `AudioInputProvider` encapsulated by `DevicesProvider` is forced to automatically select a new audio input. This behaves as expected when the selected device is an ordinary device provided by the browser. 
+However, when your application is using a transform device like Amazon Voice Focus, the `AudioInputProvider` needs a way to transform the newly selected device to avoid reverting to a non-transform device.
+This is accomplished by exposing a `onDeviceReplacement` prop on `MeetingProvider` and `DevicesProvider`, allowing your application to customize the behavior of this device reselection step. 
+Provide a function that accepts a `Device` as input and returns a `Device` or `AudioTransformDevice` of your choice.
 
 #### activeSpeakerPolicy
 

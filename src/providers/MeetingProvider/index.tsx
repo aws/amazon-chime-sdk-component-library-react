@@ -2,6 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
+  AudioTransformDevice,
+  Device,
   Logger,
   LogLevel,
   VideoDownlinkBandwidthPolicy,
@@ -35,6 +37,13 @@ interface Props {
    * based on `logLevel` and `postLogConfig` to initialize the meeting session.
    */
   logger?: Logger;
+  /** Determines how to handle the current audio input device when devices
+   *  change in `AudioInputProvider`.
+   */
+  onDeviceReplacement?: (
+    nextDevice: string,
+    currentDevice: Device | AudioTransformDevice
+  ) => Promise<Device | AudioTransformDevice>;
   /** The `VideoDownlinkBandwidthPolicy` object you want to use in meeting session */
   videoDownlinkBandwidthPolicy?: VideoDownlinkBandwidthPolicy;
   /** Pass a `MeetingManager` instance if you want to share this instance
@@ -52,6 +61,7 @@ export const MeetingProvider: React.FC<Props> = ({
   simulcastEnabled = false,
   enableWebAudio = false,
   logger,
+  onDeviceReplacement,
   videoDownlinkBandwidthPolicy,
   meetingManager: meetingManagerProp,
   children,
@@ -73,7 +83,7 @@ export const MeetingProvider: React.FC<Props> = ({
     <MeetingContext.Provider value={meetingManager}>
       <MeetingEventProvider>
         <AudioVideoProvider>
-          <DevicesProvider>
+          <DevicesProvider onDeviceReplacement={onDeviceReplacement}>
             <RosterProvider>
               <RemoteVideoTileProvider>
                 <LocalVideoProvider>
