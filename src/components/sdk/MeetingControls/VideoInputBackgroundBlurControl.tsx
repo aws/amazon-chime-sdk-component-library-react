@@ -41,7 +41,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } = useBackgroundBlur();
   const [isLoading, setIsLoading] = useState(false);
   const [dropdownWithVideoTransformOptions, setDropdownWithVideoTransformOptions] = useState<ReactNode[] | null>(null);
-  const [activeVideoDevice, setDevice] = useState<Device | VideoTransformDevice | null>(meetingManager.selectedVideoInputDevice);
+  const [activeVideoDevice, setDevice] = useState<Device | VideoTransformDevice | null>(meetingManager.selectedVideoInputTransformDevice);
 
   const videoDevices: DeviceType[] = useMemoCompare(devices, (prev: DeviceType[], next: DeviceType[]): boolean => isEqual(prev, next));
 
