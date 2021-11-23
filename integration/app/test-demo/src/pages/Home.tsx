@@ -17,7 +17,6 @@ export const Home: React.FC = () => (
           'useRosterState',
           'useAttendeeStatus',
           'useAttendeeAudioStatus',
-          'useAudioVideo'
         ]}
       />
     </ul>
