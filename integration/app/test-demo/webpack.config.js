@@ -36,15 +36,11 @@ module.exports = {
   ],
   devServer: {
     proxy: {
-      '/': {
-        target: 'http://127.0.0.1:8080',
-        bypass: function (req, _res, _proxyOptions) {
-          if (req.headers.accept.indexOf('html') !== -1) {
-            console.log('Skipping proxy for browser request.');
-            return `/${app}.html`;
-          }
-        }
-      }
+      context: ['/join', '/attendee'],
+      target: 'http://127.0.0.1:8080',
+    },
+    historyApiFallback: {
+      index: `/${app}.html`,
     },
     hot: false,
     port: 9000,

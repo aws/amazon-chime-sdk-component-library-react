@@ -9,6 +9,7 @@ import {
 import MeetingControls from '../containers/MeetingControls';
 import MeetingForm from '../containers/MeetingForm';
 import MeetingRoster from '../containers/MeetingRoster';
+import MeetingStatusDisplay from '../components/MeetingStatusDisplay';
 
 export const RosterTestApp: React.FC = () => {
   const config = {
@@ -30,7 +31,8 @@ const Meeting: React.FC = () => {
   return (
     <>
       <MeetingControls />
-      <div style={{ marginTop: '2rem', height: '40rem', display: 'flex', flexDirection: 'row' }}>
+      <MeetingStatusDisplay />
+      <div style={{ height: '40rem', display: 'flex', flexDirection: 'row' }}>
         <MeetingRoster />
         <HookStates />
       </div>
@@ -52,12 +54,14 @@ const AttendeeState: React.FC<{ attendeeId: string, attendee: RosterAttendeeType
   const attendeeStatus = useAttendeeStatus(attendeeId);
   const state = {};
 
-  state[attendeeId] = { ...attendee, ...attendeeStatus };
+  if (attendee.name) {
+    state[attendee.name] = { ...attendee, ...attendeeStatus };
+  }
 
   return (
     <code
       style={{ display: 'block' }}
-      data-testid={'code-' + attendeeId}>
+      data-testid={'code-' + attendee.name}>
       {JSON.stringify(state, null, 2)}
     </code>
   );
