@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Fixed
+- Fixed `ts-ignore` after running `npm run lint` as part of `npm run build:release`.
 
 ### Added
 - Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` to `MeetingProvider` props.

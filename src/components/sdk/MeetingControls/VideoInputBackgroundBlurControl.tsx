@@ -102,8 +102,8 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
             setIsLoading(true);
             const receivedDevice = videoInputSelectionToDevice(option.deviceId);
             if ('chooseNewInnerDevice' in activeVideoDevice) {
-              // @ts-ignore
               const transformedDevice =
+                // @ts-ignore
                 activeVideoDevice.chooseNewInnerDevice(receivedDevice);
               await meetingManager.selectVideoInputDevice(transformedDevice);
             } else {
