@@ -46,9 +46,9 @@ interface Props {
     nextDevice: string,
     currentDevice: Device | AudioTransformDevice
   ) => Promise<Device | AudioTransformDevice>;
-  /** 
+  /**
    * The [VideoDownlinkBandwidthPolicy](https://aws.github.io/amazon-chime-sdk-js/interfaces/videodownlinkbandwidthpolicy.html) object you want to use in the meeting session
-   * 
+   *
    */
   videoDownlinkBandwidthPolicy?: VideoDownlinkBandwidthPolicy;
   /**
@@ -58,7 +58,7 @@ interface Props {
   /**
    * The [ActiveSpeakerPolicy](https://aws.github.io/amazon-chime-sdk-js/interfaces/activespeakerpolicy.html) object that you want to use in the meeting session.
    */
-   activeSpeakerPolicy?: ActiveSpeakerPolicy;
+  activeSpeakerPolicy?: ActiveSpeakerPolicy;
   /** Pass a `MeetingManager` instance if you want to share this instance
    * across multiple different `MeetingProvider`s. This approach has limitations.
    * Check `meetingManager` prop documentation for more information.
