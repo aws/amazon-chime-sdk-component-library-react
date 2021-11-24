@@ -2,7 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
+  ActiveSpeakerPolicy,
   AudioTransformDevice,
+  DefaultActiveSpeakerPolicy,
   Device,
   Logger,
   LogLevel,
@@ -46,6 +48,11 @@ interface Props {
   ) => Promise<Device | AudioTransformDevice>;
   /** The `VideoDownlinkBandwidthPolicy` object you want to use in meeting session */
   videoDownlinkBandwidthPolicy?: VideoDownlinkBandwidthPolicy;
+  /**
+   * The `ActiveSpeakerPolicy` object that you want to be used in the meeting session.
+   * For more information on `ActiveSpeakerPolicy`, check Amazon Chime JS SDK [ActiveSpeakerPolicy](https://aws.github.io/amazon-chime-sdk-js/interfaces/activespeakerpolicy.html).
+   */
+   activeSpeakerPolicy?: ActiveSpeakerPolicy;
   /** Pass a `MeetingManager` instance if you want to share this instance
    * across multiple different `MeetingProvider`s. This approach has limitations.
    * Check `meetingManager` prop documentation for more information.
@@ -63,6 +70,7 @@ export const MeetingProvider: React.FC<Props> = ({
   logger,
   onDeviceReplacement,
   videoDownlinkBandwidthPolicy,
+  activeSpeakerPolicy,
   meetingManager: meetingManagerProp,
   children,
 }) => {
@@ -76,6 +84,7 @@ export const MeetingProvider: React.FC<Props> = ({
         enableWebAudio,
         logger,
         videoDownlinkBandwidthPolicy,
+        activeSpeakerPolicy,
       })
   );
 

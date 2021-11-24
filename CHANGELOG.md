@@ -7,6 +7,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+### Added
+- Add `activeSpeakerPolicy` prop to provide custom active speaker policy through `MeetingProvider` prop.
+
+### Changed
+- Override `MeetingManagerConfig`'s existing values with `meetingManagerConfig` passed from `MeetingManager`'s `join` function.
+Do not replace the whole object.
+
+### Removed
+
 ## [2.12.0] - 2021-11-19
 
 ### Fixed
