@@ -6,23 +6,23 @@ import {
   isVideoTransformDevice,
   VideoTransformDevice,
 } from 'amazon-chime-sdk-js';
-import React, { ReactNode, useEffect, useState } from 'react';
 import isEqual from 'lodash.isequal';
+import React, { ReactNode, useEffect, useState } from 'react';
 
 import { useBackgroundBlur } from '../../../providers/BackgroundBlurProvider';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
+import { DeviceType } from '../../../types';
 import {
   isOptionActive,
   videoInputSelectionToDevice,
 } from '../../../utils/device-utils';
+import useMemoCompare from '../../../utils/use-memo-compare';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Camera, Spinner } from '../../ui/icons';
 import PopOverItem from '../../ui/PopOver/PopOverItem';
 import PopOverSeparator from '../../ui/PopOver/PopOverSeparator';
-import { DeviceType } from '../../../types';
-import useMemoCompare from '../../../utils/use-memo-compare';
 
 interface Props {
   /** The label that will be shown for video input control, it defaults to `Video`. */
@@ -38,12 +38,21 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
   const meetingManager = useMeetingManager();
   const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
-  const { isBackgroundBlurSupported, createBackgroundBlurDevice } = useBackgroundBlur();
+  const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
+    useBackgroundBlur();
   const [isLoading, setIsLoading] = useState(false);
-  const [dropdownWithVideoTransformOptions, setDropdownWithVideoTransformOptions] = useState<ReactNode[] | null>(null);
-  const [activeVideoDevice, setDevice] = useState<Device | VideoTransformDevice | null>(meetingManager.selectedVideoInputTransformDevice);
+  const [
+    dropdownWithVideoTransformOptions,
+    setDropdownWithVideoTransformOptions,
+  ] = useState<ReactNode[] | null>(null);
+  const [activeVideoDevice, setDevice] = useState<
+    Device | VideoTransformDevice | null
+  >(meetingManager.selectedVideoInputTransformDevice);
 
-  const videoDevices: DeviceType[] = useMemoCompare(devices, (prev: DeviceType[], next: DeviceType[]): boolean => isEqual(prev, next));
+  const videoDevices: DeviceType[] = useMemoCompare(
+    devices,
+    (prev: DeviceType[], next: DeviceType[]): boolean => isEqual(prev, next)
+  );
 
   // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
   useEffect(() => {
@@ -62,11 +71,17 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
     if (!isVideoTransformDevice(current)) {
       // Enable video transform on the non-transformed device
       current = await createBackgroundBlurDevice(current);
-      meetingManager.logger?.info('Video filter turned on - selecting video transform device: ' + JSON.stringify(current));
+      meetingManager.logger?.info(
+        'Video filter turned on - selecting video transform device: ' +
+          JSON.stringify(current)
+      );
     } else {
       // switch back to the inner device
       current = await current.intrinsicDevice();
-      meetingManager.logger?.info('Video filter was turned off - selecting inner device: ' + JSON.stringify(current));
+      meetingManager.logger?.info(
+        'Video filter was turned off - selecting inner device: ' +
+          JSON.stringify(current)
+      );
     }
     // If we're currently using a video transform device, and a non-video transform device is selected
     // then the video transform device will be stopped automatically
@@ -88,10 +103,13 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
             const receivedDevice = videoInputSelectionToDevice(option.deviceId);
             if ('chooseNewInnerDevice' in activeVideoDevice) {
               // @ts-ignore
-              const transformedDevice = activeVideoDevice.chooseNewInnerDevice(receivedDevice);
+              const transformedDevice =
+                activeVideoDevice.chooseNewInnerDevice(receivedDevice);
               await meetingManager.selectVideoInputDevice(transformedDevice);
             } else {
-              meetingManager.logger?.error('Transform device cannot choose new inner device');
+              meetingManager.logger?.error(
+                'Transform device cannot choose new inner device'
+              );
             }
             setIsLoading(false);
           } else {

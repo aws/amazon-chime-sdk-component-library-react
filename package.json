@@ -27,7 +27,7 @@
     "build:publish": "npm run check && npm run build && npm run test ",
     "postbuild:publish": "node scripts/postbuild.js",
     "prebuild:release": "node scripts/prebuild.js",
-    "build:release": "npm install && npm run check && npm run build && npm run test ",
+    "build:release": "npm install && npm run build && npm run lint && npm run check && npm run test ",
     "postbuild:release": "node scripts/postbuild.js",
     "start": "start-storybook -p 9009",
     "test": "jest -c jest.config.js",
