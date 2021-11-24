@@ -9,7 +9,7 @@ import {
 import MeetingControls from '../containers/MeetingControls';
 import MeetingForm from '../containers/MeetingForm';
 import MeetingRoster from '../containers/MeetingRoster';
-import MeetingStatusDisplay from '../components/MeetingStatusDisplay';
+import MeetingInfo from '../components/MeetingInfo';
 
 export const RosterTestApp: React.FC = () => {
   const config = {
@@ -31,7 +31,7 @@ const Meeting: React.FC = () => {
   return (
     <>
       <MeetingControls />
-      <MeetingStatusDisplay />
+      <MeetingInfo />
       <div style={{ height: '40rem', display: 'flex', flexDirection: 'row' }}>
         <MeetingRoster />
         <HookStates />
@@ -47,10 +47,13 @@ const HookStates: React.FC = () => {
     <AttendeeState key={attendeeId} attendeeId={attendeeId} attendee={attendee} />
   );
 
-  return (<pre>{states}</pre>);
+  return <pre>{states}</pre>;
 };
 
-const AttendeeState: React.FC<{ attendeeId: string, attendee: RosterAttendeeType }> = ({ attendeeId, attendee }) => {
+const AttendeeState: React.FC<{
+  attendeeId: string,
+  attendee: RosterAttendeeType
+}> = ({ attendeeId, attendee }) => {
   const attendeeStatus = useAttendeeStatus(attendeeId);
   const state = {};
 
@@ -61,7 +64,8 @@ const AttendeeState: React.FC<{ attendeeId: string, attendee: RosterAttendeeType
   return (
     <code
       style={{ display: 'block' }}
-      data-testid={'code-' + attendee.name}>
+      data-testid={'code-' + attendee.name}
+    >
       {JSON.stringify(state, null, 2)}
     </code>
   );
