@@ -12,11 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Added
-- Add `activeSpeakerPolicy` prop to provide custom active speaker policy through `MeetingProvider` prop.
+- Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` to `MeetingProvider` props.
 
 ### Changed
-- Override `MeetingManagerConfig`'s existing values with `meetingManagerConfig` passed from `MeetingManager`'s `join` function.
-Do not replace the whole object.
 
 ### Removed
 

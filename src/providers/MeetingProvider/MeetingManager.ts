@@ -222,7 +222,7 @@ export class MeetingManager implements AudioVideoObserver {
     meetingManagerConfig,
   }: MeetingJoinData) {
     if (meetingManagerConfig) {
-      this.meetingManagerConfig = {...this.meetingManagerConfig, ...meetingManagerConfig};
+      this.meetingManagerConfig = meetingManagerConfig;
     }
     this.configuration = new MeetingSessionConfiguration(
       meetingInfo,

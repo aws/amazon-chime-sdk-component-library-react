@@ -4,11 +4,11 @@
 import {
   ActiveSpeakerPolicy,
   AudioTransformDevice,
-  DefaultActiveSpeakerPolicy,
   Device,
   Logger,
   LogLevel,
   VideoDownlinkBandwidthPolicy,
+  VideoUplinkBandwidthPolicy,
 } from 'amazon-chime-sdk-js';
 import React, { createContext, useContext, useState } from 'react';
 
@@ -46,11 +46,17 @@ interface Props {
     nextDevice: string,
     currentDevice: Device | AudioTransformDevice
   ) => Promise<Device | AudioTransformDevice>;
-  /** The `VideoDownlinkBandwidthPolicy` object you want to use in meeting session */
+  /** 
+   * The [VideoDownlinkBandwidthPolicy](https://aws.github.io/amazon-chime-sdk-js/interfaces/videodownlinkbandwidthpolicy.html) object you want to use in the meeting session
+   * 
+   */
   videoDownlinkBandwidthPolicy?: VideoDownlinkBandwidthPolicy;
   /**
-   * The `ActiveSpeakerPolicy` object that you want to be used in the meeting session.
-   * For more information on `ActiveSpeakerPolicy`, check Amazon Chime JS SDK [ActiveSpeakerPolicy](https://aws.github.io/amazon-chime-sdk-js/interfaces/activespeakerpolicy.html).
+   * The [VideoUplinkBandwidthPolicy](https://aws.github.io/amazon-chime-sdk-js/interfaces/videouplinkbandwidthpolicy.html) object you want to use in the meeting session
+   */
+  videoUplinkBandwidthPolicy?: VideoUplinkBandwidthPolicy;
+  /**
+   * The [ActiveSpeakerPolicy](https://aws.github.io/amazon-chime-sdk-js/interfaces/activespeakerpolicy.html) object that you want to use in the meeting session.
    */
    activeSpeakerPolicy?: ActiveSpeakerPolicy;
   /** Pass a `MeetingManager` instance if you want to share this instance
@@ -70,6 +76,7 @@ export const MeetingProvider: React.FC<Props> = ({
   logger,
   onDeviceReplacement,
   videoDownlinkBandwidthPolicy,
+  videoUplinkBandwidthPolicy,
   activeSpeakerPolicy,
   meetingManager: meetingManagerProp,
   children,
@@ -84,6 +91,7 @@ export const MeetingProvider: React.FC<Props> = ({
         enableWebAudio,
         logger,
         videoDownlinkBandwidthPolicy,
+        videoUplinkBandwidthPolicy,
         activeSpeakerPolicy,
       })
   );
