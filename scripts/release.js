@@ -185,10 +185,10 @@ if (release_option === '5') {
 // Checkout the meeting demo
 process.chdir(path.join(__dirname, '../..'));
 if (!fs.existsSync('amazon-chime-sdk')) {
-  spawnOrFail('git', ['clone https://github.com/aws-samples/amazon-chime-sdk.git']);
+  spawnOrFail('git', ['clone --branch meeting-dev https://github.com/aws-samples/amazon-chime-sdk.git']);
 } else {
   spawnOrFail('rm', ['-rf amazon-chime-sdk']);
-  spawnOrFail('git', ['clone https://github.com/aws-samples/amazon-chime-sdk.git']);
+  spawnOrFail('git', ['clone --branch meeting-dev https://github.com/aws-samples/amazon-chime-sdk.git']);
 }
 
 // Udpate the demo to the most up to date version of JS SDK 
