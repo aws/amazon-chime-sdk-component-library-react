@@ -1,0 +1,155 @@
+const BaseTestPage = require('./BaseTestPage');
+const assert = require('assert');
+const { By } = require('selenium-webdriver');
+
+const ELEMENTS = {
+  toggleMicrophoneButton: By.css(
+    "[data-testid='button'][label='Mute'], [data-testid='button'][label='Unmute']"
+  ),
+  toggleVideoButton: By.css("[data-testid='button'][label='Video']"),
+  toggleSpeakerButton: By.css("[data-testid='button'][label='Speaker']"),
+  toggleContentButton: By.css("[data-testid='button'][label='Content']"),
+  roster: By.css(".roster"),
+  rosterCell: By.css("[data-testid='roster-cell']"),
+  hookStates: By.css("pre"),
+  attendeeState: By.css("code"),
+};
+
+
+class RosterTestPage extends BaseTestPage {
+  constructor(driver) {
+    super(driver);
+  }
+
+  async getRosterLength() {
+    const rosterCells = await this.findAll(ELEMENTS.rosterCell);
+    return rosterCells.length;
+  }
+
+  async getAttendeeRosterCell(attendeeName) {
+    const rosterCells = await this.findAll(ELEMENTS.rosterCell);
+    for (const rosterCell of rosterCells) {
+      const name = await rosterCell.getText();
+      if (name === attendeeName) {
+        return rosterCell;
+      }
+    }
+  }
+
+  async getAttendeeStates(attendeeName) {
+    const hookStates = this.find(ELEMENTS.hookStates);
+    const attendeeStates = await hookStates.findElements(ELEMENTS.attendeeState);
+
+    for (const attendeeState of attendeeStates) {
+      const testId = await attendeeState.getAttribute('data-testid');
+      if (testId === ('code-' + attendeeName)) {
+        return JSON.parse(await attendeeState.getText());
+      }
+    }
+
+    return {};
+  }
+
+  async getAttendeeState(attendeeName, property) {
+    const attendeeState = await this.getAttendeeStates(attendeeName);
+    const hookState = Object.values(attendeeState)[0];
+    return hookState[property];
+  }
+
+  async getLengthOfAttendeeStates() {
+    const hookStates = this.find(ELEMENTS.hookStates);
+    const attendeeStates = await hookStates.findElements(ELEMENTS.attendeeState);
+    return attendeeStates.length;
+  }
+
+  async checkRosterLength(targetLength) {
+    const isMatched = await this.waitUntil(async () => {
+      const actualLength = await this.getRosterLength();
+      return actualLength === targetLength;
+    }, 5000);
+
+    assert(isMatched, `The length of roster is not ${targetLength}`);
+  }
+
+  async checkIfAttendeeIsInRoster(attendeeName) {
+    const isMatched = this.waitUntil(async () => {
+      const rosterCells = await this.findAll(ELEMENTS.rosterCell);
+      for (const rosterCell of rosterCells) {
+        const name = await rosterCell.getText();
+        return name === attendeeName;
+      }
+    }, 5000);
+
+    assert(isMatched, `Attendee ${attendeeName} is not in the roster`);
+  }
+
+  async checkLengthOfAttendeeStates(targetLength) {
+    const length = await this.getLengthOfAttendeeStates();
+    assert(length === targetLength, `The length of attendee states is not ${targetLength} but ${length}`);
+  }
+
+  async checkAttendeeState(attendeeName, property, value, equal = true) {
+    const passed = await this.waitUntil(async () => {
+      const state = await this.getAttendeeState(attendeeName, property);
+      if (equal) {
+        return state === value;
+      } else {
+        return state !== value;
+      }
+    }, 5000);
+
+    assert(passed, `Wrong attendee property, the ${property} of ${attendeeName} should be ${value}`);
+  }
+
+  async toggleMicrophone() {
+    await this.click(ELEMENTS.toggleMicrophoneButton);
+  }
+
+  async toggleVideo() {
+    await this.click(ELEMENTS.toggleVideoButton);
+  }
+
+  async toggleSpeaker() {
+    await this.click(ELEMENTS.toggleSpeakerButton);
+  }
+
+  async toggleContent() {
+    await this.click(ELEMENTS.toggleContentButton);
+  }
+
+  async checkMicrophoneIcon(attendeeName, muted) {
+    const isMatched = await this.waitUntil(async () => {
+      const rosterCell = await this.getAttendeeRosterCell(attendeeName);
+      const title = await rosterCell.findElement(By.css('title')).getAttribute('innerHTML');
+      const target = muted ? 'Muted microphone' : 'Microphone';
+      return title === target;
+    }, 5000);
+
+    assert(isMatched, `Wrong microphone icon when muted is ${muted}`);
+  }
+
+  async checkVideoIcon(attendeeName, videoEnabled) {
+    const isMatched = await this.waitUntil(async () => {
+      const rosterCell = await this.getAttendeeRosterCell(attendeeName);
+      const childElements = await rosterCell.findElements(By.xpath('*'));
+      const videoIcon = childElements[2];
+      const d = await videoIcon.findElement(By.css('path')).getAttribute('d');
+      return videoEnabled === d.startsWith('M19');
+    }, 5000);
+
+    assert(isMatched, `Wrong video icon when videoEnabled is ${videoEnabled}`);
+  }
+
+  async checkContentIcon(attendeeName, sharingContent) {
+    const isMatched = await this.waitUntil(async () => {
+      const rosterCell = await this.getAttendeeRosterCell(attendeeName);
+      const title = await rosterCell.findElement(By.css('title')).getAttribute('innerHTML');
+      const target = sharingContent ? 'Screen share' : '';
+      return title === target;
+    }, 5000);
+
+    assert(isMatched, `Wrong content icon when sharingContent is ${sharingContent}`);
+  }
+}
+
+module.exports = RosterTestPage;
