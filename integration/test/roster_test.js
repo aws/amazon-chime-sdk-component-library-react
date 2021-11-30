@@ -14,10 +14,10 @@ describe('Roster Test', async function () {
   let failureCount = 0;
 
   before(async function () {
-    await chromeDriverFactory.build('Roster Test', 'chrome');
+    await chromeDriverFactory.build('Roster Test - Local', 'sauce-chrome');
     localPage = new RosterTestPage(chromeDriverFactory.driver);
 
-    await firefoxDriverFactory.build('Roster Test', 'firefox');
+    await firefoxDriverFactory.build('Roster Test - Remote', 'sauce-firefox');
     remotePage = new RosterTestPage(firefoxDriverFactory.driver);
   });
 

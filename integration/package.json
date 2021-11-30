@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "description": "Integration testing for Amazon Chime SDK React Components Library",
   "scripts": {
-    "test": "npm install && mocha test/*",
-    "test:fast": "mocha test/*"
+    "test": "npm ci && ./script/run-test"
   },
   "license": "Apache-2.0",
   "dependencies": {

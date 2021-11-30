@@ -1,0 +1,64 @@
+#!/bin/bash -i
+
+function start_test_demo {
+  cd $curr/app/test-demo
+  uuid=$(uuidgen)
+  mkdir -p $curr/logs
+  echo "Starting the test demo"
+  npm run start 2>&1 | tee -a $curr/logs/$uuid.log &
+}
+
+function did_server_start {
+  if ! lsof -i:$1 > /dev/null; then
+    echo 0
+  else
+    echo 1
+  fi
+}
+
+function wait_for_demo_to_start {
+  echo "Waiting for test demo to start"
+  threshold=60
+  started=0
+  retry_count=1
+  while [ $started -eq 0 ] && [ $retry_count -lt $threshold ]
+  do
+    started=$(did_server_start $1)
+    sleep 5
+    retry_count=$(($retry_count+1))
+  done
+
+  if [ $retry_count -eq $threshold ]; then
+    echo "test demo not started"
+    exit 1
+  fi
+}
+
+echo `pwd`
+curr=`pwd`
+
+start_test_demo
+wait_for_demo_to_start 9000
+cd $curr
+
+# Start test and store result in /logs
+case $1 in
+  roster)
+    mocha test/roster_test.js > $curr/logs/$uuid-result 2>&1
+    ;;
+   *)
+    mocha test/* > $curr/logs/$uuid-result 2>&1
+    ;;
+esac
+
+# Print test result
+cat "$curr/logs/$uuid-result"
+
+# Kill the current local demo process
+kill -9 $(lsof -i:9000 | grep LISTEN | awk '{print $2}')
+kill -9 $(lsof -i:8080 | grep LISTEN | awk '{print $2}')
+
+# Check failure
+if grep -q failing "$curr/logs/$uuid-result"; then
+  exit 1
+fi

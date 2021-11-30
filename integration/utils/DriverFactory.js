@@ -9,14 +9,14 @@ class DriverFactory {
     const sauceLabsURL = 'https://ondemand.saucelabs.com/wd/hub';
 
     switch (host) {
-      case 'saucelabs-firefox':
+      case 'sauce-firefox':
         builder.usingServer(sauceLabsURL);
         builder.withCapabilities({
           ...config.firefoxOptions,
           ...config.sauceOptions
         });
         break;
-      case 'saucelabs-chrome':
+      case 'sauce-chrome':
         builder.usingServer(sauceLabsURL);
         builder.withCapabilities({
           ...config.chromeOptions,

@@ -37,7 +37,7 @@ const config = {
     'sauce:options': {
       username: process.env.SAUCE_USERNAME,
       accessKey: process.env.SAUCE_ACCESS_KEY,
-      tunnelIdentifier: process.env.SAUCE_TUNNEL,
+      tunnelIdentifier: process.env.JOB_ID,
       noSSLBumpDomains: 'all',
       extendedDebugging: true,
     }
