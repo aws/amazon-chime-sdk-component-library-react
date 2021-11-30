@@ -102,19 +102,19 @@ class RosterTestPage extends BaseTestPage {
   }
 
   async toggleMicrophone() {
-    await this.click(ELEMENTS.toggleMicrophoneButton);
+    await this.find(ELEMENTS.toggleMicrophoneButton).click();
   }
 
   async toggleVideo() {
-    await this.click(ELEMENTS.toggleVideoButton);
+    await this.find(ELEMENTS.toggleVideoButton).click();
   }
 
   async toggleSpeaker() {
-    await this.click(ELEMENTS.toggleSpeakerButton);
+    await this.find(ELEMENTS.toggleSpeakerButton).click();
   }
 
   async toggleContent() {
-    await this.click(ELEMENTS.toggleContentButton);
+    await this.find(ELEMENTS.toggleContentButton).click();
   }
 
   async checkMicrophoneIcon(attendeeName, muted) {

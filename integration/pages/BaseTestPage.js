@@ -29,11 +29,11 @@ class BaseTestPage extends BasePage {
   }
 
   async joinMeeting() {
-    await this.click(ELEMENTS.joinMeetingButton);
+    await this.find(ELEMENTS.joinMeetingButton).click();
   }
 
   async leaveMeeting() {
-    await this.click(ELEMENTS.leaveMeetingButton);
+    await this.find(ELEMENTS.leaveMeetingButton).click();
   }
 
   async checkIfAttendeeHasJoinedMeeting() {

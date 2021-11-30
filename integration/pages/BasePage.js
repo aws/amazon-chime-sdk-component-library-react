@@ -18,14 +18,6 @@ class BasePage {
     return await this.driver.findElements(locator);
   }
 
-  async click(locator) {
-    await this.find(locator).click();
-  }
-
-  async type(locator, inputText) {
-    await this.find(locator).sendKeys(inputText);
-  }
-
   async isDisplayed(locator, timeout) {
     if (timeout) {
       await this.driver.wait(until.elementLocated(locator), timeout);
