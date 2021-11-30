@@ -84,6 +84,7 @@ const RosterProvider: React.FC = ({ children }) => {
     };
 
     audioVideo.realtimeSubscribeToAttendeeIdPresence(rosterUpdateCallback);
+    console.log('roster callback');
 
     return () => {
       setRoster({});
