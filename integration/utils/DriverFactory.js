@@ -1,6 +1,4 @@
 const { Builder } = require('selenium-webdriver');
-const firefox = require('selenium-webdriver/firefox');
-const chrome = require('selenium-webdriver/chrome');
 const config = require('./config');
 
 class DriverFactory {
@@ -44,7 +42,7 @@ class DriverFactory {
   }
 
   async quit(testResult) {
-    if (this.host.startsWith('saucelabs')) {
+    if (this.host.startsWith('sauce')) {
       this.driver.executeScript('sauce:job-result=' + testResult);
       console.log(
         'See a video of the run at https://saucelabs.com/tests/' +

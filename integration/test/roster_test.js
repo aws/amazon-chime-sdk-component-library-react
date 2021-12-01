@@ -2,61 +2,59 @@ const { describe, before, after, it } = require('mocha');
 const { v4: uuidv4 } = require('uuid');
 const RosterTestPage = require('../pages/RosterTestPage');
 const DriverFactory = require('../utils/DriverFactory');
+const Window = require('../utils/Window');
 
 describe('Roster Test', async function () {
-  const chromeDriverFactory = new DriverFactory();
-  const firefoxDriverFactory = new DriverFactory();
-  let localPage;
-  let remotePage;
-  const meetingId = uuidv4();
-  localAttendeeName = 'local-attendee';
-  remoteAttendeeName = 'remote-attendee';
+  const driverFactory = new DriverFactory();
+  let page;
+  let localWindow;
+  let remoteWindow;
   let failureCount = 0;
 
-  before(async function () {
-    await chromeDriverFactory.build('Roster Test - Local', 'sauce-chrome');
-    localPage = new RosterTestPage(chromeDriverFactory.driver);
+  const meetingId = uuidv4();
+  const localAttendeeName = 'local-attendee';
+  const remoteAttendeeName = 'remote-attendee';
 
-    await firefoxDriverFactory.build('Roster Test - Remote', 'sauce-firefox');
-    remotePage = new RosterTestPage(firefoxDriverFactory.driver);
+  before(async function () {
+    await driverFactory.build('Roster Test', 'sauce-chrome');
+    page = new RosterTestPage(driverFactory.driver);
+    localWindow = await Window.getDefaultWindow(driverFactory.driver, 'localAttendeeWindow');
+    remoteWindow = await Window.createNewWindow(driverFactory.driver, 'remoteAttendeeWindow');
   });
 
   afterEach(function () {
     const state = this.currentTest.state;
-    if (state === 'failed') {
-      failureCount += 1;
-    }
+    if (state === 'failed') failureCount += 1;
   });
 
   after(async function () {
     const passed = failureCount === 0;
-    await chromeDriverFactory.quit(passed);
-    await firefoxDriverFactory.quit(passed);
+    await driverFactory.quit(passed);
   });
 
   describe('Load Roster Test App', async function () {
     it('should load the roster test App successfully - local attendee', async function () {
-      await localPage.visit('/roster-test');
-      await localPage.checkIfAppLoaded();
+      await localWindow.run(async () => await page.visit('/roster-test'));
+      await localWindow.run(async () => await page.checkIfAppLoaded());
     });
 
     it('should load the roster test App successfully - remote attendee', async function () {
-      await remotePage.visit('/roster-test');
-      await remotePage.checkIfAppLoaded();
+      await remoteWindow.run(async () => await page.visit('/roster-test'));
+      await remoteWindow.run(async () => await page.checkIfAppLoaded());
     });
   });
 
   describe('Join Meeting', async function () {
     it('should join the meeting successfully - local attendee', async function () {
-      await localPage.enterMeetingInfo(meetingId, localAttendeeName);
-      await localPage.joinMeeting();
-      await localPage.checkIfAttendeeHasJoinedMeeting();
+      await localWindow.run(async () => await page.enterMeetingInfo(meetingId, localAttendeeName));
+      await localWindow.run(async () => await page.joinMeeting());
+      await localWindow.run(async () => await page.checkIfAttendeeHasJoinedMeeting());
     });
 
     it('should join the meeting successfully - remote attendee', async function () {
-      await remotePage.enterMeetingInfo(meetingId, remoteAttendeeName);
-      await remotePage.joinMeeting();
-      await remotePage.checkIfAttendeeHasJoinedMeeting();
+      await remoteWindow.run(async () => await page.enterMeetingInfo(meetingId, remoteAttendeeName));
+      await remoteWindow.run(async () => await page.joinMeeting());
+      await remoteWindow.run(async () => await page.checkIfAttendeeHasJoinedMeeting());
     });
   });
 
@@ -64,51 +62,51 @@ describe('Roster Test', async function () {
     describe('length', async function () {
       describe('#RosterAttendee / length', async function () {
         it('should be equal to 2 - local attendee', async function () {
-          await localPage.checkRosterLength(2);
+          await localWindow.run(async () => await page.checkRosterLength(2));
         });
 
         it('should be equal to 2 - remote attendee', async function () {
-          await remotePage.checkRosterLength(2);
+          await remoteWindow.run(async () => await page.checkRosterLength(2));
         });
       });
 
       describe('#useAttendeeStatus / length', async function () {
         it('should be equal to 2 - local attendee', async function () {
-          await localPage.checkLengthOfAttendeeStates(2);
+          await localWindow.run(async () => await page.checkLengthOfAttendeeStates(2));
         });
 
         it('should be equal to 2 - remote attendee', async function () {
-          await remotePage.checkLengthOfAttendeeStates(2);
+          await remoteWindow.run(async () => await page.checkLengthOfAttendeeStates(2));
         });
       });
 
       describe('#useAttendeeStatus / chimeAttendeeId', async function () {
         it('should not be empty - local attendee', async function () {
-          await localPage.checkAttendeeState(localAttendeeName, 'chimeAttendeeId', '', false);
+          await localWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'chimeAttendeeId', '', false));
         });
 
         it('should not be empty - remote attendee', async function () {
-          await remotePage.checkAttendeeState(localAttendeeName, 'chimeAttendeeId', '', false);
+          await remoteWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'chimeAttendeeId', '', false));
         });
       });
 
       describe('#useAttendeeStatus / externalUserId', async function () {
         it('should not be empty - local attendee', async function () {
-          await localPage.checkAttendeeState(localAttendeeName, 'externalUserId', '', false);
+          await localWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'externalUserId', '', false));
         });
 
         it('should not be empty - remote attendee', async function () {
-          await remotePage.checkAttendeeState(localAttendeeName, 'externalUserId', '', false);
+          await remoteWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'externalUserId', '', false));
         });
       });
 
       describe('#useAttendeeStatus / signalStrength', async function () {
         it('should be equal to 1 - local attendee', async function () {
-          await localPage.checkAttendeeState(localAttendeeName, 'signalStrength', 1);
+          await localWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'signalStrength', 1));
         });
 
         it('should be equal to 1 - remote attendee', async function () {
-          await remotePage.checkAttendeeState(localAttendeeName, 'signalStrength', 1);
+          await remoteWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'signalStrength', 1));
         });
       });
     });
@@ -116,21 +114,21 @@ describe('Roster Test', async function () {
     describe('name', async function () {
       describe('#RosterAttendee / nameplate', async function () {
         it('should display the correct name - local attendee', async function () {
-          await localPage.checkIfAttendeeIsInRoster(localAttendeeName);
+          await localWindow.run(async () => await page.checkIfAttendeeIsInRoster(localAttendeeName));
         });
 
         it('should display the correct name - remote attendee', async function () {
-          await remotePage.checkIfAttendeeIsInRoster(localAttendeeName);
+          await remoteWindow.run(async () => await page.checkIfAttendeeIsInRoster(localAttendeeName));
         });
       });
 
       describe('#useAttendeeStatus / name', async function () {
         it('should be equal to attendee name - local attendee', async function () {
-          await localPage.checkAttendeeState(localAttendeeName, 'name', localAttendeeName);
+          await localWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'name', localAttendeeName));
         });
 
         it('should be equal to attendee name - remote attendee', async function () {
-          await remotePage.checkAttendeeState(localAttendeeName, 'name', localAttendeeName);
+          await remoteWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'name', localAttendeeName));
         });
       });
     });
@@ -139,52 +137,52 @@ describe('Roster Test', async function () {
   describe('Microphone', async function () {
     describe('mute', async function () {
       before(async function () {
-        await localPage.toggleMicrophone();
+        await localWindow.run(async () => await await page.toggleMicrophone());
       });
 
       describe('#RosterAttendee / microphone muted icon', async function () {
         it('should have it - local attendee', async function () {
-          await localPage.checkMicrophoneIcon(localAttendeeName, true);
+          await localWindow.run(async () => await page.checkMicrophoneIcon(localAttendeeName, true));
         });
 
         it('should have it - remote attendee', async function () {
-          await remotePage.checkMicrophoneIcon(localAttendeeName, true);
+          await remoteWindow.run(async () => await page.checkMicrophoneIcon(localAttendeeName, true));
         });
       });
 
       describe('#useAttendeeStatus / muted', async function () {
         it('should be true - local attendee', async function () {
-          await localPage.checkAttendeeState(localAttendeeName, 'muted', true);
+          await localWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'muted', true));
         });
 
         it('should be true - remote attendee', async function () {
-          await remotePage.checkAttendeeState(localAttendeeName, 'muted', true);
+          await remoteWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'muted', true));
         });
       });
     });
 
     describe('unmute', async function () {
       before(async function () {
-        await localPage.toggleMicrophone();
+        await localWindow.run(async () => await await page.toggleMicrophone());
       });
 
       describe('#RosterAttendee / microphone unmuted icon', async function () {
         it('should have it - local attendee', async function () {
-          await localPage.checkMicrophoneIcon(localAttendeeName, false);
+          await localWindow.run(async () => await page.checkMicrophoneIcon(localAttendeeName, false));
         });
 
         it('should have it - remote attendee', async function () {
-          await remotePage.checkMicrophoneIcon(localAttendeeName, false);
+          await remoteWindow.run(async () => await page.checkMicrophoneIcon(localAttendeeName, false));
         });
       });
 
       describe('#useAttendeeStatus / muted', async function () {
         it('should be false - local attendee', async function () {
-          await localPage.checkAttendeeState(localAttendeeName, 'muted', false);
+          await localWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'muted', false));
         });
 
         it('should be false - remote attendee', async function () {
-          await remotePage.checkAttendeeState(localAttendeeName, 'muted', false);
+          await remoteWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'muted', false));
         });
       });
     });
@@ -193,52 +191,52 @@ describe('Roster Test', async function () {
   describe('Video', async function () {
     describe('enable', async function () {
       before(async function () {
-        await localPage.toggleVideo();
+        await localWindow.run(async () => await await page.toggleVideo());
       });
 
       describe('#RosterAttendee / video enabled icon', async function () {
         it('should have it - local attendee', async function () {
-          await localPage.checkVideoIcon(localAttendeeName, true);
+          await localWindow.run(async () => await page.checkVideoIcon(localAttendeeName, true));
         });
 
         it('should have it - remote attendee', async function () {
-          await remotePage.checkVideoIcon(localAttendeeName, true);
+          await remoteWindow.run(async () => await page.checkVideoIcon(localAttendeeName, true));
         });
       });
 
       describe('#useAttendeeStatus / videoEnabled', async function () {
         it('should be true - local attendee', async function () {
-          await localPage.checkAttendeeState(localAttendeeName, 'videoEnabled', true);
+          await localWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'videoEnabled', true));
         });
 
         it('should be true - remote attendee', async function () {
-          await remotePage.checkAttendeeState(localAttendeeName, 'videoEnabled', true);
+          await remoteWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'videoEnabled', true));
         });
       });
     });
 
     describe('disable', async function () {
       before(async function () {
-        await localPage.toggleVideo();
+        await localWindow.run(async () => await await page.toggleVideo());
       });
 
       describe('#RosterAttendee / video disabled icon', async function () {
         it('should have it - local attendee', async function () {
-          await localPage.checkVideoIcon(localAttendeeName, false);
+          await localWindow.run(async () => await page.checkVideoIcon(localAttendeeName, false));
         });
 
         it('should have it - remote attendee', async function () {
-          await remotePage.checkVideoIcon(localAttendeeName, false);
+          await remoteWindow.run(async () => await page.checkVideoIcon(localAttendeeName, false));
         });
       });
 
       describe('#useAttendeeStatus / videoEnabled', async function () {
         it('should be false - local attendee', async function () {
-          await localPage.checkAttendeeState(localAttendeeName, 'videoEnabled', false);
+          await localWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'videoEnabled', false));
         });
 
         it('should be false - remote attendee', async function () {
-          await remotePage.checkAttendeeState(localAttendeeName, 'videoEnabled', false);
+          await remoteWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'videoEnabled', false));
         });
       });
     });
@@ -247,52 +245,52 @@ describe('Roster Test', async function () {
   describe('Content', async function () {
     describe('start', async function () {
       before(async function () {
-        await localPage.toggleContent();
+        await localWindow.run(async () => await await page.toggleContent());
       });
 
       describe('#RosterAttendee / content icon', async function () {
         it('should have it - local attendee', async function () {
-          await localPage.checkContentIcon(localAttendeeName, true);
+          await localWindow.run(async () => await page.checkContentIcon(localAttendeeName, true));
         });
 
         it('should have it - remote attendee', async function () {
-          await remotePage.checkContentIcon(localAttendeeName, true);
+          await remoteWindow.run(async () => await page.checkContentIcon(localAttendeeName, true));
         });
       });
 
       describe('#useAttendeeStatus / sharingContent', async function () {
         it('should be true - local attendee', async function () {
-          await localPage.checkAttendeeState(localAttendeeName, 'sharingContent', true);
+          await localWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'sharingContent', true));
         });
 
         it('should be true - remote attendee', async function () {
-          await remotePage.checkAttendeeState(localAttendeeName, 'sharingContent', true);
+          await remoteWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'sharingContent', true));
         });
       });
     });
 
     describe('stop', async function () {
       before(async function () {
-        await localPage.toggleContent();
+        await localWindow.run(async () => await await page.toggleContent());
       });
 
       describe('#RosterAttendee / content icon', async function () {
         it('should not have it - local attendee', async function () {
-          await localPage.checkContentIcon(localAttendeeName, false);
+          await localWindow.run(async () => await page.checkContentIcon(localAttendeeName, false));
         });
 
         it('should not have it - remote attendee', async function () {
-          await remotePage.checkContentIcon(localAttendeeName, false);
+          await remoteWindow.run(async () => await page.checkContentIcon(localAttendeeName, false));
         });
       });
 
       describe('#useAttendeeStatus / sharingContent', async function () {
         it('should be false - local attendee', async function () {
-          await localPage.checkAttendeeState(localAttendeeName, 'sharingContent', false);
+          await localWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'sharingContent', false));
         });
 
         it('should be false - remote attendee', async function () {
-          await remotePage.checkAttendeeState(localAttendeeName, 'sharingContent', false);
+          await remoteWindow.run(async () => await page.checkAttendeeState(localAttendeeName, 'sharingContent', false));
         });
       });
     });
@@ -300,13 +298,13 @@ describe('Roster Test', async function () {
 
   describe('Leave meeting', async function () {
     it('should leave meeting successfully - local attendee', async function () {
-      await localPage.leaveMeeting();
-      await localPage.checkIfAttendeeHasLeftMeeting();
+      await localWindow.run(async () => await page.leaveMeeting());
+      await localWindow.run(async () => await page.checkIfAttendeeHasLeftMeeting());
     });
 
     it('should leave meeting successfully - remote attendee', async function () {
-      await remotePage.leaveMeeting();
-      await remotePage.checkIfAttendeeHasLeftMeeting();
+      await remoteWindow.run(async () => await page.leaveMeeting());
+      await remoteWindow.run(async () => await page.checkIfAttendeeHasLeftMeeting());
     });
   });
 });
