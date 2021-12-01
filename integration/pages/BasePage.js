@@ -32,7 +32,7 @@ class BasePage {
     }
   }
 
-  async isDisappeared(locator, timeout) {
+  async isStale(locator, timeout) {
     return await this.driver.wait(until.stalenessOf(locator), timeout);
   }
 

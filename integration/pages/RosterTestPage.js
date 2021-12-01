@@ -4,15 +4,15 @@ const { By } = require('selenium-webdriver');
 
 const ELEMENTS = {
   toggleMicrophoneButton: By.css(
-    "[data-testid='button'][label='Mute'], [data-testid='button'][label='Unmute']"
+    '[data-testid=\'button\'][label=\'Mute\'], [data-testid=\'button\'][label=\'Unmute\']'
   ),
-  toggleVideoButton: By.css("[data-testid='button'][label='Video']"),
-  toggleSpeakerButton: By.css("[data-testid='button'][label='Speaker']"),
-  toggleContentButton: By.css("[data-testid='button'][label='Content']"),
-  roster: By.css(".roster"),
-  rosterCell: By.css("[data-testid='roster-cell']"),
-  hookStates: By.css("pre"),
-  attendeeState: By.css("code"),
+  toggleVideoButton: By.css('[data-testid=\'button\'][label=\'Video\']'),
+  toggleSpeakerButton: By.css('[data-testid=\'button\'][label=\'Speaker\']'),
+  toggleContentButton: By.css('[data-testid=\'button\'][label=\'Content\']'),
+  roster: By.css('.roster'),
+  rosterCell: By.css('[data-testid=\'roster-cell\']'),
+  hookStates: By.css('pre'),
+  attendeeState: By.css('code'),
 };
 
 
@@ -133,6 +133,8 @@ class RosterTestPage extends BaseTestPage {
       const rosterCell = await this.getAttendeeRosterCell(attendeeName);
       const childElements = await rosterCell.findElements(By.xpath('*'));
       const videoIcon = childElements[2];
+      // Compare the path definition value of the video icon SVG to determine if it is the target icon.
+      // When video is enabled, it should start with 'M19', otherwise it should start with 'M4'.
       const d = await videoIcon.findElement(By.css('path')).getAttribute('d');
       return videoEnabled === d.startsWith('M19');
     }, 5000);
@@ -143,7 +145,16 @@ class RosterTestPage extends BaseTestPage {
   async checkContentIcon(attendeeName, sharingContent) {
     const isMatched = await this.waitUntil(async () => {
       const rosterCell = await this.getAttendeeRosterCell(attendeeName);
-      const title = await rosterCell.findElement(By.css('title')).getAttribute('innerHTML');
+      const childElements = await rosterCell.findElements(By.xpath('*'));
+      const contentIcon = childElements[2];
+      let title;
+
+      try {
+        title = await contentIcon.findElement(By.css('title'))?.getAttribute('innerHTML');
+      } catch (error) {
+        title = '';
+      }
+
       const target = sharingContent ? 'Screen share' : '';
       return title === target;
     }, 5000);

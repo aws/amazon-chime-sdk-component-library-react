@@ -23,7 +23,7 @@ describe('Roster Test', async function () {
 
   afterEach(function () {
     const state = this.currentTest.state;
-    if (state === "failed") {
+    if (state === 'failed') {
       failureCount += 1;
     }
   });
@@ -34,26 +34,26 @@ describe('Roster Test', async function () {
     await firefoxDriverFactory.quit(passed);
   });
 
-  describe('Load App', async function () {
-    it('chrome', async function () {
-      await localPage.load('/roster-test');
+  describe('Load Roster Test App', async function () {
+    it('should load the roster test App successfully - local attendee', async function () {
+      await localPage.visit('/roster-test');
       await localPage.checkIfAppLoaded();
     });
 
-    it('firefox', async function () {
-      await remotePage.load('/roster-test');
+    it('should load the roster test App successfully - remote attendee', async function () {
+      await remotePage.visit('/roster-test');
       await remotePage.checkIfAppLoaded();
     });
   });
 
   describe('Join Meeting', async function () {
-    it('local attendee', async function () {
+    it('should join the meeting successfully - local attendee', async function () {
       await localPage.enterMeetingInfo(meetingId, localAttendeeName);
       await localPage.joinMeeting();
       await localPage.checkIfAttendeeHasJoinedMeeting();
     });
 
-    it('remote attendee', async function () {
+    it('should join the meeting successfully - remote attendee', async function () {
       await remotePage.enterMeetingInfo(meetingId, remoteAttendeeName);
       await remotePage.joinMeeting();
       await remotePage.checkIfAttendeeHasJoinedMeeting();
@@ -61,62 +61,76 @@ describe('Roster Test', async function () {
   });
 
   describe('Attendee Presence', async function () {
-    describe('#length', async function () {
-      describe('component', async function () {
-        it('has length of 2', async function () {
+    describe('length', async function () {
+      describe('#RosterAttendee / length', async function () {
+        it('should be equal to 2 - local attendee', async function () {
           await localPage.checkRosterLength(2);
+        });
+
+        it('should be equal to 2 - remote attendee', async function () {
+          await remotePage.checkRosterLength(2);
         });
       });
 
-      describe('hook', async function () {
-        it('has length of 2', async function () {
+      describe('#useAttendeeStatus / length', async function () {
+        it('should be equal to 2 - local attendee', async function () {
           await localPage.checkLengthOfAttendeeStates(2);
         });
 
-        it('`chimeAttendeeId` of local attendee is not empty', async function () {
+        it('should be equal to 2 - remote attendee', async function () {
+          await remotePage.checkLengthOfAttendeeStates(2);
+        });
+      });
+
+      describe('#useAttendeeStatus / chimeAttendeeId', async function () {
+        it('should not be empty - local attendee', async function () {
           await localPage.checkAttendeeState(localAttendeeName, 'chimeAttendeeId', '', false);
         });
 
-        it('`chimeAttendeeId` of remote attendee is not empty', async function () {
-          await localPage.checkAttendeeState(remoteAttendeeName, 'chimeAttendeeId', '', false);
+        it('should not be empty - remote attendee', async function () {
+          await remotePage.checkAttendeeState(localAttendeeName, 'chimeAttendeeId', '', false);
         });
+      });
 
-        it('`externalUserId` of local attendee is not empty', async function () {
+      describe('#useAttendeeStatus / externalUserId', async function () {
+        it('should not be empty - local attendee', async function () {
           await localPage.checkAttendeeState(localAttendeeName, 'externalUserId', '', false);
         });
 
-        it('`externalUserId` of remote attendee is not empty', async function () {
-          await localPage.checkAttendeeState(remoteAttendeeName, 'externalUserId', '', false);
+        it('should not be empty - remote attendee', async function () {
+          await remotePage.checkAttendeeState(localAttendeeName, 'externalUserId', '', false);
         });
+      });
 
-        it('`signalStrength` of local attendee is 1', async function () {
+      describe('#useAttendeeStatus / signalStrength', async function () {
+        it('should be equal to 1 - local attendee', async function () {
           await localPage.checkAttendeeState(localAttendeeName, 'signalStrength', 1);
         });
 
-        it('`signalStrength` of remote attendee is 1', async function () {
-          await localPage.checkAttendeeState(localAttendeeName, 'signalStrength', 1);
+        it('should be equal to 1 - remote attendee', async function () {
+          await remotePage.checkAttendeeState(localAttendeeName, 'signalStrength', 1);
         });
       });
     });
 
-    describe('#name', async function () {
-      describe('component', async function () {
-        it('has name of local attendee', async function () {
+    describe('name', async function () {
+      describe('#RosterAttendee / nameplate', async function () {
+        it('should display the correct name - local attendee', async function () {
           await localPage.checkIfAttendeeIsInRoster(localAttendeeName);
         });
 
-        it('has name of remote attendee', async function () {
-          await localPage.checkIfAttendeeIsInRoster(remoteAttendeeName);
+        it('should display the correct name - remote attendee', async function () {
+          await remotePage.checkIfAttendeeIsInRoster(localAttendeeName);
         });
       });
 
-      describe('hook', async function () {
-        it('has name of local attendee', async function () {
+      describe('#useAttendeeStatus / name', async function () {
+        it('should be equal to attendee name - local attendee', async function () {
           await localPage.checkAttendeeState(localAttendeeName, 'name', localAttendeeName);
         });
 
-        it('has name of remote attendee', async function () {
-          await localPage.checkAttendeeState(remoteAttendeeName, 'name', remoteAttendeeName);
+        it('should be equal to attendee name - remote attendee', async function () {
+          await remotePage.checkAttendeeState(localAttendeeName, 'name', localAttendeeName);
         });
       });
     });
@@ -128,22 +142,22 @@ describe('Roster Test', async function () {
         await localPage.toggleMicrophone();
       });
 
-      describe('component', async function () {
-        it('local attendee has muted microphone icon', async function () {
+      describe('#RosterAttendee / microphone muted icon', async function () {
+        it('should have it - local attendee', async function () {
           await localPage.checkMicrophoneIcon(localAttendeeName, true);
         });
 
-        it('remote attendee has muted microphone icon', async function () {
+        it('should have it - remote attendee', async function () {
           await remotePage.checkMicrophoneIcon(localAttendeeName, true);
         });
       });
 
-      describe('hook', async function () {
-        it('`muted` of local attendee is `true`', async function () {
+      describe('#useAttendeeStatus / muted', async function () {
+        it('should be true - local attendee', async function () {
           await localPage.checkAttendeeState(localAttendeeName, 'muted', true);
         });
 
-        it('`muted` of remote attendee is `true`', async function () {
+        it('should be true - remote attendee', async function () {
           await remotePage.checkAttendeeState(localAttendeeName, 'muted', true);
         });
       });
@@ -154,22 +168,22 @@ describe('Roster Test', async function () {
         await localPage.toggleMicrophone();
       });
 
-      describe('component', async function () {
-        it('local attendee has unmuted microphone icon', async function () {
+      describe('#RosterAttendee / microphone unmuted icon', async function () {
+        it('should have it - local attendee', async function () {
           await localPage.checkMicrophoneIcon(localAttendeeName, false);
         });
 
-        it('remote attendee has unmuted microphone icon', async function () {
+        it('should have it - remote attendee', async function () {
           await remotePage.checkMicrophoneIcon(localAttendeeName, false);
         });
       });
 
-      describe('hook', async function () {
-        it('`muted` of local attendee is `false`', async function () {
+      describe('#useAttendeeStatus / muted', async function () {
+        it('should be false - local attendee', async function () {
           await localPage.checkAttendeeState(localAttendeeName, 'muted', false);
         });
 
-        it('`muted` of remote attendee is `false`', async function () {
+        it('should be false - remote attendee', async function () {
           await remotePage.checkAttendeeState(localAttendeeName, 'muted', false);
         });
       });
@@ -182,22 +196,22 @@ describe('Roster Test', async function () {
         await localPage.toggleVideo();
       });
 
-      describe('component', async function () {
-        it('local attendee has enabled video icon', async function () {
+      describe('#RosterAttendee / video enabled icon', async function () {
+        it('should have it - local attendee', async function () {
           await localPage.checkVideoIcon(localAttendeeName, true);
         });
 
-        it('remote attendee has enabled video icon', async function () {
+        it('should have it - remote attendee', async function () {
           await remotePage.checkVideoIcon(localAttendeeName, true);
         });
       });
 
-      describe('hook', async function () {
-        it('`videEnabled` of local attendee is `true`', async function () {
+      describe('#useAttendeeStatus / videoEnabled', async function () {
+        it('should be true - local attendee', async function () {
           await localPage.checkAttendeeState(localAttendeeName, 'videoEnabled', true);
         });
 
-        it('`videEnabled` of remote attendee is `true`', async function () {
+        it('should be true - remote attendee', async function () {
           await remotePage.checkAttendeeState(localAttendeeName, 'videoEnabled', true);
         });
       });
@@ -208,22 +222,22 @@ describe('Roster Test', async function () {
         await localPage.toggleVideo();
       });
 
-      describe('component', async function () {
-        it('local attendee has disabled video icon', async function () {
+      describe('#RosterAttendee / video disabled icon', async function () {
+        it('should have it - local attendee', async function () {
           await localPage.checkVideoIcon(localAttendeeName, false);
         });
 
-        it('remote attendee has disabled video icon', async function () {
+        it('should have it - remote attendee', async function () {
           await remotePage.checkVideoIcon(localAttendeeName, false);
         });
       });
 
-      describe('hook', async function () {
-        it('`videEnabled` of local attendee is `false`', async function () {
+      describe('#useAttendeeStatus / videoEnabled', async function () {
+        it('should be false - local attendee', async function () {
           await localPage.checkAttendeeState(localAttendeeName, 'videoEnabled', false);
         });
 
-        it('`videEnabled` of remote attendee is `false`', async function () {
+        it('should be false - remote attendee', async function () {
           await remotePage.checkAttendeeState(localAttendeeName, 'videoEnabled', false);
         });
       });
@@ -236,16 +250,22 @@ describe('Roster Test', async function () {
         await localPage.toggleContent();
       });
 
-      describe('component', async function () {
+      describe('#RosterAttendee / content icon', async function () {
+        it('should have it - local attendee', async function () {
+          await localPage.checkContentIcon(localAttendeeName, true);
+        });
 
+        it('should have it - remote attendee', async function () {
+          await remotePage.checkContentIcon(localAttendeeName, true);
+        });
       });
 
-      describe('hook', async function () {
-        it('local attendee is sharing content', async function () {
+      describe('#useAttendeeStatus / sharingContent', async function () {
+        it('should be true - local attendee', async function () {
           await localPage.checkAttendeeState(localAttendeeName, 'sharingContent', true);
         });
 
-        it('remote attendee is sharing content', async function () {
+        it('should be true - remote attendee', async function () {
           await remotePage.checkAttendeeState(localAttendeeName, 'sharingContent', true);
         });
       });
@@ -255,16 +275,23 @@ describe('Roster Test', async function () {
       before(async function () {
         await localPage.toggleContent();
       });
-      describe('component', async function () {
 
+      describe('#RosterAttendee / content icon', async function () {
+        it('should not have it - local attendee', async function () {
+          await localPage.checkContentIcon(localAttendeeName, false);
+        });
+
+        it('should not have it - remote attendee', async function () {
+          await remotePage.checkContentIcon(localAttendeeName, false);
+        });
       });
 
-      describe('hook', async function () {
-        it('local attendee is not sharing content', async function () {
+      describe('#useAttendeeStatus / sharingContent', async function () {
+        it('should be false - local attendee', async function () {
           await localPage.checkAttendeeState(localAttendeeName, 'sharingContent', false);
         });
 
-        it('remote attendee is not sharing content', async function () {
+        it('should be false - remote attendee', async function () {
           await remotePage.checkAttendeeState(localAttendeeName, 'sharingContent', false);
         });
       });
@@ -272,12 +299,12 @@ describe('Roster Test', async function () {
   });
 
   describe('Leave meeting', async function () {
-    it('Chrome - leave meeting', async function () {
+    it('should leave meeting successfully - local attendee', async function () {
       await localPage.leaveMeeting();
       await localPage.checkIfAttendeeHasLeftMeeting();
     });
 
-    it('Firefox - leave meeting', async function () {
+    it('should leave meeting successfully - remote attendee', async function () {
       await remotePage.leaveMeeting();
       await remotePage.checkIfAttendeeHasLeftMeeting();
     });

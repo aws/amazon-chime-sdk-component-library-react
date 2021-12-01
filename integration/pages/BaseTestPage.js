@@ -16,10 +16,6 @@ class BaseTestPage extends BasePage {
     super(driver);
   }
 
-  async load(route) {
-    await this.visit(route);
-  }
-
   async enterMeetingInfo(meetingId, name) {
     const meetingIdInputBox = this.find(ELEMENTS.meetingIdInputBox);
     await meetingIdInputBox.sendKeys(meetingId);
