@@ -2,6 +2,7 @@
 
 function start_test_demo {
   cd $curr/app/test-demo
+  npm install
   uuid=$(uuidgen)
   mkdir -p $curr/logs
   echo "Starting the test demo"
