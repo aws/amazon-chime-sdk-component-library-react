@@ -35,12 +35,12 @@ describe('Roster Test', async function () {
   describe('Load Roster Test App', async function () {
     it('should load the roster test App successfully - local attendee', async function () {
       await localWindow.run(async () => await page.visit('/roster-test'));
-      await localWindow.run(async () => await page.checkIfAppLoaded());
+      await localWindow.run(async () => await page.checkIfTestAppHasLoaded());
     });
 
     it('should load the roster test App successfully - remote attendee', async function () {
       await remoteWindow.run(async () => await page.visit('/roster-test'));
-      await remoteWindow.run(async () => await page.checkIfAppLoaded());
+      await remoteWindow.run(async () => await page.checkIfTestAppHasLoaded());
     });
   });
 

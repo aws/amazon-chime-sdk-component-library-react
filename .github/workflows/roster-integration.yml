@@ -52,11 +52,10 @@ jobs:
           accessKey: ${{ secrets.SAUCE_ACCESS_KEY }}
           noSSLBumpDomains: all
           tunnelIdentifier: ${{ steps.create-job-id.outputs.uuid }}
-      - name: Setup Node.js - 16.x
-        uses: actions/setup-node@v2
-        with:
-          node-version: '16.x'
       - name: Clean Install
         run: npm ci
       - name: Run Roster Integration Test
-        run: npm run test:integration-roster
+        run: |
+          cd integration
+          npm install
+          npm run test:roster

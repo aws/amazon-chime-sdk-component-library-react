@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Integration testing for Amazon Chime SDK React Components Library",
   "scripts": {
-    "test": "npm install && ./script/run-test",
-    "test:fast": "mocha ./test/*"
+    "test": "./script/run-test",
+    "test:fast": "mocha ./test/*",
+    "test:roster": "npm run test -- roster"
   },
   "license": "Apache-2.0",
   "dependencies": {
@@ -15,6 +16,6 @@
     "uuid": "^8.3.2"
   },
   "mocha": {
-    "timeout": 120000
+    "timeout": 300000
   }
 }

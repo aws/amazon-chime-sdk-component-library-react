@@ -35,9 +35,7 @@
     "build-storybook": "build-storybook",
     "jest:integration": "jest -c jest-snapshot.config.js --verbose ./tst/snapshots/*",
     "test:snapshots-path": "jest -c jest-snapshot.config.js --verbose",
-    "test:snapshots": "start-server-and-test start http-get://localhost:9009 jest:integration",
-    "test:integration": "cd ./integration && npm run test",
-    "test:integration-roster": "cd ./integration && npm run test -- roster"
+    "test:snapshots": "start-server-and-test start http-get://localhost:9009 jest:integration"
   },
   "keywords": [],
   "author": "",

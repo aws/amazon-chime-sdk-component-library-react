@@ -18,25 +18,15 @@ class BasePage {
     return await this.driver.findElements(locator);
   }
 
-  async isDisplayed(locator, timeout) {
-    if (timeout) {
-      await this.driver.wait(until.elementLocated(locator), timeout);
-      await this.driver.wait(until.elementIsVisible(this.find(locator)), timeout);
-      return true;
-    } else {
-      try {
-        return await this.find(locator).isDisplayed();
-      } catch (error) {
-        return false;
-      }
-    }
+  async isFound(locator, timeout = 5000) {
+    return await this.driver.wait(until.elementLocated(locator), timeout);
   }
 
-  async isStale(locator, timeout) {
-    return await this.driver.wait(until.stalenessOf(locator), timeout);
+  async isDisplayed(locator, timeout = 5000) {
+    return await this.driver.wait(until.elementIsVisible(this.find(locator)), timeout);
   }
 
-  async waitUntil(condition, timeout) {
+  async waitUntil(condition, timeout = 5000) {
     return await this.driver.wait(condition, timeout);
   }
 }

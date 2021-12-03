@@ -66,7 +66,7 @@ class RosterTestPage extends BaseTestPage {
     const isMatched = await this.waitUntil(async () => {
       const actualLength = await this.getRosterLength();
       return actualLength === targetLength;
-    }, 5000);
+    });
 
     assert(isMatched, `The length of roster is not ${targetLength}`);
   }
@@ -78,7 +78,7 @@ class RosterTestPage extends BaseTestPage {
         const name = await rosterCell.getText();
         return name === attendeeName;
       }
-    }, 5000);
+    });
 
     assert(isMatched, `Attendee ${attendeeName} is not in the roster`);
   }
@@ -96,7 +96,7 @@ class RosterTestPage extends BaseTestPage {
       } else {
         return state !== value;
       }
-    }, 5000);
+    });
 
     assert(passed, `Wrong attendee property, the ${property} of ${attendeeName} should be ${value}`);
   }
@@ -123,7 +123,7 @@ class RosterTestPage extends BaseTestPage {
       const title = await rosterCell.findElement(By.css('title')).getAttribute('innerHTML');
       const target = muted ? 'Muted microphone' : 'Microphone';
       return title === target;
-    }, 5000);
+    });
 
     assert(isMatched, `Wrong microphone icon when muted is ${muted}`);
   }
@@ -137,7 +137,7 @@ class RosterTestPage extends BaseTestPage {
       // When video is enabled, it should start with 'M19', otherwise it should start with 'M4'.
       const d = await videoIcon.findElement(By.css('path')).getAttribute('d');
       return videoEnabled === d.startsWith('M19');
-    }, 5000);
+    });
 
     assert(isMatched, `Wrong video icon when videoEnabled is ${videoEnabled}`);
   }
@@ -157,7 +157,7 @@ class RosterTestPage extends BaseTestPage {
 
       const target = sharingContent ? 'Screen share' : '';
       return title === target;
-    }, 5000);
+    });
 
     assert(isMatched, `Wrong content icon when sharingContent is ${sharingContent}`);
   }

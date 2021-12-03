@@ -36,24 +36,24 @@ class BaseTestPage extends BasePage {
     const isMatched = await this.waitUntil(async () => {
       const meetingStatus = await this.find(ELEMENTS.meetingStatus).getText();
       return meetingStatus === 'Succeeded';
-    }, 5000);
+    });
 
     assert(isMatched, 'Attendee did not join the meeting successfully');
   }
 
-  async checkIfAppLoaded() {
-    const isDisplayed = await this.isDisplayed(
-      ELEMENTS.appHeader,
-      5000
-    );
-    assert(isDisplayed, 'App was not loaded successfully');
+  async checkIfTestAppHasLoaded() {
+    const isFound = await this.isFound(ELEMENTS.appHeader);
+    assert(isFound, 'The header of Test App was not found, Test App was not loaded successfully');
+
+    const isDisplayed = await this.isDisplayed(ELEMENTS.appHeader);
+    assert(isDisplayed, 'The header of Test App was not displayed, Test App was not loaded successfully');
   }
 
   async checkIfAttendeeHasLeftMeeting() {
     const isMatched = await this.waitUntil(async () => {
       const meetingStatus = await this.find(ELEMENTS.meetingStatus).getText();
       return meetingStatus === 'Left';
-    }, 5000);
+    });
 
     assert(isMatched, 'Attendee did not leave the meeting successfully');
   }
