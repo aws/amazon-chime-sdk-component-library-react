@@ -33,7 +33,7 @@ class DriverFactory {
     return builder;
   }
 
-  async build(testName, host = this.config.host) {
+  async build(testName, host = config.host) {
     this.host = host;
     this.driver = await this.configure(host).build();
     const { id_ } = await this.driver.getSession();

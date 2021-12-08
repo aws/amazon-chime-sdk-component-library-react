@@ -16,7 +16,7 @@ describe('Roster Test', async function () {
   const remoteAttendeeName = 'remote-attendee';
 
   before(async function () {
-    await driverFactory.build('Roster Test', 'sauce-chrome');
+    await driverFactory.build('[React] Integration - Roster');
     page = new RosterTestPage(driverFactory.driver);
     localWindow = await Window.getDefaultWindow(driverFactory.driver, 'localAttendeeWindow');
     remoteWindow = await Window.createNewWindow(driverFactory.driver, 'remoteAttendeeWindow');

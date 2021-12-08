@@ -5,13 +5,17 @@
   "scripts": {
     "test": "./script/run-test",
     "test:fast": "mocha ./test/*",
-    "test:roster": "npm run test -- roster"
+    "test:roster": "npm run test -- --test=roster"
   },
   "license": "Apache-2.0",
   "dependencies": {
+    "child_process": "^1.0.2",
     "chromedriver": "^96.0.0",
+    "fs-extra": "^10.0.0",
     "geckodriver": "^2.0.4",
+    "minimist": "^1.2.5",
     "mocha": "^9.1.3",
+    "path": "^0.12.7",
     "selenium-webdriver": "^4.1.0",
     "uuid": "^8.3.2"
   },
