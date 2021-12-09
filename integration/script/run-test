@@ -11,6 +11,78 @@ const pathToTestDemoFolder = path.resolve(__dirname, '../app/test-demo');
 const green = '\x1b[32m%s\x1b[0m';
 const red = '\x1b[31m%s\x1b[0m';
 
+let testTarget = 'test/*';
+
+const usage = () => {
+  console.log(`Usage: run-test -- [-t test] [-h host] [-b browser-version] [-p platform-name]`);
+  console.log(`  -t, --test                    Target test suite [default: all]`);
+  console.log(`  -h, --host                    Target browser and WebDriver server [default: sauce-chrome]`);
+  console.log(`  -v, --browser-version         Version of the browser to use [default: latest]`);
+  console.log(`  -p, --platform-name           Name of the operating system the browser should be running on [default: Windows 10]\n`);
+  console.log(`Values:`);
+  console.log(`  -t, --test`);
+  console.log(`    all: ../test/*`);
+  console.log(`    roster: ../test/roster-test.js\n`);
+  console.log(`  -h, --host`);
+  console.log(`    chrome: Chrome browser running locally`);
+  console.log(`    sauce-chrome: Chrome browser running on Sauce Labs`);
+  console.log(`    firefox: Firefox browser running locally`);
+  console.log(`    sauce-firefox: Firefox browser running on Sauce Labs\n`);
+  console.log(`  -v, --browser-version`);
+  console.log(`    check https://docs.saucelabs.com/dev/test-configuration-options/#browserversion\n`);
+  console.log(`  -p, --platform-name`);
+  console.log(`    check https://docs.saucelabs.com/dev/test-configuration-options/#platformname\n`);
+};
+
+const parseArgs = () => {
+  for (const [key, value] of Object.entries(args)) {
+    if (key === '_') continue;
+    switch (key) {
+      case 'help':
+        usage();
+        exit(0);
+
+      case 't': case 'test':
+        setTestTarget(value);
+        break;
+
+      case 'h': case 'host':
+        env.HOST = value;
+        break;
+
+      case 'v': case 'browser-version':
+        env.BROWSER_VERSION = value;
+        break;
+
+      case 'p': case 'platform-name':
+        env.PLATFORM_NAME = value;
+        break;
+
+      default:
+        console.log(red, `Invalid argument ${key}`);
+        usage();
+        exit(1);
+    }
+  }
+};
+
+const setTestTarget = (target) => {
+  switch (target) {
+    case 'all':
+      testTarget = 'test/*';
+      break;
+
+    case 'roster':
+      testTarget = 'test/roster_test.js';
+      break;
+
+    default:
+      testTarget = 'test/*';
+      break;
+  }
+};
+
+// Run the command asynchronously without blocking the Node.js event loop.
 function runAsync(command, args, options) {
   options = {
     ...options,
@@ -35,6 +107,8 @@ function runAsync(command, args, options) {
   return child.pid;
 }
 
+// Run the command synchronously with blocking the Node.js event loop
+// until the spawned process either exits or is terminated.
 function runSync(command, args, options, printOutput = true) {
   options = {
     ...options,
@@ -77,6 +151,8 @@ function startTestDemo() {
   runSync('npm', ['install'], { cwd: pathToTestDemoFolder });
 
   console.log(green, ' Starting the test demo');
+  // The test demo will keep running until the process is terminated,
+  // so we should execute this command asynchronously without blocking other commands.
   runAsync('npm', ['run', 'start'], { cwd: pathToTestDemoFolder });
 }
 
@@ -100,26 +176,9 @@ const waitUntilTestDemoStarts = async () => {
   exit(1);
 };
 
-const setupTestEnvironment = () => {
-  if (args['host']) env.HOST = args['host'];
-  if (args['browser-version']) env.BROWSER_VERSION = args['browser-version'];
-  if (args['platform-name']) env.PLATFORM_NAME = args['platform-name'];
-  console.log(green, ' Set up the test environment');
-};
-
 const startTesting = () => {
   console.log(green, ' Running test');
-  let targetTest;
-  switch (args['host']) {
-    case 'roster':
-      targetTest = 'test/roster_test.js';
-      break;
-
-    default:
-      targetTest = 'test/*';
-      break;
-  }
-  const testResult = runSync('mocha', [targetTest], { cwd: pathToIntegrationFolder });
+  const testResult = runSync('mocha', [testTarget], { cwd: pathToIntegrationFolder });
   return testResult;
 };
 
@@ -133,7 +192,7 @@ const terminateTestDemo = () => {
 };
 
 const checkTestResult = (result) => {
-  if (result.includes('failing')) {
+  if (!result || result.includes('failing')) {
     console.log(red, 'Did not pass all tests, failed');
     exit(1);
   } else {
@@ -143,9 +202,9 @@ const checkTestResult = (result) => {
 };
 
 (async () => {
+  parseArgs();
   startTestDemo();
   await waitUntilTestDemoStarts();
-  setupTestEnvironment();
   const testResult = startTesting();
   terminateTestDemo();
   checkTestResult(testResult);

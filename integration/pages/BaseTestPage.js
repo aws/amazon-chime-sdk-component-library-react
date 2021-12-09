@@ -42,11 +42,10 @@ class BaseTestPage extends BasePage {
   }
 
   async checkIfTestAppHasLoaded() {
-    const isFound = await this.isFound(ELEMENTS.appHeader);
-    assert(isFound, 'The header of Test App was not found, Test App was not loaded successfully');
-
-    const isDisplayed = await this.isDisplayed(ELEMENTS.appHeader);
-    assert(isDisplayed, 'The header of Test App was not displayed, Test App was not loaded successfully');
+    const isDisplayed = await this.waitUntil(async () => {
+      return await this.find(ELEMENTS.appHeader).isDisplayed();
+    });
+    assert(isDisplayed, 'The header of Test App was not found, Test App was not loaded successfully');
   }
 
   async checkIfAttendeeHasLeftMeeting() {

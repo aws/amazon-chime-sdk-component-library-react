@@ -18,14 +18,6 @@ class BasePage {
     return await this.driver.findElements(locator);
   }
 
-  async isFound(locator, timeout = 5000) {
-    return await this.driver.wait(until.elementLocated(locator), timeout);
-  }
-
-  async isDisplayed(locator, timeout = 5000) {
-    return await this.driver.wait(until.elementIsVisible(this.find(locator)), timeout);
-  }
-
   async waitUntil(condition, timeout = 5000) {
     return await this.driver.wait(condition, timeout);
   }

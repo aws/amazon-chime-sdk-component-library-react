@@ -4,8 +4,7 @@
   "description": "Integration testing for Amazon Chime SDK React Components Library",
   "scripts": {
     "test": "./script/run-test",
-    "test:fast": "mocha ./test/*",
-    "test:roster": "npm run test -- --test=roster"
+    "test:fast": "mocha ./test/*"
   },
   "license": "Apache-2.0",
   "dependencies": {

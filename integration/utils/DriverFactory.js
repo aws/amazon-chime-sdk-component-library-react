@@ -14,6 +14,7 @@ class DriverFactory {
           ...config.sauceOptions
         });
         break;
+
       case 'sauce-chrome':
         builder.usingServer(sauceLabsURL);
         builder.withCapabilities({
@@ -21,15 +22,24 @@ class DriverFactory {
           ...config.sauceOptions
         });
         break;
+
       case 'firefox':
         builder.forBrowser('firefox');
         builder.withCapabilities(config.firefoxOptions);
         break;
+
       case 'chrome':
         builder.forBrowser('chrome');
         builder.withCapabilities(config.chromeOptions);
         break;
+
+      default:
+        console.log(`Invalid host: ${host}, use local ChromeDriver instead.`);
+        builder.forBrowser('chrome');
+        builder.withCapabilities(config.chromeOptions);
+        break;
     }
+
     return builder;
   }
 

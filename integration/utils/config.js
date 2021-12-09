@@ -1,6 +1,6 @@
 const config = {
   baseUrl: 'http://localhost:9000',
-  host: process.env.HOST || 'sauce-chrome',
+  host: process.env.HOST || 'chrome',
   firefoxOptions: {
     browserName: 'firefox',
     resolution: '1920x1080',
