@@ -12,7 +12,6 @@ class DriverFactory {
         builder.withCapabilities({
           ...config.firefoxOptions,
           ...config.sauceOptions,
-          browserVersion: process.env.BROWSER_VERSION || 'latest',
         });
         break;
 
@@ -21,7 +20,6 @@ class DriverFactory {
         builder.withCapabilities({
           ...config.chromeOptions,
           ...config.sauceOptions,
-          browserVersion: process.env.BROWSER_VERSION || 'latest',
         });
         break;
 
@@ -30,7 +28,6 @@ class DriverFactory {
         builder.withCapabilities({
           ...config.safariOptions,
           ...config.sauceOptions,
-          browserVersion: process.env.BROWSER_VERSION || '15',
         });
         break;
 
