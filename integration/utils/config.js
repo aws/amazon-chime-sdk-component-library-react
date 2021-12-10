@@ -33,6 +33,7 @@ const config = {
     browserName: 'safari',
   },
   sauceOptions: {
+    platformName: process.env.PLATFORM_NAME || 'macOS 12',
     'sauce:options': {
       username: process.env.SAUCE_USERNAME,
       accessKey: process.env.SAUCE_ACCESS_KEY,
@@ -40,16 +41,6 @@ const config = {
       noSSLBumpDomains: 'all',
       extendedDebugging: true,
       screenResolution: '1440x900',
-    },
-  },
-  platformOptions: {
-    windows: {
-      browserVersion: process.env.BROWSER_VERSION || 'latest',
-      platformName: process.env.PLATFORM_NAME || 'Windows 10',
-    },
-    mac: {
-      browserVersion: process.env.BROWSER_VERSION || '15',
-      platformName: process.env.PLATFORM_NAME || 'macOS 12',
     },
   },
 };

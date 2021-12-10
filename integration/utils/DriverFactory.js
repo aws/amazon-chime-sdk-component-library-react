@@ -12,7 +12,7 @@ class DriverFactory {
         builder.withCapabilities({
           ...config.firefoxOptions,
           ...config.sauceOptions,
-          ...config.platformOptions.windows,
+          browserVersion: process.env.BROWSER_VERSION || 'latest',
         });
         break;
 
@@ -21,16 +21,16 @@ class DriverFactory {
         builder.withCapabilities({
           ...config.chromeOptions,
           ...config.sauceOptions,
-          ...config.platformOptions.windows,
+          browserVersion: process.env.BROWSER_VERSION || 'latest',
         });
         break;
 
       case 'sauce-safari':
         builder.usingServer(sauceLabsURL);
         builder.withCapabilities({
-          ...config.sauceOptions,
           ...config.safariOptions,
-          ...config.platformOptions.mac,
+          ...config.sauceOptions,
+          browserVersion: process.env.BROWSER_VERSION || '15',
         });
         break;
 
