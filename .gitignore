@@ -9,3 +9,4 @@ tst/snapshots/**/__diff_output__
 .out
 .idea
 *.iml
+integration/logs
