@@ -17,6 +17,7 @@ describe('Roster Test', async function () {
 
   before(async function () {
     await driverFactory.build('[React] Integration - Roster');
+    driverFactory.driver.manage().window().maximize();
     page = new RosterTestPage(driverFactory.driver);
     localWindow = await Window.getDefaultWindow(driverFactory.driver, 'localAttendeeWindow');
     remoteWindow = await Window.createNewWindow(driverFactory.driver, 'remoteAttendeeWindow');

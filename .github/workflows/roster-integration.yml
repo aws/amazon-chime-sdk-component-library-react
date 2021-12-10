@@ -54,7 +54,7 @@ jobs:
           tunnelIdentifier: ${{ steps.create-job-id.outputs.uuid }}
       - name: Clean Install
         run: npm ci
-      - name: Run Roster Integration Test
+      - name: Run Roster Integration Test in Latest Chrome
         run: |
           cd integration
           npm install

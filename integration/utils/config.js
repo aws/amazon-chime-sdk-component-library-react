@@ -3,11 +3,10 @@ const config = {
   host: process.env.HOST || 'chrome',
   firefoxOptions: {
     browserName: 'firefox',
-    resolution: '1920x1080',
     'moz:firefoxOptions': {
       args: [
         '-start-debugger-server',
-        '9222'
+        '9222',
       ],
       prefs: {
         'media.navigator.streams.fake': true,
@@ -17,13 +16,12 @@ const config = {
         'media.webrtc.platformencoder': true,
         'devtools.chrome.enabled': true,
         'devtools.debugger.prompt-connection': false,
-        'devtools.debugger.remote-enabled': true
+        'devtools.debugger.remote-enabled': true,
       },
     },
   },
   chromeOptions: {
     browserName: 'chrome',
-    resolution: '1920x1080',
     'goog:chromeOptions': {
       args: [
         '--use-fake-ui-for-media-stream',
@@ -31,16 +29,28 @@ const config = {
       ],
     },
   },
+  safariOptions: {
+    browserName: 'safari',
+  },
   sauceOptions: {
-    browserVersion: process.env.BROWSER_VERSION || 'latest',
-    platformName: process.env.PLATFORM_NAME || 'Windows 10',
     'sauce:options': {
       username: process.env.SAUCE_USERNAME,
       accessKey: process.env.SAUCE_ACCESS_KEY,
-      tunnelIdentifier: process.env.JOB_ID,
+      tunnelIdentifier: process.env.JOB_ID || 'test-tunnel',
       noSSLBumpDomains: 'all',
       extendedDebugging: true,
-    }
+      screenResolution: '1440x900',
+    },
+  },
+  platformOptions: {
+    windows: {
+      browserVersion: process.env.BROWSER_VERSION || 'latest',
+      platformName: process.env.PLATFORM_NAME || 'Windows 10',
+    },
+    mac: {
+      browserVersion: process.env.BROWSER_VERSION || '15',
+      platformName: process.env.PLATFORM_NAME || 'macOS 12',
+    },
   },
 };
 

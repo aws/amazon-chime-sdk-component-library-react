@@ -11,7 +11,8 @@ class DriverFactory {
         builder.usingServer(sauceLabsURL);
         builder.withCapabilities({
           ...config.firefoxOptions,
-          ...config.sauceOptions
+          ...config.sauceOptions,
+          ...config.platformOptions.windows,
         });
         break;
 
@@ -19,7 +20,17 @@ class DriverFactory {
         builder.usingServer(sauceLabsURL);
         builder.withCapabilities({
           ...config.chromeOptions,
-          ...config.sauceOptions
+          ...config.sauceOptions,
+          ...config.platformOptions.windows,
+        });
+        break;
+
+      case 'sauce-safari':
+        builder.usingServer(sauceLabsURL);
+        builder.withCapabilities({
+          ...config.sauceOptions,
+          ...config.safariOptions,
+          ...config.platformOptions.mac,
         });
         break;
 
@@ -31,6 +42,11 @@ class DriverFactory {
       case 'chrome':
         builder.forBrowser('chrome');
         builder.withCapabilities(config.chromeOptions);
+        break;
+
+      case 'safari':
+        builder.forBrowser('safari');
+        builder.withCapabilities(config.safariOptions);
         break;
 
       default:
@@ -55,6 +71,7 @@ class DriverFactory {
     if (this.host.startsWith('sauce')) {
       this.driver.executeScript('sauce:job-result=' + testResult);
       console.log(
+        '\x1b[33m%s\x1b[0m',
         'See a video of the run at https://saucelabs.com/tests/' +
         this.sessionId
       );

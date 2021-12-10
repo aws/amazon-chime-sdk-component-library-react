@@ -12,7 +12,7 @@ class Window {
 
   static async createNewWindow(driver, name) {
     const window = new Window(driver);
-    await window.driver.switchTo().newWindow(name);
+    await window.driver.switchTo().newWindow('tab');
     window.handle = await driver.getWindowHandle();
     window.name = name;
     return window;

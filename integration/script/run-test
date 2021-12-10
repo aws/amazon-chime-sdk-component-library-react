@@ -24,14 +24,17 @@ const usage = () => {
   console.log(`    all: ../test/*`);
   console.log(`    roster: ../test/roster-test.js\n`);
   console.log(`  -h, --host`);
-  console.log(`    chrome: Chrome browser running locally`);
-  console.log(`    sauce-chrome: Chrome browser running on Sauce Labs`);
-  console.log(`    firefox: Firefox browser running locally`);
-  console.log(`    sauce-firefox: Firefox browser running on Sauce Labs\n`);
+  console.log(`    chrome: Run tests locally with Chrome`);
+  console.log(`    firefox: Run tests locally with Firefox`);
+  console.log(`    safari: Run tests locally with Safari`);
+  console.log(`    sauce-chrome: Run tests on Sauce Labs with Chrome`);
+  console.log(`    sauce-firefox: Run tests on Sauce Labs with Firefox`);
+  console.log(`    sauce-safari: Run tests on Sauce Labs with Safari\n`);
+  console.log(`Below options are only available when executing tests on Sauce Labs`);
   console.log(`  -v, --browser-version`);
-  console.log(`    check https://docs.saucelabs.com/dev/test-configuration-options/#browserversion\n`);
+  console.log(`    check example here: https://saucelabs.com/platform/platform-configurator#/`);
   console.log(`  -p, --platform-name`);
-  console.log(`    check https://docs.saucelabs.com/dev/test-configuration-options/#platformname\n`);
+  console.log(`    check example here: https://saucelabs.com/platform/platform-configurator#/\n`);
 };
 
 const parseArgs = () => {
