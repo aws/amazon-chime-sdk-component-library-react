@@ -34,6 +34,7 @@ const config = {
   },
   sauceOptions: {
     platformName: process.env.PLATFORM_NAME || 'macOS 12',
+    browserVersion: process.env.BROWSER_VERSION || 'latest',
     'sauce:options': {
       username: process.env.SAUCE_USERNAME,
       accessKey: process.env.SAUCE_ACCESS_KEY,
