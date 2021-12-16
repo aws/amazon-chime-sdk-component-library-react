@@ -46,4 +46,4 @@ jobs:
       - name: Publish Storybook Documentation
         run: npm run deploy-storybook -- --ci
         env:
-          GH_TOKEN: chime-sdk-component-bot:${{ secrets.GITHUBPAGES}}
+          GH_TOKEN: chime-sdk-js-bot:${{ secrets.GITHUBPAGES}}
