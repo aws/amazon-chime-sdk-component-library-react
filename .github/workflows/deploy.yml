@@ -2,7 +2,7 @@ name: Deploy Components Demo App Workflow
 
 on:
   push:
-    branches: [master]
+    branches: [main]
 
 jobs:
   deploy:
