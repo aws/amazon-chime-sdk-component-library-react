@@ -418,7 +418,7 @@ a `createBackgroundBlurDevice` function that takes in a `Device` type and return
 you may call `meetingManager.selectVideoInputDevice(videoTransformedDevice)` with the `VideoTransformDevice` just as you would with a regular device.
 
 Optionally, you may use the `VideoInputBackgroundBlurControl` component - it is similar to the `VideoInputControl` component, except it has an
-additional button to enable background blur. If you'd like to create your own background blur control component, you may look at the [`VideoInputBackgroundBlurControl`](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/src/components/sdk/MeetingControls/VideoInputBackgroundBlurControl.tsx)
+additional button to enable background blur. If you'd like to create your own background blur control component, you may look at the [`VideoInputBackgroundBlurControl`](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/main/src/components/sdk/MeetingControls/VideoInputBackgroundBlurControl.tsx)
 as an example.
 
 One thing to note is that calling `meetingManager.selectVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
@@ -482,9 +482,9 @@ const Root = () => (
 );
 ```
 
-> The component library's [meeting demo](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/src/meetingConfig.ts) showcases above example.
-> We post the JS SDK logs to AWS CloudWatch once the demo is deployed. Check the serverless handlers [log](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/src/handlers.js#L252)
-> function and AWS CloudWatch [access policy](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/master/demo/meeting/serverless/template.yaml#L49) in our serverless template for more details.
+> The component library's [meeting demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/src/meetingConfig.ts) showcases above example.
+> We post the JS SDK logs to AWS CloudWatch once the demo is deployed. Check the serverless handlers [log](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/serverless/src/handlers.js#L252)
+> function and AWS CloudWatch [access policy](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/serverless/template.yaml#L49) in our serverless template for more details.
 
 ## Opt-Out of Client Event Ingestion
 

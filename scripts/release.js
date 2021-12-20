@@ -87,11 +87,11 @@ shouldContinuePrompt();
 spawnOrFail('git', ['fetch origin']);
 if (release_option !== '5') {
   logger.warn(`
-    Warning: are you sure to reset the HEAD to origin/master?
+    Warning: are you sure to reset the HEAD to origin/main?
     Current staged and local changes will be lost!\n`);
   shouldContinuePrompt();
-  logger.log('Reseting HEAD to origin/master');
-  spawnOrFail('git', ['reset --hard origin/master']);
+  logger.log('Reseting HEAD to origin/main');
+  spawnOrFail('git', ['reset --hard origin/main']);
 }
 spawnOrFail('git', [' clean -ffxd .']);
 
