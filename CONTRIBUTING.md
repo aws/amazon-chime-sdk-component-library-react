@@ -24,6 +24,16 @@ reported the issue. Please try to include as much information as you can. Detail
 Contributions via pull requests are much appreciated. Before sending us a pull request, please ensure that:
 
 1. You are working against the latest source on the *main* branch.
+
+   Note that we recently renamed our branch from *master* to *main*. If you have checked out our repo before, please run the following commands:
+
+   ```
+    git branch -m master main
+    git fetch origin
+    git branch -u origin/main main
+    git remote set-head origin -a
+   ```
+
 2. You check existing open, and recently merged, pull requests to make sure someone else hasn't addressed the problem already.
 3. You open an issue to discuss any significant work - we would hate for your time to be wasted.
 
