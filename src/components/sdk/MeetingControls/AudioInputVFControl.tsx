@@ -38,6 +38,8 @@ interface Props {
   voiceFocusOnLabel?: string;
   /** The label that will be shown when the current input audio is not an Amazon Voice Focus device, it defaults to `Enable Amazon Voice Focus`. */
   voiceFocusOffLabel?: string;
+  /** A boolean that determines whether or not to include additional sample audio input devices, such as "None", "440 Hz". Defaults to true. This will be deprecated in the next major version. */
+  appendSampleDevices?: boolean;
 }
 
 const AudioInputVFControl: React.FC<Props> = ({
@@ -47,6 +49,7 @@ const AudioInputVFControl: React.FC<Props> = ({
   unmutedIconTitle,
   voiceFocusOnLabel = 'Amazon Voice Focus enabled',
   voiceFocusOffLabel = 'Enable Amazon Voice Focus',
+  appendSampleDevices = true,
 }) => {
   const meetingManager = useMeetingManager();
   const [isLoading, setIsLoading] = useState(false);
@@ -63,7 +66,7 @@ const AudioInputVFControl: React.FC<Props> = ({
   );
   const { isVoiceFocusSupported, addVoiceFocus } = useVoiceFocus();
   const audioInputConfig: DeviceConfig = {
-    additionalDevices: true,
+    additionalDevices: appendSampleDevices,
   };
   const { devices, selectedDevice } = useAudioInputs(audioInputConfig);
 

@@ -17,10 +17,12 @@ interface Props {
   muteLabel?: string;
   /** The label that will be shown when microphone is unmuted, it defaults to `Unmute`. */
   unmuteLabel?: string;
-  /** Title attribute for the icon when muted, it defaults to `Muted microphone` */
+  /** Title attribute for the icon when muted, it defaults to `Muted microphone`. */
   mutedIconTitle?: string;
-  /** Title attribute for the icon when unmuted, it defaults to `Microphone` */
+  /** Title attribute for the icon when unmuted, it defaults to `Microphone`. */
   unmutedIconTitle?: string;
+  /** A boolean that determines whether or not to include additional sample audio input devices, such as "None", "440 Hz". Defaults to true. This will be deprecated in the next major version. */
+  appendSampleDevices?: boolean;
 }
 
 const AudioInputControl: React.FC<Props> = ({
@@ -28,11 +30,12 @@ const AudioInputControl: React.FC<Props> = ({
   unmuteLabel = 'Unmute',
   mutedIconTitle,
   unmutedIconTitle,
+  appendSampleDevices = true,
 }) => {
   const meetingManager = useMeetingManager();
   const { muted, toggleMute } = useToggleLocalMute();
   const audioInputConfig: DeviceConfig = {
-    additionalDevices: true,
+    additionalDevices: appendSampleDevices,
   };
   const { devices, selectedDevice } = useAudioInputs(audioInputConfig);
 

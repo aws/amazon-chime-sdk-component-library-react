@@ -5,6 +5,7 @@ import React from 'react';
 
 import { useVideoInputs } from '../../../../providers/DevicesProvider';
 import { useMeetingManager } from '../../../../providers/MeetingProvider';
+import { DeviceConfig } from '../../../../types';
 import DeviceInput from '../DeviceInput';
 
 interface Props {
@@ -12,14 +13,20 @@ interface Props {
   notFoundMsg?: string;
   /** The label that will be shown for camera selection, it defaults to "Camera source". */
   label?: string;
+  /** A boolean that determines whether or not to include additional sample video devices, such as "None", "Blue", "SMTP Color Bars". Defaults to true. This will be deprecated in the next major version. */
+  appendSampleDevices?: boolean;
 }
 
 export const CameraSelection: React.FC<Props> = ({
   notFoundMsg = 'No camera devices found',
   label = 'Camera source',
+  appendSampleDevices = true,
 }) => {
   const meetingManager = useMeetingManager();
-  const { devices, selectedDevice } = useVideoInputs();
+  const videoInputConfig: DeviceConfig = {
+    additionalDevices: appendSampleDevices,
+  };
+  const { devices, selectedDevice } = useVideoInputs(videoInputConfig);
 
   async function selectVideoInput(deviceId: string) {
     meetingManager.selectVideoInputDevice(deviceId);
