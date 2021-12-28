@@ -15,13 +15,17 @@ import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
 interface Props {
   /** The label that will be shown for video input control, it defaults to `Video`. */
   label?: string;
+  /** A boolean that determines whether or not to include additional sample video devices, such as "None", "Blue", "SMTP Color Bars". Defaults to true. This will be deprecated in the next major version. */
+  appendSampleDevices?: boolean;
 }
 
-const videoInputConfig: DeviceConfig = {
-  additionalDevices: true,
-};
-
-const VideoInputControl: React.FC<Props> = ({ label = 'Video' }) => {
+const VideoInputControl: React.FC<Props> = ({ 
+  label = 'Video',
+  appendSampleDevices = true,
+}) => {
+  const videoInputConfig: DeviceConfig = {
+    additionalDevices: appendSampleDevices,
+  };
   const { devices, selectedDevice } = useVideoInputs(videoInputConfig);
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
   const selectDevice = useSelectVideoInputDevice();
