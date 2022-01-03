@@ -59,6 +59,10 @@ interface Props {
    * The [ActiveSpeakerPolicy](https://aws.github.io/amazon-chime-sdk-js/interfaces/activespeakerpolicy.html) object that you want to use in the meeting session.
    */
   activeSpeakerPolicy?: ActiveSpeakerPolicy;
+  /**
+   * Maximum amount of time in milliseconds to allow for reconnecting. Default is 120 seconds. [Refer to the documentation.](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionconfiguration.html#reconnecttimeoutms)
+   */
+  reconnectTimeoutMs?: number;
   /** Pass a `MeetingManager` instance if you want to share this instance
    * across multiple different `MeetingProvider`s. This approach has limitations.
    * Check `meetingManager` prop documentation for more information.
@@ -77,6 +81,7 @@ export const MeetingProvider: React.FC<Props> = ({
   onDeviceReplacement,
   videoDownlinkBandwidthPolicy,
   videoUplinkBandwidthPolicy,
+  reconnectTimeoutMs,
   activeSpeakerPolicy,
   meetingManager: meetingManagerProp,
   children,
@@ -92,6 +97,7 @@ export const MeetingProvider: React.FC<Props> = ({
         logger,
         videoDownlinkBandwidthPolicy,
         videoUplinkBandwidthPolicy,
+        reconnectTimeoutMs,
         activeSpeakerPolicy,
       })
   );

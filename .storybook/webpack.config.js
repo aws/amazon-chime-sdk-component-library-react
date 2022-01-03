@@ -73,7 +73,7 @@ module.exports = ({ config }) => {
           options: { 
             parser: 'typescript',
             prettierConfig: {
-              printWidth: 100,
+              printWidth: 120,
               tabWidth: 2,
               bracketSpacing: true,
               trailingComma: 'es5',

@@ -19,7 +19,7 @@ interface Props {
   appendSampleDevices?: boolean;
 }
 
-const VideoInputControl: React.FC<Props> = ({ 
+const VideoInputControl: React.FC<Props> = ({
   label = 'Video',
   appendSampleDevices = true,
 }) => {

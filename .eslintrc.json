@@ -34,6 +34,7 @@
     "no-unused-vars": ["error", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }],
     "prefer-const" : "error",
     "no-eval": "error",
+    "max-len": ["error", { "code": 120 }],
     "semi": ["error", "always"],
     "eqeqeq": ["error", "always"],
     "indent": ["error", 2, { "SwitchCase": 1 }],

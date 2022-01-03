@@ -2,9 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import CameraSelection from './CameraSelection';
+import BackgroundBlurCheckbox from './CameraSelection/BackgroundBlurCheckbox';
 import QualitySelection from './CameraSelection/QualitySelection';
 import MicSelection from './MicSelection';
 import SpeakerSelection from './SpeakerSelection';
-import BackgroundBlurCheckbox from './CameraSelection/BackgroundBlurCheckbox';
 
-export { SpeakerSelection, MicSelection, CameraSelection, QualitySelection, BackgroundBlurCheckbox };
+export {
+  SpeakerSelection,
+  MicSelection,
+  CameraSelection,
+  QualitySelection,
+  BackgroundBlurCheckbox,
+};

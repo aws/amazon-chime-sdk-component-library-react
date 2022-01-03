@@ -188,6 +188,10 @@ const Root = () => {
 ```
 For more information on `VideoPriorityBasedPolicy`, check Amazon Chime JS SDK [priority downlink policy guide](https://aws.github.io/amazon-chime-sdk-js/modules/prioritybased_downlink_policy.html).
 
+#### reconnectTimeoutMs
+
+The `reconnectTimeoutMs` specifies the maximum amount of time in milliseconds to allow for reconnecting. Refer to the [JS SDK FAQ](https://aws.github.io/amazon-chime-sdk-js/modules/faqs.html#what-is-the-timeout-for-connect-and-reconnect-and-where-can-i-configure-the-value) for more information. 
+
 #### meetingManager
 
 There may be use cases to re-use the same `MeetingManager` instance across multiple different `MeetingProvider`s.
