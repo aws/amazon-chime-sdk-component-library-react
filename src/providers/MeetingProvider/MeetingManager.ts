@@ -280,6 +280,7 @@ export class MeetingManager implements AudioVideoObserver {
       logger: configLogger,
       videoUplinkBandwidthPolicy,
       videoDownlinkBandwidthPolicy,
+      reconnectTimeoutMs,
     } = this.meetingManagerConfig;
 
     // We are assigning the values from the `meetingManagerConfig` to preserve backward compatibility.
@@ -298,6 +299,10 @@ export class MeetingManager implements AudioVideoObserver {
 
     if (videoDownlinkBandwidthPolicy) {
       configuration.videoDownlinkBandwidthPolicy = videoDownlinkBandwidthPolicy;
+    }
+
+    if (reconnectTimeoutMs) {
+      configuration.reconnectTimeoutMs = reconnectTimeoutMs;
     }
 
     const deviceController = new DefaultDeviceController(logger, {

@@ -58,4 +58,5 @@ export interface MeetingManagerConfig {
   activeSpeakerPolicy?: ActiveSpeakerPolicy;
   videoUplinkBandwidthPolicy?: VideoUplinkBandwidthPolicy;
   videoDownlinkBandwidthPolicy?: VideoDownlinkBandwidthPolicy;
+  reconnectTimeoutMs?: number;
 }

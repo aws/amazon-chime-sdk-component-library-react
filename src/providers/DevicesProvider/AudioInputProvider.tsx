@@ -1,6 +1,11 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import type {
+  AudioTransformDevice,
+  Device,
+  DeviceChangeObserver,
+} from 'amazon-chime-sdk-js';
 import React, {
   createContext,
   useContext,
@@ -9,7 +14,6 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import type { Device, AudioTransformDevice, DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
 import { AUDIO_INPUT } from '../../constants/additional-audio-video-devices';
 import { DeviceConfig, DeviceTypeContext } from '../../types';
@@ -26,7 +30,10 @@ interface Props {
 
 const Context = createContext<DeviceTypeContext | null>(null);
 
-const AudioInputProvider: React.FC<Props> = ({ children, onDeviceReplacement }) => {
+const AudioInputProvider: React.FC<Props> = ({
+  children,
+  onDeviceReplacement,
+}) => {
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
@@ -38,7 +45,9 @@ const AudioInputProvider: React.FC<Props> = ({ children, onDeviceReplacement }) 
   const [selectAudioInputDeviceError, setSelectAudioInputDeviceError] =
     useState(meetingManager.selectAudioInputDeviceError);
 
-  const replaceDevice = async (device: string): Promise<Device | AudioTransformDevice> => {
+  const replaceDevice = async (
+    device: string
+  ): Promise<Device | AudioTransformDevice> => {
     if (onDeviceReplacement) {
       return onDeviceReplacement(
         device,

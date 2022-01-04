@@ -36,11 +36,14 @@ interface BackgroundBlurProviderState {
   isBackgroundBlurSupported: boolean | undefined;
 }
 
-const BackgroundBlurProviderContext =
-  createContext<BackgroundBlurProviderState | undefined>(undefined);
+const BackgroundBlurProviderContext = createContext<
+  BackgroundBlurProviderState | undefined
+>(undefined);
 
 const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
-  const [isBackgroundBlurSupported, setIsBackgroundBlurSupported] = useState<boolean | undefined>(undefined);
+  const [isBackgroundBlurSupported, setIsBackgroundBlurSupported] = useState<
+    boolean | undefined
+  >(undefined);
   const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>();
 
   useEffect(() => {
@@ -60,12 +63,19 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
           setProcessor(undefined);
           setIsBackgroundBlurSupported(false);
         } else {
-          console.log(`Initialized background blur processor: ${JSON.stringify(createdProcessor)}`);
+          console.log(
+            `Initialized background blur processor: ${JSON.stringify(
+              createdProcessor
+            )}`
+          );
           setProcessor(createdProcessor);
           setIsBackgroundBlurSupported(true);
         }
       } catch (error) {
-        console.error(`Error creating a background blur video frame processor device.`, error);
+        console.error(
+          `Error creating a background blur video frame processor device.`,
+          error
+        );
         setProcessor(undefined);
         setIsBackgroundBlurSupported(false);
       }
@@ -80,10 +90,16 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
   const createBackgroundBlurDevice = async (
     selectedDevice: Device
   ): Promise<DefaultVideoTransformDevice> => {
-    console.log(`Calling createBackgroundBlurDevice with device: ${JSON.stringify(selectedDevice)}`);
+    console.log(
+      `Calling createBackgroundBlurDevice with device: ${JSON.stringify(
+        selectedDevice
+      )}`
+    );
     // It takes time for the processor to start - if you call this method before it is finished initializing, throw an error
     if (!isBackgroundBlurSupported) {
-      throw new Error('Background blur is not supported. The processor may not be initialized yet.');
+      throw new Error(
+        'Background blur is not supported. The processor may not be initialized yet.'
+      );
     }
     try {
       const logger = options?.logger
@@ -95,7 +111,13 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
           selectedDevice,
           [processor]
         );
-        console.log(`Created video transform device ${JSON.stringify(chosenVideoTransformDevice, null, 2)}`);
+        console.log(
+          `Created video transform device ${JSON.stringify(
+            chosenVideoTransformDevice,
+            null,
+            2
+          )}`
+        );
         return chosenVideoTransformDevice;
       } else {
         throw new Error('Processor has not been created.');
