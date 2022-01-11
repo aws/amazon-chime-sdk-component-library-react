@@ -8,6 +8,7 @@ import {
   VoiceFocusSpec,
   VoiceFocusTransformDevice,
 } from 'amazon-chime-sdk-js';
+import {JoinMeetingInfo} from '../../types';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import useMemoCompare from '../../utils/use-memo-compare';
@@ -21,6 +22,9 @@ interface Props {
    * For more info, you can go to https://aws.github.io/amazon-chime-sdk-js/interfaces/voicefocusdeviceoptions.html
    */
   options?: VoiceFocusDeviceOptions;
+
+  /** Optional features like Amazon Chime Echo Reduction capability is enabled at the meeting level when CreateMeeting is called. */
+  createMeetingResponse?: JoinMeetingInfo;
 }
 
 interface VoiceFocusState {
@@ -32,7 +36,12 @@ interface VoiceFocusState {
 
 const VoiceFocusContext = createContext<VoiceFocusState | null>(null);
 
-const VoiceFocusProvider: React.FC<Props> = ({ spec, options, children }) => {
+const VoiceFocusProvider: React.FC<Props> = ({ 
+  spec, 
+  options, 
+  createMeetingResponse,
+  children, 
+}) => {
   const [isVoiceFocusSupported, setIsVoiceFocusSupported] = useState<
     boolean | undefined
   >(undefined);
@@ -49,7 +58,7 @@ const VoiceFocusProvider: React.FC<Props> = ({ spec, options, children }) => {
       prev: VoiceFocusSpec | undefined,
       next: VoiceFocusSpec | undefined
     ): boolean => {
-      if (Object.is(prev, next)) {
+      if (Object.is(prev, next) || JSON.stringify(prev) === JSON.stringify(next)) {
         return true;
       }
 
@@ -132,9 +141,15 @@ const VoiceFocusProvider: React.FC<Props> = ({ spec, options, children }) => {
   async function createVoiceFocusDeviceTransformer(
     spec: VoiceFocusSpec | undefined,
     options: VoiceFocusDeviceOptions | undefined,
-    canceled: () => boolean
+    canceled: () => boolean,
+    createMeetingResponse?: JoinMeetingInfo | undefined,
   ): Promise<VoiceFocusDeviceTransformer> {
-    const fetch = VoiceFocusDeviceTransformer.create(spec, options);
+    const fetch = VoiceFocusDeviceTransformer.create(
+      spec, 
+      options, 
+      undefined, 
+      createMeetingResponse
+      );
     fetch
       .then((transformer) => {
         // A different request arrived afterwards. Drop this one on the floor
@@ -165,21 +180,24 @@ const VoiceFocusProvider: React.FC<Props> = ({ spec, options, children }) => {
   async function initVoiceFocus(
     vfSpec: VoiceFocusSpec | undefined,
     options: VoiceFocusDeviceOptions | undefined,
-    canceled: () => boolean
+    canceled: () => boolean,
+    createMeetingResponse: JoinMeetingInfo | undefined,
   ) {
     // Throw away the old one and reinitialize.
     setVoiceFocusTransformer(null);
     setVoiceFocusDevice(null);
-    createVoiceFocusDeviceTransformer(vfSpec, options, canceled);
+    createVoiceFocusDeviceTransformer(vfSpec, options, canceled, createMeetingResponse);
   }
 
   useEffect(() => {
     let canceled = false;
-    initVoiceFocus(vfSpec, options, () => canceled);
+    if (createMeetingResponse) {
+      initVoiceFocus(vfSpec, options, () => canceled, createMeetingResponse);
+    }
     return () => {
       canceled = true;
     };
-  }, [vfSpec, options]);
+  }, [vfSpec, options, createMeetingResponse]);
 
   useEffect(() => {
     if (isVoiceFocusSupported === undefined) {
