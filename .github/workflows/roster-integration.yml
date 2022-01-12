@@ -4,6 +4,7 @@ on:
   pull_request:
     branches:
       - main
+      - 'release-**.x'
 
 env:
   SELENIUM_GRID_PROVIDER: saucelabs

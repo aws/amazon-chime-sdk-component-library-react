@@ -19,7 +19,7 @@
   },
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "rollup -c",
+    "build": "node scripts/generate-version.js && rollup -c",
     "lint": "eslint src tst --ext .ts,.tsx,.js --fix",
     "check": "node scripts/check-codestyle.js",
     "release": "node scripts/release.js",
@@ -88,6 +88,7 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.26.1",
     "eslint-plugin-simple-import-sort": "^7.0.0",
+    "git-rev-sync": "^3.0.2",
     "jest": "^26.6.3",
     "jest-image-snapshot": "^4.4.0",
     "jest-puppeteer-docker": "^1.4.2",

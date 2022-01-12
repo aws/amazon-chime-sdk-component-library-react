@@ -1,4 +1,4 @@
-// Helper modules for commont functions.
+// Helper modules for common functions.
 
 const exec = require('child_process').spawnSync;
 const process = require('process');
@@ -14,24 +14,21 @@ const logger = {
 };
 
 const spawnOrFail = (command, args, options) => {
-  options = {
-    ...options,
-    shell: true
-  };
-  const cmd = exec(command, args, options);
+  const cmd = exec(command, args, { shell: true });
   if (cmd.error) {
     logger.log(`Command ${command} failed with ${cmd.error.code}`);
-
     process.exit(255);
   }
   const output = cmd.stdout.toString();
-  logger.log(output);
+  if (!options || !options.skipOutput) {
+    logger.log(output);
+  }
   if (cmd.status !== 0) {
-    logger.log(
-      `Command ${command} failed with exit code ${cmd.status} signal ${cmd.signal}`
-    );
-    logger.log(cmd.stderr.toString());
+    logger.error(`Command ${command} failed with exit code ${cmd.status} signal ${cmd.signal}`);
+    logger.error(cmd.stderr.toString());
     process.exit(cmd.status);
+  } else if (options && options.printErr) { // Some commands like npm pack output to stderr
+    logger.log(cmd.stderr.toString());
   }
   return output;
 };
