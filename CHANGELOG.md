@@ -13,10 +13,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` to `MeetingProvider` props.
+- Add `BackgroundReplacementProvider`.
 
 ### Changed
 - Change `additionalDevices` to a prop in `AudioInputControl`, `VideoInputControl`, `AudioInputVFControl`, `MicSelection`, and `CameraSelection` components to allow option to turn off that configuration.
 - Add `reconnectTimeoutMs` as an optional parameter to `MeetingManagerConfig` to manage the timeout for reconnection.
+- Add memoCompare to `BackgroundBlurProvider` Props to avoid re-rendering when state is the same.
+- Add a global promise that will hold the most recent call to initialize background blur processor in `BackgroundBlurProvider`.
+- Update `BackgroundBlurProvider` docs.
+- Rename `VideoFilterSelection.stories.mdx` storybook to `BackgroundBlurCheckbox.stories.mdx`.
 
 ### Removed
 
