@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { DefaultDeviceController, Device } from 'amazon-chime-sdk-js';
+import { DefaultDeviceController, Device, BackgroundFilterSpec, BackgroundBlurOptions, BackgroundReplacementOptions} from 'amazon-chime-sdk-js';
 
 import { DeviceType } from '../types';
 
@@ -51,4 +51,10 @@ export const isOptionActive = (
 // TODO: Remove this and use DefaultBrowserBehavior.supportsSetSinkId from JS SDK v2.x
 export const supportsSetSinkId = (): boolean => {
   return 'setSinkId' in HTMLAudioElement.prototype;
+};
+
+export function isPrevNextUndefined(prev: BackgroundFilterSpec | BackgroundBlurOptions | BackgroundReplacementOptions | boolean | undefined, next: BackgroundFilterSpec | BackgroundBlurOptions | BackgroundReplacementOptions | boolean | undefined): boolean{
+  const isPrevEmpty = prev === undefined || (prev && Object.keys(prev).length === 0);
+  const isNextEmpty = next === undefined || (next && Object.keys(next).length === 0);
+  return isPrevEmpty && isNextEmpty;
 };
