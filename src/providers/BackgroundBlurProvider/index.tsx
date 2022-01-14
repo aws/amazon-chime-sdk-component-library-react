@@ -18,6 +18,7 @@ import React, {
   FC,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import useMemoCompare from '../../utils/use-memo-compare';
@@ -46,7 +47,9 @@ const BackgroundBlurProviderContext =
 const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
   const [isBackgroundBlurSupported, setIsBackgroundBlurSupported] = useState<boolean | undefined>(undefined);
   const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>();
-
+  const processorState = useRef<VideoFrameProcessor | undefined>();
+  processorState.current = processor;
+  
   const blurSpec = useMemoCompare(
     spec,
     (
@@ -136,11 +139,12 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
       const logger = options?.logger
         ? options.logger
         : new ConsoleLogger('BackgroundBlurProvider', LogLevel.INFO);
-      if (processor) {
+      let currentProcessor = processorState.current;
+      if (currentProcessor) {
         const chosenVideoTransformDevice = new DefaultVideoTransformDevice(
           logger,
           selectedDevice,
-          [processor]
+          [currentProcessor]
         );
         console.log(`Created video transform device ${JSON.stringify(chosenVideoTransformDevice, null, 2)}`);
         return chosenVideoTransformDevice;

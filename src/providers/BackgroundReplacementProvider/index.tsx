@@ -12,12 +12,14 @@ import{
   NoOpVideoFrameProcessor,
   VideoFrameProcessor,
   BackgroundReplacementProcessor,
+  VideoTransformDevice,
 } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
   FC,
   useContext,
   useEffect,
+  useRef,
   useState,
 } from 'react';
 import useMemoCompare from '../../utils/use-memo-compare';
@@ -46,6 +48,8 @@ const BackgroundReplacementProviderContext =
 const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) => {
   const [isBackgroundReplacementSupported, setIsBackgroundReplacementSupported] = useState<boolean | undefined>(undefined);
   const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>(undefined);
+  const processorState = useRef<VideoFrameProcessor | undefined>();
+  processorState.current = processor;
 
   const replacementSpec = useMemoCompare(
     spec,
@@ -127,17 +131,22 @@ const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) 
   const createBackgroundReplacementDevice = async (
     selectedDevice: Device
   ): Promise<DefaultVideoTransformDevice> => {
-    console.log(`Calling createBackgroundReplacement with device: ${JSON.stringify(selectedDevice)}`);
+    console.log(
+      `Calling createBackgroundReplacement with device: ${JSON.stringify(
+        selectedDevice
+      )}`
+    );
     await createProcessor();
     try {
       const logger = options?.logger
         ? options.logger
         : new ConsoleLogger('BackgroundReplacementProvider', LogLevel.INFO);
-      if (processor) {
+      let currentProcessor = processorState.current;
+      if (currentProcessor) {
         const chosenVideoTransformDevice = new DefaultVideoTransformDevice(
           logger,
           selectedDevice,
-          [processor]
+          [currentProcessor]
         );
         console.log(`Created video transform device ${JSON.stringify(chosenVideoTransformDevice, null, 2)}`);
         return chosenVideoTransformDevice;
