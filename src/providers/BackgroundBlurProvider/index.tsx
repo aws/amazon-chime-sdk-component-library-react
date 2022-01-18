@@ -21,15 +21,15 @@ import React, {
   useState,
 } from 'react';
 import useMemoCompare from '../../utils/use-memo-compare';
-import { isPrevNextObjectUndefined, isPrevNextObjectEmpty } from '../../utils/device-utils';
+import { isPrevNextUndefined, isPrevNextEmpty } from '../../utils/device-utils';
 import { BaseSdkProps } from '../../components/sdk/Base';
 
 interface Props extends BaseSdkProps {
   /** The spec defines the assets that will be used for adding background blur to a frame. For more information, refer to
-   * [Amazon Chime JS SDK Background Filter Guide](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#adding-a-background-filter-to-your-application). */
+   * [Amazon Chime SDK for JavaScript Background Filter Guide](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#adding-a-background-filter-to-your-application). */
   spec?: BackgroundFilterSpec;
   /** A set of options that can be supplied when creating a background blur video frame processor. For more information, refer to
-   * [Amazon Chime JS SDK Background Filter Guide](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#adding-a-background-filter-to-your-application). */
+   * [Amazon Chime SDK for JavaScript Background Filter Guide](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#adding-a-background-filter-to-your-application). */
   options?: BackgroundBlurOptions;
 }
 
@@ -66,7 +66,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
       prev: BackgroundBlurOptions | undefined,
       next: BackgroundBlurOptions | undefined
     ): boolean => {
-      if (isPrevNextObjectUndefined(prev, next) || isPrevNextObjectEmpty(prev, next) || (prev?.filterCPUUtilization === next?.filterCPUUtilization)) {
+      if (isPrevNextUndefined(prev, next) || isPrevNextEmpty(prev, next) || (prev?.filterCPUUtilization === next?.filterCPUUtilization)) {
         return true;
       }
       return false;
