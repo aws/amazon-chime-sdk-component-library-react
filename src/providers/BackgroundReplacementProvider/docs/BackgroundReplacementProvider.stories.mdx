@@ -19,7 +19,7 @@ when mounted, which may impact performance.
   // Whether background replacement is supported. The default value is undefined, then changes to true or false.
   isBackgroundReplacementSupported: boolean | undefined;
 
-  // A function to transform a video input device to a DefaultVideoTransformDevice.
+  // A function to transform a video input device to a `DefaultVideoTransformDevice`.
   createBackgroundReplacementDevice: (device: Device) => Promise<DefaultVideoTransformDevice>;
 }
 
@@ -27,15 +27,15 @@ when mounted, which may impact performance.
 
 You should see either "processor is supported" or "processor is not supported" in your browser developer tools based on whether or not
 background replacement is supported on your device and browser version. For more information on if background replacement is supported, refer
-to [Amazon Chime JS SDK Background replacement Guide](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#integrating-background-filters-into-your-amazon-chime-sdk-for-javascript-application).
+to [Integrating background filters into your Amazon Chime SDK for JavaScript application](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#integrating-background-filters-into-your-amazon-chime-sdk-for-javascript-application).
 
 You can check whether or not the processor has been loaded correctly by checking the state of `isBackgroundReplacementSupported`.
 `createBackgroundReplacementDevice` may throw an error if the processor was not loaded. You should check whether or not the processor has been loaded correctly by checking the state of `isBackgroundReplacementSupported`
-before calling `createBackgroundReplacementDevice`. Calling `createBackgroundReplacementDevice` will create a new processor. Users would also need to call DefaultVideoTransformDevice.stop when constructing a new 
-DefaultVideoTransformDevice with new video processors. For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice);
+before calling `createBackgroundReplacementDevice`. Calling `createBackgroundReplacementDevice` will create a new processor. Users would also need to call `DefaultVideoTransformDevice.stop` when constructing a new 
+`DefaultVideoTransformDevice` with new video processors. For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice);
 
 One thing to note is that calling `meetingManager.selectVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
-will automatically stop any video processor that was previously running. Lastly, make sure to construct a new DefaultVideoTransformDevice using `createBackgroundReplacementDevice` 
+will automatically stop any video processor that was previously running. Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `createBackgroundReplacementDevice`.
 if the Props of the provider were changed.
 
 You can access the state by using the [useBackgroundReplacement](/docs/sdk-hooks-useBackgroundReplacement--page) hook.

@@ -18,11 +18,10 @@ import React, {
   FC,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from 'react';
 import useMemoCompare from '../../utils/use-memo-compare';
-import { isPrevNextUndefined } from '../../utils/device-utils';
+import { isPrevNextObjectUndefined, isPrevNextObjectEmpty } from '../../utils/device-utils';
 import { BaseSdkProps } from '../../components/sdk/Base';
 
 interface Props extends BaseSdkProps {
@@ -54,7 +53,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
       prev: BackgroundFilterSpec | undefined,
       next: BackgroundFilterSpec | undefined
     ): boolean => {
-      if ((Object.is(prev, next)) || isPrevNextUndefined(prev, next)) {
+      if (Object.is(prev, next)) {
         return true;
       }
       return false;
@@ -67,7 +66,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
       prev: BackgroundBlurOptions | undefined,
       next: BackgroundBlurOptions | undefined
     ): boolean => {
-      if ((Object.is(prev?.filterCPUUtilization, next?.filterCPUUtilization)) || isPrevNextUndefined(prev, next)) {
+      if (isPrevNextObjectUndefined(prev, next) || isPrevNextObjectEmpty(prev, next) || (Object.is(prev?.filterCPUUtilization, next?.filterCPUUtilization))) {
         return true;
       }
       return false;
@@ -81,7 +80,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
       console.log(`Destroying background blur processor.`);
       processor?.destroy();
     };
-  },[blurOptions, blurSpec]);
+  }, [blurOptions, blurSpec]);
 
   async function initializeBackgroundBlur(): Promise<BackgroundBlurProcessor | undefined>{
     console.log('Initializing background blur processor with ', spec, options);
@@ -107,7 +106,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
         return createdProcessor;
       }
     } catch (error) {
-      console.log(`Error creating a background blur video frame processor device`, error);
+      console.error(`Error creating a background blur video frame processor device`, error);
       setProcessor(undefined);
       setIsBackgroundBlurSupported(false);
       return undefined;
@@ -122,12 +121,10 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
         selectedDevice
       )}`
     );
-    let currentProcessor = await initializeBackgroundBlur();
-
+    const currentProcessor = await initializeBackgroundBlur();
     try {
       const logger = options?.logger
-        ? options.logger
-        : new ConsoleLogger('BackgroundBlurProvider', LogLevel.INFO);
+        || new ConsoleLogger('BackgroundBlurProvider', LogLevel.INFO);
       if (currentProcessor) {
         const chosenVideoTransformDevice = new DefaultVideoTransformDevice(
           logger,

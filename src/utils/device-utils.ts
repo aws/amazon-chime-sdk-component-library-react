@@ -53,8 +53,14 @@ export const supportsSetSinkId = (): boolean => {
   return 'setSinkId' in HTMLAudioElement.prototype;
 };
 
-export function isPrevNextUndefined(prev: BackgroundFilterSpec | BackgroundBlurOptions | BackgroundReplacementOptions | boolean | undefined, next: BackgroundFilterSpec | BackgroundBlurOptions | BackgroundReplacementOptions | boolean | undefined): boolean{
-  const isPrevEmpty = prev === undefined || (prev && Object.keys(prev).length === 0);
-  const isNextEmpty = next === undefined || (next && Object.keys(next).length === 0);
-  return isPrevEmpty && isNextEmpty;
+export function isPrevNextObjectUndefined<T>(prev: T, next: T): boolean{
+  const isPrevUndefined = prev === undefined;
+  const isNextUndefined = next === undefined;
+  return isPrevUndefined && isNextUndefined;
 };
+
+export function isPrevNextObjectEmpty<T>(prev: T, next: T): boolean {
+  const isPrevEmpty = (prev && Object.keys(prev).length === 0);
+  const isNextEmpty = (next && Object.keys(next).length === 0);
+  return isPrevEmpty && isNextEmpty;
+}

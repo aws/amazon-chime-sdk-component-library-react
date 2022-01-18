@@ -12,18 +12,16 @@ import{
   NoOpVideoFrameProcessor,
   VideoFrameProcessor,
   BackgroundReplacementProcessor,
-  VideoTransformDevice,
 } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
   FC,
   useContext,
   useEffect,
-  useRef,
   useState,
 } from 'react';
 import useMemoCompare from '../../utils/use-memo-compare';
-import { isPrevNextUndefined } from '../../utils/device-utils';
+import { isPrevNextObjectUndefined, isPrevNextObjectEmpty } from '../../utils/device-utils';
 import { BaseSdkProps } from '../../components/sdk/Base';
 
 interface Props extends BaseSdkProps {
@@ -48,15 +46,14 @@ const BackgroundReplacementProviderContext =
 const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) => {
   const [isBackgroundReplacementSupported, setIsBackgroundReplacementSupported] = useState<boolean | undefined>(undefined);
   const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>(undefined);
-
-
+  
   const replacementSpec = useMemoCompare(
     spec,
     (
       prev: BackgroundFilterSpec | undefined,
       next: BackgroundFilterSpec | undefined
     ): boolean => {
-      if ((Object.is(prev, next)) || isPrevNextUndefined(prev, next)) {
+      if (Object.is(prev, next)) {
         return true;
       }
       return false;
@@ -69,7 +66,7 @@ const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) 
       prev: BackgroundReplacementOptions | undefined,
       next: BackgroundReplacementOptions | undefined
     ): boolean => {
-      if ( isPrevNextUndefined(prev, next) || (prev?.imageBlob?.size == next?.imageBlob?.size && Object.is(prev?.filterCPUUtilization, next?.filterCPUUtilization))) {
+      if (isPrevNextObjectUndefined(prev, next) || isPrevNextObjectEmpty(prev, next) || (prev?.imageBlob?.size === next?.imageBlob?.size && Object.is(prev?.filterCPUUtilization, next?.filterCPUUtilization))) {
         return true;
       }
       return false;
@@ -120,15 +117,14 @@ const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) 
     selectedDevice: Device
   ): Promise<DefaultVideoTransformDevice> => {
     console.log(
-      `Calling createBackgroundReplacement with device: ${JSON.stringify(
+      `Calling createBackgroundReplacementDevice with device: ${JSON.stringify(
         selectedDevice
       )}`
     );
-    let currentProcessor = await initializeBackgroundReplacement();
+    const currentProcessor = await initializeBackgroundReplacement();
     try {
       const logger = options?.logger
-        ? options.logger
-        : new ConsoleLogger('BackgroundReplacementProvider', LogLevel.INFO);
+        || new ConsoleLogger('BackgroundReplacementProvider', LogLevel.INFO);
       if (currentProcessor) {
         const chosenVideoTransformDevice = new DefaultVideoTransformDevice(
           logger,
@@ -151,7 +147,7 @@ const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) 
     createBackgroundReplacementDevice,
     isBackgroundReplacementSupported
   };
-  
+
   return (
     <BackgroundReplacementProviderContext.Provider value={value}>
       {children}

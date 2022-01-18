@@ -20,7 +20,7 @@ Background blur related logs can be found in the browser developer tools when th
   // Whether background blur is finished loading the processor. The default value is undefined, then changes to true or false.
   isBackgroundBlurSupported: boolean | undefined;
 
-  // A function to transform a video input device to a DefaultVideoTransformDevice.
+  // A function to transform a video input device to a `DefaultVideoTransformDevice`.
   createBackgroundBlurDevice: (device: Device) => Promise<DefaultVideoTransformDevice>;
 }
 
