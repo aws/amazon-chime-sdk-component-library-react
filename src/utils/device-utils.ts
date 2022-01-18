@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { DefaultDeviceController, Device, BackgroundFilterSpec, BackgroundBlurOptions, BackgroundReplacementOptions} from 'amazon-chime-sdk-js';
+import { DefaultDeviceController, Device } from 'amazon-chime-sdk-js';
 
 import { DeviceType } from '../types';
 
