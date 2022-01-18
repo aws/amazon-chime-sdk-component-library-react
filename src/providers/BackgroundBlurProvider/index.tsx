@@ -47,8 +47,6 @@ const BackgroundBlurProviderContext =
 const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
   const [isBackgroundBlurSupported, setIsBackgroundBlurSupported] = useState<boolean | undefined>(undefined);
   const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>();
-  const processorState = useRef<VideoFrameProcessor | undefined>();
-  processorState.current = processor;
   
   const blurSpec = useMemoCompare(
     spec,
@@ -85,20 +83,14 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
     };
   },[blurOptions, blurSpec]);
 
-  let currentProcessorPromise:
-  | Promise<BackgroundBlurProcessor | undefined>
-  | undefined;
-
   async function initializeBackgroundBlur(): Promise<BackgroundBlurProcessor | undefined>{
     console.log('Initializing background blur processor with ', spec, options);
 
-    const fetchedProcessor = BackgroundBlurVideoFrameProcessor.create(
-      spec,
-      options
-    );
-
-    fetchedProcessor
-    .then((createdProcessor) => {
+    try {
+      const createdProcessor = await BackgroundBlurVideoFrameProcessor.create(
+        spec,
+        options
+      );
       // BackgroundBlurVideoFrameProcessor.create will return a NoOpVideoFrameProcessor
       // in the case that BackgroundBlurVideoFrameProcessor.isSupported() returns false.
       // BackgroundBlurVideoFrameProcessor.create() can also throw an error in case loading
@@ -107,23 +99,19 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
         console.warn(`Initialized NoOpVideoFrameProcessor.`);
         setProcessor(undefined);
         setIsBackgroundBlurSupported(false);
+        return undefined;
       } else {
         console.log(`Initialized background blur processor: ${JSON.stringify(createdProcessor)}`);
         setProcessor(createdProcessor);
         setIsBackgroundBlurSupported(true);
+        return createdProcessor;
       }
-    }).catch((e) => {
-      console.log(`Error creating a background blur video frame processor device`, e);
+    } catch (error) {
+      console.log(`Error creating a background blur video frame processor device`, error);
       setProcessor(undefined);
       setIsBackgroundBlurSupported(false);
-    });
-
-    return (currentProcessorPromise = fetchedProcessor);
-  }
-
-  async function createProcessor(): Promise<BackgroundBlurProcessor | undefined>{
-    initializeBackgroundBlur();
-    return currentProcessorPromise;
+      return undefined;
+    }
   }
 
   const createBackgroundBlurDevice = async (
@@ -134,12 +122,12 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
         selectedDevice
       )}`
     );
-    await createProcessor();
+    let currentProcessor = await initializeBackgroundBlur();
+
     try {
       const logger = options?.logger
         ? options.logger
         : new ConsoleLogger('BackgroundBlurProvider', LogLevel.INFO);
-      let currentProcessor = processorState.current;
       if (currentProcessor) {
         const chosenVideoTransformDevice = new DefaultVideoTransformDevice(
           logger,

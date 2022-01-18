@@ -48,8 +48,7 @@ const BackgroundReplacementProviderContext =
 const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) => {
   const [isBackgroundReplacementSupported, setIsBackgroundReplacementSupported] = useState<boolean | undefined>(undefined);
   const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>(undefined);
-  const processorState = useRef<VideoFrameProcessor | undefined>();
-  processorState.current = processor;
+
 
   const replacementSpec = useMemoCompare(
     spec,
@@ -86,21 +85,14 @@ const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) 
     };
   }, [replacementSpec, replacementOptions]);
 
-
-  let currentProcessorPromise:
-  | Promise<BackgroundReplacementProcessor| undefined>
-  | undefined;
-
   async function initializeBackgroundReplacement(): Promise<BackgroundReplacementProcessor | undefined> {
     console.log('Initializing background replacement processor with ', spec, options);
 
-    const fetchedProcessor = BackgroundReplacementVideoFrameProcessor.create(
-      spec,
-      options
-    );
-    
-    fetchedProcessor.
-    then((createdProcessor) => {
+    try {
+      const createdProcessor = await BackgroundReplacementVideoFrameProcessor.create(
+        spec,
+        options
+      );
       // BackgroundReplacementVideoFrameProcessor.create will return a NoOpVideoFrameProcessor
       // in the case that BackgroundReplacementVideoFrameProcessor.isSupported() returns false.
       // BackgroundReplacementVideoFrameProcessor.create() can also throw an error in case loading
@@ -109,23 +101,19 @@ const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) 
         console.warn(`Initialized NoOpVideoFrameProcessor.`);
         setProcessor(undefined);
         setIsBackgroundReplacementSupported(false);
+        return undefined;
       } else {
         console.log(`Initialized background replacement processor: ${JSON.stringify(createdProcessor)}`);
         setProcessor(createdProcessor);
         setIsBackgroundReplacementSupported(true);
+        return createdProcessor;
       }
-    }).catch((e) =>{
-      console.error(`Error creating a background replacement video frame processor device.`, e);
+    } catch (error) {
+      console.error(`Error creating a background replacement video frame processor device.`, error);
       setProcessor(undefined);
       setIsBackgroundReplacementSupported(false);
-    });
-
-    return(currentProcessorPromise = fetchedProcessor);
-  }
-
-  async function createProcessor(): Promise<BackgroundReplacementProcessor | undefined>{
-    initializeBackgroundReplacement();
-    return currentProcessorPromise;
+      return undefined;
+    }
   }
 
   const createBackgroundReplacementDevice = async (
@@ -136,12 +124,11 @@ const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) 
         selectedDevice
       )}`
     );
-    await createProcessor();
+    let currentProcessor = await initializeBackgroundReplacement();
     try {
       const logger = options?.logger
         ? options.logger
         : new ConsoleLogger('BackgroundReplacementProvider', LogLevel.INFO);
-      let currentProcessor = processorState.current;
       if (currentProcessor) {
         const chosenVideoTransformDevice = new DefaultVideoTransformDevice(
           logger,
@@ -164,6 +151,7 @@ const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) 
     createBackgroundReplacementDevice,
     isBackgroundReplacementSupported
   };
+  
   return (
     <BackgroundReplacementProviderContext.Provider value={value}>
       {children}
