@@ -66,7 +66,7 @@ const BackgroundReplacementProvider: FC<Props> = ( { spec, options, children }) 
       prev: BackgroundReplacementOptions | undefined,
       next: BackgroundReplacementOptions | undefined
     ): boolean => {
-      if (isPrevNextObjectUndefined(prev, next) || isPrevNextObjectEmpty(prev, next) || (prev?.imageBlob?.size === next?.imageBlob?.size && Object.is(prev?.filterCPUUtilization, next?.filterCPUUtilization))) {
+      if (isPrevNextObjectUndefined(prev, next) || isPrevNextObjectEmpty(prev, next) || (prev?.imageBlob?.size === next?.imageBlob?.size && prev?.filterCPUUtilization === next?.filterCPUUtilization)) {
         return true;
       }
       return false;

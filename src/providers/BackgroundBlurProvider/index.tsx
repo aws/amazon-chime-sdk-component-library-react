@@ -66,7 +66,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
       prev: BackgroundBlurOptions | undefined,
       next: BackgroundBlurOptions | undefined
     ): boolean => {
-      if (isPrevNextObjectUndefined(prev, next) || isPrevNextObjectEmpty(prev, next) || (Object.is(prev?.filterCPUUtilization, next?.filterCPUUtilization))) {
+      if (isPrevNextObjectUndefined(prev, next) || isPrevNextObjectEmpty(prev, next) || (prev?.filterCPUUtilization === next?.filterCPUUtilization)) {
         return true;
       }
       return false;
