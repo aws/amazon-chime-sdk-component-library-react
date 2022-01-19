@@ -32,7 +32,7 @@ to [Integrating background filters into your Amazon Chime SDK for JavaScript app
 You can check whether or not the processor has been loaded correctly by checking the state of `isBackgroundBlurSupported`.
 `createBackgroundBlurDevice` may throw an error if the processor was not loaded. You should check whether or not the processor has been loaded correctly by checking the state of `isBackgroundBlurSupported`
 before calling `createBackgroundBlurDevice`. Calling `createBackgroundBlurDevice` will create a new processor. Users would also need to call `DefaultVideoTransformDevice.stop` when constructing a new 
-`DefaultVideoTransformDevice` with new video processors. For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice);
+`DefaultVideoTransformDevice` with new video processors. For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice).
 
 One thing to note is that calling `meetingManager.selectVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
 will automatically stop any video processor that was previously running. Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `createBackgroundBlurDevice`. 
