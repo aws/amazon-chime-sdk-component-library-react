@@ -7,13 +7,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Fixed
+
+### Added
+- Add `BackgroundReplacementProvider` provider to support background replacement.
+
+### Changed
+
+### Removed
+
 ## [2.13.0] - 2022-01-06
 
 ### Fixed
 
 ### Added
 - Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` to `MeetingProvider` props.
-- Add `BackgroundReplacementProvider`.
 
 ### Changed
 - Change `additionalDevices` to a prop in `AudioInputControl`, `VideoInputControl`, `AudioInputVFControl`, `MicSelection`, and `CameraSelection` components to allow option to turn off that configuration.
