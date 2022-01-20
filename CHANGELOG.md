@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` to `MeetingProvider` props.
+- Add `BackgroundReplacementProvider`.
 
 ### Changed
 - Change `additionalDevices` to a prop in `AudioInputControl`, `VideoInputControl`, `AudioInputVFControl`, `MicSelection`, and `CameraSelection` components to allow option to turn off that configuration.
@@ -207,7 +208,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- [Doc] Add documentation in introduction on how to use `MeetingSessionPostLogger` to post Amazon Chime JS SDK logs.
+- [Doc] Add documentation in introduction on how to use `MeetingSessionPostLogger` to post Amazon Chime SDK for JavaScript logs.
 - Add `useMediaStreamMetrics` hook to expose audio, video and bandwidth data.
 
 ### Changed

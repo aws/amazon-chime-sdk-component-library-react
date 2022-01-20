@@ -50,7 +50,7 @@ const MyApp = () => {
 
 > **Note:** Joining a meeting in view-only mode may result in attendees not being able to join the meeting successfully. This results in an issue where the roster remains empty and the attendee cannot receive audio and video feeds from others. Check the [GitHub Issue](https://github.com/aws/amazon-chime-sdk-js/issues/474) for details.
 >
-> The Amazon Chime JS SDK uses the attendee's audio signal to determine whether or not this attendee has joined a meeting. However, the browser's autoplay policy sometimes prohibits this audio signal from being played automatically. You could fix this issue by enabling the autoplay policy:
+> The Amazon Chime SDK for JavaScript uses the attendee's audio signal to determine whether or not this attendee has joined a meeting. However, the browser's autoplay policy sometimes prohibits this audio signal from being played automatically. You could fix this issue by enabling the autoplay policy:
 >
 >* Chrome: Preference - Privacy and security - Find your project hosting URL - Sound - Allow
 >* Safari: Preference - Auto-Play - Find your project hosting URL - Allow All Auto-Play
@@ -454,7 +454,7 @@ const MyApp = () => {
 ## How to Enable a Meeting to Post Logs to a URL?
 
 By default, `MeetingManager` provided by `MeetingProvider` uses [`ConsoleLogger`](https://aws.github.io/amazon-chime-sdk-js/classes/consolelogger.html) to log JS SDK logs.
-You can enable posting your logs to a URL by using Amazon Chime JS SDK's [`MeetingSessionPostLogger`](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionpostlogger.html). You can pass `logLevel` and `postLogConfig` as props to the `MeetingProvider`.
+You can enable posting your logs to a URL by using Amazon Chime SDK for JavaScript [`MeetingSessionPostLogger`](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionpostlogger.html). You can pass `logLevel` and `postLogConfig` as props to the `MeetingProvider`.
 
 Check JS SDK [LogLevel](https://aws.github.io/amazon-chime-sdk-js/enums/loglevel.html) for more details on log levels.
 
