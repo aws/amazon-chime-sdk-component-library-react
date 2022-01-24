@@ -108,10 +108,10 @@ If you pass in a `Logger` object using this parameter, the `MeetingManager` will
 
 #### onDeviceReplacement
 
-When a selected device is disconnected, or when the Operating System (OS) default device is selected and is changed by the OS (e.g., if a Bluetooth headset is disconnected), 
-the `AudioInputProvider` encapsulated by `DevicesProvider` is forced to automatically select a new audio input. This behaves as expected when the selected device is an ordinary device provided by the browser. 
+When a selected device is disconnected, or when the Operating System (OS) default device is selected and is changed by the OS (e.g., if a Bluetooth headset is disconnected),
+the `AudioInputProvider` encapsulated by `DevicesProvider` is forced to automatically select a new audio input. This behaves as expected when the selected device is an ordinary device provided by the browser.
 However, when your application is using a transform device like Amazon Voice Focus, the `AudioInputProvider` needs a way to transform the newly selected device to avoid reverting to a non-transform device.
-This is accomplished by exposing a `onDeviceReplacement` prop on `MeetingProvider` and `DevicesProvider`, allowing your application to customize the behavior of this device reselection step. 
+This is accomplished by exposing a `onDeviceReplacement` prop on `MeetingProvider` and `DevicesProvider`, allowing your application to customize the behavior of this device reselection step.
 Provide a function that accepts a `Device` as input and returns a `Device` or `AudioTransformDevice` of your choice.
 
 #### activeSpeakerPolicy
@@ -190,7 +190,11 @@ For more information on `VideoPriorityBasedPolicy`, check Amazon Chime SDK for J
 
 #### reconnectTimeoutMs
 
-The `reconnectTimeoutMs` specifies the maximum amount of time in milliseconds to allow for reconnecting. Refer to the [JS SDK FAQ](https://aws.github.io/amazon-chime-sdk-js/modules/faqs.html#what-is-the-timeout-for-connect-and-reconnect-and-where-can-i-configure-the-value) for more information. 
+The `reconnectTimeoutMs` specifies the maximum amount of time in milliseconds to allow for reconnecting. Refer to the [JS SDK FAQ](https://aws.github.io/amazon-chime-sdk-js/modules/faqs.html#what-is-the-timeout-for-connect-and-reconnect-and-where-can-i-configure-the-value) for more information.
+
+#### keepLastFrameWhenPaused
+
+The `keepLastFrameWhenPaused` keeps the last frame of the video when a remote video is paused via the pauseVideoTile.
 
 #### meetingManager
 
