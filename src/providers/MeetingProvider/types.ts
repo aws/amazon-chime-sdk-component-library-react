@@ -59,4 +59,5 @@ export interface MeetingManagerConfig {
   videoUplinkBandwidthPolicy?: VideoUplinkBandwidthPolicy;
   videoDownlinkBandwidthPolicy?: VideoDownlinkBandwidthPolicy;
   reconnectTimeoutMs?: number;
+  keepLastFrameWhenPaused?: boolean;
 }

@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Add `BackgroundReplacementProvider` provider to support background replacement.
+- Add `keepLastFrameWhenPaused` as an optional parameter to allow to keep the last frame of the video when a remote video is paused via the pauseVideoTile.
 
 ### Changed
 
