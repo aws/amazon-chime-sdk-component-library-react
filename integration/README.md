@@ -109,15 +109,15 @@ To enable the entire testing process:
 
 To change the browser on which the test is run, simply change the host property in `/utils/config.js` file.
 
-```json
+```js
 // By default is to run tests locally with Chrome
-host: process.env.HOST || 'chrome',
+host: process.env.HOST || 'chrome'
 
 // To run tests locally with Firefox
-host: process.env.HOST || 'firefox',
+host: process.env.HOST || 'firefox'
 
 // To run tests locally with Safari
-host: process.env.HOST || 'safari',
+host: process.env.HOST || 'safari'
 ```
 
 ### Run Test Suites on Sauce Labs
@@ -132,18 +132,18 @@ npm run start
 
 Then, you need to update the `host` property in `/utils/config.js` file.
 
-```json
+```js
 // By default is to run tests locally with Chrome
-host: process.env.HOST || 'chrome',
+host: process.env.HOST || 'chrome'
 
 // To Run tests on Sauce Labs with Chrome
-host: process.env.HOST || 'sauce-chrome',
+host: process.env.HOST || 'sauce-chrome'
 
 // To Run tests on Sauce Labs with Firefox
-host: process.env.HOST || 'sauce-firefox',
+host: process.env.HOST || 'sauce-firefox'
 
 // To Run tests on Sauce Labs with Safari
-host: process.env.HOST || 'sauce-safari',
+host: process.env.HOST || 'sauce-safari'
 ```
 
 Last, you need to [setup the Sauce Connect Proxy](https://docs.saucelabs.com/secure-connections/sauce-connect/setup-configuration/basic-setup/) manually to allow Sauce Labs accessing the test demo running on your local machine.
