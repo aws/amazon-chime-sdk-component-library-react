@@ -63,6 +63,10 @@ interface Props {
    * Maximum amount of time in milliseconds to allow for reconnecting. Default is 120 seconds. [Refer to the documentation.](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionconfiguration.html#reconnecttimeoutms)
    */
   reconnectTimeoutMs?: number;
+  /**
+   * Keep the last frame of the video when a remote video is paused via the pauseVideoTile API.
+   */
+  keepLastFrameWhenPaused?: boolean;
   /** Pass a `MeetingManager` instance if you want to share this instance
    * across multiple different `MeetingProvider`s. This approach has limitations.
    * Check `meetingManager` prop documentation for more information.
@@ -83,6 +87,7 @@ export const MeetingProvider: React.FC<Props> = ({
   videoUplinkBandwidthPolicy,
   reconnectTimeoutMs,
   activeSpeakerPolicy,
+  keepLastFrameWhenPaused,
   meetingManager: meetingManagerProp,
   children,
 }) => {
@@ -98,6 +103,7 @@ export const MeetingProvider: React.FC<Props> = ({
         videoDownlinkBandwidthPolicy,
         videoUplinkBandwidthPolicy,
         reconnectTimeoutMs,
+        keepLastFrameWhenPaused,
         activeSpeakerPolicy,
       })
   );

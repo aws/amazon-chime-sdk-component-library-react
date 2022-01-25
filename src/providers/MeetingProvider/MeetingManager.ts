@@ -281,6 +281,7 @@ export class MeetingManager implements AudioVideoObserver {
       videoUplinkBandwidthPolicy,
       videoDownlinkBandwidthPolicy,
       reconnectTimeoutMs,
+      keepLastFrameWhenPaused,
     } = this.meetingManagerConfig;
 
     // We are assigning the values from the `meetingManagerConfig` to preserve backward compatibility.
@@ -303,6 +304,10 @@ export class MeetingManager implements AudioVideoObserver {
 
     if (reconnectTimeoutMs) {
       configuration.reconnectTimeoutMs = reconnectTimeoutMs;
+    }
+
+    if (keepLastFrameWhenPaused) {
+      configuration.keepLastFrameWhenPaused = keepLastFrameWhenPaused;
     }
 
     const deviceController = new DefaultDeviceController(logger, {
