@@ -1,13 +1,14 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, ReactElement } from 'react';
+import React, { FC, HTMLAttributes, ReactElement } from 'react';
+import { BaseProps } from '../Base';
 
 import { useModalContext } from './ModalContext';
 import { StyledModalButtonGroup } from './Styled';
 
 export interface ModalButtonGroupProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>, BaseProps {
   /** Defines the primary button(s) in the modal. */
   primaryButtons: ReactElement | ReactElement[];
   /** Defines the secondary button(s) in the modal. */
@@ -17,6 +18,7 @@ export interface ModalButtonGroupProps
 export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
   primaryButtons,
   secondaryButtons,
+  ...rest
 }) => {
   const context = useModalContext();
 
@@ -49,7 +51,10 @@ export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
   };
 
   return (
-    <StyledModalButtonGroup data-testid="modal-button-group">
+    <StyledModalButtonGroup
+      data-testid="modal-button-group"
+      {...rest}
+    >
       <div key="primarybuttons">
         {addCloseBehaviorToButtons(primaryButtons)}
       </div>

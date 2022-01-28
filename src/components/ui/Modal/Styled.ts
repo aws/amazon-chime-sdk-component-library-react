@@ -4,6 +4,7 @@
 import styled from 'styled-components';
 
 import { fadeAnimation, slideDownAndScaleUp } from '../../../utils/animations';
+import { baseSpacing, baseStyles } from '../Base';
 import { ModalProps } from './';
 
 export const StyledModal = styled.div<ModalProps>`
@@ -50,6 +51,9 @@ export const StyledModal = styled.div<ModalProps>`
       max-height: none;
     }
   }
+
+  ${baseSpacing}
+  ${baseStyles}
 `;
 
 export const StyledModalHeader = styled.header`
@@ -67,6 +71,9 @@ export const StyledModalHeader = styled.header`
     font-size: ${(props) => props.theme.modal.titleSize};
     font-weight: ${(props) => props.theme.modal.titleWeight};
   }
+
+  ${baseSpacing}
+  ${baseStyles}
 `;
 
 export const StyledModalBody = styled.div`
@@ -75,6 +82,9 @@ export const StyledModalBody = styled.div`
   padding: 0 1.5rem;
   flex-grow: 1;
   overflow-y: auto;
+
+  ${baseSpacing}
+  ${baseStyles}
 `;
 
 export const StyledModalButtonGroup = styled.footer`
@@ -110,4 +120,7 @@ export const StyledModalButtonGroup = styled.footer`
       margin: 0.5rem 0 0;
     }
   }
+
+  ${baseSpacing}
+  ${baseStyles}
 `;

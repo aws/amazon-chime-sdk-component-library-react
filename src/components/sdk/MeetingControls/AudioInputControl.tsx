@@ -11,8 +11,9 @@ import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Microphone } from '../../ui/icons';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
+import { BaseSdkProps } from '../Base';
 
-interface Props {
+interface Props extends BaseSdkProps {
   /** The label that will be shown when microphone is muted , it defaults to `Mute`. */
   muteLabel?: string;
   /** The label that will be shown when microphone is unmuted, it defaults to `Unmute`. */
@@ -31,6 +32,7 @@ const AudioInputControl: React.FC<Props> = ({
   mutedIconTitle,
   unmutedIconTitle,
   appendSampleDevices = true,
+  ...rest
 }) => {
   const meetingManager = useMeetingManager();
   const { muted, toggleMute } = useToggleLocalMute();
@@ -58,6 +60,7 @@ const AudioInputControl: React.FC<Props> = ({
       onClick={toggleMute}
       label={muted ? unmuteLabel : muteLabel}
       popOver={dropdownOptions}
+      {...rest}
     />
   );
 };

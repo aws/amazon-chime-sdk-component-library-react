@@ -5,9 +5,10 @@ import React from 'react';
 
 import useSelectAudioOutputDevice from '../../../../hooks/sdk/useSelectAudioOutputDevice';
 import { useAudioOutputs } from '../../../../providers/DevicesProvider';
+import { BaseSdkProps } from '../../Base';
 import DeviceInput from '../DeviceInput';
 
-interface Props {
+interface Props extends BaseSdkProps {
   /** The message that will be shown when no audio output speaker devices are found. */
   notFoundMsg?: string;
   /** The label that will be shown for speaker selection, it defaults to `Speaker source`. */
@@ -20,6 +21,7 @@ export const SpeakerSelection: React.FC<Props> = ({
   notFoundMsg = 'No speaker devices found',
   label = 'Speaker source',
   onChange,
+  ...rest
 }) => {
   const { devices, selectedDevice } = useAudioOutputs();
   const selectAudioOutput = useSelectAudioOutputDevice();
@@ -36,6 +38,7 @@ export const SpeakerSelection: React.FC<Props> = ({
       onChange={selectDevice}
       selectedDeviceId={selectedDevice}
       notFoundMsg={notFoundMsg}
+      {...rest}
     />
   );
 };
