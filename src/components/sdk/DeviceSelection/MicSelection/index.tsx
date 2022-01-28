@@ -6,9 +6,10 @@ import React from 'react';
 import { useSelectAudioInputDevice } from '../../../../hooks/sdk/useSelectAudioInputDevice';
 import { useAudioInputs } from '../../../../providers/DevicesProvider';
 import { DeviceConfig } from '../../../../types';
+import { BaseSdkProps } from '../../Base';
 import DeviceInput from '../DeviceInput';
 
-interface Props {
+interface Props extends BaseSdkProps {
   /** The message that will be shown when no microphone devices are found. */
   notFoundMsg?: string;
   /** The label that will be shown for microphone selection, it defaults to `Microphone source`. */
@@ -21,6 +22,7 @@ export const MicSelection: React.FC<Props> = ({
   notFoundMsg = 'No microphone devices found',
   label = 'Microphone source',
   appendSampleDevices = true,
+  ...rest
 }) => {
   const audioInputConfig: DeviceConfig = {
     additionalDevices: appendSampleDevices,
@@ -35,6 +37,7 @@ export const MicSelection: React.FC<Props> = ({
       devices={devices}
       selectedDeviceId={selectedDevice}
       notFoundMsg={notFoundMsg}
+      {...rest}
     />
   );
 };

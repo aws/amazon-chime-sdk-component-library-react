@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
+import { baseSpacing, baseStyles } from '../Base';
 
 export const StyledWrapper = styled.div`
   position: relative;
@@ -9,6 +10,9 @@ export const StyledWrapper = styled.div`
   .ch-select-icon {
     pointer-events: none;
   }
+
+  ${baseSpacing}
+  ${baseStyles}
 `;
 
 export const StyledSelectInput = styled.select`
@@ -38,4 +42,7 @@ export const StyledSelectInput = styled.select`
     border: ${(props) => props.theme.inputs.error.border};
     box-shadow: ${(props) => props.theme.inputs.error.shadow};
   }
+
+  ${baseSpacing}
+  ${baseStyles}
 `;

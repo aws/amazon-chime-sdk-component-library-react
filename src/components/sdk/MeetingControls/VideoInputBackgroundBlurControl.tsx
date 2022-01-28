@@ -23,8 +23,9 @@ import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Camera, Spinner } from '../../ui/icons';
 import PopOverItem from '../../ui/PopOver/PopOverItem';
 import PopOverSeparator from '../../ui/PopOver/PopOverSeparator';
+import { BaseSdkProps } from '../Base';
 
-interface Props {
+interface Props extends BaseSdkProps {
   /** The label that will be shown for video input control, it defaults to `Video`. */
   label?: string;
   /** The label that will be shown for the background blur button. */
@@ -34,6 +35,7 @@ interface Props {
 const VideoInputBackgroundBlurControl: React.FC<Props> = ({
   label = 'Video',
   backgroundBlurLabel = 'Enable Background Blur',
+  ...rest
 }) => {
   const meetingManager = useMeetingManager();
   const { devices, selectedDevice } = useVideoInputs();
@@ -152,6 +154,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
       onClick={toggleVideo}
       label={label}
       children={dropdownWithVideoTransformOptions}
+      {...rest}
     />
   );
 };

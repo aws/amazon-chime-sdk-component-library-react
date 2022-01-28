@@ -1,0 +1,112 @@
+<Meta title="Styling Guide" />
+
+# Styling Guide
+
+The Amazon Chime SDK React Component Library is comprised of Providers, Hooks, UI Components, and SDK-connected components. 
+Each component has some basic styling applied to it, but you can add or override your own styles to the component by using stylesheets,
+`styled-components` or other styling frameworks. 
+
+The Amazon Chime SDK React Component Library uses [`styled-components`](https://styled-components.com/docs) to attach base styles to all of the components. You must install the peer dependency on `styled-components` to use the library. 
+
+
+# Base Styles
+Every component extends either the [BaseSdkProps](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/61464e15175b0f88d141f968790524c5443ea5d1/src/components/sdk/Base/index.tsx) props or [BaseProps](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/61464e15175b0f88d141f968790524c5443ea5d1/src/components/ui/Base/index.ts), which include the `css` and `className` props. 
+
+# Override base styles on a component
+There are multiple ways to override the base styling applied on SDK or UI components.
+
+Each UI or SDK component contains one or more DOM elements, and in some cases the DOM elements are nested within each other or dynamically rendered.
+In order to select these DOM elements in your stylesheets, you can refer to the individual components' DOM structure. 
+
+## 1. Override styles using the `className` prop
+
+The first method is to use the `className` prop and apply your own classes to the top level DOM element that, in some cases, contain child DOM elements.
+This is the preferred method if you are making more than a couple styling changes to the component.
+
+The base styles were designed to hold a low specificity, however due to [this caveat](https://styled-components.com/docs/advanced#issues-with-specificity) with using `styled-components`, when you select DOM elements in your own stylesheet, you'll need
+to use a higher specificity than just one class selector, otherwise the base styles applied by `styled-components` will override your styles.
+
+```jsx
+import './style.scss'
+
+<Badge className="floating-badge"/>
+```
+Then, in your stylesheet, you need to specify the class name:
+
+```scss
+// ./style.scss
+.floating-badge.floating-badge {
+  // override the base styles in Badge component here
+}
+```
+The reason for having to specify the class selector twice is due to [this caveat](https://styled-components.com/docs/advanced#issues-with-specificity) with `styled-components`. 
+
+## 2. Override styles using `styled-components`
+
+An alternative way you can override base styles is by wrapping an existing component from the `amazon-chime-sdk-component-library-react` library inside of another styled component.
+This is the preferred approach if you are familiar with `styled-components`.
+
+```jsx
+import styled from 'styled-components';
+import { Label } from 'amazon-chime-sdk-component-library-react';
+
+// Create a new styled component based on one of the components from the component library
+let yourStyledLabel = styled(Label)`
+  border: solid 1px black;
+`
+```
+
+## 3. Override styles using the `css` prop
+The last method is by providing the `css` prop to any of the components. This prop is meant to be used
+for minor changes and is not recommended if making more than a couple styling changes for a component.
+
+```jsx
+// CSS prop 
+<Badge css="border: solid 1px black"/>
+```
+
+
+#  Unset styling on a component
+If you want to unset the base styles for a component, you may do the following.
+In some cases, you'll need to use the `*` selector to unstyle components that render nested DOM elements:
+
+## 1. Using `className` prop:
+```jsx
+import './style.scss';
+
+<Label className="my-label"/>
+```
+Example of `./style.scss`:
+```scss
+.my-label.my-label {
+  all: unset;
+  * {
+    all: unset;
+  }
+}
+```
+The reason for having to specify the class selector twice is due to [this caveat](https://styled-components.com/docs/advanced#issues-with-specificity) with `styled-components`. 
+
+## 2. Using `styled-components`
+You can attach the `unset` property to an existing component the same way you'd add any other CSS property to an existing component with `styled-components`:
+
+```jsx
+import styled from 'styled-components';
+import { Label } from 'amazon-chime-sdk-component-library-react';
+
+let yourStyledLabel = styled(Label)`
+  all: unset;
+  * {
+    all: unset;
+  }
+`
+```
+
+## 3. Using `css` prop
+
+You can achieve the same with the `css` prop, but this is most likely not the ideal
+use of this prop, since this prop is meant for only minor changes to the styling:
+
+```jsx
+<Label css="all: unset; * { all: unset }"/>
+```

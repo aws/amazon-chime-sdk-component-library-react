@@ -11,8 +11,9 @@ import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Camera } from '../../ui/icons';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
+import { BaseSdkProps } from '../Base';
 
-interface Props {
+interface Props extends BaseSdkProps {
   /** The label that will be shown for video input control, it defaults to `Video`. */
   label?: string;
   /** A boolean that determines whether or not to include additional sample video devices, such as "None", "Blue", "SMTP Color Bars". Defaults to true. This will be deprecated in the next major version. */
@@ -22,6 +23,7 @@ interface Props {
 const VideoInputControl: React.FC<Props> = ({
   label = 'Video',
   appendSampleDevices = true,
+  ...rest
 }) => {
   const videoInputConfig: DeviceConfig = {
     additionalDevices: appendSampleDevices,
@@ -42,6 +44,7 @@ const VideoInputControl: React.FC<Props> = ({
       onClick={toggleVideo}
       label={label}
       popOver={dropdownOptions}
+      {...rest}
     />
   );
 };

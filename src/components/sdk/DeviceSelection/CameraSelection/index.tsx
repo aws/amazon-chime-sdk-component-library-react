@@ -6,9 +6,10 @@ import React from 'react';
 import { useVideoInputs } from '../../../../providers/DevicesProvider';
 import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { DeviceConfig } from '../../../../types';
+import { BaseSdkProps } from '../../Base';
 import DeviceInput from '../DeviceInput';
 
-interface Props {
+interface Props extends BaseSdkProps {
   /** The message that will be shown when no camera devices are found. */
   notFoundMsg?: string;
   /** The label that will be shown for camera selection, it defaults to "Camera source". */
@@ -21,6 +22,7 @@ export const CameraSelection: React.FC<Props> = ({
   notFoundMsg = 'No camera devices found',
   label = 'Camera source',
   appendSampleDevices = true,
+  ...rest
 }) => {
   const meetingManager = useMeetingManager();
   const videoInputConfig: DeviceConfig = {
@@ -39,6 +41,7 @@ export const CameraSelection: React.FC<Props> = ({
       devices={devices}
       selectedDeviceId={selectedDevice}
       notFoundMsg={notFoundMsg}
+      {...rest}
     />
   );
 };

@@ -6,8 +6,9 @@ import React, { ChangeEvent } from 'react';
 import { DeviceType, SelectedDeviceId } from '../../../types';
 import { FormField } from '../../ui/FormField';
 import { Select } from '../../ui/Select';
+import { BaseSdkProps } from '../Base';
 
-interface Props {
+interface Props extends BaseSdkProps {
   label: string;
   notFoundMsg: string;
   devices: DeviceType[];
@@ -21,6 +22,7 @@ const DeviceInput: React.FC<Props> = ({
   devices,
   selectedDeviceId,
   notFoundMsg,
+  ...rest
 }) => {
   const outputOptions = devices.map((device) => ({
     value: device.deviceId,
@@ -52,6 +54,7 @@ const DeviceInput: React.FC<Props> = ({
       onChange={selectDevice}
       value={selectedDeviceId || ''}
       label={label}
+      {...rest}
     />
   );
 };

@@ -12,14 +12,16 @@ import { useBackgroundBlur } from '../../../../providers/BackgroundBlurProvider'
 import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { Checkbox } from '../../../ui/Checkbox';
 import { FormField } from '../../../ui/FormField';
+import { BaseSdkProps } from '../../Base';
 
-interface Props {
+interface Props extends BaseSdkProps {
   /** Label shown for video filter selection, by default it is "Blur my background" */
   label?: string;
 }
 
 export const BackgroundBlurCheckbox: React.FC<Props> = ({
   label = 'Blur my background',
+  ...rest
 }) => {
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
     useBackgroundBlur();
@@ -70,6 +72,7 @@ export const BackgroundBlurCheckbox: React.FC<Props> = ({
       value={'Background Blur'}
       checked={isVideoTransformDevice(device)}
       label={label}
+      {...rest}
     />
   );
 };

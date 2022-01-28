@@ -10,8 +10,9 @@ import {
 } from '../../../../hooks/sdk/useSelectVideoQuality';
 import { FormField } from '../../../ui/FormField';
 import { Select } from '../../../ui/Select';
+import { BaseSdkProps } from '../../Base';
 
-interface Props {
+interface Props extends BaseSdkProps {
   /** Label shown for video quality selection, by default it is "Video quality" */
   label?: string;
   /** Label shown in the dropdown when no video quality has been selected yet, by default it is "Select video quality" */
@@ -21,6 +22,7 @@ interface Props {
 export const QualitySelection: React.FC<Props> = ({
   label = 'Video quality',
   labelForUnselected = 'Select video quality',
+  ...rest
 }) => {
   const selectVideoQuality = useSelectVideoQuality();
   const [videoQuality, setVideoQuality] = useState('unselected');
@@ -56,6 +58,7 @@ export const QualitySelection: React.FC<Props> = ({
       onChange={selectQuality}
       value={videoQuality}
       label={label}
+      {...rest}
     />
   );
 };

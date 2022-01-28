@@ -11,13 +11,14 @@ import { isOptionActive, supportsSetSinkId } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Sound } from '../../ui/icons';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
+import { BaseSdkProps } from '../Base';
 
-interface Props {
+interface Props extends BaseSdkProps {
   /** The label that will be shown for audio output speaker control, it defaults to `Speaker`. */
   label?: string;
 }
 
-const AudioOutputControl: React.FC<Props> = ({ label = 'Speaker' }) => {
+const AudioOutputControl: React.FC<Props> = ({ label = 'Speaker', ...rest }) => {
   const meetingManager = useMeetingManager();
   const { devices, selectedDevice } = useAudioOutputs();
   const { isAudioOn, toggleAudio } = useLocalAudioOutput();
@@ -42,6 +43,7 @@ const AudioOutputControl: React.FC<Props> = ({ label = 'Speaker' }) => {
         onClick={toggleAudio}
         label={label}
         popOver={dropdownOptions.length ? dropdownOptions : null}
+        {...rest}
       />
     </>
   );
