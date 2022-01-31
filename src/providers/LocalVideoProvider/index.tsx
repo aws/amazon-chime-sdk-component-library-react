@@ -32,8 +32,22 @@ const LocalVideoProvider: React.FC = ({ children }) => {
       setIsVideoEnabled(true);
     }
 
+    const observer: AudioVideoObserver = {
+      videoAvailabilityDidChange: (availability) => {
+        if (!availability.canStartLocalVideo) {
+          setIsVideoEnabled(false);
+        }
+        console.log(
+          'video availability changed: canStartLocalVideo ',
+          availability.canStartLocalVideo
+        );
+      },
+    };
+    audioVideo.addObserver(observer);
+
     return () => {
       setIsVideoEnabled(false);
+      audioVideo.removeObserver(observer);
     };
   }, [audioVideo]);
 
