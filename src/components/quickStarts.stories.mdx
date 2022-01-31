@@ -411,20 +411,23 @@ You can find examples and usage of the hook from [`useMediaStreamMetrics` storyb
 
 For UI implementation, check the [`LocalMediaStreamMetrics`](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/de22a537d6437073f72d69da30f1703ef4cf40b3/demo/meeting/src/containers/LocalMediaStreamMetrics/index.tsx#L22-L28) and [`VideoStreamMetrics`](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/de22a537d6437073f72d69da30f1703ef4cf40b3/demo/meeting/src/containers/VideoStreamMetrics/index.tsx#L27) components in meeting demo for more details.
 
-## Enable Background Blur
+## Enable Background Blur and Replacement
 
-You can enable background blur on your video stream by using the provider called `BackgroundBlurProvider`. The `BackgroundBlurProvider` provides
-a `createBackgroundBlurDevice` function that takes in a `Device` type and returns a `VideoTransformDevice`. Once you have the `VideoTransformDevice`,
-you may call `meetingManager.selectVideoInputDevice(videoTransformedDevice)` with the `VideoTransformDevice` just as you would with a regular device.
+You can enable background blur and replacement on your video stream by using the providers called `BackgroundBlurProvider` and `BackgroundReplacementProvider`. The `BackgroundBlurProvider` and `BackgroundReplacementProvider` provides
+a `createBackgroundBlurDevice` and `createBackgroundReplacementDevice` functions that takes in a `Device` type and returns a `VideoTransformDevice`. Once you have the `VideoTransformDevice`,
+you may call `meetingManager.selectVideoInputDevice(videoTransformedDevice)` with the `VideoTransformDevice` just as you would with a regular device. Please note that users would also need to call `DefaultVideoTransformDevice.stop` when constructing a new 
+`DefaultVideoTransformDevice` with new video processors. For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice).
 
 Optionally, you may use the `VideoInputBackgroundBlurControl` component - it is similar to the `VideoInputControl` component, except it has an
 additional button to enable background blur. If you'd like to create your own background blur control component, you may look at the [`VideoInputBackgroundBlurControl`](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/main/src/components/sdk/MeetingControls/VideoInputBackgroundBlurControl.tsx)
 as an example.
 
 One thing to note is that calling `meetingManager.selectVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
-will automatically stop any video processor that was previously running.
+will automatically stop any video processor that was previously running. Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `createBackgroundBlurDevice` or `createBackgroundReplacementDevice` if
+the Props of the provider were changed.
 
-You may also refer to the storybook documentation for other examples on how to use [`BackgroundBlurProvider`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-providers-backgroundblurprovider--page) and `createBackgroundBlurDevice`.
+You may also refer to the storybook documentation for other examples on how to use [`BackgroundBlurProvider`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-providers-backgroundblurprovider--page) 
+and [`BackgroundReplacementProvider`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-providers-backgroundreplacementprovider--page).
 
 For more documentation on creating a `VideoTransformDevice`, you can refer to the [Background Filter Video Processor Guide](https://github.com/aws/amazon-chime-sdk-js/blob/master/guides/15_Background_Filter_Video_Processor.md).
 
