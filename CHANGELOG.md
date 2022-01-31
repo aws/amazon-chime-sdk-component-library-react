@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add `BackgroundReplacementProvider` provider to support background replacement.
 - Add `keepLastFrameWhenPaused` as an optional parameter to allow to keep the last frame of the video when a remote video is paused via the pauseVideoTile.
+- Add `videoAvailabilityDidChange` as an audio observer in `LocalVideoProvider` and a new state `isReachVideoLimit` to disable the video button when the video limit is reached.
 
 ### Changed
 

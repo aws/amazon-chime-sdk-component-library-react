@@ -21,6 +21,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
+  const [isReachVideoLimit, setIsReachVideoLimit] = useState(false);
   const [tileId, setTileId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -32,25 +33,50 @@ const LocalVideoProvider: React.FC = ({ children }) => {
       setIsVideoEnabled(true);
     }
 
+    const observer: AudioVideoObserver = {
+      videoAvailabilityDidChange: (availability) => {
+        if (!availability.canStartLocalVideo) {
+          setIsReachVideoLimit(true);
+        } else {
+          setIsReachVideoLimit(false);
+        }
+        console.log(
+          'video availability changed: canStartLocalVideo ',
+          availability.canStartLocalVideo
+        );
+      },
+    };
+    audioVideo.addObserver(observer);
+
     return () => {
       setIsVideoEnabled(false);
+      audioVideo.removeObserver(observer);
     };
   }, [audioVideo]);
+
+  useEffect(() => {
+    if (isReachVideoLimit) {
+      console.warn('Reach the number of maximum active videos');
+    }
+  }, [isReachVideoLimit]);
 
   const toggleVideo = useCallback(async (): Promise<void> => {
     if (isVideoEnabled || !meetingManager.selectedVideoInputTransformDevice) {
       audioVideo?.stopLocalVideoTile();
       setIsVideoEnabled(false);
-    } else {
+    } else if (!isReachVideoLimit) {
       await audioVideo?.chooseVideoInputDevice(
         meetingManager.selectedVideoInputTransformDevice
       );
       audioVideo?.startLocalVideoTile();
       setIsVideoEnabled(true);
+    } else {
+      console.error('Video limit is reached and can not turn on more videos!');
     }
   }, [
     audioVideo,
     isVideoEnabled,
+    isReachVideoLimit,
     meetingManager.selectedVideoInputTransformDevice,
   ]);
 

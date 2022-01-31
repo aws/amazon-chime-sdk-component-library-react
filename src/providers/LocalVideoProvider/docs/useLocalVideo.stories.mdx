@@ -23,6 +23,12 @@ To start/stop user's local video, use `toggleVideo` function from the `LocalVide
   // A function to set the value of `isVideoEnabled`
   setIsVideoEnabled: (isEnabled: boolean) => void;
 
+  // Whether or not video limit is reached, it defaults to false
+  isReachVideoLimit: boolean;
+
+  // A function to set the value of `isReachVideoLimit`
+  setIsReachVideoLimit: (isReachVideoLimit: boolean) => void;
+
   // A function that toggles the local user's video
   toggleVideo: () => Promise<void>;
 }
@@ -52,21 +58,31 @@ const App = () => (
 );
 
 const MyChild = () => {
-  const { tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo } = useLocalVideo();
+  const { tileId, isVideoEnabled, setIsVideoEnabled, 
+  isReachVideoLimit, setIsReachVideoLimit, toggleVideo } = useLocalVideo();
 
   return (
     <p>Tile ID: {tileId}</p>
 
     <p>
-      {setIsVideoEnabled ? 'LocalVideo is enabled' : 'LocalVideo is disabled'}
+      {isVideoEnabled ? 'LocalVideo is enabled' : 'LocalVideo is disabled'}
+    </p>
+
+    <p>
+      {isReachVideoLimit ? 'Video limit is reached' : 'Video limit is not reached'}
     </p>
 
     <button onClick={() => setIsVideoEnabled(true)}>
       Set isVideoEnabled to true
     </button>
+
+    <button onClick={() => setIsReachVideoLimit(true)}>
+      Set isReachVideoLimit to true
+    </button>
     
     <button onClick={toggleVideo}>
-      {isVideoEnabled ? 'Stop your video' : 'Start your video'}
+      {isVideoEnabled ? 'Stop your video' : isReachVideoLimit ? 
+      'Reach the video limit, can not turn on video' : 'Start your video'}
     </button>
   );
 };
