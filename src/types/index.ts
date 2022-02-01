@@ -74,3 +74,16 @@ export enum DeviceLabels {
 }
 
 export type DeviceLabelTrigger = () => Promise<MediaStream>;
+
+export type MeetingFeatures = {
+  Audio: {[key: string]: string};
+}
+
+export type CreateMeetingResponse = {
+  MeetingFeatures: MeetingFeatures;
+}
+
+export type JoinMeetingInfo = {
+  Meeting: CreateMeetingResponse;
+  Attendee: string;
+}
