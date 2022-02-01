@@ -21,7 +21,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
-  const [isReachVideoLimit, setIsReachVideoLimit] = useState(false);
+  const [hasReachedVideoLimit, setHasReachedVideoLimit] = useState(false);
   const [tileId, setTileId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -36,9 +36,9 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     const observer: AudioVideoObserver = {
       videoAvailabilityDidChange: (availability) => {
         if (!availability.canStartLocalVideo) {
-          setIsReachVideoLimit(true);
+          setHasReachedVideoLimit(true);
         } else {
-          setIsReachVideoLimit(false);
+          setHasReachedVideoLimit(false);
         }
         console.log(
           'video availability changed: canStartLocalVideo ',
@@ -55,16 +55,19 @@ const LocalVideoProvider: React.FC = ({ children }) => {
   }, [audioVideo]);
 
   useEffect(() => {
-    if (isReachVideoLimit) {
+    if (hasReachedVideoLimit) {
       console.warn('Reach the number of maximum active videos');
     }
-  }, [isReachVideoLimit]);
+  }, [hasReachedVideoLimit]);
 
   const toggleVideo = useCallback(async (): Promise<void> => {
     if (isVideoEnabled || !meetingManager.selectedVideoInputTransformDevice) {
+      if (!meetingManager.selectedVideoInputTransformDevice) {
+        console.warn('There is no input video device chosen!');
+      }
       audioVideo?.stopLocalVideoTile();
       setIsVideoEnabled(false);
-    } else if (!isReachVideoLimit) {
+    } else if (!hasReachedVideoLimit) {
       await audioVideo?.chooseVideoInputDevice(
         meetingManager.selectedVideoInputTransformDevice
       );
@@ -76,7 +79,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
   }, [
     audioVideo,
     isVideoEnabled,
-    isReachVideoLimit,
+    hasReachedVideoLimit,
     meetingManager.selectedVideoInputTransformDevice,
   ]);
 

@@ -3,6 +3,7 @@
 
 import {
   AudioTransformDevice,
+  AudioVideoFacade,
   Device,
   VoiceFocusTransformDevice,
 } from 'amazon-chime-sdk-js';
@@ -14,6 +15,7 @@ import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { useVoiceFocus } from '../../../providers/VoiceFocusProvider';
+import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { DeviceConfig, DeviceType } from '../../../types';
 import {
   audioInputSelectionToDevice,
@@ -51,6 +53,7 @@ const AudioInputVFControl: React.FC<Props> = ({
   voiceFocusOffLabel = 'Enable Amazon Voice Focus',
   appendSampleDevices = true,
 }) => {
+  const audioVideo = useAudioVideo();
   const meetingManager = useMeetingManager();
   const [isLoading, setIsLoading] = useState(false);
   // When the user click on Amazon Voice Focus option, the state will change.
@@ -101,6 +104,15 @@ const AudioInputVFControl: React.FC<Props> = ({
       setIsVoiceFocusEnabled(false);
     }
   }, [device]);
+
+  useEffect(() => {
+    if (!audioVideo) {
+      return;
+    }
+    if (device instanceof VoiceFocusTransformDevice && isVoiceFocusEnabled) {
+      device.observeMeetingAudio(audioVideo as AudioVideoFacade);
+    }
+  }, [audioVideo, isVoiceFocusEnabled, device]);
 
   useEffect(() => {
     const dropdownOptions: ReactNode[] = audioInputDevices.map((device) => (
