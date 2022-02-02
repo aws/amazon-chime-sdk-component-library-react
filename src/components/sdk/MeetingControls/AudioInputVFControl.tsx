@@ -12,10 +12,10 @@ import React, { ReactNode, useEffect, useState } from 'react';
 
 import { PopOverSeparator } from '../../..';
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
+import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { useVoiceFocus } from '../../../providers/VoiceFocusProvider';
-import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { DeviceConfig, DeviceType } from '../../../types';
 import {
   audioInputSelectionToDevice,
