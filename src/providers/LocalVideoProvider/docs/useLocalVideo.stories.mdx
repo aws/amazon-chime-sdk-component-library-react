@@ -23,6 +23,9 @@ To start/stop user's local video, use `toggleVideo` function from the `LocalVide
   // A function to set the value of `isVideoEnabled`
   setIsVideoEnabled: (isEnabled: boolean) => void;
 
+  // Whether or not video limit is reached, it defaults to false
+  hasReachedVideoLimit: boolean;
+
   // A function that toggles the local user's video
   toggleVideo: () => Promise<void>;
 }
@@ -52,13 +55,18 @@ const App = () => (
 );
 
 const MyChild = () => {
-  const { tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo } = useLocalVideo();
+  const { tileId, isVideoEnabled, setIsVideoEnabled, 
+  hasReachedVideoLimit, toggleVideo } = useLocalVideo();
 
   return (
     <p>Tile ID: {tileId}</p>
 
     <p>
-      {setIsVideoEnabled ? 'LocalVideo is enabled' : 'LocalVideo is disabled'}
+      {isVideoEnabled ? 'LocalVideo is enabled' : 'LocalVideo is disabled'}
+    </p>
+
+    <p>
+      {hasReachedVideoLimit ? 'Video limit reached' : 'Video limit not reached'}
     </p>
 
     <button onClick={() => setIsVideoEnabled(true)}>
@@ -66,7 +74,8 @@ const MyChild = () => {
     </button>
     
     <button onClick={toggleVideo}>
-      {isVideoEnabled ? 'Stop your video' : 'Start your video'}
+      {isVideoEnabled ? 'Stop your video' : hasReachedVideoLimit ? 
+      'Has reached the video limit, can not turn on video' : 'Start your video'}
     </button>
   );
 };

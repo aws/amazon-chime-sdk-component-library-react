@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Allow builders to supply the response from a `CreateMeeting` or `CreateMeetingWithAttendees` call when adding a `VoiceFocusProvider` to the component tree. This enables optional features like Amazon Chime Echo Reduction to be added to devices when turning on Amazon Voice Focus.
+- Add `videoAvailabilityDidChange` as an audio observer in `LocalVideoProvider` and a new state `hasReachedVideoLimit` to disable the video button when the video limit is reached.
+- Add `keepLastFrameWhenPaused` as an optional parameter to allow to keep the last frame of the video when a remote video is paused via the pauseVideoTile.
 
 ### Changed
 
@@ -25,8 +27,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Add `BackgroundReplacementProvider` provider to support background replacement.
-- Add `keepLastFrameWhenPaused` as an optional parameter to allow to keep the last frame of the video when a remote video is paused via the pauseVideoTile.
-
 
 ### Changed
 

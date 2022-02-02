@@ -21,6 +21,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
+  const [hasReachedVideoLimit, setHasReachedVideoLimit] = useState(false);
   const [tileId, setTileId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -32,25 +33,53 @@ const LocalVideoProvider: React.FC = ({ children }) => {
       setIsVideoEnabled(true);
     }
 
+    const observer: AudioVideoObserver = {
+      videoAvailabilityDidChange: (availability) => {
+        if (!availability.canStartLocalVideo) {
+          setHasReachedVideoLimit(true);
+        } else {
+          setHasReachedVideoLimit(false);
+        }
+        console.log(
+          'video availability changed: canStartLocalVideo ',
+          availability.canStartLocalVideo
+        );
+      },
+    };
+    audioVideo.addObserver(observer);
+
     return () => {
       setIsVideoEnabled(false);
+      audioVideo.removeObserver(observer);
     };
   }, [audioVideo]);
 
+  useEffect(() => {
+    if (hasReachedVideoLimit) {
+      console.warn('Reach the number of maximum active videos');
+    }
+  }, [hasReachedVideoLimit]);
+
   const toggleVideo = useCallback(async (): Promise<void> => {
     if (isVideoEnabled || !meetingManager.selectedVideoInputTransformDevice) {
+      if (!meetingManager.selectedVideoInputTransformDevice) {
+        console.warn('There is no input video device chosen!');
+      }
       audioVideo?.stopLocalVideoTile();
       setIsVideoEnabled(false);
-    } else {
+    } else if (!hasReachedVideoLimit) {
       await audioVideo?.chooseVideoInputDevice(
         meetingManager.selectedVideoInputTransformDevice
       );
       audioVideo?.startLocalVideoTile();
       setIsVideoEnabled(true);
+    } else {
+      console.error('Video limit is reached and can not turn on more videos!');
     }
   }, [
     audioVideo,
     isVideoEnabled,
+    hasReachedVideoLimit,
     meetingManager.selectedVideoInputTransformDevice,
   ]);
 
