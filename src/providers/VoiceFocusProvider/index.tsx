@@ -8,9 +8,9 @@ import {
   VoiceFocusSpec,
   VoiceFocusTransformDevice,
 } from 'amazon-chime-sdk-js';
-import {JoinMeetingInfo} from '../../types';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
+import { JoinMeetingInfo } from '../../types';
 import useMemoCompare from '../../utils/use-memo-compare';
 
 interface Props {
@@ -36,11 +36,11 @@ interface VoiceFocusState {
 
 const VoiceFocusContext = createContext<VoiceFocusState | null>(null);
 
-const VoiceFocusProvider: React.FC<Props> = ({ 
-  spec, 
-  options, 
+const VoiceFocusProvider: React.FC<Props> = ({
+  spec,
+  options,
   createMeetingResponse,
-  children, 
+  children,
 }) => {
   const [isVoiceFocusSupported, setIsVoiceFocusSupported] = useState<
     boolean | undefined
@@ -58,7 +58,10 @@ const VoiceFocusProvider: React.FC<Props> = ({
       prev: VoiceFocusSpec | undefined,
       next: VoiceFocusSpec | undefined
     ): boolean => {
-      if (Object.is(prev, next) || JSON.stringify(prev) === JSON.stringify(next)) {
+      if (
+        Object.is(prev, next) ||
+        JSON.stringify(prev) === JSON.stringify(next)
+      ) {
         return true;
       }
 
@@ -142,14 +145,14 @@ const VoiceFocusProvider: React.FC<Props> = ({
     spec: VoiceFocusSpec | undefined,
     options: VoiceFocusDeviceOptions | undefined,
     canceled: () => boolean,
-    createMeetingResponse?: JoinMeetingInfo | undefined,
+    createMeetingResponse?: JoinMeetingInfo | undefined
   ): Promise<VoiceFocusDeviceTransformer> {
     const fetch = VoiceFocusDeviceTransformer.create(
-      spec, 
-      options, 
-      undefined, 
+      spec,
+      options,
+      undefined,
       createMeetingResponse
-      );
+    );
     fetch
       .then((transformer) => {
         // A different request arrived afterwards. Drop this one on the floor
@@ -181,12 +184,17 @@ const VoiceFocusProvider: React.FC<Props> = ({
     vfSpec: VoiceFocusSpec | undefined,
     options: VoiceFocusDeviceOptions | undefined,
     canceled: () => boolean,
-    createMeetingResponse: JoinMeetingInfo | undefined,
+    createMeetingResponse: JoinMeetingInfo | undefined
   ) {
     // Throw away the old one and reinitialize.
     setVoiceFocusTransformer(null);
     setVoiceFocusDevice(null);
-    createVoiceFocusDeviceTransformer(vfSpec, options, canceled, createMeetingResponse);
+    createVoiceFocusDeviceTransformer(
+      vfSpec,
+      options,
+      canceled,
+      createMeetingResponse
+    );
   }
 
   useEffect(() => {
