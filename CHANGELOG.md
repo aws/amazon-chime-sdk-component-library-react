@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Fixed
+- Fix `PreviewVideo` not starting if audioVideo is set after the video device.
 - Fix a bug in `BackgroundBlurProvider` and `BackgroundReplacementProvider` where the options objects are updated and causing re-rendering and destroying previous processor.
 
 ### Added

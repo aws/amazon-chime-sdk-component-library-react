@@ -37,7 +37,7 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
     return () => {
       meetingManager.unsubscribeFromSelectedVideoInputTranformDevice(setDevice);
     };
-  }, []);
+  }, [meetingManager]);
 
   useEffect(() => {
     const videoElement = videoEl.current;
@@ -47,7 +47,7 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
         setIsVideoEnabled(false);
       }
     };
-  }, [audioVideo]);
+  }, [audioVideo, setIsVideoEnabled]);
 
   useEffect(() => {
     if (!audioVideo || !device || !videoEl.current) {
@@ -64,7 +64,7 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
       }
     }
     startPreview();
-  }, [device]);
+  }, [meetingManager, device, audioVideo, setIsVideoEnabled]);
 
   return <StyledPreview {...props} ref={videoEl} />;
 };
