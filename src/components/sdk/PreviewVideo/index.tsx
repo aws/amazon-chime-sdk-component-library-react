@@ -64,7 +64,7 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
       }
     }
     startPreview();
-  }, [device]);
+  }, [audioVideo, device]);
 
   return <StyledPreview {...props} ref={videoEl} />;
 };
