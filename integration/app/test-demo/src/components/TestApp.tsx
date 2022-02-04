@@ -5,7 +5,7 @@ const TestApp: React.FC<{ name: string, route: string, components: string[], hoo
   const componentList = components.map(component => <li key={component}>{component}</li>);
   const hookList = hooks.map(hook => <li key={hook}>{hook}</li>);
   return (
-    <li>
+    <li style={{marginBottom: '1rem'}}>
       <Link to={route}>{name}</Link>
       <header>Component Coverage</header>
       <ul>
