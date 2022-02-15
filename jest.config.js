@@ -1,5 +1,6 @@
 module.exports = {
   testRegex: './*\\.test\\.tsx$',
+  setupFiles: ['jest-useragent-mock'],
   setupFilesAfterEnv: ['./tst/setupTests.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'jsx', 'node'],
   transform: {
