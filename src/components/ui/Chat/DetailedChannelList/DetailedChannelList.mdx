@@ -1,0 +1,53 @@
+import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import DetailedChannelList from './';
+import { _DetailedChannelList } from './DetailedChannelList.stories.tsx';
+import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import PopOverItem from '../../PopOver/PopOverItem';
+
+# DetailedChannelList
+
+The DetailedChannelList component displays a column of chat channels along with last message's content and timestamp.
+
+## Importing
+
+```javascript
+import { DetailedChannelList } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
+  <Preview>
+    <_DetailedChannelList />
+  </Preview>
+</ThemeProvider>
+
+```jsx
+<DetailedChannelList
+  activeChannelId={activeChannelId}
+  setActiveChannelId={setActiveChannelId}
+>
+  <DetailedChannelItem
+    name='Channel 1'
+    channelMessage = "hello"
+    channelMessageTime = "2:30pm"
+    id='abc'
+    actions={<PopOverItem children={<span>Option 1</span>} onClick={() => console.log('Option 1 clicked')} />}
+  />
+  <DetailedChannelItem
+    name='Channel 2'
+    channelMessage = "hello"
+    channelMessageTime = "12:30pm"
+    id='dce'
+    actions={<PopOverItem children={<span>Option 1</span>} onClick={() => console.log('Option 1 clicked')} />}
+  />
+</DetailedChannelList>
+```
+
+## Props
+
+<Props of={DetailedChannelList} />

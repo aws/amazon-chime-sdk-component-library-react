@@ -12,6 +12,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add styling guide documentation for customizing SDK and UI component CSS.
 - Extend and enabled style customizing capabilities on the SDK components.
+- Add a new chat UI component DetailedChannelList which displays a list of channels with channel name, last message content and 
+timestamp, as well as unread channel badge.
 ### Changed
 
 ### Removed
