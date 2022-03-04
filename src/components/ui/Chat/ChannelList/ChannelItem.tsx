@@ -26,21 +26,65 @@ export interface ChannelItemProps
   unread?: boolean;
   /** Content of the badge signaling unread messages, such as a badge displaying the number. */
   unreadBadgeLabel?: string;
+  /** Boolean to indicate if we want to display the channel with last channel message and timestamp */
+  displayLastChannelMessageAndTimestamp?: boolean;
+  /* Display last channel message of the channel */
+  lastChannelMessage?: string;
+  /* Display the timestamp of last channel message of the channel */
+  lastChannelMessageTimestamp?: string;
 }
 
 export const ChannelItem: FC<ChannelItemProps> = (props) => {
-  const { name, actions, isSelected, onClick, unread, unreadBadgeLabel } =
-    props;
+  const {
+    name,
+    actions,
+    isSelected,
+    onClick,
+    unread,
+    unreadBadgeLabel,
+    displayLastChannelMessageAndTimestamp,
+    lastChannelMessage,
+    lastChannelMessageTimestamp,
+  } = props;
   return (
     <StyledChannelItem
       {...props}
       className={classnames({ 'ch-selected': isSelected, 'ch-unread': unread })}
     >
-      <Button className="ch-channel-button" label={name} onClick={onClick} />
-      {unread && unreadBadgeLabel && (
+      {displayLastChannelMessageAndTimestamp ? (
+        <div className={'ch-channel-detailed'} onClick={onClick}>
+          <div className="channel-name">{name}</div>
+          <div className="channel-message">{lastChannelMessage}</div>
+          <div className="channel-message-time">
+            {lastChannelMessageTimestamp}
+          </div>
+        </div>
+      ) : (
+        <Button className="ch-channel-button" label={name} onClick={onClick} />
+      )}
+      {displayLastChannelMessageAndTimestamp && unread && unreadBadgeLabel && (
+        <Badge value={unreadBadgeLabel} className="ch-unread-badge-detailed" />
+      )}
+      {!displayLastChannelMessageAndTimestamp && unread && unreadBadgeLabel && (
         <Badge value={unreadBadgeLabel} className="ch-unread-badge" />
       )}
-      {actions && isSelected && (
+      {displayLastChannelMessageAndTimestamp && actions && isSelected && (
+        <PopOver
+          className={'ch-popover-toggle-detailed'}
+          a11yLabel="Open channel options"
+          placement="bottom-end"
+          renderButton={(isOpen: boolean) => (
+            <Dots
+              width="1.5rem"
+              height="1.5rem"
+              className={`${isOpen ? 'isOpen' : ''} ch-channel-actions`}
+              data-testid="channel-actions"
+            />
+          )}
+          children={actions}
+        />
+      )}
+      {!displayLastChannelMessageAndTimestamp && actions && isSelected && (
         <PopOver
           a11yLabel="Open channel options"
           placement="bottom-end"

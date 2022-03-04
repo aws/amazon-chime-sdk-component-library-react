@@ -10,7 +10,6 @@ import ChannelList from './';
 import ChannelItem from './ChannelItem';
 import PopOverItem from '../../PopOver/PopOverItem';
 import ChannelListDocs from './ChannelList.mdx';
-import Badge from '../../Badge';
 
 export default {
   title: 'UI Components/Chat',
@@ -39,6 +38,9 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel1')}
+          displayLastChannelMessageAndTimestamp={boolean('displayLastChannelMessageAndTimestamp', false)}
+          lastChannelMessage = "Alice: Hello, how are you doing recently?"
+          lastChannelMessageTimestamp = "5:01 pm"
           isSelected={activeChannelId === 'channel1'}
         />
         <ChannelItem
@@ -50,6 +52,9 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel2')}
+          displayLastChannelMessageAndTimestamp={boolean('displayLastChannelMessageAndTimestamp', false)}
+          lastChannelMessage = "Bob: Good morning!"
+          lastChannelMessageTimestamp = "Yesterday"
           isSelected={activeChannelId === 'channel2'}
         />
         <ChannelItem
@@ -61,6 +66,9 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel3')}
+          displayLastChannelMessageAndTimestamp={boolean('displayLastChannelMessageAndTimestamp', false)}
+          lastChannelMessage = "Alice: [Attachment]"
+          lastChannelMessageTimestamp = "Jan 27"
           isSelected={activeChannelId === 'channel3'}
         />
         <ChannelItem
@@ -72,6 +80,8 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel4')}
+          displayLastChannelMessageAndTimestamp={boolean('displayLastChannelMessageAndTimestamp', false)}
+          lastChannelMessage = "No Message Sent On Channel"
           isSelected={activeChannelId === 'channel4'}
         />
       </ChannelList>

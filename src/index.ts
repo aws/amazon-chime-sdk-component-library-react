@@ -50,8 +50,6 @@ export { UserActivityManager } from './components/ui/UserActivityManager';
 export { ChannelList } from './components/ui/Chat/ChannelList';
 export { ChannelItem } from './components/ui/Chat/ChannelList/ChannelItem';
 export { ChatBubble } from './components/ui/Chat/ChatBubble';
-export { DetailedChannelList } from './components/ui/Chat/DetailedChannelList';
-export { DetailedChannelItem } from './components/ui/Chat/DetailedChannelList/DetailedChannelItem';
 export { EditableChatBubble } from './components/ui/Chat/ChatBubble/EditableChatBubble';
 export { ChatBubbleContainer } from './components/ui/Chat/ChatBubble/ChatBubbleContainer';
 export { InfiniteList } from './components/ui/Chat/InfiniteList';
