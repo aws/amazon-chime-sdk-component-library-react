@@ -106,7 +106,7 @@ export const StyledChannelItem = styled.li<ChannelItemProps>`
     }
   }
 
-  & .ch-channel-detailed {
+  & .ch-detailed-channel {
     display: grid;
     grid-template-rows: 17px 1fr max-content;
     grid-gap: 16px;
@@ -130,7 +130,7 @@ export const StyledChannelItem = styled.li<ChannelItemProps>`
     }
   }
 
-  & .channel-name {
+  & .ch-detailed-channel-name {
     font-weight: bold;
     padding-left: 25px;
     white-space: nowrap;
@@ -140,7 +140,7 @@ export const StyledChannelItem = styled.li<ChannelItemProps>`
     max-width: 85%;
   }
 
-  & .channel-message {
+  & .ch-detailed-channel-message {
     grid-row: span 2;
     padding-left: 25px;
     white-space: nowrap;
@@ -150,7 +150,7 @@ export const StyledChannelItem = styled.li<ChannelItemProps>`
     max-width: 90%;
   }
 
-  & .channel-message-time {
+  & .ch-detailed-channel-message-time {
     position: absolute;
     top: 0.8rem;
     right: 0.5rem;
@@ -168,7 +168,7 @@ export const StyledChannelItem = styled.li<ChannelItemProps>`
     background-color: ${(props) => props.theme.colors.primary.light};
   }
 
-  &.ch-selected .ch-channel-detailed {
+  &.ch-selected .ch-detailed-channel {
     background-color: ${(props) => props.theme.colors.primary.light};
     color: ${(props) => props.theme.channelList.selected.fontColor};
 

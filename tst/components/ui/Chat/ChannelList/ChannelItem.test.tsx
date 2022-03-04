@@ -23,7 +23,7 @@ describe('ChannelItem', () => {
     const component =
         <ChannelItem
             name="Channel 1"
-            displayLastChannelMessageAndTimestamp = {'channel1' === 'channel1'}
+            displayDetailedChannelView = {'channel1' === 'channel1'}
             lastChannelMessage = 'Alice: Hello!'
             lastChannelMessageTimestamp = "5:01 pm"
             onClick={() => null} />;

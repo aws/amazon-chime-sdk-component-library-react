@@ -22,15 +22,15 @@ export interface ChannelItemProps
   isSelected?: boolean;
   /** Callback function when clicked */
   onClick: () => void;
-  /** Signifies of there are unread message in the channel. */
+  /** Signifies if there are unread message in the channel. */
   unread?: boolean;
   /** Content of the badge signaling unread messages, such as a badge displaying the number. */
   unreadBadgeLabel?: string;
-  /** Boolean to indicate if we want to display the channel with last channel message and timestamp */
-  displayLastChannelMessageAndTimestamp?: boolean;
-  /* Display last channel message of the channel */
+  /** Indicate if we want to display the detailed channel view with last channel message or timestamp */
+  displayDetailedChannelView?: boolean;
+  /* Content of the last channel message to be displayed */
   lastChannelMessage?: string;
-  /* Display the timestamp of last channel message of the channel */
+  /* Timestamp of the last channel message to be displayed */
   lastChannelMessageTimestamp?: string;
 }
 
@@ -42,33 +42,44 @@ export const ChannelItem: FC<ChannelItemProps> = (props) => {
     onClick,
     unread,
     unreadBadgeLabel,
-    displayLastChannelMessageAndTimestamp,
+    displayDetailedChannelView,
     lastChannelMessage,
     lastChannelMessageTimestamp,
   } = props;
+
+  const displayUnreadBadgeForDetailedView =
+    displayDetailedChannelView && unread && unreadBadgeLabel;
+  const displayUnreadBadgeForSimpleView =
+    !displayDetailedChannelView && unread && unreadBadgeLabel;
+  const displayPopOverForDetailedView =
+    displayDetailedChannelView && actions && isSelected;
+  const displayPopOverForSimpleView =
+    !displayDetailedChannelView && actions && isSelected;
   return (
     <StyledChannelItem
       {...props}
       className={classnames({ 'ch-selected': isSelected, 'ch-unread': unread })}
     >
-      {displayLastChannelMessageAndTimestamp ? (
-        <div className={'ch-channel-detailed'} onClick={onClick}>
-          <div className="channel-name">{name}</div>
-          <div className="channel-message">{lastChannelMessage}</div>
-          <div className="channel-message-time">
+      {displayDetailedChannelView ? (
+        <div className={'ch-detailed-channel'} onClick={onClick}>
+          <div className="ch-detailed-channel-name">{name}</div>
+          <div className="ch-detailed-channel-message">
+            {lastChannelMessage}
+          </div>
+          <div className="ch-detailed-channel-message-time">
             {lastChannelMessageTimestamp}
           </div>
         </div>
       ) : (
         <Button className="ch-channel-button" label={name} onClick={onClick} />
       )}
-      {displayLastChannelMessageAndTimestamp && unread && unreadBadgeLabel && (
-        <Badge value={unreadBadgeLabel} className="ch-unread-badge-detailed" />
+      {displayUnreadBadgeForDetailedView && (
+        <Badge value={unreadBadgeLabel!} className="ch-unread-badge-detailed" />
       )}
-      {!displayLastChannelMessageAndTimestamp && unread && unreadBadgeLabel && (
-        <Badge value={unreadBadgeLabel} className="ch-unread-badge" />
+      {displayUnreadBadgeForSimpleView && (
+        <Badge value={unreadBadgeLabel!} className="ch-unread-badge" />
       )}
-      {displayLastChannelMessageAndTimestamp && actions && isSelected && (
+      {displayPopOverForDetailedView && (
         <PopOver
           className={'ch-popover-toggle-detailed'}
           a11yLabel="Open channel options"
@@ -84,7 +95,7 @@ export const ChannelItem: FC<ChannelItemProps> = (props) => {
           children={actions}
         />
       )}
-      {!displayLastChannelMessageAndTimestamp && actions && isSelected && (
+      {displayPopOverForSimpleView && (
         <PopOver
           a11yLabel="Open channel options"
           placement="bottom-end"

@@ -38,7 +38,7 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel1')}
-          displayLastChannelMessageAndTimestamp={boolean('displayLastChannelMessageAndTimestamp', false)}
+          displayDetailedChannelView={boolean('displayDetailedChannelView', false)}
           lastChannelMessage = "Alice: Hello, how are you doing recently?"
           lastChannelMessageTimestamp = "5:01 pm"
           isSelected={activeChannelId === 'channel1'}
@@ -52,7 +52,7 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel2')}
-          displayLastChannelMessageAndTimestamp={boolean('displayLastChannelMessageAndTimestamp', false)}
+          displayDetailedChannelView={boolean('displayDetailedChannelView', false)}
           lastChannelMessage = "Bob: Good morning!"
           lastChannelMessageTimestamp = "Yesterday"
           isSelected={activeChannelId === 'channel2'}
@@ -66,7 +66,7 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel3')}
-          displayLastChannelMessageAndTimestamp={boolean('displayLastChannelMessageAndTimestamp', false)}
+          displayDetailedChannelView={boolean('displayDetailedChannelView', false)}
           lastChannelMessage = "Alice: [Attachment]"
           lastChannelMessageTimestamp = "Jan 27"
           isSelected={activeChannelId === 'channel3'}
@@ -80,7 +80,7 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel4')}
-          displayLastChannelMessageAndTimestamp={boolean('displayLastChannelMessageAndTimestamp', false)}
+          displayDetailedChannelView={boolean('displayDetailedChannelView', false)}
           lastChannelMessage = "No Message Sent On Channel"
           isSelected={activeChannelId === 'channel4'}
         />

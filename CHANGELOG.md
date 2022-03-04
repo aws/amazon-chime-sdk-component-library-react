@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Add styling guide documentation for customizing SDK and UI component CSS.
 - Extend and enabled style customizing capabilities on the SDK components.
-- Updated the ChannelList UI component to take in an optional boolean `displayLastChannelMessageAndTimestamp`. If the boolean is set to true then it will display the last message content and timestamp for each channel item.
+- Updated the ChannelList UI component to take in an optional boolean `displayDetailedChannelView`. If the boolean is set to true then it will display the last message content and timestamp for each channel item.
 ### Changed
 
 ### Removed
