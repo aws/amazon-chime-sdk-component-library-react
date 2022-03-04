@@ -6,7 +6,7 @@ Version 3 of the Amazon Chime React Component Library makes small changes to the
 
 ### IMPORTANT - Version 3 of the library also requires a dependency to version 3.0.0 or higher of the amazon-chime-sdk-js.
 
-In many cases you will need to adjust your application code because interface parameters to root providers like Meeting Provider are updated.
+In many cases, you will need to adjust your application code because interface parameters to root providers like `MeetingProvider` are updated.
 
 ## Installation
 
@@ -24,6 +24,11 @@ npm install --save amazon-chime-sdk-component-library-react@beta amazon-chime-sd
 - Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
 - Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
 - Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
+- Add `MeetingSessionConfiguration` as a required parameter to `MeetingManager.join()` method. With this change the builders have direct access to `MeetingSessionConfiguration`, this will allow more flexibility to customize the `MeetingSession`.
+- Add `MeetingManagerJoinOptions` as a new interface for the `options` parameter of the `MeetingManager.join` method.
+- Add `deviceLabels`, `eventController`, `logLevel`, `postLoggerConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface. 
+- Remove `MeetingSessionConfiguration` properties from `MeetingProvider` props.
+- Remove `deviceLabels`, `eventController`, `logLevel`, `postLogConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
 
 ### Updating `EventReporter` to `EventController`
 
@@ -38,7 +43,7 @@ const MyApp = () => {
     const joinData = {
       meetingInfo: data.Meeting,
       attendeeInfo: data.Attendee,
-      eventReporter: new NoOpEventReporter()
+      eventReporter: new NoOpEventReporter(),
     };
     try {
       await meetingManager.join(joinData);
@@ -63,17 +68,19 @@ const MyApp = () => {
     const data = await response.json();
     const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
     const eventController = new DefaultEventController(
-        meetingSessionConfiguration, 
-        meetingManager.createLogger(meetingSessionConfiguration), 
-        new NoOpEventReporter()
-      );
-    const joinData = {
-      meetingSessionConfiguration: meetingSessionConfiguration,
-      eventController: eventController
+      meetingSessionConfiguration, 
+      new ConsoleLogger('SDK', LogLevel.WARN), 
+      new NoOpEventReporter()
+    );
+    const options = {
+      eventController
     };
 
     try {
-      await meetingManager.join(joinData);
+      await meetingManager.join(
+        meetingSessionConfiguration,
+        options
+      );
     } catch {
       console.error('Something went wrong');
     }
@@ -81,6 +88,275 @@ const MyApp = () => {
   
   return (
     <button onClick={joinMeeting}>Join Meeting</button>;
+  );
+};
+```
+
+### `MeetingProvider` props change
+
+`MeetingProvider` no longer takes the following props:
+- `MeetingSessionConfiguration` properties:
+  - `VideoDownlinkBandwidthPolicy`
+  - `VideoUplinkBandwidthPolicy`
+  - `simulcastEnabled`
+  - `reconnectTimeoutMs`
+  - `keepLastFrameWhenPaused`
+- Other props:
+  - `deviceLabels`
+  - `eventController`
+  - `logLevel`
+  - `postLogConfig`
+  - `logger`
+  - `enableWebAudio`
+  - `activeSpeakerPolicy`
+
+These props can rather be updated by passing the `MeetingSessionConfiguration` object or by passing `options` props to `meetingManager.join()` method. 
+
+You can learn more about the `meetingManager.join()` method here: [MeetingManager](/docs/sdk-providers-meetingmanager--page).
+
+#### Examples
+
+##### VideoDownlinkBandwidthPolicy
+
+The following example uses `VideoDownlinkBandwidthPolicy` property as an example to showcase the change.
+
+Before in 2.x:
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  // MyVideoDownlinkBandwidthPolicy is a custom class implementing VideoDownlinkBandwidthPolicy interface from amazon-chime-sdk-js.
+  const videoDownlinkBandwidthPolicy = new MyVideoDownlinkBandwidthPolicy();
+  const meetingConfig = {
+    videoDownlinkBandwidthPolicy,
+  };
+
+  return (
+    <MeetingProvider {...meetingConfig}>
+      <MyApp />
+    </MeetingProvider>
+  );
+};
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+  await meetingManger.join({
+    data.Meeting,
+    data.Attendee
+  });
+
+  return (
+    <div>
+      ...
+    </div>
+  );
+};
+```
+
+After in 3.x:
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
+
+const App = () => {
+  return(
+    <MeetingProvider>
+      <MyApp />
+    </MeetingProvider>
+  );
+};
+
+const MyApp = () => {
+  // MyVideoDownlinkBandwidthPolicy is a custom class implementing VideoDownlinkBandwidthPolicy interface from amazon-chime-sdk-js.
+  const videoDownlinkBandwidthPolicy = new MyVideoDownlinkBandwidthPolicy();
+
+  const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+  meetingSessionConfiguration.videoDownlinkBandwidthPolicy = videoDownlinkBandwidthPolicy;
+
+  const meetingManager = useMeetingManager();
+  await meetingManager.join(
+    meetingSessionConfiguration
+  );
+
+  return (
+    <div>
+      ...
+    </div>
+  );
+};
+```
+
+##### simulcastEnabled
+
+One thing to note is that the `MeetingProvider` props might not have the same mapping with `MeetingSessionConfiguration` properties.
+For example, `simulcastEnabled` in `MeetingProvider` and the property in `MeetingSessionConfiguration` is different. The following code example should help remove any confusion.
+
+Before in 2.x:
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  const meetingConfig = {
+    simulcastEnabled: false,
+  };
+
+  return(
+    <MeetingProvider {...meetingConfig}>
+      <MyApp />
+    </MeetingProvider>
+  );
+};
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+  await meetingManger.join({
+    data.Meeting,
+    data.Attendee
+  });
+
+  return (
+    <div>
+      ...
+    </div>
+  );
+};
+```
+
+After in 3.x:
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
+
+const App = () => {
+  return(
+    <MeetingProvider>
+      <MyApp />
+    </MeetingProvider>
+  );
+};
+
+const MyApp = () => {
+  const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+  meetingSessionConfiguration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = false;
+
+  const meetingManager = useMeetingManager();
+  await meetingManager.join(
+    meetingSessionConfiguration
+  );
+
+  return (
+    <div>
+      ...
+    </div>
+  );
+};
+```
+
+##### enableWebAudio
+
+The following example uses `enableWebAudio` property as an example to showcase the change. `enableWebAudio` is chosen here because it is one of the properties that is affected and it is not part of `MeetingSessionConfiguration`. 
+
+Before in 2.x:
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  const meetingConfig = {
+    enableWebAudio: true,
+  };
+
+  return(
+    <MeetingProvider {...meetingConfig}>
+      <MyApp />
+    </MeetingProvider>
+  );
+};
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+  await meetingManger.join({
+    data.Meeting,
+    data.Attendee
+  });
+
+  return (
+    <div>
+      ...
+    </div>
+  );
+};
+```
+
+After in 3.x:
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
+
+const App = () => {
+  return(
+    <MeetingProvider>
+      <MyApp />
+    </MeetingProvider>
+  );
+};
+
+const MyApp = () => {
+  const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+  const options = {
+    enableWebAudio: true,
+  };
+
+  const meetingManager = useMeetingManager();
+  await meetingManager.join(
+    meetingSessionConfiguration,
+    options
+  );
+
+  return (
+    <div>
+      ...
+    </div>
+  );
+};
+```
+
+### `MeetingManager` `join` method parameter change
+
+In V3, `MeetingManager`'s `join` method takes `MeetingSessionConfiguraiton` and `options` as parameter.
+`meetingInfo` and `attendeeInfo` parameters are removed from the interface and are rather passed to the constructor of `MeetingSessionConfiguration`.
+
+Before in 2.x:
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+  await meetingManager.join({
+    data.Meeting,
+    data.Attendee
+  });
+};
+```
+
+After in 3.x:
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
+
+const MyApp = () => {
+  const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+  
+  const meetingManager = useMeetingManager();
+  await meetingManager.join(
+    meetingSessionConfiguration
   );
 };
 ```

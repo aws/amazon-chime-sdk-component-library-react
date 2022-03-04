@@ -67,6 +67,7 @@ import {
   MeetingProvider,
   useMeetingManager
 } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const App = () => (
   <MeetingProvider>
@@ -81,13 +82,12 @@ const MyApp = () => {
     const response = await fetch('/my-meetings-endpoint');
     const data = await response.json();
 
-    const joinData = {
-      meetingInfo: data.Meeting,
-      attendeeInfo: data.Attendee
-    };
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
 
     try {
-      await meetingManager.join(joinData);
+      await meetingManager.join(
+        meetingSessionConfiguration
+      );
     } catch {
       console.error('Something went wrong');
     }
@@ -119,6 +119,7 @@ import {
   MeetingProvider,
   useMeetingManager
 } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MyApp = () => {
   const meetingManager = useMeetingManager();
@@ -128,17 +129,19 @@ const MyApp = () => {
     const data = await response.json();
     const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
     const eventController = new DefaultEventController(
-        meetingSessionConfiguration, 
-        meetingManager.createLogger(meetingSessionConfiguration), 
-        new NoOpEventReporter()
-      );
-    const joinData = {
-      meetingSessionConfiguration: meetingSessionConfiguration,
-      eventController: eventController
+      meetingSessionConfiguration, 
+      new ConsoleLogger('SDK', LogLevel.WARN), 
+      new NoOpEventReporter()
+    );
+    const options = {
+      eventController,
     };
 
     try {
-      await meetingManager.join(joinData);
+      await meetingManager.join(
+        meetingSessionConfiguration,
+        options
+      );
     } catch {
       console.error('Something went wrong');
     }

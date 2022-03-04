@@ -1,5 +1,5 @@
 module.exports = {
-  testRegex: './*\\.test\\.tsx$',
+  testRegex: './*\\.test\\.tsx?$',
   setupFilesAfterEnv: ['./tst/setupTests.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'jsx', 'node'],
   transform: {

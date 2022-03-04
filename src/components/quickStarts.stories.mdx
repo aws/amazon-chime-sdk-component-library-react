@@ -19,6 +19,7 @@ For example, a simple App to join the meeting in view-only mode.
 
 ```jsx
 import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MyApp = () => {
   const meetingManager = useMeetingManager();
@@ -28,15 +29,16 @@ const MyApp = () => {
     const response = await fetch('/my-server');
     const data = await response.json();
 
-    const joinData = {
-      meetingInfo: data.Meeting,
-      attendeeInfo: data.Attendee,
-      // SDK doesn't choose any device
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+    const options = {
       deviceLabels: DeviceLabels.None,
-    };
+    }
 
     // Use the join API to create a meeting session using the above data
-    await meetingManager.join(joinData);
+    await meetingManager.join(
+      meetingSessionConfiguration,
+      options
+    );
 
     // Skip devices setup
 
@@ -91,6 +93,7 @@ For example, a simple App to join a meeting that only requires camera using pres
 
 ```jsx
 import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MyApp = () => {
   const meetingManager = useMeetingManager();
@@ -100,15 +103,16 @@ const MyApp = () => {
     const response = await fetch('/my-server');
     const data = await response.json();
 
-    const joinData = {
-      meetingInfo: data.Meeting,
-      attendeeInfo: data.Attendee,
-      // Use preset options from `DeviceLabels` enum
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+    const options = {
       deviceLabels: DeviceLabels.Video,
     };
 
-    // Use the join API to create a meeting session using the above data
-    await meetingManager.join(joinData);
+    // Use the join API to create a meeting session using DeviceLabels.Video
+    await meetingManager.join(
+      meetingSessionConfiguration,
+      options
+    );
 
     // At this point you can let users setup their camera device
     // Or by default the SDK selects the first device in the list for the kind indicated by `deviceLabels`
@@ -142,6 +146,7 @@ For example, a simple App to join a meeting that only requires camera permission
 
 ```jsx
 import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MyApp = () => {
   const meetingManager = useMeetingManager();
@@ -151,22 +156,25 @@ const MyApp = () => {
     const response = await fetch('/my-server');
     const data = await response.json();
 
-    const joinData = {
-      meetingInfo: data.Meeting,
-      attendeeInfo: data.Attendee,
-      // Customize your own `DeviceLabelTrigger`
-      deviceLabels: async () => {
-          // Do something
-          const stream = await navigator.mediaDevices.getUserMedia({
-            video: true,
-          });
-          // Do something
-          return stream;
-        },
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+    // Customize your own `DeviceLabelTrigger`
+    const deviceLabels = async () => {
+      // Do something
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: true,
+      });
+      // Do something
+      return stream;
+    };
+    const options = {
+      deviceLabels,
     };
 
-    // Use the join API to create a meeting session using the above data
-    await meetingManager.join(joinData);
+    // Use the join API to create a meeting session using the `MeetingSessionConfiguration` and custom device label trigger
+    await meetingManager.join(
+      meetingSessionConfiguration,
+      options
+    );
 
     // At this point you can let users setup their camera
     ...
@@ -201,6 +209,7 @@ For example, join a meeting that doesn't require any device permission, and obta
 
 ```jsx
 import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MyApp = () => {
   const meetingManager = useMeetingManager();
@@ -210,15 +219,17 @@ const MyApp = () => {
     const response = await fetch('/my-server');
     const data = await response.json();
 
-    const joinData = {
-      meetingInfo: data.Meeting,
-      attendeeInfo: data.Attendee,
-      // Join a meeting without triggering any device permission prompt
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+    const options = {
       deviceLabels: DeviceLabels.None,
     };
 
-    // Use join API to create a MeetingSession using the above data
-    await meetingManager.join(joinData);
+    // Use join API to create a MeetingSession using the `MeetingSessionConfiguration` and device labels as None
+    // DeviceLabels.None will join a meeting without triggering any device permission prompt
+    await meetingManager.join(
+      meetingSessionConfiguration,
+      options
+    );
 
     // Skip devices setup
 
@@ -343,7 +354,7 @@ For example, to enable camera and display the video stream, in addition to using
 import {
   useLocalVideo,
   useMeetingManager,
-  VideoTileGrid
+  VideoTileGrid,
 } from 'amazon-chime-sdk-component-library-react';
 
 const MeetingView = () => {
@@ -447,11 +458,11 @@ const MyApp = () => {
       const user = await response.json();
 
       return {
-        name: user.name
+        name: user.name,
       }
     }
   }, [])
-}
+};
 ```
 
 ## How to Enable a Meeting to Post Logs to a URL?
@@ -501,7 +512,7 @@ import React from 'react';
 import { NoOpEventReporter, DefaultEventController, MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 import {
   MeetingProvider,
-  useMeetingManager
+  useMeetingManager,
 } from 'amazon-chime-sdk-component-library-react';
 
 const MyApp = () => {
@@ -511,17 +522,19 @@ const MyApp = () => {
     const data = await response.json();
     const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
     const eventController = new DefaultEventController(
-        meetingSessionConfiguration, 
-        meetingManager.createLogger(meetingSessionConfiguration), 
-        new NoOpEventReporter()
-      );
-    const joinData = {
-      meetingSessionConfiguration: meetingSessionConfiguration,
-      eventController: eventController
+      meetingSessionConfiguration, 
+      new ConsoleLogger('SDK', LogLevel.INFO), 
+      new NoOpEventReporter()
+    );
+    const options = {
+      eventController,
     };
 
     try {
-      await meetingManager.join(joinData);
+      await meetingManager.join(
+        meetingSessionConfiguration,
+        options
+      );
     } catch {
       console.error('Something went wrong');
     }

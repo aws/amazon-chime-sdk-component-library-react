@@ -6,8 +6,6 @@ import {
   EventController,
   Logger,
   LogLevel,
-  VideoDownlinkBandwidthPolicy,
-  VideoUplinkBandwidthPolicy,
 } from 'amazon-chime-sdk-js';
 
 import { DeviceLabels, DeviceLabelTrigger } from '../../types';
@@ -19,12 +17,14 @@ export enum DevicePermissionStatus {
   DENIED = 'DENIED',
 }
 
-export interface MeetingJoinData {
-  meetingInfo: any;
-  attendeeInfo: any;
+export interface MeetingManagerJoinOptions {
   deviceLabels?: DeviceLabels | DeviceLabelTrigger;
   eventController?: EventController;
-  meetingManagerConfig?: MeetingManagerConfig;
+  logLevel?: LogLevel;
+  postLoggerConfig?: PostLoggerConfig;
+  logger?: Logger;
+  enableWebAudio?: boolean;
+  activeSpeakerPolicy?: ActiveSpeakerPolicy;
 }
 
 export interface AttendeeResponse {
@@ -41,23 +41,10 @@ export type FullDeviceInfoType = {
   videoInputDevices: MediaDeviceInfo[] | null;
 };
 
-export interface PostLogConfig {
+export interface PostLoggerConfig {
   name: string;
   batchSize: number;
   intervalMs: number;
   url: string;
   logLevel: LogLevel;
-}
-
-export interface MeetingManagerConfig {
-  logLevel: LogLevel;
-  postLogConfig?: PostLogConfig;
-  simulcastEnabled?: boolean;
-  enableWebAudio?: boolean;
-  logger?: Logger;
-  activeSpeakerPolicy?: ActiveSpeakerPolicy;
-  videoUplinkBandwidthPolicy?: VideoUplinkBandwidthPolicy;
-  videoDownlinkBandwidthPolicy?: VideoDownlinkBandwidthPolicy;
-  reconnectTimeoutMs?: number;
-  keepLastFrameWhenPaused?: boolean;
 }

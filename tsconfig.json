@@ -25,10 +25,11 @@
   "exclude": [
     "node_modules",
     "build",
-    "tst",
+    "demo",
     "scripts",
     ".storybook",
     "src/**/*.stories.tsx",
     "coverage",
+    "tst" // TODO: This tst folder exclusion is causing parserIssues on linter due to the include on line 24. This tst folder include and exclude needs to be adjusted to remove the parserError. This tst folder exclusion cannot be removed as npm starts to fail.
   ]
 }

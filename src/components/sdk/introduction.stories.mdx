@@ -42,6 +42,7 @@ import {
   VideoTileGrid,
   useMeetingManager
 } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MyApp = () => {
   const meetingManager = useMeetingManager();
@@ -51,13 +52,13 @@ const MyApp = () => {
     const response = await fetch('/my-server');
     const data = await response.json();
 
-    const joinData = {
-      meetingInfo: data.Meeting,
-      attendeeInfo: data.Attendee
-    };
+    // Initalize the `MeetingSessionConfiguration`
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
 
-    // Use the join API to create a meeting session using the above data
-    await meetingManager.join(joinData);
+    // Use the join API to create a meeting session using the MeetingSessionConfiguration
+    await meetingManager.join(
+      meetingSessionConfiguration
+    );
 
     // At this point you could let users setup their devices, or by default 
     // the SDK will select the first device in the list for the s indicated

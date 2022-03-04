@@ -10,6 +10,7 @@ import {
   useMeetingManager,
 } from 'amazon-chime-sdk-component-library-react';
 import { createGetAttendeeCallback, fetchMeeting } from '../utils/api';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MeetingForm: React.FC = () => {
   const meetingManager = useMeetingManager();
@@ -23,10 +24,9 @@ const MeetingForm: React.FC = () => {
 
     try {
       const { JoinInfo } = await fetchMeeting(meetingId, name, 'us-east-1');
-      await meetingManager.join({
-        meetingInfo: JoinInfo.Meeting,
-        attendeeInfo: JoinInfo.Attendee,
-      });
+      await meetingManager.join(
+        new MeetingSessionConfiguration(JoinInfo.Meeting, JoinInfo.Attendee),
+      );
     } catch (error: any) {
       updateErrorMessage(error.message);
     }

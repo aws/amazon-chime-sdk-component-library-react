@@ -49,16 +49,29 @@ const Root = () => (
   </ThemeProvider>
 );
 ```
-
 3. Join a meeting
 
-To join a meeting, you need to fetch the meeting and attendee data from Chime's [CreateAttendee](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateAttendee.html) and [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) APIs. 
+To join a meeting, you need to do the following sub steps:
+
+* Fetch the meeting and attendee data from Chime
+
+* Intialize `MeetingSessionConfiguration`
+
+* Create and join the meeting
+
+First, you need to fetch the meeting and attendee data from Chime's [CreateAttendee](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateAttendee.html) and [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) APIs. 
 
 * Check the [Getting responses from your server application](https://github.com/aws/amazon-chime-sdk-js#getting-responses-from-your-server-application) for details.
 * Check the [MeetingForm component](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/containers/MeetingForm/index.tsx), the [API calls](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/utils/api.ts), and [server application](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js) in our [React meeting demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting) as examples.
 
+Then, intialize `MeetingSessionConfiguration` with the meeting and attendee data from the last step. You can choose to modify the `MeetingSessionConfiguration` properties to customize the meeting to your preference.
+
+Updating the `MeetingSessionConfiguration` props is an optional step. You can learn more about the available props here: [MeetingSessionConfiguration](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionconfiguration.html)
+
+Lastly, pass the `MeetingSessionConfiguration` to the `join` method to create a meeting session. You can now start the meeting session and join the meeting. 
 ```jsx
 import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MyApp = () => {
   const meetingManager = useMeetingManager();
@@ -68,13 +81,11 @@ const MyApp = () => {
     const response = await fetch('/my-server');
     const data = await response.json();
 
-    const joinData = {
-      meetingInfo: data.Meeting,
-      attendeeInfo: data.Attendee,
-    };
+    // Initalize the `MeetingSessionConfiguration`
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
 
-    // Create a `MeetingSession` using `join()` function with the above data
-    await meetingManager.join(joinData);
+    // Create a `MeetingSession` using `join()` function with the `MeetingSessionConfiguration`
+    await meetingManager.join(meetingSessionConfiguration);
 
     // At this point you could let users setup their devices, or by default 
     // the SDK will select the first device in the list for the kind indicated
