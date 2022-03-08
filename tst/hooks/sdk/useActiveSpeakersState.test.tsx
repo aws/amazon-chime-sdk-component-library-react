@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import {LogLevel} from "amazon-chime-sdk-js";
+import {LogLevel} from 'amazon-chime-sdk-js';
 import React from 'react';
 import {renderHook} from '@testing-library/react-hooks'
 import useActiveSpeakersState from '../../../src/hooks/sdk/useActiveSpeakersState';
@@ -10,7 +10,7 @@ import {MeetingContext} from '../../../src/providers/MeetingProvider';
 
 jest.mock('../../../src/providers/MeetingProvider/MeetingManager');
 
-describe('Icon Button', () => {
+describe('useActiveSpeakersState', () => {
   const mockMeetingManager = MeetingManager as jest.Mock;
   const subscribeToActiveSpeakerSpy = jest.fn();
   const unsubscribeToActiveSpeakerSpy = jest.fn();

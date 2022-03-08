@@ -494,11 +494,11 @@ const Root = () => (
 The Amazon Chime SDK for JavaScript sends meeting events to the Amazon Chime backend to analyze meeting health trends or identify common failures.
 This helps to improve your meeting experience. For more information, check the [client event ingestion guide](https://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.html) in the Amazon Chime SDK for JavaScript guides.
 
-To opt-out of event ingestion from the Amazon Chime SDK for JavaScript, provide the `NoOpEventReporter` as the `eventReporter` while joining the meeting.
+To opt-out of event ingestion from the Amazon Chime SDK for JavaScript, provide a `DefaultEventController` with a `NoOpEventReporter` as the `eventReporter` while joining the meeting.
 
 ```jsx
 import React from 'react';
-import { NoOpEventReporter } from 'amazon-chime-sdk-js';
+import { NoOpEventReporter, DefaultEventController, MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 import {
   MeetingProvider,
   useMeetingManager
@@ -509,10 +509,15 @@ const MyApp = () => {
   const joinMeeting = async () => {
     const response = await fetch('/my-meetings-endpoint');
     const data = await response.json();
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+    const eventController = new DefaultEventController(
+        meetingSessionConfiguration, 
+        meetingManager.createLogger(meetingSessionConfiguration), 
+        new NoOpEventReporter()
+      );
     const joinData = {
-      meetingInfo: data.Meeting,
-      attendeeInfo: data.Attendee,
-      eventReporter: new NoOpEventReporter();
+      meetingSessionConfiguration: meetingSessionConfiguration,
+      eventController: eventController
     };
 
     try {
