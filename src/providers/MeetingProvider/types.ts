@@ -3,7 +3,7 @@
 
 import {
   ActiveSpeakerPolicy,
-  EventReporter,
+  EventController,
   Logger,
   LogLevel,
   VideoDownlinkBandwidthPolicy,
@@ -23,7 +23,7 @@ export interface MeetingJoinData {
   meetingInfo: any;
   attendeeInfo: any;
   deviceLabels?: DeviceLabels | DeviceLabelTrigger;
-  eventReporter?: EventReporter;
+  eventController?: EventController;
   meetingManagerConfig?: MeetingManagerConfig;
 }
 

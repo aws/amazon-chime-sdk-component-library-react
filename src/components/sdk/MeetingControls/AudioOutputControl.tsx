@@ -18,7 +18,10 @@ interface Props extends BaseSdkProps {
   label?: string;
 }
 
-const AudioOutputControl: React.FC<Props> = ({ label = 'Speaker', ...rest }) => {
+const AudioOutputControl: React.FC<Props> = ({
+  label = 'Speaker',
+  ...rest
+}) => {
   const meetingManager = useMeetingManager();
   const { devices, selectedDevice } = useAudioOutputs();
   const { isAudioOn, toggleAudio } = useLocalAudioOutput();

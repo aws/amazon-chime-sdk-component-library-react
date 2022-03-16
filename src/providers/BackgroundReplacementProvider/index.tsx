@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import{
+import {
   BackgroundFilterSpec,
   BackgroundReplacementOptions,
   BackgroundReplacementProcessor,
@@ -22,7 +22,7 @@ import React, {
 } from 'react';
 
 import { BaseSdkProps } from '../../components/sdk/Base';
-import { isPrevNextEmpty,isPrevNextUndefined } from '../../utils/device-utils';
+import { isPrevNextEmpty, isPrevNextUndefined } from '../../utils/device-utils';
 import useMemoCompare from '../../utils/use-memo-compare';
 
 interface Props extends BaseSdkProps {
@@ -54,7 +54,9 @@ const BackgroundReplacementProvider: FC<Props> = ({
     isBackgroundReplacementSupported,
     setIsBackgroundReplacementSupported,
   ] = useState<boolean | undefined>(undefined);
-  const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>(undefined);
+  const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>(
+    undefined
+  );
 
   const replacementSpec = useMemoCompare(
     spec,

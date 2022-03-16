@@ -11,8 +11,9 @@ import {
   DefaultMeetingSession,
   Device,
   EventAttributes,
+  EventController,
   EventName,
-  EventReporter,
+  EventObserver,
   isAudioTransformDevice,
   isVideoTransformDevice,
   Logger,
@@ -138,7 +139,7 @@ export class MeetingManager implements AudioVideoObserver {
   // Please use `meetingManagerConfig` to use `MeetingManagerConfig` values.
   postLoggerConfig: PostLogConfig | null = null;
 
-  eventReporter: EventReporter;
+  private eventController: EventController;
 
   // This variable will be deprecated in favor of `meetingManagerConfig`.
   // Please use `meetingManagerConfig` to use `MeetingManagerConfig` values.
@@ -156,7 +157,7 @@ export class MeetingManager implements AudioVideoObserver {
     (name: EventName, attributes: EventAttributes) => void
   >();
 
-  private eventDidReceiveRef: AudioVideoObserver;
+  private eventDidReceiveRef: EventObserver;
 
   constructor(private meetingManagerConfig: MeetingManagerConfig) {
     const {
@@ -218,7 +219,7 @@ export class MeetingManager implements AudioVideoObserver {
     meetingInfo,
     attendeeInfo,
     deviceLabels = DeviceLabels.AudioAndVideo,
-    eventReporter,
+    eventController,
     meetingManagerConfig,
   }: MeetingJoinData) {
     if (meetingManagerConfig) {
@@ -232,8 +233,8 @@ export class MeetingManager implements AudioVideoObserver {
     this.meetingRegion = meetingInfo.MediaRegion;
     this.meetingId = this.configuration.meetingId;
 
-    if (eventReporter) {
-      this.eventReporter = eventReporter;
+    if (eventController) {
+      this.eventController = eventController;
     }
 
     await this.initializeMeetingSession(this.configuration, deviceLabels);
@@ -287,7 +288,6 @@ export class MeetingManager implements AudioVideoObserver {
     // We are assigning the values from the `meetingManagerConfig` to preserve backward compatibility.
     // Please use `this.meetingManagerConfig` for any values going forward.
     if (simulcastEnabled) {
-      configuration.enableUnifiedPlanForChromiumBasedBrowsers = true;
       configuration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = true;
     }
     const logger = configLogger
@@ -317,17 +317,16 @@ export class MeetingManager implements AudioVideoObserver {
       configuration,
       logger,
       deviceController,
-      this.eventReporter
+      this.eventController
     );
+    if (this.eventController) {
+      this.eventController.removeObserver(this.eventDidReceiveRef);
+    } else {
+      this.eventController = this.meetingSession.eventController;
+    }
+    this.eventController.addObserver(this.eventDidReceiveRef);
 
     this.audioVideo = this.meetingSession.audioVideo;
-
-    // When an attendee leaves, we remove AudioVideoObservers and nullify AudioVideoFacade and MeetingSession object.
-    // This results into missing few meeting events triggered with audioVideoDidStop such as meetingEnded, meetingFailed and meetingStartFailed.
-    // We may also loose audioInputUnselected and videoInputUnselected events as we choose null devices when an attendee leaves.
-    // When a new AudioVideoFacade object is created remove and re-add the eventDidReceive observer which wont leak.
-    this.audioVideo.removeObserver(this.eventDidReceiveRef);
-    this.audioVideo.addObserver(this.eventDidReceiveRef);
 
     this.setupAudioVideoObservers();
     this.setupDeviceLabelTrigger(deviceLabels);
@@ -372,14 +371,6 @@ export class MeetingManager implements AudioVideoObserver {
   audioVideoDidStop = (sessionStatus: MeetingSessionStatus) => {
     const sessionStatusCode = sessionStatus.statusCode();
     switch (sessionStatusCode) {
-      case MeetingSessionStatusCode.AudioCallEnded:
-        console.log(
-          `[MeetingManager audioVideoDidStop] Meeting ended for all: ${sessionStatusCode}`
-        );
-        this.meetingStatus = MeetingStatus.Ended;
-        this.publishMeetingStatus();
-        this.leave();
-        break;
       case MeetingSessionStatusCode.Left:
         console.log(
           `[MeetingManager audioVideoDidStop] Left the meeting: ${sessionStatusCode}`

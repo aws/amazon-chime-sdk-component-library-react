@@ -1,0 +1,79 @@
+<Meta title="Migration to V3" />
+
+# Migration from 2.0 to 3.0
+
+Version 3 of the Amazon Chime React Component Library makes small changes to the interface of the library to make it more customizable.
+
+### IMPORTANT - Version 3 of the library also requires a dependency to version 3.0.0 or higher of the amazon-chime-sdk-js.
+
+In many cases you will need to adjust your application code because interface parameters to root providers like Meeting Provider are updated.
+
+## Installation
+
+Installation involves adjusting your package.json to depend on version 3.x.x
+
+```
+npm uninstall amazon-chime-sdk-component-library-react amazon-chime-sdk-js
+npm install --save amazon-chime-sdk-component-library-react@beta amazon-chime-sdk-js@beta
+```
+
+## What’s New
+
+- `MeetingManager`'s `join()` method no longer takes an `EventReporter` and instead takes an `EventController`
+
+### Updating `EventReporter` to `EventController`
+
+Before in 2.x
+```jsx
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+  const joinMeeting = async () => {
+    const response = await fetch('/my-meetings-endpoint');
+    const data = await response.json();
+    const joinData = {
+      meetingInfo: data.Meeting,
+      attendeeInfo: data.Attendee,
+      eventReporter: new NoOpEventReporter()
+    };
+    try {
+      await meetingManager.join(joinData);
+    } catch {
+      console.error('Something went wrong');
+    }
+  };
+
+ return (
+  <button onClick={joinMeeting}>Join Meeting</button>;
+ );
+};
+```
+After in 3.x
+```jsx
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+  const joinMeeting = async () => {
+    const response = await fetch('/my-meetings-endpoint');
+    const data = await response.json();
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+    const eventController = new DefaultEventController(
+        meetingSessionConfiguration, 
+        meetingManager.createLogger(meetingSessionConfiguration), 
+        new NoOpEventReporter()
+      );
+    const joinData = {
+      meetingSessionConfiguration: meetingSessionConfiguration,
+      eventController: eventController
+    };
+
+    try {
+      await meetingManager.join(joinData);
+    } catch {
+      console.error('Something went wrong');
+    }
+  };
+  
+  return (
+    <button onClick={joinMeeting}>Join Meeting</button>;
+  );
+};
+```

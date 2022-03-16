@@ -43,7 +43,7 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE/amazon-chime-sdk/apps/meeting/serverless
           node ./deploy.js -r us-east-1 -b chime-sdk-components-demo-canary -s chime-sdk-components-demo-canary -l
-      - name: Publish Storybook Documentation
-        run: npm run deploy-storybook -- --ci
-        env:
-          GH_TOKEN: chime-sdk-js-bot:${{ secrets.GITHUBPAGES}}
+      ##- name: Publish Storybook Documentation
+        ##run: npm run deploy-storybook -- --ci
+        ##env:
+          ##GH_TOKEN: chime-sdk-js-bot:${{ secrets.GITHUBPAGES}}

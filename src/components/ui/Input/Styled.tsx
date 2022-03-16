@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
-import { baseSpacing, baseStyles } from '../Base';
 
+import { baseSpacing, baseStyles } from '../Base';
 import { InputWrapperProps } from './InputWrapper';
 
 const getPadding = (props: InputWrapperProps) => {
