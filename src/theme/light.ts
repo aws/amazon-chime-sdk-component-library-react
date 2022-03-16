@@ -77,7 +77,7 @@ const colors = {
   },
 };
 
-const global = {
+const globalStyle = {
   bgd: colors.greys.white,
   text: colors.greys.grey80,
   fontSize: defaultTheme.fontSizes.baseFontSize,
@@ -449,7 +449,7 @@ export const lightTheme = {
   name: 'Light Theme',
   buttons,
   colors,
-  global,
+  globalStyle,
   links,
   shadows,
   inputs,

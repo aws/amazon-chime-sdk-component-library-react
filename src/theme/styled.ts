@@ -81,7 +81,7 @@ declare module 'styled-components' {
       monospace: string;
     };
 
-    global: {
+    globalStyle: {
       bgd: string;
       text: string;
       fontSize: string;

@@ -3,15 +3,16 @@
 
 import '@testing-library/jest-dom';
 
-import React from 'react';
-import { act, renderHook } from '@testing-library/react-hooks'
+import { act, renderHook } from '@testing-library/react-hooks';
 import { BackgroundBlurOptions } from 'amazon-chime-sdk-js';
+import React from 'react';
+
 import { BackgroundBlurProvider, useBackgroundBlur } from '../../../src';
 
 describe('BackgroundBlurProvider', () => {
   it('should not change props', async () => {
     const blurOptions: BackgroundBlurOptions = {
-      blurStrength: 20
+      blurStrength: 20,
     };
 
     // Mock the user agent to ensure the BackgroundBlurVideoFrameProcessor gets
@@ -47,8 +48,14 @@ describe('BackgroundBlurProvider', () => {
     // once, that means some dependency or parent is changing the parameters
     // erroneously.
     expect(consoleLogMock).toHaveBeenCalledTimes(2);
-    expect(consoleLogMock).toHaveBeenCalledWith("Initializing background blur processor with", undefined, blurOptions);
-    expect(consoleLogMock).toHaveBeenCalledWith("Specs or options were changed. Destroying and re-initializing background blur processor.");
+    expect(consoleLogMock).toHaveBeenCalledWith(
+      'Initializing background blur processor with',
+      undefined,
+      blurOptions
+    );
+    expect(consoleLogMock).toHaveBeenCalledWith(
+      'Specs or options were changed. Destroying and re-initializing background blur processor.'
+    );
 
     // Even though we are using a NoOpVideoFrameProcessor, the input specs
     // and options that are passed to the amazon-chime-sdk-js are still
@@ -59,7 +66,9 @@ describe('BackgroundBlurProvider', () => {
     // and we don't validate it strictly because there's a non-deterministic
     // timestamp. Verifying the call count should be good enough.
     expect(consoleWarnMock).toHaveBeenCalledTimes(2);
-    expect(consoleWarnMock).toHaveBeenLastCalledWith("Initialized NoOpVideoFrameProcessor.");
+    expect(consoleWarnMock).toHaveBeenLastCalledWith(
+      'Initialized NoOpVideoFrameProcessor.'
+    );
 
     // No errors should happen.
     expect(consoleErrorMock).toHaveBeenCalledTimes(0);

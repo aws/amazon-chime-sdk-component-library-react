@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 
 import { useAudioVideo } from '../../providers/AudioVideoProvider';
 
-function isValidMetric(metric: any) {
-  return typeof metric === 'number' && !Number.isNaN(metric);
+function isValidMetric(metric: number): boolean {
+  return !Number.isNaN(metric);
 }
 
 interface MediaStreamMetrics {
@@ -20,7 +20,7 @@ interface MediaStreamMetrics {
   };
 }
 
-export function useMediaStreamMetrics() {
+export function useMediaStreamMetrics(): MediaStreamMetrics {
   const audioVideo = useAudioVideo();
   const [mediaStreamMetrics, setMediaStreamMetrics] =
     useState<MediaStreamMetrics>({
@@ -41,8 +41,6 @@ export function useMediaStreamMetrics() {
         const {
           audioPacketLossPercent,
           audioPacketsReceivedFractionLoss,
-          availableSendBandwidth,
-          availableReceiveBandwidth,
           availableOutgoingBitrate,
           availableIncomingBitrate,
         } = clientMetricReport.getObservableMetrics();
@@ -64,21 +62,19 @@ export function useMediaStreamMetrics() {
           );
         }
 
+        // TODO: remove if condition after JS SDK 3.0.0-beta.2 is released
         if (clientMetricReport.getObservableVideoMetrics) {
           videoStreamMetrics = clientMetricReport.getObservableVideoMetrics();
         }
 
-        if (isValidMetric(availableSendBandwidth)) {
-          availableOutgoingBandwidth = availableSendBandwidth / 1000;
-        } else if (isValidMetric(availableOutgoingBitrate)) {
+        if (isValidMetric(availableOutgoingBitrate)) {
           availableOutgoingBandwidth = availableOutgoingBitrate / 1000;
         }
 
-        if (isValidMetric(availableReceiveBandwidth)) {
-          availableIncomingBandwidth = availableReceiveBandwidth / 1000;
-        } else if (isValidMetric(availableIncomingBitrate)) {
+        if (isValidMetric(availableIncomingBitrate)) {
           availableIncomingBandwidth = availableIncomingBitrate / 1000;
         }
+
         setMediaStreamMetrics({
           audioPacketsSentFractionLossPercent,
           audioPacketsReceivedFractionLossPercent,
