@@ -148,7 +148,6 @@ export { useToggleLocalMute } from './hooks/sdk/useToggleLocalMute';
 export { useMeetingStatus } from './hooks/sdk/useMeetingStatus';
 export { useLocalAudioInputActivity } from './hooks/sdk/useLocalAudioInputActivity';
 export { useLocalAudioInputActivityPreview } from './hooks/sdk/useLocalAudioInputActivityPreview';
-export { useBandwidthMetrics } from './hooks/sdk/useBandwidthMetrics';
 export { useDevicePermissionStatus } from './hooks/sdk/useDevicePermissionStatus';
 export { useMediaStreamMetrics } from './hooks/sdk/useMediaStreamMetrics';
 

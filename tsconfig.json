@@ -3,8 +3,8 @@
     "declaration": true,
     "declarationDir": "lib",
     "module": "esnext",
-    "target": "es5",
-    "lib": ["es5", "es6", "es7", "es2017", "dom"],
+    "target": "ES2015",
+    "lib": ["ES2015", "ES2016", "ES2017", "DOM"],
     "sourceMap": true,
     "allowJs": false,
     "jsx": "react",
@@ -25,12 +25,9 @@
   "exclude": [
     "node_modules",
     "build",
-    "demo",
     "tst",
     "scripts",
     ".storybook",
-    "src/internal",
-    "src/**/*.test.tsx",
     "src/**/*.stories.tsx",
     "coverage",
   ]

@@ -17,13 +17,18 @@ npm uninstall amazon-chime-sdk-component-library-react amazon-chime-sdk-js
 npm install --save amazon-chime-sdk-component-library-react@beta amazon-chime-sdk-js@beta
 ```
 
-## What’s New
+## What's New
 
-- `MeetingManager`'s `join()` method no longer takes an `EventReporter` and instead takes an `EventController`
+- `MeetingManager`'s `join()` method no longer takes an `EventReporter` and instead takes an `EventController`.
+- Deprecate `useBandwidthMetrics` hook in favor of `useMediaStreamMetrics`.
+- Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
+- Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
+- Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
 
 ### Updating `EventReporter` to `EventController`
 
-Before in 2.x
+Before in 2.x:
+
 ```jsx
 const MyApp = () => {
   const meetingManager = useMeetingManager();
@@ -42,12 +47,14 @@ const MyApp = () => {
     }
   };
 
- return (
-  <button onClick={joinMeeting}>Join Meeting</button>;
- );
+  return (
+    <button onClick={joinMeeting}>Join Meeting</button>;
+  );
 };
 ```
-After in 3.x
+
+After in 3.x:
+
 ```jsx
 const MyApp = () => {
   const meetingManager = useMeetingManager();
@@ -77,3 +84,79 @@ const MyApp = () => {
   );
 };
 ```
+
+## WebRTC Metrics Change
+
+### Deprecation of `useBandwidthMetrics` hook
+
+The `useBandwidthMetrics` hook exposes two WebRTC metrics:
+
+- `availableOutgoingBandwidth`
+- `availableIncomingBandwidth`. 
+
+The `useMediaStreamMetrics` covers all metrics of `useBandwidthMetrics` hook, so we decide to deprecate it in V3.
+
+Before in 2.x:
+
+To get the `availableOutgoingBandwidth` and `availableIncomingBandwidth` in V2.
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useBandwidthMetrics,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const metrics = useBandwidthMetrics();
+
+  return (
+    <>
+      <p>Incoming Bandwidth: {metrics.availableIncomingBandwidth}</p>
+      <p>Outgoing Bandwidth: {metrics.availableOutgoingBandwidth}</p>
+    </>
+  );
+};
+```
+
+After in 3.x:
+
+To get the `availableOutgoingBandwidth` and `availableIncomingBandwidth` in V3.
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useMediaStreamMetrics,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const metrics = useMediaStreamMetrics();
+
+  return (
+    <>
+      <p>Incoming Bandwidth: {metrics.availableIncomingBandwidth}</p>
+      <p>Bandwidth Outgoing: {metrics.availableOutgoingBandwidth}</p>
+    </>
+  );
+};
+```
+
+## StyledComponent
+
+### DefaultTheme Interface
+
+In V3 we rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
+When you implement your own theme, you need to use `globalStyle` instead of `global`.

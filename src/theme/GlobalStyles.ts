@@ -17,8 +17,8 @@ export const GlobalStyles = createGlobalStyle`
   html {
     font-size: ${(props) => props.theme.fontSizes.baseFontSize};
     font-family: ${(props) => props.theme.fonts.body};;
-    background-color: ${(props) => props.theme.global.bgd};
-    color: ${(props) => props.theme.global.text};
+    background-color: ${(props) => props.theme.globalStyle.bgd};
+    color: ${(props) => props.theme.globalStyle.text};
     min-height: 100%;
   }
 `;

@@ -20,11 +20,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update `MeetingManager` to use new `EventController` API.
 - Update `amazon-chime-sdk-js` dependency to v3 beta.
+- Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
+- Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
 
 ### Removed
 
 - Remove use of the deprecated `enableUnifiedPlanForChromiumBasedBrowsers` configuration variable.
 - Remove all deprecated `MeetingSessionStatusCode`.  
+- Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
+- Deprecate `useBandwidthMetrics` hook as we already have `useMediaStreamMetrics`.
 
 ## [2.15.0] - 2022-02-03
 
@@ -48,6 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Added
+
 - Add `BackgroundReplacementProvider` provider to support background replacement.
 
 ### Changed
@@ -59,9 +64,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Added
+
 - Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` to `MeetingProvider` props.
 
 ### Changed
+
 - Change `additionalDevices` to a prop in `AudioInputControl`, `VideoInputControl`, `AudioInputVFControl`, `MicSelection`, and `CameraSelection` components to allow option to turn off that configuration.
 - Add `reconnectTimeoutMs` as an optional parameter to `MeetingManagerConfig` to manage the timeout for reconnection.
 
@@ -70,6 +77,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.12.0] - 2021-11-19
 
 ### Fixed
+
 - Fix the issue that Amazon Voice Focus does not get applied on new devices mid-meeting.
 
 ### Added
