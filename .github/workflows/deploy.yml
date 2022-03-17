@@ -2,7 +2,9 @@ name: Deploy Components Demo App Workflow
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - 'release-**.x'
 
 jobs:
   deploy:
@@ -30,20 +32,41 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 16
+      - name: Get branch name
+        id: branch_name
+        run: |
+          branch=${{github.ref}}
+          branch=${branch#refs/heads/}
+          echo $branch
+          echo ::set-output name=branch_name::$branch
       - name: Checkout amazon-chime-sdk repo
         uses: actions/checkout@v2
         with:
           repository: 'aws-samples/amazon-chime-sdk'
           path: amazon-chime-sdk
+          ref: ${{steps.branch_name.outputs.branch_name}}
       - name: Install latest version of React library and JS SDK in meeting demo
         run: |
           npm install
           node ./scripts/update-sdk-version.js
       - name: Deploy the Serverless Demo App
+        if: ${{ steps.branch_name.outputs.branch_name == 'main' }}
         run: |
           cd $GITHUB_WORKSPACE/amazon-chime-sdk/apps/meeting/serverless
           node ./deploy.js -r us-east-1 -b chime-sdk-components-demo-canary -s chime-sdk-components-demo-canary -l
-      ##- name: Publish Storybook Documentation
-        ##run: npm run deploy-storybook -- --ci
-        ##env:
-          ##GH_TOKEN: chime-sdk-js-bot:${{ secrets.GITHUBPAGES}}
+      - name: Deploy the Serverless Demo App for Previous Major Version
+        if: ${{ steps.branch_name.outputs.branch_name != 'main' }}
+        run: |
+          cd $GITHUB_WORKSPACE/amazon-chime-sdk/apps/meeting/serverless
+          node ./deploy.js -r us-east-1 -b chime-sdk-components-demo-canary-prev -s chime-sdk-components-demo-canary-prev -l
+      - name: Check if need to deploy storybook
+        id: need_deploy
+        run: |
+          result=$(.github/script/need-deploy-storybook.js)
+          echo $result
+          echo ::set-output name=need_deploy::$result
+      - name: Publish Storybook Documentation
+        if: startsWith(steps.need_deploy.outputs.need_deploy, 'Deploy storybook')
+        run: npm run deploy-storybook -- --ci
+        env:
+          GH_TOKEN: chime-sdk-js-bot:${{ secrets.GITHUBPAGES}}
