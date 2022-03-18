@@ -60,8 +60,6 @@ export class MeetingManager implements AudioVideoObserver {
 
   meetingId: string | null = null;
 
-  meetingRegion: string | null = null;
-
   getAttendee?: (
     chimeAttendeeId: string,
     externalUserId?: string
@@ -151,7 +149,6 @@ export class MeetingManager implements AudioVideoObserver {
     this.audioVideo = null;
     this.meetingSessionConfiguration = undefined;
     this.meetingId = null;
-    this.meetingRegion = null;
     this.selectedAudioOutputDevice = null;
     this.selectedAudioInputDevice = null;
     this.selectedAudioInputTransformDevice = null;
@@ -308,6 +305,14 @@ export class MeetingManager implements AudioVideoObserver {
   audioVideoDidStop = (sessionStatus: MeetingSessionStatus): void => {
     const sessionStatusCode = sessionStatus.statusCode();
     switch (sessionStatusCode) {
+      case MeetingSessionStatusCode.MeetingEnded:
+        console.log(
+          `[MeetingManager audioVideoDidStop] Meeting ended for all: ${sessionStatusCode}`
+        );
+        this.meetingStatus = MeetingStatus.Ended;
+        this.publishMeetingStatus();
+        this.leave();
+        break;
       case MeetingSessionStatusCode.Left:
         console.log(
           `[MeetingManager audioVideoDidStop] Left the meeting: ${sessionStatusCode}`

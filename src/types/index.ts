@@ -69,7 +69,7 @@ export enum DevicePermissionStatus {
 }
 
 export enum DeviceLabels {
-  None,
+  None = 1,
   Audio,
   Video,
   AudioAndVideo,
