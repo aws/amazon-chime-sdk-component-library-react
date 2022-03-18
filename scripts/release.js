@@ -170,6 +170,7 @@ const main = () => {
       }
       cleanUp(remoteBranch);
       spawnOrFail('npm', ['install']);
+      buildAndPack();
       deployDemo(currentVersion);
       break;
     default:
