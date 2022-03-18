@@ -12,8 +12,15 @@ import {
   NoOpDebugLogger,
 } from 'amazon-chime-sdk-js';
 
-import MeetingManager from '../../../src/providers/MeetingProvider/MeetingManager';
-import { MeetingJoinData } from '../../../src/providers/MeetingProvider/types';
+import { MeetingManager } from '../../../src/providers/MeetingProvider/MeetingManager';
+import { MeetingManagerJoinOptions } from '../../../src/providers/MeetingProvider/types';
+
+import '@testing-library/jest-dom';
+
+import { act, renderHook } from '@testing-library/react-hooks';
+import React from 'react';
+
+import { MeetingProvider, useMeetingManager } from '../../../src/providers/MeetingProvider';
 
 describe('Meeting Provider', () => {
   it('events are received correctly', async () => {
@@ -28,24 +35,26 @@ describe('Meeting Provider', () => {
     const audioInputErrorMessage = 'Something went wrong';
 
     // Setup MeetingManager and EventController
-    const joinData: MeetingJoinData = {
+    const joinData = {
       meetingInfo: {
         meetingId: '',
         externalMeetingId: '',
-        mediaplacement: new MeetingSessionURLs(),
-      },
-      attendeeInfo: new MeetingSessionCredentials(),
+        mediaplacement: new MeetingSessionURLs()
+      }, 
+      attendeeInfo: new MeetingSessionCredentials(),  
+    }
+    let eventController = new DefaultEventController(
+      new MeetingSessionConfiguration(joinData.meetingInfo, joinData.attendeeInfo), 
+      new NoOpDebugLogger(),
+      );
+    let meetingManagerJoinOptions: MeetingManagerJoinOptions = {
+      logLevel: LogLevel.OFF,
+      eventController: eventController,
     };
-    const eventController = new DefaultEventController(
-      new MeetingSessionConfiguration(
-        joinData.meetingInfo,
-        joinData.attendeeInfo
-      ),
-      new NoOpDebugLogger()
+    let meetingManager = new MeetingManager();
+    await meetingManager.join(new MeetingSessionConfiguration(joinData.meetingInfo, joinData.attendeeInfo),
+      meetingManagerJoinOptions,
     );
-    joinData.eventController = eventController;
-    const meetingManager = new MeetingManager({ logLevel: LogLevel.OFF });
-    await meetingManager.join(joinData);
 
     let calls = 0;
     const callback = (name: EventName, attributes: EventAttributes): void => {
@@ -83,5 +92,23 @@ describe('Meeting Provider', () => {
     await new Promise((r) => setTimeout(r, 10));
     // Should have been called twice
     expect(calls).toBe(2);
+  })
+
+  it('should not change params', async () => {
+    // @ts-ignore
+    const meetingProviderParams: MeetingManager = jest.fn();
+
+    // Render and unmount the provider.
+    const { unmount } = renderHook(() => useMeetingManager(), {
+      wrapper: ({ children }) => (
+        <MeetingProvider {...meetingProviderParams}>{children}</MeetingProvider>
+      ),
+    });
+
+    await act(async () => {
+      unmount();
+    });
+
+    expect(meetingProviderParams).toStrictEqual(meetingProviderParams);
   });
 });

@@ -97,7 +97,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
 
   async function initializeBackgroundBlur(): Promise<
     BackgroundBlurProcessor | undefined
-    > {
+  > {
     console.log('Initializing background blur processor with', spec, options);
 
     try {

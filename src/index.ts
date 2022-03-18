@@ -196,7 +196,6 @@ export { MeetingManager } from './providers/MeetingProvider/MeetingManager';
 
 // Interface
 export { NotificationType, Action } from './providers/NotificationProvider';
-export { MeetingManagerConfig } from './providers/MeetingProvider/types';
 
 // Utilities
 export { Versioning } from './versioning/Versioning';

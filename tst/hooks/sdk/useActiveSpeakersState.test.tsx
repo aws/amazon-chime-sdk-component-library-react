@@ -32,7 +32,7 @@ describe('useActiveSpeakersState', () => {
     const { result, unmount } = renderHook(() => useActiveSpeakersState(), {
       wrapper: ({ children }) => (
         <MeetingContext.Provider
-          value={new MeetingManager({ logLevel: LogLevel.OFF })}
+          value={ new MeetingManager() }
         >
           {children}
         </MeetingContext.Provider>

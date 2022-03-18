@@ -45,6 +45,7 @@
     "no-trailing-spaces": "error",
     "brace-style": "error",
     "spaced-comment": ["error", "always"],
+    "eol-last": ["error", "always"],
 
     // React
     "react/prop-types": "off",

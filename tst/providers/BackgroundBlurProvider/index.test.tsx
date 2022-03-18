@@ -7,7 +7,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 import { BackgroundBlurOptions } from 'amazon-chime-sdk-js';
 import React from 'react';
 
-import { BackgroundBlurProvider, useBackgroundBlur } from '../../../src';
+import { BackgroundBlurProvider, useBackgroundBlur } from '../../../src/providers/BackgroundBlurProvider';
 
 describe('BackgroundBlurProvider', () => {
   it('should not change props', async () => {
