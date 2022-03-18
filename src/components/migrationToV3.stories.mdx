@@ -20,97 +20,38 @@ npm install --save amazon-chime-sdk-component-library-react@beta amazon-chime-sd
 ## What's New
 
 - `MeetingManager`'s `join()` method no longer takes an `EventReporter` and instead takes an `EventController`.
+- Add `MeetingSessionConfiguration` as a required parameter to `MeetingManager.join()` method. With this change the builders have direct access to `MeetingSessionConfiguration`, this will allow more flexibility to customize the `MeetingSession`.
+- Add `MeetingManagerJoinOptions` as a new interface for the `options` parameter of the `MeetingManager.join` method.
+- Add `deviceLabels`, `eventController`, `logLevel`, `postLoggerConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface.
+- Remove `MeetingSessionConfiguration` properties from `MeetingProvider` props.
+- Remove `deviceLabels`, `eventController`, `logLevel`, `postLogConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
+- Remove `meetingRegion` from `MeetingManager`. Previously we just cache this value from meetingInfo returned by
+[CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) but it is not used
+anywhere in the library.
 - Deprecate `useBandwidthMetrics` hook in favor of `useMediaStreamMetrics`.
 - Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
 - Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
 - Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
-- Add `MeetingSessionConfiguration` as a required parameter to `MeetingManager.join()` method. With this change the builders have direct access to `MeetingSessionConfiguration`, this will allow more flexibility to customize the `MeetingSession`.
-- Add `MeetingManagerJoinOptions` as a new interface for the `options` parameter of the `MeetingManager.join` method.
-- Add `deviceLabels`, `eventController`, `logLevel`, `postLoggerConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface. 
-- Remove `MeetingSessionConfiguration` properties from `MeetingProvider` props.
-- Remove `deviceLabels`, `eventController`, `logLevel`, `postLogConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
-
-### Updating `EventReporter` to `EventController`
-
-Before in 2.x:
-
-```jsx
-const MyApp = () => {
-  const meetingManager = useMeetingManager();
-  const joinMeeting = async () => {
-    const response = await fetch('/my-meetings-endpoint');
-    const data = await response.json();
-    const joinData = {
-      meetingInfo: data.Meeting,
-      attendeeInfo: data.Attendee,
-      eventReporter: new NoOpEventReporter(),
-    };
-    try {
-      await meetingManager.join(joinData);
-    } catch {
-      console.error('Something went wrong');
-    }
-  };
-
-  return (
-    <button onClick={joinMeeting}>Join Meeting</button>;
-  );
-};
-```
-
-After in 3.x:
-
-```jsx
-const MyApp = () => {
-  const meetingManager = useMeetingManager();
-  const joinMeeting = async () => {
-    const response = await fetch('/my-meetings-endpoint');
-    const data = await response.json();
-    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
-    const eventController = new DefaultEventController(
-      meetingSessionConfiguration, 
-      new ConsoleLogger('SDK', LogLevel.WARN), 
-      new NoOpEventReporter()
-    );
-    const options = {
-      eventController
-    };
-
-    try {
-      await meetingManager.join(
-        meetingSessionConfiguration,
-        options
-      );
-    } catch {
-      console.error('Something went wrong');
-    }
-  };
-  
-  return (
-    <button onClick={joinMeeting}>Join Meeting</button>;
-  );
-};
-```
 
 ### `MeetingProvider` props change
 
 `MeetingProvider` no longer takes the following props:
 - `MeetingSessionConfiguration` properties:
-  - `VideoDownlinkBandwidthPolicy`
-  - `VideoUplinkBandwidthPolicy`
-  - `simulcastEnabled`
-  - `reconnectTimeoutMs`
-  - `keepLastFrameWhenPaused`
+- `VideoDownlinkBandwidthPolicy`
+- `VideoUplinkBandwidthPolicy`
+- `simulcastEnabled`
+- `reconnectTimeoutMs`
+- `keepLastFrameWhenPaused`
 - Other props:
-  - `deviceLabels`
-  - `eventController`
-  - `logLevel`
-  - `postLogConfig`
-  - `logger`
-  - `enableWebAudio`
-  - `activeSpeakerPolicy`
+- `deviceLabels`
+- `eventController`
+- `logLevel`
+- `postLogConfig`
+- `logger`
+- `enableWebAudio`
+- `activeSpeakerPolicy`
 
-These props can rather be updated by passing the `MeetingSessionConfiguration` object or by passing `options` props to `meetingManager.join()` method. 
+These props can rather be updated by passing the `MeetingSessionConfiguration` object or by passing `options` props to `meetingManager.join()` method.
 
 You can learn more about the `meetingManager.join()` method here: [MeetingManager](/docs/sdk-providers-meetingmanager--page).
 
@@ -258,7 +199,7 @@ const MyApp = () => {
 
 ##### enableWebAudio
 
-The following example uses `enableWebAudio` property as an example to showcase the change. `enableWebAudio` is chosen here because it is one of the properties that is affected and it is not part of `MeetingSessionConfiguration`. 
+The following example uses `enableWebAudio` property as an example to showcase the change. `enableWebAudio` is chosen here because it is one of the properties that is affected and it is not part of `MeetingSessionConfiguration`.
 
 Before in 2.x:
 
@@ -353,13 +294,77 @@ import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MyApp = () => {
   const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
-  
+
   const meetingManager = useMeetingManager();
   await meetingManager.join(
     meetingSessionConfiguration
   );
 };
 ```
+
+### Updating `EventReporter` to `EventController`
+
+Before in 2.x:
+
+```jsx
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+  const joinMeeting = async () => {
+    const response = await fetch('/my-meetings-endpoint');
+    const data = await response.json();
+    const joinData = {
+      meetingInfo: data.Meeting,
+      attendeeInfo: data.Attendee,
+      eventReporter: new NoOpEventReporter(),
+    };
+    try {
+      await meetingManager.join(joinData);
+    } catch {
+      console.error('Something went wrong');
+    }
+  };
+
+  return (
+    <button onClick={joinMeeting}>Join Meeting</button>;
+  );
+};
+```
+
+After in 3.x:
+
+```jsx
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+  const joinMeeting = async () => {
+    const response = await fetch('/my-meetings-endpoint');
+    const data = await response.json();
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+    const eventController = new DefaultEventController(
+      meetingSessionConfiguration,
+      new ConsoleLogger('SDK', LogLevel.WARN),
+      new NoOpEventReporter()
+    );
+    const options = {
+      eventController
+    };
+
+    try {
+      await meetingManager.join(
+        meetingSessionConfiguration,
+        options
+      );
+    } catch {
+      console.error('Something went wrong');
+    }
+  };
+
+  return (
+    <button onClick={joinMeeting}>Join Meeting</button>;
+  );
+};
+```
+
+
 
 ## WebRTC Metrics Change
 
@@ -368,7 +373,7 @@ const MyApp = () => {
 The `useBandwidthMetrics` hook exposes two WebRTC metrics:
 
 - `availableOutgoingBandwidth`
-- `availableIncomingBandwidth`. 
+- `availableIncomingBandwidth`.
 
 The `useMediaStreamMetrics` covers all metrics of `useBandwidthMetrics` hook, so we decide to deprecate it in V3.
 
