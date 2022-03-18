@@ -176,7 +176,6 @@ const versionBump = (option, branchName) => {
   return newVersion;
 };
 
-console.log(isCurrentMajorVersion());
 module.exports = {
   versionBump,
   currentVersion,
