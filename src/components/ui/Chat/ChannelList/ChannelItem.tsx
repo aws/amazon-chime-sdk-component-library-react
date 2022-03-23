@@ -44,41 +44,27 @@ export const ChannelItem: FC<ChannelItemProps> = (props) => {
     lastChannelMessageTimestamp,
   } = props;
 
-  const displayDetailedChannelView =
-    lastChannelMessage || lastChannelMessageTimestamp;
-  const displayUnreadBadgeForDetailedView =
-    displayDetailedChannelView && unread && unreadBadgeLabel;
-  const displayUnreadBadgeForSimpleView =
-    !displayDetailedChannelView && unread && unreadBadgeLabel;
-  const displayPopOverForDetailedView =
-    displayDetailedChannelView && actions && isSelected;
-  const displayPopOverForSimpleView =
-    !displayDetailedChannelView && actions && isSelected;
+  const displayDetailedView = lastChannelMessage || lastChannelMessageTimestamp;
+  const displayUnreadBatch = unread && unreadBadgeLabel;
+  const displayPopOver = actions && isSelected;
   return (
     <StyledChannelItem
       {...props}
       className={classnames({ 'ch-selected': isSelected, 'ch-unread': unread })}
     >
-      {displayDetailedChannelView ? (
+      {displayDetailedView && (
         <div className={'ch-detailed-channel'} onClick={onClick}>
           <div className="ch-detailed-channel-name">{name}</div>
-          <div className="ch-detailed-channel-message">
-            {lastChannelMessage}
-          </div>
+          <div className="ch-detailed-channel-message">{lastChannelMessage}</div>
           <div className="ch-detailed-channel-message-time">
             {lastChannelMessageTimestamp}
           </div>
         </div>
-      ) : (
-        <Button className="ch-channel-button" label={name} onClick={onClick} />
       )}
-      {displayUnreadBadgeForDetailedView && (
+      {displayDetailedView && displayUnreadBatch && (
         <Badge value={unreadBadgeLabel!} className="ch-unread-badge-detailed" />
       )}
-      {displayUnreadBadgeForSimpleView && (
-        <Badge value={unreadBadgeLabel!} className="ch-unread-badge" />
-      )}
-      {displayPopOverForDetailedView && (
+      {displayDetailedView && displayPopOver && (
         <PopOver
           className={'ch-popover-toggle-detailed'}
           a11yLabel="Open channel options"
@@ -94,7 +80,14 @@ export const ChannelItem: FC<ChannelItemProps> = (props) => {
           children={actions}
         />
       )}
-      {displayPopOverForSimpleView && (
+
+      {!displayDetailedView && (
+        <Button className="ch-channel-button" label={name} onClick={onClick} />
+      )}
+      {!displayDetailedView && displayUnreadBatch && (
+        <Badge value={unreadBadgeLabel!} className="ch-unread-badge"></Badge>
+      )}
+      {!displayDetailedView && displayPopOver && (
         <PopOver
           a11yLabel="Open channel options"
           placement="bottom-end"
