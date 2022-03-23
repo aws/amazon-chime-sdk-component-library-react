@@ -52,55 +52,69 @@ export const ChannelItem: FC<ChannelItemProps> = (props) => {
       {...props}
       className={classnames({ 'ch-selected': isSelected, 'ch-unread': unread })}
     >
-      {displayDetailedView && (
-        <div className={'ch-detailed-channel'} onClick={onClick}>
-          <div className="ch-detailed-channel-name">{name}</div>
-          <div className="ch-detailed-channel-message">{lastChannelMessage}</div>
-          <div className="ch-detailed-channel-message-time">
-            {lastChannelMessageTimestamp}
+      {displayDetailedView ? (
+        <>
+          <div className={'ch-detailed-channel'} onClick={onClick}>
+            <div className="ch-detailed-channel-name">{name}</div>
+            <div className="ch-detailed-channel-message">
+              {lastChannelMessage}
+            </div>
+            <div className="ch-detailed-channel-message-time">
+              {lastChannelMessageTimestamp}
+            </div>
           </div>
-        </div>
-      )}
-      {displayDetailedView && displayUnreadBatch && (
-        <Badge value={unreadBadgeLabel!} className="ch-unread-badge-detailed" />
-      )}
-      {displayDetailedView && displayPopOver && (
-        <PopOver
-          className={'ch-popover-toggle-detailed'}
-          a11yLabel="Open channel options"
-          placement="bottom-end"
-          renderButton={(isOpen: boolean) => (
-            <Dots
-              width="1.5rem"
-              height="1.5rem"
-              className={`${isOpen ? 'isOpen' : ''} ch-channel-actions`}
-              data-testid="channel-actions"
+          {displayUnreadBatch && (
+            <Badge
+              value={unreadBadgeLabel!}
+              className="ch-unread-badge-detailed"
             />
           )}
-          children={actions}
-        />
-      )}
-
-      {!displayDetailedView && (
-        <Button className="ch-channel-button" label={name} onClick={onClick} />
-      )}
-      {!displayDetailedView && displayUnreadBatch && (
-        <Badge value={unreadBadgeLabel!} className="ch-unread-badge"></Badge>
-      )}
-      {!displayDetailedView && displayPopOver && (
-        <PopOver
-          a11yLabel="Open channel options"
-          placement="bottom-end"
-          renderButton={(isOpen: boolean) => (
-            <Dots
-              width="1.5rem"
-              height="1.5rem"
-              className={`${isOpen ? 'isOpen' : ''} ch-channel-actions`}
-              data-testid="channel-actions"
+          {displayPopOver && (
+            <PopOver
+              className={'ch-popover-toggle-detailed'}
+              a11yLabel="Open channel options"
+              placement="bottom-end"
+              renderButton={(isOpen: boolean) => (
+                <Dots
+                  width="1.5rem"
+                  height="1.5rem"
+                  className={`${isOpen ? 'isOpen' : ''} ch-channel-actions`}
+                  data-testid="channel-actions"
+                />
+              )}
+              children={actions}
             />
           )}
-          children={actions}
-        />
+        </>
+      ) : (
+        <>
+          <Button
+            className="ch-channel-button"
+            label={name}
+            onClick={onClick}
+          />
+          {displayUnreadBatch && (
+            <Badge
+              value={unreadBadgeLabel!}
+              className="ch-unread-badge"
+            ></Badge>
+          )}
+          {displayPopOver && (
+            <PopOver
+              a11yLabel="Open channel options"
+              placement="bottom-end"
+              renderButton={(isOpen: boolean) => (
+                <Dots
+                  width="1.5rem"
+                  height="1.5rem"
+                  className={`${isOpen ? 'isOpen' : ''} ch-channel-actions`}
+                  data-testid="channel-actions"
+                />
+              )}
+              children={actions}
+            />
+          )}
+        </>
       )}
     </StyledChannelItem>
   );
