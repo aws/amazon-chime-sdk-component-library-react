@@ -19,6 +19,42 @@ describe('ChannelItem', () => {
     expect(el).toBeInTheDocument();
   });
 
+  it('renders a detailed ChannelItem if both lastChannelMessage and lastChannelMessageTimeStamp are set ', () => {
+      const component =
+          <ChannelItem
+              name="Channel 1"
+              lastChannelMessage =  'Alice: Hello!'
+              lastChannelMessageTimestamp = "5:01 pm"
+              onClick={() => null} />;
+      const { getByText } = renderWithTheme(lightTheme, component);
+      const el = getByText('Alice: Hello!');
+      expect(el).toBeInTheDocument();
+      const el2 = getByText('5:01 pm');
+      expect(el2).toBeInTheDocument();
+  });
+
+  it('renders a detailed ChannelItem when only lastChannelMessageTimeStamp is set ', () => {
+    const component =
+        <ChannelItem
+            name="Channel 1"
+            lastChannelMessageTimestamp = "5:01 pm"
+            onClick={() => null} />;
+    const { getByText } = renderWithTheme(lightTheme, component);
+    const el2 = getByText('5:01 pm');
+    expect(el2).toBeInTheDocument();
+  });
+
+  it('renders a detailed ChannelItem when only lastChannelMessage is set ', () => {
+    const component =
+        <ChannelItem
+            name="Channel 1"
+            lastChannelMessage =  'Alice: Hello!'
+            onClick={() => null} />;
+    const { getByText } = renderWithTheme(lightTheme, component);
+    const el = getByText('Alice: Hello!');
+    expect(el).toBeInTheDocument();
+  });
+
   it('should render a channel actions button if more options are provided and the channel is active is the list', () => {
     const component = (
       <ChannelList>
