@@ -11,6 +11,23 @@ const { logger, process } = require('./utilities');
 const exec = require('child_process').execSync;
 let exitCode = 0;
 
+const gitIgnoreMemo = {};
+const isGitIgnored = (file) => {
+  if (file in gitIgnoreMemo) {
+    return gitIgnoreMemo[file];
+  }
+  try {
+    // If this returns zero, it means the file is ignored by git; skip it.
+    exec(`git check-ignore -q '${file}'`);
+    gitIgnoreMemo[file] = true;
+    return true;
+  } catch (e) {
+    // It's tracked by git.
+    gitIgnoreMemo[file] = false;
+    return false;
+  }
+};
+
 let walk = function(dir) {
   let results = [];
   if (dir.includes('.DS_Store')) {
@@ -53,7 +70,6 @@ let allFiles = function() {
 
 tests().forEach(file => {
   if (
-    file.includes(`.DS_Store`) ||
     file.includes(`snapshots`) ||
     file.includes(`utils`)
   ) {
@@ -83,10 +99,8 @@ tests().forEach(file => {
 
 const spdx = '// SPDX-License-Identifier: Apache-2.0';
 
-let allYears = [];
-
 allFiles().forEach(file => {
-  if (file.endsWith('.d.ts') || file.includes('.DS_Store')) {
+  if (file.endsWith('.d.ts') || isGitIgnored(file)) {
     return;
   }
 
