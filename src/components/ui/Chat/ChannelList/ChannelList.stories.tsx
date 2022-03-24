@@ -10,7 +10,6 @@ import ChannelList from './';
 import ChannelItem from './ChannelItem';
 import PopOverItem from '../../PopOver/PopOverItem';
 import ChannelListDocs from './ChannelList.mdx';
-import Badge from '../../Badge';
 
 export default {
   title: 'UI Components/Chat',
@@ -24,6 +23,8 @@ export default {
 
 export const _ChannelList = () => {
   const [activeChannelId, setActiveChannelId] = useState(null);
+  const showLastChannelMessage = boolean('showLastChannelMessage', false);
+  const showLastChannelMessageTimestamp = boolean('showLastChannelMessageTimestamp', false);
 
   return (
     <Flex layout="fill-space-centered">
@@ -39,6 +40,8 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel1')}
+          lastChannelMessage = {showLastChannelMessage ? "Alice: Hello, how are you doing recently?" : ""}
+          lastChannelMessageTimestamp = {showLastChannelMessageTimestamp ? "5:01 pm" : ""}
           isSelected={activeChannelId === 'channel1'}
         />
         <ChannelItem
@@ -50,6 +53,8 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel2')}
+          lastChannelMessage = {showLastChannelMessage ? "Bob: Good morning!" : ""}
+          lastChannelMessageTimestamp = {showLastChannelMessageTimestamp ? "Yesterday" : ""}
           isSelected={activeChannelId === 'channel2'}
         />
         <ChannelItem
@@ -61,6 +66,8 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel3')}
+          lastChannelMessage = {showLastChannelMessage ? "Alice: [Attachment]" : ""}
+          lastChannelMessageTimestamp = {showLastChannelMessageTimestamp ? "Jan 27" : ""}
           isSelected={activeChannelId === 'channel3'}
         />
         <ChannelItem
@@ -72,6 +79,8 @@ export const _ChannelList = () => {
             />
           }
           onClick={() => setActiveChannelId('channel4')}
+          lastChannelMessage = {showLastChannelMessage ? "Kevin: Hello!": ""}
+          lastChannelMessageTimestamp = {showLastChannelMessageTimestamp ? "Jan 26" : ""}
           isSelected={activeChannelId === 'channel4'}
         />
       </ChannelList>

@@ -22,38 +22,99 @@ export interface ChannelItemProps
   isSelected?: boolean;
   /** Callback function when clicked */
   onClick: () => void;
-  /** Signifies of there are unread message in the channel. */
+  /** Signifies if there are unread message in the channel. */
   unread?: boolean;
   /** Content of the badge signaling unread messages, such as a badge displaying the number. */
   unreadBadgeLabel?: string;
+  /* Content of the last channel message to be displayed */
+  lastChannelMessage?: string;
+  /* Timestamp of the last channel message to be displayed */
+  lastChannelMessageTimestamp?: string;
 }
 
 export const ChannelItem: FC<ChannelItemProps> = (props) => {
-  const { name, actions, isSelected, onClick, unread, unreadBadgeLabel } =
-    props;
+  const {
+    name,
+    actions,
+    isSelected,
+    onClick,
+    unread,
+    unreadBadgeLabel,
+    lastChannelMessage,
+    lastChannelMessageTimestamp,
+  } = props;
+
+  const displayDetailedView = lastChannelMessage || lastChannelMessageTimestamp;
+  const displayUnreadBadge = unread && unreadBadgeLabel;
+  const displayPopOver = actions && isSelected;
   return (
     <StyledChannelItem
       {...props}
       className={classnames({ 'ch-selected': isSelected, 'ch-unread': unread })}
     >
-      <Button className="ch-channel-button" label={name} onClick={onClick} />
-      {unread && unreadBadgeLabel && (
-        <Badge value={unreadBadgeLabel} className="ch-unread-badge" />
-      )}
-      {actions && isSelected && (
-        <PopOver
-          a11yLabel="Open channel options"
-          placement="bottom-end"
-          renderButton={(isOpen: boolean) => (
-            <Dots
-              width="1.5rem"
-              height="1.5rem"
-              className={`${isOpen ? 'isOpen' : ''} ch-channel-actions`}
-              data-testid="channel-actions"
+      {displayDetailedView ? (
+        <>
+          <div className={'ch-detailed-channel'} onClick={onClick}>
+            <div className="ch-detailed-channel-name">{name}</div>
+            <div className="ch-detailed-channel-message">
+              {lastChannelMessage}
+            </div>
+            <div className="ch-detailed-channel-message-time">
+              {lastChannelMessageTimestamp}
+            </div>
+          </div>
+          {displayUnreadBadge && (
+            <Badge
+              value={unreadBadgeLabel!}
+              className="ch-unread-badge-detailed"
             />
           )}
-          children={actions}
-        />
+          {displayPopOver && (
+            <PopOver
+              className={'ch-popover-toggle-detailed'}
+              a11yLabel="Open channel options"
+              placement="bottom-end"
+              renderButton={(isOpen: boolean) => (
+                <Dots
+                  width="1.5rem"
+                  height="1.5rem"
+                  className={`${isOpen ? 'isOpen' : ''} ch-channel-actions`}
+                  data-testid="channel-actions"
+                />
+              )}
+              children={actions}
+            />
+          )}
+        </>
+      ) : (
+        <>
+          <Button
+            className="ch-channel-button"
+            label={name}
+            onClick={onClick}
+          />
+          {displayUnreadBadge && (
+            <Badge
+              value={unreadBadgeLabel!}
+              className="ch-unread-badge"
+            ></Badge>
+          )}
+          {displayPopOver && (
+            <PopOver
+              a11yLabel="Open channel options"
+              placement="bottom-end"
+              renderButton={(isOpen: boolean) => (
+                <Dots
+                  width="1.5rem"
+                  height="1.5rem"
+                  className={`${isOpen ? 'isOpen' : ''} ch-channel-actions`}
+                  data-testid="channel-actions"
+                />
+              )}
+              children={actions}
+            />
+          )}
+        </>
       )}
     </StyledChannelItem>
   );
