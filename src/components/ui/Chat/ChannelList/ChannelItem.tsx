@@ -45,7 +45,7 @@ export const ChannelItem: FC<ChannelItemProps> = (props) => {
   } = props;
 
   const displayDetailedView = lastChannelMessage || lastChannelMessageTimestamp;
-  const displayUnreadBatch = unread && unreadBadgeLabel;
+  const displayUnreadBadge = unread && unreadBadgeLabel;
   const displayPopOver = actions && isSelected;
   return (
     <StyledChannelItem
@@ -63,7 +63,7 @@ export const ChannelItem: FC<ChannelItemProps> = (props) => {
               {lastChannelMessageTimestamp}
             </div>
           </div>
-          {displayUnreadBatch && (
+          {displayUnreadBadge && (
             <Badge
               value={unreadBadgeLabel!}
               className="ch-unread-badge-detailed"
@@ -93,7 +93,7 @@ export const ChannelItem: FC<ChannelItemProps> = (props) => {
             label={name}
             onClick={onClick}
           />
-          {displayUnreadBatch && (
+          {displayUnreadBadge && (
             <Badge
               value={unreadBadgeLabel!}
               className="ch-unread-badge"
