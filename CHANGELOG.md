@@ -37,7 +37,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
 - Change `Versioning.ts` to read from Git instead of manually hard-coded. This is the same behavior in 
   `amazon-chime-sdk-js`.
-
+- Update the ChannelList UI component to take in optional `lastChannelMessage` and `lastChannelMessageTimestamp` parameters. If any of them is set, it will display more detailed channel item view with last message content or timestamp.
 ### Removed
 
 - Remove use of the deprecated `enableUnifiedPlanForChromiumBasedBrowsers` configuration variable.
