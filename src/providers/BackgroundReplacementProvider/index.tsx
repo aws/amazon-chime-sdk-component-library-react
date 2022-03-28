@@ -166,13 +166,6 @@ const BackgroundReplacementProvider: FC<Props> = ({
           selectedDevice,
           [currentProcessor]
         );
-        console.log(
-          `Created video transform device ${JSON.stringify(
-            chosenVideoTransformDevice,
-            null,
-            2
-          )}`
-        );
         return chosenVideoTransformDevice;
       } else {
         throw new Error(

@@ -154,13 +154,6 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
           selectedDevice,
           [currentProcessor]
         );
-        console.log(
-          `Created video transform device ${JSON.stringify(
-            chosenVideoTransformDevice,
-            null,
-            2
-          )}`
-        );
         return chosenVideoTransformDevice;
       } else {
         throw new Error(
