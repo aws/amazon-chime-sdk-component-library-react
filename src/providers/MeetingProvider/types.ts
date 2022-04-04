@@ -29,8 +29,16 @@ export interface MeetingManagerJoinOptions {
 
 export interface AttendeeResponse {
   name?: string;
-  [attribute: string]: any;
+  [attribute: string]: unknown;
 }
+
+export type ParsedJoinParams = {
+  deviceLabels: DeviceLabels | DeviceLabelTrigger;
+  eventController: EventController | undefined;
+  logger: Logger;
+  enableWebAudio: boolean;
+  activeSpeakerPolicy: ActiveSpeakerPolicy;
+};
 
 export type FullDeviceInfoType = {
   selectedAudioOutputDevice: string | null;

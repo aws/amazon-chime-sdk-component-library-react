@@ -367,7 +367,7 @@ const MeetingView = () => {
       // Change the state to hide the `LocalVideo` tile
       setIsVideoEnabled(false);
     } else {
-      await meetingManager.meetingSession?.audioVideo?.chooseVideoInputDevice(
+      await meetingManager.meetingSession?.audioVideo?.startVideoInput(
         meetingManager.selectedVideoInputDevice
       );
       meetingManager.meetingSession?.audioVideo?.startLocalVideoTile();

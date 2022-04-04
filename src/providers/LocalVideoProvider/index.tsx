@@ -68,7 +68,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
       audioVideo?.stopLocalVideoTile();
       setIsVideoEnabled(false);
     } else if (!hasReachedVideoLimit) {
-      await audioVideo?.chooseVideoInputDevice(
+      await meetingManager.selectVideoInputDevice(
         meetingManager.selectedVideoInputTransformDevice
       );
       audioVideo?.startLocalVideoTile();

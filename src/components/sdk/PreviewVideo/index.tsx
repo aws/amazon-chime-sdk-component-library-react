@@ -27,9 +27,9 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
 
   const { setIsVideoEnabled } = useLocalVideo();
   // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
-  const [device, setDevice] = useState<Device | VideoTransformDevice | null>(
-    meetingManager.selectedVideoInputTransformDevice
-  );
+  const [device, setDevice] = useState<
+    Device | VideoTransformDevice | undefined
+  >(meetingManager.selectedVideoInputTransformDevice);
 
   // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
   useEffect(() => {
@@ -50,18 +50,13 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
   }, [audioVideo]);
 
   useEffect(() => {
-    if (!audioVideo || !device || !videoEl.current) {
-      return;
-    }
-    async function startPreview() {
-      if (!audioVideo) {
+    async function startPreview(): Promise<void> {
+      if (!audioVideo || !device || !videoEl.current) {
         return;
       }
       await meetingManager.selectVideoInputDevice(device);
-      if (videoEl.current) {
-        audioVideo.startVideoPreviewForVideoInput(videoEl.current);
-        setIsVideoEnabled(true);
-      }
+      audioVideo.startVideoPreviewForVideoInput(videoEl.current);
+      setIsVideoEnabled(true);
     }
     startPreview();
   }, [audioVideo, device]);
