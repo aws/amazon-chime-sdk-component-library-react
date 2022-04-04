@@ -15,17 +15,15 @@ import React, {
   useState,
 } from 'react';
 
-import { AUDIO_INPUT } from '../../constants/additional-audio-video-devices';
-import { DeviceConfig, DeviceTypeContext } from '../../types';
-import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
+import { DeviceTypeContext } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
 interface Props {
   onDeviceReplacement?: (
     nextDevice: string,
-    currentDevice: Device | AudioTransformDevice
-  ) => Promise<Device | AudioTransformDevice>;
+    currentDevice: Device | AudioTransformDevice | null
+  ) => Promise<Device | AudioTransformDevice | null>;
 }
 
 const Context = createContext<DeviceTypeContext | null>(null);
@@ -47,7 +45,7 @@ const AudioInputProvider: React.FC<Props> = ({
 
   const replaceDevice = async (
     device: string
-  ): Promise<Device | AudioTransformDevice> => {
+  ): Promise<Device | AudioTransformDevice | null> => {
     if (onDeviceReplacement) {
       return onDeviceReplacement(
         device,
@@ -122,7 +120,7 @@ const AudioInputProvider: React.FC<Props> = ({
       },
     };
 
-    async function initAudioInput() {
+    async function initAudioInput(): Promise<void> {
       if (!audioVideo) {
         return;
       }
@@ -162,27 +160,14 @@ const AudioInputProvider: React.FC<Props> = ({
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
-const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
-  const needAdditionalIO = props && props.additionalDevices;
+const useAudioInputs = (): DeviceTypeContext => {
   const context = useContext(Context);
 
   if (!context) {
     throw new Error('useAudioInputs must be used within AudioInputProvider');
   }
 
-  let { devices } = context;
-  const { selectedDevice } = context;
-  const { selectDeviceError } = context;
-
-  if (needAdditionalIO) {
-    const additionalAudioInputs =
-      getFormattedDropdownDeviceOptions(AUDIO_INPUT);
-    if (additionalAudioInputs !== null) {
-      devices = [...devices, ...additionalAudioInputs];
-    }
-  }
-
-  return { devices, selectedDevice, selectDeviceError };
+  return context;
 };
 
 export { AudioInputProvider, useAudioInputs };

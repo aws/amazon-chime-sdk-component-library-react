@@ -28,20 +28,22 @@ export const BackgroundBlurCheckbox: React.FC<Props> = ({
   const [isLoading, setIsLoading] = useState(false);
   const meetingManager = useMeetingManager();
   // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
-  const [device, setDevice] = useState<Device | VideoTransformDevice | null>(
-    meetingManager.selectedVideoInputTransformDevice
-  );
+  const [device, setDevice] = useState<
+    Device | VideoTransformDevice | undefined
+  >(meetingManager.selectedVideoInputTransformDevice);
 
   // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
   useEffect(() => {
     meetingManager.subscribeToSelectedVideoInputTransformDevice(setDevice);
     return () => {
-      meetingManager.unsubscribeFromSelectedVideoInputTransformDevice(setDevice);
+      meetingManager.unsubscribeFromSelectedVideoInputTransformDevice(
+        setDevice
+      );
     };
   }, []);
 
-  const toggleBackgroundBlur = async () => {
-    if (isLoading) {
+  const toggleBackgroundBlur = async (): Promise<void> => {
+    if (isLoading || !device) {
       return;
     }
     if (!isVideoTransformDevice(device)) {

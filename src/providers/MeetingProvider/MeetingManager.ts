@@ -8,6 +8,7 @@ import {
   AudioVideoObserver,
   ConsoleLogger,
   DefaultActiveSpeakerPolicy,
+  DefaultBrowserBehavior,
   DefaultDeviceController,
   DefaultMeetingSession,
   Device,
@@ -28,11 +29,6 @@ import {
 } from 'amazon-chime-sdk-js';
 
 import { DeviceLabels, DeviceLabelTrigger, MeetingStatus } from '../../types';
-import {
-  audioInputSelectionToDevice,
-  supportsSetSinkId,
-  videoInputSelectionToDevice,
-} from '../../utils/device-utils';
 import {
   AttendeeResponse,
   DevicePermissionStatus,
@@ -493,7 +489,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.audioOutputDevices.length
     ) {
       this.selectedAudioOutputDevice = this.audioOutputDevices[0].deviceId;
-      if (supportsSetSinkId()) {
+      if (new DefaultBrowserBehavior().supportsSetSinkId()) {
         try {
           await this.audioVideo?.chooseAudioOutput(
             this.audioOutputDevices[0].deviceId
@@ -518,12 +514,9 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   selectAudioInputDevice = async (
-    device: Device | AudioTransformDevice
+    device: Device | AudioTransformDevice | null
   ): Promise<void> => {
-    let receivedDevice = device;
-    if (typeof device === 'string') {
-      receivedDevice = audioInputSelectionToDevice(device);
-    }
+    const receivedDevice = device;
     if (receivedDevice === null) {
       try {
         await this.audioVideo?.startAudioInput(null);
@@ -543,15 +536,17 @@ export class MeetingManager implements AudioVideoObserver {
         console.error('Failed to choose audio input device.', error);
       }
 
-      let innerDevice = null;
+      let deviceId = null;
       if (isAudioTransformDevice(device)) {
-        innerDevice = await device.intrinsicDevice();
+        const innerDevice = await device.intrinsicDevice();
+        deviceId = DefaultDeviceController.getIntrinsicDeviceId(innerDevice);
       } else {
-        innerDevice = device;
+        const innerDevice = device;
+        if (innerDevice) {
+          deviceId = DefaultDeviceController.getIntrinsicDeviceId(innerDevice);
+        }
       }
 
-      const deviceId =
-        DefaultDeviceController.getIntrinsicDeviceId(innerDevice);
       if (typeof deviceId === 'string') {
         this.selectedAudioInputDevice = deviceId;
       } else if (Array.isArray(deviceId) && deviceId[0]) {
@@ -577,10 +572,7 @@ export class MeetingManager implements AudioVideoObserver {
   selectVideoInputDevice = async (
     device: Device | VideoTransformDevice
   ): Promise<void> => {
-    let receivedDevice = device;
-    if (typeof device === 'string') {
-      receivedDevice = videoInputSelectionToDevice(device);
-    }
+    const receivedDevice = device;
     if (receivedDevice === null) {
       try {
         await this.audioVideo?.stopVideoInput();
