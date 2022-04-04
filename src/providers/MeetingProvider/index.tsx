@@ -14,6 +14,7 @@ import { MeetingEventProvider } from '../MeetingEventProvider';
 import { RemoteVideoTileProvider } from '../RemoteVideoTileProvider';
 import { RosterProvider } from '../RosterProvider';
 import MeetingManager from './MeetingManager';
+import { useLogger } from '../LoggerProvider';
 
 interface Props {
   onDeviceReplacement?: (
@@ -34,8 +35,9 @@ export const MeetingProvider: React.FC<Props> = ({
   meetingManager: meetingManagerProp,
   children,
 }) => {
+  const logger = useLogger();
   const [meetingManager] = useState(
-    () => meetingManagerProp || new MeetingManager()
+    () => meetingManagerProp || new MeetingManager(logger)
   );
 
   return (

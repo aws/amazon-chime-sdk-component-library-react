@@ -9,6 +9,7 @@ import {
 import React, { useEffect, useState } from 'react';
 
 import { useBackgroundBlur } from '../../../../providers/BackgroundBlurProvider';
+import { useLogger } from '../../../../providers/LoggerProvider';
 import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { Checkbox } from '../../../ui/Checkbox';
 import { FormField } from '../../../ui/FormField';
@@ -23,6 +24,7 @@ export const BackgroundBlurCheckbox: React.FC<Props> = ({
   label = 'Blur my background',
   ...rest
 }) => {
+  const logger = useLogger();
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
     useBackgroundBlur();
   const [isLoading, setIsLoading] = useState(false);
@@ -50,7 +52,7 @@ export const BackgroundBlurCheckbox: React.FC<Props> = ({
         const transformedVideoDevice = await createBackgroundBlurDevice(device);
         await meetingManager.selectVideoInputDevice(transformedVideoDevice);
       } else {
-        meetingManager.logger?.warn(
+        logger.warn(
           'Background blur processor is not supported yet.'
         );
       }

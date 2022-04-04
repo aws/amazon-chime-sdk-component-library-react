@@ -6,7 +6,6 @@ import {
   AudioTransformDevice,
   AudioVideoFacade,
   AudioVideoObserver,
-  ConsoleLogger,
   DefaultActiveSpeakerPolicy,
   DefaultDeviceController,
   DefaultMeetingSession,
@@ -18,12 +17,9 @@ import {
   isAudioTransformDevice,
   isVideoTransformDevice,
   Logger,
-  LogLevel,
   MeetingSessionConfiguration,
-  MeetingSessionPOSTLogger,
   MeetingSessionStatus,
   MeetingSessionStatusCode,
-  MultiLogger,
   VideoTransformDevice,
 } from 'amazon-chime-sdk-js';
 
@@ -38,7 +34,6 @@ import {
   DevicePermissionStatus,
   FullDeviceInfoType,
   MeetingManagerJoinOptions,
-  PostLoggerConfig,
 } from './types';
 
 function noOpDeviceLabelHook(): Promise<MediaStream> {
@@ -128,7 +123,7 @@ export class MeetingManager implements AudioVideoObserver {
   devicesUpdatedCallbacks: ((fullDeviceInfo: FullDeviceInfoType) => void)[] =
     [];
 
-  logger: Logger;
+  private logger: Logger;
 
   private meetingEventObserverSet = new Set<
     (name: EventName, attributes: EventAttributes) => void
@@ -136,7 +131,8 @@ export class MeetingManager implements AudioVideoObserver {
 
   private eventDidReceiveRef: EventObserver;
 
-  constructor() {
+  constructor(logger: Logger) {
+    this.logger = logger;
     this.eventDidReceiveRef = {
       eventDidReceive: (name: EventName, attributes: EventAttributes) => {
         this.publishEventDidReceiveUpdate(name, attributes);
@@ -171,20 +167,18 @@ export class MeetingManager implements AudioVideoObserver {
     const {
       deviceLabels,
       eventController,
-      logger,
       enableWebAudio,
       activeSpeakerPolicy,
-    } = this.parseJoinParams(meetingSessionConfiguration, options);
+    } = this.parseJoinParams(options);
     this.meetingSessionConfiguration = meetingSessionConfiguration;
     this.meetingId = this.meetingSessionConfiguration.meetingId;
-    this.logger = logger;
 
-    const deviceController = new DefaultDeviceController(logger, {
+    const deviceController = new DefaultDeviceController(this.logger, {
       enableWebAudio: enableWebAudio,
     });
     this.meetingSession = new DefaultMeetingSession(
       meetingSessionConfiguration,
-      logger,
+      this.logger,
       deviceController,
       eventController
     );
@@ -206,32 +200,17 @@ export class MeetingManager implements AudioVideoObserver {
     this.publishMeetingStatus();
   }
 
-  private parseJoinParams(
-    meetingSessionConfiguration: MeetingSessionConfiguration,
-    options?: MeetingManagerJoinOptions
-  ) {
+  private parseJoinParams(options?: MeetingManagerJoinOptions) {
     const deviceLabels: DeviceLabels | DeviceLabelTrigger =
       options?.deviceLabels || DeviceLabels.AudioAndVideo;
     const eventController: EventController | undefined =
       options?.eventController;
-    const logLevel: LogLevel = options?.logLevel || LogLevel.WARN;
-    const postLoggerConfig: PostLoggerConfig | undefined =
-      options?.postLoggerConfig;
-    const logger: Logger =
-      options?.logger ||
-      this.createLogger(
-        logLevel,
-        meetingSessionConfiguration,
-        postLoggerConfig
-      );
     const enableWebAudio: boolean = options?.enableWebAudio || false;
     const activeSpeakerPolicy: ActiveSpeakerPolicy =
       options?.activeSpeakerPolicy || new DefaultActiveSpeakerPolicy();
-
     return {
       deviceLabels,
       eventController,
-      logger,
       enableWebAudio,
       activeSpeakerPolicy,
     };
@@ -252,7 +231,7 @@ export class MeetingManager implements AudioVideoObserver {
         await this.audioVideo.chooseAudioInputDevice(null);
         await this.audioVideo.chooseAudioOutputDevice(null);
       } catch (error) {
-        console.log('Unable to set device to null on leave.');
+        this.logger.info('Unable to set device to null on leave.');
       }
 
       if (this.activeSpeakerListener) {
@@ -268,34 +247,8 @@ export class MeetingManager implements AudioVideoObserver {
     this.publishActiveSpeaker();
   }
 
-  private createLogger(
-    logLevel: LogLevel,
-    meetingSessionConfiguration: MeetingSessionConfiguration,
-    postLoggerConfig?: PostLoggerConfig
-  ): Logger {
-    const consoleLogger = new ConsoleLogger('SDK', logLevel);
-    let logger: ConsoleLogger | MultiLogger = consoleLogger;
-
-    if (postLoggerConfig) {
-      const { name, batchSize, intervalMs, url, logLevel } = postLoggerConfig;
-      logger = new MultiLogger(
-        consoleLogger,
-        new MeetingSessionPOSTLogger(
-          name,
-          meetingSessionConfiguration,
-          batchSize,
-          intervalMs,
-          url,
-          logLevel
-        )
-      );
-    }
-
-    return logger;
-  }
-
   audioVideoDidStart = (): void => {
-    console.log(
+    this.logger.info(
       '[MeetingManager audioVideoDidStart] Meeting started successfully'
     );
     this.meetingStatus = MeetingStatus.Succeeded;
@@ -306,7 +259,7 @@ export class MeetingManager implements AudioVideoObserver {
     const sessionStatusCode = sessionStatus.statusCode();
     switch (sessionStatusCode) {
       case MeetingSessionStatusCode.MeetingEnded:
-        console.log(
+        this.logger.info(
           `[MeetingManager audioVideoDidStop] Meeting ended for all: ${sessionStatusCode}`
         );
         this.meetingStatus = MeetingStatus.Ended;
@@ -314,7 +267,7 @@ export class MeetingManager implements AudioVideoObserver {
         this.leave();
         break;
       case MeetingSessionStatusCode.Left:
-        console.log(
+        this.logger.info(
           `[MeetingManager audioVideoDidStop] Left the meeting: ${sessionStatusCode}`
         );
         this.meetingStatus = MeetingStatus.Left;
@@ -322,7 +275,7 @@ export class MeetingManager implements AudioVideoObserver {
         this.leave();
         break;
       case MeetingSessionStatusCode.AudioJoinedFromAnotherDevice:
-        console.log(
+        this.logger.info(
           `[MeetingManager audioVideoDidStop] Meeting joined from another device: ${sessionStatusCode}`
         );
         this.meetingStatus = MeetingStatus.JoinedFromAnotherDevice;
@@ -332,19 +285,19 @@ export class MeetingManager implements AudioVideoObserver {
       default:
         // The following status codes are Failures according to MeetingSessionStatus
         if (sessionStatus.isFailure()) {
-          console.log(
+          this.logger.info(
             `[MeetingManager audioVideoDidStop] Non-Terminal failure occured: ${sessionStatusCode}`
           );
           this.meetingStatus = MeetingStatus.Failed;
           this.publishMeetingStatus();
         } else if (sessionStatus.isTerminal()) {
-          console.log(
+          this.logger.info(
             `[MeetingManager audioVideoDidStop] Terminal failure occured: ${sessionStatusCode}`
           );
           this.meetingStatus = MeetingStatus.TerminalFailure;
           this.publishMeetingStatus();
         }
-        console.log(
+        this.logger.info(
           `[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}`
         );
         this.leave();
@@ -420,7 +373,7 @@ export class MeetingManager implements AudioVideoObserver {
           this.publishDevicePermissionStatus();
           return stream;
         } catch (error) {
-          console.error('Failed to get device permissions');
+          this.logger.error('Failed to get device permissions');
           this.devicePermissionStatus = DevicePermissionStatus.DENIED;
           this.publishDevicePermissionStatus();
           throw new Error(error);
@@ -489,7 +442,7 @@ export class MeetingManager implements AudioVideoObserver {
           this.audioInputDevices[0].deviceId
         );
       } catch (error) {
-        console.error(`Error in selecting audio input device - ${error}`);
+        this.logger.error(`Error in selecting audio input device - ${error}`);
       }
       this.publishSelectedAudioInputDevice();
       this.publishSelectedAudioInputTransformDevice();
@@ -507,7 +460,7 @@ export class MeetingManager implements AudioVideoObserver {
             this.audioOutputDevices[0].deviceId
           );
         } catch (error) {
-          console.error('Failed to choose audio output device.', error);
+          this.logger.error(`Failed to choose audio output device. ${error}`);
         }
       }
       this.publishSelectedAudioOutputDevice();
@@ -538,7 +491,7 @@ export class MeetingManager implements AudioVideoObserver {
         this.selectAudioInputDeviceError = null;
       } catch (error) {
         this.selectAudioInputDeviceError = error;
-        console.error('Failed to choose audio input device.', error);
+        this.logger.error(`Failed to choose audio input device. ${error}`);
       }
       this.selectedAudioInputTransformDevice = null;
       this.selectedAudioInputDevice = null;
@@ -548,7 +501,7 @@ export class MeetingManager implements AudioVideoObserver {
         this.selectAudioInputDeviceError = null;
       } catch (error) {
         this.selectAudioInputDeviceError = error;
-        console.error('Failed to choose audio input device.', error);
+        this.logger.error(`Failed to choose audio input device. ${error}`);
       }
 
       let innerDevice = null;
@@ -578,7 +531,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedAudioOutputDevice = deviceId;
       this.publishSelectedAudioOutputDevice();
     } catch (error) {
-      console.error(`Error setting audio output`, error);
+      this.logger.error(`Error setting audio output ${error}`);
     }
   };
 
@@ -595,7 +548,7 @@ export class MeetingManager implements AudioVideoObserver {
         this.selectVideoInputDeviceError = null;
       } catch (error) {
         this.selectVideoInputDeviceError = error;
-        console.error('Failed to choose video input device.', error);
+        this.logger.error(`Failed to choose video input device. ${error}`);
       }
       this.selectedVideoInputDevice = null;
       this.selectedVideoInputTransformDevice = null;
@@ -605,7 +558,7 @@ export class MeetingManager implements AudioVideoObserver {
         this.selectVideoInputDeviceError = null;
       } catch (error) {
         this.selectVideoInputDeviceError = error;
-        console.error('Failed to choose video input device.', error);
+        this.logger.error(`Failed to choose video input device.',${error}`);
       }
       let innerDevice = null;
       if (isVideoTransformDevice(device)) {

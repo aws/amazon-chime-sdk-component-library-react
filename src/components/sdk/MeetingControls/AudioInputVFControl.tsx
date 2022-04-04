@@ -14,6 +14,7 @@ import { PopOverSeparator } from '../../..';
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
+import { useLogger } from '../../../providers/LoggerProvider';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { useVoiceFocus } from '../../../providers/VoiceFocusProvider';
 import { DeviceConfig, DeviceType } from '../../../types';
@@ -55,6 +56,7 @@ const AudioInputVFControl: React.FC<Props> = ({
   appendSampleDevices = true,
   ...rest
 }) => {
+  const logger = useLogger();
   const audioVideo = useAudioVideo();
   const meetingManager = useMeetingManager();
   const [isLoading, setIsLoading] = useState(false);
@@ -92,7 +94,7 @@ const AudioInputVFControl: React.FC<Props> = ({
   }, []);
 
   useEffect(() => {
-    console.info(
+    logger.info(
       `Amazon Voice Focus is ${isVoiceFocusEnabled ? 'enabled' : 'disabled'}.`
     );
   }, [isVoiceFocusEnabled]);
@@ -177,13 +179,13 @@ const AudioInputVFControl: React.FC<Props> = ({
     async function onVFCheckboxChange() {
       let current = device;
       if (isVoiceFocusChecked) {
-        console.info('User turned on Amazon Voice Focus.');
+        logger.info('User turned on Amazon Voice Focus.');
         if (typeof device === 'string') {
           const currentDevice = audioInputSelectionToDevice(device);
           current = await addVoiceFocus(currentDevice);
         }
       } else {
-        console.info(
+        logger.info(
           'Amazon Voice Focus is off by default or user turned off Amazon Voice Focus.'
         );
         if (device instanceof VoiceFocusTransformDevice) {

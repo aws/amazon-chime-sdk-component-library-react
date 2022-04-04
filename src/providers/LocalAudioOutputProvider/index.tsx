@@ -13,10 +13,12 @@ import React, {
 
 import { LocalAudioOutputContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useLogger } from '../LoggerProvider';
 
 const Context = createContext<LocalAudioOutputContextType | null>(null);
 
 const LocalAudioOutputProvider: React.FC = ({ children }) => {
+  const logger = useLogger();
   const audioVideo = useAudioVideo();
   const [isAudioOn, setIsAudioOn] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -31,7 +33,7 @@ const LocalAudioOutputProvider: React.FC = ({ children }) => {
         try {
           await audioVideo.bindAudioElement(element);
         } catch (e) {
-          console.error('Failed to bind audio element.', e);
+          logger.error(`Failed to bind audio element., ${e}`);
         }
       })(audioRef.current);
     }
@@ -53,7 +55,7 @@ const LocalAudioOutputProvider: React.FC = ({ children }) => {
         try {
           await audioVideo?.bindAudioElement(element);
         } catch (e) {
-          console.error('Failed to bind audio element.', e);
+          logger.error(`Failed to bind audio element., ${e}`);
         }
       })(audioRef.current);
     }

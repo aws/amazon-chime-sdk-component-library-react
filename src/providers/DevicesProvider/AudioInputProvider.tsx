@@ -19,6 +19,7 @@ import { AUDIO_INPUT } from '../../constants/additional-audio-video-devices';
 import { DeviceConfig, DeviceTypeContext } from '../../types';
 import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
 interface Props {
@@ -34,6 +35,7 @@ const AudioInputProvider: React.FC<Props> = ({
   children,
   onDeviceReplacement,
 }) => {
+  const logger = useLogger();
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
@@ -86,7 +88,7 @@ const AudioInputProvider: React.FC<Props> = ({
 
     const observer: DeviceChangeObserver = {
       audioInputsChanged: async (newAudioInputs: MediaDeviceInfo[]) => {
-        console.log('AudioInputProvider - audio inputs updated');
+        logger.info('AudioInputProvider - audio inputs updated');
 
         const hasSelectedDevice = newAudioInputs.some(
           (device) => device.deviceId === selectedInputRef.current
@@ -98,7 +100,7 @@ const AudioInputProvider: React.FC<Props> = ({
           !hasSelectedDevice &&
           newAudioInputs.length
         ) {
-          console.log(
+          logger.info(
             'Previously selected audio input lost. Selecting a default device.'
           );
           nextInput = newAudioInputs[0].deviceId;
@@ -106,7 +108,7 @@ const AudioInputProvider: React.FC<Props> = ({
           // Safari and Firefox don't have this "default" as device Id
           // Only Chrome have this "default" device
         } else if (selectedInputRef.current === 'default') {
-          console.log(
+          logger.info(
             `Audio devices updated and "default" device is selected. Reselecting input.`
           );
         }
@@ -115,7 +117,7 @@ const AudioInputProvider: React.FC<Props> = ({
         try {
           await meetingManager.selectAudioInputDevice(nextDevice);
         } catch (e) {
-          console.error(`Error in selecting audio input device - ${e}`);
+          logger.error(`Error in selecting audio input device - ${e}`);
         }
 
         setAudioInputs(newAudioInputs);

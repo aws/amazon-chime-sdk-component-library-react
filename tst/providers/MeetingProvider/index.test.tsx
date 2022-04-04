@@ -5,7 +5,6 @@ import {
   DefaultEventController,
   EventAttributes,
   EventName,
-  LogLevel,
   MeetingSessionConfiguration,
   MeetingSessionCredentials,
   MeetingSessionURLs,
@@ -43,15 +42,16 @@ describe('Meeting Provider', () => {
       }, 
       attendeeInfo: new MeetingSessionCredentials(),  
     }
+
+    const logger = new NoOpDebugLogger();
     let eventController = new DefaultEventController(
       new MeetingSessionConfiguration(joinData.meetingInfo, joinData.attendeeInfo), 
-      new NoOpDebugLogger(),
+      logger,
       );
     let meetingManagerJoinOptions: MeetingManagerJoinOptions = {
-      logLevel: LogLevel.OFF,
       eventController: eventController,
     };
-    let meetingManager = new MeetingManager();
+    let meetingManager = new MeetingManager(logger);
     await meetingManager.join(new MeetingSessionConfiguration(joinData.meetingInfo, joinData.attendeeInfo),
       meetingManagerJoinOptions,
     );

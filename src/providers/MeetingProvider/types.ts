@@ -4,8 +4,6 @@
 import {
   ActiveSpeakerPolicy,
   EventController,
-  Logger,
-  LogLevel,
 } from 'amazon-chime-sdk-js';
 
 import { DeviceLabels, DeviceLabelTrigger } from '../../types';
@@ -20,9 +18,6 @@ export enum DevicePermissionStatus {
 export interface MeetingManagerJoinOptions {
   deviceLabels?: DeviceLabels | DeviceLabelTrigger;
   eventController?: EventController;
-  logLevel?: LogLevel;
-  postLoggerConfig?: PostLoggerConfig;
-  logger?: Logger;
   enableWebAudio?: boolean;
   activeSpeakerPolicy?: ActiveSpeakerPolicy;
 }
@@ -40,11 +35,3 @@ export type FullDeviceInfoType = {
   audioOutputDevices: MediaDeviceInfo[] | null;
   videoInputDevices: MediaDeviceInfo[] | null;
 };
-
-export interface PostLoggerConfig {
-  name: string;
-  batchSize: number;
-  intervalMs: number;
-  url: string;
-  logLevel: LogLevel;
-}

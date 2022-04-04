@@ -3,6 +3,7 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
+import { useLogger } from '../../../providers/LoggerProvider';
 
 import { StyledTooltip } from './Styled';
 
@@ -38,6 +39,7 @@ export const WithTooltip =
     container_id?: string
   ) =>
   (props: P & ToolTipProps) => {
+    const logger = useLogger();
     const [{ show, bounds }, setShow] =
       useState<WithTooltipState>(initialState);
     const [container, setContainer] = useState<HTMLElement | null>(null);
@@ -70,7 +72,7 @@ export const WithTooltip =
       );
 
       if (!container) {
-        console.warn(`
+        logger.warn(`
         Attempted to use 'WithTooltip' but could not find container element.
         Pass a valid element ID or add 'Tooltip__container' ID to existing element
       `);

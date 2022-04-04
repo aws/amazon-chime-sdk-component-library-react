@@ -8,10 +8,7 @@ import {
   DefaultActiveSpeakerPolicy,
   DefaultDeviceController,
   DefaultMeetingSession,
-  LogLevel,
   MeetingSessionConfiguration,
-  MeetingSessionPOSTLogger,
-  MultiLogger,
 } from 'amazon-chime-sdk-js';
 
 import { MeetingManager } from '../../../src/providers/MeetingProvider/MeetingManager';
@@ -28,16 +25,6 @@ describe('Meeting Manager', () => {
     // @ts-ignore
     MeetingSessionConfiguration = jest.fn().mockImplementation(() => {});
     mockMeetingSessionConfiguration = new MeetingSessionConfiguration();
-    mockMeetingManagerJoinOptions = {
-      logLevel: LogLevel.WARN,
-    };
-    meetingManager = new MeetingManager();
-    // @ts-ignore
-    ConsoleLogger = jest.fn().mockReturnValue({});
-    // @ts-ignore 
-    MultiLogger = jest.fn().mockReturnValue({});
-    // @ts-ignore
-    MeetingSessionPOSTLogger = jest.fn().mockReturnValue({});
     // @ts-ignore
     DefaultDeviceController = jest.fn().mockReturnValue({});
     // @ts-ignore
@@ -67,66 +54,18 @@ describe('Meeting Manager', () => {
     });
   });
 
-  describe('join', () => {
-    it('should call MeetingSessionPOSTLogger with PostLogConfig', async () => {
-      mockMeetingManagerJoinOptions = {
-        logLevel: LogLevel.ERROR,
-        postLoggerConfig: {
-          name: 'Test',
-          batchSize: 20,
-          intervalMs: 100,
-          url: 'http://test-url.com',
-          logLevel: LogLevel.INFO,
-        }
-      }
-      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
-      expect(MeetingSessionPOSTLogger).toHaveBeenCalledWith(
-        'Test',
-        mockMeetingSessionConfiguration,
-        20,
-        100,
-        'http://test-url.com',
-        LogLevel.INFO,
-    );
-      expect(MeetingSessionPOSTLogger).toHaveBeenCalledTimes(1);
+  describe('constructor', () => {
+    it('can be constructed', () => {
+      const logger = new ConsoleLogger('SDK');
+      meetingManager = new MeetingManager(logger);
+      expect(meetingManager).toBeDefined;
     });
+  });
 
-    it('should call MultiLogger if PostLoggerConfig is passed', async () => {
-      mockMeetingManagerJoinOptions = {
-        logLevel: LogLevel.ERROR,
-        postLoggerConfig: {
-          name: 'Test',
-          batchSize: 20,
-          intervalMs: 100,
-          url: 'http://test-url.com',
-          logLevel: LogLevel.INFO,
-        }
-      }
-      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
-      expect(ConsoleLogger).toHaveBeenCalledWith(
-        'SDK',
-        LogLevel.ERROR,
-      );
-      expect(MeetingSessionPOSTLogger).toHaveBeenCalledWith(
-        'Test',
-        mockMeetingSessionConfiguration,
-        20,
-        100,
-        'http://test-url.com',
-        LogLevel.INFO,
-      );
-      expect(MultiLogger).toHaveBeenCalledWith(
-        new ConsoleLogger('SDK', LogLevel.ERROR),
-        new MeetingSessionPOSTLogger(
-          'Test',
-          mockMeetingSessionConfiguration,
-          20,
-          100,
-          'http://test-url.com',
-          LogLevel.INFO,
-        ),
-      );
-      expect(MultiLogger).toHaveBeenCalledTimes(1);
+  describe('join', () => {
+    beforeEach(() => {
+      const logger = new ConsoleLogger('SDK');
+      meetingManager = new MeetingManager(logger);
     });
 
     it('should call subscribeToActiveSpeakerDetector with new DefaultActiveSpeakerPolicy if one is not passed via MeetinManagerJoinOptions', async () => {

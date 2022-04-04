@@ -6,10 +6,8 @@ import {
   BackgroundReplacementOptions,
   BackgroundReplacementProcessor,
   BackgroundReplacementVideoFrameProcessor,
-  ConsoleLogger,
   DefaultVideoTransformDevice,
   Device,
-  LogLevel,
   NoOpVideoFrameProcessor,
   VideoFrameProcessor,
 } from 'amazon-chime-sdk-js';
@@ -21,6 +19,7 @@ import React, {
   useState,
 } from 'react';
 
+import { useLogger } from '../LoggerProvider';
 import { BaseSdkProps } from '../../components/sdk/Base';
 import { isPrevNextEmpty, isPrevNextUndefined } from '../../utils/device-utils';
 import useMemoCompare from '../../utils/use-memo-compare';
@@ -50,6 +49,7 @@ const BackgroundReplacementProvider: FC<Props> = ({
   options,
   children,
 }) => {
+  const logger = useLogger();
   const [
     isBackgroundReplacementSupported,
     setIsBackgroundReplacementSupported,
@@ -95,7 +95,7 @@ const BackgroundReplacementProvider: FC<Props> = ({
   useEffect(() => {
     initializeBackgroundReplacement();
     return () => {
-      console.log(
+      logger.info(
         'Specs or options were changed. Destroying and re-initializing background replacement processor.'
       );
       processor?.destroy();
@@ -105,10 +105,10 @@ const BackgroundReplacementProvider: FC<Props> = ({
   async function initializeBackgroundReplacement(): Promise<
     BackgroundReplacementProcessor | undefined
   > {
-    console.log(
-      'Initializing background replacement processor with ',
-      spec,
-      options
+    logger.info(
+      `Initializing background replacement processor with ,
+      ${JSON.stringify(spec)},
+      ${JSON.stringify(options)}`
     );
 
     try {
@@ -122,12 +122,12 @@ const BackgroundReplacementProvider: FC<Props> = ({
       // BackgroundReplacementVideoFrameProcessor.create() can also throw an error in case loading
       // the assets are not fetched successfully.
       if (createdProcessor instanceof NoOpVideoFrameProcessor) {
-        console.warn(`Initialized NoOpVideoFrameProcessor.`);
+        logger.info(`Initialized NoOpVideoFrameProcessor.`);
         setProcessor(undefined);
         setIsBackgroundReplacementSupported(false);
         return undefined;
       } else {
-        console.log(
+        logger.info(
           `Initialized background replacement processor: ${JSON.stringify(
             createdProcessor
           )}`
@@ -137,9 +137,9 @@ const BackgroundReplacementProvider: FC<Props> = ({
         return createdProcessor;
       }
     } catch (error) {
-      console.error(
-        `Error creating a background replacement video frame processor device.`,
-        error
+      logger.error(
+        `Error creating a background replacement video frame processor device.,
+        ${error}`
       );
       setProcessor(undefined);
       setIsBackgroundReplacementSupported(false);
@@ -150,23 +150,21 @@ const BackgroundReplacementProvider: FC<Props> = ({
   const createBackgroundReplacementDevice = async (
     selectedDevice: Device
   ): Promise<DefaultVideoTransformDevice> => {
-    console.log(
+    logger.info(
       `Calling createBackgroundReplacementDevice with device: ${JSON.stringify(
         selectedDevice
       )}`
     );
     const currentProcessor = await initializeBackgroundReplacement();
     try {
-      const logger =
-        options?.logger ||
-        new ConsoleLogger('BackgroundReplacementProvider', LogLevel.INFO);
+      const bgReplacementlogger = options?.logger || logger;
       if (currentProcessor) {
         const chosenVideoTransformDevice = new DefaultVideoTransformDevice(
           logger,
           selectedDevice,
           [currentProcessor]
         );
-        console.log(
+        bgReplacementlogger.info(
           `Created video transform device ${JSON.stringify(
             chosenVideoTransformDevice,
             null,

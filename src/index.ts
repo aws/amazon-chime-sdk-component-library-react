@@ -165,7 +165,6 @@ export { FeaturedVideoTileProvider } from './providers/FeaturedVideoTileProvider
 export { VoiceFocusProvider } from './providers/VoiceFocusProvider';
 export { BackgroundBlurProvider } from './providers/BackgroundBlurProvider';
 export { BackgroundReplacementProvider } from './providers/BackgroundReplacementProvider';
-
 export {
   UserActivityProvider,
   useUserActivityState,
@@ -174,6 +173,11 @@ export {
   useMeetingEvent,
   MeetingEventProvider,
 } from './providers/MeetingEventProvider';
+export {
+  LoggerContext,
+  LoggerProvider,
+  useLogger,
+} from './providers/LoggerProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';

@@ -13,11 +13,13 @@ import React, {
 
 import { LocalVideoContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
 const Context = createContext<LocalVideoContextType | null>(null);
 
 const LocalVideoProvider: React.FC = ({ children }) => {
+  const logger = useLogger();
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
@@ -40,9 +42,9 @@ const LocalVideoProvider: React.FC = ({ children }) => {
         } else {
           setHasReachedVideoLimit(false);
         }
-        console.log(
-          'video availability changed: canStartLocalVideo ',
-          availability.canStartLocalVideo
+        logger.info(
+          `video availability changed: canStartLocalVideo ,
+          ${availability.canStartLocalVideo}`
         );
       },
     };
@@ -56,14 +58,14 @@ const LocalVideoProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (hasReachedVideoLimit) {
-      console.warn('Reach the number of maximum active videos');
+      logger.warn('Reach the number of maximum active videos');
     }
   }, [hasReachedVideoLimit]);
 
   const toggleVideo = useCallback(async (): Promise<void> => {
     if (isVideoEnabled || !meetingManager.selectedVideoInputTransformDevice) {
       if (!meetingManager.selectedVideoInputTransformDevice) {
-        console.warn('There is no input video device chosen!');
+        logger.warn('There is no input video device chosen!');
       }
       audioVideo?.stopLocalVideoTile();
       setIsVideoEnabled(false);
@@ -74,7 +76,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
       audioVideo?.startLocalVideoTile();
       setIsVideoEnabled(true);
     } else {
-      console.error('Video limit is reached and can not turn on more videos!');
+      logger.error('Video limit is reached and can not turn on more videos!');
     }
   }, [
     audioVideo,

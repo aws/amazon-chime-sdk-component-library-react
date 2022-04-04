@@ -12,6 +12,7 @@ import React, { ReactNode, useEffect, useState } from 'react';
 import { useBackgroundBlur } from '../../../providers/BackgroundBlurProvider';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
+import { useLogger } from '../../../providers/LoggerProvider';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { DeviceType } from '../../../types';
 import {
@@ -37,6 +38,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
   backgroundBlurLabel = 'Enable Background Blur',
   ...rest
 }) => {
+  const logger = useLogger();
   const meetingManager = useMeetingManager();
   const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
@@ -73,14 +75,14 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
     if (!isVideoTransformDevice(current)) {
       // Enable video transform on the non-transformed device
       current = await createBackgroundBlurDevice(current);
-      meetingManager.logger?.info(
+      logger.info(
         'Video filter turned on - selecting video transform device: ' +
           JSON.stringify(current)
       );
     } else {
       // switch back to the inner device
       current = await current.intrinsicDevice();
-      meetingManager.logger?.info(
+      logger.info(
         'Video filter was turned off - selecting inner device: ' +
           JSON.stringify(current)
       );
@@ -109,7 +111,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
                 activeVideoDevice.chooseNewInnerDevice(receivedDevice);
               await meetingManager.selectVideoInputDevice(transformedDevice);
             } else {
-              meetingManager.logger?.error(
+              logger.error(
                 'Transform device cannot choose new inner device'
               );
             }
