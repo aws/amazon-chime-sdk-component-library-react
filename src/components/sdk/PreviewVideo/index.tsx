@@ -6,7 +6,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
-import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
@@ -25,7 +24,6 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
   const meetingManager = useMeetingManager();
   const videoEl = useRef<HTMLVideoElement>(null);
 
-  const { setIsVideoEnabled } = useLocalVideo();
   // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
   const [device, setDevice] = useState<
     Device | VideoTransformDevice | undefined
@@ -46,7 +44,6 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
     return () => {
       if (videoElement) {
         audioVideo?.stopVideoPreviewForVideoInput(videoElement);
-        setIsVideoEnabled(false);
       }
     };
   }, [audioVideo]);
@@ -58,7 +55,6 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
       }
       await meetingManager.selectVideoInputDevice(device);
       audioVideo.startVideoPreviewForVideoInput(videoEl.current);
-      setIsVideoEnabled(true);
     }
     startPreview();
   }, [audioVideo, device]);

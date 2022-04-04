@@ -29,7 +29,6 @@ export type LocalAudioOutputContextType = {
 export type LocalVideoContextType = {
   tileId: null | number;
   isVideoEnabled: boolean;
-  setIsVideoEnabled: (isEnabled: boolean) => void;
   hasReachedVideoLimit: boolean;
   setHasReachedVideoLimit: (hasReached: boolean) => void;
   toggleVideo: () => Promise<void>;
