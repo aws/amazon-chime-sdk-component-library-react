@@ -719,7 +719,7 @@ export class MeetingManager implements AudioVideoObserver {
     this.selectedVideoInputTransformDeviceObservers.push(callback);
   };
 
-  unsubscribeFromSelectedVideoInputTranformDevice = (
+  unsubscribeFromSelectedVideoInputTransformDevice = (
     callbackToRemove: (device: Device | VideoTransformDevice) => void
   ): void => {
     this.selectedVideoInputTransformDeviceObservers =

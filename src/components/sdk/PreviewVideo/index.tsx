@@ -35,7 +35,9 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
   useEffect(() => {
     meetingManager.subscribeToSelectedVideoInputTransformDevice(setDevice);
     return () => {
-      meetingManager.unsubscribeFromSelectedVideoInputTranformDevice(setDevice);
+      meetingManager.unsubscribeFromSelectedVideoInputTransformDevice(
+        setDevice
+      );
     };
   }, []);
 

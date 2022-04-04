@@ -60,7 +60,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
   useEffect(() => {
     meetingManager.subscribeToSelectedVideoInputTransformDevice(setDevice);
     return () => {
-      meetingManager.unsubscribeFromSelectedVideoInputTranformDevice(setDevice);
+      meetingManager.unsubscribeFromSelectedVideoInputTransformDevice(setDevice);
     };
   }, []);
 
