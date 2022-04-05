@@ -516,8 +516,7 @@ export class MeetingManager implements AudioVideoObserver {
   selectAudioInputDevice = async (
     device: Device | AudioTransformDevice | null
   ): Promise<void> => {
-    const receivedDevice = device;
-    if (receivedDevice === null) {
+    if (device === null) {
       try {
         await this.audioVideo?.startAudioInput(null);
         this.selectAudioInputDeviceError = null;
@@ -529,7 +528,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedAudioInputDevice = null;
     } else {
       try {
-        await this.audioVideo?.startAudioInput(receivedDevice);
+        await this.audioVideo?.startAudioInput(device);
         this.selectAudioInputDeviceError = null;
       } catch (error) {
         this.selectAudioInputDeviceError = error;
@@ -570,10 +569,9 @@ export class MeetingManager implements AudioVideoObserver {
   };
 
   selectVideoInputDevice = async (
-    device: Device | VideoTransformDevice
+    device: Device | VideoTransformDevice | null
   ): Promise<void> => {
-    const receivedDevice = device;
-    if (receivedDevice === null) {
+    if (device === null) {
       try {
         await this.audioVideo?.stopVideoInput();
         this.selectVideoInputDeviceError = null;
@@ -585,7 +583,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedVideoInputTransformDevice = undefined;
     } else {
       try {
-        await this.audioVideo?.startVideoInput(receivedDevice);
+        await this.audioVideo?.startVideoInput(device);
         this.selectVideoInputDeviceError = null;
       } catch (error) {
         this.selectVideoInputDeviceError = error;
