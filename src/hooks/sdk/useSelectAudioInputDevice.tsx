@@ -6,11 +6,13 @@ import { useCallback } from 'react';
 
 import { useMeetingManager } from '../../providers/MeetingProvider';
 
-export const useSelectAudioInputDevice = () => {
+export const useSelectAudioInputDevice = (): ((
+  device: Device | AudioTransformDevice | null
+) => Promise<void>) => {
   const meetingManager = useMeetingManager();
 
   const selectDevice = useCallback(
-    async (device: Device | AudioTransformDevice) => {
+    async (device: Device | AudioTransformDevice | null) => {
       await meetingManager.selectAudioInputDevice(device);
     },
     []

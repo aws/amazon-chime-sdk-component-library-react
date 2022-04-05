@@ -6,7 +6,9 @@ import { useCallback } from 'react';
 import { useLocalVideo } from '../../providers/LocalVideoProvider';
 import { useMeetingManager } from '../../providers/MeetingProvider';
 
-export const useSelectVideoInputDevice = () => {
+export const useSelectVideoInputDevice = (): ((
+  deviceId: string
+) => Promise<void>) => {
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
   const meetingManager = useMeetingManager();
 

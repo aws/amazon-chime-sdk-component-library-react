@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import { useMeetingManager } from '../../providers/MeetingProvider';
 import { MeetingStatus } from '../../types';
 
-export const useMeetingStatus = () => {
+export const useMeetingStatus = (): MeetingStatus => {
   const meetingManager = useMeetingManager();
   const [meetingStatus, setMeetingStatus] = useState(
     () => meetingManager.meetingStatus
