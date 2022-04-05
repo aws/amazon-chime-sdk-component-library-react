@@ -6,7 +6,7 @@ import { renderHook } from '@testing-library/react-hooks';
 import {
   AudioVideoObserver,
   DefaultAudioVideoFacade,
-  DefaultClientMetricReport,
+  ClientMetricReport,
   NoOpAudioVideoController,
   NoOpDebugLogger,
 } from 'amazon-chime-sdk-js';
@@ -15,7 +15,7 @@ import React from 'react';
 import { AudioVideoContext } from '../../../src';
 import useMediaStreamMetrics from '../../../src/hooks/sdk/useMediaStreamMetrics';
 
-class FakeClientMetricReport extends DefaultClientMetricReport {
+class FakeClientMetricReport extends ClientMetricReport {
   constructor() {
     super(new NoOpDebugLogger());
   }

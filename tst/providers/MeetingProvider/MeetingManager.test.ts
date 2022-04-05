@@ -37,7 +37,7 @@ describe('Meeting Manager', () => {
     // @ts-ignore 
     MultiLogger = jest.fn().mockReturnValue({});
     // @ts-ignore
-    MeetingSessionPOSTLogger = jest.fn().mockReturnValue({});
+    // MeetingSessionPOSTLogger = jest.fn().mockReturnValue({});
     // @ts-ignore
     DefaultDeviceController = jest.fn().mockReturnValue({});
     // @ts-ignore
