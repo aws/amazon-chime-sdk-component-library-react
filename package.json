@@ -42,6 +42,7 @@
   "license": "Apache-2.0",
   "dependencies": {
     "@popperjs/core": "^2.2.2",
+    "amazon-chime-sdk-js": "file:amazon-chime-sdk-js-3.0.0.tgz",
     "fast-memoize": "^2.5.2",
     "lodash.isequal": "^4.5.0",
     "react-popper": "^2.2.4",
@@ -80,7 +81,6 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "add": "^2.0.6",
-    "amazon-chime-sdk-js": "^3.0.0-beta.1",
     "babel-loader": "^8.1.0",
     "css-loader": "^2.1.1",
     "eslint": "^7.32.0",
@@ -121,7 +121,6 @@
     "webpack-cli": "^3.3.2"
   },
   "peerDependencies": {
-    "amazon-chime-sdk-js": "^3.0.0-beta.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "styled-components": "^5.0.0",
