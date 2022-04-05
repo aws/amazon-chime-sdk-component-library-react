@@ -29,7 +29,7 @@ export interface MeetingManagerJoinOptions {
 
 export interface AttendeeResponse {
   name?: string;
-  [attribute: string]: unknown;
+  [attribute: string]: any;
 }
 
 export type ParsedJoinParams = {
