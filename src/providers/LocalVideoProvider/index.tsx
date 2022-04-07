@@ -61,20 +61,26 @@ const LocalVideoProvider: React.FC = ({ children }) => {
   }, [hasReachedVideoLimit]);
 
   const toggleVideo = useCallback(async (): Promise<void> => {
-    if (isVideoEnabled || !meetingManager.selectedVideoInputTransformDevice) {
-      if (!meetingManager.selectedVideoInputTransformDevice) {
-        console.warn('There is no input video device chosen!');
+    try {
+      if (isVideoEnabled || !meetingManager.selectedVideoInputTransformDevice) {
+        if (!meetingManager.selectedVideoInputTransformDevice) {
+          console.warn('There is no input video device chosen!');
+        }
+        audioVideo?.stopLocalVideoTile();
+        setIsVideoEnabled(false);
+      } else if (!hasReachedVideoLimit) {
+        await meetingManager.selectVideoInputDevice(
+          meetingManager.selectedVideoInputTransformDevice
+        );
+        audioVideo?.startLocalVideoTile();
+        setIsVideoEnabled(true);
+      } else {
+        console.error(
+          'Video limit is reached and can not turn on more videos!'
+        );
       }
-      audioVideo?.stopLocalVideoTile();
-      setIsVideoEnabled(false);
-    } else if (!hasReachedVideoLimit) {
-      await meetingManager.selectVideoInputDevice(
-        meetingManager.selectedVideoInputTransformDevice
-      );
-      audioVideo?.startLocalVideoTile();
-      setIsVideoEnabled(true);
-    } else {
-      console.error('Video limit is reached and can not turn on more videos!');
+    } catch (error) {
+      console.error('Failed to toggle video');
     }
   }, [
     audioVideo,

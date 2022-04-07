@@ -5,6 +5,7 @@ import { Device, VideoTransformDevice } from 'amazon-chime-sdk-js';
 import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
+import { useSelectVideoInputDevice } from '../../..';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
 import VideoTile from '../../ui/VideoTile';
@@ -23,7 +24,7 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
   const audioVideo = useAudioVideo();
   const meetingManager = useMeetingManager();
   const videoEl = useRef<HTMLVideoElement>(null);
-
+  const selectVideoInput = useSelectVideoInputDevice();
   // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
   const [device, setDevice] = useState<
     Device | VideoTransformDevice | undefined
@@ -53,9 +54,15 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
       if (!audioVideo || !device || !videoEl.current) {
         return;
       }
-      await meetingManager.selectVideoInputDevice(device);
-      audioVideo.startVideoPreviewForVideoInput(videoEl.current);
+
+      try {
+        await selectVideoInput(device);
+        audioVideo.startVideoPreviewForVideoInput(videoEl.current);
+      } catch (error) {
+        console.error('Failed to start video preview');
+      }
     }
+
     startPreview();
   }, [audioVideo, device]);
 

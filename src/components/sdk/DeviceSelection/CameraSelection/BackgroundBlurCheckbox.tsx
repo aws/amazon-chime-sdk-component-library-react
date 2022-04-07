@@ -8,6 +8,7 @@ import {
 } from 'amazon-chime-sdk-js';
 import React, { useEffect, useState } from 'react';
 
+import useSelectVideoInputDevice from '../../../../hooks/sdk/useSelectVideoInputDevice';
 import { useBackgroundBlur } from '../../../../providers/BackgroundBlurProvider';
 import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { Checkbox } from '../../../ui/Checkbox';
@@ -27,6 +28,7 @@ export const BackgroundBlurCheckbox: React.FC<Props> = ({
     useBackgroundBlur();
   const [isLoading, setIsLoading] = useState(false);
   const meetingManager = useMeetingManager();
+  const selectVideoInput = useSelectVideoInputDevice();
   // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
   const [device, setDevice] = useState<
     Device | VideoTransformDevice | undefined
@@ -46,24 +48,31 @@ export const BackgroundBlurCheckbox: React.FC<Props> = ({
     if (isLoading || !device) {
       return;
     }
-    if (!isVideoTransformDevice(device)) {
-      setIsLoading(true);
-      if (isBackgroundBlurSupported) {
-        const transformedVideoDevice = await createBackgroundBlurDevice(device);
-        await meetingManager.selectVideoInputDevice(transformedVideoDevice);
+    setIsLoading(true);
+
+    try {
+      if (!isVideoTransformDevice(device)) {
+        if (isBackgroundBlurSupported) {
+          const transformedVideoDevice = await createBackgroundBlurDevice(
+            device
+          );
+          await selectVideoInput(transformedVideoDevice);
+        } else {
+          meetingManager.logger?.warn(
+            'Background blur processor is not supported yet.'
+          );
+        }
       } else {
-        meetingManager.logger?.warn(
-          'Background blur processor is not supported yet.'
-        );
+        if ('chooseNewInnerDevice' in device) {
+          // @ts-ignore
+          const deviceId = await device.intrinsicDevice();
+          await selectVideoInput(deviceId);
+        }
       }
-    } else {
-      if ('chooseNewInnerDevice' in device) {
-        setIsLoading(true);
-        // @ts-ignore
-        const deviceId = await device.intrinsicDevice();
-        await meetingManager.selectVideoInputDevice(deviceId);
-      }
+    } catch (error) {
+      console.error('Failed to toggle Background Blur');
     }
+
     setIsLoading(false);
   };
 

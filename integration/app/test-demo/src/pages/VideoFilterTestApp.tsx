@@ -29,20 +29,20 @@ export const VideoFilterTestApp: React.FC = () => {
 
   const setBlurStrength = (newBlurStrength: number): void => {
     console.log(`Setting blur strength to ${newBlurStrength} - should re-initialize the bg blur provider`);
-    const options = {...backgroundBlurOptions, blurStrength : newBlurStrength};
+    const options = { ...backgroundBlurOptions, blurStrength: newBlurStrength };
     setBackgroundBlurOptions(options);
   }
 
-  return(
+  return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '70%', margin: 'auto' }}>
       <BackgroundBlurProvider options={backgroundBlurOptions}>
-        <MeetingProvider {...{logLevel: LogLevel.INFO}}>
+        <MeetingProvider {...{ logLevel: LogLevel.INFO }}>
           <h3 data-testid='app-name'>Video Filter Test</h3>
-          <Meeting onBlurStrengthChanged={(newBlurStrength) => setBlurStrength(newBlurStrength)}/>
+          <Meeting onBlurStrengthChanged={(newBlurStrength) => setBlurStrength(newBlurStrength)} />
         </MeetingProvider>
       </BackgroundBlurProvider>
     </div>
-    )
+  )
 };
 
 interface Props {
@@ -55,19 +55,23 @@ const Meeting: React.FC<Props> = ({ onBlurStrengthChanged }) => {
   const { selectedDevice } = useVideoInputs();
   const { toggleVideo } = useLocalVideo();
   const meetingStatus = useMeetingStatus();
-  const [ blurStrength, setBlurStrength ] = useState<string>("20");
+  const [blurStrength, setBlurStrength] = useState<string>('20');
 
   useEffect(() => {
     const addBackgroundBlur = async () => {
-      if (
-        isBackgroundBlurSupported &&
-        meetingStatus === MeetingStatus.Succeeded
-      ) {
-        console.log("Creating background blur device called");
-        const chosenVideoTransformDevice = await createBackgroundBlurDevice(selectedDevice);
-        console.log(chosenVideoTransformDevice);
-        await meetingManager.selectVideoInputDevice(chosenVideoTransformDevice);
-        toggleVideo();
+      try {
+        if (
+          isBackgroundBlurSupported &&
+          meetingStatus === MeetingStatus.Succeeded
+        ) {
+          console.log('reating background blur device called');
+          const chosenVideoTransformDevice = await createBackgroundBlurDevice(selectedDevice);
+          console.log(chosenVideoTransformDevice);
+          await meetingManager.selectVideoInputDevice(chosenVideoTransformDevice);
+          toggleVideo();
+        }
+      } catch (error) {
+        console.error('Failed to add Background Blur');
       }
     };
     addBackgroundBlur();
@@ -87,30 +91,30 @@ const Meeting: React.FC<Props> = ({ onBlurStrengthChanged }) => {
   return (
     <>
       <MeetingInfo />
-      { meetingStatus !== MeetingStatus.Succeeded ?
-      <MeetingForm /> :
-      <>
-        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', margin: 'auto' }}>
-          <ControlBar
-            layout='undocked-horizontal'
-            css='margin-bottom: 1rem;'
-            showLabels
-          >
-            <VideoInputBackgroundBlurControl />
-            <FormField
-              field={Select}
-              label="Blur Strength"
-              value={blurStrength}
-              onChange={updateBlurStrength}
-              options={[{value: '20', label: '20'}, {value: '40', label: '40'}, {value: '60', label: '60'}]}
-            />
-            <MeetingLeaveControl />
-          </ControlBar>
-          <div style={{ height: '30rem', width:'100%' }}>
-            <VideoTileGrid />
+      {meetingStatus !== MeetingStatus.Succeeded ?
+        <MeetingForm /> :
+        <>
+          <div style={{ display: 'flex', flexDirection: 'column', width: '100%', margin: 'auto' }}>
+            <ControlBar
+              layout='undocked-horizontal'
+              css='margin-bottom: 1rem;'
+              showLabels
+            >
+              <VideoInputBackgroundBlurControl />
+              <FormField
+                field={Select}
+                label='Blur Strength'
+                value={blurStrength}
+                onChange={updateBlurStrength}
+                options={[{ value: '20', label: '20' }, { value: '40', label: '40' }, { value: '60', label: '60' }]}
+              />
+              <MeetingLeaveControl />
+            </ControlBar>
+            <div style={{ height: '30rem', width: '100%' }}>
+              <VideoTileGrid />
+            </div>
           </div>
-        </div>
-      </>}
+        </>}
     </>
   )
 };

@@ -78,12 +78,6 @@ export class MeetingManager implements AudioVideoObserver {
     device: Device | AudioTransformDevice | null
   ) => void)[] = [];
 
-  selectAudioInputDeviceError: Error | null = null;
-
-  selectAudioInputDeviceErrorObservers: ((
-    selectAudioInputDeviceError: Error | null
-  ) => void)[] = [];
-
   selectedVideoInputDevice: string | null = null;
 
   selectedVideoInputTransformDevice: Device | VideoTransformDevice | undefined;
@@ -93,12 +87,6 @@ export class MeetingManager implements AudioVideoObserver {
   ) => void)[] = [];
 
   selectedVideoInputDeviceObservers: ((deviceId: string | null) => void)[] = [];
-
-  selectVideoInputDeviceError: Error | null = null;
-
-  selectVideoInputDeviceErrorObservers: ((
-    selectVideoInputDeviceError: Error | null
-  ) => void)[] = [];
 
   deviceLabelTriggerChangeObservers: (() => void)[] = [];
 
@@ -150,8 +138,6 @@ export class MeetingManager implements AudioVideoObserver {
     this.selectedAudioInputTransformDevice = null;
     this.selectedVideoInputDevice = null;
     this.selectedVideoInputTransformDevice = undefined;
-    this.selectAudioInputDeviceError = null;
-    this.selectVideoInputDeviceError = null;
     this.audioInputDevices = [];
     this.audioOutputDevices = [];
     this.videoInputDevices = [];
@@ -247,7 +233,9 @@ export class MeetingManager implements AudioVideoObserver {
         this.meetingSession?.deviceController.destroy();
         await this.audioVideo.chooseAudioOutput(null);
       } catch (error) {
-        console.log('Unable to clean up media resources on leave.');
+        console.log(
+          'MeetingManager failed to clean up media resources on leave'
+        );
       }
 
       if (this.activeSpeakerListener) {
@@ -408,7 +396,7 @@ export class MeetingManager implements AudioVideoObserver {
           this.publishDevicePermissionStatus();
           return stream;
         } catch (error) {
-          console.error('Failed to get device permissions');
+          console.error('MeetingManager failed to get device permissions');
           this.devicePermissionStatus = DevicePermissionStatus.DENIED;
           this.publishDevicePermissionStatus();
           throw new Error(error);
@@ -477,7 +465,10 @@ export class MeetingManager implements AudioVideoObserver {
           this.audioInputDevices[0].deviceId
         );
       } catch (error) {
-        console.error(`Error in selecting audio input device - ${error}`);
+        console.error(
+          'MeetingManager failed to select audio input device on join',
+          error
+        );
       }
       this.publishSelectedAudioInputDevice();
       this.publishSelectedAudioInputTransformDevice();
@@ -495,7 +486,10 @@ export class MeetingManager implements AudioVideoObserver {
             this.audioOutputDevices[0].deviceId
           );
         } catch (error) {
-          console.error('Failed to choose audio output device.', error);
+          console.error(
+            'MeetingManager failed to select audio output device on join',
+            error
+          );
         }
       }
       this.publishSelectedAudioOutputDevice();
@@ -516,45 +510,39 @@ export class MeetingManager implements AudioVideoObserver {
   selectAudioInputDevice = async (
     device: Device | AudioTransformDevice | null
   ): Promise<void> => {
-    if (device === null) {
-      try {
-        await this.audioVideo?.startAudioInput(null);
-        this.selectAudioInputDeviceError = null;
-      } catch (error) {
-        this.selectAudioInputDeviceError = error;
-        console.error('Failed to choose audio input device.', error);
-      }
-      this.selectedAudioInputTransformDevice = null;
-      this.selectedAudioInputDevice = null;
-    } else {
-      try {
-        await this.audioVideo?.startAudioInput(device);
-        this.selectAudioInputDeviceError = null;
-      } catch (error) {
-        this.selectAudioInputDeviceError = error;
-        console.error('Failed to choose audio input device.', error);
-      }
-
-      let deviceId = null;
-      if (isAudioTransformDevice(device)) {
-        const innerDevice = await device.intrinsicDevice();
-        deviceId = DefaultDeviceController.getIntrinsicDeviceId(innerDevice);
-      } else {
-        const innerDevice = device;
-        if (innerDevice) {
-          deviceId = DefaultDeviceController.getIntrinsicDeviceId(innerDevice);
-        }
-      }
-
-      if (typeof deviceId === 'string') {
-        this.selectedAudioInputDevice = deviceId;
-      } else if (Array.isArray(deviceId) && deviceId[0]) {
-        this.selectedAudioInputDevice = deviceId[0];
-      }
-      this.selectedAudioInputTransformDevice = device;
+    try {
+      await this.audioVideo?.startAudioInput(device);
+    } catch (error) {
+      console.error(
+        'MeetingManager failed to select audio input device',
+        error
+      );
+      throw new Error('MeetingManager failed to select audio input device');
     }
+
+    if (device === null) {
+      this.selectedAudioInputDevice = null;
+      this.selectedAudioInputTransformDevice = null;
+    }
+
+    let innerDevice: Device | null;
+
+    if (isAudioTransformDevice(device)) {
+      innerDevice = await device.intrinsicDevice();
+    } else {
+      innerDevice = device;
+    }
+
+    const deviceId = DefaultDeviceController.getIntrinsicDeviceId(innerDevice);
+
+    if (typeof deviceId === 'string') {
+      this.selectedAudioInputDevice = deviceId;
+    } else if (Array.isArray(deviceId) && deviceId[0]) {
+      this.selectedAudioInputDevice = deviceId[0];
+    }
+    this.selectedAudioInputTransformDevice = device;
+
     this.publishSelectedAudioInputDevice();
-    this.publishSelectAudioInputDeviceError();
     this.publishSelectedAudioInputTransformDevice();
   };
 
@@ -564,49 +552,61 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedAudioOutputDevice = deviceId;
       this.publishSelectedAudioOutputDevice();
     } catch (error) {
-      console.error(`Error setting audio output`, error);
+      console.error(
+        'MeetingManager failed to select audio output device',
+        error
+      );
+      throw new Error('MeetingManager failed to select audio output device');
     }
   };
 
   selectVideoInputDevice = async (
-    device: Device | VideoTransformDevice | null
+    device: Device | VideoTransformDevice
   ): Promise<void> => {
-    if (device === null) {
-      try {
-        await this.audioVideo?.stopVideoInput();
-        this.selectVideoInputDeviceError = null;
-      } catch (error) {
-        this.selectVideoInputDeviceError = error;
-        console.error('Failed to choose video input device.', error);
-      }
-      this.selectedVideoInputDevice = null;
-      this.selectedVideoInputTransformDevice = undefined;
-    } else {
-      try {
-        await this.audioVideo?.startVideoInput(device);
-        this.selectVideoInputDeviceError = null;
-      } catch (error) {
-        this.selectVideoInputDeviceError = error;
-        console.error('Failed to choose video input device.', error);
-      }
-      let innerDevice = null;
-      if (isVideoTransformDevice(device)) {
-        innerDevice = await device.intrinsicDevice();
-      } else {
-        innerDevice = device;
-      }
-
-      const deviceId =
-        DefaultDeviceController.getIntrinsicDeviceId(innerDevice);
-      if (typeof deviceId === 'string') {
-        this.selectedVideoInputDevice = deviceId;
-      } else if (Array.isArray(deviceId) && deviceId[0]) {
-        this.selectedVideoInputDevice = deviceId[0];
-      }
-      this.selectedVideoInputTransformDevice = device;
+    try {
+      await this.audioVideo?.startVideoInput(device);
+    } catch (error) {
+      console.error(
+        'MeetingManager failed to select video input device',
+        error
+      );
+      throw new Error('MeetingManager failed to select video input device');
     }
+
+    let innerDevice: Device;
+
+    if (isVideoTransformDevice(device)) {
+      innerDevice = await device.intrinsicDevice();
+    } else {
+      innerDevice = device;
+    }
+
+    const deviceId = DefaultDeviceController.getIntrinsicDeviceId(innerDevice);
+
+    if (typeof deviceId === 'string') {
+      this.selectedVideoInputDevice = deviceId;
+    } else if (Array.isArray(deviceId) && deviceId[0]) {
+      this.selectedVideoInputDevice = deviceId[0];
+    }
+    this.selectedVideoInputTransformDevice = device;
+
     this.publishSelectedVideoInputDevice();
-    this.publishSelectVideoInputDeviceError();
+    this.publishSelectedVideoInputTransformDevice();
+  };
+
+  unselectVideoInputDevice = async (): Promise<void> => {
+    try {
+      await this.audioVideo?.stopVideoInput();
+    } catch (error) {
+      console.error(
+        'MeetingManager failed to unselect video input device',
+        error
+      );
+      throw new Error('MeetingManager failed to unselect video input device');
+    }
+    this.selectedVideoInputDevice = null;
+    this.selectedVideoInputTransformDevice = undefined;
+    this.publishSelectedVideoInputDevice();
     this.publishSelectedVideoInputTransformDevice();
   };
 
@@ -806,48 +806,6 @@ export class MeetingManager implements AudioVideoObserver {
     this.meetingStatusObservers.forEach((callback) => {
       callback(this.meetingStatus);
     });
-  };
-
-  subscribeToSelectAudioInputDeviceError = (
-    callback: (errorMessage: Error | null) => void
-  ): void => {
-    this.selectAudioInputDeviceErrorObservers.push(callback);
-  };
-
-  unsubscribeFromSelectAudioInputDeviceError = (
-    callbackToRemove: (errorMessage: Error | null) => void
-  ): void => {
-    this.selectAudioInputDeviceErrorObservers =
-      this.selectAudioInputDeviceErrorObservers.filter(
-        (callback) => callback !== callbackToRemove
-      );
-  };
-
-  private publishSelectAudioInputDeviceError = (): void => {
-    for (const observer of this.selectAudioInputDeviceErrorObservers) {
-      observer(this.selectAudioInputDeviceError);
-    }
-  };
-
-  subscribeToSelectVideoInputDeviceError = (
-    callback: (errorMessage: Error | null) => void
-  ): void => {
-    this.selectVideoInputDeviceErrorObservers.push(callback);
-  };
-
-  unsubscribeFromSelectVideoInputDeviceError = (
-    callbackToRemove: (errorMessage: Error | null) => void
-  ): void => {
-    this.selectVideoInputDeviceErrorObservers =
-      this.selectVideoInputDeviceErrorObservers.filter(
-        (callback) => callback !== callbackToRemove
-      );
-  };
-
-  private publishSelectVideoInputDeviceError = (): void => {
-    for (const observer of this.selectVideoInputDeviceErrorObservers) {
-      observer(this.selectVideoInputDeviceError);
-    }
   };
 
   subscribeToDeviceLabelTriggerChange = (callback: () => void): void => {

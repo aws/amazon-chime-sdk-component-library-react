@@ -20,13 +20,21 @@ export const MicSelection: React.FC<Props> = ({
   label = 'Microphone source',
   ...rest
 }) => {
-  const selectAudioInput = useSelectAudioInputDevice();
   const { devices, selectedDevice } = useAudioInputs();
+  const selectAudioInput = useSelectAudioInputDevice();
+
+  const handleSelect = async (deviceId: string): Promise<void> => {
+    try {
+      await selectAudioInput(deviceId);
+    } catch (error) {
+      console.error('MicSelection failed to select mic');
+    }
+  };
 
   return (
     <DeviceInput
       label={label}
-      onChange={selectAudioInput}
+      onChange={handleSelect}
       devices={devices}
       selectedDeviceId={selectedDevice}
       notFoundMsg={notFoundMsg}

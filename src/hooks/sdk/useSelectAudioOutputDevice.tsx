@@ -14,6 +14,10 @@ export const useSelectAudioOutputDevice = (): ((
   const selectDevice = useCallback(async (deviceId: string) => {
     if (new DefaultBrowserBehavior().supportsSetSinkId()) {
       await meetingManager.selectAudioOutputDevice(deviceId);
+    } else {
+      console.log(
+        'AudioOutputControl cannot select audio output device because browser does not support setSinkId operation.'
+      );
     }
   }, []);
 

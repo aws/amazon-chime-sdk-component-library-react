@@ -26,16 +26,20 @@ export const SpeakerSelection: React.FC<Props> = ({
   const { devices, selectedDevice } = useAudioOutputs();
   const selectAudioOutput = useSelectAudioOutputDevice();
 
-  async function selectDevice(deviceId: string): Promise<void> {
-    selectAudioOutput(deviceId);
-    onChange && onChange(deviceId);
-  }
+  const handleSelect = async (deviceId: string): Promise<void> => {
+    try {
+      await selectAudioOutput(deviceId);
+      onChange && onChange(deviceId);
+    } catch (error) {
+      console.error('SpeakerSelection failed to select speaker');
+    }
+  };
 
   return (
     <DeviceInput
       label={label}
       devices={devices}
-      onChange={selectDevice}
+      onChange={handleSelect}
       selectedDeviceId={selectedDevice}
       notFoundMsg={notFoundMsg}
       {...rest}
