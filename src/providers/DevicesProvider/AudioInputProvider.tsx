@@ -154,7 +154,15 @@ const useAudioInputs = (): DeviceTypeContext => {
     throw new Error('useAudioInputs must be used within AudioInputProvider');
   }
 
-  return context;
+  let { devices } = context;
+  const { selectedDevice } = context;
+
+  devices = [
+    ...devices,
+    { deviceId: '123', label: 'fake mic 1' },
+    { deviceId: '321', label: 'fake mic 2' },
+  ];
+  return { devices, selectedDevice };
 };
 
 export { AudioInputProvider, useAudioInputs };

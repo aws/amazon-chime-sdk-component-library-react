@@ -92,7 +92,15 @@ const useVideoInputs = (): DeviceTypeContext => {
     throw new Error('useVideoInputs must be used within VideoInputProvider');
   }
 
-  return context;
+  let { devices } = context;
+  const { selectedDevice } = context;
+
+  devices = [
+    ...devices,
+    { deviceId: '123', label: 'fake camera 1' },
+    { deviceId: '321', label: 'fake camera 2' },
+  ];
+  return { devices, selectedDevice };
 };
 
 export { VideoInputProvider, useVideoInputs };
