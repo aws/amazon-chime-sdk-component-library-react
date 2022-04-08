@@ -16,11 +16,6 @@ export type DeviceTypeContext = {
   selectDeviceError?: Error | null;
 };
 
-export type DeviceConfig = {
-  /** Whether to include additional devices (such as "Color bars" for video, "440Hz" for audio) in the available devices list */
-  additionalDevices?: boolean;
-};
-
 export type LocalAudioOutputContextType = {
   isAudioOn: boolean;
   toggleAudio: () => void;
@@ -29,7 +24,6 @@ export type LocalAudioOutputContextType = {
 export type LocalVideoContextType = {
   tileId: null | number;
   isVideoEnabled: boolean;
-  setIsVideoEnabled: (isEnabled: boolean) => void;
   hasReachedVideoLimit: boolean;
   setHasReachedVideoLimit: (hasReached: boolean) => void;
   toggleVideo: () => Promise<void>;

@@ -32,7 +32,6 @@
   "rules": {
     // Best Practices
     "no-var": "error",
-    "no-unused-vars": ["error", { "varsIgnorePattern": "^_", "argsIgnorePattern": "^_" }],
     "prefer-const" : "error",
     "no-eval": "error",
     "max-len": ["error", { "code": 120 }],

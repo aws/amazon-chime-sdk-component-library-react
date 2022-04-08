@@ -18,8 +18,8 @@ import MeetingManager from './MeetingManager';
 interface Props {
   onDeviceReplacement?: (
     nextDevice: string,
-    currentDevice: Device | AudioTransformDevice
-  ) => Promise<Device | AudioTransformDevice>;
+    currentDevice: Device | AudioTransformDevice | null
+  ) => Promise<Device | AudioTransformDevice | null>;
   /** Pass a `MeetingManager` instance if you want to share this instance
    * across multiple different `MeetingProvider`s. This approach has limitations.
    * Check `meetingManager` prop documentation for more information.

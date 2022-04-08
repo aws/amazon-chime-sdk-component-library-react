@@ -26,8 +26,8 @@ export const SpeakerSelection: React.FC<Props> = ({
   const { devices, selectedDevice } = useAudioOutputs();
   const selectAudioOutput = useSelectAudioOutputDevice();
 
-  async function selectDevice(deviceId: string) {
-    selectAudioOutput(deviceId);
+  async function selectDevice(deviceId: string): Promise<void> {
+    await selectAudioOutput(deviceId);
     onChange && onChange(deviceId);
   }
 

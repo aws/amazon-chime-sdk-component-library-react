@@ -12,7 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 ### Removed
+
 - Remove logging of the video transform device to avoid circular structure error.
+- Remove `setIsVideoEnabled` from `useLocalVideo` hook.
+- Remove preset device selection options ("None" and "440 Hz" for audio input device. "None", "Blue", and "SMTP Color Bars" for video input device). Remove `appendSampleDevices` from Props of `CameraSelection`, `MicSelection`, `AudioInputControl`, `AudioInputVFcontrol`, and `VideoInputControl`. Remove `DeviceConfig` type. Remove `additionalDevices` from Props of `useAudioInputs` and `useVideoInputs` hook.
 
 ### Changed
 
@@ -28,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Extend and enabled style customizing capabilities on the SDK components.
 - Add `MeetingSessionConfiguration` as a required parameter to `MeetingManager.join()` method. With this change the builders have direct access to `MeetingSessionConfiguration`, this will allow more flexibility to customize the `MeetingSession`.
 - Add `MeetingManagerJoinOptions` as a new interface for the `options` parameter of the `MeetingManager.join` method.
-- Add `deviceLabels`, `eventController`, `logLevel`, `postLoggerConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface. 
+- Add `deviceLabels`, `eventController`, `logLevel`, `postLoggerConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface.
 
 ### Changed
 
@@ -36,9 +39,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update `amazon-chime-sdk-js` dependency to v3 beta.
 - Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
 - Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
-- Change `Versioning.ts` to read from Git instead of manually hard-coded. This is the same behavior in 
+- Change `Versioning.ts` to read from Git instead of manually hard-coded. This is the same behavior in
   `amazon-chime-sdk-js`.
 - Update the ChannelList UI component to take in optional `lastChannelMessage` and `lastChannelMessageTimestamp` parameters. If any of them is set, it will display more detailed channel item view with last message content or timestamp.
+
 ### Removed
 
 - Remove use of the deprecated `enableUnifiedPlanForChromiumBasedBrowsers` configuration variable.

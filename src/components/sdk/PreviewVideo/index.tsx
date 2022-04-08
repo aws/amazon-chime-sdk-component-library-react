@@ -6,7 +6,6 @@ import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
-import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
@@ -25,17 +24,18 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
   const meetingManager = useMeetingManager();
   const videoEl = useRef<HTMLVideoElement>(null);
 
-  const { setIsVideoEnabled } = useLocalVideo();
   // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
-  const [device, setDevice] = useState<Device | VideoTransformDevice | null>(
-    meetingManager.selectedVideoInputTransformDevice
-  );
+  const [device, setDevice] = useState<
+    Device | VideoTransformDevice | undefined
+  >(meetingManager.selectedVideoInputTransformDevice);
 
   // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
   useEffect(() => {
     meetingManager.subscribeToSelectedVideoInputTransformDevice(setDevice);
     return () => {
-      meetingManager.unsubscribeFromSelectedVideoInputTranformDevice(setDevice);
+      meetingManager.unsubscribeFromSelectedVideoInputTransformDevice(
+        setDevice
+      );
     };
   }, []);
 
@@ -44,24 +44,17 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
     return () => {
       if (videoElement) {
         audioVideo?.stopVideoPreviewForVideoInput(videoElement);
-        setIsVideoEnabled(false);
       }
     };
   }, [audioVideo]);
 
   useEffect(() => {
-    if (!audioVideo || !device || !videoEl.current) {
-      return;
-    }
-    async function startPreview() {
-      if (!audioVideo) {
+    async function startPreview(): Promise<void> {
+      if (!audioVideo || !device || !videoEl.current) {
         return;
       }
       await meetingManager.selectVideoInputDevice(device);
-      if (videoEl.current) {
-        audioVideo.startVideoPreviewForVideoInput(videoEl.current);
-        setIsVideoEnabled(true);
-      }
+      audioVideo.startVideoPreviewForVideoInput(videoEl.current);
     }
     startPreview();
   }, [audioVideo, device]);

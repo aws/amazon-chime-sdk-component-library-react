@@ -7,7 +7,7 @@ import { useAudioVideo } from '../../providers/AudioVideoProvider';
 
 export type VideoQuality = '360p' | '540p' | '720p';
 
-export function useSelectVideoQuality() {
+export function useSelectVideoQuality(): (quality: VideoQuality) => void {
   const audioVideo = useAudioVideo();
 
   const selectVideoQuality = useCallback(
@@ -20,13 +20,16 @@ export function useSelectVideoQuality() {
 
       switch (quality) {
         case '360p':
-          audioVideo.chooseVideoInputQuality(640, 360, 15, 600);
+          audioVideo.chooseVideoInputQuality(640, 360, 15);
+          audioVideo.setVideoMaxBandwidthKbps(600);
           break;
         case '540p':
-          audioVideo.chooseVideoInputQuality(960, 540, 15, 1400);
+          audioVideo.chooseVideoInputQuality(960, 540, 15);
+          audioVideo.setVideoMaxBandwidthKbps(1000);
           break;
         case '720p':
-          audioVideo.chooseVideoInputQuality(1280, 720, 15, 1400);
+          audioVideo.chooseVideoInputQuality(1280, 720, 15);
+          audioVideo.setVideoMaxBandwidthKbps(1400);
           break;
         default:
           console.log(`Unsupported video quality: ${quality}`);

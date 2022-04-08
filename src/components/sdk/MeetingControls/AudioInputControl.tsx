@@ -6,7 +6,6 @@ import React from 'react';
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
-import { DeviceConfig } from '../../../types';
 import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Microphone } from '../../ui/icons';
@@ -22,8 +21,6 @@ interface Props extends BaseSdkProps {
   mutedIconTitle?: string;
   /** Title attribute for the icon when unmuted, it defaults to `Microphone`. */
   unmutedIconTitle?: string;
-  /** A boolean that determines whether or not to include additional sample audio input devices, such as "None", "440 Hz". Defaults to true. This will be deprecated in the next major version. */
-  appendSampleDevices?: boolean;
 }
 
 const AudioInputControl: React.FC<Props> = ({
@@ -31,15 +28,11 @@ const AudioInputControl: React.FC<Props> = ({
   unmuteLabel = 'Unmute',
   mutedIconTitle,
   unmutedIconTitle,
-  appendSampleDevices = true,
   ...rest
 }) => {
   const meetingManager = useMeetingManager();
   const { muted, toggleMute } = useToggleLocalMute();
-  const audioInputConfig: DeviceConfig = {
-    additionalDevices: appendSampleDevices,
-  };
-  const { devices, selectedDevice } = useAudioInputs(audioInputConfig);
+  const { devices, selectedDevice } = useAudioInputs();
 
   const dropdownOptions: PopOverItemProps[] = devices.map((device) => ({
     children: <span>{device.label}</span>,

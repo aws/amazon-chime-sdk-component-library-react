@@ -65,10 +65,10 @@ const LocalVideoProvider: React.FC = ({ children }) => {
       if (!meetingManager.selectedVideoInputTransformDevice) {
         console.warn('There is no input video device chosen!');
       }
-      audioVideo?.stopLocalVideoTile();
+      await audioVideo?.stopVideoInput();
       setIsVideoEnabled(false);
     } else if (!hasReachedVideoLimit) {
-      await audioVideo?.chooseVideoInputDevice(
+      await meetingManager.selectVideoInputDevice(
         meetingManager.selectedVideoInputTransformDevice
       );
       audioVideo?.startLocalVideoTile();
@@ -110,7 +110,6 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     () => ({
       tileId,
       isVideoEnabled,
-      setIsVideoEnabled,
       hasReachedVideoLimit,
       setHasReachedVideoLimit,
       toggleVideo,
@@ -118,7 +117,6 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     [
       tileId,
       isVideoEnabled,
-      setIsVideoEnabled,
       hasReachedVideoLimit,
       setHasReachedVideoLimit,
       toggleVideo,

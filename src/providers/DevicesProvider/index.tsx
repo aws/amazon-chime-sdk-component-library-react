@@ -11,8 +11,8 @@ import { useVideoInputs, VideoInputProvider } from './VideoInputProvider';
 interface Props {
   onDeviceReplacement?: (
     nextDevice: string,
-    currentDevice: Device | AudioTransformDevice
-  ) => Promise<Device | AudioTransformDevice>;
+    currentDevice: Device | AudioTransformDevice | null
+  ) => Promise<Device | AudioTransformDevice | null>;
 }
 
 const DevicesProvider: React.FC<Props> = ({

@@ -1,13 +1,14 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { DefaultBrowserBehavior } from 'amazon-chime-sdk-js';
 import React from 'react';
 
 import { useAudioOutputs } from '../../../providers/DevicesProvider';
 import { useLocalAudioOutput } from '../../../providers/LocalAudioOutputProvider';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { DeviceType } from '../../../types';
-import { isOptionActive, supportsSetSinkId } from '../../../utils/device-utils';
+import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Sound } from '../../ui/icons';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
@@ -26,7 +27,7 @@ const AudioOutputControl: React.FC<Props> = ({
   const { devices, selectedDevice } = useAudioOutputs();
   const { isAudioOn, toggleAudio } = useLocalAudioOutput();
   const audioOutputOnClick = async (deviceId: string): Promise<void> => {
-    if (supportsSetSinkId()) {
+    if (new DefaultBrowserBehavior().supportsSetSinkId()) {
       await meetingManager.selectAudioOutputDevice(deviceId);
     }
   };
