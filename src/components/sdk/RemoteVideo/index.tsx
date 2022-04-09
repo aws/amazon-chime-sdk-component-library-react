@@ -38,6 +38,15 @@ export const RemoteVideo: React.FC<Props> = ({
       const tile = audioVideo.getVideoTile(tileId);
       if (tile) {
         audioVideo.unbindVideoElement(tileId);
+        if (videoEl.current) {
+          const mediaStream = videoEl.current.srcObject as MediaStream;
+          const tracks = mediaStream.getTracks();
+          for (const track of tracks) {
+            track.stop();
+            mediaStream.removeTrack(track);
+          }
+          videoEl.current.srcObject = null;
+        }
       }
     };
   }, [audioVideo, tileId]);
