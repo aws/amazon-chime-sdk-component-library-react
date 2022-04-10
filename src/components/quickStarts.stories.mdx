@@ -259,55 +259,35 @@ Result:
 
 ## Handle Device Selection Error
 
-We expose `selectAudioInputDeviceError` in [`useAudioInput`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-useaudioinputs--page) hook and `selectVideoInputDeviceError` in [`useVideoInput`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-usevideoinputs--page) hook to deliver the device selection error from the SDK level to client application level.
-
-The initial values of `selectAudioInputDeviceError` and `selectVideoInputDeviceError` are `null`. Once the device selection triggers an error, the error will be passed to `selectAudioInputDeviceError` and `selectVideoInputDeviceError`. A successful device selection will reset their values to `null`.
-
-To handle device selection error:
-
-1. List and select devices using `MicSelection` and `CameraSelection` from SDK components
-2. Use the [`useAudioInput`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-useaudioinputs--page) hook to get `selectAudioInputDeviceError` and [`useVideoInput`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-hooks-usevideoinputs--page) hook to get `selectVideoInputDeviceError`
-3. Handle device selection error by checking whether the values of `selectAudioInputDeviceError` and `selectVideoInputDeviceError` are null
-4. Reset the `selectAudioInputDeviceError` and `selectVideoInputDeviceError` to null by a successful device selection
-
-For example, a simple component to list and select microphone and camera.
+When `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` methods of `MeetingManager` failed, they will throw the error directly. The device selection functions return by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook are built on top of these `MeetingManager` methods, thus they will throw error when failed as well.
 
 ```jsx
+import React from 'react';
 import {
-  MicSelection,
-  CameraSelection,
-  useAudioInputs,
-  useVideoInputs,
+  MeetingProvider,
+  useSelectVideoInputDevice,
 } from 'amazon-chime-sdk-component-library-react';
 
-const DeviceSelection = () => {
-  return (
-    <>
-      <AudioInputDeviceSelection />
-      <VideoInputDeviceSelection />
-    </>
-  );
-};
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
 
-const AudioInputDeviceSelection = () => {
-  const { selectDeviceError } = useAudioInputs();
-  return (
-    <>
-      <h2>Select your microphone</h2>
-      <MicSelection />
-      {selectDeviceError && <p>{selectDeviceError?.message}</p>}
-    </>
-  );
-};
+const MyChild = () => {
+  const selectVideoInput = useSelectVideoInputDevice();
 
-const VideoInputDeviceSelection = () => {
-  const { selectDeviceError } = useVideoInputs();
+  const handleClick = async (): => {
+    try {
+      await selectVideoInput('deviceId');
+    } catch (error) {
+      // Handle device selection error.
+      console.error('Failed to select video input device', error);
+    }
+  };
+
   return (
-    <>
-      <h2>Select your camera</h2>
-      <CameraSelection />
-      {selectDeviceError && <p>{selectDeviceError?.message}</p>}
-    </>
+    <button onClick={handleClick}>Select Video Input Device</button>
   );
 };
 ```

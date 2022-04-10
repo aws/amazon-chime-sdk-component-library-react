@@ -2,7 +2,7 @@
 
 # useSelectVideoInputDevice
 
-The `useSelectVideoInputDevice` hook returns a function that selects a video input device given a device ID.
+The `useSelectVideoInputDevice` hook returns a function that selects a video input device given a device ID. This function will throw the error if the device selection failed.
 
 If you pass `none` as device ID, it will stop the local video if active. A user must select a device again before being able to share their video.
 
@@ -46,19 +46,24 @@ const MyChild = () => {
   const { isVideoEnabled, setIsVideoEnabled } = useLocalVideo();
   const selectVideoInput = useSelectVideoInputDevice();
 
-  const handleClick = (deviceId) => {
+  const handleClick = async (deviceId) => {
     if (!audioVideo) {
       return;
     }
-    selectVideoInput(deviceId);
-    if (deviceId !== 'none' && !isVideoEnabled) {
-      audioVideo?.startLocalVideoTile();
-      setIsVideoEnabled(true);
+    try {
+      await selectVideoInput(deviceId);
+      if (!isVideoEnabled) {
+        audioVideo?.startLocalVideoTile();
+        setIsVideoEnabled(true);
+      }
+    } catch (error) {
+      // Handle device selection failure.
+      console.error('Failed to start local video tile.');
     }
   };
 
   return (
-    <div style={{height:'300px', width: '400px'}}>
+    <div style={{ height: '300px', width: '400px' }}>
       <button onClick={handleClick}>Some device ID</button>;
       {isVideoEnabled && <LocalVideo />}
     </div>

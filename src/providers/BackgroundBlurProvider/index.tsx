@@ -110,7 +110,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
       // BackgroundBlurVideoFrameProcessor.create() can also throw an error in case loading
       // the assets are not fetched successfully.
       if (createdProcessor instanceof NoOpVideoFrameProcessor) {
-        console.warn(`Initialized NoOpVideoFrameProcessor.`);
+        console.warn('Initialized NoOpVideoFrameProcessor');
         setProcessor(undefined);
         setIsBackgroundBlurSupported(false);
         return undefined;

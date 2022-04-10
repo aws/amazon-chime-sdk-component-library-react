@@ -23,20 +23,6 @@ const VideoInputProvider: React.FC = ({ children }) => {
   const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState(
     meetingManager.selectedVideoInputDevice
   );
-  const [selectVideoInputDeviceError, setSelectVideoInputDeviceError] =
-    useState(meetingManager.selectVideoInputDeviceError);
-
-  useEffect(() => {
-    meetingManager.subscribeToSelectVideoInputDeviceError(
-      setSelectVideoInputDeviceError
-    );
-
-    return (): void => {
-      meetingManager.unsubscribeFromSelectVideoInputDeviceError(
-        setSelectVideoInputDeviceError
-      );
-    };
-  }, []);
 
   useEffect(() => {
     meetingManager.subscribeToSelectedVideoInputDevice(
@@ -92,9 +78,8 @@ const VideoInputProvider: React.FC = ({ children }) => {
     () => ({
       devices: videoInputs,
       selectedDevice: selectedVideoInputDevice,
-      selectDeviceError: selectVideoInputDeviceError,
     }),
-    [videoInputs, selectedVideoInputDevice, selectVideoInputDeviceError]
+    [videoInputs, selectedVideoInputDevice]
   );
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

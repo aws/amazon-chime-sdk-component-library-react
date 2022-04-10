@@ -46,7 +46,7 @@ const AudioOutputProvider: React.FC = ({ children }) => {
       },
     };
 
-    async function initAudioOutput() {
+    async function initAudioOutput(): Promise<void> {
       if (!audioVideo) {
         return;
       }

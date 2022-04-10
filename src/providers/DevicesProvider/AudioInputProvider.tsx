@@ -40,8 +40,6 @@ const AudioInputProvider: React.FC<Props> = ({
   );
   const selectedInputRef = useRef(selectedAudioInputDevice);
   selectedInputRef.current = selectedAudioInputDevice;
-  const [selectAudioInputDeviceError, setSelectAudioInputDeviceError] =
-    useState(meetingManager.selectAudioInputDeviceError);
 
   const replaceDevice = async (
     device: string
@@ -54,18 +52,6 @@ const AudioInputProvider: React.FC<Props> = ({
     }
     return device;
   };
-
-  useEffect(() => {
-    meetingManager.subscribeToSelectAudioInputDeviceError(
-      setSelectAudioInputDeviceError
-    );
-
-    return (): void => {
-      meetingManager.unsubscribeFromSelectAudioInputDeviceError(
-        setSelectAudioInputDeviceError
-      );
-    };
-  }, []);
 
   useEffect(() => {
     meetingManager.subscribeToSelectedAudioInputDevice(
@@ -113,7 +99,9 @@ const AudioInputProvider: React.FC<Props> = ({
         try {
           await meetingManager.selectAudioInputDevice(nextDevice);
         } catch (e) {
-          console.error(`Error in selecting audio input device - ${e}`);
+          console.error(
+            `Failed to select audio input device on audioInputsChanged: ${e}`
+          );
         }
 
         setAudioInputs(newAudioInputs);
@@ -152,9 +140,8 @@ const AudioInputProvider: React.FC<Props> = ({
     () => ({
       devices: audioInputs,
       selectedDevice: selectedAudioInputDevice,
-      selectDeviceError: selectAudioInputDeviceError,
     }),
-    [audioInputs, selectedAudioInputDevice, selectAudioInputDeviceError]
+    [audioInputs, selectedAudioInputDevice]
   );
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;

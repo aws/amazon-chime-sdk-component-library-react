@@ -3,8 +3,8 @@
 
 import React from 'react';
 
+import useSelectVideoInputDevice from '../../../../hooks/sdk/useSelectVideoInputDevice';
 import { useVideoInputs } from '../../../../providers/DevicesProvider';
-import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { BaseSdkProps } from '../../Base';
 import DeviceInput from '../DeviceInput';
 
@@ -20,16 +20,21 @@ export const CameraSelection: React.FC<Props> = ({
   label = 'Camera source',
   ...rest
 }) => {
-  const meetingManager = useMeetingManager();
   const { devices, selectedDevice } = useVideoInputs();
-  const selectVideoInput = async (deviceId: string): Promise<void> => {
-    await meetingManager.selectVideoInputDevice(deviceId);
+  const selectVideoInput = useSelectVideoInputDevice();
+
+  const handleSelect = async (deviceId: string): Promise<void> => {
+    try {
+      await selectVideoInput(deviceId);
+    } catch (error) {
+      console.error('CameraSelection failed to select camera');
+    }
   };
 
   return (
     <DeviceInput
       label={label}
-      onChange={selectVideoInput}
+      onChange={handleSelect}
       devices={devices}
       selectedDeviceId={selectedDevice}
       notFoundMsg={notFoundMsg}

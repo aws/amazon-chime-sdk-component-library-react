@@ -3,9 +3,9 @@
 
 import React from 'react';
 
+import useSelectAudioInputDevice from '../../../hooks/sdk/useSelectAudioInputDevice';
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Microphone } from '../../ui/icons';
@@ -30,15 +30,22 @@ const AudioInputControl: React.FC<Props> = ({
   unmutedIconTitle,
   ...rest
 }) => {
-  const meetingManager = useMeetingManager();
+  const selectAudioInput = useSelectAudioInputDevice();
   const { muted, toggleMute } = useToggleLocalMute();
   const { devices, selectedDevice } = useAudioInputs();
+
+  const handleClick = async (deviceId: string): Promise<void> => {
+    try {
+      await selectAudioInput(deviceId);
+    } catch (error) {
+      console.error('AudioInputControl failed to select audio input device');
+    }
+  };
 
   const dropdownOptions: PopOverItemProps[] = devices.map((device) => ({
     children: <span>{device.label}</span>,
     checked: isOptionActive(selectedDevice, device.deviceId),
-    onClick: (): Promise<void> =>
-      meetingManager.selectAudioInputDevice(device.deviceId),
+    onClick: async () => await handleClick(device.deviceId),
   }));
 
   return (

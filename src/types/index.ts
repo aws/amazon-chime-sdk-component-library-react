@@ -13,7 +13,6 @@ export type SelectedDeviceId = string | null;
 export type DeviceTypeContext = {
   devices: DeviceType[];
   selectedDevice: SelectedDeviceId;
-  selectDeviceError?: Error | null;
 };
 
 export type LocalAudioOutputContextType = {

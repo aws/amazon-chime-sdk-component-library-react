@@ -9,6 +9,7 @@ import {
 import isEqual from 'lodash.isequal';
 import React, { ReactNode, useEffect, useState } from 'react';
 
+import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 import { useBackgroundBlur } from '../../../providers/BackgroundBlurProvider';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
@@ -35,6 +36,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
   ...rest
 }) => {
   const meetingManager = useMeetingManager();
+  const selectVideoinput = useSelectVideoInputDevice();
   const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
@@ -63,61 +65,72 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
     };
   }, []);
 
-  async function toggleBackgroundBlur(): Promise<void> {
+  const toggleBackgroundBlur = async (): Promise<void> => {
     let current = activeVideoDevice;
     if (isLoading || !current) {
       return;
     }
     setIsLoading(true);
-    if (!isVideoTransformDevice(current)) {
-      // Enable video transform on the non-transformed device
-      current = await createBackgroundBlurDevice(current);
-      meetingManager.logger?.info(
-        'Video filter turned on - selecting video transform device: ' +
-          JSON.stringify(current)
-      );
-    } else {
-      // switch back to the inner device
-      current = await current.intrinsicDevice();
-      meetingManager.logger?.info(
-        'Video filter was turned off - selecting inner device: ' +
-          JSON.stringify(current)
-      );
+
+    try {
+      if (!isVideoTransformDevice(current)) {
+        // Enable video transform on the non-transformed device
+        current = await createBackgroundBlurDevice(current);
+        meetingManager.logger?.info(
+          'Video filter turned on - selecting video transform device: ' +
+            JSON.stringify(current)
+        );
+      } else {
+        // switch back to the inner device
+        current = await current.intrinsicDevice();
+        meetingManager.logger?.info(
+          'Video filter was turned off - selecting inner device: ' +
+            JSON.stringify(current)
+        );
+      }
+      // If we're currently using a video transform device, and a non-video transform device is selected
+      // then the video transform device will be stopped automatically
+      await selectVideoinput(current);
+    } catch (error) {
+      console.error('Failed to toggle Background Blur');
     }
-    // If we're currently using a video transform device, and a non-video transform device is selected
-    // then the video transform device will be stopped automatically
-    await meetingManager.selectVideoInputDevice(current);
+
     setIsLoading(false);
-  }
+  };
+
+  const handleClick = async (deviceId: string): Promise<void> => {
+    try {
+      // If background blur is on, then re-use the same video transform pipeline, but replace the inner device
+      // If background blur is not on, then do a normal video selection
+      if (isVideoTransformDevice(activeVideoDevice) && !isLoading) {
+        setIsLoading(true);
+        if ('chooseNewInnerDevice' in activeVideoDevice) {
+          const transformedDevice =
+            // @ts-ignore
+            activeVideoDevice.chooseNewInnerDevice(deviceId);
+          await selectVideoinput(transformedDevice);
+        } else {
+          meetingManager.logger?.error(
+            'Transform device cannot choose new inner device'
+          );
+        }
+        setIsLoading(false);
+      } else {
+        await selectVideoinput(deviceId);
+      }
+    } catch (error) {
+      console.error('Failed to select video input device');
+    }
+  };
 
   useEffect(() => {
-    const deviceOptions: ReactNode[] = videoDevices.map((option) => (
+    const deviceOptions: ReactNode[] = videoDevices.map((device) => (
       <PopOverItem
-        key={option.deviceId}
-        checked={isOptionActive(selectedDevice, option.deviceId)}
-        onClick={async (): Promise<void> => {
-          // If background blur is on, then re-use the same video transform pipeline, but replace the inner device
-          // If background blur is not on, then do a normal video selection
-          if (isVideoTransformDevice(activeVideoDevice) && !isLoading) {
-            setIsLoading(true);
-            const receivedDevice = option.deviceId;
-            if ('chooseNewInnerDevice' in activeVideoDevice) {
-              const transformedDevice =
-                // @ts-ignore
-                activeVideoDevice.chooseNewInnerDevice(receivedDevice);
-              await meetingManager.selectVideoInputDevice(transformedDevice);
-            } else {
-              meetingManager.logger?.error(
-                'Transform device cannot choose new inner device'
-              );
-            }
-            setIsLoading(false);
-          } else {
-            await meetingManager.selectVideoInputDevice(option.deviceId);
-          }
-        }}
+        key={device.deviceId}
+        checked={isOptionActive(selectedDevice, device.deviceId)}
+        onClick={async (): Promise<void> => handleClick(device.deviceId)}
       >
-        <span>{option.label}</span>
+        <span>{device.label}</span>
       </PopOverItem>
     ));
     if (isBackgroundBlurSupported) {
