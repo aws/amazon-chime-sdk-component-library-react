@@ -5,6 +5,7 @@ import React from 'react';
 
 import { useSelectAudioInputDevice } from '../../../../hooks/sdk/useSelectAudioInputDevice';
 import { useAudioInputs } from '../../../../providers/DevicesProvider';
+import { useLogger } from '../../../../providers/LoggerProvider';
 import { BaseSdkProps } from '../../Base';
 import DeviceInput from '../DeviceInput';
 
@@ -20,6 +21,7 @@ export const MicSelection: React.FC<Props> = ({
   label = 'Microphone source',
   ...rest
 }) => {
+  const logger = useLogger();
   const { devices, selectedDevice } = useAudioInputs();
   const selectAudioInput = useSelectAudioInputDevice();
 
@@ -27,7 +29,7 @@ export const MicSelection: React.FC<Props> = ({
     try {
       await selectAudioInput(deviceId);
     } catch (error) {
-      console.error('MicSelection failed to select mic');
+      logger.error('MicSelection failed to select mic');
     }
   };
 

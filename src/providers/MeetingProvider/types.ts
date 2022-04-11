@@ -20,9 +20,6 @@ export enum DevicePermissionStatus {
 export interface MeetingManagerJoinOptions {
   deviceLabels?: DeviceLabels | DeviceLabelTrigger;
   eventController?: EventController;
-  logLevel?: LogLevel;
-  postLoggerConfig?: PostLoggerConfig;
-  logger?: Logger;
   enableWebAudio?: boolean;
   activeSpeakerPolicy?: ActiveSpeakerPolicy;
 }
@@ -35,7 +32,6 @@ export interface AttendeeResponse {
 export type ParsedJoinParams = {
   deviceLabels: DeviceLabels | DeviceLabelTrigger;
   eventController: EventController | undefined;
-  logger: Logger;
   enableWebAudio: boolean;
   activeSpeakerPolicy: ActiveSpeakerPolicy;
 };
@@ -49,10 +45,3 @@ export type FullDeviceInfoType = {
   videoInputDevices: MediaDeviceInfo[] | null;
 };
 
-export interface PostLoggerConfig {
-  name: string;
-  batchSize: number;
-  intervalMs: number;
-  url: string;
-  logLevel: LogLevel;
-}

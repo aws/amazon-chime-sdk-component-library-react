@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { renderHook } from '@testing-library/react-hooks';
-import { LogLevel } from 'amazon-chime-sdk-js';
+import { ConsoleLogger } from 'amazon-chime-sdk-js';
 import React from 'react';
 
 import useActiveSpeakersState from '../../../src/hooks/sdk/useActiveSpeakersState';
@@ -32,7 +32,7 @@ describe('useActiveSpeakersState', () => {
     const { result, unmount } = renderHook(() => useActiveSpeakersState(), {
       wrapper: ({ children }) => (
         <MeetingContext.Provider
-          value={ new MeetingManager() }
+          value={ new MeetingManager(new ConsoleLogger('MeetingManager')) }
         >
           {children}
         </MeetingContext.Provider>

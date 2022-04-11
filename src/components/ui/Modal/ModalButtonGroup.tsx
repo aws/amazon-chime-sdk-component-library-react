@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, HTMLAttributes, ReactElement } from 'react';
+import { useLogger } from '../../../providers/LoggerProvider';
 
 import { BaseProps } from '../Base';
 import { useModalContext } from './ModalContext';
@@ -21,6 +22,7 @@ export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
   secondaryButtons,
   ...rest
 }) => {
+  const logger = useLogger();
   const context = useModalContext();
 
   const addCloseBehaviorToButton = (button: any) => {
@@ -40,7 +42,7 @@ export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
       (buttons instanceof Array && buttons.length === 0)
     ) {
       context.dismissible &&
-        console.warn(
+        logger.warn(
           "the 'dismissible prop prevents buttons from closing the modal"
         );
       return buttons;

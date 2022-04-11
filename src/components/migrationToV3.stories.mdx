@@ -22,7 +22,7 @@ npm install --save amazon-chime-sdk-component-library-react@beta amazon-chime-sd
 - `MeetingManager`'s `join()` method no longer takes an `EventReporter` and instead takes an `EventController`.
 - Add `MeetingSessionConfiguration` as a required parameter to `MeetingManager.join()` method. With this change the builders have direct access to `MeetingSessionConfiguration`, this will allow more flexibility to customize the `MeetingSession`.
 - Add `MeetingManagerJoinOptions` as a new interface for the `options` parameter of the `MeetingManager.join` method.
-- Add `deviceLabels`, `eventController`, `logLevel`, `postLoggerConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface.
+- Add `deviceLabels`, `eventController`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface.
 - Remove `MeetingSessionConfiguration` properties from `MeetingProvider` props.
 - Remove `deviceLabels`, `eventController`, `logLevel`, `postLogConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
 - Remove `meetingRegion` from `MeetingManager`. Previously we just cache this value from meetingInfo returned by [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) but it is not used anywhere in the library.
@@ -32,6 +32,7 @@ npm install --save amazon-chime-sdk-component-library-react@beta amazon-chime-sd
 - Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
 - Remove preset device selection options ("None" and "440 Hz" for audio input device. "None", "Blue" and "SMTP Color Bars" for video input device). Remove `appendSampleDevices` from Props of `CameraSelection`, `MicSelection`, `AudioInputControl`, `AudioInputVFcontrol`, and `VideoInputControl`. Remove `DeviceConfig` type. Remove `additionalDevices` from Props of `useAudioInputs` and `useVideoInputs` hook.
 - Revert "Add Observer to select input device error" ([PR #493](https://github.com/aws/amazon-chime-sdk-component-library-react/pull/493)). `useAudioInputs` and `useVideoInputs` hook no longer return `selectDeviceError`. `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` method of `MeetingManager` now throw error when failed. The device selection methods returned by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook are built on top of these `MeetingManager` methods, thus now they throw error when failed as well.
+- Add `LoggerProvider` and `useLogger` components to enable unniversal logging in component library.
 
 ### `MeetingProvider` props change
 
@@ -46,9 +47,6 @@ npm install --save amazon-chime-sdk-component-library-react@beta amazon-chime-sd
 - Other props:
 - `deviceLabels`
 - `eventController`
-- `logLevel`
-- `postLogConfig`
-- `logger`
 - `enableWebAudio`
 - `activeSpeakerPolicy`
 
@@ -425,6 +423,10 @@ const MyChild = () => {
   );
 };
 ```
+
+## Enable logging using `useLogger` and `LoggerProvider`
+
+Please check documentation on [`LoggerProvider`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/sdk-providers-loggerprovider--page) for more information on its usage.
 
 ## StyledComponent
 

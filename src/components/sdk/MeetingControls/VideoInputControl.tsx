@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
+import { useLogger } from '../../../providers/LoggerProvider';
 import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Camera } from '../../ui/icons';
@@ -18,6 +19,7 @@ interface Props extends BaseSdkProps {
 }
 
 const VideoInputControl: React.FC<Props> = ({ label = 'Video', ...rest }) => {
+  const logger = useLogger();
   const selectVideoInput = useSelectVideoInputDevice();
   const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
@@ -30,7 +32,7 @@ const VideoInputControl: React.FC<Props> = ({ label = 'Video', ...rest }) => {
       try {
         await selectVideoInput(deviceId);
       } catch (error) {
-        console.error('VideoInputControl failed to select video input device');
+        logger.error('VideoInputControl failed to select video input device');
       }
     };
 

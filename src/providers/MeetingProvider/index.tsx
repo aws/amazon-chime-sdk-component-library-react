@@ -10,6 +10,7 @@ import { DevicesProvider } from '../DevicesProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
 import { LocalAudioOutputProvider } from '../LocalAudioOutputProvider';
 import { LocalVideoProvider } from '../LocalVideoProvider';
+import { useLogger } from '../LoggerProvider';
 import { MeetingEventProvider } from '../MeetingEventProvider';
 import { RemoteVideoTileProvider } from '../RemoteVideoTileProvider';
 import { RosterProvider } from '../RosterProvider';
@@ -34,8 +35,9 @@ export const MeetingProvider: React.FC<Props> = ({
   meetingManager: meetingManagerProp,
   children,
 }) => {
+  const logger = useLogger();
   const [meetingManager] = useState(
-    () => meetingManagerProp || new MeetingManager()
+    () => meetingManagerProp || new MeetingManager(logger)
   );
 
   return (

@@ -9,6 +9,7 @@ import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDev
 import { useBackgroundBlur } from '../../../providers/BackgroundBlurProvider';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
+import { useLogger } from '../../../providers/LoggerProvider';
 import { DeviceType } from '../../../types';
 import { isOptionActive } from '../../../utils/device-utils';
 import useMemoCompare from '../../../utils/use-memo-compare';
@@ -30,6 +31,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
   backgroundBlurLabel = 'Enable Background Blur',
   ...rest
 }) => {
+  const logger = useLogger();
   const selectVideoInput = useSelectVideoInputDevice();
   const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
@@ -58,23 +60,25 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
       if (!isVideoTransformDevice(selectedDevice)) {
         // Enable video transform on the non-transformed device
         current = await createBackgroundBlurDevice(selectedDevice);
-        console.info(
-          'Video filter turned on - selecting video transform device: ' +
-            JSON.stringify(current)
+        logger.info(
+          `Video filter turned on - selecting video transform device: ${JSON.stringify(
+            current
+          )}`
         );
       } else {
         // switch back to the inner device
         current = await selectedDevice.intrinsicDevice();
-        console.info(
-          'Video filter was turned off - selecting inner device: ' +
-            JSON.stringify(current)
+        logger.info(
+          `Video filter was turned off - selecting inner device: ${JSON.stringify(
+            current
+          )}`
         );
       }
       // If we're currently using a video transform device, and a non-video transform device is selected
       // then the video transform device will be stopped automatically
       await selectVideoInput(current);
     } catch (error) {
-      console.error('Failed to toggle Background Blur');
+      logger.error('Failed to toggle Background Blur');
     } finally {
       setIsLoading(false);
     }
@@ -93,14 +97,14 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
               selectedDevice.chooseNewInnerDevice(deviceId);
             await selectVideoInput(transformedDevice);
           } else {
-            console.error('Transform device cannot choose new inner device');
+            logger.error('Transform device cannot choose new inner device');
           }
           setIsLoading(false);
         } else {
           await selectVideoInput(deviceId);
         }
       } catch (error) {
-        console.error('Failed to select video input device');
+        logger.error('Failed to select video input device');
       } finally {
         setIsLoading(false);
       }

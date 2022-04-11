@@ -7,6 +7,7 @@ import React, { useEffect, useState } from 'react';
 import useSelectAudioOutputDevice from '../../../hooks/sdk/useSelectAudioOutputDevice';
 import { useAudioOutputs } from '../../../providers/DevicesProvider';
 import { useLocalAudioOutput } from '../../../providers/LocalAudioOutputProvider';
+import { useLogger } from '../../../providers/LoggerProvider';
 import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Sound } from '../../ui/icons';
@@ -22,6 +23,7 @@ const AudioOutputControl: React.FC<Props> = ({
   label = 'Speaker',
   ...rest
 }) => {
+  const logger = useLogger();
   const selectAudioOutput = useSelectAudioOutputDevice();
   const { devices, selectedDevice } = useAudioOutputs();
   const { isAudioOn, toggleAudio } = useLocalAudioOutput();
@@ -35,14 +37,12 @@ const AudioOutputControl: React.FC<Props> = ({
         if (new DefaultBrowserBehavior().supportsSetSinkId()) {
           await selectAudioOutput(deviceId);
         } else {
-          console.error(
+          logger.error(
             'AudioOutputControl cannot select audio output device because browser does not support setSinkId operation.'
           );
         }
       } catch (error) {
-        console.error(
-          'AudioOutputControl failed to select audio output device'
-        );
+        logger.error('AudioOutputControl failed to select audio output device');
       }
     };
 

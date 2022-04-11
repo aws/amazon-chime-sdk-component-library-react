@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import { useLocalVideo, useVideoInputs } from '../../..';
 import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { useLogger } from '../../../providers/LoggerProvider';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
 
@@ -20,6 +21,7 @@ const StyledPreview = styled(VideoTile)`
 `;
 
 export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
+  const logger = useLogger();
   const audioVideo = useAudioVideo();
   const { selectedDevice } = useVideoInputs();
   const videoEl = useRef<HTMLVideoElement>(null);
@@ -48,7 +50,7 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
         audioVideo.startVideoPreviewForVideoInput(videoEl.current);
         setIsVideoEnabled(true);
       } catch (error) {
-        console.error('Failed to start video preview');
+        logger.error('Failed to start video preview');
       }
     }
 
