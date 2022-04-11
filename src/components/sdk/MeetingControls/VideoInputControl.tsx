@@ -1,12 +1,11 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
-import { DeviceType } from '../../../types';
 import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Camera } from '../../ui/icons';
@@ -19,17 +18,35 @@ interface Props extends BaseSdkProps {
 }
 
 const VideoInputControl: React.FC<Props> = ({ label = 'Video', ...rest }) => {
+  const selectVideoInput = useSelectVideoInputDevice();
   const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
-  const selectDevice = useSelectVideoInputDevice();
-
-  const dropdownOptions: PopOverItemProps[] = devices.map(
-    (device: DeviceType) => ({
-      children: <span>{device.label}</span>,
-      checked: isOptionActive(selectedDevice, device.deviceId),
-      onClick: () => selectDevice(device.deviceId),
-    })
+  const [dropdownOptions, setDropdownOptions] = useState<PopOverItemProps[]>(
+    []
   );
+
+  useEffect(() => {
+    const handleClick = async (deviceId: string): Promise<void> => {
+      try {
+        await selectVideoInput(deviceId);
+      } catch (error) {
+        console.error('VideoInputControl failed to select video input device');
+      }
+    };
+
+    const getDropdownOptions = async (): Promise<void> => {
+      const dropdownOptions = await Promise.all(
+        devices.map(async (device) => ({
+          children: <span>{device.label}</span>,
+          checked: await isOptionActive(selectedDevice, device.deviceId),
+          onClick: async () => await handleClick(device.deviceId),
+        }))
+      );
+      setDropdownOptions(dropdownOptions);
+    };
+
+    getDropdownOptions();
+  }, [devices, selectedDevice]);
 
   return (
     <ControlBarButton

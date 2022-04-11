@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import useSelectAudioInputDevice from '../../../hooks/sdk/useSelectAudioInputDevice';
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
@@ -33,20 +33,32 @@ const AudioInputControl: React.FC<Props> = ({
   const selectAudioInput = useSelectAudioInputDevice();
   const { muted, toggleMute } = useToggleLocalMute();
   const { devices, selectedDevice } = useAudioInputs();
+  const [dropdownOptions, setDropdownOptions] = useState<PopOverItemProps[]>(
+    []
+  );
 
-  const handleClick = async (deviceId: string): Promise<void> => {
-    try {
-      await selectAudioInput(deviceId);
-    } catch (error) {
-      console.error('AudioInputControl failed to select audio input device');
-    }
-  };
+  useEffect(() => {
+    const handleClick = async (deviceId: string): Promise<void> => {
+      try {
+        await selectAudioInput(deviceId);
+      } catch (error) {
+        console.error('AudioInputControl failed to select audio input device');
+      }
+    };
 
-  const dropdownOptions: PopOverItemProps[] = devices.map((device) => ({
-    children: <span>{device.label}</span>,
-    checked: isOptionActive(selectedDevice, device.deviceId),
-    onClick: async () => await handleClick(device.deviceId),
-  }));
+    const getDropdownOptions = async (): Promise<void> => {
+      const dropdownOptions = await Promise.all(
+        devices.map(async (device) => ({
+          children: <span>{device.label}</span>,
+          checked: await isOptionActive(selectedDevice, device.deviceId),
+          onClick: async () => await handleClick(device.deviceId),
+        }))
+      );
+      setDropdownOptions(dropdownOptions);
+    };
+
+    getDropdownOptions();
+  }, [devices, selectedDevice]);
 
   return (
     <ControlBarButton

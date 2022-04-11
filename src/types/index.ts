@@ -1,6 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { AudioInputDevice, VideoInputDevice } from 'amazon-chime-sdk-js';
+
 export type Direction = 'up' | 'right' | 'down' | 'left';
 
 export type DeviceType = {
@@ -8,11 +10,19 @@ export type DeviceType = {
   label: string;
 };
 
-export type SelectedDeviceId = string | null;
-
-export type DeviceTypeContext = {
+export type AudioInputContextType = {
   devices: DeviceType[];
-  selectedDevice: SelectedDeviceId;
+  selectedDevice: AudioInputDevice | undefined;
+};
+
+export type AudioOutputContextType = {
+  devices: DeviceType[];
+  selectedDevice: string | null;
+};
+
+export type VideoInputContextType = {
+  devices: DeviceType[];
+  selectedDevice: VideoInputDevice | undefined;
 };
 
 export type LocalAudioOutputContextType = {

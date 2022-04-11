@@ -1,13 +1,11 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { Device, VideoTransformDevice } from 'amazon-chime-sdk-js';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import { useSelectVideoInputDevice } from '../../..';
+import { useSelectVideoInputDevice, useVideoInputs } from '../../..';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
 
@@ -22,23 +20,9 @@ const StyledPreview = styled(VideoTile)`
 
 export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
   const audioVideo = useAudioVideo();
-  const meetingManager = useMeetingManager();
+  const { selectedDevice } = useVideoInputs();
   const videoEl = useRef<HTMLVideoElement>(null);
   const selectVideoInput = useSelectVideoInputDevice();
-  // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
-  const [device, setDevice] = useState<
-    Device | VideoTransformDevice | undefined
-  >(meetingManager.selectedVideoInputTransformDevice);
-
-  // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
-  useEffect(() => {
-    meetingManager.subscribeToSelectedVideoInputTransformDevice(setDevice);
-    return () => {
-      meetingManager.unsubscribeFromSelectedVideoInputTransformDevice(
-        setDevice
-      );
-    };
-  }, []);
 
   useEffect(() => {
     const videoElement = videoEl.current;
@@ -51,12 +35,12 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
 
   useEffect(() => {
     async function startPreview(): Promise<void> {
-      if (!audioVideo || !device || !videoEl.current) {
+      if (!audioVideo || !selectedDevice || !videoEl.current) {
         return;
       }
 
       try {
-        await selectVideoInput(device);
+        await selectVideoInput(selectedDevice);
         audioVideo.startVideoPreviewForVideoInput(videoEl.current);
       } catch (error) {
         console.error('Failed to start video preview');
@@ -64,7 +48,7 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
     }
 
     startPreview();
-  }, [audioVideo, device]);
+  }, [audioVideo, selectedDevice]);
 
   return <StyledPreview {...props} ref={videoEl} />;
 };

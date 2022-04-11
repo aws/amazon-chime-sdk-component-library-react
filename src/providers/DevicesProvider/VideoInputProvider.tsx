@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
+import { DeviceChangeObserver, VideoInputDevice } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
   useContext,
@@ -10,19 +10,19 @@ import React, {
   useState,
 } from 'react';
 
-import { DeviceTypeContext } from '../../types';
+import { VideoInputContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
-const Context = createContext<DeviceTypeContext | null>(null);
+const Context = createContext<VideoInputContextType | null>(null);
 
 const VideoInputProvider: React.FC = ({ children }) => {
   const audioVideo = useAudioVideo();
   const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);
   const meetingManager = useMeetingManager();
-  const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState(
-    meetingManager.selectedVideoInputDevice
-  );
+  const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState<
+    VideoInputDevice | undefined
+  >(meetingManager.selectedVideoInputDevice);
 
   useEffect(() => {
     meetingManager.subscribeToSelectedVideoInputDevice(
@@ -74,7 +74,7 @@ const VideoInputProvider: React.FC = ({ children }) => {
     };
   }, [audioVideo]);
 
-  const contextValue: DeviceTypeContext = useMemo(
+  const contextValue: VideoInputContextType = useMemo(
     () => ({
       devices: videoInputs,
       selectedDevice: selectedVideoInputDevice,
@@ -85,7 +85,7 @@ const VideoInputProvider: React.FC = ({ children }) => {
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
-const useVideoInputs = (): DeviceTypeContext => {
+const useVideoInputs = (): VideoInputContextType => {
   const context = useContext(Context);
 
   if (!context) {

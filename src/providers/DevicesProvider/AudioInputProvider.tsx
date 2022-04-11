@@ -2,8 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import type {
-  AudioTransformDevice,
-  Device,
+  AudioInputDevice,
   DeviceChangeObserver,
 } from 'amazon-chime-sdk-js';
 import React, {
@@ -15,18 +14,18 @@ import React, {
   useState,
 } from 'react';
 
-import { DeviceTypeContext } from '../../types';
+import { AudioInputContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
 interface Props {
   onDeviceReplacement?: (
     nextDevice: string,
-    currentDevice: Device | AudioTransformDevice | null
-  ) => Promise<Device | AudioTransformDevice | null>;
+    currentDevice: AudioInputDevice | undefined
+  ) => Promise<AudioInputDevice>;
 }
 
-const Context = createContext<DeviceTypeContext | null>(null);
+const Context = createContext<AudioInputContextType | null>(null);
 
 const AudioInputProvider: React.FC<Props> = ({
   children,
@@ -41,13 +40,11 @@ const AudioInputProvider: React.FC<Props> = ({
   const selectedInputRef = useRef(selectedAudioInputDevice);
   selectedInputRef.current = selectedAudioInputDevice;
 
-  const replaceDevice = async (
-    device: string
-  ): Promise<Device | AudioTransformDevice | null> => {
+  const replaceDevice = async (device: string): Promise<AudioInputDevice> => {
     if (onDeviceReplacement) {
       return onDeviceReplacement(
         device,
-        meetingManager.selectedAudioInputTransformDevice
+        meetingManager.selectedAudioInputDevice
       );
     }
     return device;
@@ -136,7 +133,7 @@ const AudioInputProvider: React.FC<Props> = ({
     };
   }, [audioVideo, onDeviceReplacement]);
 
-  const contextValue: DeviceTypeContext = useMemo(
+  const contextValue: AudioInputContextType = useMemo(
     () => ({
       devices: audioInputs,
       selectedDevice: selectedAudioInputDevice,
@@ -147,7 +144,7 @@ const AudioInputProvider: React.FC<Props> = ({
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
-const useAudioInputs = (): DeviceTypeContext => {
+const useAudioInputs = (): AudioInputContextType => {
   const context = useContext(Context);
 
   if (!context) {

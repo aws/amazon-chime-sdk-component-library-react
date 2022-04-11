@@ -36,7 +36,7 @@ export const MicSelection: React.FC<Props> = ({
       label={label}
       onChange={handleSelect}
       devices={devices}
-      selectedDeviceId={selectedDevice}
+      selectedDevice={selectedDevice}
       notFoundMsg={notFoundMsg}
       {...rest}
     />

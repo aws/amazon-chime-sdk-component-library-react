@@ -15,7 +15,7 @@ interface Props extends BaseSdkProps {
   label?: string;
   /** The callback fired when the selection is changed.
    *  It is required if you want to add testing functionality around speaker selection. */
-  onChange?: (selectedAudioOutputDeviceId: string) => void;
+  onChange?: (selectedAudioOutputDevice: string) => void;
 }
 
 export const SpeakerSelection: React.FC<Props> = ({
@@ -41,7 +41,7 @@ export const SpeakerSelection: React.FC<Props> = ({
       label={label}
       devices={devices}
       onChange={handleSelect}
-      selectedDeviceId={selectedDevice}
+      selectedDevice={selectedDevice}
       notFoundMsg={notFoundMsg}
       {...rest}
     />

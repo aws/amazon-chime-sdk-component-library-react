@@ -57,9 +57,9 @@ const MyChild = () => {
   const { isVoiceFocusSupported, addVoiceFocus } = useVoiceFocus();
 
   useEffect(() => {
-    meetingManager.subscribeToSelectedAudioInputTransformDevice(setDevice);
+    meetingManager.subscribeToSelectedAudioInputDevice(setDevice);
     return () => {
-      meetingManager.unsubscribeFromSelectedAudioInputTransformDevice(setDevice);
+      meetingManager.unsubscribeFromSelectedAudioInputDevice(setDevice);
     };
   }, []);
 

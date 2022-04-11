@@ -13,6 +13,7 @@ import React, {
 
 import { LocalVideoContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useVideoInputs } from '../DevicesProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
 const Context = createContext<LocalVideoContextType | null>(null);
@@ -20,6 +21,7 @@ const Context = createContext<LocalVideoContextType | null>(null);
 const LocalVideoProvider: React.FC = ({ children }) => {
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
+  const { selectedDevice } = useVideoInputs();
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
   const [hasReachedVideoLimit, setHasReachedVideoLimit] = useState(false);
   const [tileId, setTileId] = useState<number | null>(null);
@@ -62,16 +64,14 @@ const LocalVideoProvider: React.FC = ({ children }) => {
 
   const toggleVideo = useCallback(async (): Promise<void> => {
     try {
-      if (isVideoEnabled || !meetingManager.selectedVideoInputTransformDevice) {
-        if (!meetingManager.selectedVideoInputTransformDevice) {
+      if (isVideoEnabled || !selectedDevice) {
+        if (!selectedDevice) {
           console.warn('There is no input video device chosen!');
         }
         await audioVideo?.stopVideoInput();
         setIsVideoEnabled(false);
       } else if (!hasReachedVideoLimit) {
-        await meetingManager.selectVideoInputDevice(
-          meetingManager.selectedVideoInputTransformDevice
-        );
+        await meetingManager.selectVideoInputDevice(selectedDevice);
         audioVideo?.startLocalVideoTile();
         setIsVideoEnabled(true);
       } else {
@@ -82,12 +82,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     } catch (error) {
       console.error('Failed to toggle video');
     }
-  }, [
-    audioVideo,
-    isVideoEnabled,
-    hasReachedVideoLimit,
-    meetingManager.selectedVideoInputTransformDevice,
-  ]);
+  }, [audioVideo, isVideoEnabled, hasReachedVideoLimit, selectedDevice]);
 
   useEffect(() => {
     if (!audioVideo) {

@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Revert "Add Observer to select input device error" ([PR #493](https://github.com/aws/amazon-chime-sdk-component-library-react/pull/493)). `useAudioInputs` and `useVideoInputs` hook no longer return `selectDeviceError`. `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` method of `MeetingManager` now throw error when failed. The device selection methods returned by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook are built on top of these `MeetingManager` methods, thus now they throw error when failed as well.
+- Change the `selectedDeviceId: string | null` to `selectedDevice: Device | TransformDevice`.
 
 ### Fixed
 
@@ -141,9 +142,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add FAQ link on audio outputs not available in FireFox and Safari.
 - Add `BackgroundBlurProvider` which provides a background blur video transform device.
 - Add `VideoInputBackgroundBlurControl` component which includes a checkbox for enabling background blur.
-- Add `unsubscribeFromSelectedVideoInputTranformDevice` which subscribes to changes to selected video devices.
-- Add `subscribeFromSelectedVideoInputTranformDevice`.
-- Add `publishSelectedVideoInputTranformDevice` which publishes a `Device | VideoTransformDevice` depending on what video device was chosen.
+- Add `unsubscribeFromSelectedVideoInputTransformDevice` which subscribes to changes to selected video devices.
+- Add `subscribeFromSelectedVideoInputTransformDevice`.
+- Add `publishSelectedVideoInputTransformDevice` which publishes a `Device | VideoTransformDevice` depending on what video device was chosen.
 
 ### Changed
 

@@ -25,7 +25,7 @@ export function useSelectVideoQuality(): (quality: VideoQuality) => void {
           break;
         case '540p':
           audioVideo.chooseVideoInputQuality(960, 540, 15);
-          audioVideo.setVideoMaxBandwidthKbps(1000);
+          audioVideo.setVideoMaxBandwidthKbps(1400);
           break;
         case '720p':
           audioVideo.chooseVideoInputQuality(1280, 720, 15);

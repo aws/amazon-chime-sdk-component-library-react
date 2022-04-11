@@ -62,10 +62,7 @@ export function useMediaStreamMetrics(): MediaStreamMetrics {
           );
         }
 
-        // TODO: remove if condition after JS SDK 3.0.0-beta.2 is released
-        if (clientMetricReport.getObservableVideoMetrics) {
-          videoStreamMetrics = clientMetricReport.getObservableVideoMetrics();
-        }
+        videoStreamMetrics = clientMetricReport.getObservableVideoMetrics();
 
         if (isValidMetric(availableOutgoingBitrate)) {
           availableOutgoingBandwidth = availableOutgoingBitrate / 1000;

@@ -8,7 +8,7 @@ import { BackgroundBlurProvider } from '../';
 The `BackgroundBlurProvider` provides a function transforming a normal video device to a `DefaultVideoTransformDevice`, and also whether or not the background blur feature is supported.
 Background blur related logs can be found in the browser developer tools when the `BackgroundBlurProvider` is used within the app component tree.
 
-This provider is independent from `MeetingProvider`. You can put `BackgroundBlurProvider` wherever you want in the component tree so long as any component that relies on 
+This provider is independent from `MeetingProvider`. You can put `BackgroundBlurProvider` wherever you want in the component tree so long as any component that relies on
 `BackgroundBlurProvider` is nested within `BackgroundBlurProvider`. The `BackgroundBlurProvider` loads the required worker assets
 when mounted, which may impact performance.
 
@@ -31,12 +31,12 @@ to [Integrating background filters into your Amazon Chime SDK for JavaScript app
 
 You can check whether or not the processor has been loaded correctly by checking the state of `isBackgroundBlurSupported`.
 `createBackgroundBlurDevice` may throw an error if the processor was not loaded. You should check whether or not the processor has been loaded correctly by checking the state of `isBackgroundBlurSupported`
-before calling `createBackgroundBlurDevice`. Calling `createBackgroundBlurDevice` will create a new `DefaultVideoTransformDevice`. Users would also need to call `DefaultVideoTransformDevice.stop` when constructing a new 
-`DefaultVideoTransformDevice` with `createBackgroundBlurDevice` in order to destroy the processors running previously. Once you call `DefaultVideoTransformDevice.stop`, you should discard the old `DefaultVideoTransformDevice`. 
+before calling `createBackgroundBlurDevice`. Calling `createBackgroundBlurDevice` will create a new `DefaultVideoTransformDevice`. Users would also need to call `DefaultVideoTransformDevice.stop` when constructing a new
+`DefaultVideoTransformDevice` with `createBackgroundBlurDevice` in order to destroy the processors running previously. Once you call `DefaultVideoTransformDevice.stop`, you should discard the old `DefaultVideoTransformDevice`.
 For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice).
 
 One thing to note is that calling `meetingManager.selectVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
-will automatically stop any video processor that was previously running. Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `createBackgroundBlurDevice`. 
+will automatically stop any video processor that was previously running. Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `createBackgroundBlurDevice`.
 if the Props of the provider were changed.
 
 You can access the state by using the [useBackgroundBlur](/docs/sdk-hooks-usebackgroundblur--page) hook.
@@ -57,7 +57,7 @@ import { BackgroundBlurProvider } from 'amazon-chime-sdk-component-library-react
 import React from 'react';
 import {
   isVideoTranformDevice,
-  VideoTransformDevice
+  VideoTransformDevice,
 } from 'amazon-chime-sdk-js';
 import {
   MeetingProvider,
@@ -77,47 +77,48 @@ const App = () => (
 const MyChild = () => {
   const meetingManager = useMeetingManager();
   const [isVideoTransformChecked, setIsVideoTransformCheckOn] = useState(false);
-  const [device, setDevice] = useState(meetingManager.selectedVideoInputDevice);
-  const { isBackgroundBlurSupported, createBackgroundBlurDevice } = useBackgroundBlur();
-
-  useEffect(() => {
-    meetingManager.subscribeToSelectedVideoInputTransformDevice(setDevice);
-    return () => {
-      meetingManager.unsubscribeToSelectedVideoInputTransformDevice(setDevice);
-    };
-  }, []);
+  const { selectedDevice } = useVideoInputs();
+  const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
+    useBackgroundBlur();
 
   useEffect(() => {
     async function toggleBackgroundBlur() {
-      let current = device;
+      if (!selectedDevice) {
+        return;
+      }
+
+      let current = selectedDevice;
       if (isVideoTransformChecked) {
-        current = await createBackgroundBlurDevice(device);
+        current = await createBackgroundBlurDevice(selectedDevice);
       } else {
-        if (isVideoTransformDevice(device)) {
-          current = await device.intrinsicDevice();
+        if (isVideoTransformDevice(selectedDevice)) {
+          current = await selectedDevice.intrinsicDevice();
         }
       }
       await meetingManager.selectVideoInputDevice(current);
     }
-    
+
     toggleBackgroundBlur();
   }, [isVideoTransformChecked]);
 
   const onClick = () => {
-    setisVideoTransformCheckOn(current => !current);
+    setisVideoTransformCheckOn((current) => !current);
   };
 
   return (
     <div>
       {isBackgroundBlurSupported && (
         <button onClick={onClick}>
-          {isVideoTranformDevice(device) ? 'Background Blur Enabled' : 'Enable Background Blur'}
+          {isVideoTranformDevice(device)
+            ? 'Background Blur Enabled'
+            : 'Enable Background Blur'}
         </button>
       )}
     </div>
   );
 };
 ```
+
 ### Dependencies
 
 - `MeetingProvider`

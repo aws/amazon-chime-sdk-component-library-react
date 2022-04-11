@@ -36,7 +36,7 @@ export const CameraSelection: React.FC<Props> = ({
       label={label}
       onChange={handleSelect}
       devices={devices}
-      selectedDeviceId={selectedDevice}
+      selectedDevice={selectedDevice}
       notFoundMsg={notFoundMsg}
       {...rest}
     />
