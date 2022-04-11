@@ -107,7 +107,6 @@ const AudioInputVFControl: React.FC<Props> = ({
           const receivedDevice = deviceId;
           const currentDevice = await addVoiceFocus(receivedDevice);
           await selectAudioInput(currentDevice);
-          setIsLoading(false);
         } else {
           await selectAudioInput(deviceId);
         }
@@ -163,6 +162,7 @@ const AudioInputVFControl: React.FC<Props> = ({
     // but also on the Voice Focus state, including `addVoiceFocus` which is used inside
     // the click handler.
     addVoiceFocus,
+    selectAudioInput,
     selectedDevice,
     audioInputDevices,
     isLoading,

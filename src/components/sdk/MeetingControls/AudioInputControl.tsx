@@ -58,7 +58,7 @@ const AudioInputControl: React.FC<Props> = ({
     };
 
     getDropdownOptions();
-  }, [devices, selectedDevice]);
+  }, [devices, selectedDevice, selectAudioInput]);
 
   return (
     <ControlBarButton

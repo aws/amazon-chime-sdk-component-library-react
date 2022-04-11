@@ -58,7 +58,7 @@ const AudioOutputControl: React.FC<Props> = ({
     };
 
     getDropdownOptions();
-  }, [devices, selectedDevice]);
+  }, [devices, selectedDevice, selectAudioOutput]);
 
   return (
     <>

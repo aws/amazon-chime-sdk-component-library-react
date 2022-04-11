@@ -11,15 +11,18 @@ export const useSelectAudioOutputDevice = (): ((
 ) => Promise<void>) => {
   const meetingManager = useMeetingManager();
 
-  const selectDevice = useCallback(async (deviceId: string) => {
-    if (new DefaultBrowserBehavior().supportsSetSinkId()) {
-      await meetingManager.selectAudioOutputDevice(deviceId);
-    } else {
-      console.error(
-        'AudioOutputControl cannot select audio output device because browser does not support setSinkId operation.'
-      );
-    }
-  }, []);
+  const selectDevice = useCallback(
+    async (deviceId: string) => {
+      if (new DefaultBrowserBehavior().supportsSetSinkId()) {
+        await meetingManager.selectAudioOutputDevice(deviceId);
+      } else {
+        console.error(
+          'AudioOutputControl cannot select audio output device because browser does not support setSinkId operation.'
+        );
+      }
+    },
+    [meetingManager]
+  );
 
   return selectDevice;
 };

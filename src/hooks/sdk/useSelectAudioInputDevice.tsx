@@ -11,9 +11,12 @@ export const useSelectAudioInputDevice = (): ((
 ) => Promise<void>) => {
   const meetingManager = useMeetingManager();
 
-  const selectDevice = useCallback(async (device: AudioInputDevice) => {
-    await meetingManager.selectAudioInputDevice(device);
-  }, []);
+  const selectDevice = useCallback(
+    async (device: AudioInputDevice) => {
+      await meetingManager.selectAudioInputDevice(device);
+    },
+    [meetingManager]
+  );
 
   return selectDevice;
 };

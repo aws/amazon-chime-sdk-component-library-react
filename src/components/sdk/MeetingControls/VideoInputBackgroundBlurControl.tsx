@@ -30,7 +30,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
   backgroundBlurLabel = 'Enable Background Blur',
   ...rest
 }) => {
-  const selectVideoinput = useSelectVideoInputDevice();
+  const selectVideoInput = useSelectVideoInputDevice();
   const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
@@ -72,7 +72,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
       }
       // If we're currently using a video transform device, and a non-video transform device is selected
       // then the video transform device will be stopped automatically
-      await selectVideoinput(current);
+      await selectVideoInput(current);
     } catch (error) {
       console.error('Failed to toggle Background Blur');
     } finally {
@@ -91,13 +91,13 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
             const transformedDevice =
               // @ts-ignore
               selectedDevice.chooseNewInnerDevice(deviceId);
-            await selectVideoinput(transformedDevice);
+            await selectVideoInput(transformedDevice);
           } else {
             console.error('Transform device cannot choose new inner device');
           }
           setIsLoading(false);
         } else {
-          await selectVideoinput(deviceId);
+          await selectVideoInput(deviceId);
         }
       } catch (error) {
         console.error('Failed to select video input device');
@@ -142,6 +142,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
     getDropdownWithVideoTransformOptions();
   }, [
     createBackgroundBlurDevice,
+    selectVideoInput,
     selectedDevice,
     videoDevices,
     isLoading,

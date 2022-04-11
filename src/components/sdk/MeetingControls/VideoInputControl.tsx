@@ -46,7 +46,7 @@ const VideoInputControl: React.FC<Props> = ({ label = 'Video', ...rest }) => {
     };
 
     getDropdownOptions();
-  }, [devices, selectedDevice]);
+  }, [devices, selectedDevice, selectVideoInput]);
 
   return (
     <ControlBarButton

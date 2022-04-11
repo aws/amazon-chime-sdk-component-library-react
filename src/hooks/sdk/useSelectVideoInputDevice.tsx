@@ -11,9 +11,12 @@ export const useSelectVideoInputDevice = (): ((
 ) => Promise<void>) => {
   const meetingManager = useMeetingManager();
 
-  const selectVideo = useCallback(async (device: VideoInputDevice) => {
-    await meetingManager.selectVideoInputDevice(device);
-  }, []);
+  const selectVideo = useCallback(
+    async (device: VideoInputDevice) => {
+      await meetingManager.selectVideoInputDevice(device);
+    },
+    [meetingManager]
+  );
 
   return selectVideo;
 };
