@@ -444,7 +444,7 @@ export class MeetingManager implements AudioVideoObserver {
     }
   }
 
-  selectAudioInputDevice = async (device: AudioInputDevice): Promise<void> => {
+  startAudioInputDevice = async (device: AudioInputDevice): Promise<void> => {
     try {
       await this.audioVideo?.startAudioInput(device);
       this.selectedAudioInputDevice = device;
@@ -458,7 +458,7 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
-  selectAudioOutputDevice = async (deviceId: string): Promise<void> => {
+  startAudioOutputDevice = async (deviceId: string): Promise<void> => {
     try {
       await this.audioVideo?.chooseAudioOutput(deviceId);
       this.selectedAudioOutputDevice = deviceId;
@@ -472,7 +472,7 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
-  selectVideoInputDevice = async (device: VideoInputDevice): Promise<void> => {
+  startVideoInputDevice = async (device: VideoInputDevice): Promise<void> => {
     try {
       await this.audioVideo?.startVideoInput(device);
       this.selectedVideoInputDevice = device;
@@ -486,7 +486,7 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
-  unselectVideoInputDevice = async (): Promise<void> => {
+  stopVideoInputDevice = async (): Promise<void> => {
     try {
       await this.audioVideo?.stopVideoInput();
       this.selectedVideoInputDevice = undefined;

@@ -16,11 +16,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Remove logging of the video transform device to avoid circular structure error.
 - Remove preset device selection options ("None" and "440 Hz" for audio input device. "None", "Blue", and "SMTP Color Bars" for video input device). Remove `appendSampleDevices` from Props of `CameraSelection`, `MicSelection`, `AudioInputControl`, `AudioInputVFcontrol`, and `VideoInputControl`. Remove `DeviceConfig` type. Remove `additionalDevices` from Props of `useAudioInputs` and `useVideoInputs` hook.
+- Removed `useSelectAudioInputDevice`, `useSelectAudioOutputDevice` and `useSelectVideoInputDevice` hook.
 
 ### Changed
 
 - Revert "Add Observer to select input device error" ([PR #493](https://github.com/aws/amazon-chime-sdk-component-library-react/pull/493)). `useAudioInputs` and `useVideoInputs` hook no longer return `selectDeviceError`. `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` method of `MeetingManager` now throw error when failed. The device selection methods returned by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook are built on top of these `MeetingManager` methods, thus now they throw error when failed as well.
 - Change the `selectedDeviceId: string | null` to `selectedDevice: Device | TransformDevice`.
+- Rename `selectAudioInputDevice` to `startAudioInputDevice`, `selectVideoInputDevice` to `startVideoInputDevice`, and `selectAudioOutputDevice` to `startAudioOutputDevice`.
 
 ### Fixed
 

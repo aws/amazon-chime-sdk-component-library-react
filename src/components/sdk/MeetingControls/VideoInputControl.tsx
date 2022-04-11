@@ -3,10 +3,10 @@
 
 import React, { useEffect, useState } from 'react';
 
-import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Camera } from '../../ui/icons';
@@ -20,7 +20,7 @@ interface Props extends BaseSdkProps {
 
 const VideoInputControl: React.FC<Props> = ({ label = 'Video', ...rest }) => {
   const logger = useLogger();
-  const selectVideoInput = useSelectVideoInputDevice();
+  const meetingManager = useMeetingManager();
   const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
   const [dropdownOptions, setDropdownOptions] = useState<PopOverItemProps[]>(
@@ -30,7 +30,7 @@ const VideoInputControl: React.FC<Props> = ({ label = 'Video', ...rest }) => {
   useEffect(() => {
     const handleClick = async (deviceId: string): Promise<void> => {
       try {
-        await selectVideoInput(deviceId);
+        await meetingManager.startVideoInputDevice(deviceId);
       } catch (error) {
         logger.error('VideoInputControl failed to select video input device');
       }
@@ -48,7 +48,12 @@ const VideoInputControl: React.FC<Props> = ({ label = 'Video', ...rest }) => {
     };
 
     getDropdownOptions();
-  }, [devices, selectedDevice, selectVideoInput]);
+  }, [
+    devices,
+    selectedDevice,
+    meetingManager,
+    meetingManager.startVideoInputDevice,
+  ]);
 
   return (
     <ControlBarButton
