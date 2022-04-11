@@ -1,23 +1,21 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { VideoInputDevice } from 'amazon-chime-sdk-js';
 import { useCallback } from 'react';
 
-import { useLocalVideo } from '../../providers/LocalVideoProvider';
 import { useMeetingManager } from '../../providers/MeetingProvider';
 
-export const useSelectVideoInputDevice = () => {
-  const { isVideoEnabled, toggleVideo } = useLocalVideo();
+export const useSelectVideoInputDevice = (): ((
+  device: VideoInputDevice
+) => Promise<void>) => {
   const meetingManager = useMeetingManager();
 
   const selectVideo = useCallback(
-    async (deviceId: string) => {
-      if (deviceId === 'none' && isVideoEnabled) {
-        await toggleVideo();
-      }
-      await meetingManager.selectVideoInputDevice(deviceId);
+    async (device: VideoInputDevice) => {
+      await meetingManager.selectVideoInputDevice(device);
     },
-    [isVideoEnabled]
+    [meetingManager]
   );
 
   return selectVideo;

@@ -199,3 +199,4 @@ export { NotificationType, Action } from './providers/NotificationProvider';
 
 // Utilities
 export { Versioning } from './versioning/Versioning';
+export { isOptionActive, getDeviceId } from './utils/device-utils';

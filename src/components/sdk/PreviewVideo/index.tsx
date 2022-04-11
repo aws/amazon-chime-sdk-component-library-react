@@ -1,13 +1,12 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { Device, VideoTransformDevice } from 'amazon-chime-sdk-js';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
+import { useLocalVideo, useVideoInputs } from '../../..';
+import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
-import { useLocalVideo } from '../../../providers/LocalVideoProvider';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
 
@@ -22,49 +21,39 @@ const StyledPreview = styled(VideoTile)`
 
 export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
   const audioVideo = useAudioVideo();
-  const meetingManager = useMeetingManager();
+  const { selectedDevice } = useVideoInputs();
   const videoEl = useRef<HTMLVideoElement>(null);
-
+  const selectVideoInput = useSelectVideoInputDevice();
   const { setIsVideoEnabled } = useLocalVideo();
-  // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
-  const [device, setDevice] = useState<Device | VideoTransformDevice | null>(
-    meetingManager.selectedVideoInputTransformDevice
-  );
-
-  // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
-  useEffect(() => {
-    meetingManager.subscribeToSelectedVideoInputTransformDevice(setDevice);
-    return () => {
-      meetingManager.unsubscribeFromSelectedVideoInputTranformDevice(setDevice);
-    };
-  }, []);
 
   useEffect(() => {
     const videoElement = videoEl.current;
     return () => {
       if (videoElement) {
         audioVideo?.stopVideoPreviewForVideoInput(videoElement);
+        audioVideo?.stopVideoInput();
         setIsVideoEnabled(false);
       }
     };
   }, [audioVideo]);
 
   useEffect(() => {
-    if (!audioVideo || !device || !videoEl.current) {
-      return;
-    }
-    async function startPreview() {
-      if (!audioVideo) {
+    async function startPreview(): Promise<void> {
+      if (!audioVideo || !selectedDevice || !videoEl.current) {
         return;
       }
-      await meetingManager.selectVideoInputDevice(device);
-      if (videoEl.current) {
+
+      try {
+        await selectVideoInput(selectedDevice);
         audioVideo.startVideoPreviewForVideoInput(videoEl.current);
         setIsVideoEnabled(true);
+      } catch (error) {
+        console.error('Failed to start video preview');
       }
     }
+
     startPreview();
-  }, [audioVideo, device]);
+  }, [audioVideo, selectedDevice]);
 
   return <StyledPreview {...props} ref={videoEl} />;
 };

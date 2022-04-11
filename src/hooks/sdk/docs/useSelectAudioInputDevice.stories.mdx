@@ -2,7 +2,7 @@
 
 # useSelectAudioInputDevice
 
-The `useSelectAudioInputDevice` hook returns a function that selects an audio input device given a device ID.
+The `useSelectAudioInputDevice` hook returns a function that selects an audio input device given a device. This function will throw the error if the device selection failed.
 
 You can access the available audio input device IDs using the `useAudioInputs` hook.
 
@@ -26,7 +26,7 @@ The hook depends on the `MeetingProvider` being rendered.
 import React from 'react';
 import {
   MeetingProvider,
-  useSelectAudioInputDevice
+  useSelectAudioInputDevice,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -38,10 +38,15 @@ const App = () => (
 const MyChild = () => {
   const selectAudioInput = useSelectAudioInputDevice();
 
-  const handleClick = () => {
-    selectAudioInput('some-device-id');
+  const handleClick = async () => {
+    try {
+      await selectAudioInput(device);
+    } catch (error) {
+      // Handle device selection failure.
+      console.error('Failed to select audio input device.');
+    }
   };
 
-  return <button onClick={handleClick}>Some device ID</button>;
+  return <button onClick={handleClick}>Device</button>;
 };
 ```

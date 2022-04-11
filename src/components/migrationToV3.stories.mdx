@@ -25,17 +25,18 @@ npm install --save amazon-chime-sdk-component-library-react@beta amazon-chime-sd
 - Add `deviceLabels`, `eventController`, `logLevel`, `postLoggerConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface.
 - Remove `MeetingSessionConfiguration` properties from `MeetingProvider` props.
 - Remove `deviceLabels`, `eventController`, `logLevel`, `postLogConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
-- Remove `meetingRegion` from `MeetingManager`. Previously we just cache this value from meetingInfo returned by
-[CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) but it is not used
-anywhere in the library.
+- Remove `meetingRegion` from `MeetingManager`. Previously we just cache this value from meetingInfo returned by [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) but it is not used anywhere in the library.
 - Deprecate `useBandwidthMetrics` hook in favor of `useMediaStreamMetrics`.
 - Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
 - Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
 - Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
+- Remove preset device selection options ("None" and "440 Hz" for audio input device. "None", "Blue" and "SMTP Color Bars" for video input device). Remove `appendSampleDevices` from Props of `CameraSelection`, `MicSelection`, `AudioInputControl`, `AudioInputVFcontrol`, and `VideoInputControl`. Remove `DeviceConfig` type. Remove `additionalDevices` from Props of `useAudioInputs` and `useVideoInputs` hook.
+- Revert "Add Observer to select input device error" ([PR #493](https://github.com/aws/amazon-chime-sdk-component-library-react/pull/493)). `useAudioInputs` and `useVideoInputs` hook no longer return `selectDeviceError`. `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` method of `MeetingManager` now throw error when failed. The device selection methods returned by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook are built on top of these `MeetingManager` methods, thus now they throw error when failed as well.
 
 ### `MeetingProvider` props change
 
 `MeetingProvider` no longer takes the following props:
+
 - `MeetingSessionConfiguration` properties:
 - `VideoDownlinkBandwidthPolicy`
 - `VideoUplinkBandwidthPolicy`
@@ -102,7 +103,7 @@ import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const App = () => {
-  return(
+  return (
     <MeetingProvider>
       <MyApp />
     </MeetingProvider>
@@ -113,19 +114,17 @@ const MyApp = () => {
   // MyVideoDownlinkBandwidthPolicy is a custom class implementing VideoDownlinkBandwidthPolicy interface from amazon-chime-sdk-js.
   const videoDownlinkBandwidthPolicy = new MyVideoDownlinkBandwidthPolicy();
 
-  const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
-  meetingSessionConfiguration.videoDownlinkBandwidthPolicy = videoDownlinkBandwidthPolicy;
+  const meetingSessionConfiguration = new MeetingSessionConfiguration(
+    data.Meeting,
+    data.Attendee
+  );
+  meetingSessionConfiguration.videoDownlinkBandwidthPolicy =
+    videoDownlinkBandwidthPolicy;
 
   const meetingManager = useMeetingManager();
-  await meetingManager.join(
-    meetingSessionConfiguration
-  );
+  await meetingManager.join(meetingSessionConfiguration);
 
-  return (
-    <div>
-      ...
-    </div>
-  );
+  return <div>...</div>;
 };
 ```
 
@@ -173,7 +172,7 @@ import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const App = () => {
-  return(
+  return (
     <MeetingProvider>
       <MyApp />
     </MeetingProvider>
@@ -181,19 +180,16 @@ const App = () => {
 };
 
 const MyApp = () => {
-  const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+  const meetingSessionConfiguration = new MeetingSessionConfiguration(
+    data.Meeting,
+    data.Attendee
+  );
   meetingSessionConfiguration.enableSimulcastForUnifiedPlanChromiumBasedBrowsers = false;
 
   const meetingManager = useMeetingManager();
-  await meetingManager.join(
-    meetingSessionConfiguration
-  );
+  await meetingManager.join(meetingSessionConfiguration);
 
-  return (
-    <div>
-      ...
-    </div>
-  );
+  return <div>...</div>;
 };
 ```
 
@@ -240,7 +236,7 @@ import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const App = () => {
-  return(
+  return (
     <MeetingProvider>
       <MyApp />
     </MeetingProvider>
@@ -248,22 +244,18 @@ const App = () => {
 };
 
 const MyApp = () => {
-  const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+  const meetingSessionConfiguration = new MeetingSessionConfiguration(
+    data.Meeting,
+    data.Attendee
+  );
   const options = {
     enableWebAudio: true,
   };
 
   const meetingManager = useMeetingManager();
-  await meetingManager.join(
-    meetingSessionConfiguration,
-    options
-  );
+  await meetingManager.join(meetingSessionConfiguration, options);
 
-  return (
-    <div>
-      ...
-    </div>
-  );
+  return <div>...</div>;
 };
 ```
 
@@ -293,12 +285,13 @@ import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MyApp = () => {
-  const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+  const meetingSessionConfiguration = new MeetingSessionConfiguration(
+    data.Meeting,
+    data.Attendee
+  );
 
   const meetingManager = useMeetingManager();
-  await meetingManager.join(
-    meetingSessionConfiguration
-  );
+  await meetingManager.join(meetingSessionConfiguration);
 };
 ```
 
@@ -363,8 +356,6 @@ const MyApp = () => {
   );
 };
 ```
-
-
 
 ## WebRTC Metrics Change
 
@@ -441,3 +432,194 @@ const MyChild = () => {
 
 In V3 we rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
 When you implement your own theme, you need to use `globalStyle` instead of `global`.
+
+## Device
+
+### Remove Preset Device Selection Options
+
+In V3, we remove preset device selection options:
+
+- "None", "440 Hz" for audio input device.
+- "None", "Blue" and "SMTP Color Bars" for video input device.
+
+The detailed changes are:
+
+- Remove `appendSampleDevices` from Props of `CameraSelection`, `MicSelection`, `AudioInputControl`, `AudioInputVFcontrol`, and `VideoInputControl`.
+- Remove `additionalDevices` from Props of `useAudioInputs` and `useVideoInputs` hook.
+- Remove `DeviceConfig` type.
+
+#### Components
+
+Before in 2.x:
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  CameraSelection,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  return (
+    <MeetingProvider>
+      {/* If you don't want preset device selection options. */}
+      <CameraSelection appendSampleDevices={false} />
+    </MeetingProvider>
+  );
+};
+```
+
+After in 3.x:
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  CameraSelection,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  return (
+    <MeetingProvider>
+      {/* In V3, `CameraSelection` component no longer supports preset device selection options. */}
+      <CameraSelection />
+    </MeetingProvider>
+  );
+};
+```
+
+#### Hooks
+
+Before in 2.x:
+
+```tsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useVideoInputs
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const videoInputConfig: DeviceConfig = {
+    additionalDevices: false,
+  };
+
+  // `devices` does not contain preset device selection options.
+  const { devices } = useVideoInputs(videoInputConfig);
+  const items = devices.map(device => (
+    <li key={device.deviceId}>{device.label}</li>
+  ));
+
+  return (
+    <div>
+      <p>Devices</p>
+      <ul>{items}</ul>
+    </div>
+  );
+};
+```
+
+After in 3.x:
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useVideoInputs
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  // In V3, `useVideoInputs` hook no longer supports preset device selection options.
+  const { devices } = useVideoInputs();
+  const items = devices.map(device => (
+    <li key={device.deviceId}>{device.label}</li>
+  ));
+
+  return (
+    <div>
+      <p>Devices</p>
+      <ul>{items}</ul>
+    </div>
+  );
+};
+```
+
+### Device Selection APIs Throw Error When Failed
+
+In V2, we added `selectDeviceError` to `useAudioInputs` and `useVideoInputs` hook to get the error of `selectAudioInputDevice` and `selectVideoInputDevice` API from client side when they failed. In V3, we remove `selectDeviceError` from these hooks and throw error directly when `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` methods of `MeetingManager` failed. The device selection functions return by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook now throw errors as well.
+
+Before in 2.x:
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useSelectVideoInputDevice,
+  useVideoInputs,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const selectVideoInput = useSelectVideoInputDevice();
+  const { selectDeviceError } = useVideoInputs();
+
+  const handleClick = async (): => {
+    await selectVideoInput('deviceId');
+  };
+
+  return (
+    <button onClick={handleClick}>Select Video Input Device</button>
+    {selectDeviceError && <p>{selectDeviceError?.message}</p>}
+  );
+};
+```
+
+After in 3.x:
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useSelectVideoInputDevice,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const selectVideoInput = useSelectVideoInputDevice();
+
+  const handleClick = async (): => {
+    try {
+      await selectVideoInput('deviceId');
+    } catch (error) {
+      // Handle device selection error.
+      console.error('Failed to select video input device', error);
+    }
+  };
+
+  return (
+    <button onClick={handleClick}>Select Video Input Device</button>
+  );
+};
+```

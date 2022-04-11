@@ -2,7 +2,7 @@
 
 # AudioInputProvider
 
-The `AudioInputProvider` provides a list of the user's available `audio-input` devices, the currently selected device, and the error if device selection fails.
+The `AudioInputProvider` provides a list of the user's available `audio-input` devices, the currently selected device.
 
 ## State
 
@@ -15,9 +15,6 @@ The `AudioInputProvider` provides a list of the user's available `audio-input` d
 
   // The device ID of the currently selected device
   selectedDevice: string | null
-
-  // The error if device selection fails
-  selectDeviceError?: Error | null
 }
 
 ```
@@ -56,7 +53,7 @@ const App = () => (
 );
 
 const MyChild = () => {
-  const { devices, selectedDevice, selectDeviceError } = useAudioInputs();
+  const { devices, selectedDevice } = useAudioInputs();
   const items = devices.map(device => (
     <li key={device.deviceId}>{device.label}</li>
   ));
@@ -66,7 +63,6 @@ const MyChild = () => {
       <p>Current Selected DeviceId: {selectedDevice}</p>
       <p>Devices</p>
       <ul>{items}</ul>
-      {selectDeviceError && (<p>{selectDeviceError.message}</p>)}
     </div>
   );
 };

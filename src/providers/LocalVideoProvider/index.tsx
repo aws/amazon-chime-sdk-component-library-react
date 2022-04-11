@@ -13,6 +13,7 @@ import React, {
 
 import { LocalVideoContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useVideoInputs } from '../DevicesProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
 const Context = createContext<LocalVideoContextType | null>(null);
@@ -20,6 +21,7 @@ const Context = createContext<LocalVideoContextType | null>(null);
 const LocalVideoProvider: React.FC = ({ children }) => {
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
+  const { selectedDevice } = useVideoInputs();
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
   const [hasReachedVideoLimit, setHasReachedVideoLimit] = useState(false);
   const [tileId, setTileId] = useState<number | null>(null);
@@ -61,27 +63,26 @@ const LocalVideoProvider: React.FC = ({ children }) => {
   }, [hasReachedVideoLimit]);
 
   const toggleVideo = useCallback(async (): Promise<void> => {
-    if (isVideoEnabled || !meetingManager.selectedVideoInputTransformDevice) {
-      if (!meetingManager.selectedVideoInputTransformDevice) {
-        console.warn('There is no input video device chosen!');
+    try {
+      if (isVideoEnabled || !selectedDevice) {
+        if (!selectedDevice) {
+          console.warn('There is no input video device chosen!');
+        }
+        await audioVideo?.stopVideoInput();
+        setIsVideoEnabled(false);
+      } else if (!hasReachedVideoLimit) {
+        await meetingManager.selectVideoInputDevice(selectedDevice);
+        audioVideo?.startLocalVideoTile();
+        setIsVideoEnabled(true);
+      } else {
+        console.error(
+          'Video limit is reached and can not turn on more videos!'
+        );
       }
-      audioVideo?.stopLocalVideoTile();
-      setIsVideoEnabled(false);
-    } else if (!hasReachedVideoLimit) {
-      await audioVideo?.chooseVideoInputDevice(
-        meetingManager.selectedVideoInputTransformDevice
-      );
-      audioVideo?.startLocalVideoTile();
-      setIsVideoEnabled(true);
-    } else {
-      console.error('Video limit is reached and can not turn on more videos!');
+    } catch (error) {
+      console.error('Failed to toggle video');
     }
-  }, [
-    audioVideo,
-    isVideoEnabled,
-    hasReachedVideoLimit,
-    meetingManager.selectedVideoInputTransformDevice,
-  ]);
+  }, [audioVideo, isVideoEnabled, hasReachedVideoLimit, selectedDevice]);
 
   useEffect(() => {
     if (!audioVideo) {

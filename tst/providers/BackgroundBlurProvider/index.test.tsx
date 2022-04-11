@@ -67,7 +67,7 @@ describe('BackgroundBlurProvider', () => {
     // timestamp. Verifying the call count should be good enough.
     expect(consoleWarnMock).toHaveBeenCalledTimes(2);
     expect(consoleWarnMock).toHaveBeenLastCalledWith(
-      'Initialized NoOpVideoFrameProcessor.'
+      'Initialized NoOpVideoFrameProcessor'
     );
 
     // No errors should happen.

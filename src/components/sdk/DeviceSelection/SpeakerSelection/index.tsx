@@ -13,8 +13,9 @@ interface Props extends BaseSdkProps {
   notFoundMsg?: string;
   /** The label that will be shown for speaker selection, it defaults to `Speaker source`. */
   label?: string;
-  /** The callback fired when the selection is changed. It is required if you want to add testing functionality around speaker selection. */
-  onChange?: (selectedAudioOutputDeviceId: string) => void;
+  /** The callback fired when the selection is changed.
+   *  It is required if you want to add testing functionality around speaker selection. */
+  onChange?: (selectedAudioOutputDevice: string) => void;
 }
 
 export const SpeakerSelection: React.FC<Props> = ({
@@ -26,17 +27,21 @@ export const SpeakerSelection: React.FC<Props> = ({
   const { devices, selectedDevice } = useAudioOutputs();
   const selectAudioOutput = useSelectAudioOutputDevice();
 
-  async function selectDevice(deviceId: string) {
-    selectAudioOutput(deviceId);
-    onChange && onChange(deviceId);
-  }
+  const handleSelect = async (deviceId: string): Promise<void> => {
+    try {
+      await selectAudioOutput(deviceId);
+      onChange && onChange(deviceId);
+    } catch (error) {
+      console.error('SpeakerSelection failed to select speaker');
+    }
+  };
 
   return (
     <DeviceInput
       label={label}
       devices={devices}
-      onChange={selectDevice}
-      selectedDeviceId={selectedDevice}
+      onChange={handleSelect}
+      selectedDevice={selectedDevice}
       notFoundMsg={notFoundMsg}
       {...rest}
     />

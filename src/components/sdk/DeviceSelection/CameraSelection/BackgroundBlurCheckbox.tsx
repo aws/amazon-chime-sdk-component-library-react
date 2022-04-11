@@ -1,15 +1,12 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  Device,
-  isVideoTransformDevice,
-  VideoTransformDevice,
-} from 'amazon-chime-sdk-js';
-import React, { useEffect, useState } from 'react';
+import { isVideoTransformDevice, VideoInputDevice } from 'amazon-chime-sdk-js';
+import React, { useState } from 'react';
 
+import useSelectVideoInputDevice from '../../../../hooks/sdk/useSelectVideoInputDevice';
 import { useBackgroundBlur } from '../../../../providers/BackgroundBlurProvider';
-import { useMeetingManager } from '../../../../providers/MeetingProvider';
+import { useVideoInputs } from '../../../../providers/DevicesProvider';
 import { Checkbox } from '../../../ui/Checkbox';
 import { FormField } from '../../../ui/FormField';
 import { BaseSdkProps } from '../../Base';
@@ -26,43 +23,41 @@ export const BackgroundBlurCheckbox: React.FC<Props> = ({
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
     useBackgroundBlur();
   const [isLoading, setIsLoading] = useState(false);
-  const meetingManager = useMeetingManager();
-  // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
-  const [device, setDevice] = useState<Device | VideoTransformDevice | null>(
-    meetingManager.selectedVideoInputTransformDevice
-  );
+  const { selectedDevice } = useVideoInputs();
+  const selectVideoInput = useSelectVideoInputDevice();
 
-  // TODO: Move this to the Video Input Provider and expose only one selected Video Input device state
-  useEffect(() => {
-    meetingManager.subscribeToSelectedVideoInputTransformDevice(setDevice);
-    return () => {
-      meetingManager.unsubscribeFromSelectedVideoInputTranformDevice(setDevice);
-    };
-  }, []);
-
-  const toggleBackgroundBlur = async () => {
-    if (isLoading) {
+  const toggleBackgroundBlur = async (): Promise<void> => {
+    if (isLoading || !selectedDevice) {
       return;
     }
-    if (!isVideoTransformDevice(device)) {
+
+    try {
       setIsLoading(true);
-      if (isBackgroundBlurSupported) {
-        const transformedVideoDevice = await createBackgroundBlurDevice(device);
-        await meetingManager.selectVideoInputDevice(transformedVideoDevice);
+      let current: VideoInputDevice;
+
+      if (!isVideoTransformDevice(selectedDevice)) {
+        if (!isBackgroundBlurSupported) {
+          console.warn('Background blur processor is not supported yet.');
+          return;
+        }
+        current = await createBackgroundBlurDevice(selectedDevice);
+        console.info(
+          'Video filter turned on - selecting video transform device: ' +
+            JSON.stringify(current)
+        );
       } else {
-        meetingManager.logger?.warn(
-          'Background blur processor is not supported yet.'
+        current = await selectedDevice.intrinsicDevice();
+        console.info(
+          'Video filter was turned off - selecting inner device: ' +
+            JSON.stringify(current)
         );
       }
-    } else {
-      if ('chooseNewInnerDevice' in device) {
-        setIsLoading(true);
-        // @ts-ignore
-        const deviceId = await device.intrinsicDevice();
-        await meetingManager.selectVideoInputDevice(deviceId);
-      }
+      await selectVideoInput(current);
+    } catch (error) {
+      console.error('Failed to toggle Background Blur');
+    } finally {
+      setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   return (
@@ -70,7 +65,7 @@ export const BackgroundBlurCheckbox: React.FC<Props> = ({
       field={Checkbox}
       onChange={toggleBackgroundBlur}
       value={'Background Blur'}
-      checked={isVideoTransformDevice(device)}
+      checked={isVideoTransformDevice(selectedDevice)}
       label={label}
       {...rest}
     />

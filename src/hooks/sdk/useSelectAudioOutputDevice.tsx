@@ -1,19 +1,28 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { DefaultBrowserBehavior } from 'amazon-chime-sdk-js';
 import { useCallback } from 'react';
 
 import { useMeetingManager } from '../../providers/MeetingProvider';
-import { supportsSetSinkId } from '../../utils/device-utils';
 
-export const useSelectAudioOutputDevice = () => {
+export const useSelectAudioOutputDevice = (): ((
+  deviceId: string
+) => Promise<void>) => {
   const meetingManager = useMeetingManager();
 
-  const selectDevice = useCallback(async (deviceId: string) => {
-    if (supportsSetSinkId()) {
-      await meetingManager.selectAudioOutputDevice(deviceId);
-    }
-  }, []);
+  const selectDevice = useCallback(
+    async (deviceId: string) => {
+      if (new DefaultBrowserBehavior().supportsSetSinkId()) {
+        await meetingManager.selectAudioOutputDevice(deviceId);
+      } else {
+        console.error(
+          'AudioOutputControl cannot select audio output device because browser does not support setSinkId operation.'
+        );
+      }
+    },
+    [meetingManager]
+  );
 
   return selectDevice;
 };

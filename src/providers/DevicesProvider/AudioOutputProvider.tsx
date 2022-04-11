@@ -10,11 +10,11 @@ import React, {
   useState,
 } from 'react';
 
-import { DeviceTypeContext } from '../../types';
+import { AudioOutputContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
-const AudioOutputContext = createContext<DeviceTypeContext | null>(null);
+const AudioOutputContext = createContext<AudioOutputContextType | null>(null);
 
 const AudioOutputProvider: React.FC = ({ children }) => {
   const audioVideo = useAudioVideo();
@@ -46,7 +46,7 @@ const AudioOutputProvider: React.FC = ({ children }) => {
       },
     };
 
-    async function initAudioOutput() {
+    async function initAudioOutput(): Promise<void> {
       if (!audioVideo) {
         return;
       }
@@ -74,7 +74,7 @@ const AudioOutputProvider: React.FC = ({ children }) => {
     };
   }, [audioVideo]);
 
-  const contextValue: DeviceTypeContext = useMemo(
+  const contextValue: AudioOutputContextType = useMemo(
     () => ({
       devices: audioOutputs,
       selectedDevice: selectedAudioOutputDevice,
@@ -89,7 +89,7 @@ const AudioOutputProvider: React.FC = ({ children }) => {
   );
 };
 
-const useAudioOutputs = (): DeviceTypeContext => {
+const useAudioOutputs = (): AudioOutputContextType => {
   const context = useContext(AudioOutputContext);
 
   if (!context) {

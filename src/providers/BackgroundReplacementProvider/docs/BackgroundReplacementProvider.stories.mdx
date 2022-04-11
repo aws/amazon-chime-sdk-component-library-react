@@ -81,9 +81,9 @@ const MyChild = () => {
   const { isBackgroundReplacementSupported, createBackgroundReplacementDevice } = useBackgroundReplacement();
 
   useEffect(() => {
-    meetingManager.subscribeToSelectedVideoInputTransformDevice(setDevice);
+    meetingManager.subscribeToSelectedVideoInputDevice(setDevice);
     return () => {
-      meetingManager.unsubscribeToSelectedVideoInputTransformDevice(setDevice);
+      meetingManager.unsubscribeToSelectedVideoInputDevice(setDevice);
     };
   }, []);
 

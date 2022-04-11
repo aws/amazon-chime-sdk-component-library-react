@@ -1,12 +1,11 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
+import useSelectAudioInputDevice from '../../../hooks/sdk/useSelectAudioInputDevice';
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
-import { DeviceConfig } from '../../../types';
 import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Microphone } from '../../ui/icons';
@@ -22,8 +21,6 @@ interface Props extends BaseSdkProps {
   mutedIconTitle?: string;
   /** Title attribute for the icon when unmuted, it defaults to `Microphone`. */
   unmutedIconTitle?: string;
-  /** A boolean that determines whether or not to include additional sample audio input devices, such as "None", "440 Hz". Defaults to true. This will be deprecated in the next major version. */
-  appendSampleDevices?: boolean;
 }
 
 const AudioInputControl: React.FC<Props> = ({
@@ -31,22 +28,37 @@ const AudioInputControl: React.FC<Props> = ({
   unmuteLabel = 'Unmute',
   mutedIconTitle,
   unmutedIconTitle,
-  appendSampleDevices = true,
   ...rest
 }) => {
-  const meetingManager = useMeetingManager();
+  const selectAudioInput = useSelectAudioInputDevice();
   const { muted, toggleMute } = useToggleLocalMute();
-  const audioInputConfig: DeviceConfig = {
-    additionalDevices: appendSampleDevices,
-  };
-  const { devices, selectedDevice } = useAudioInputs(audioInputConfig);
+  const { devices, selectedDevice } = useAudioInputs();
+  const [dropdownOptions, setDropdownOptions] = useState<PopOverItemProps[]>(
+    []
+  );
 
-  const dropdownOptions: PopOverItemProps[] = devices.map((device) => ({
-    children: <span>{device.label}</span>,
-    checked: isOptionActive(selectedDevice, device.deviceId),
-    onClick: (): Promise<void> =>
-      meetingManager.selectAudioInputDevice(device.deviceId),
-  }));
+  useEffect(() => {
+    const handleClick = async (deviceId: string): Promise<void> => {
+      try {
+        await selectAudioInput(deviceId);
+      } catch (error) {
+        console.error('AudioInputControl failed to select audio input device');
+      }
+    };
+
+    const getDropdownOptions = async (): Promise<void> => {
+      const dropdownOptions = await Promise.all(
+        devices.map(async (device) => ({
+          children: <span>{device.label}</span>,
+          checked: await isOptionActive(selectedDevice, device.deviceId),
+          onClick: async () => await handleClick(device.deviceId),
+        }))
+      );
+      setDropdownOptions(dropdownOptions);
+    };
+
+    getDropdownOptions();
+  }, [devices, selectedDevice, selectAudioInput]);
 
   return (
     <ControlBarButton

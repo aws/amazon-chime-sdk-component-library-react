@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { AudioTransformDevice, Device } from 'amazon-chime-sdk-js';
+import { AudioInputDevice } from 'amazon-chime-sdk-js';
 import React, { createContext, useContext, useState } from 'react';
 
 import { AudioVideoProvider } from '../AudioVideoProvider';
@@ -18,8 +18,8 @@ import MeetingManager from './MeetingManager';
 interface Props {
   onDeviceReplacement?: (
     nextDevice: string,
-    currentDevice: Device | AudioTransformDevice
-  ) => Promise<Device | AudioTransformDevice>;
+    currentDevice: AudioInputDevice
+  ) => Promise<AudioInputDevice>;
   /** Pass a `MeetingManager` instance if you want to share this instance
    * across multiple different `MeetingProvider`s. This approach has limitations.
    * Check `meetingManager` prop documentation for more information.

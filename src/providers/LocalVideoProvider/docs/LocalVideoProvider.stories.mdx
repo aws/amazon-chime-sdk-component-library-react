@@ -2,7 +2,9 @@
 
 # LocalVideoProvider
 
-The `LocalVideoProvider` provides video tile id associated with the local user's video, `isVideoEnabled` specifying the local video status, a function to set the value of `isVideoEnabled` and a function to toggle user's local video. 
+The `LocalVideoProvider` provides `tileId` of video tile associated with the local video, `isVideoEnabled` specifying the local video state, `hasReachedVideoLimit` specifying whether or not video limit is reached, and `toggleVideo()` to toggle local video.
+
+The state of the `LocalVideo` component and the state of the `PreviewVideo` component are independent.
 
 The React SDK depends on the Amazon Chime SDK for JavaScript, wherein, a single video stream is attached to a video element at a time. Hence, if `PreviewVideo` and `LocalVideo` component both are rendered on the same page and if both are enabled, stopping the video preview in `PreviewVideo` component will result into disconnecting the video stream for `LocalVideo` as well showing a black screen.
 
@@ -13,20 +15,21 @@ To start/stop user's local video, use `toggleVideo` function from the `LocalVide
 
 ```javascript
 {
-  // The tile ID associated with the local user's video
+  // The tile ID associated with the local video
   tileId: null | number;
 
   // Whether or not the local user has video enabled
-  // This does not tell whether the video preview from PreviewVideo component is enabled or not.
+  // This does not tell whether the video preview from `PreviewVideo` component is enabled or not.
   isVideoEnabled: boolean;
 
-  // A function to set the value of `isVideoEnabled`
+  // A function to set the value of `isVideoEnabled`, it can not change the state of camera
+  // This is aimed to be used internally to synchronize the state of `PreviewVideo` and `LocalVideo`
   setIsVideoEnabled: (isEnabled: boolean) => void;
 
   // Whether or not video limit is reached, it defaults to false
   hasReachedVideoLimit: boolean;
 
-  // A function that toggles the local user's video
+  // A function that toggles the local video
   toggleVideo: () => Promise<void>;
 }
 ```
@@ -51,8 +54,7 @@ const App = () => (
 );
 
 const MyChild = () => {
-  const { tileId, isVideoEnabled, setIsVideoEnabled, 
-  hasReachedVideoLimit, toggleVideo } = useLocalVideo();
+const { tileId, isVideoEnabled, hasReachedVideoLimit, toggleVideo } = useLocalVideo();
 
   return (
     <p>Tile ID: {tileId}</p>
@@ -65,12 +67,8 @@ const MyChild = () => {
       {hasReachedVideoLimit ? 'Video limit reached' : 'Video limit not reached'}
     </p>
 
-    <button onClick={() => setIsVideoEnabled(true)}>
-      Set isVideoEnabled to true
-    </button>
-    
     <button onClick={toggleVideo}>
-      {isVideoEnabled ? 'Stop your video' : hasReachedVideoLimit ? 
+      {isVideoEnabled ? 'Stop your video' : hasReachedVideoLimit ?
       'Has reached the video limit, can not turn on video' : 'Start your video'}
     </button>
   );

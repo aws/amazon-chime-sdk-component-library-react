@@ -1,12 +1,11 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
-import { DeviceConfig } from '../../../types';
 import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Camera } from '../../ui/icons';
@@ -16,27 +15,38 @@ import { BaseSdkProps } from '../Base';
 interface Props extends BaseSdkProps {
   /** The label that will be shown for video input control, it defaults to `Video`. */
   label?: string;
-  /** A boolean that determines whether or not to include additional sample video devices, such as "None", "Blue", "SMTP Color Bars". Defaults to true. This will be deprecated in the next major version. */
-  appendSampleDevices?: boolean;
 }
 
-const VideoInputControl: React.FC<Props> = ({
-  label = 'Video',
-  appendSampleDevices = true,
-  ...rest
-}) => {
-  const videoInputConfig: DeviceConfig = {
-    additionalDevices: appendSampleDevices,
-  };
-  const { devices, selectedDevice } = useVideoInputs(videoInputConfig);
+const VideoInputControl: React.FC<Props> = ({ label = 'Video', ...rest }) => {
+  const selectVideoInput = useSelectVideoInputDevice();
+  const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
-  const selectDevice = useSelectVideoInputDevice();
+  const [dropdownOptions, setDropdownOptions] = useState<PopOverItemProps[]>(
+    []
+  );
 
-  const dropdownOptions: PopOverItemProps[] = devices.map((device: any) => ({
-    children: <span>{device.label}</span>,
-    checked: isOptionActive(selectedDevice, device.deviceId),
-    onClick: () => selectDevice(device.deviceId),
-  }));
+  useEffect(() => {
+    const handleClick = async (deviceId: string): Promise<void> => {
+      try {
+        await selectVideoInput(deviceId);
+      } catch (error) {
+        console.error('VideoInputControl failed to select video input device');
+      }
+    };
+
+    const getDropdownOptions = async (): Promise<void> => {
+      const dropdownOptions = await Promise.all(
+        devices.map(async (device) => ({
+          children: <span>{device.label}</span>,
+          checked: await isOptionActive(selectedDevice, device.deviceId),
+          onClick: async () => await handleClick(device.deviceId),
+        }))
+      );
+      setDropdownOptions(dropdownOptions);
+    };
+
+    getDropdownOptions();
+  }, [devices, selectedDevice, selectVideoInput]);
 
   return (
     <ControlBarButton
