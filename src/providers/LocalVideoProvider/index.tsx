@@ -111,6 +111,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     () => ({
       tileId,
       isVideoEnabled,
+      setIsVideoEnabled,
       hasReachedVideoLimit,
       setHasReachedVideoLimit,
       toggleVideo,
@@ -118,6 +119,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     [
       tileId,
       isVideoEnabled,
+      setIsVideoEnabled,
       hasReachedVideoLimit,
       setHasReachedVideoLimit,
       toggleVideo,

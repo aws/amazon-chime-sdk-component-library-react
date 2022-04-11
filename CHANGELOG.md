@@ -14,7 +14,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 - Remove logging of the video transform device to avoid circular structure error.
-- Remove `setIsVideoEnabled` from `useLocalVideo` hook.
 - Remove preset device selection options ("None" and "440 Hz" for audio input device. "None", "Blue", and "SMTP Color Bars" for video input device). Remove `appendSampleDevices` from Props of `CameraSelection`, `MicSelection`, `AudioInputControl`, `AudioInputVFcontrol`, and `VideoInputControl`. Remove `DeviceConfig` type. Remove `additionalDevices` from Props of `useAudioInputs` and `useVideoInputs` hook.
 
 ### Changed

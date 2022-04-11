@@ -30,7 +30,6 @@ npm install --save amazon-chime-sdk-component-library-react@beta amazon-chime-sd
 - Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
 - Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
 - Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
-- Remove `setIsVideoEnabled` from `useLocalVideo` hook.
 - Remove preset device selection options ("None" and "440 Hz" for audio input device. "None", "Blue" and "SMTP Color Bars" for video input device). Remove `appendSampleDevices` from Props of `CameraSelection`, `MicSelection`, `AudioInputControl`, `AudioInputVFcontrol`, and `VideoInputControl`. Remove `DeviceConfig` type. Remove `additionalDevices` from Props of `useAudioInputs` and `useVideoInputs` hook.
 - Revert "Add Observer to select input device error" ([PR #493](https://github.com/aws/amazon-chime-sdk-component-library-react/pull/493)). `useAudioInputs` and `useVideoInputs` hook no longer return `selectDeviceError`. `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` method of `MeetingManager` now throw error when failed. The device selection methods returned by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook are built on top of these `MeetingManager` methods, thus now they throw error when failed as well.
 
@@ -435,12 +434,6 @@ In V3 we rename the `global` property of `DefaultTheme` Interface to `globalStyl
 When you implement your own theme, you need to use `globalStyle` instead of `global`.
 
 ## Device
-
-### useLocalVideo
-
-In V3, we remove `setIsVideoEnabled` from `useLocalVideo` hook.
-
-In V2, We exposed `setIsVideoEnabled` via `useLocalVideo` hook to synchronize the state of `LocalVideo` in the `PreviewVideo` SDK Component as a mitigation of [issue #529](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/529). In JS SDK V3, `startVideoPreviewForVideoInput` and `stopVideoPreviewForVideoInput` do not affect the local video state anymore. So we revert the change in PR #556 (https://github.com/aws/amazon-chime-sdk-component-library-react/pull/556).
 
 ### Remove Preset Device Selection Options
 
