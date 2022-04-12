@@ -13,6 +13,7 @@ import useSelectAudioInputDevice from '../../../hooks/sdk/useSelectAudioInputDev
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
+import { useLogger } from '../../../providers/LoggerProvider';
 import { useVoiceFocus } from '../../../providers/VoiceFocusProvider';
 import { DeviceType } from '../../../types';
 import { isOptionActive } from '../../../utils/device-utils';
@@ -49,6 +50,7 @@ const AudioInputVFControl: React.FC<Props> = ({
   voiceFocusOffLabel = 'Enable Amazon Voice Focus',
   ...rest
 }) => {
+  const logger = useLogger();
   const audioVideo = useAudioVideo();
   const selectAudioInput = useSelectAudioInputDevice();
   const [isLoading, setIsLoading] = useState(false);
@@ -72,7 +74,7 @@ const AudioInputVFControl: React.FC<Props> = ({
   );
 
   useEffect(() => {
-    console.info(
+    logger.info(
       `Amazon Voice Focus is ${isVoiceFocusEnabled ? 'enabled' : 'disabled'}.`
     );
   }, [isVoiceFocusEnabled]);
@@ -111,9 +113,7 @@ const AudioInputVFControl: React.FC<Props> = ({
           await selectAudioInput(deviceId);
         }
       } catch (error) {
-        console.error(
-          'AudioInputVFControl failed to select audio input device'
-        );
+        logger.error('AudioInputVFControl failed to select audio input device');
       } finally {
         setIsLoading(false);
       }
@@ -181,12 +181,12 @@ const AudioInputVFControl: React.FC<Props> = ({
       try {
         let current = selectedDevice;
         if (isVoiceFocusChecked) {
-          console.info('User turned on Amazon Voice Focus.');
+          logger.info('User turned on Amazon Voice Focus.');
           if (typeof selectedDevice === 'string') {
             current = await addVoiceFocus(selectedDevice);
           }
         } else {
-          console.info(
+          logger.info(
             'Amazon Voice Focus is off by default or user turned off Amazon Voice Focus.'
           );
           if (selectedDevice instanceof VoiceFocusTransformDevice) {
@@ -195,7 +195,7 @@ const AudioInputVFControl: React.FC<Props> = ({
         }
         await selectAudioInput(current);
       } catch (error) {
-        console.error(
+        logger.error(
           'AudioInputVFControl failed to select audio input device onVFCheckboxChange change'
         );
       }

@@ -6,7 +6,6 @@ import {
   AudioInputDevice,
   AudioVideoFacade,
   AudioVideoObserver,
-  ConsoleLogger,
   DefaultActiveSpeakerPolicy,
   DefaultBrowserBehavior,
   DefaultDeviceController,
@@ -16,12 +15,9 @@ import {
   EventName,
   EventObserver,
   Logger,
-  LogLevel,
   MeetingSessionConfiguration,
-  // MeetingSessionPOSTLogger,
   MeetingSessionStatus,
   MeetingSessionStatusCode,
-  MultiLogger,
   VideoInputDevice,
 } from 'amazon-chime-sdk-js';
 
@@ -32,7 +28,6 @@ import {
   FullDeviceInfoType,
   MeetingManagerJoinOptions,
   ParsedJoinParams,
-  PostLoggerConfig,
 } from './types';
 
 function noOpDeviceLabelHook(): Promise<MediaStream> {
@@ -100,7 +95,7 @@ export class MeetingManager implements AudioVideoObserver {
   devicesUpdatedCallbacks: ((fullDeviceInfo: FullDeviceInfoType) => void)[] =
     [];
 
-  logger: Logger;
+  private logger: Logger;
 
   private meetingEventObserverSet = new Set<
     (name: EventName, attributes: EventAttributes) => void
@@ -108,7 +103,8 @@ export class MeetingManager implements AudioVideoObserver {
 
   private eventDidReceiveRef: EventObserver;
 
-  constructor() {
+  constructor(logger: Logger) {
+    this.logger = logger;
     this.eventDidReceiveRef = {
       eventDidReceive: (name: EventName, attributes: EventAttributes) => {
         this.publishEventDidReceiveUpdate(name, attributes);
@@ -139,20 +135,18 @@ export class MeetingManager implements AudioVideoObserver {
     const {
       deviceLabels,
       eventController,
-      logger,
       enableWebAudio,
       activeSpeakerPolicy,
-    } = this.parseJoinParams(meetingSessionConfiguration, options);
+    } = this.parseJoinParams(options);
     this.meetingSessionConfiguration = meetingSessionConfiguration;
     this.meetingId = this.meetingSessionConfiguration.meetingId;
-    this.logger = logger;
 
-    const deviceController = new DefaultDeviceController(logger, {
+    const deviceController = new DefaultDeviceController(this.logger, {
       enableWebAudio: enableWebAudio,
     });
     this.meetingSession = new DefaultMeetingSession(
       meetingSessionConfiguration,
-      logger,
+      this.logger,
       deviceController,
       eventController
     );
@@ -175,23 +169,12 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   private parseJoinParams(
-    meetingSessionConfiguration: MeetingSessionConfiguration,
     options?: MeetingManagerJoinOptions
   ): ParsedJoinParams {
     const deviceLabels: DeviceLabels | DeviceLabelTrigger =
       options?.deviceLabels || DeviceLabels.AudioAndVideo;
     const eventController: EventController | undefined =
       options?.eventController;
-    const logLevel: LogLevel = options?.logLevel || LogLevel.WARN;
-    const postLoggerConfig: PostLoggerConfig | undefined =
-      options?.postLoggerConfig;
-    const logger: Logger =
-      options?.logger ||
-      this.createLogger(
-        logLevel,
-        meetingSessionConfiguration,
-        postLoggerConfig
-      );
     const enableWebAudio: boolean = options?.enableWebAudio || false;
     const activeSpeakerPolicy: ActiveSpeakerPolicy =
       options?.activeSpeakerPolicy || new DefaultActiveSpeakerPolicy();
@@ -199,7 +182,6 @@ export class MeetingManager implements AudioVideoObserver {
     return {
       deviceLabels,
       eventController,
-      logger,
       enableWebAudio,
       activeSpeakerPolicy,
     };
@@ -235,33 +217,6 @@ export class MeetingManager implements AudioVideoObserver {
     this.initializeMeetingManager();
     this.publishAudioVideo();
     this.publishActiveSpeaker();
-  }
-
-  private createLogger(
-    logLevel: LogLevel,
-    meetingSessionConfiguration: MeetingSessionConfiguration,
-    postLoggerConfig?: PostLoggerConfig
-  ): Logger {
-    const consoleLogger = new ConsoleLogger('SDK', logLevel);
-    let logger: ConsoleLogger | MultiLogger = consoleLogger;
-
-    if (postLoggerConfig) {
-      logger = new MultiLogger(consoleLogger);
-      // const { name, batchSize, intervalMs, url, logLevel } = postLoggerConfig;
-      // logger = new MultiLogger(
-      //   consoleLogger,
-      //   new MeetingSessionPOSTLogger(
-      //     name,
-      //     meetingSessionConfiguration,
-      //     batchSize,
-      //     intervalMs,
-      //     url,
-      //     logLevel
-      //   )
-      // );
-    }
-
-    return logger;
   }
 
   audioVideoDidStart = (): void => {

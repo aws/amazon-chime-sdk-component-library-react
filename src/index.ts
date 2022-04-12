@@ -174,6 +174,11 @@ export {
   useMeetingEvent,
   MeetingEventProvider,
 } from './providers/MeetingEventProvider';
+export {
+  LoggerProvider,
+  LoggerContext,
+  useLogger,
+} from './providers/LoggerProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';

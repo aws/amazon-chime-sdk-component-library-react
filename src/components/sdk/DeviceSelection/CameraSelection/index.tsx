@@ -5,6 +5,7 @@ import React from 'react';
 
 import useSelectVideoInputDevice from '../../../../hooks/sdk/useSelectVideoInputDevice';
 import { useVideoInputs } from '../../../../providers/DevicesProvider';
+import { useLogger } from '../../../../providers/LoggerProvider';
 import { BaseSdkProps } from '../../Base';
 import DeviceInput from '../DeviceInput';
 
@@ -20,6 +21,7 @@ export const CameraSelection: React.FC<Props> = ({
   label = 'Camera source',
   ...rest
 }) => {
+  const logger = useLogger();
   const { devices, selectedDevice } = useVideoInputs();
   const selectVideoInput = useSelectVideoInputDevice();
 
@@ -27,7 +29,7 @@ export const CameraSelection: React.FC<Props> = ({
     try {
       await selectVideoInput(deviceId);
     } catch (error) {
-      console.error('CameraSelection failed to select camera');
+      logger.error('CameraSelection failed to select camera');
     }
   };
 

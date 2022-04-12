@@ -7,6 +7,7 @@ import React, { useState } from 'react';
 import useSelectVideoInputDevice from '../../../../hooks/sdk/useSelectVideoInputDevice';
 import { useBackgroundBlur } from '../../../../providers/BackgroundBlurProvider';
 import { useVideoInputs } from '../../../../providers/DevicesProvider';
+import { useLogger } from '../../../../providers/LoggerProvider';
 import { Checkbox } from '../../../ui/Checkbox';
 import { FormField } from '../../../ui/FormField';
 import { BaseSdkProps } from '../../Base';
@@ -20,6 +21,7 @@ export const BackgroundBlurCheckbox: React.FC<Props> = ({
   label = 'Blur my background',
   ...rest
 }) => {
+  const logger = useLogger();
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
     useBackgroundBlur();
   const [isLoading, setIsLoading] = useState(false);
@@ -37,24 +39,26 @@ export const BackgroundBlurCheckbox: React.FC<Props> = ({
 
       if (!isVideoTransformDevice(selectedDevice)) {
         if (!isBackgroundBlurSupported) {
-          console.warn('Background blur processor is not supported yet.');
+          logger.warn('Background blur processor is not supported yet.');
           return;
         }
         current = await createBackgroundBlurDevice(selectedDevice);
-        console.info(
-          'Video filter turned on - selecting video transform device: ' +
-            JSON.stringify(current)
+        logger.info(
+          `Video filter turned on - selecting video transform device: ${JSON.stringify(
+            current
+          )}`
         );
       } else {
         current = await selectedDevice.intrinsicDevice();
-        console.info(
-          'Video filter was turned off - selecting inner device: ' +
-            JSON.stringify(current)
+        logger.info(
+          `Video filter was turned off - selecting inner device: ${JSON.stringify(
+            current
+          )}`
         );
       }
       await selectVideoInput(current);
     } catch (error) {
-      console.error('Failed to toggle Background Blur');
+      logger.error('Failed to toggle Background Blur');
     } finally {
       setIsLoading(false);
     }

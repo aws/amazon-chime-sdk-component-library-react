@@ -14,11 +14,13 @@ import React, {
 import { LocalVideoContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useVideoInputs } from '../DevicesProvider';
+import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
 const Context = createContext<LocalVideoContextType | null>(null);
 
 const LocalVideoProvider: React.FC = ({ children }) => {
+  const logger = useLogger();
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const { selectedDevice } = useVideoInputs();
@@ -42,9 +44,8 @@ const LocalVideoProvider: React.FC = ({ children }) => {
         } else {
           setHasReachedVideoLimit(false);
         }
-        console.log(
-          'video availability changed: canStartLocalVideo ',
-          availability.canStartLocalVideo
+        logger.info(
+          `video availability changed: canStartLocalVideo ${availability.canStartLocalVideo}`
         );
       },
     };
@@ -58,7 +59,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
 
   useEffect(() => {
     if (hasReachedVideoLimit) {
-      console.warn('Reach the number of maximum active videos');
+      logger.warn('Reach the number of maximum active videos');
     }
   }, [hasReachedVideoLimit]);
 
@@ -66,7 +67,7 @@ const LocalVideoProvider: React.FC = ({ children }) => {
     try {
       if (isVideoEnabled || !selectedDevice) {
         if (!selectedDevice) {
-          console.warn('There is no input video device chosen!');
+          logger.warn('There is no input video device chosen!');
         }
         await audioVideo?.stopVideoInput();
         setIsVideoEnabled(false);
@@ -75,12 +76,10 @@ const LocalVideoProvider: React.FC = ({ children }) => {
         audioVideo?.startLocalVideoTile();
         setIsVideoEnabled(true);
       } else {
-        console.error(
-          'Video limit is reached and can not turn on more videos!'
-        );
+        logger.error('Video limit is reached and can not turn on more videos!');
       }
     } catch (error) {
-      console.error('Failed to toggle video');
+      logger.error('Failed to toggle video');
     }
   }, [audioVideo, isVideoEnabled, hasReachedVideoLimit, selectedDevice]);
 

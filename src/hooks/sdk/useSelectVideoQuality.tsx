@@ -4,11 +4,13 @@
 import { useCallback } from 'react';
 
 import { useAudioVideo } from '../../providers/AudioVideoProvider';
+import { useLogger } from '../../providers/LoggerProvider';
 
 export type VideoQuality = '360p' | '540p' | '720p';
 
 export function useSelectVideoQuality(): (quality: VideoQuality) => void {
   const audioVideo = useAudioVideo();
+  const logger = useLogger();
 
   const selectVideoQuality = useCallback(
     (quality: VideoQuality) => {
@@ -16,7 +18,7 @@ export function useSelectVideoQuality(): (quality: VideoQuality) => void {
         return;
       }
 
-      console.log(`Selecting video quality: ${quality}`);
+      logger.info(`Selecting video quality: ${quality}`);
 
       switch (quality) {
         case '360p':
@@ -32,7 +34,7 @@ export function useSelectVideoQuality(): (quality: VideoQuality) => void {
           audioVideo.setVideoMaxBandwidthKbps(1400);
           break;
         default:
-          console.log(`Unsupported video quality: ${quality}`);
+          logger.warn(`Unsupported video quality: ${quality}`);
       }
     },
     [audioVideo]

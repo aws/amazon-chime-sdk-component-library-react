@@ -5,6 +5,7 @@ import React from 'react';
 
 import useSelectAudioOutputDevice from '../../../../hooks/sdk/useSelectAudioOutputDevice';
 import { useAudioOutputs } from '../../../../providers/DevicesProvider';
+import { useLogger } from '../../../../providers/LoggerProvider';
 import { BaseSdkProps } from '../../Base';
 import DeviceInput from '../DeviceInput';
 
@@ -24,6 +25,7 @@ export const SpeakerSelection: React.FC<Props> = ({
   onChange,
   ...rest
 }) => {
+  const logger = useLogger();
   const { devices, selectedDevice } = useAudioOutputs();
   const selectAudioOutput = useSelectAudioOutputDevice();
 
@@ -32,7 +34,7 @@ export const SpeakerSelection: React.FC<Props> = ({
       await selectAudioOutput(deviceId);
       onChange && onChange(deviceId);
     } catch (error) {
-      console.error('SpeakerSelection failed to select speaker');
+      logger.error('SpeakerSelection failed to select speaker');
     }
   };
 

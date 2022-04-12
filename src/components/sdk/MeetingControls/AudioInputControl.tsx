@@ -6,6 +6,7 @@ import React, { useEffect, useState } from 'react';
 import useSelectAudioInputDevice from '../../../hooks/sdk/useSelectAudioInputDevice';
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
+import { useLogger } from '../../../providers/LoggerProvider';
 import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Microphone } from '../../ui/icons';
@@ -30,6 +31,7 @@ const AudioInputControl: React.FC<Props> = ({
   unmutedIconTitle,
   ...rest
 }) => {
+  const logger = useLogger();
   const selectAudioInput = useSelectAudioInputDevice();
   const { muted, toggleMute } = useToggleLocalMute();
   const { devices, selectedDevice } = useAudioInputs();
@@ -42,7 +44,7 @@ const AudioInputControl: React.FC<Props> = ({
       try {
         await selectAudioInput(deviceId);
       } catch (error) {
-        console.error('AudioInputControl failed to select audio input device');
+        logger.error('AudioInputControl failed to select audio input device');
       }
     };
 

@@ -3,6 +3,7 @@
 
 import { DefaultBrowserBehavior } from 'amazon-chime-sdk-js';
 import { useCallback } from 'react';
+import { useLogger } from '../../providers/LoggerProvider';
 
 import { useMeetingManager } from '../../providers/MeetingProvider';
 
@@ -10,13 +11,14 @@ export const useSelectAudioOutputDevice = (): ((
   deviceId: string
 ) => Promise<void>) => {
   const meetingManager = useMeetingManager();
+  const logger = useLogger();
 
   const selectDevice = useCallback(
     async (deviceId: string) => {
       if (new DefaultBrowserBehavior().supportsSetSinkId()) {
         await meetingManager.selectAudioOutputDevice(deviceId);
       } else {
-        console.error(
+        logger.error(
           'AudioOutputControl cannot select audio output device because browser does not support setSinkId operation.'
         );
       }

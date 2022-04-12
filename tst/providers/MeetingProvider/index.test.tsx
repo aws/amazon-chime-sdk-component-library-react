@@ -2,10 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import {
+  ConsoleLogger,
   DefaultEventController,
   EventAttributes,
   EventName,
-  LogLevel,
   MeetingSessionConfiguration,
   MeetingSessionCredentials,
   MeetingSessionURLs,
@@ -48,10 +48,9 @@ describe('Meeting Provider', () => {
       new NoOpDebugLogger(),
       );
     let meetingManagerJoinOptions: MeetingManagerJoinOptions = {
-      logLevel: LogLevel.OFF,
       eventController: eventController,
     };
-    let meetingManager = new MeetingManager();
+    let meetingManager = new MeetingManager(new ConsoleLogger('MeetingManager'));
     await meetingManager.join(new MeetingSessionConfiguration(joinData.meetingInfo, joinData.attendeeInfo),
       meetingManagerJoinOptions,
     );
