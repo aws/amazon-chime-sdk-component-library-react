@@ -24,7 +24,7 @@ npm install --save amazon-chime-sdk-component-library-react@beta amazon-chime-sd
 - Add `MeetingManagerJoinOptions` as a new interface for the `options` parameter of the `MeetingManager.join` method.
 - Add `deviceLabels`, `eventController`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface.
 - Remove `MeetingSessionConfiguration` properties from `MeetingProvider` props.
-- Remove `deviceLabels`, `eventController`, `logLevel`, `postLogConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
+- Remove `deviceLabels`, `eventController`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
 - Remove `meetingRegion` from `MeetingManager`. Previously we just cache this value from meetingInfo returned by [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) but it is not used anywhere in the library.
 - Deprecate `useBandwidthMetrics` hook in favor of `useMediaStreamMetrics`.
 - Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
