@@ -500,6 +500,11 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
+  selectVideoInputDevice = (device: VideoInputDevice): void => {
+    this.selectedVideoInputDevice = device;
+    this.publishSelectedVideoInputDevice();
+  };
+
   invokeDeviceProvider = (deviceLabels: DeviceLabels): void => {
     this.setupDeviceLabelTrigger(deviceLabels);
     this.publishDeviceLabelTriggerChange();

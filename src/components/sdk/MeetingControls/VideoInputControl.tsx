@@ -30,7 +30,11 @@ const VideoInputControl: React.FC<Props> = ({ label = 'Video', ...rest }) => {
   useEffect(() => {
     const handleClick = async (deviceId: string): Promise<void> => {
       try {
-        await meetingManager.startVideoInputDevice(deviceId);
+        if (isVideoEnabled) {
+          await meetingManager.startVideoInputDevice(deviceId);
+        } else {
+          meetingManager.selectVideoInputDevice(deviceId);
+        }
       } catch (error) {
         logger.error('VideoInputControl failed to select video input device');
       }
@@ -51,6 +55,7 @@ const VideoInputControl: React.FC<Props> = ({ label = 'Video', ...rest }) => {
   }, [
     devices,
     selectedDevice,
+    isVideoEnabled,
     meetingManager,
     meetingManager.startVideoInputDevice,
   ]);

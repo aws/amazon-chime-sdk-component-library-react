@@ -164,7 +164,6 @@ const AudioInputVFControl: React.FC<Props> = ({
     addVoiceFocus,
     meetingManager,
     meetingManager.startAudioInputDevice,
-    selectedDevice,
     audioInputDevices,
     isLoading,
     isVoiceFocusEnabled,
