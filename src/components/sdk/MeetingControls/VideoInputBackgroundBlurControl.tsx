@@ -91,6 +91,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
         // If background blur is not on, then do a normal video selection
         let newDevice: VideoInputDevice = deviceId;
         if (isVideoTransformDevice(selectedDevice) && !isLoading) {
+          setIsLoading(true);
           if ('chooseNewInnerDevice' in selectedDevice) {
             // @ts-ignore
             newDevice = selectedDevice.chooseNewInnerDevice(deviceId);
