@@ -1,21 +1,9 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import {
-  ActiveSpeakerPolicy,
-  EventController,
-  Logger,
-  LogLevel,
-} from 'amazon-chime-sdk-js';
+import { ActiveSpeakerPolicy, EventController } from 'amazon-chime-sdk-js';
 
 import { DeviceLabels, DeviceLabelTrigger } from '../../types';
-
-export enum DevicePermissionStatus {
-  UNSET = 'UNSET',
-  IN_PROGRESS = 'IN_PROGRESS',
-  GRANTED = 'GRANTED',
-  DENIED = 'DENIED',
-}
 
 export interface MeetingManagerJoinOptions {
   deviceLabels?: DeviceLabels | DeviceLabelTrigger;
@@ -44,4 +32,3 @@ export type FullDeviceInfoType = {
   audioOutputDevices: MediaDeviceInfo[] | null;
   videoInputDevices: MediaDeviceInfo[] | null;
 };
-

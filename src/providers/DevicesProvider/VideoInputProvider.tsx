@@ -65,14 +65,14 @@ const VideoInputProvider: React.FC = ({ children }) => {
       initVideoInput();
     };
 
-    meetingManager.subscribeToDeviceLabelTriggerChange(callback);
+    meetingManager.subscribeToDeviceLabelTrigger(callback);
 
     initVideoInput();
 
     return () => {
       isMounted = false;
       audioVideo?.removeDeviceChangeObserver(observer);
-      meetingManager.unsubscribeFromDeviceLabelTriggerChange(callback);
+      meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
   }, [audioVideo]);
 

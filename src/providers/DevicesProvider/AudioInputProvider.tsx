@@ -124,14 +124,14 @@ const AudioInputProvider: React.FC<Props> = ({
       initAudioInput();
     };
 
-    meetingManager.subscribeToDeviceLabelTriggerChange(callback);
+    meetingManager.subscribeToDeviceLabelTrigger(callback);
 
     initAudioInput();
 
     return () => {
       isMounted = false;
       audioVideo?.removeDeviceChangeObserver(observer);
-      meetingManager.unsubscribeFromDeviceLabelTriggerChange(callback);
+      meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
   }, [audioVideo, onDeviceReplacement]);
 

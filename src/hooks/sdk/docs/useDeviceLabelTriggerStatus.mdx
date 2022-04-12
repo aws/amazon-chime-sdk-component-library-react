@@ -1,0 +1,57 @@
+<Meta title="SDK Hooks/useDevicePermissionStatus" />
+
+# useDeviceLabelTriggerStatus
+
+The `useDeviceLabelTriggerStatus` hook returns the `DeviceLabelTrigger` status from the enum below.
+
+It tracks if application has triggered the `DeviceLabelTrigger` to request device permission from browser, and if the request is granted or denied.
+
+```javascript
+enum DeviceLabelTriggerStatus {
+  UNTRIGGERED = 'UNTRIGGERED',
+  IN_PROGRESS = 'IN_PROGRESS',
+  GRANTED = 'GRANTED',
+  DENIED = 'DENIED',
+}
+```
+
+### Return Value
+
+```javascript
+status: DeviceLabelTriggerStatus;
+```
+
+## Importing
+
+```javascript
+import { useDeviceLabelTriggerStatus } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook depends on the `MeetingProvider`.
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useDeviceLabelTriggerStatus,
+  DeviceLabelTriggerStatus,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const status = useDeviceLabelTriggerStatus();
+
+  return <p>Device Label Trigger Status: {status}</p>;
+};
+```
+
+### Dependencies
+
+- `MeetingProvider`
