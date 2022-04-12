@@ -24,7 +24,7 @@ Amazon Chime SDK React Components Library v3 is here !! 🎉🎉🎉
 Amazon Chime SDK React Components Library v3 includes major improvements for component style customization, `MeetingProvider/MeetingManager` configuration, device management, WebRTC metrics and logger.
 
 - **Component style customization**: Improve components for easier customization of style. Check out our [styling guide](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/styling-guide--page) for more information.
-- **`MeetingProvider/MeetingManager` configuration**: Improve `MeetingProvider`, `MeetingManager` and `MeetingManager.join()` API to allow configuring right before joining a meeting instead of when `MeetingProvider` is mounted.
+- **`MeetingProvider/MeetingManager` configuration**: Improve `MeetingProvider`, `MeetingManager` and `MeetingManager.join()` API to allow configuring a meeting session right before joining a meeting instead of when `MeetingProvider` mounts.
 - **Device management**: Improve `types` for device selection components to better support basic and transformed devices. Remove `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hooks to standardize device selection through `MeetingManager` and throw error when selection fails.
 - **WebRTC metrics**: Publish the standardized WebRTC metrics for all supported browsers. Deprecate `useBandwidthMetrics` hook in favor of `useMediaStreamMetrics` hook.
 - **Logger**: Add `LoggerProvider` and `useLogger` components to enable universal logging in component library.
@@ -34,7 +34,7 @@ Below is a list of all changes in Amazon Chime SDK React Components Library v3. 
 ### Added
 
 - Add `LoggerProvider` and `useLogger` components to enable universal logging in component library.
-- Add a new interface `MeetingManagerJoinOptions` containing `deviceLabels`, `eventController`, `logLevel`, `postLoggerConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` properties. This interface is used for optional parameter `options` of `MeetingManager.join()` API.
+- Add a new interface `MeetingManagerJoinOptions` containing `deviceLabels`, `eventController`, `enableWebAudio`, and `activeSpeakerPolicy` properties. This interface is used for optional parameter `options` of `MeetingManager.join()` API.
 - Extend and enable style customizing capabilities on the SDK components.
 
 ### Removed
