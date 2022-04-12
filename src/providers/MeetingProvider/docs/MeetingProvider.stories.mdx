@@ -41,10 +41,11 @@ Please make sure your app calls `meetingManager.join(meetingSessionConfiguration
 Otherwise, the previous attendee who joined the meeting will leave the meeting with [AudioJoinedFromAnotherDevice](https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice).
 
 ```jsx
+import { ConsoleLogger } from 'amazon-chime-sdk-js';
 import { MeetingProvider, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 
 const Root = () => {
-  const meetingManager = new MeetingManager({ logLevel: LogLevel.INFO });
+  const meetingManager = new MeetingManager(new ConsoleLogger('LoggerName'));
 
   return (
     <MeetingProvider meetingManager={meetingManager}>

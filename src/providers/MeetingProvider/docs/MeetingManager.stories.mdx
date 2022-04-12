@@ -10,6 +10,15 @@ from an Angular application to a React application.
 
 You can access the `MeetingManager` instance with the `useMeetingManager` hook.
 
+## Constructor
+
+You need to pass a class implementing [Logger](https://aws.github.io/amazon-chime-sdk-js/interfaces/logger.html) interface as a required property to construct a `MeetingManager` object.
+
+```js
+const logger = new ConsoleLogger('LoggerName');
+const meetingManager = new MeetingManager(logger);
+```
+
 ## Interface
 
 ### `meetingManager.join`
@@ -40,17 +49,6 @@ options?: {
 
   // Override the default event controller in the Amazon Chime SDK for JavaScript.
   eventController?: EventController;
-  
-  // The level of logging you want with your meeting session. 
-  // It is defined by the LogLevel (https://aws.github.io/amazon-chime-sdk-js/enums/loglevel.html) enum in `amazon-chime-sdk-js`.
-  logLevel?: LogLevel;
-  
-  // Configuration for setting up a MeetingSessionPOSTLogger (https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionpostlogger.html).
-  postLoggerConfig?: PostLogConfig;
-  
-  // The `Logger` object that you want to be used in the meeting session.
-  // If you pass in a `Logger` object using this parameter, the `MeetingManager` will use this object instead of creating a logger based on `logLevel` and `postLogConfig` to initialize the meeting session.
-  logger?: Logger;
   
   // If you want to enable Amazon Voice Focus feature, you should enable Web Audio for the meeting and pass the `enableWebAudio` prop with value set to `true`. 
   // By default, `enableWebAudio` is `false`.
@@ -207,10 +205,11 @@ a new `MeetingManager` instance will be created internally with each `MeetingPro
 you will get the `MeetingManager` instance associated with that particular `MeetingProvider` when `useMeetingManager` hook is called.
 
 ```jsx
+import { ConsoleLogger } from 'amazon-chime-sdk-js';
 import { MeetingProvider, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 
 const Root = () => {
-  const meetingManager = new MeetingManager({ logLevel: LogLevel.INFO });
+  const meetingManager = new MeetingManager(new ConsoleLogger('LoggerName'));
 
   return (
     <MeetingProvider meetingManager={meetingManager}>
