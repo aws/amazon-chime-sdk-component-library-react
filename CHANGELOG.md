@@ -23,11 +23,11 @@ Amazon Chime SDK React Components Library v3 is here !! 🎉🎉🎉
 
 Amazon Chime SDK React Components Library v3 includes major improvements for component style customization, `MeetingProvider/MeetingManager` configuration, device management, WebRTC metrics and logger.
 
-- **Component style customization**: Improve components for easier customization of style. Publish this [styling guide](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/styling-guide--page) to instruct on how to customize the component style.
-- **`MeetingProvider/MeetingManager` configuration**: Remove most of `Props` of `MeetingProvider` and improve `MeetingManager.join()` API to allow configuring `MeetingSession` and some other options (e.g., `enableWebAudio`, `logger`) before joining a meeting instead of when `MeetingProvider` is mounted.
-- **Device management**: Update the type of most `device` from `string | null` to `Device | TransformDevice` for better `TransformDevice` support. Remove redundant hooks `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice`. Rename device selection methods of `MeetingManager` and now they throw errors when failed.
-- **WebRTC metrics**: Publish the standardized WebRTC metrics for all supported browsers. Deprecate `useBandwidthMetrics` hook as duplicate of `useMediaStreamMetrics` hook.
-- **logger**: Add `LoggerProvider` and `useLogger` components to enable universal logging in component library.
+- **Component style customization**: Improve components for easier customization of style. Check out our [styling guide](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/styling-guide--page) for more information.
+- **`MeetingProvider/MeetingManager` configuration**: Improve `MeetingProvider`, `MeetingManager` and `MeetingManager.join()` API to allow configuring right before joining a meeting instead of when `MeetingProvider` is mounted.
+- **Device management**: Improve `types` for device selection components to better support basic and transformed devices. Remove `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hooks to standardize device selection through `MeetingManager` and throw error when selection fails.
+- **WebRTC metrics**: Publish the standardized WebRTC metrics for all supported browsers. Deprecate `useBandwidthMetrics` hook in favor of `useMediaStreamMetrics` hook.
+- **Logger**: Add `LoggerProvider` and `useLogger` components to enable universal logging in component library.
 
 Below is a list of all changes in Amazon Chime SDK React Components Library v3. Please refer to the [Migration from 2.0 to 3.0](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/migration-to-v3--page) for more information.
 
