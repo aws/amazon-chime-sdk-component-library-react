@@ -31,6 +31,8 @@ The [Amazon Chime SDK Project Board](https://github.com/orgs/aws/projects/12) ca
 
 [Migration from V1 to V2](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/migration-to-v2--page)
 
+[Migration from V2 to V3](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/migration-to-v3--page)
+
 ## Examples
 
 [Amazon Chime Meeting Demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting)
