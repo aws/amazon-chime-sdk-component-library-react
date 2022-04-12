@@ -96,7 +96,8 @@ const checkNPMDepsInstall = () => {
   }
   process.chdir(path.join(__dirname, '../../dependency-check-app'));
   spawnOrFail('npm', ['init -y']);
-  spawnOrFail('npm', ['install react react-dom']);
+  // Currently, install 17 version as this now install 18.0.0 which we do not support yet.
+  spawnOrFail('npm', ['install react@17.0.1 react-dom@17.0.1']);
   spawnOrFail('npm', [`install amazon-chime-sdk-js@${latestNPMJSSdkVersion} styled-components styled-system`]);
   checkWarning('npm', [`install -q ../amazon-chime-sdk-component-library-react/amazon-chime-sdk-component-library-react-${currentVersion}.tgz`], null, 'amazon-chime-sdk-component-library-react');
   process.chdir(path.join(__dirname, '..'));
