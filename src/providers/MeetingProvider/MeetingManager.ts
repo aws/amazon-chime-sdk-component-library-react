@@ -21,10 +21,14 @@ import {
   VideoInputDevice,
 } from 'amazon-chime-sdk-js';
 
-import { DeviceLabels, DeviceLabelTrigger, MeetingStatus } from '../../types';
+import {
+  DeviceLabels,
+  DeviceLabelTrigger,
+  DeviceLabelTriggerStatus,
+  MeetingStatus,
+} from '../../types';
 import {
   AttendeeResponse,
-  DevicePermissionStatus,
   FullDeviceInfoType,
   MeetingManagerJoinOptions,
   ParsedJoinParams,
@@ -71,18 +75,19 @@ export class MeetingManager implements AudioVideoObserver {
     device: VideoInputDevice | undefined
   ) => void)[] = [];
 
-  deviceLabelTriggerChangeObservers: (() => void)[] = [];
-
   audioInputDevices: MediaDeviceInfo[] | null = null;
 
   audioOutputDevices: MediaDeviceInfo[] | null = null;
 
   videoInputDevices: MediaDeviceInfo[] | null = null;
 
-  devicePermissionStatus = DevicePermissionStatus.UNSET;
+  deviceLabelTriggerStatus = DeviceLabelTriggerStatus.UNTRIGGERED;
 
-  devicePermissionsObservers: ((permission: DevicePermissionStatus) => void)[] =
-    [];
+  deviceLabelTriggerStatusObservers: ((
+    status: DeviceLabelTriggerStatus
+  ) => void)[] = [];
+
+  deviceLabelTriggerObservers: (() => void)[] = [];
 
   activeSpeakerListener: ((activeSpeakers: string[]) => void) | null = null;
 
@@ -320,8 +325,8 @@ export class MeetingManager implements AudioVideoObserver {
       }
 
       callback = async (): Promise<MediaStream> => {
-        this.devicePermissionStatus = DevicePermissionStatus.IN_PROGRESS;
-        this.publishDevicePermissionStatus();
+        this.deviceLabelTriggerStatus = DeviceLabelTriggerStatus.IN_PROGRESS;
+        this.publishDeviceLabelTriggerStatus();
         try {
           const devices = await navigator.mediaDevices.enumerateDevices();
           const hasVideoInput = devices.some(
@@ -333,13 +338,13 @@ export class MeetingManager implements AudioVideoObserver {
             video: constraints.video && hasVideoInput,
           });
 
-          this.devicePermissionStatus = DevicePermissionStatus.GRANTED;
-          this.publishDevicePermissionStatus();
+          this.deviceLabelTriggerStatus = DeviceLabelTriggerStatus.GRANTED;
+          this.publishDeviceLabelTriggerStatus();
           return stream;
         } catch (error) {
           console.error('MeetingManager failed to get device permissions');
-          this.devicePermissionStatus = DevicePermissionStatus.DENIED;
-          this.publishDevicePermissionStatus();
+          this.deviceLabelTriggerStatus = DeviceLabelTriggerStatus.DENIED;
+          this.publishDeviceLabelTriggerStatus();
           throw new Error(error);
         }
       };
@@ -444,7 +449,7 @@ export class MeetingManager implements AudioVideoObserver {
     }
   }
 
-  selectAudioInputDevice = async (device: AudioInputDevice): Promise<void> => {
+  startAudioInputDevice = async (device: AudioInputDevice): Promise<void> => {
     try {
       await this.audioVideo?.startAudioInput(device);
       this.selectedAudioInputDevice = device;
@@ -458,7 +463,7 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
-  selectAudioOutputDevice = async (deviceId: string): Promise<void> => {
+  startAudioOutputDevice = async (deviceId: string): Promise<void> => {
     try {
       await this.audioVideo?.chooseAudioOutput(deviceId);
       this.selectedAudioOutputDevice = deviceId;
@@ -472,7 +477,7 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
-  selectVideoInputDevice = async (device: VideoInputDevice): Promise<void> => {
+  startVideoInputDevice = async (device: VideoInputDevice): Promise<void> => {
     try {
       await this.audioVideo?.startVideoInput(device);
       this.selectedVideoInputDevice = device;
@@ -486,7 +491,7 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
-  unselectVideoInputDevice = async (): Promise<void> => {
+  stopVideoInputDevice = async (): Promise<void> => {
     try {
       await this.audioVideo?.stopVideoInput();
       this.selectedVideoInputDevice = undefined;
@@ -500,9 +505,14 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
+  selectVideoInputDevice = (device: VideoInputDevice): void => {
+    this.selectedVideoInputDevice = device;
+    this.publishSelectedVideoInputDevice();
+  };
+
   invokeDeviceProvider = (deviceLabels: DeviceLabels): void => {
     this.setupDeviceLabelTrigger(deviceLabels);
-    this.publishDeviceLabelTriggerChange();
+    this.publishDeviceLabelTrigger();
   };
 
   /**
@@ -550,26 +560,6 @@ export class MeetingManager implements AudioVideoObserver {
     this.activeSpeakerCallbacks.forEach((callback) => {
       callback(this.activeSpeakers);
     });
-  };
-
-  subscribeToDevicePermissionStatus = (
-    callback: (permission: DevicePermissionStatus) => void
-  ): void => {
-    this.devicePermissionsObservers.push(callback);
-  };
-
-  unsubscribeFromDevicePermissionStatus = (
-    callbackToRemove: (permission: DevicePermissionStatus) => void
-  ): void => {
-    this.devicePermissionsObservers = this.devicePermissionsObservers.filter(
-      (callback) => callback !== callbackToRemove
-    );
-  };
-
-  private publishDevicePermissionStatus = (): void => {
-    for (const observer of this.devicePermissionsObservers) {
-      observer(this.devicePermissionStatus);
-    }
   };
 
   subscribeToSelectedVideoInputDevice = (
@@ -656,22 +646,40 @@ export class MeetingManager implements AudioVideoObserver {
     });
   };
 
-  subscribeToDeviceLabelTriggerChange = (callback: () => void): void => {
-    this.deviceLabelTriggerChangeObservers.push(callback);
+  subscribeToDeviceLabelTrigger = (callback: () => void): void => {
+    this.deviceLabelTriggerObservers.push(callback);
   };
 
-  unsubscribeFromDeviceLabelTriggerChange = (
-    callbackToRemove: () => void
+  unsubscribeFromDeviceLabelTrigger = (callbackToRemove: () => void): void => {
+    this.deviceLabelTriggerObservers = this.deviceLabelTriggerObservers.filter(
+      (callback) => callback !== callbackToRemove
+    );
+  };
+
+  private publishDeviceLabelTrigger = (): void => {
+    for (const callback of this.deviceLabelTriggerObservers) {
+      callback();
+    }
+  };
+
+  subscribeToDeviceLabelTriggerStatus = (
+    callback: (permission: DeviceLabelTriggerStatus) => void
   ): void => {
-    this.deviceLabelTriggerChangeObservers =
-      this.deviceLabelTriggerChangeObservers.filter(
+    this.deviceLabelTriggerStatusObservers.push(callback);
+  };
+
+  unsubscribeFromDeviceLabelTriggerStatus = (
+    callbackToRemove: (permission: DeviceLabelTriggerStatus) => void
+  ): void => {
+    this.deviceLabelTriggerStatusObservers =
+      this.deviceLabelTriggerStatusObservers.filter(
         (callback) => callback !== callbackToRemove
       );
   };
 
-  private publishDeviceLabelTriggerChange = (): void => {
-    for (const callback of this.deviceLabelTriggerChangeObservers) {
-      callback();
+  private publishDeviceLabelTriggerStatus = (): void => {
+    for (const observer of this.deviceLabelTriggerStatusObservers) {
+      observer(this.deviceLabelTriggerStatus);
     }
   };
 

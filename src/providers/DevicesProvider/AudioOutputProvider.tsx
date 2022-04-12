@@ -65,14 +65,14 @@ const AudioOutputProvider: React.FC = ({ children }) => {
       initAudioOutput();
     };
 
-    meetingManager.subscribeToDeviceLabelTriggerChange(callback);
+    meetingManager.subscribeToDeviceLabelTrigger(callback);
 
     initAudioOutput();
 
     return () => {
       isMounted = false;
       audioVideo?.removeDeviceChangeObserver(observer);
-      meetingManager.unsubscribeFromDeviceLabelTriggerChange(callback);
+      meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
   }, [audioVideo]);
 

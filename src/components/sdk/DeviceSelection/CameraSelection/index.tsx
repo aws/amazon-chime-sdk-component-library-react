@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import useSelectVideoInputDevice from '../../../../hooks/sdk/useSelectVideoInputDevice';
 import { useVideoInputs } from '../../../../providers/DevicesProvider';
 import { useLogger } from '../../../../providers/LoggerProvider';
+import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { BaseSdkProps } from '../../Base';
 import DeviceInput from '../DeviceInput';
 
@@ -23,11 +23,11 @@ export const CameraSelection: React.FC<Props> = ({
 }) => {
   const logger = useLogger();
   const { devices, selectedDevice } = useVideoInputs();
-  const selectVideoInput = useSelectVideoInputDevice();
+  const meetingManager = useMeetingManager();
 
   const handleSelect = async (deviceId: string): Promise<void> => {
     try {
-      await selectVideoInput(deviceId);
+      await meetingManager.startVideoInputDevice(deviceId);
     } catch (error) {
       logger.error('CameraSelection failed to select camera');
     }

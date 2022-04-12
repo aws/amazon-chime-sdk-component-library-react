@@ -96,7 +96,7 @@ const AudioInputProvider: React.FC<Props> = ({
 
         const nextDevice = await replaceDevice(nextInput);
         try {
-          await meetingManager.selectAudioInputDevice(nextDevice);
+          await meetingManager.startAudioInputDevice(nextDevice);
         } catch (e) {
           logger.error(
             `Failed to select audio input device on audioInputsChanged: ${e}`
@@ -124,14 +124,14 @@ const AudioInputProvider: React.FC<Props> = ({
       initAudioInput();
     };
 
-    meetingManager.subscribeToDeviceLabelTriggerChange(callback);
+    meetingManager.subscribeToDeviceLabelTrigger(callback);
 
     initAudioInput();
 
     return () => {
       isMounted = false;
       audioVideo?.removeDeviceChangeObserver(observer);
-      meetingManager.unsubscribeFromDeviceLabelTriggerChange(callback);
+      meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
   }, [audioVideo, onDeviceReplacement]);
 

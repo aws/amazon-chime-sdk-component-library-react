@@ -140,15 +140,12 @@ export {
 export { useAttendeeStatus } from './hooks/sdk/useAttendeeStatus';
 export { useAttendeeAudioStatus } from './hooks/sdk/useAttendeeAudioStatus';
 export { useSelectVideoQuality } from './hooks/sdk/useSelectVideoQuality';
-export { useSelectVideoInputDevice } from './hooks/sdk/useSelectVideoInputDevice';
-export { useSelectAudioInputDevice } from './hooks/sdk/useSelectAudioInputDevice';
-export { useSelectAudioOutputDevice } from './hooks/sdk/useSelectAudioOutputDevice';
 export { useActiveSpeakersState } from './hooks/sdk/useActiveSpeakersState';
 export { useToggleLocalMute } from './hooks/sdk/useToggleLocalMute';
 export { useMeetingStatus } from './hooks/sdk/useMeetingStatus';
 export { useLocalAudioInputActivity } from './hooks/sdk/useLocalAudioInputActivity';
 export { useLocalAudioInputActivityPreview } from './hooks/sdk/useLocalAudioInputActivityPreview';
-export { useDevicePermissionStatus } from './hooks/sdk/useDevicePermissionStatus';
+export { useDeviceLabelTriggerStatus } from './hooks/sdk/useDeviceLabelTriggerStatus';
 export { useMediaStreamMetrics } from './hooks/sdk/useMediaStreamMetrics';
 
 // Providers
@@ -190,9 +187,9 @@ export { RosterAttendeeType, RosterType } from './types';
 // enums
 export {
   MeetingStatus,
-  DevicePermissionStatus,
   DeviceLabels,
   DeviceLabelTrigger,
+  DeviceLabelTriggerStatus,
 } from './types';
 export { Severity, ActionType } from './providers/NotificationProvider';
 
@@ -200,6 +197,7 @@ export { Severity, ActionType } from './providers/NotificationProvider';
 export { MeetingManager } from './providers/MeetingProvider/MeetingManager';
 
 // Interface
+export { MeetingManagerJoinOptions } from './providers/MeetingProvider/types';
 export { NotificationType, Action } from './providers/NotificationProvider';
 
 // Utilities

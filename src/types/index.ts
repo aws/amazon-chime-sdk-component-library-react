@@ -65,8 +65,8 @@ export type RosterType = {
   [attendeeId: string]: RosterAttendeeType;
 };
 
-export enum DevicePermissionStatus {
-  UNSET = 'UNSET',
+export enum DeviceLabelTriggerStatus {
+  UNTRIGGERED = 'UNTRIGGERED',
   IN_PROGRESS = 'IN_PROGRESS',
   GRANTED = 'GRANTED',
   DENIED = 'DENIED',

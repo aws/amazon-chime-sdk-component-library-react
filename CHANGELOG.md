@@ -10,17 +10,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [3.0.0] - 2022-03-17
 
 ### Added
-- Add `LoggerProvider` and `useLogger` components to enable unniversal logging in component library.
+
+- Add `LoggerProvider` and `useLogger` components to enable universal logging in component library.
+- Extend and enabled style customizing capabilities on the SDK components.
+- Add `MeetingSessionConfiguration` as a required parameter to `MeetingManager.join()` method. With this change the builders have direct access to `MeetingSessionConfiguration`, this will allow more flexibility to customize the `MeetingSession`.
+- Add `MeetingManagerJoinOptions` as a new interface for the `options` parameter of the `MeetingManager.join` method.
+- Add `deviceLabels`, `eventController`, `logLevel`, `postLoggerConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface.
 
 ### Removed
 
 - Remove logging of the video transform device to avoid circular structure error.
 - Remove preset device selection options ("None" and "440 Hz" for audio input device. "None", "Blue", and "SMTP Color Bars" for video input device). Remove `appendSampleDevices` from Props of `CameraSelection`, `MicSelection`, `AudioInputControl`, `AudioInputVFcontrol`, and `VideoInputControl`. Remove `DeviceConfig` type. Remove `additionalDevices` from Props of `useAudioInputs` and `useVideoInputs` hook.
+- Removed `useSelectAudioInputDevice`, `useSelectAudioOutputDevice` and `useSelectVideoInputDevice` hook.
+- Remove use of the deprecated `enableUnifiedPlanForChromiumBasedBrowsers` configuration variable.
+- Remove all deprecated `MeetingSessionStatusCode`.  
+- Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
+- Deprecate `useBandwidthMetrics` hook as we already have `useMediaStreamMetrics`.
+- Remove `MeetingSessionConfiguration` properties from `MeetingProvider` props.
+- Remove `deviceLabels`, `eventController`, `logLevel`, `postLogConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
 
 ### Changed
 
 - Revert "Add Observer to select input device error" ([PR #493](https://github.com/aws/amazon-chime-sdk-component-library-react/pull/493)). `useAudioInputs` and `useVideoInputs` hook no longer return `selectDeviceError`. `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` method of `MeetingManager` now throw error when failed. The device selection methods returned by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook are built on top of these `MeetingManager` methods, thus now they throw error when failed as well.
 - Change the `selectedDeviceId: string | null` to `selectedDevice: Device | TransformDevice`.
+- Rename `selectAudioInputDevice` to `startAudioInputDevice`, `selectVideoInputDevice` to `startVideoInputDevice`, and `selectAudioOutputDevice` to `startAudioOutputDevice`.
+- Rename `DevicePermissionStatus.UNSET` to `DevicePermissionStatus.UNTRIGGERED` and `DevicePermissionStatus` to `DeviceLabelTriggerStatus`.
+- Rename `useDevicePermissionStatus` to `useDeviceLabelTriggerStatus`.
+- Rename `devicePermissionsObservers` to `deviceLabelTriggerStatusObservers` and corresponding `subscribe`, `unsubscribe`, and `publish` functions.
+- Rename `deviceLabelTriggerChangeObservers` to `deviceLabelTriggerObservers` and corresponding `subscribe`, `unsubscribe`, and `publish` functions.
+- Update `MeetingManager` to use new `EventController` API.
+- Update `amazon-chime-sdk-js` dependency to v3..
+- Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
+- Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
+- Change `Versioning.ts` to read from Git instead of manually hard-coded. This is the same behavior in `amazon-chime-sdk-js`.
+- Update the ChannelList UI component to take in optional `lastChannelMessage` and `lastChannelMessageTimestamp` parameters. If any of them is set, it will display more detailed channel item view with last message content or timestamp.
 
 ### Fixed
 
@@ -42,8 +65,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Update `amazon-chime-sdk-js` dependency to v3 beta.
 - Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
 - Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
-- Change `Versioning.ts` to read from Git instead of manually hard-coded. This is the same behavior in
-  `amazon-chime-sdk-js`.
+- Change `Versioning.ts` to read from Git instead of manually hard-coded. This is the same behavior in `amazon-chime-sdk-js`.
 - Update the ChannelList UI component to take in optional `lastChannelMessage` and `lastChannelMessageTimestamp` parameters. If any of them is set, it will display more detailed channel item view with last message content or timestamp.
 
 ### Removed

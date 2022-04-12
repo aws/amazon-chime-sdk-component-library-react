@@ -13,7 +13,7 @@ import {
   FormField,
   Select,
   VideoInputBackgroundBlurControl,
-  useSelectVideoInputDevice,
+  useMeetingManager,
 } from 'amazon-chime-sdk-component-library-react';
 import MeetingInfo from '../components/MeetingInfo';
 import MeetingLeaveControl from '../components/MeetingLeaveControl';
@@ -51,7 +51,7 @@ interface Props {
 
 const Meeting: React.FC<Props> = ({ onBlurStrengthChanged }) => {
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } = useBackgroundBlur();
-  const selectVideoInput = useSelectVideoInputDevice();
+  const meetingManager = useMeetingManager();
   const { selectedDevice } = useVideoInputs();
   const { toggleVideo } = useLocalVideo();
   const meetingStatus = useMeetingStatus();
@@ -68,7 +68,7 @@ const Meeting: React.FC<Props> = ({ onBlurStrengthChanged }) => {
           console.log('Creating background blur device called');
           const chosenVideoTransformDevice = await createBackgroundBlurDevice(selectedDevice);
           console.log(chosenVideoTransformDevice);
-          await selectVideoInput(chosenVideoTransformDevice);
+          await meetingManager.startVideoInputDevice(chosenVideoTransformDevice);
           toggleVideo();
         }
       } catch (error) {
@@ -79,6 +79,8 @@ const Meeting: React.FC<Props> = ({ onBlurStrengthChanged }) => {
   }, [
     isBackgroundBlurSupported,
     meetingStatus,
+    meetingManager,
+    meetingManager.startVideoInputDevice,
   ]);
 
   const updateBlurStrength = (e: ChangeEvent<HTMLSelectElement>) => {

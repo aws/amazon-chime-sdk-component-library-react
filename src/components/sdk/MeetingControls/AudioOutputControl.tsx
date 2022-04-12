@@ -4,10 +4,10 @@
 import { DefaultBrowserBehavior } from 'amazon-chime-sdk-js';
 import React, { useEffect, useState } from 'react';
 
-import useSelectAudioOutputDevice from '../../../hooks/sdk/useSelectAudioOutputDevice';
 import { useAudioOutputs } from '../../../providers/DevicesProvider';
 import { useLocalAudioOutput } from '../../../providers/LocalAudioOutputProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Sound } from '../../ui/icons';
@@ -24,7 +24,7 @@ const AudioOutputControl: React.FC<Props> = ({
   ...rest
 }) => {
   const logger = useLogger();
-  const selectAudioOutput = useSelectAudioOutputDevice();
+  const meetingManager = useMeetingManager();
   const { devices, selectedDevice } = useAudioOutputs();
   const { isAudioOn, toggleAudio } = useLocalAudioOutput();
   const [dropdownOptions, setDropdownOptions] = useState<PopOverItemProps[]>(
@@ -35,7 +35,7 @@ const AudioOutputControl: React.FC<Props> = ({
     const handleClick = async (deviceId: string): Promise<void> => {
       try {
         if (new DefaultBrowserBehavior().supportsSetSinkId()) {
-          await selectAudioOutput(deviceId);
+          await meetingManager.startAudioOutputDevice(deviceId);
         } else {
           logger.error(
             'AudioOutputControl cannot select audio output device because browser does not support setSinkId operation.'
@@ -58,7 +58,12 @@ const AudioOutputControl: React.FC<Props> = ({
     };
 
     getDropdownOptions();
-  }, [devices, selectedDevice, selectAudioOutput]);
+  }, [
+    devices,
+    selectedDevice,
+    meetingManager,
+    meetingManager.startAudioOutputDevice,
+  ]);
 
   return (
     <>

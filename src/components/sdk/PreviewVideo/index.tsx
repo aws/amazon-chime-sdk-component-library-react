@@ -4,10 +4,11 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import { useLocalVideo, useVideoInputs } from '../../..';
-import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { useVideoInputs } from '../../../providers/DevicesProvider';
+import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
 
@@ -25,7 +26,7 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
   const audioVideo = useAudioVideo();
   const { selectedDevice } = useVideoInputs();
   const videoEl = useRef<HTMLVideoElement>(null);
-  const selectVideoInput = useSelectVideoInputDevice();
+  const meetingManager = useMeetingManager();
   const { setIsVideoEnabled } = useLocalVideo();
 
   useEffect(() => {
@@ -46,7 +47,7 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
       }
 
       try {
-        await selectVideoInput(selectedDevice);
+        await meetingManager.startVideoInputDevice(selectedDevice);
         audioVideo.startVideoPreviewForVideoInput(videoEl.current);
         setIsVideoEnabled(true);
       } catch (error) {

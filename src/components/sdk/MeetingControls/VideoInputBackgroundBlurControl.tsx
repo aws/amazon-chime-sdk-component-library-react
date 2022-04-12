@@ -5,11 +5,11 @@ import { isVideoTransformDevice, VideoInputDevice } from 'amazon-chime-sdk-js';
 import isEqual from 'lodash.isequal';
 import React, { ReactNode, useEffect, useState } from 'react';
 
-import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
 import { useBackgroundBlur } from '../../../providers/BackgroundBlurProvider';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { DeviceType } from '../../../types';
 import { isOptionActive } from '../../../utils/device-utils';
 import useMemoCompare from '../../../utils/use-memo-compare';
@@ -32,7 +32,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
   ...rest
 }) => {
   const logger = useLogger();
-  const selectVideoInput = useSelectVideoInputDevice();
+  const meetingManager = useMeetingManager();
   const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
@@ -76,7 +76,7 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
       }
       // If we're currently using a video transform device, and a non-video transform device is selected
       // then the video transform device will be stopped automatically
-      await selectVideoInput(current);
+      await meetingManager.startVideoInputDevice(current);
     } catch (error) {
       logger.error('Failed to toggle Background Blur');
     } finally {
@@ -89,19 +89,21 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
       try {
         // If background blur is on, then re-use the same video transform pipeline, but replace the inner device
         // If background blur is not on, then do a normal video selection
+        let newDevice: VideoInputDevice = deviceId;
         if (isVideoTransformDevice(selectedDevice) && !isLoading) {
           setIsLoading(true);
           if ('chooseNewInnerDevice' in selectedDevice) {
-            const transformedDevice =
-              // @ts-ignore
-              selectedDevice.chooseNewInnerDevice(deviceId);
-            await selectVideoInput(transformedDevice);
+            // @ts-ignore
+            newDevice = selectedDevice.chooseNewInnerDevice(deviceId);
           } else {
             logger.error('Transform device cannot choose new inner device');
           }
-          setIsLoading(false);
+        }
+
+        if (isVideoEnabled) {
+          await meetingManager.startVideoInputDevice(newDevice);
         } else {
-          await selectVideoInput(deviceId);
+          meetingManager.selectVideoInputDevice(newDevice);
         }
       } catch (error) {
         logger.error('Failed to select video input device');
@@ -146,10 +148,11 @@ const VideoInputBackgroundBlurControl: React.FC<Props> = ({
     getDropdownWithVideoTransformOptions();
   }, [
     createBackgroundBlurDevice,
-    selectVideoInput,
-    selectedDevice,
+    meetingManager,
+    meetingManager.startVideoInputDevice,
     videoDevices,
     isLoading,
+    isVideoEnabled,
     selectedDevice,
     isBackgroundBlurSupported,
   ]);
