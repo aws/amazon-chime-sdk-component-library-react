@@ -39,6 +39,7 @@ import {
   VoiceFocusProvider,
   useMeetingManager,
   useVoiceFocus,
+  useAudioInputs,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -51,53 +52,53 @@ const App = () => (
 
 const MyChild = () => {
   const meetingManager = useMeetingManager();
+  const { selectedDevice } = useAudioInputs();
   const [isVoiceFocusOn, setIsVoiceFocusOn] = useState(false);
   const [isVoiceFocusEnabled, setIsVoiceFocusEnabled] = useState(false);
-  const [device, setDevice] = useState(meetingManager.selectedAudioInputDevice);
   const { isVoiceFocusSupported, addVoiceFocus } = useVoiceFocus();
 
   useEffect(() => {
-    meetingManager.subscribeToSelectedAudioInputDevice(setDevice);
-    return () => {
-      meetingManager.unsubscribeFromSelectedAudioInputDevice(setDevice);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (device instanceof VoiceFocusTransformDevice) {
+    if (selectedDevice instanceof VoiceFocusTransformDevice) {
       setIsVoiceFocusEnabled(true);
     } else {
       setIsVoiceFocusEnabled(false);
     }
-  }, [device]);
+  }, [selectedDevice]);
 
   useEffect(() => {
     async function toggleVoiceFocus() {
-      let current = device;
-      if (isVoiceFocusOn) {
-        if (typeof (device) === 'string') {
-          current = await addVoiceFocus(device);
+      try {
+        let current = selectedDevice;
+        if (isVoiceFocusOn) {
+          if (typeof selectedDevice === 'string') {
+            current = await addVoiceFocus(selectedDevice);
+          }
+        } else {
+          if (selectedDevice instanceof VoiceFocusTransformDevice) {
+            current = selectedDevice.getInnerDevice();
+          }
         }
-      } else {
-        if (device instanceof VoiceFocusTransformDevice) {
-          current = device.getInnerDevice();
-        }
+        await meetingManager.startAudioInputDevice(current);
+      } catch (error) {
+        // Handle device selection failure here
+        console.error('Failed to toggle Voice Focus');
       }
-      await meetingManager.selectAudioInputDevice(current);
     }
-    
+
     toggleVoiceFocus();
   }, [isVoiceFocusOn]);
 
   const onClick = () => {
-    setIsVoiceFocusOn(current => !current);
+    setIsVoiceFocusOn((current) => !current);
   };
 
   return (
     <div>
       {isVoiceFocusSupported && (
         <button onClick={onClick}>
-          {isVoiceFocusEnabled ? 'Disable Amazon Voice Focus' : 'Enable Amazon Voice Focus'}
+          {isVoiceFocusEnabled
+            ? 'Disable Amazon Voice Focus'
+            : 'Enable Amazon Voice Focus'}
         </button>
       )}
     </div>

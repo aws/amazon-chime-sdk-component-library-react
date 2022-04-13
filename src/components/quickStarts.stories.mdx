@@ -257,41 +257,6 @@ Result:
 4. The SDK doesn’t select any device
     * You need to handle the device selection yourself
 
-## Handle Device Selection Error
-
-When `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` methods of `MeetingManager` failed, they will throw the error directly. The device selection functions return by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook are built on top of these `MeetingManager` methods, thus they will throw error when failed as well.
-
-```jsx
-import React from 'react';
-import {
-  MeetingProvider,
-  useSelectVideoInputDevice,
-} from 'amazon-chime-sdk-component-library-react';
-
-const App = () => (
-  <MeetingProvider>
-    <MyChild />
-  </MeetingProvider>
-);
-
-const MyChild = () => {
-  const selectVideoInput = useSelectVideoInputDevice();
-
-  const handleClick = async (): => {
-    try {
-      await selectVideoInput('deviceId');
-    } catch (error) {
-      // Handle device selection error.
-      console.error('Failed to select video input device', error);
-    }
-  };
-
-  return (
-    <button onClick={handleClick}>Select Video Input Device</button>
-  );
-};
-```
-
 ## Enable Camera and Display the Video Stream in the Grid
 
 The [`VideoTileGrid`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-components-videotilegrid--page) component renders all meeting session video tiles in a responsive grid layout. This includes the local tile, remote tiles, and content share tile. By default a user joins without video, so in order to see the `VideoTileGrid`, there must be at least one video tile being shared.
@@ -406,14 +371,14 @@ For UI implementation, check the [`LocalMediaStreamMetrics`](https://github.com/
 
 You can enable background blur and replacement on your video stream by using the providers called `BackgroundBlurProvider` and `BackgroundReplacementProvider`. The `BackgroundBlurProvider` and `BackgroundReplacementProvider` provides
 a `createBackgroundBlurDevice` and `createBackgroundReplacementDevice` functions that takes in a `Device` type and returns a `VideoTransformDevice`. Once you have the `VideoTransformDevice`,
-you may call `meetingManager.selectVideoInputDevice(videoTransformedDevice)` with the `VideoTransformDevice` just as you would with a regular device. Please note that users would also need to call `DefaultVideoTransformDevice.stop` when constructing a new 
+you may call `meetingManager.startVideoInputDevice(videoTransformedDevice)` with the `VideoTransformDevice` just as you would with a regular device. Please note that users would also need to call `DefaultVideoTransformDevice.stop` when constructing a new 
 `DefaultVideoTransformDevice` with new video processors. For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice).
 
 Optionally, you may use the `VideoInputBackgroundBlurControl` component - it is similar to the `VideoInputControl` component, except it has an
 additional button to enable background blur. If you'd like to create your own background blur control component, you may look at the [`VideoInputBackgroundBlurControl`](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/main/src/components/sdk/MeetingControls/VideoInputBackgroundBlurControl.tsx)
 as an example.
 
-One thing to note is that calling `meetingManager.selectVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
+One thing to note is that calling `meetingManager.startVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
 will automatically stop any video processor that was previously running. Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `createBackgroundBlurDevice` or `createBackgroundReplacementDevice` if
 the Props of the provider were changed.
 

@@ -18,7 +18,7 @@ If you are using `MeetingProvider`, `DevicesProvider` is rendered by default.
 import React from 'react';
 import {
   MeetingProvider,
-  useVideoInputs
+  useVideoInputs,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -29,11 +29,11 @@ const App = () => (
 
 const MyChild = () => {
   const { devices, selectedDevice } = useVideoInputs();
-  const items = devices.map(device => <li>{device.label}</li>);
+  const items = devices.map((device) => <li>{device.label}</li>);
 
   return (
     <div>
-      <p>Current Selected DeviceId: {selectedDevice}</p>
+      <p>Current Selected Device: {selectedDevice}</p>
       <p>Devices</p>
       <ul>{items}</ul>
     </div>

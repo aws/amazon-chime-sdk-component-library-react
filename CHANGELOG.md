@@ -35,7 +35,9 @@ Below is a list of all changes in Amazon Chime SDK React Components Library v3. 
 
 - Add `LoggerProvider` and `useLogger` components to enable universal logging in component library.
 - Add a new interface `MeetingManagerJoinOptions` containing `deviceLabels`, `eventController`, `enableWebAudio`, and `activeSpeakerPolicy` properties. This interface is used for optional parameter `options` of `MeetingManager.join()` API.
+- Add new method `selectVideoInputDevice(device: VideoInputDevice)` in `MeetingManager`. This method only updates the `MeetingManager.selectedVideoInputDevice` with the given `device` and publish this update via `selectedVideoInputDeviceObservers`. The original `selectedVideoInputDevice` method in V2 has been renamed to `startVideoInputDevice` in V3.
 - Extend and enable style customizing capabilities on the SDK components.
+- Add documentation for device management change.
 
 ### Removed
 

@@ -2,30 +2,31 @@
 
 # AudioInputProvider
 
-The `AudioInputProvider` provides a list of the user's available `audio-input` devices, the currently selected device.
+The `AudioInputProvider` provides a list of the user's available audio input devices and the currently selected audio input device.
 
 ## State
 
-```javascript
+```ts
 {
+  // A list of the user's available audio input devices
   devices: [{
     deviceId: string;
     label: string;
   }],
 
-  // The device ID of the currently selected device
-  selectedDevice: string | null
+  // The currently selected audio input device
+  selectedDevice: AudioInputDevice | undefined,
 }
 
 ```
 
-NOTE: In Chrome, there is a "default" device which can used as the current audio input device. When a new device is added during the 
-meeting, the new device will become the current audio input device also the new "default" device. If you want to get this device change, 
-it would be better to use `devices`. When a new "default" device is added, the `devices` list will have changed. We suggest you to 
-watch for changes to `devices[0]` - this will indicate when the "default" device has changed. `selectedDevice` will not be updated when 
-switching to a new audio device since it stands for the deviceId, and the value of deviceId remains the same, still being `default`. 
-The deviceId that was previously in use was `default`. When you switch to a new device, that device becomes "default" device. Since the old 
-deviceId was `default` and the new deviceId is still `default`, so `selectedDevice` does not change. But actually they correspond to different physical devices. 
+NOTE: In Chrome, there is a "default" device which can used as the current audio input device. When a new device is added during the
+meeting, the new device will become the current audio input device also the new "default" device. If you want to get this device change,
+it would be better to use `devices`. When a new "default" device is added, the `devices` list will have changed. We suggest you to
+watch for changes to `devices[0]` - this will indicate when the "default" device has changed. `selectedDevice` will not be updated when
+switching to a new audio device since it stands for the deviceId, and the value of deviceId remains the same, still being `default`.
+The deviceId that was previously in use was `default`. When you switch to a new device, that device becomes "default" device. Since the old
+deviceId was `default` and the new deviceId is still `default`, so `selectedDevice` does not change. But actually they correspond to different physical devices.
 
 You can access the state by using the [useAudioInputs](/docs/sdk-hooks-useaudioinputs--page) hook.
 
@@ -43,7 +44,7 @@ If you are using `MeetingProvider`, `AudioInputProvider` is rendered by default.
 import React from 'react';
 import {
   MeetingProvider,
-  useAudioInputs
+  useAudioInputs,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -54,13 +55,13 @@ const App = () => (
 
 const MyChild = () => {
   const { devices, selectedDevice } = useAudioInputs();
-  const items = devices.map(device => (
+  const items = devices.map((device) => (
     <li key={device.deviceId}>{device.label}</li>
   ));
 
   return (
     <div>
-      <p>Current Selected DeviceId: {selectedDevice}</p>
+      <p>Current Selected Audio Input Device: {JSON.stringify(selectedDevice)}</p>
       <p>Devices</p>
       <ul>{items}</ul>
     </div>

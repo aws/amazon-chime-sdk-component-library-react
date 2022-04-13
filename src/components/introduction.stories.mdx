@@ -14,14 +14,14 @@ React components for building realtime meeting applications with Amazon Chime.
 
 For the majority of use cases, an Amazon Chime application consists of **a server application** and **a client application**.
 
-* A server application – Manages meeting and attendee resources, and serves those resources to the client application. The server application is created in the AWS account and must have access to the IAM role mentioned previously.
+- A server application – Manages meeting and attendee resources, and serves those resources to the client application. The server application is created in the AWS account and must have access to the IAM role mentioned previously.
 
-* A client application – Receives meeting and attendee information from the server application, and uses that information to make media.
+- A client application – Receives meeting and attendee information from the server application, and uses that information to make media.
 
 The server application and client application could be hosted either locally or in the cloud (serverless).
 
-* For hosting locally, see the [client application](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/src) and [server application](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js).
-* For hosting in the cloud, see the [serverless example](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/serverless).
+- For hosting locally, see the [client application](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/src) and [server application](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js).
+- For hosting in the cloud, see the [serverless example](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/serverless).
 
 ## Getting Started
 
@@ -32,7 +32,8 @@ npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js 
 ```
 
 2. Render a `ThemeProvider` and a `MeetingProvider` in the root of your application
-   * You can pass a default theme that we provide, or a customized theme that adheres to our theme's structure.
+
+- You can pass a default theme that we provide, or a customized theme that adheres to our theme's structure.
 
 ```jsx
 import { ThemeProvider } from 'styled-components';
@@ -49,26 +50,28 @@ const Root = () => (
   </ThemeProvider>
 );
 ```
+
 3. Join a meeting
 
 To join a meeting, you need to do the following sub steps:
 
-* Fetch the meeting and attendee data from Chime
+- Fetch the meeting and attendee data from Chime
 
-* Intialize `MeetingSessionConfiguration`
+- Initialize `MeetingSessionConfiguration`
 
-* Create and join the meeting
+- Create and join the meeting
 
-First, you need to fetch the meeting and attendee data from Chime's [CreateAttendee](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateAttendee.html) and [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) APIs. 
+First, you need to fetch the meeting and attendee data from Chime's [CreateAttendee](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateAttendee.html) and [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) APIs.
 
-* Check the [Getting responses from your server application](https://github.com/aws/amazon-chime-sdk-js#getting-responses-from-your-server-application) for details.
-* Check the [MeetingForm component](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/containers/MeetingForm/index.tsx), the [API calls](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/utils/api.ts), and [server application](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js) in our [React meeting demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting) as examples.
+- Check the [Getting responses from your server application](https://github.com/aws/amazon-chime-sdk-js#getting-responses-from-your-server-application) for details.
+- Check the [MeetingForm component](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/containers/MeetingForm/index.tsx), the [API calls](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/utils/api.ts), and [server application](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js) in our [React meeting demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting) as examples.
 
-Then, intialize `MeetingSessionConfiguration` with the meeting and attendee data from the last step. You can choose to modify the `MeetingSessionConfiguration` properties to customize the meeting to your preference.
+Then, initialize `MeetingSessionConfiguration` with the meeting and attendee data from the last step. You can choose to modify the `MeetingSessionConfiguration` properties to customize the meeting to your preference.
 
 Updating the `MeetingSessionConfiguration` props is an optional step. You can learn more about the available props here: [MeetingSessionConfiguration](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionconfiguration.html)
 
-Lastly, pass the `MeetingSessionConfiguration` to the `join` method to create a meeting session. You can now start the meeting session and join the meeting. 
+Lastly, pass the `MeetingSessionConfiguration` to the `join` method to create a meeting session. You can now start the meeting session and join the meeting.
+
 ```jsx
 import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
@@ -87,7 +90,7 @@ const MyApp = () => {
     // Create a `MeetingSession` using `join()` function with the `MeetingSessionConfiguration`
     await meetingManager.join(meetingSessionConfiguration);
 
-    // At this point you could let users setup their devices, or by default 
+    // At this point you could let users setup their devices, or by default
     // the SDK will select the first device in the list for the kind indicated
     // by `deviceLabels` (the default value is DeviceLabels.AudioAndVideo)
     ...

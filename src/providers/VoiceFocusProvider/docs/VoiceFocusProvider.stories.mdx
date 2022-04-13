@@ -5,7 +5,7 @@ import { VoiceFocusProvider } from '../';
 
 # VoiceFocusProvider
 
-The `VoiceFocusProvider` provides a function transforming a normal audio device to an Amazon Voice Focus device, and whether Amazon Voice Focus is supported. 
+The `VoiceFocusProvider` provides a function transforming a normal audio device to an Amazon Voice Focus device, and whether Amazon Voice Focus is supported.
 Amazon Voice Focus related logs can be found in the browser developer tools when Amazon Voice Focus is enabled.
 
 This provider is independent from `MeetingProvider`. You can put `VoiceFocusProvider` wherever you want in the component tree to control the workflow of Voice Focus, so long
@@ -24,8 +24,8 @@ as any component which relies on `VoiceFocusProvider` is nested within `VoiceFoc
 
 ```
 
-You should see either "Amazon Voice Focus is supported." or "Amazon Voice Focus is not supported." in your browser developer tools based on whether 
-Amazon Voice Focus is supported on your device and browser. For more information, please check Amazon Chime SDK for JavaScript's Amazon Voice Focus 
+You should see either "Amazon Voice Focus is supported." or "Amazon Voice Focus is not supported." in your browser developer tools based on whether
+Amazon Voice Focus is supported on your device and browser. For more information, please check Amazon Chime SDK for JavaScript's Amazon Voice Focus
 [guide](https://aws.github.io/amazon-chime-sdk-js/modules/amazonvoice_focus.html#can-i-use-amazon-voice-focus-in-my-application).
 
 You can access the state by using the [useVoiceFocus](/docs/sdk-hooks-usevoicefocus--page) hook.
@@ -50,6 +50,7 @@ import {
   VoiceFocusProvider,
   useMeetingManager,
   useVoiceFocus,
+  useAudioInputs,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -62,53 +63,53 @@ const App = () => (
 
 const MyChild = () => {
   const meetingManager = useMeetingManager();
+  const { selectedDevice } = useAudioInputs();
   const [isVoiceFocusOn, setIsVoiceFocusOn] = useState(false);
   const [isVoiceFocusEnabled, setIsVoiceFocusEnabled] = useState(false);
-  const [device, setDevice] = useState(meetingManager.selectedAudioInputDevice);
   const { isVoiceFocusSupported, addVoiceFocus } = useVoiceFocus();
 
   useEffect(() => {
-    meetingManager.subscribeToSelectedAudioInputDevice(setDevice);
-    return () => {
-      meetingManager.unsubscribeFromSelectedAudioInputDevice(setDevice);
-    };
-  }, []);
-
-  useEffect(() => {
-    if (device instanceof VoiceFocusTransformDevice) {
+    if (selectedDevice instanceof VoiceFocusTransformDevice) {
       setIsVoiceFocusEnabled(true);
     } else {
       setIsVoiceFocusEnabled(false);
     }
-  }, [device]);
+  }, [selectedDevice]);
 
   useEffect(() => {
-    async function toggleVoiceFocus() {
-      let current = device;
-      if (isVoiceFocusOn) {
-        if (typeof (device) === 'string') {
-          current = await addVoiceFocus(device);
+    const toggleVoiceFocus = async () => {
+      try {
+        let current = selectedDevice;
+        if (isVoiceFocusOn) {
+          if (typeof selectedDevice === 'string') {
+            current = await addVoiceFocus(selectedDevice);
+          }
+        } else {
+          if (selectedDevice instanceof VoiceFocusTransformDevice) {
+            current = selectedDevice.getInnerDevice();
+          }
         }
-      } else {
-        if (device instanceof VoiceFocusTransformDevice) {
-          current = device.getInnerDevice();
-        }
+        await meetingManager.startAudioInputDevice(current);
+      } catch (error) {
+        // Handle device selection failure here
+        console.error('Failed to toggle Voice Focus');
       }
-      await meetingManager.selectAudioInputDevice(current);
-    }
-    
+    };
+
     toggleVoiceFocus();
   }, [isVoiceFocusOn]);
 
   const onClick = () => {
-    setIsVoiceFocusOn(current => !current);
+    setIsVoiceFocusOn((current) => !current);
   };
 
   return (
     <div>
       {isVoiceFocusSupported && (
         <button onClick={onClick}>
-          {isVoiceFocusEnabled ? 'Disable Amazon Voice Focus' : 'Enable Amazon Voice Focus'}
+          {isVoiceFocusEnabled
+            ? 'Disable Amazon Voice Focus'
+            : 'Enable Amazon Voice Focus'}
         </button>
       )}
     </div>

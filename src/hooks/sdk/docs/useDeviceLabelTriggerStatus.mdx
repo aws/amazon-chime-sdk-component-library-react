@@ -2,7 +2,7 @@
 
 # useDeviceLabelTriggerStatus
 
-The `useDeviceLabelTriggerStatus` hook returns the `DeviceLabelTrigger` status from the enum below.
+The `useDeviceLabelTriggerStatus` hook returns the [`DeviceLabelTrigger`](https://github.com/aws/amazon-chime-sdk-js/blob/bec0e13331ee1ff9198070dd2a6bb1bd289dd14e/src/devicecontroller/DeviceControllerFacade.ts#L25-L37) status from the enum below.
 
 It tracks if application has triggered the `DeviceLabelTrigger` to request device permission from browser, and if the request is granted or denied.
 
@@ -14,6 +14,11 @@ enum DeviceLabelTriggerStatus {
   DENIED = 'DENIED',
 }
 ```
+
+`DeviceLabelTriggerStatus.UNTRIGGERED` could mean three cases:
+1. `DeviceLabelTrigger` is not triggered to request device permission.
+2. Device permission is already granted before and thus `DeviceLabelTrigger` can not be triggered.
+3. Device permission is already denied before and thus `DeviceLabelTrigger` can not be triggered.
 
 ### Return Value
 

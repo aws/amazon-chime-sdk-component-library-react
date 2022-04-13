@@ -11,7 +11,7 @@ The `VideoInputBackgroundBlurControl` component also has a button that will enab
 next to the background blur button will indicate whether or not background blur is active. If you want to apply background blur to your video input device stream,
 try this `VideoInputBackgroundBlurControl`. If not, `VideoInputControl` is a better choice.
 
-One thing to note is that calling `meetingManager.selectVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
+One thing to note is that calling `meetingManager.startVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
 will automatically stop any video processor that was previously running.
 
 This component must be used within `BackgroundBlurProvider` and `MeetingProvider`.
@@ -42,10 +42,7 @@ const App = () => {
   return (
     <BackgroundBlurProvider>
       <MeetingProvider>
-        <ControlBar
-          layout="undocked-horizontal"
-          showLabels
-        >
+        <ControlBar layout="undocked-horizontal" showLabels>
           <AudioInputControl />
           <VideoInputBackgroundBlurControl />
         </ControlBar>

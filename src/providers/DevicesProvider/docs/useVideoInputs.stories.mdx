@@ -5,19 +5,19 @@ import { useVideoInputs } from '../';
 
 # useVideoInputs
 
-The `useVideoInputs` hook returns a list of the user's available `video-input` devices, the currently selected device.
+The `useVideoInputs` hook returns a list of the user's available video input devices and the currently selected video input device.
 
 ## Return Value
 
-```javascript
+```ts
 {
   devices: [{
     deviceId: string;
     label: string;
   }],
 
-  // The device ID of the currently selected device
-  selectedDevice: string | null
+  // The current selected video input device
+  selectedDevice: VideoInputDevice | undefined;
 }
 
 ```
@@ -36,7 +36,7 @@ The hook depends on the `DevicesProvider`. If you are using `MeetingProvider`, i
 import React from 'react';
 import {
   MeetingProvider,
-  useVideoInputs
+  useVideoInputs,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -47,13 +47,13 @@ const App = () => (
 
 const MyChild = () => {
   const { devices, selectedDevice } = useVideoInputs();
-  const items = devices.map(device => (
+  const items = devices.map((device) => (
     <li key={device.deviceId}>{device.label}</li>
   ));
 
   return (
     <div>
-      <p>Current Selected DeviceId: {selectedDevice}</p>
+      <p>Current Selected Video Input Device: {JSON.stringify(selectedDevice)}</p>
       <p>Devices</p>
       <ul>{items}</ul>
     </div>
