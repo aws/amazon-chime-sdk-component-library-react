@@ -6,7 +6,7 @@ The `AudioInputProvider` provides a list of the user's available audio input dev
 
 ## State
 
-```javascript
+```ts
 {
   // A list of the user's available audio input devices
   devices: [{
@@ -61,7 +61,7 @@ const MyChild = () => {
 
   return (
     <div>
-      <p>Current Selected Audio Input Device: {JSON.parse(selectedDevice)}</p>
+      <p>Current Selected Audio Input Device: {JSON.stringify(selectedDevice)}</p>
       <p>Devices</p>
       <ul>{items}</ul>
     </div>

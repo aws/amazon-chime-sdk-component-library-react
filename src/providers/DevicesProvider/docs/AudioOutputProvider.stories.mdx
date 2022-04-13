@@ -9,7 +9,7 @@ The `AudioOutputProvider` provides a list of the user's available audio output d
 
 ## State
 
-```javascript
+```ts
 {
   devices: [{
     deviceId: string;
@@ -55,7 +55,7 @@ const MyChild = () => {
 
   return (
     <div>
-      <p>Current Selected Audio Output Device: {JSON.parese(selectedDevice)}</p>
+      <p>Current Selected Audio Output Device: {selectedDevice}</p>
       <p>Devices</p>
       <ul>{items}</ul>
     </div>

@@ -9,7 +9,7 @@ The `useVideoInputs` hook returns a list of the user's available video input dev
 
 ## Return Value
 
-```javascript
+```ts
 {
   devices: [{
     deviceId: string;
@@ -53,7 +53,7 @@ const MyChild = () => {
 
   return (
     <div>
-      <p>Current Selected Video Input Device: {JSON.parse(selectedDevice)}</p>
+      <p>Current Selected Video Input Device: {JSON.stringify(selectedDevice)}</p>
       <p>Devices</p>
       <ul>{items}</ul>
     </div>

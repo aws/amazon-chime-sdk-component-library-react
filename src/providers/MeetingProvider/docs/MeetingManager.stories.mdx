@@ -251,20 +251,25 @@ import { MeetingProvider } from 'amazon-chime-sdk-component-library-react';
 const MeetingForm = () => {
   const meetingManager = useMeetingManager();
 
-  const response = await fetch('/my-meetings-endpoint');
-  const data = await response.json();
+  const handleJoinMeeting = async () => {
+    const response = await fetch('/my-meetings-endpoint');
+    const data = await response.json();
 
-  const meetingSessionConfiguration = new MeetingSessionConfiguration(
-    data.Meeting,
-    data.Attendee
-  );
-  const eventController = new DefaultEventController(
-    meetingSessionConfiguration,
-    new ConsoleLogger('SDK', LogLevel.WARN),
-    new NoOpEventReporter()
-  );
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(
+      data.Meeting,
+      data.Attendee
+    );
 
-  const handleJoinMeeting = async (event) => {
+    const eventController = new DefaultEventController(
+      meetingSessionConfiguration,
+      new ConsoleLogger('SDK', LogLevel.WARN),
+      new NoOpEventReporter()
+    );
+
+    const options = {
+      eventController,
+    };
+
     await meetingManager.join(meetingSessionConfiguration, options);
   };
   return <PrimaryButton label="Continue" onClick={handleJoinMeeting} />;
