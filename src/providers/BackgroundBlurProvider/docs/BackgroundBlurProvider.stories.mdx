@@ -35,7 +35,7 @@ before calling `createBackgroundBlurDevice`. Calling `createBackgroundBlurDevice
 `DefaultVideoTransformDevice` with `createBackgroundBlurDevice` in order to destroy the processors running previously. Once you call `DefaultVideoTransformDevice.stop`, you should discard the old `DefaultVideoTransformDevice`.
 For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice).
 
-One thing to note is that calling `meetingManager.selectVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
+One thing to note is that calling `meetingManager.startVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
 will automatically stop any video processor that was previously running. Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `createBackgroundBlurDevice`.
 if the Props of the provider were changed.
 
@@ -87,15 +87,20 @@ const MyChild = () => {
         return;
       }
 
-      let current = selectedDevice;
-      if (isVideoTransformChecked) {
-        current = await createBackgroundBlurDevice(selectedDevice);
-      } else {
-        if (isVideoTransformDevice(selectedDevice)) {
-          current = await selectedDevice.intrinsicDevice();
+      try {
+        let current = selectedDevice;
+        if (isVideoTransformChecked) {
+          current = await createBackgroundBlurDevice(selectedDevice);
+        } else {
+          if (isVideoTransformDevice(selectedDevice)) {
+            current = await selectedDevice.intrinsicDevice();
+          }
         }
+        await meetingManager.startVideoInputDevice(current);
+      } catch (error) {
+        // Handle device selection failure here
+        console.error('Failed to toggle BackgroundBlur');
       }
-      await meetingManager.selectVideoInputDevice(current);
     }
 
     toggleBackgroundBlur();

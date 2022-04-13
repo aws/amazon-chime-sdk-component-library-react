@@ -5,9 +5,10 @@ import { useAudioOutputs } from '../';
 
 # useAudioOutputs
 
-The `useAudioOutputs` hook returns a list of the user's available `audio-output` devices and the currently selected device.
-> Please note that, in Firefox and Safari, the browser does not list the 'audiooutput' media devices yet. We have an [FAQ](https://aws.github.io/amazon-chime-sdk-js/modules/faqs.html#i-am-unable-to-select-an-audio-output-device-in-some-browsers-is-this-a-known-issue) in
-`amazon-chime-sdk-js` with more information on respective bugs for Firefox and Safari browser.
+The `useAudioOutputs` hook returns a list of the user's available audio output devices and the currently selected audio output device identified by its `deviceId`
+
+> Please note that, in Firefox and Safari, the browser does not list the `audiooutput` media devices yet. We have an [FAQ](https://aws.github.io/amazon-chime-sdk-js/modules/faqs.html#i-am-unable-to-select-an-audio-output-device-in-some-browsers-is-this-a-known-issue) in
+> `amazon-chime-sdk-js` with more information on respective bugs for Firefox and Safari browser.
 
 ## Return Value
 
@@ -18,8 +19,8 @@ The `useAudioOutputs` hook returns a list of the user's available `audio-output`
     label: string;
   }],
 
-  // The device ID of the currently selected device
-  selectedDevice: string | null
+  // The current selected audio output device identified by its `deviceId`
+  selectedDevice: string | null,
 }
 
 ```
@@ -38,7 +39,7 @@ The hook depends on the `DevicesProvider`. If you are using `MeetingProvider`, i
 import React from 'react';
 import {
   MeetingProvider,
-  useAudioOutputs
+  useAudioOutputs,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -48,12 +49,18 @@ const App = () => (
 );
 
 const MyChild = () => {
-  const { devices } = useAudioOutputs();
-  const items = devices.map(device => (
+  const { devices, selectedDevice } = useAudioOutputs();
+  const items = devices.map((device) => (
     <li key={device.deviceId}>{device.label}</li>
   ));
 
-  return <ul>{items}</ul>;
+  return (
+    <div>
+      <p>Current Selected Audio Output Device: {JSON.parese(selectedDevice)}</p>
+      <p>Devices</p>
+      <ul>{items}</ul>
+    </div>
+  );
 };
 ```
 

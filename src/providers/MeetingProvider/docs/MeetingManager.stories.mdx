@@ -23,12 +23,13 @@ const meetingManager = new MeetingManager(logger);
 
 ### `meetingManager.join`
 
-`meetingManager.join` creates a `MeetingSession` using the passed `MeetingSessionConfiguration` and `options`. `options` use `MeetingManagerJoinOptions` type interface. 
+`meetingManager.join` creates a `MeetingSession` using the passed `MeetingSessionConfiguration` and `options`. `options` use `MeetingManagerJoinOptions` type interface.
 `join` will attempt to select default devices for the user.
 
 ```typescript
 (meetingSessionConfiguration: MeetingSessionConfiguration, options?: MeetingManagerJoinOptions) => Promise<void>
 ```
+
 Let's take a deeper look at the interface of the `join` method params.
 
 ##### `MeetingSessionConfiguration`
@@ -41,6 +42,7 @@ meetingSessionConfiguration: MeetingSessionConfiguration;
 ```
 
 ##### `MeetingManagerJoinOptions`
+
 ```typescript
 options?: {
   // The kind of device for which the browser requests permission.
@@ -49,11 +51,11 @@ options?: {
 
   // Override the default event controller in the Amazon Chime SDK for JavaScript.
   eventController?: EventController;
-  
-  // If you want to enable Amazon Voice Focus feature, you should enable Web Audio for the meeting and pass the `enableWebAudio` prop with value set to `true`. 
+
+  // If you want to enable Amazon Voice Focus feature, you should enable Web Audio for the meeting and pass the `enableWebAudio` prop with value set to `true`.
   // By default, `enableWebAudio` is `false`.
   enableWebAudio?: boolean;
-  
+
   // The `ActiveSpeakerPolicy` object that you want to be used in the meeting session.
   // For more information on `ActiveSpeakerPolicy`, check Amazon Chime SDK for JavaScript ActiveSpeakerPolicy (https://aws.github.io/amazon-chime-sdk-js/interfaces/activespeakerpolicy.html).
   activeSpeakerPolicy?: ActiveSpeakerPolicy;
@@ -118,29 +120,36 @@ const MyApp = () => {
 ## Usage Examples
 
 ### `MeetingManager` instance is created internally in the `MeetingProvider` and can be retrived using `useMeetingManager` hook.
+
 ```jsx
-import { MeetingProvider, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useMeetingManager,
+} from 'amazon-chime-sdk-component-library-react';
 
 const Root = () => (
   <MeetingProvider>
     <MyApp />
-  <MeetingProvider/>
+  </MeetingProvider>
 );
 
 const MyApp = () => {
   const meetingManager = useMeetingManager();
 
   useEffect(() => {
-    meetingManager.getAttendee = async (chimeAttendeeId: string, externalUserId?: string) => {
-      const response = await fetch('/my-attendees-endpoint);
+    meetingManager.getAttendee = async (
+      chimeAttendeeId: string,
+      externalUserId?: string
+    ) => {
+      const response = await fetch('/my-attendees-endpoint');
       const user = await response.json();
 
       return {
-        name: user.name
-      }
-    }
-  }, [])
-}
+        name: user.name,
+      };
+    };
+  }, []);
+};
 ```
 
 ### Update the `MeetingSessionConfiguration` properties being passed to the `join` method
@@ -177,7 +186,7 @@ const MyApp = () => {
       meetingSessionConfiguration
     );
 
-    // At this point you could let users setup their devices, or by default 
+    // At this point you could let users setup their devices, or by default
     // the SDK will select the first device in the list for the kind indicated
     // by `deviceLabels` (the default value is DeviceLabels.AudioAndVideo)
     ...
@@ -198,7 +207,7 @@ variable values and you will not use video, roster and audio at both places. Sti
 The video will not work at both places due to limitations of JS SDK to bind a video stream to a single video tile only. Please check [this](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/492#issuecomment-846317339) issue for more details.
 
 Please make sure your app calls `meetingManager.join()` only once with the same `attendeeInfo`.
-Otherwise,  the previous attendee who joined the meeting will leave the meeting with [AudioJoinedFromAnotherDevice](https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice).
+Otherwise, the previous attendee who joined the meeting will leave the meeting with [AudioJoinedFromAnotherDevice](https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice).
 
 You can create a new `MeetingManager` instance and then pass it as a prop to your `MeetingProvider`s. If not passed,
 a new `MeetingManager` instance will be created internally with each `MeetingProvider` when rendered; and,
@@ -214,11 +223,11 @@ const Root = () => {
   return (
     <MeetingProvider meetingManager={meetingManager}>
       <MyApp1 />
-    <MeetingProvider/>
+    </MeetingProvider>
 
     <MeetingProvider meetingManager={meetingManager}>
       <MyApp2 />
-    <MeetingProvider/>
+    </MeetingProvider>
   );
 }
 ```
@@ -232,32 +241,34 @@ To opt-out of event ingestion from the Amazon Chime SDK for JavaScript, provide 
 
 ```jsx
 import React from 'react';
-import { NoOpEventReporter, DefaultEventController, DefaultMeetingSessionConfiguration} from 'amazon-chime-sdk-js';
+import {
+  NoOpEventReporter,
+  DefaultEventController,
+  DefaultMeetingSessionConfiguration,
+} from 'amazon-chime-sdk-js';
 import { MeetingProvider } from 'amazon-chime-sdk-component-library-react';
 
 const MeetingForm = () => {
   const meetingManager = useMeetingManager();
-  
+
   const response = await fetch('/my-meetings-endpoint');
   const data = await response.json();
-  
-  const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+
+  const meetingSessionConfiguration = new MeetingSessionConfiguration(
+    data.Meeting,
+    data.Attendee
+  );
   const eventController = new DefaultEventController(
-    meetingSessionConfiguration, 
-    new ConsoleLogger('SDK', LogLevel.WARN), 
+    meetingSessionConfiguration,
+    new ConsoleLogger('SDK', LogLevel.WARN),
     new NoOpEventReporter()
   );
 
   const handleJoinMeeting = async (event) => {
-    await meetingManager.join(
-      meetingSessionConfiguration,
-      options
-    );
-  }
-  return (
-    <PrimaryButton label="Continue" onClick={handleJoinMeeting} />
-  )
-}
+    await meetingManager.join(meetingSessionConfiguration, options);
+  };
+  return <PrimaryButton label="Continue" onClick={handleJoinMeeting} />;
+};
 
 const App = () => (
   <MeetingProvider>

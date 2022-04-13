@@ -19,20 +19,25 @@ npm install --save amazon-chime-sdk-component-library-react@beta amazon-chime-sd
 
 ## What's New
 
-- `MeetingManager`'s `join()` method no longer takes an `EventReporter` and instead takes an `EventController`.
-- Add `MeetingSessionConfiguration` as a required parameter to `MeetingManager.join()` method. With this change the builders have direct access to `MeetingSessionConfiguration`, this will allow more flexibility to customize the `MeetingSession`.
-- Add `MeetingManagerJoinOptions` as a new interface for the `options` parameter of the `MeetingManager.join` method.
+- Add a new interface `MeetingManagerJoinOptions` containing `deviceLabels`, `eventController`, `enableWebAudio`, and `activeSpeakerPolicy` properties. This interface is used for optional parameter `options` of `MeetingManager.join()` API.
 - Add `deviceLabels`, `eventController`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface.
-- Remove `MeetingSessionConfiguration` properties from `MeetingProvider` props.
-- Remove `deviceLabels`, `eventController`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
-- Remove `meetingRegion` from `MeetingManager`. Previously we just cache this value from meetingInfo returned by [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) but it is not used anywhere in the library.
-- Deprecate `useBandwidthMetrics` hook in favor of `useMediaStreamMetrics`.
-- Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
-- Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
-- Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
-- Remove preset device selection options ("None" and "440 Hz" for audio input device. "None", "Blue" and "SMTP Color Bars" for video input device). Remove `appendSampleDevices` from Props of `CameraSelection`, `MicSelection`, `AudioInputControl`, `AudioInputVFcontrol`, and `VideoInputControl`. Remove `DeviceConfig` type. Remove `additionalDevices` from Props of `useAudioInputs` and `useVideoInputs` hook.
-- Revert "Add Observer to select input device error" ([PR #493](https://github.com/aws/amazon-chime-sdk-component-library-react/pull/493)). `useAudioInputs` and `useVideoInputs` hook no longer return `selectDeviceError`. `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` method of `MeetingManager` now throw error when failed. The device selection methods returned by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook are built on top of these `MeetingManager` methods, thus now they throw error when failed as well.
 - Add `LoggerProvider` and `useLogger` components to enable unniversal logging in component library.
+- Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
+- Update `MeetingManager.join()` API to have a require parameter `meetingSessionConfiguration: MeetingSessionConfiguration` and an optional parameter `options?: MeetingManagerJoinOptions`. With `meetingSessionConfiguration` parameter builders have direct access to `MeetingSessionConfiguration` which allows more flexibility to customize the `MeetingSession`. With `options` parameter, builders can easily config the `enableWebAudio`, `logger`, `activeSpeakerPolicy`, `deviceLabels` and `eventController` before joining the meeting.
+- Remove `useSelectAudioInputDevice`, `useSelectAudioOutputDevice` and `useSelectVideoInputDevice` hook.
+- Remove `MeetingSessionConfiguration` properties from `MeetingProvider` props.
+- Remove `deviceLabels`, `eventController`, `logLevel`, `postLogConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
+- Remove `meetingRegion` from `MeetingManager`. Previously we just cache this value from meetingInfo returned by [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) but it is not used anywhere in the library.
+- Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
+- Remove preset device selection options ("None" and "440 Hz" for audio input device. "None", "Blue" and "SMTP Color Bars" for video input device). Remove `appendSampleDevices` from Props of `CameraSelection`, `MicSelection`, `AudioInputControl`, `AudioInputVFcontrol`, and `VideoInputControl`. Remove `DeviceConfig` type. Remove `additionalDevices` from Props of `useAudioInputs` and `useVideoInputs` hook.
+- Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
+- Rename `DevicePermissionStatus.UNSET` to `DevicePermissionStatus.UNTRIGGERED` and `DevicePermissionStatus` to `DeviceLabelTriggerStatus`.
+- Rename `useDevicePermissionStatus` to `useDeviceLabelTriggerStatus`.
+- Rename `devicePermissionsObservers` to `deviceLabelTriggerStatusObservers` and corresponding `subscribe`, `unsubscribe`, and `publish` functions.
+- Rename `deviceLabelTriggerChangeObservers` to `deviceLabelTriggerObservers` and corresponding `subscribe`, `unsubscribe`, and `publish` functions.
+- Rename `selectAudioInputDevice` to `startAudioInputDevice`, `selectVideoInputDevice` to `startVideoInputDevice`, and `selectAudioOutputDevice` to `startAudioOutputDevice`.
+- Revert "Add Observer to select input device error" ([PR #493](https://github.com/aws/amazon-chime-sdk-component-library-react/pull/493)). `useAudioInputs` and `useVideoInputs` hook no longer return `selectDeviceError`. `startAudioInputDevice`, `startVideoInputDevice`, and `startAudioOutputDevice` method of `MeetingManager` now throw error when failed.
+- Deprecate `useBandwidthMetrics` hook in favor of `useMediaStreamMetrics`.
 
 ### `MeetingProvider` props change
 
@@ -437,6 +442,140 @@ When you implement your own theme, you need to use `globalStyle` instead of `glo
 
 ## Device
 
+### Renaming
+
+Below table summarizes all renaming of device management related stuff. Simply use new naming to replace old naming for migration.
+
+| Before in 2.x                                               | After in 3.x                                               |
+| ----------------------------------------------------------- | ---------------------------------------------------------- |
+| `DevicePermissionStatus`                                    | `DeviceLabelTriggerStatus`                                 |
+| `DevicePermissionStatus.UNSET`                              | `DevicePermissionStatus.UNTRIGGERED`                       |
+| `useDevicePermissionStatus`                                 | `useDeviceLabelTriggerStatus`                              |
+|                                                             |                                                            |
+| `MeetingManager.devicePermissionStatus`                     | `MeetingManager.deviceLabelTriggerStatus`                  |
+|                                                             |                                                            |
+| `MeetingManager.selectAudioInputDevice()`                   | `MeetingManager.startAudioInputDevice()`                   |
+| `MeetingManager.selectAudioOutputDevice()`                  | `MeetingManager.startAudioOutputDevice()`                  |
+| `MeetingManager.selectVideoInputDevice()`                   | `MeetingManager.startVideoInputDevice()`                   |
+|                                                             |                                                            |
+| `MeetingManager.devicePermissionsObservers`                 | `MeetingManager.deviceLabelTriggerStatusObservers`         |
+| `MeetingManager.subscribeToDevicePermissionStatus()`        | `MeetingManager.subscribeToDeviceLabelTriggerStatus()`     |
+| `MeetingManager.unsubscribeFromDevicePermissionStatus()`    | `MeetingManager.unsubscribeFromDeviceLabelTriggerStatus()` |
+|                                                             |                                                            |
+| `MeetingManager.deviceLabelTriggerChangeObservers`          | `MeetingManager.deviceLabelTriggerObservers`               |
+| `MeetingManageer.subscribeToDeviceLabelTriggerChange()`     | `MeetingManageer.subscribeToDeviceLabelTrigger()`          |
+| `MeetingManageer.unsubscribeFromDeviceLabelTriggerChange()` | `MeetingManageer.unsubscribeFromDeviceLabelTrigger()`      |
+
+### Update Type of Selected Device in MeetingManager
+
+In V3, we improve type for selected device in `MeetingManager` and update the corresponding components and hooks.
+
+#### MeetingManager Properties Change
+
+| Before in 2.x                              | After in 3.x                                             |
+| ------------------------------------------ | -------------------------------------------------------- |
+| `selectedAudioOutputDevice: string | null` | `selectedAudioOutputDevice: string | null`               |
+| `selectedAudioInputDevice: string | null`  | `selectedAudioInputDevice: AudioInputDevice | undefined` |
+| `selectedVideoInputDevice: string | null`  | `selectedVideoInputDevice: VideoInputDevice | undefined` |
+
+```js
+type Device = string | MediaTrackConstraints | MediaStream;
+type AudioInputDevice = Device | AudioTransformDevice | null;
+type VideoInputDevice = Device | VideoTransformDevice;
+```
+#### Hooks Return Values Change
+
+Before in 2.x
+
+```js
+// Selected audio output deivce. The type is `string | null`
+const { selectedDevice } = useAudioOutputs();
+// Selected audio input deivce. The type is `string | null`
+const { selectedDevice } = useAudioInputs();
+// Selected video input deivce. The type is `string | null`
+const { selectedDevice } = useVideoInputs();
+```
+
+After in 3.x
+
+```js
+// Selected audio output deivce. The type is `string | null`
+const { selectedDevice } = useAudioOutputs();
+// Selected audio input deivce. The type is `AudioInputDevice | undefined`
+const { selectedDevice } = useAudioInputs();
+// Selected video input deivce. The type is `VideoInputDevice | undefined`
+const { selectedDevice } = useVideoInputs();
+```
+
+### Remove `useSelectAudioInputDevice`, `useSelectAudioOutputDevice` and `useSelectVideoInputDevice` hook
+
+In V3, we remove `useSelectAudioInputDevice`, `useSelectAudioOutputDevice` and `useSelectVideoInputDevice` hook. These hooks just expose device selection APIs from `MeetingManager`, thus they are redundant.
+
+Before in 2.x:
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useSelectVideoInputDevice,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const selectVideoInput = useSelectVideoInputDevice();
+
+  const handleClick = async () => {
+    await selectVideoInput('device-id');
+  };
+
+  return (
+    <button onClick={handleClick}>
+      Start Video Input Device with ID 'device-id'
+    </button>
+  );
+};
+```
+
+After in 3.x:
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useMeetingManager,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const meetingManager = useMeetingManager();
+
+  const handleClick = async () => {
+    try {
+      await meetingManager.startVideoInputDevice('device-id');
+    } catch (error) {
+      // Handle device selection failure here
+      console.error('Failed to start video input device');
+    }
+  };
+
+  return (
+    <button onClick={handleClick}>
+      Start Video Input Device with ID 'device-id'
+    </button>
+  );
+};
+```
+
 ### Remove Preset Device Selection Options
 
 In V3, we remove preset device selection options:
@@ -498,7 +637,7 @@ Before in 2.x:
 import React from 'react';
 import {
   MeetingProvider,
-  useVideoInputs
+  useVideoInputs,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -514,7 +653,7 @@ const MyChild = () => {
 
   // `devices` does not contain preset device selection options.
   const { devices } = useVideoInputs(videoInputConfig);
-  const items = devices.map(device => (
+  const items = devices.map((device) => (
     <li key={device.deviceId}>{device.label}</li>
   ));
 
@@ -533,7 +672,7 @@ After in 3.x:
 import React from 'react';
 import {
   MeetingProvider,
-  useVideoInputs
+  useVideoInputs,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -545,7 +684,7 @@ const App = () => (
 const MyChild = () => {
   // In V3, `useVideoInputs` hook no longer supports preset device selection options.
   const { devices } = useVideoInputs();
-  const items = devices.map(device => (
+  const items = devices.map((device) => (
     <li key={device.deviceId}>{device.label}</li>
   ));
 
@@ -560,7 +699,7 @@ const MyChild = () => {
 
 ### Device Selection APIs Throw Error When Failed
 
-In V2, we added `selectDeviceError` to `useAudioInputs` and `useVideoInputs` hook to get the error of `selectAudioInputDevice` and `selectVideoInputDevice` API from client side when they failed. In V3, we remove `selectDeviceError` from these hooks and throw error directly when `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` methods of `MeetingManager` failed. The device selection functions return by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook now throw errors as well.
+In V2, we added `selectDeviceError` to `useAudioInputs` and `useVideoInputs` hook to get the error of `selectAudioInputDevice` and `selectVideoInputDevice` API from client side when they failed. In V3, we remove `selectDeviceError` from these hooks and throw error directly when `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` methods of `MeetingManager` failed.
 
 Before in 2.x:
 
@@ -568,7 +707,7 @@ Before in 2.x:
 import React from 'react';
 import {
   MeetingProvider,
-  useSelectVideoInputDevice,
+  useMeetingManager,
   useVideoInputs,
 } from 'amazon-chime-sdk-component-library-react';
 
@@ -579,11 +718,11 @@ const App = () => (
 );
 
 const MyChild = () => {
-  const selectVideoInput = useSelectVideoInputDevice();
+  const meetingManager = useMeetingManager();
   const { selectDeviceError } = useVideoInputs();
 
   const handleClick = async (): => {
-    await selectVideoInput('deviceId');
+    await meetingManager.selectVideoInputDevice('deviceId');
   };
 
   return (
@@ -599,7 +738,7 @@ After in 3.x:
 import React from 'react';
 import {
   MeetingProvider,
-  useSelectVideoInputDevice,
+  useMeetingManager,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -609,11 +748,11 @@ const App = () => (
 );
 
 const MyChild = () => {
-  const selectVideoInput = useSelectVideoInputDevice();
+  const meetingManager = useMeetingManager();
 
   const handleClick = async (): => {
     try {
-      await selectVideoInput('deviceId');
+      await meetingManager.startAudioInputDevice('deviceId');
     } catch (error) {
       // Handle device selection error.
       console.error('Failed to select video input device', error);
