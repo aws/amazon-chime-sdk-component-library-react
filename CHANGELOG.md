@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fix command line sample to install latest node dependencies in migration guides.
+
 ## [3.0.0] - 2022-03-17
 
 Amazon Chime SDK React Components Library v3 is here !! 🎉🎉🎉
