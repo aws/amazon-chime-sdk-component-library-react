@@ -12,7 +12,7 @@ You can access the `MeetingManager` instance with the `useMeetingManager` hook.
 
 ## Constructor
 
-You need to pass a class implementing [Logger](https://aws.github.io/amazon-chime-sdk-js/interfaces/logger.html) interface as a required property to construct a `MeetingManager` object.
+You need to pass a class implementing <a target="_blank" href="https://aws.github.io/amazon-chime-sdk-js/interfaces/logger.html">Logger</a> interface as a required property to construct a `MeetingManager` object.
 
 ```js
 const logger = new ConsoleLogger('LoggerName');
@@ -156,7 +156,7 @@ const MyApp = () => {
 
 With V3 of the Amazon Chime SDK for JavaScript, builders now have the option of updating the properties of `MeetingSessionConfiguration`. `MeetingSessionConfiguration` is a class that allows the users to configure the meeting session.
 
-The class contains several properties like `videoUplinkBandwidthPolicy`, `videoDownlinkBandwidthPolicy`, `attendeePresenceTimeoutMs` etc. You can learn more about the available properties at [MeetingSessionConfiguration](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionconfiguration.html)
+The class contains several properties like `videoUplinkBandwidthPolicy`, `videoDownlinkBandwidthPolicy`, `attendeePresenceTimeoutMs` etc. You can learn more about the available properties at <a target="_blank" href="https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionconfiguration.html">MeetingSessionConfiguration</a>
 in the SDK documentation. The following code example shows a `MeetingSessionConfiguration` where the default value of the properties are overridden to cusomize the meeting session.
 
 ```jsx
@@ -204,10 +204,10 @@ const MyApp = () => {
 **IMPORTANT NOTE**
 This approach has limitations. This should be used only in very specific cases where you want to share the meeting manager instance
 variable values and you will not use video, roster and audio at both places. Still, the hooks and providers may not work as expected as `MeetingProvider` wraps all the other providers.
-The video will not work at both places due to limitations of JS SDK to bind a video stream to a single video tile only. Please check [this](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/492#issuecomment-846317339) issue for more details.
+The video will not work at both places due to limitations of JS SDK to bind a video stream to a single video tile only. Please check <a target="_blank" href="https://github.com/aws/amazon-chime-sdk-component-library-react/issues/492#issuecomment-846317339">this</a> issue for more details.
 
 Please make sure your app calls `meetingManager.join()` only once with the same `attendeeInfo`.
-Otherwise, the previous attendee who joined the meeting will leave the meeting with [AudioJoinedFromAnotherDevice](https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice).
+Otherwise, the previous attendee who joined the meeting will leave the meeting with <a target="_blank" href="https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice">AudioJoinedFromAnotherDevice</a>.
 
 You can create a new `MeetingManager` instance and then pass it as a prop to your `MeetingProvider`s. If not passed,
 a new `MeetingManager` instance will be created internally with each `MeetingProvider` when rendered; and,
@@ -235,7 +235,7 @@ const Root = () => {
 ### Opt-out of client event ingestion.
 
 The Amazon Chime SDK for JavaScript sends meeting events to the Amazon Chime backend to analyze meeting health trends or identify common failures.
-This helps to improve your meeting experience. For more information, check the [client event ingestion guide](https://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.html) in the Amazon Chime SDK for JavaScript guides.
+This helps to improve your meeting experience. For more information, check the <a target="_blank" href="https://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.html">client event ingestion guide</a> in the Amazon Chime SDK for JavaScript guides.
 
 To opt-out of event ingestion from the Amazon Chime SDK for JavaScript, provide a `DefaultEventController` with a `NoOpEventReporter` as the `eventReporter` while joining the meeting.
 

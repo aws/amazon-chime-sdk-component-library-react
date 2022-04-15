@@ -27,13 +27,13 @@ when mounted, which may impact performance.
 
 You should see either "processor is supported" or "processor is not supported" in your browser developer tools based on whether or not
 background blur is supported on your device and browser version. For more information on if background blur is supported, refer
-to [Integrating background filters into your Amazon Chime SDK for JavaScript application](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#integrating-background-filters-into-your-amazon-chime-sdk-for-javascript-application).
+to <a target="_blank" href="https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#integrating-background-filters-into-your-amazon-chime-sdk-for-javascript-application">Integrating background filters into your Amazon Chime SDK for JavaScript application</a>.
 
 You can check whether or not the processor has been loaded correctly by checking the state of `isBackgroundBlurSupported`.
 `createBackgroundBlurDevice` may throw an error if the processor was not loaded. You should check whether or not the processor has been loaded correctly by checking the state of `isBackgroundBlurSupported`
 before calling `createBackgroundBlurDevice`. Calling `createBackgroundBlurDevice` will create a new `DefaultVideoTransformDevice`. Users would also need to call `DefaultVideoTransformDevice.stop` when constructing a new
 `DefaultVideoTransformDevice` with `createBackgroundBlurDevice` in order to destroy the processors running previously. Once you call `DefaultVideoTransformDevice.stop`, you should discard the old `DefaultVideoTransformDevice`.
-For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice).
+For more information, refer to <a target="_blank" href="https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice">Video Processing APIs</a>.
 
 One thing to note is that calling `meetingManager.startVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
 will automatically stop any video processor that was previously running. Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `createBackgroundBlurDevice`.
