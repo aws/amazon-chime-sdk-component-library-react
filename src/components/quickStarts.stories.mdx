@@ -58,40 +58,56 @@ const MyApp = () => {
 >* Safari: Preference - Auto-Play - Find your project hosting URL - Allow All Auto-Play
 >* Edge: Preference - Cookies and Site Permissions - All permissions - Media autoplay - Add your project hosting URL
 
-## Handle Device Permission
+## Get Device Permissions From the Browser
 
-By default, after `join()` method is called, `MeetingManager` will:
+Amazon Chime React Component Library uses [`DeviceLabelTrigger`](https://github.com/aws/amazon-chime-sdk-js/blob/bec0e13331ee1ff9198070dd2a6bb1bd289dd14e/src/devicecontroller/DeviceControllerFacade.ts#L25-L37) to call `getUserMedia` API to invoke the device permission prompt to request device permission from browser. `MeetingManager.join()` API provides an optional parameter `options: MeetingManagerJoinOptions` which contains property `deviceLabels: DeviceLabels | DeviceLabelTrigger` to configure `DeviceLabelTrigger`.
 
-1. Trigger the device permission prompt using `deviceLabelTrigger`
+```ts
+// Initialize the `MeetingSession` and invoke device permission prompt to get device permission
+join(
+  meetingSessionConfiguration: MeetingSessionConfiguration,
+  options?: MeetingManagerJoinOptions
+): Promise<void> {};
+
+interface MeetingManagerJoinOptions {
+  deviceLabels?: DeviceLabels | DeviceLabelTrigger;
+  eventController?: EventController;
+  enableWebAudio?: boolean;
+  activeSpeakerPolicy?: ActiveSpeakerPolicy;
+}
+```
+
+After calling `MeetingManager.join()` method, `MeetingManager` will:
+
+1. Invoke device permission prompt to request device permission
+    * The kind of device for which permission is requested is determined by `MeetingManagerJoinOptions.deviceLabels` (`DeviceLabels.AudioAndVideo` is default value).
 2. Read the device lists of `AudioInput`, `AudioOutput` and `VideoInput` devices
     * In any case, SDK will read the device list of all three device kinds
     * For a device kind without permission, it may get a device list with blank labels. This result depends on the design of device permission of different browsers
-
 3. Select a device for each kind
 
 ### Suppress Device Permission Prompt
 
-`MeetingManager` provides an optional parameter `deviceLabels: DeviceLabels | DeviceLabelTrigger` in its `join()` method to suppress device permission prompt.
-
-You could either use preset options or customize your own device label trigger.
+By default, after calling `MeetingManager.join()`, the React SDK will request permission for both audio device and video device. You could either use preset options or customize your own device label trigger to suppress this behavior.
 
 #### To Use the Preset Options
 
-1. Call `join()` method with a `deviceLabels` parameter of `DeviceLabels` type to select the devices from which the browser requests permission when joining the meeting
-    * The SDK reads the device list of all kinds of devices, but only selects the device for the kind indicated by `DeviceLabels`
+Pass `DeviceLabels` to the `deviceLabels` property of `MeetingManager.join()`'s optional parameter `options: MeetingManagerJoinOptions`.
 
-```js
+* The SDK reads the device list of all kinds of devices, but only selects the device for the kind indicated by `DeviceLabels`
+
+```ts
 enum DeviceLabels {
-  None,
-  Audio,
-  Video,
-  AudioAndVideo,
-};
+  None = 1, // Do not invoke device permission prompt - suppress device permission for audio and video device
+  Audio, // The constraint of `getUserMedia` is { audio: true } - suppress device permission request for video device
+  Video, // The constraint of `getUserMedia` is { video: true } - suppress device permission request for audio device
+  AudioAndVideo, // Default value. The constraint of `getUserMedia` is { audio:true, video: true } - no suppression
+}
 ```
 
 For example, a simple App to join a meeting that only requires camera using preset option.
 
-```jsx
+```tsx
 import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
@@ -128,17 +144,18 @@ const MyApp = () => {
 
 Result:
 
-1. Browser asks permission for camera
+1. Invoke device permission prompt to request permission for camera
 2. The SDK reads the device lists for `AudioInput`, `AudioOutput` and `VideoInput` devices
     * `AudioInput` and `AudioOutput` device may get a device list with blank labels due to no permission
 3. The SDK selects a device for `VideoInput` kind
 
 #### To Customize Your Own Device Label Trigger
 
-1. Pass a `deviceLabels` parameter of `DeviceLabelTrigger` type to `join()` method to set your customized `deviceLabelTrigger` which triggers the device permission prompt
-    * The SDK reads the device list of all kinds of devices, but does not select any device. You need to handle the device selection yourself
+Pass `DeviceLabelTrigger` to the `deviceLabels` property of `MeetingManager.join()`'s optional parameter `options: MeetingManagerJoinOptions` to set your customized `deviceLabelTrigger` which invokes the device permission prompt.
 
-```js
+* The SDK reads the device list of all kinds of devices, but does not select any device. You need to handle the device selection yourself
+
+```ts
 type DeviceLabelTrigger = () => Promise<MediaStream>;
 ```
 
@@ -159,11 +176,15 @@ const MyApp = () => {
     const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
     // Customize your own `DeviceLabelTrigger`
     const deviceLabels = async () => {
-      // Do something
+      // Customize your own behavior here
+      ...
+
       const stream = await navigator.mediaDevices.getUserMedia({
         video: true,
       });
-      // Do something
+
+      // Customize your own behavior here
+      ...
       return stream;
     };
     const options = {
@@ -194,21 +215,24 @@ Result:
 
     * `AudioInput` and `AudioOutput` device may get a device list with empty labels due to no permission
 
-3. The SDK doesn’t select any device
+3. The SDK doesn't select any device
 
-## Invoke Device Permission
+## Invoke Device Permission Prompt
 
-MeetingManager provides an invokeDeviceProvider(deviceLabels: DeviceLabels) method to invoke the device permission prompt. It accepts a parameter of DeviceLabels type to let you indicate the kind of device to be invoked.
+`MeetingManager` provides an `invokeDeviceProvider(deviceLabels: DeviceLabels)` method to invoke the device permission prompt. It accepts a parameter of `DeviceLabels` type to let you indicate the kind of device to be invoked. This API should only be used after you suppress the device permission prompt.
+
+> Note: In order for this function to work, you need to make sure that browser's device permissions are "unset". Only suppressed device permission requests (device permission is "unset" for browser) can be invoked.
+
 
 To invoke device permission:
 
-1. Call invokeDeviceProvider() method with a parameter of DeviceLabels type
+1. Call `invokeDeviceProvider()` method with a parameter of `DeviceLabels` type
     * See the <a target="_blank" href="https://github.com/aws-samples/amazon-chime-sdk/blob/daefd28611a577877146a46aa189958c5bd0234b/apps/meeting/src/containers/DevicePermissionControl/DevicePermissionControl.tsx">invoke device permission example</a>
 
-For example, join a meeting that doesn't require any device permission, and obtain the full access to devices later.
+For example, a simple App that joins a meeting without invoking device permission prompt, and request the permission for camera and microphone later.
 
 ```jsx
-import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import { useMeetingManager, DeviceLabels } from 'amazon-chime-sdk-component-library-react';
 import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MyApp = () => {
@@ -241,7 +265,7 @@ const MyApp = () => {
 };
 ```
 
-Click a button to trigger `invokeDeviceProvider()` method.
+Click a button to call `invokeDeviceProvider()` method and invoke device permission prompt.
 
 ```js
 const handleClick = async () => {
@@ -251,11 +275,15 @@ const handleClick = async () => {
 
 Result:
 
-1. Join a meeting without triggering any device permission prompt
+1. Join a meeting without invoking device permission prompt
 2. After clicking the button, browser asks permission for microphone and camera
 3. The SDK reads the device lists of all kinds of devices
-4. The SDK doesn’t select any device
+4. The SDK doesn't select any device
     * You need to handle the device selection yourself
+
+## Track DeviceLabelTrigger Status
+
+Check out [useDeviceLabelTriggerStatus](?path=/story/sdk-hooks-usedevicelabeltriggerstatus--page) for more details.
 
 ## Enable Camera and Display the Video Stream in the Grid
 

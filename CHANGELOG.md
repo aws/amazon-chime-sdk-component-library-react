@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Improve "Handle Device Permission" guide in Quick Starts.
+
 ### Fixed
 
 - Fix command line sample to install latest node dependencies in migration guides.
