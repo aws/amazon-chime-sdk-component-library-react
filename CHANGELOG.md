@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fix command line sample to install latest node dependencies in migration guides.
 - Fix the broken markdown URLs due to this [storybook issue](https://github.com/storybookjs/storybook/issues/9005) by replacing markdown links with HTML `<a>` tag.
+- Clarify `setIsVideoEnabled` usage in `LocalVideoProvider` and `useLocalVideo` docs.
 
 ## [3.0.0] - 2022-03-17
 
