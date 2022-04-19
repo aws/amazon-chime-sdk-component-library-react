@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Improve "Handle Device Permission" guide in Quick Starts.
+- Upgrade `storybook` to a fixed `6.5.0-alpha.64` with `webpack v5` to fix security vulnerabilities and issues with external HTTP link rendering.
 
 ### Fixed
 

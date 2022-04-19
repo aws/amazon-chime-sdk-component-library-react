@@ -26,37 +26,21 @@ module.exports = ({ config }) => {
     },
     {
       test: /\.(ts|tsx)$/,
-      use: [
-        require.resolve("ts-loader"),
-        {
-          loader: require.resolve('react-docgen-typescript-loader'),
-          options: {
-            tsconfigPath: resolve(__dirname, '../tsconfig.json'),
-            // omit props extended from styled-system
-            propFilter: (prop) => {
-              if (prop.parent) {
-                return !prop.parent.fileName.includes("node_modules");
-              }
-              return true;
-            },
-          }
-        }
-      ]
+      use: 'ts-loader',
+      exclude: /node_modules/,
     },
     {
       test: /\.(woff|woff2|eot|ttf|otf)$/,
-      use: ['file-loader']
+      type: 'asset/resource',
     },
     {
       test: /\.(png|svg|jpg|gif)$/,
-      use: [
-        {
-          loader: 'url-loader',
-          options: {
-            limit: 8192
-          }
+      type: 'asset',
+      parser: {
+        dataUrlCondition: {
+          maxSize: 8192
         }
-      ]
+      }
     },
     {
       test: /\.(ts|tsx)$/,
@@ -67,7 +51,7 @@ module.exports = ({ config }) => {
     },
     {
       test: /\.stories\.tsx?$/,
-      loaders: [
+      use: [
         {
           loader: require.resolve('@storybook/source-loader'),
           options: { 

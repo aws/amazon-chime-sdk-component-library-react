@@ -27,7 +27,7 @@ Amazon Chime SDK React Components Library v3 includes major improvements for com
 - **WebRTC metrics**: Publish the standardized WebRTC metrics for all supported browsers. Deprecate `useBandwidthMetrics` hook in favor of `useMediaStreamMetrics` hook.
 - **Logger**: Add `LoggerProvider` and `useLogger` components to enable universal logging in component library.
 
-Check out our <a target="_blank" href="https://github.com/aws/amazon-chime-sdk-component-library-react/blob/2e9ae19fb6ea72a6611a7d7188744c1db45d8e09/CHANGELOG.md#L20">CHANGELOG for 3.0.0</a> for more details.
+Check out our [CHANGELOG for 3.0.0](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/2e9ae19fb6ea72a6611a7d7188744c1db45d8e09/CHANGELOG.md#L20) for more details.
 
 ### `MeetingProvider` props change
 
@@ -421,7 +421,7 @@ const MyChild = () => {
 
 ## Enable logging using `useLogger` and `LoggerProvider`
 
-Please check documentation on <a target="_blank" href="https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/sdk-providers-loggerprovider--page">LoggerProvider</a> for more information on its usage.
+Please check documentation on [LoggerProvider](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/sdk-providers-loggerprovider--page) for more information on its usage.
 
 ## StyledComponent
 
@@ -539,11 +539,17 @@ In V3, we have improved the `type` for selected device in `MeetingManager` and c
 
 #### MeetingManager Properties Change
 
-| Before in 2.x                              | After in 3.x                                             |
-| ------------------------------------------ | -------------------------------------------------------- |
-| `selectedAudioOutputDevice: string | null` | `selectedAudioOutputDevice: string | null`               |
-| `selectedAudioInputDevice: string | null`  | `selectedAudioInputDevice: AudioInputDevice | undefined` |
-| `selectedVideoInputDevice: string | null`  | `selectedVideoInputDevice: VideoInputDevice | undefined` |
+```ts
+// Before in 2.x  
+selectedAudioOutputDevice: string | null
+selectedAudioInputDevice: string | null
+selectedVideoInputDevice: string | null
+
+// After in 3.x
+selectedAudioOutputDevice: string | null
+selectedAudioInputDevice: AudioInputDevice | undefined
+selectedVideoInputDevice: VideoInputDevice | undefined
+```
 
 ```ts
 type Device = string | MediaTrackConstraints | MediaStream;
