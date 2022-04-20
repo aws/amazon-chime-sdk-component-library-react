@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { BackgroundBlurOptions, LogLevel } from 'amazon-chime-sdk-js';
+import { BackgroundBlurOptions, isVideoTransformDevice, LogLevel } from 'amazon-chime-sdk-js';
 import {
   MeetingProvider,
   useBackgroundBlur,
@@ -59,19 +59,28 @@ const Meeting: React.FC<Props> = ({ onBlurStrengthChanged }) => {
 
   useEffect(() => {
     const addBackgroundBlur = async () => {
+      console.log('Creating background blur device called');
+      let current = selectedDevice;
+      if (
+        !isBackgroundBlurSupported ||
+        meetingStatus !== MeetingStatus.Succeeded ||
+        current === undefined
+      ) {
+        console.log('Does not meet the conditions of use');
+        return;
+      }
+
       try {
-        if (
-          isBackgroundBlurSupported &&
-          meetingStatus === MeetingStatus.Succeeded &&
-          selectedDevice
-        ) {
-          console.log('Creating background blur device called');
-          const chosenVideoTransformDevice = await createBackgroundBlurDevice(selectedDevice);
-          console.log(chosenVideoTransformDevice);
-          await meetingManager.startVideoInputDevice(chosenVideoTransformDevice);
-          toggleVideo();
+        if (isVideoTransformDevice(current)) {
+          const intrinsicDevice = await current.intrinsicDevice();
+          await current.stop();
+          current = intrinsicDevice;
         }
-      } catch (error) {
+        current = await createBackgroundBlurDevice(current);
+        await meetingManager.startVideoInputDevice(current);
+        toggleVideo();
+      }
+      catch (error) {
         console.error('Failed to add Background Blur');
       }
     };
