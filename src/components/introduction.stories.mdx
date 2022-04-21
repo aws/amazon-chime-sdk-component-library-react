@@ -20,8 +20,8 @@ For the majority of use cases, an Amazon Chime application consists of **a serve
 
 The server application and client application could be hosted either locally or in the cloud (serverless).
 
-- For hosting locally, see the <a target="_blank" href="https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/src">client application</a> and <a target="_blank" href="https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js">server application</a>.
-- For hosting in the cloud, see the <a target="_blank" href="https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/serverless">serverless example</a>.
+- For hosting locally, see the [client application](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/src) and [server application](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js).
+- For hosting in the cloud, see the [serverless example](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/serverless).
 
 ## Getting Started
 
@@ -61,14 +61,14 @@ To join a meeting, you need to do the following sub steps:
 
 - Create and join the meeting
 
-First, you need to fetch the meeting and attendee data from Chime's <a target="_blank" href="https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateAttendee.html">CreateAttendee</a> and <a target="_blank" href="https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html">CreateMeeting</a> APIs.
+First, you need to fetch the meeting and attendee data from Chime's [CreateAttendee](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateAttendee.html) and [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) APIs.
 
-- Check the <a target="_blank" href="https://github.com/aws/amazon-chime-sdk-js#getting-responses-from-your-server-application">Getting responses from your server application</a> for details.
-- Check the <a target="_blank" href="https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/containers/MeetingForm/index.tsx">MeetingForm component</a>, the <a target="_blank" href="https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/utils/api.ts">API calls</a>, and <a target="_blank" href="https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js">server application</a> in our <a target="_blank" href="https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting">React meeting demo</a> as examples.
+- Check the [Getting responses from your server application](https://github.com/aws/amazon-chime-sdk-js#getting-responses-from-your-server-application) for details.
+- Check the [MeetingForm component](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/containers/MeetingForm/index.tsx), the [API calls](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/utils/api.ts), and [server application](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js) in our [React meeting demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting) as examples.
 
 Then, initialize `MeetingSessionConfiguration` with the meeting and attendee data from the last step. You can choose to modify the `MeetingSessionConfiguration` properties to customize the meeting to your preference.
 
-Updating the `MeetingSessionConfiguration` props is an optional step. You can learn more about the available props here: <a target="_blank" href="https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionconfiguration.html">MeetingSessionConfiguration</a>
+Updating the `MeetingSessionConfiguration` props is an optional step. You can learn more about the available props here: [MeetingSessionConfiguration](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionconfiguration.html)
 
 Lastly, pass the `MeetingSessionConfiguration` to the `join` method to create a meeting session. You can now start the meeting session and join the meeting.
 
@@ -117,7 +117,7 @@ const MyMeetingView = () => {
 };
 ```
 
-For more common use cases, please review our <a target="_blank" href="https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/quick-starts--page">Quick Starts</a> guide.
+For more common use cases, please review our [Quick Starts](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/quick-starts--page) guide.
 
 ## FAQ
 

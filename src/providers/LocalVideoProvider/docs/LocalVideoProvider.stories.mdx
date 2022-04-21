@@ -4,7 +4,7 @@
 
 The `LocalVideoProvider` provides `tileId` of video tile associated with the local video, `isVideoEnabled` specifying the local video state, `setIsVideoEnabled` function to set the value of `isVideoEnabled`, `hasReachedVideoLimit` specifying whether or not video limit is reached, and `toggleVideo()` to toggle local video.
 
-> Note: `setIsVideoEnabled` is a workaround for <a target="_blank" href="https://github.com/aws/amazon-chime-sdk-component-library-react/issues/529">GitHub Issue 529</a> to synchronize the state of `PreviewVideo` and `LocalVideo` internally. This function does not change the actual state of `LocalVideo` and `PreviewVideo`. Don't use this in your application.
+> Note: `setIsVideoEnabled` is a workaround for [GitHub Issue 529](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/529) to synchronize the state of `PreviewVideo` and `LocalVideo` internally. This function does not change the actual state of `LocalVideo` and `PreviewVideo`. Don't use this in your application.
 
 The React SDK depends on the Amazon Chime SDK for JavaScript, wherein, a single video stream is attached to a video element at a time. Hence, if `PreviewVideo` and `LocalVideo` component both are rendered on the same page and if both are enabled, stopping the video preview in `PreviewVideo` component will result into disconnecting the video stream for `LocalVideo` as well showing a black screen.
 
