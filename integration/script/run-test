@@ -86,7 +86,7 @@ const setTestTarget = (target) => {
 };
 
 // Run the command asynchronously without blocking the Node.js event loop.
-function runAsync(command, args, options) {
+const runAsync = (command, args, options) => {
   options = {
     ...options,
     shell: true
@@ -108,11 +108,11 @@ function runAsync(command, args, options) {
   });
 
   return child.pid;
-}
+};
 
 // Run the command synchronously with blocking the Node.js event loop
 // until the spawned process either exits or is terminated.
-function runSync(command, args, options, printOutput = true) {
+const runSync = (command, args, options, printOutput = true) => {
   options = {
     ...options,
     shell: true
@@ -134,7 +134,7 @@ function runSync(command, args, options, printOutput = true) {
   }
 
   return output;
-}
+};
 
 const checkIfPortIsInUse = async port =>
   new Promise(resolve => {
@@ -149,15 +149,15 @@ const checkIfPortIsInUse = async port =>
       });
   });
 
-function startTestDemo() {
+const startTestDemo = () => {
   console.log(green, 'Installing dependencies in test demo');
   runSync('npm', ['install'], { cwd: pathToTestDemoFolder });
 
   console.log(green, ' Starting the test demo');
   // The test demo will keep running until the process is terminated,
   // so we should execute this command asynchronously without blocking other commands.
-  runAsync('npm', ['run', 'start'], { cwd: pathToTestDemoFolder });
-}
+  runAsync('npm', ['run', 'start:fast'], { cwd: pathToTestDemoFolder });
+};
 
 const waitUntilTestDemoStarts = async () => {
   console.log(green, ' Waiting for test demo to start');

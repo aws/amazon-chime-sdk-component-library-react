@@ -2,8 +2,7 @@
   "name": "test-demo",
   "version": "0.1.0",
   "dependencies": {
-    "amazon-chime-sdk-component-library-react": "^2.15.0",
-    "amazon-chime-sdk-js": "^3.0.0-beta.1",
+    "amazon-chime-sdk-component-library-react": "file:../../..",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "styled-components": "^5.3.3",
@@ -28,8 +27,10 @@
   },
   "scripts": {
     "build": "webpack",
+    "preinstall": "cd ../../.. && npm install && npm run build",
     "start:client": "webpack-dev-server",
     "start:backend": "node server.js",
-    "start": "concurrently \"npm run start:client\" \"npm run start:backend\""
+    "start:fast": "concurrently \"npm run start:client\" \"npm run start:backend\"",
+    "start": "npm install && npm run start:fast"
   }
 }

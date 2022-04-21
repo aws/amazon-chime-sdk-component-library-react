@@ -23,16 +23,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Pack the React Components Library and install the tarball into the Test Demo
-        run: |
-          current_version=$(.github/script/get-current-version)
-          echo "Packing current version:" $current_version
-          npm ci
-          npm run build
-          npm pack
-          cd integration/app/test-demo
-          npm uninstall amazon-chime-sdk-component-library-react
-          npm install ../../../amazon-chime-sdk-component-library-react-$current_version.tgz
       - name: Create a Job ID
         id: create-job-id
         uses: filipstefansson/uuid-action@ce29ebbb0981ac2448c2e406e848bfaa30ddf04c
