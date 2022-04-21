@@ -6,11 +6,11 @@ The Amazon Chime SDK React Component Library is comprised of Providers, Hooks, U
 Each component has some basic styling applied to it, but you can add or override your own styles to the component by using stylesheets,
 `styled-components` or other styling frameworks.
 
-The Amazon Chime SDK React Component Library uses <a target="_blank" href="https://styled-components.com/docs">`styled-components`</a> to attach base styles to all of the components. You must install the peer dependency on `styled-components` to use the library.
+The Amazon Chime SDK React Component Library uses [`styled-components`](https://styled-components.com/docs) to attach base styles to all of the components. You must install the peer dependency on `styled-components` to use the library.
 
 # Base Styles
 
-Every component extends either the <a target="_blank" href="https://github.com/aws/amazon-chime-sdk-component-library-react/blob/61464e15175b0f88d141f968790524c5443ea5d1/src/components/sdk/Base/index.tsx">BaseSdkProps</a> props or <a target="_blank" href="https://github.com/aws/amazon-chime-sdk-component-library-react/blob/61464e15175b0f88d141f968790524c5443ea5d1/src/components/ui/Base/index.ts">BaseProps</a>, which include the `css` and `className` props.
+Every component extends either the [BaseSdkProps](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/61464e15175b0f88d141f968790524c5443ea5d1/src/components/sdk/Base/index.tsx) props or [BaseProps](https://github.com/aws/amazon-chime-sdk-component-library-react/blob/61464e15175b0f88d141f968790524c5443ea5d1/src/components/ui/Base/index.ts), which include the `css` and `className` props.
 
 # Override base styles on a component
 
@@ -24,7 +24,7 @@ In order to select these DOM elements in your stylesheets, you can refer to the 
 The first method is to use the `className` prop and apply your own classes to the top level DOM element that, in some cases, contain child DOM elements.
 This is the preferred method if you are making more than a couple styling changes to the component.
 
-The base styles were designed to hold a low specificity, however due to <a target="_blank" href="https://styled-components.com/docs/advanced#issues-with-specificity">this caveat</a> with using `styled-components`, when you select DOM elements in your own stylesheet, you'll need
+The base styles were designed to hold a low specificity, however due to [this caveat](https://styled-components.com/docs/advanced#issues-with-specificity) with using `styled-components`, when you select DOM elements in your own stylesheet, you'll need
 to use a higher specificity than just one class selector, otherwise the base styles applied by `styled-components` will override your styles.
 
 ```jsx
@@ -42,7 +42,7 @@ Then, in your stylesheet, you need to specify the class name:
 }
 ```
 
-The reason for having to specify the class selector twice is due to <a target="_blank" href="https://styled-components.com/docs/advanced#issues-with-specificity">this caveat</a> with `styled-components`.
+The reason for having to specify the class selector twice is due to [this caveat](https://styled-components.com/docs/advanced#issues-with-specificity) with `styled-components`.
 
 ## 2. Override styles using `styled-components`
 
@@ -93,7 +93,7 @@ Example of `./style.scss`:
 }
 ```
 
-The reason for having to specify the class selector twice is due to <a target="_blank" href="https://styled-components.com/docs/advanced#issues-with-specificity">this caveat</a> with `styled-components`.
+The reason for having to specify the class selector twice is due to [this caveat](https://styled-components.com/docs/advanced#issues-with-specificity) with `styled-components`.
 
 ## 2. Using `styled-components`
 

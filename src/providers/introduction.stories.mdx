@@ -57,7 +57,7 @@ const MyApp = () => {
 
 3. Join a meeting
 
-To join a meeting, you will need to pass the meeting and attendee data from Chime's <a target="_blank" href="https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateAttendee.html">CreateAttendee</a> and <a target="_blank" href="https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html">CreateMeeting</a> APIs. <a target="_blank" href="https://aws.github.io/amazon-chime-sdk-js/modules/gettingstarted.html#meeting-service">Read this for more details</a>.
+To join a meeting, you will need to pass the meeting and attendee data from Chime's [CreateAttendee](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateAttendee.html) and [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) APIs. [Read this for more details](https://aws.github.io/amazon-chime-sdk-js/modules/gettingstarted.html#meeting-service).
 
 Once you have your meeting and attendee data, you can call `meetingManager.join` to join the meeting.
 
@@ -108,7 +108,7 @@ The attendee should be in the meeting, and able to receive audio/video. Check ou
 6. _Optional_ - Opt-out of client event ingestion
 
 The Amazon Chime SDK for JavaScript sends meeting events to the Amazon Chime backend to analyze meeting health trends or identify common failures.
-This helps to improve your meeting experience. For more information, check the <a target="_blank" href="https://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.html">client event ingestion guide</a> in the Amazon Chime SDK for JavaScript guides.
+This helps to improve your meeting experience. For more information, check the [client event ingestion guide](https://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.html) in the Amazon Chime SDK for JavaScript guides.
 
 To opt-out of event ingestion from the Amazon Chime SDK for JavaScript, provide a `DefaultEventController` with a `NoOpEventReporter` as the `eventReporter` while joining the meeting.
 

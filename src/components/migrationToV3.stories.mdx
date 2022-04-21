@@ -21,7 +21,7 @@ npm install --save amazon-chime-sdk-component-library-react@3 amazon-chime-sdk-j
 
 Amazon Chime SDK React Components Library v3 includes major improvements for component style customization, `MeetingProvider/MeetingManager` configuration, device management, WebRTC metrics and logger.
 
-- **Component style customization**: Improve components for easier customization of style. Check out our <a target="_blank" href="https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/styling-guide--page">styling guide</a> for more information.
+- **Component style customization**: Improve components for easier customization of style. Check out our [styling guide](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/styling-guide--page) for more information.
 - **`MeetingProvider/MeetingManager` configuration**: Improve `MeetingProvider`, `MeetingManager` and `MeetingManager.join()` API to allow configuring a meeting session right before joining a meeting instead of when `MeetingProvider` mounts.
 - **Device management**: Improve `types` for device selection components to better support basic and transformed devices. Remove `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hooks to standardize device selection through `MeetingManager` and throw error when selection fails.
 - **WebRTC metrics**: Publish the standardized WebRTC metrics for all supported browsers. Deprecate `useBandwidthMetrics` hook in favor of `useMediaStreamMetrics` hook.
@@ -254,7 +254,7 @@ const MyApp = () => {
 
 ### `MeetingManager` `join` method parameter change
 
-In V3, `MeetingManager`'s `join` method takes `MeetingSessionConfiguraiton` and `options` as parameter.
+In V3, `MeetingManager`'s `join` method takes `MeetingSessionConfiguration` and `options` as parameter.
 `meetingInfo` and `attendeeInfo` parameters are removed from the interface and are rather passed to the constructor of `MeetingSessionConfiguration`.
 
 Before in 2.x:
@@ -436,25 +436,25 @@ When you implement your own theme, you need to use `globalStyle` instead of `glo
 
 In V3, some of device management APIs, hooks and types have been renamed for more accurate description. To migrate, use new names summarized in table below.
 
-| Before in 2.x                                               | After in 3.x                                               |
-| ----------------------------------------------------------- | ---------------------------------------------------------- |
-| `DevicePermissionStatus`                                    | `DeviceLabelTriggerStatus`                                 |
-| `DevicePermissionStatus.UNSET`                              | `DevicePermissionStatus.UNTRIGGERED`                       |
-| `useDevicePermissionStatus`                                 | `useDeviceLabelTriggerStatus`                              |
-|                                                             |                                                            |
-| `MeetingManager.devicePermissionStatus`                     | `MeetingManager.deviceLabelTriggerStatus`                  |
-|                                                             |                                                            |
-| `MeetingManager.selectAudioInputDevice()`                   | `MeetingManager.startAudioInputDevice()`                   |
-| `MeetingManager.selectAudioOutputDevice()`                  | `MeetingManager.startAudioOutputDevice()`                  |
-| `MeetingManager.selectVideoInputDevice()`                   | `MeetingManager.startVideoInputDevice()`                   |
-|                                                             |                                                            |
-| `MeetingManager.devicePermissionsObservers`                 | `MeetingManager.deviceLabelTriggerStatusObservers`         |
-| `MeetingManager.subscribeToDevicePermissionStatus()`        | `MeetingManager.subscribeToDeviceLabelTriggerStatus()`     |
-| `MeetingManager.unsubscribeFromDevicePermissionStatus()`    | `MeetingManager.unsubscribeFromDeviceLabelTriggerStatus()` |
-|                                                             |                                                            |
-| `MeetingManager.deviceLabelTriggerChangeObservers`          | `MeetingManager.deviceLabelTriggerObservers`               |
-| `MeetingManageer.subscribeToDeviceLabelTriggerChange()`     | `MeetingManageer.subscribeToDeviceLabelTrigger()`          |
-| `MeetingManageer.unsubscribeFromDeviceLabelTriggerChange()` | `MeetingManageer.unsubscribeFromDeviceLabelTrigger()`      |
+| Before in 2.x                                                         | After in 3.x                                                          |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| <code>DevicePermissionStatus</code>                                   | <code>DeviceLabelTriggerStatus</code>                                 |
+| <code>DevicePermissionStatus.UNSET</code>                             | <code>DevicePermissionStatus.UNTRIGGERED</code>                       |
+| <code>useDevicePermissionStatus</code>                                | <code>useDeviceLabelTriggerStatus</code>                              |
+|                                                                       |                                                                       |
+| <code>MeetingManager.devicePermissionStatus</code>                    | <code>MeetingManager.deviceLabelTriggerStatus</code>                  |
+|                                                                       |                                                                       |
+| <code>MeetingManager.selectAudioInputDevice()</code>                  | <code>MeetingManager.startAudioInputDevice()</code>                   |
+| <code>MeetingManager.selectAudioOutputDevice()</code>                 | <code>MeetingManager.startAudioOutputDevice()</code>                  |
+| <code>MeetingManager.selectVideoInputDevice()</code>                  | <code>MeetingManager.startVideoInputDevice()</code>                   |
+|                                                                       |                                                                       |
+| <code>MeetingManager.devicePermissionsObserver</code>                 | <code>MeetingManager.deviceLabelTriggerStatusObservers</code>         |
+| <code>MeetingManager.subscribeToDevicePermissionStatus()</code>       | <code>MeetingManager.subscribeToDeviceLabelTriggerStatus()</code>     |
+| <code>MeetingManager.unsubscribeFromDevicePermissionStatus()</code>   | <code>MeetingManager.unsubscribeFromDeviceLabelTriggerStatus()</code> |
+|                                                                       |                                                                       |
+| <code>MeetingManager.deviceLabelTriggerChangeObservers</code>         | <code>MeetingManager.deviceLabelTriggerObservers</code>               |
+| <code>MeetingManager.subscribeToDeviceLabelTriggerChange()</code>     | <code>MeetingManager.subscribeToDeviceLabelTrigger()</code>           |
+| <code>MeetingManager.unsubscribeFromDeviceLabelTriggerChange()</code> | <code>MeetingManager.unsubscribeFromDeviceLabelTrigger()</code>       |
 
 #### New API for Handling Video Input Device Switching
 
@@ -532,7 +532,6 @@ const MyChild = () => {
 };
 ```
 
-
 ### Update Type of Selected Device in MeetingManager
 
 In V3, we have improved the `type` for selected device in `MeetingManager` and corresponding components and hooks.
@@ -540,15 +539,15 @@ In V3, we have improved the `type` for selected device in `MeetingManager` and c
 #### MeetingManager Properties Change
 
 ```ts
-// Before in 2.x  
-selectedAudioOutputDevice: string | null
-selectedAudioInputDevice: string | null
-selectedVideoInputDevice: string | null
+// Before in 2.x
+selectedAudioOutputDevice: string | null;
+selectedAudioInputDevice: string | null;
+selectedVideoInputDevice: string | null;
 
 // After in 3.x
-selectedAudioOutputDevice: string | null
-selectedAudioInputDevice: AudioInputDevice | undefined
-selectedVideoInputDevice: VideoInputDevice | undefined
+selectedAudioOutputDevice: string | null;
+selectedAudioInputDevice: AudioInputDevice | undefined;
+selectedVideoInputDevice: VideoInputDevice | undefined;
 ```
 
 ```ts
@@ -556,27 +555,28 @@ type Device = string | MediaTrackConstraints | MediaStream;
 type AudioInputDevice = Device | AudioTransformDevice | null;
 type VideoInputDevice = Device | VideoTransformDevice;
 ```
+
 #### Hooks Return Values Change
 
 Before in 2.x
 
 ```js
-// Selected audio output deivce. The type is `string | null`
+// Selected audio output device. The type is `string | null`
 const { selectedDevice } = useAudioOutputs();
-// Selected audio input deivce. The type is `string | null`
+// Selected audio input device. The type is `string | null`
 const { selectedDevice } = useAudioInputs();
-// Selected video input deivce. The type is `string | null`
+// Selected video input device. The type is `string | null`
 const { selectedDevice } = useVideoInputs();
 ```
 
 After in 3.x
 
 ```js
-// Selected audio output deivce. The type is `string | null`
+// Selected audio output device. The type is `string | null`
 const { selectedDevice } = useAudioOutputs();
-// Selected audio input deivce. The type is `AudioInputDevice | undefined`
+// Selected audio input device. The type is `AudioInputDevice | undefined`
 const { selectedDevice } = useAudioInputs();
-// Selected video input deivce. The type is `VideoInputDevice | undefined`
+// Selected video input device. The type is `VideoInputDevice | undefined`
 const { selectedDevice } = useVideoInputs();
 ```
 
