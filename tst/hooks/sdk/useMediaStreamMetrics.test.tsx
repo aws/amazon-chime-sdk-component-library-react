@@ -34,9 +34,20 @@ class FakeClientMetricReport extends ClientMetricReport {
 
   getObservableMetrics(): { [p: string]: number } {
     return {
-      availableOutgoingBitrate: 1000,
-      availableIncomingBitrate: 1000,
+      audioPacketsSentFractionLossPercent: NaN,
+      audioPacketsReceivedFractionLossPercent: NaN,
+      audioSpeakerDelayMs: NaN,
+      audioUpstreamRoundTripTimeMs: NaN,
+      audioUpstreamJitterMs: NaN,
+      audioDownstreamJitterMs: NaN,
+      currentRoundTripTimeMs: 11.11,
+      availableOutgoingBitrate: 1111,
+      availableIncomingBitrate: 1111,
     };
+  }
+
+  getRTCStatsReport(): RTCStatsReport {
+    return {} as RTCStatsReport;
   }
 }
 
@@ -76,16 +87,28 @@ class NoOPAudioVideoFacade extends DefaultAudioVideoFacade {
 const initialMediaStreamMetrics = {
   audioPacketsSentFractionLossPercent: null,
   audioPacketsReceivedFractionLossPercent: null,
+  audioSpeakerDelayMs: null,
+  audioUpstreamRoundTripTimeMs: null,
+  audioUpstreamJitterMs: null,
+  audioDownstreamJitterMs: null,
+  currentRoundTripTimeMs: null,
   availableOutgoingBandwidth: null,
   availableIncomingBandwidth: null,
+  rtcStatsReport: null,
   videoStreamMetrics: {},
 };
 
 const expectedMediaStreamMetrics = {
-  audioPacketsSentFractionLossPercent: NaN,
-  audioPacketsReceivedFractionLossPercent: NaN,
+  audioPacketsSentFractionLossPercent: 0,
+  audioPacketsReceivedFractionLossPercent: 0,
+  audioSpeakerDelayMs: 0,
+  audioUpstreamRoundTripTimeMs: 0,
+  audioUpstreamJitterMs: 0,
+  audioDownstreamJitterMs: 0,
+  currentRoundTripTimeMs: 11,
   availableOutgoingBandwidth: 1,
   availableIncomingBandwidth: 1,
+  rtcStatsReport: {},
   videoStreamMetrics: {
     '1': {
       '1': {

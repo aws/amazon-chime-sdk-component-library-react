@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add `audioSpeakerDelayMs`, `audioUpstreamRoundTripTimeMs`, `audioUpstreamJitterMs`, `audioDownstreamJitterMs` and `currentRoundTripTimeMs` metrics to `useMediaStreamMetrics` hook. Also add `rtcStatsReport` to expose the original [`RTCStatsReport`](https://developer.mozilla.org/en-US/docs/Web/API/RTCStatsReport) from [RTCPeerConnection.getStats()](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/getStats).
+
 ### Removed
 
 ### Changed
