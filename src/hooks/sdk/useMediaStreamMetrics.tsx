@@ -6,15 +6,17 @@ import { useEffect, useState } from 'react';
 
 import { useAudioVideo } from '../../providers/AudioVideoProvider';
 
-function isValidMetric(metric: number): boolean {
-  return !Number.isNaN(metric);
-}
-
 interface MediaStreamMetrics {
   audioPacketsSentFractionLossPercent: number | null; // Percentage of audio packets lost (1s) from client to server
   audioPacketsReceivedFractionLossPercent: number | null; // Percentage of audio packets lost from server to client
+  audioSpeakerDelayMs: number | null;
+  audioUpstreamRoundTripTimeMs: number | null;
+  audioUpstreamJitterMs: number | null;
+  audioDownstreamJitterMs: number | null;
+  currentRoundTripTimeMs: number | null;
   availableOutgoingBandwidth: number | null;
   availableIncomingBandwidth: number | null;
+  rtcStatsReport: RTCStatsReport | null;
   videoStreamMetrics: {
     [attendeeId: string]: { [ssrc: string]: { [key: string]: number } };
   };
@@ -26,8 +28,14 @@ export function useMediaStreamMetrics(): MediaStreamMetrics {
     useState<MediaStreamMetrics>({
       audioPacketsSentFractionLossPercent: null,
       audioPacketsReceivedFractionLossPercent: null,
+      audioSpeakerDelayMs: null,
+      audioUpstreamRoundTripTimeMs: null,
+      audioUpstreamJitterMs: null,
+      audioDownstreamJitterMs: null,
+      currentRoundTripTimeMs: null,
       availableOutgoingBandwidth: null,
       availableIncomingBandwidth: null,
+      rtcStatsReport: null,
       videoStreamMetrics: {},
     });
 
@@ -41,43 +49,29 @@ export function useMediaStreamMetrics(): MediaStreamMetrics {
         const {
           audioPacketLossPercent,
           audioPacketsReceivedFractionLoss,
+          audioSpeakerDelayMs,
+          audioUpstreamRoundTripTimeMs,
+          audioUpstreamJitterMs,
+          audioDownstreamJitterMs,
+          currentRoundTripTimeMs,
           availableOutgoingBitrate,
           availableIncomingBitrate,
         } = clientMetricReport.getObservableMetrics();
-        let videoStreamMetrics = {};
-        let availableOutgoingBandwidth = 0;
-        let availableIncomingBandwidth = 0;
-        let audioPacketsSentFractionLossPercent = 0;
-        let audioPacketsReceivedFractionLossPercent = 0;
 
-        if (isValidMetric(audioPacketLossPercent)) {
-          audioPacketsSentFractionLossPercent = Math.trunc(
-            audioPacketLossPercent
-          );
-        }
-
-        if (isValidMetric(audioPacketsReceivedFractionLoss)) {
-          audioPacketsReceivedFractionLossPercent = Math.trunc(
-            audioPacketsReceivedFractionLoss
-          );
-        }
-
-        videoStreamMetrics = clientMetricReport.getObservableVideoMetrics();
-
-        if (isValidMetric(availableOutgoingBitrate)) {
-          availableOutgoingBandwidth = availableOutgoingBitrate / 1000;
-        }
-
-        if (isValidMetric(availableIncomingBitrate)) {
-          availableIncomingBandwidth = availableIncomingBitrate / 1000;
-        }
-
+        // Return 0 if the metric value is NaN, otherwise return its integer part.
         setMediaStreamMetrics({
-          audioPacketsSentFractionLossPercent,
-          audioPacketsReceivedFractionLossPercent,
-          availableOutgoingBandwidth,
-          availableIncomingBandwidth,
-          videoStreamMetrics,
+          audioPacketsSentFractionLossPercent: audioPacketLossPercent | 0,
+          audioPacketsReceivedFractionLossPercent:
+            audioPacketsReceivedFractionLoss | 0,
+          audioSpeakerDelayMs: audioSpeakerDelayMs | 0,
+          audioUpstreamRoundTripTimeMs: audioUpstreamRoundTripTimeMs | 0,
+          audioUpstreamJitterMs: audioUpstreamJitterMs | 0,
+          audioDownstreamJitterMs: audioDownstreamJitterMs | 0,
+          currentRoundTripTimeMs: currentRoundTripTimeMs | 0,
+          availableOutgoingBandwidth: (availableOutgoingBitrate / 1000) | 0,
+          availableIncomingBandwidth: (availableIncomingBitrate / 1000) | 0,
+          rtcStatsReport: clientMetricReport.getRTCStatsReport(),
+          videoStreamMetrics: clientMetricReport.getObservableVideoMetrics(),
         });
       },
     };

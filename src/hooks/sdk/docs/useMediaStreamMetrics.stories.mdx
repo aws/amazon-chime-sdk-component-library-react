@@ -2,19 +2,29 @@
 
 # useMediaStreamMetrics
 
-The `useMediaStreamMetrics` hook returns the available audio, video and bandwidth metrics for the current meeting session. Video metrics contains stream metrics for all attendeeIds.
+The `useMediaStreamMetrics` hook returns:
+
+- common metrics for audio stream
+- common metrics for video stream of all attendees
+- original [RTCStatsReport](https://developer.mozilla.org/en-US/docs/Web/API/RTCStatsReport) returned by [RTCPeerConnection.getStats()](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/getStats)
 
 This hook re-renders frequently. You should avoid using it high in your app tree, and ideally use it in your leaf components.
 
 ### Return Value
 
-```javascript
+```ts
 {
   audioPacketsSentFractionLossPercent: number | null;
   audioPacketsReceivedFractionLossPercent: number | null;
+  audioSpeakerDelayMs: number | null;
+  audioUpstreamRoundTripTimeMs: number | null;
+  audioUpstreamJitterMs: number | null;
+  audioDownstreamJitterMs: number | null;
+  currentRoundTripTimeMs: number | null;
   availableOutgoingBandwidth: number | null;
   availableIncomingBandwidth: number | null;
-  videoStreamMetrics: { [attendeeId: string]: { [ssrc: string]: {[key: string]: number} } }
+  rtcStatsReport: RTCStatsReport | null;
+  videoStreamMetrics: { [attendeeId: string]: { [ssrc: string]: { [key: string]: number } } };
 }
 ```
 
@@ -30,28 +40,35 @@ The hook depends on the `AudioVideoProvider` being rendered. If you are using th
 
 The `videoStreamMetrics` in return value is a map of attendee to stream of video metrics mappings. The format of `videoStreamMetrics` is shown below:
 
-```
-videoStreamMetrics {
-  attendeeId:{ // remote attendees will have downstream metrics
+```ts
+videoStreamMetrics: {
+  remoteAttendeeId: {
+    // remote attendees will have downstream metrics
     ssrc: {
       videoDownstreamBitrate: number;
       videoDownstreamPacketLossPercent: number;
+      videoDownstreamPacketsReceived: number;
       videoDownstreamFramesDecodedPerSecond: number;
       videoDownstreamFrameHeight: number;
       videoDownstreamFrameWidth: number;
+      videoDownstreamJitterMs: number;
+      videoDownstreamDelayMs: number;
     }
   }
-  attendeeId: { // local attendee will have upstream metrics
+  localAttendeeId: {
+    // local attendee will have upstream metrics
     ssrc: {
       videoUpstreamBitrate: number;
       videoUpstreamPacketsSent: number;
+      videoUpstreamPacketLossPercent: number;
       videoUpstreamFramesEncodedPerSecond: number;
       videoUpstreamFrameHeight: number;
       videoUpstreamFrameWidth: number;
+      videoUpstreamJitterMs: number;
+      videoUpstreamRoundTripTimeMs: number;
     }
   }
 }
-
 ```
 
 ```jsx
@@ -69,18 +86,30 @@ const App = () => (
 
 const MyChild = () => {
   const metrics = useMediaStreamMetrics();
+  const rtcStatsReportValues: ReactElement[] = [];
+
+  metrics.rtcStatsReport?.forEach((report) =>
+    rtcStatsReportValues.push(<pre>{JSON.stringify(report, null, 2)}</pre>)
+  );
 
   return (
-    <>
-      <p>Audio Uplink 1s loss: {metrics.audioPacketsSentFractionLossPercent}</p>
-      <p>
-        Audio Downlink 1s loss:{' '}
-        {metrics.audioPacketsReceivedFractionLossPercent}
-      </p>
-      <p>Bandwidth Incoming: {metrics.availableIncomingBandwidth}</p>
-      <p>Bandwidth Outgoing: {metrics.availableOutgoingBandwidth}</p>
-      <p>Video Metrics: {metrics.videoStreamMetrics}</p>
-    </>
+    <div>
+      <p>audioPacketsSentFractionLossPercent: {metrics.audioPacketsSentFractionLossPercent}</p>
+      <p>audioPacketsReceivedFractionLossPercent: {metrics.audioPacketsReceivedFractionLossPercent}</p>
+      <p>audioSpeakerDelayMs: {metrics.audioSpeakerDelayMs}</p>
+      <p>audioUpstreamRoundTripTimeMs: {metrics.audioUpstreamRoundTripTimeMs}</p>
+      <p>audioUpstreamJitterMs: {metrics.audioUpstreamJitterMs}</p>
+      <p>audioDownstreamJitterMs: {metrics.audioDownstreamJitterMs}</p>
+      <p>currentRoundTripTimeMs: {metrics.currentRoundTripTimeMs}</p>
+      <p>availableOutgoingBandwidth: {metrics.availableOutgoingBandwidth}</p>
+      <p>availableIncomingBandwidth: {metrics.availableIncomingBandwidth}</p>
+      <p>videoStreamMetrics</p>
+      <code>
+        <pre>{JSON.stringify(metrics.videoStreamMetrics, null, 2)}</pre>
+      </code>
+      <p>rtcStatsReport</p>
+      <code>{...rtcStatsReportValues}</code>
+    </div>
   );
 };
 ```
