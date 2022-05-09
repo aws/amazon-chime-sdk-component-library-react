@@ -138,7 +138,7 @@ If you have more questions, or require support for your business, you can reach 
 
 The use of Amazon Voice Focus via this SDK involves the downloading and execution of code at runtime by end users.
 
-The use of Amazon Voice Focus, background blur and background replacement runtime code is subject to additional notices. See [this Amazon Voice Focus NOTICES file](https://static.sdkassets.chime.aws/workers/NOTICES.txt), [background blur and background replacement NOTICES file](https://static.sdkassets.chime.aws/bgblur/workers/NOTICES.txt) for details. You agree to make these additional notices available to all end users who use Amazon Voice Focus and background blur runtime code via this SDK.
+The use of Amazon Voice Focus, Amazon Chime Echo Reduction, background blur and background replacement runtime code is subject to additional notices. See [this Amazon Voice Focus NOTICES file](https://static.sdkassets.chime.aws/workers/NOTICES.txt), [background blur and background replacement NOTICES file](https://static.sdkassets.chime.aws/bgblur/workers/NOTICES.txt) for details. You agree to make these additional notices available to all end users who use Amazon Voice Focus and background blur runtime code via this SDK.
 
 The use of TensorFlow runtime code referenced above may be subject to additional license requirements. See the licenses page for TensorFlow.js [here](https://github.com/tensorflow/tfjs/blob/master/LICENSE) and TensorFlow.js models [here](https://github.com/tensorflow/tfjs-models/blob/master/LICENSE) for details.
 

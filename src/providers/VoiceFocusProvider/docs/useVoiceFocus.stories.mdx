@@ -42,8 +42,33 @@ import {
   useAudioInputs,
 } from 'amazon-chime-sdk-component-library-react';
 
-const App = () => (
-  <VoiceFocusProvider>
+const joinInfo = { Meeting: {} }
+
+function voiceFocusName(name: string): VoiceFocusModelName {
+  if (name && ['default', 'ns_es'].includes(name)) {
+    return name as VoiceFocusModelName;
+  }
+  return 'default';
+}
+
+function getVoiceFocusSpecName(): VoiceFocusModelName {
+  if (
+    joinInfo && 
+    joinInfo.Meeting?.MeetingFeatures?.Audio?.EchoReduction === 'AVAILABLE'
+  ) {
+    return voiceFocusName('ns_es');
+  }
+  return voiceFocusName('default');
+}
+
+const vfConfigValue = {
+  spec: {name: getVoiceFocusSpecName()},
+  createMeetingResponse: joinInfo,
+};
+
+const App = () => {
+  return (
+  <VoiceFocusProvider {...vfConfigValue}>
     <MeetingProvider>
       <MyChild />
     </MeetingProvider>
