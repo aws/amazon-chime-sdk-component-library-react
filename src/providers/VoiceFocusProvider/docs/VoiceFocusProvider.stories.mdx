@@ -41,6 +41,9 @@ import { VoiceFocusProvider } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Usage
+`joinInfo` here is the response of [CreateMeeting](https://docs.aws.amazon.com/chime-sdk/latest/APIReference/API_CreateMeeting.html) 
+from  [Amazon Chime SDK Meetings endpoint](https://docs.aws.amazon.com/chime-sdk/latest/dg/meeting-namespace-migration.html).
+`joinInfo` is needed here so as to decide whether download Voice Focus or Echo Reduction model according to `CreatingMeetingResponse`.
 
 ```jsx
 import React from 'react';
@@ -53,8 +56,33 @@ import {
   useAudioInputs,
 } from 'amazon-chime-sdk-component-library-react';
 
-const App = () => (
-  <VoiceFocusProvider>
+const joinInfo = { Meeting: {} }
+
+function voiceFocusName(name: string): VoiceFocusModelName {
+  if (name && ['default', 'ns_es'].includes(name)) {
+    return name as VoiceFocusModelName;
+  }
+  return 'default';
+}
+
+function getVoiceFocusSpecName(): VoiceFocusModelName {
+  if (
+    joinInfo && 
+    joinInfo.Meeting?.MeetingFeatures?.Audio?.EchoReduction === 'AVAILABLE'
+  ) {
+    return voiceFocusName('ns_es');
+  }
+  return voiceFocusName('default');
+}
+
+const vfConfigValue = {
+  spec: {name: getVoiceFocusSpecName()},
+  createMeetingResponse: joinInfo,
+};
+
+const App = () => {
+  return (
+  <VoiceFocusProvider {...vfConfigValue}>
     <MeetingProvider>
       <MyChild />
     </MeetingProvider>
