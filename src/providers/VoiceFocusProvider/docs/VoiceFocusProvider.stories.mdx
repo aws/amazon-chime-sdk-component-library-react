@@ -41,8 +41,9 @@ import { VoiceFocusProvider } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Usage
-`joinInfo` here is response of [CreateMeeting](https://docs.aws.amazon.com/chime-sdk/latest/APIReference/API_CreateMeeting.html) 
+`joinInfo` here is the response of [CreateMeeting](https://docs.aws.amazon.com/chime-sdk/latest/APIReference/API_CreateMeeting.html) 
 from  [Amazon Chime SDK Meetings endpoint](https://docs.aws.amazon.com/chime-sdk/latest/dg/meeting-namespace-migration.html).
+`joinInfo` is needed here so as to decide whether download Voice Focus or Echo Reduction model according to `CreatingMeetingResponse`.
 
 ```jsx
 import React from 'react';
