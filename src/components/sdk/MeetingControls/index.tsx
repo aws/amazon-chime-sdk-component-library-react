@@ -1,14 +1,18 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import AudioInputControl from './AudioInputControl';
-import VideoInputControl from './VideoInputControl';
-import ContentShareControl from './ContentShareControl';
+import AudioInputVFControl from './AudioInputVFControl';
 import AudioOutputControl from './AudioOutputControl';
+import ContentShareControl from './ContentShareControl';
+import VideoInputBackgroundBlurControl from './VideoInputBackgroundBlurControl';
+import VideoInputControl from './VideoInputControl';
 
 export {
   AudioInputControl,
+  AudioInputVFControl,
   AudioOutputControl,
   VideoInputControl,
+  VideoInputBackgroundBlurControl,
   ContentShareControl,
 };

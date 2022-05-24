@@ -1,18 +1,19 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
-import React from 'react';
+
 import { fireEvent, waitFor } from '@testing-library/dom';
+import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 import { Simulate } from 'react-dom/test-utils';
 
 import PopOver from '../../../../src/components/ui/PopOver';
-import lightTheme from '../../../../src/theme/light';
-import { renderWithTheme } from '../../../test-helpers';
 import PopOverItem from '../../../../src/components/ui/PopOver/PopOverItem';
 import PopOverSubMenu from '../../../../src/components/ui/PopOver/PopOverSubMenu';
-import { act } from '@testing-library/react';
+import lightTheme from '../../../../src/theme/light';
+import { renderWithTheme } from '../../../test-helpers';
 
 let mockFunction: any, value: string, label: string;
 

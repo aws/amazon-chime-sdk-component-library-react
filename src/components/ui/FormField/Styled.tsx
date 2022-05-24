@@ -1,10 +1,10 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled, { css } from 'styled-components';
 
+import { baseSpacing, baseStyles } from '../Base';
 import { FieldWrapperProps } from './';
-import { baseStyles, baseSpacing } from '../Base';
 
 export const stack = css`
   &.ch-form-field-input,
@@ -195,7 +195,7 @@ export const StyledFormField = styled.div<FieldWrapperProps>`
     font-size: ${(props) => props.theme.fontSizes.small.fontSize};
     margin-top: 0.5rem;
     color: ${(props) =>
-      !!props.error
+      props.error
         ? props.theme.inputs.error.fontColor
         : props.theme.inputs.fontColor};
   }

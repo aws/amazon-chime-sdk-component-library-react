@@ -1,36 +1,64 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
-import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
-import { Camera } from '../../ui/icons';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
-import { DeviceConfig } from '../../../types';
+import { useLogger } from '../../../providers/LoggerProvider';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { isOptionActive } from '../../../utils/device-utils';
+import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
+import { Camera } from '../../ui/icons';
 import { PopOverItemProps } from '../../ui/PopOver/PopOverItem';
-import useSelectVideoInputDevice from '../../../hooks/sdk/useSelectVideoInputDevice';
+import { BaseSdkProps } from '../Base';
 
-interface Props {
+interface Props extends BaseSdkProps {
   /** The label that will be shown for video input control, it defaults to `Video`. */
   label?: string;
 }
 
-const videoInputConfig: DeviceConfig = {
-  additionalDevices: true,
-};
-
-const VideoInputControl: React.FC<Props> = ({ label = 'Video' }) => {
-  const { devices, selectedDevice } = useVideoInputs(videoInputConfig);
+const VideoInputControl: React.FC<Props> = ({ label = 'Video', ...rest }) => {
+  const logger = useLogger();
+  const meetingManager = useMeetingManager();
+  const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
-  const selectDevice = useSelectVideoInputDevice();
+  const [dropdownOptions, setDropdownOptions] = useState<PopOverItemProps[]>(
+    []
+  );
 
-  const dropdownOptions: PopOverItemProps[] = devices.map((device: any) => ({
-    children: <span>{device.label}</span>,
-    checked: isOptionActive(selectedDevice, device.deviceId),
-    onClick: () => selectDevice(device.deviceId),
-  }));
+  useEffect(() => {
+    const handleClick = async (deviceId: string): Promise<void> => {
+      try {
+        if (isVideoEnabled) {
+          await meetingManager.startVideoInputDevice(deviceId);
+        } else {
+          meetingManager.selectVideoInputDevice(deviceId);
+        }
+      } catch (error) {
+        logger.error('VideoInputControl failed to select video input device');
+      }
+    };
+
+    const getDropdownOptions = async (): Promise<void> => {
+      const dropdownOptions = await Promise.all(
+        devices.map(async (device) => ({
+          children: <span>{device.label}</span>,
+          checked: await isOptionActive(selectedDevice, device.deviceId),
+          onClick: async () => await handleClick(device.deviceId),
+        }))
+      );
+      setDropdownOptions(dropdownOptions);
+    };
+
+    getDropdownOptions();
+  }, [
+    devices,
+    selectedDevice,
+    isVideoEnabled,
+    meetingManager,
+    meetingManager.startVideoInputDevice,
+  ]);
 
   return (
     <ControlBarButton
@@ -38,6 +66,7 @@ const VideoInputControl: React.FC<Props> = ({ label = 'Video' }) => {
       onClick={toggleVideo}
       label={label}
       popOver={dropdownOptions}
+      {...rest}
     />
   );
 };

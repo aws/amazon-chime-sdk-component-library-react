@@ -1,11 +1,11 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useEffect, useRef } from 'react';
 
+import useAttendeeAudioStatus from '../../../hooks/sdk/useAttendeeAudioStatus';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import MicVolumeIndicator from '../../ui/MicVolumeIndicator';
-import useAttendeeAudioStatus from '../../../hooks/sdk/useAttendeeAudioStatus';
 import { BaseSdkProps } from '../Base';
 
 interface Props extends BaseSdkProps {

@@ -1,12 +1,12 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { memo } from 'react';
 
 import { useRemoteVideoTileState } from '../../../providers/RemoteVideoTileProvider';
 import { useRosterState } from '../../../providers/RosterProvider';
-import { RemoteVideo } from '../RemoteVideo';
 import { BaseSdkProps } from '../Base';
+import { RemoteVideo } from '../RemoteVideo';
 
 export const RemoteVideos: React.FC<BaseSdkProps> = (props) => {
   const { roster } = useRosterState();

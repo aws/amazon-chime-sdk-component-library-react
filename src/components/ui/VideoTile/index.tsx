@@ -1,10 +1,10 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { forwardRef, HTMLAttributes } from 'react';
 
-import { StyledVideoTile } from './Styled';
 import { BaseProps } from '../Base';
+import { StyledVideoTile } from './Styled';
 
 type ObjectFit = 'contain' | 'cover' | 'fill' | 'none' | 'scale-down';
 

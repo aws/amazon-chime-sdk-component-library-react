@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import { FC, useEffect, useState } from 'react';
@@ -15,11 +15,11 @@ export const Portal: FC<PortalProps> = ({ children, rootId }) => {
   const [mount, setMount] = useState<any>();
 
   useEffect(() => {
-    if (!!rootId) {
+    if (rootId) {
       el = document.getElementById(rootId);
     }
 
-    if (!!el) {
+    if (el) {
       setMount(el);
     } else {
       newRoot = document.createElement('div');

@@ -1,4 +1,4 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC } from 'react';
@@ -34,7 +34,7 @@ export const PopOverItem: FC<PopOverItemProps> = ({
   testId = 'popover-item',
   ...rest
 }) => {
-  let Tag = as;
+  const Tag = as;
   return (
     <StyledPopOverItem data-testid={testId}>
       {checked && <Check className="ch-check" data-testid="popover-check" />}

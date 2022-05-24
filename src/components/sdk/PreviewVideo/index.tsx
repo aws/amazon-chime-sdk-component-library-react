@@ -1,15 +1,16 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
+import styled from 'styled-components';
 
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
-
-import VideoTile from '../../ui/VideoTile';
-import styled from 'styled-components';
-import { BaseSdkProps } from '../Base';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
+import { useLogger } from '../../../providers/LoggerProvider';
+import { useMeetingManager } from '../../../providers/MeetingProvider';
+import VideoTile from '../../ui/VideoTile';
+import { BaseSdkProps } from '../Base';
 
 const StyledPreview = styled(VideoTile)`
   height: auto;
@@ -21,39 +22,40 @@ const StyledPreview = styled(VideoTile)`
 `;
 
 export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
+  const logger = useLogger();
   const audioVideo = useAudioVideo();
-  const videoEl = useRef<HTMLVideoElement>(null);
   const { selectedDevice } = useVideoInputs();
-  const { isVideoEnabled, setIsVideoEnabled } = useLocalVideo();
+  const videoEl = useRef<HTMLVideoElement>(null);
+  const meetingManager = useMeetingManager();
+  const { setIsVideoEnabled } = useLocalVideo();
 
   useEffect(() => {
-    if (!audioVideo || !selectedDevice || !videoEl.current) {
-      return;
-    }
-    let mounted = true;
     const videoElement = videoEl.current;
+    return () => {
+      if (videoElement) {
+        audioVideo?.stopVideoPreviewForVideoInput(videoElement);
+        audioVideo?.stopVideoInput();
+        setIsVideoEnabled(false);
+      }
+    };
+  }, [audioVideo]);
 
-    async function startPreview() {
-      if (!audioVideo) {
+  useEffect(() => {
+    async function startPreview(): Promise<void> {
+      if (!audioVideo || !selectedDevice || !videoEl.current) {
         return;
       }
 
-      await audioVideo.chooseVideoInputDevice(selectedDevice);
-      if (videoEl.current && mounted) {
+      try {
+        await meetingManager.startVideoInputDevice(selectedDevice);
         audioVideo.startVideoPreviewForVideoInput(videoEl.current);
+        setIsVideoEnabled(true);
+      } catch (error) {
+        logger.error('Failed to start video preview');
       }
     }
 
     startPreview();
-
-    return () => {
-      mounted = false;
-
-      if (videoElement) {
-        audioVideo.stopVideoPreviewForVideoInput(videoElement);
-        if (isVideoEnabled) setIsVideoEnabled(false);
-      }
-    };
   }, [audioVideo, selectedDevice]);
 
   return <StyledPreview {...props} ref={videoEl} />;

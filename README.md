@@ -31,6 +31,8 @@ The [Amazon Chime SDK Project Board](https://github.com/orgs/aws/projects/12) ca
 
 [Migration from V1 to V2](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/migration-to-v2--page)
 
+[Migration from V2 to V3](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/migration-to-v3--page)
+
 ## Examples
 
 [Amazon Chime Meeting Demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting)
@@ -132,8 +134,18 @@ Review the resources given in the ReadMe and use our [client documentation](http
 
 If you have more questions, or require support for your business, you can reach out to [AWS Customer support](https://pages.awscloud.com/GLOBAL-aware-GC-Amazon-Chime-SDK-2020-reg.html). You can review our support plans [here](https://aws.amazon.com/premiumsupport/plans/?nc=sn&loc=1).
 
+## Notice
+
+The use of Amazon Voice Focus via this SDK involves the downloading and execution of code at runtime by end users.
+
+The use of Amazon Voice Focus, Amazon Chime Echo Reduction, Background Blur and Background Replacement runtime code is subject to additional notices. See [this Amazon Voice Focus NOTICES file](https://static.sdkassets.chime.aws/workers/NOTICES.txt), [background blur and background replacement NOTICES file](https://static.sdkassets.chime.aws/bgblur/workers/NOTICES.txt) for details. You agree to make these additional notices available to all end users who use Amazon Voice Focus and background blur runtime code via this SDK.
+
+The use of TensorFlow runtime code referenced above may be subject to additional license requirements. See the licenses page for TensorFlow.js [here](https://github.com/tensorflow/tfjs/blob/master/LICENSE) and TensorFlow.js models [here](https://github.com/tensorflow/tfjs-models/blob/master/LICENSE) for details.
+
+You and your end users are responsible for all Content (including any images) uploaded for use with background replacement, and must ensure that such Content does not violate the law, infringe or misappropriate the rights of any third party, or otherwise violate a material term of your agreement with Amazon (including the documentation, the AWS Service Terms, or the Acceptable Use Policy).
+
 ## License
 
 This project is licensed under the Apache-2.0 License.
 
-Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.

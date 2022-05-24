@@ -1,13 +1,12 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
 
 import Badge from '../Badge';
-import Flex from '../Flex';
 import { BaseProps, FocusableProps } from '../Base';
-
-import { StyledGroupWrapper, StyledGroup, StyledTitle } from './Styled';
+import Flex from '../Flex';
+import { StyledGroup, StyledGroupWrapper, StyledTitle } from './Styled';
 
 export interface RosterGroupProps extends BaseProps, FocusableProps {
   /** The title of the roster group. */

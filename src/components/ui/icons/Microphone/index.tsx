@@ -1,9 +1,9 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { SvgProps } from '../Svg';
 
+import { SvgProps } from '../Svg';
 import { StyledSvg } from './Styled';
 
 export interface MicrophoneProps extends SvgProps {

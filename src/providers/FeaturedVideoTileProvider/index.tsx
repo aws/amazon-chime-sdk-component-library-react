@@ -1,17 +1,17 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
-  useEffect,
   createContext,
-  useState,
   useContext,
-  useRef,
+  useEffect,
   useMemo,
+  useRef,
+  useState,
 } from 'react';
 
-import { useRemoteVideoTileState } from '../RemoteVideoTileProvider';
 import { useMeetingManager } from '../MeetingProvider';
+import { useRemoteVideoTileState } from '../RemoteVideoTileProvider';
 
 interface FeaturedTileState {
   tileId: number | null;

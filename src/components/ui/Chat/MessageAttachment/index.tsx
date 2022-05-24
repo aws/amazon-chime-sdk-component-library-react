@@ -1,14 +1,14 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, HTMLAttributes } from 'react';
 
 import { BaseProps } from '../../Base';
+import { Document } from '../../icons';
 import {
   StyledMessageAttachment,
   StyledMessageAttachmentContent,
 } from './Styled';
-import { Document } from '../../icons';
 
 export interface MessageAttachmentProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
@@ -45,7 +45,7 @@ export const MessageAttachment: FC<MessageAttachmentProps> = ({
         </div>
 
         <div className="ch-attachment-name">
-          <a target="_blank" href={downloadUrl}>
+          <a target="_blank" href={downloadUrl} rel="noreferrer">
             {name}
           </a>
           <span className="ch-attachment-size">{size}</span>

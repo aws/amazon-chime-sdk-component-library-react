@@ -1,13 +1,16 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, ReactElement } from 'react';
-import { useModalContext } from './ModalContext';
+import React, { FC, HTMLAttributes, ReactElement } from 'react';
+import { useLogger } from '../../../providers/LoggerProvider';
 
+import { BaseProps } from '../Base';
+import { useModalContext } from './ModalContext';
 import { StyledModalButtonGroup } from './Styled';
 
 export interface ModalButtonGroupProps
-  extends React.HTMLAttributes<HTMLDivElement> {
+  extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
+    BaseProps {
   /** Defines the primary button(s) in the modal. */
   primaryButtons: ReactElement | ReactElement[];
   /** Defines the secondary button(s) in the modal. */
@@ -17,7 +20,9 @@ export interface ModalButtonGroupProps
 export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
   primaryButtons,
   secondaryButtons,
+  ...rest
 }) => {
+  const logger = useLogger();
   const context = useModalContext();
 
   const addCloseBehaviorToButton = (button: any) => {
@@ -31,8 +36,15 @@ export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
   };
 
   const addCloseBehaviorToButtons = (buttons: JSX.Element[] | JSX.Element) => {
-    if (!context.dismissible || !buttons || (buttons instanceof Array && buttons.length === 0)) {
-      context.dismissible && console.warn("the 'dismissible prop prevents buttons from closing the modal");
+    if (
+      !context.dismissible ||
+      !buttons ||
+      (buttons instanceof Array && buttons.length === 0)
+    ) {
+      context.dismissible &&
+        logger.warn(
+          "the 'dismissible prop prevents buttons from closing the modal"
+        );
       return buttons;
     }
     if (!(buttons instanceof Array)) {
@@ -42,10 +54,14 @@ export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
   };
 
   return (
-    <StyledModalButtonGroup data-testid="modal-button-group">
-      <div key="primarybuttons">{addCloseBehaviorToButtons(primaryButtons)}</div>
+    <StyledModalButtonGroup data-testid="modal-button-group" {...rest}>
+      <div key="primarybuttons">
+        {addCloseBehaviorToButtons(primaryButtons)}
+      </div>
       {secondaryButtons && (
-        <div key="secondarybuttons">{addCloseBehaviorToButtons(secondaryButtons)}</div>
+        <div key="secondarybuttons">
+          {addCloseBehaviorToButtons(secondaryButtons)}
+        </div>
       )}
     </StyledModalButtonGroup>
   );

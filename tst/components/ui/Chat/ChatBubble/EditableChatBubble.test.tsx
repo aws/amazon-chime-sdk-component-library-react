@@ -1,14 +1,15 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
+
+import { fireEvent } from '@testing-library/dom';
+import { act } from '@testing-library/react';
 import React from 'react';
 
 import EditableChatBubble from '../../../../../src/components/ui/Chat/ChatBubble/EditableChatBubble';
 import lightTheme from '../../../../../src/theme/light';
 import { renderWithTheme } from '../../../../test-helpers';
-import { fireEvent } from '@testing-library/dom';
-import { act } from '@testing-library/react';
 
 describe('ChatBubble', () => {
   const save = jest.fn((e) => e.preventDefault());

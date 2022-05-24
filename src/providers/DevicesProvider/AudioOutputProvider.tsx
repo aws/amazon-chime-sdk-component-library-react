@@ -1,22 +1,24 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
-  useEffect,
-  useState,
   useContext,
+  useEffect,
   useMemo,
+  useState,
 } from 'react';
-import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
+import { AudioOutputContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
-import { DeviceTypeContext } from '../../types';
 
-const AudioOutputContext = createContext<DeviceTypeContext | null>(null);
+const AudioOutputContext = createContext<AudioOutputContextType | null>(null);
 
 const AudioOutputProvider: React.FC = ({ children }) => {
+  const logger = useLogger();
   const audioVideo = useAudioVideo();
   const [audioOutputs, setAudioOutputs] = useState<MediaDeviceInfo[]>([]);
   const meetingManager = useMeetingManager();
@@ -25,14 +27,14 @@ const AudioOutputProvider: React.FC = ({ children }) => {
   );
 
   useEffect(() => {
-    const callback = (updatedAudioOutputDevice: string | null): void => {
-      setSelectedAudioOutputDevice(updatedAudioOutputDevice);
-    };
-
-    meetingManager.subscribeToSelectedAudioOutputDevice(callback);
+    meetingManager.subscribeToSelectedAudioOutputDevice(
+      setSelectedAudioOutputDevice
+    );
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedAudioOutputDevice(callback);
+      meetingManager.unsubscribeFromSelectedAudioOutputDevice(
+        setSelectedAudioOutputDevice
+      );
     };
   }, []);
 
@@ -41,12 +43,12 @@ const AudioOutputProvider: React.FC = ({ children }) => {
 
     const observer: DeviceChangeObserver = {
       audioOutputsChanged: (newAudioOutputs: MediaDeviceInfo[]) => {
-        console.log('AudioOutputProvider - audio outputs updated');
+        logger.info('AudioOutputProvider - audio outputs updated');
         setAudioOutputs(newAudioOutputs);
       },
     };
 
-    async function initAudioOutput() {
+    async function initAudioOutput(): Promise<void> {
       if (!audioVideo) {
         return;
       }
@@ -63,18 +65,18 @@ const AudioOutputProvider: React.FC = ({ children }) => {
       initAudioOutput();
     };
 
-    meetingManager.subscribeToDeviceLabelTriggerChange(callback);
+    meetingManager.subscribeToDeviceLabelTrigger(callback);
 
     initAudioOutput();
 
     return () => {
       isMounted = false;
       audioVideo?.removeDeviceChangeObserver(observer);
-      meetingManager.unsubscribeFromDeviceLabelTriggerChange(callback);
+      meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
   }, [audioVideo]);
 
-  const contextValue: DeviceTypeContext = useMemo(
+  const contextValue: AudioOutputContextType = useMemo(
     () => ({
       devices: audioOutputs,
       selectedDevice: selectedAudioOutputDevice,
@@ -89,7 +91,7 @@ const AudioOutputProvider: React.FC = ({ children }) => {
   );
 };
 
-const useAudioOutputs = (): DeviceTypeContext => {
+const useAudioOutputs = (): AudioOutputContextType => {
   const context = useContext(AudioOutputContext);
 
   if (!context) {

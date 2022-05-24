@@ -1,0 +1,22 @@
+{
+  "name": "integration-tests",
+  "version": "1.0.0",
+  "description": "Integration testing for Amazon Chime SDK React Components Library",
+  "scripts": {
+    "test": "./script/run-test",
+    "test:fast": "mocha ./test/*"
+  },
+  "license": "Apache-2.0",
+  "dependencies": {
+    "chromedriver": "^100.0.0",
+    "fs-extra": "^10.0.0",
+    "geckodriver": "^3.0.1",
+    "minimist": "^1.2.6",
+    "mocha": "^9.2.0",
+    "selenium-webdriver": "^4.1.0",
+    "uuid": "^8.3.2"
+  },
+  "mocha": {
+    "timeout": 300000
+  }
+}

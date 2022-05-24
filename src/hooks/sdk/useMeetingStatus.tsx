@@ -1,11 +1,12 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { useMeetingManager } from '../../providers/MeetingProvider';
 import { MeetingStatus } from '../../types';
 
-export const useMeetingStatus = () => {
+export const useMeetingStatus = (): MeetingStatus => {
   const meetingManager = useMeetingManager();
   const [meetingStatus, setMeetingStatus] = useState(
     () => meetingManager.meetingStatus
@@ -24,3 +25,5 @@ export const useMeetingStatus = () => {
 
   return meetingStatus;
 };
+
+export default useMeetingStatus;

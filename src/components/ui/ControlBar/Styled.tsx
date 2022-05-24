@@ -1,13 +1,13 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled, { css } from 'styled-components';
 
-import { lightTheme } from '../../../theme/light';
 import { darkTheme } from '../../../theme/dark';
-import { ControlBarProps, ControlBarLayout } from '.';
+import { lightTheme } from '../../../theme/light';
+import { baseSpacing, baseStyles } from '../Base';
 import { PopOverItemProps } from '../PopOver/PopOverItem';
-import { baseStyles, baseSpacing } from '../Base';
+import { ControlBarLayout, ControlBarProps } from '.';
 
 interface StyledControlBarProps extends ControlBarProps {
   theme: typeof lightTheme | typeof darkTheme;
@@ -126,7 +126,6 @@ export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
   }
 
   .ch-control-bar-item-iconButton {
-
     .ch-icon {
       width: 1.5rem;
       height: 1.5rem;

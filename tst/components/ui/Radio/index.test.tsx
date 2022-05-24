@@ -1,12 +1,13 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
-import React from 'react';
-import { fireEvent } from '@testing-library/dom';
 
-import Radio from '../../../../src/components/ui/Radio';
+import { fireEvent } from '@testing-library/dom';
+import React from 'react';
+
 import Add from '../../../../src/components/ui/icons/Add';
+import Radio from '../../../../src/components/ui/Radio';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 

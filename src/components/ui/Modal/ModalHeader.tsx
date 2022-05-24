@@ -1,13 +1,13 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, HTMLAttributes } from 'react';
 
+import { BaseProps } from '../Base';
 import IconButton from '../Button/IconButton';
 import Remove from '../icons/Remove';
 import { useModalContext } from './ModalContext';
 import { StyledModalHeader } from './Styled';
-import { BaseProps } from '../Base';
 
 export interface ModalHeaderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
@@ -35,13 +35,9 @@ export const ModalHeader: FC<ModalHeaderProps> = ({
         {title}
       </Tag>
 
-      {(displayClose && context?.dismissible) && (
+      {displayClose && context?.dismissible && (
         <span className="ch-close-button">
-          <IconButton
-            label="Close"
-            icon={<Remove />}
-            onClick={handleClick}
-          />
+          <IconButton label="Close" icon={<Remove />} onClick={handleClick} />
         </span>
       )}
     </StyledModalHeader>

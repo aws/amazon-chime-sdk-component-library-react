@@ -1,17 +1,29 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { ChangeEvent } from 'react';
+import {
+  AudioTransformDevice,
+  Device,
+  VideoTransformDevice,
+} from 'amazon-chime-sdk-js';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 
+import { DeviceType } from '../../../types';
+import { getDeviceId } from '../../../utils/device-utils';
 import { FormField } from '../../ui/FormField';
 import { Select } from '../../ui/Select';
-import { DeviceType, SelectedDeviceId } from '../../../types';
+import { BaseSdkProps } from '../Base';
 
-interface Props {
+interface Props extends BaseSdkProps {
   label: string;
   notFoundMsg: string;
   devices: DeviceType[];
-  selectedDeviceId: SelectedDeviceId;
+  selectedDevice:
+    | Device
+    | AudioTransformDevice
+    | VideoTransformDevice
+    | null
+    | undefined;
   onChange: (deviceId: string) => void;
 }
 
@@ -19,39 +31,47 @@ const DeviceInput: React.FC<Props> = ({
   onChange,
   label,
   devices,
-  selectedDeviceId,
+  selectedDevice,
   notFoundMsg,
+  ...rest
 }) => {
-  const outputOptions = devices.map((device) => ({
+  const [selectedDeviceId, setSelectedDeviceId] = useState<string>('');
+
+  useEffect(() => {
+    const getSelectedDeviceId = async (): Promise<void> => {
+      const selectedDeviceId = await getDeviceId(selectedDevice);
+      setSelectedDeviceId(selectedDeviceId);
+    };
+
+    getSelectedDeviceId();
+  }, [selectedDevice]);
+
+  const deviceList = devices.map((device) => ({
     value: device.deviceId,
     label: device.label,
   }));
 
-  const options = outputOptions.length
-    ? outputOptions
-    : [
-        {
-          value: 'not-available',
-          label: notFoundMsg,
-        },
-      ];
+  const options = deviceList.length
+    ? deviceList
+    : [{ value: 'not-available', label: notFoundMsg }];
 
-  async function selectDevice(e: ChangeEvent<HTMLSelectElement>) {
+  const selectDevice = (e: ChangeEvent<HTMLSelectElement>): void => {
     const deviceId = e.target.value;
 
     if (deviceId === 'not-available') {
       return;
     }
     onChange(deviceId);
-  }
+  };
 
   return (
     <FormField
       field={Select}
       options={options}
       onChange={selectDevice}
-      value={selectedDeviceId || ''}
+      value={selectedDeviceId}
       label={label}
+      {...rest}
     />
   );
 };

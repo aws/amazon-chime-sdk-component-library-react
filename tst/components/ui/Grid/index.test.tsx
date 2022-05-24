@@ -1,13 +1,14 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
+
 import React from 'react';
 
 import Grid from '../../../../src/components/ui/Grid';
+import Cell from '../../../../src/components/ui/Grid/Cell';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
-import Cell from '../../../../src/components/ui/Grid/Cell';
 
 const CHILD = 'Child';
 const Child = () => <p>{CHILD}</p>;

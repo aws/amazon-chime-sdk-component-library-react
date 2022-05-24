@@ -11,6 +11,23 @@ const { logger, process } = require('./utilities');
 const exec = require('child_process').execSync;
 let exitCode = 0;
 
+const gitIgnoreMemo = {};
+const isGitIgnored = (file) => {
+  if (file in gitIgnoreMemo) {
+    return gitIgnoreMemo[file];
+  }
+  try {
+    // If this returns zero, it means the file is ignored by git; skip it.
+    exec(`git check-ignore -q '${file}'`);
+    gitIgnoreMemo[file] = true;
+    return true;
+  } catch (e) {
+    // It's tracked by git.
+    gitIgnoreMemo[file] = false;
+    return false;
+  }
+};
+
 let walk = function(dir) {
   let results = [];
   if (dir.includes('.DS_Store')) {
@@ -51,39 +68,8 @@ let allFiles = function() {
   return srcFiles.concat(tests());
 };
 
-let joinYears = function(years) {
-  let prevYear = null;
-  let rangeEnd = null;
-  let out = '';
-  for (const year of years) {
-    if (parseInt(prevYear) + 1 === parseInt(year)) {
-      rangeEnd = year;
-    } else {
-      if (rangeEnd) {
-        out += `-${rangeEnd}`;
-        rangeEnd = null;
-      }
-      if (out !== '') {
-        out += ', ';
-      }
-      out += year;
-    }
-    prevYear = year;
-  }
-  if (rangeEnd) {
-    out += `-${rangeEnd}`;
-    rangeEnd = null;
-  }
-  return out;
-};
-
-let unique = function(value, index, self) {
-  return self.indexOf(value) === index;
-};
-
 tests().forEach(file => {
   if (
-    file.includes(`.DS_Store`) ||
     file.includes(`snapshots`) ||
     file.includes(`utils`)
   ) {
@@ -113,30 +99,12 @@ tests().forEach(file => {
 
 const spdx = '// SPDX-License-Identifier: Apache-2.0';
 
-let allYears = [];
-
 allFiles().forEach(file => {
-  if (file.endsWith('.d.ts') || file.includes('.DS_Store')) {
+  if (file.endsWith('.d.ts') || isGitIgnored(file)) {
     return;
   }
-  let yearsForFileInGitHistory = [];
-  const stdout = exec(`git log --pretty=format:'%ad' --date=short ${file}`);
 
-  const dates = [];
-  for (const line of stdout
-    .toString()
-    .trim()
-    .split('\n')) {
-    const year = line.replace(/[-].*/, '').replace(`'`, '');
-    dates.push(year);
-    allYears.push(year);
-  }
-
-  yearsForFileInGitHistory = dates.sort().filter(unique);
-
-  const copyright = `// Copyright ${joinYears(
-    yearsForFileInGitHistory
-  )} Amazon.com, Inc. or its affiliates. All Rights Reserved.`;
+  const copyright = `// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.`;
   const fileLines = fs
     .readFileSync(file)
     .toString()
@@ -185,9 +153,7 @@ allFiles().forEach(file => {
   }
 });
 
-const footerCopyright = `\nCopyright ${joinYears(
-  allYears.sort().filter(unique)
-)} Amazon.com, Inc. or its affiliates. All Rights Reserved.\n`;
+const footerCopyright = `\nCopyright Amazon.com, Inc. or its affiliates. All Rights Reserved.\n`;
 
 for (const file of ['README.md', 'NOTICE']) {
   if (

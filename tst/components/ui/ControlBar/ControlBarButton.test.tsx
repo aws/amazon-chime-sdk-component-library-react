@@ -1,9 +1,10 @@
-// Copyright 2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
-import React from 'react';
+
 import { fireEvent } from '@testing-library/dom';
+import React from 'react';
 
 import ControlBarButton from '../../../../src/components/ui/ControlBar/ControlBarButton';
 import { Sound } from '../../../../src/components/ui/icons';

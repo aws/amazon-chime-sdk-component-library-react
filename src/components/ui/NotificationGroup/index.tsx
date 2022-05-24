@@ -1,15 +1,15 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
 
+import {
+  ActionType,
+  useNotificationDispatch,
+  useNotificationState,
+} from '../../../providers/NotificationProvider';
 import Notification from '../Notification';
 import Portal from '../Portal';
-import {
-  useNotificationState,
-  useNotificationDispatch,
-  ActionType,
-} from '../../../providers/NotificationProvider';
 import { StyledNotificationGroup } from './Styled';
 
 export const NotificationGroup: React.FC = () => {

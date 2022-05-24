@@ -37,24 +37,25 @@ This approach has limitations. This should be used only in very specific cases w
 variable values or you will not use video, roster and audio at both places. Still, the hooks and providers may not work as expected as `MeetingProvider` wraps all the other providers.
 The video will not work due to limitations of JS SDK to bind a video stream to a single video tile only. Please check [this](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/492#issuecomment-846317339) issue for more details.
 
-Please make sure your app calls `meetingManager.join()` only once with the same `attendeeInfo`.
-Otherwise,  the previous attendee who joined the meeting will leave the meeting with [AudioJoinedFromAnotherDevice](https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice).
+Please make sure your app calls `meetingManager.join(meetingSessionConfiguration)` only once. The `join` method needs `MeetingSessionConfiguration` as a required parameter. `MeetingSessionConfiguration` should be created with the same `attendeeInfo`.
+Otherwise, the previous attendee who joined the meeting will leave the meeting with [AudioJoinedFromAnotherDevice](https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice).
 
 ```jsx
+import { ConsoleLogger } from 'amazon-chime-sdk-js';
 import { MeetingProvider, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
 
 const Root = () => {
-  const meetingManager = new MeetingManager({ logLevel: LogLevel.INFO });
-  
+  const meetingManager = new MeetingManager(new ConsoleLogger('LoggerName'));
+
   return (
     <MeetingProvider meetingManager={meetingManager}>
       <MyApp1 />
-    <MeetingProvider/>
+    </MeetingProvider>
 
     <MeetingProvider meetingManager={meetingManager}>
       <MyApp2 />
-    <MeetingProvider/>
-  ); 
+    </MeetingProvider>
+  );
 }
 ```
 
@@ -64,81 +65,19 @@ const Root = () => {
 
 ### Prop values
 
-#### logLevel
+#### onDeviceReplacement
 
-The level of logging you want with your meeting session. It is defined by the [LogLevel](https://aws.github.io/amazon-chime-sdk-js/enums/loglevel.html) enum in `amazon-chime-sdk-js`.
-
-```javascript
-enum LogLevel {
-  DEBUG,
-  INFO,
-  WARN,
-  ERROR,
-  OFF
-}
-```
-
-#### postLogConfig
-
-Configuration for setting up a [MeetingSessionPOSTLogger](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionpostlogger.html).
-
-```javascript
-interface PostLogConfig = {
-  name: string;
-  batchSize: number;
-  intervalMs: number;
-  url: string;
-  logLevel: LogLevel
-}
-```
-
-#### simulcastEnabled
-
-To enable simulcast for the meeting pass the `simulcastEnabled` prop with value set to `true`. By default, it is `false`.
-For more information on Simulcast, check Amazon Chime JS SDK [simulcast guide](https://github.com/aws/amazon-chime-sdk-js/blob/master/guides/05_Simulcast.md).
-
-#### logger
-
-The `Logger` object that you want to be used in the meeting session.
-If you pass in a `Logger` object using this parameter, the `MeetingManager` will use this object instead of creating a logger based on `logLevel` and `postLogConfig` to initialize the meeting session.
-
-#### videoDownlinkBandwidthPolicy
-
-The `VideoDownlinkBandwidthPolicy` object that you want to be used in the meeting session.
-For more information on `VideoDownlinkBandwidthPolicy`, check Amazon Chime JS SDK [priority downlink policy guide](https://aws.github.io/amazon-chime-sdk-js/modules/prioritybased_downlink_policy.html).
-
-For example, to use the `VideoPriorityBasedPolicy` in the meeting:
-
-```jsx
-import {
-  LogLevel,
-  ConsoleLogger,
-  VideoPriorityBasedPolicy,
-} from 'amazon-chime-sdk-js';
-import { MeetingProvider } from 'amazon-chime-sdk-component-library-react';
-
-const Root = () => {
-  const logger = new ConsoleLogger('SDK', LogLevel.INFO);
-  const videoDownlinkBandwidthPolicy = new VideoPriorityBasedPolicy(logger);
-
-  const meetingConfig = {
-    logger,
-    videoDownlinkBandwidthPolicy,
-  };
-
-  return (
-    <MeetingProvider {...meetingConfig}>
-      <MyApp />
-    </MeetingProvider>
-  );
-};
-```
+When a selected device is disconnected, or when the Operating System (OS) default device is selected and is changed by the OS (e.g., if a Bluetooth headset is disconnected),
+the `AudioInputProvider` encapsulated by `DevicesProvider` is forced to automatically select a new audio input. This behaves as expected when the selected device is an ordinary device provided by the browser.
+However, when your application is using a transform device like Amazon Voice Focus, the `AudioInputProvider` needs a way to transform the newly selected device to avoid reverting to a non-transform device.
+This is accomplished by exposing a `onDeviceReplacement` prop on `MeetingProvider` and `DevicesProvider`, allowing your application to customize the behavior of this device reselection step.
+Provide a function that accepts a `Device` as input and returns a `Device` or `AudioTransformDevice` of your choice.
 
 #### meetingManager
 
 There may be use cases to re-use the same `MeetingManager` instance across multiple different `MeetingProvider`s.
 Hence, you can create a new `MeetingManager` instance and then pass it as a prop to your `MeetingProvider`s. If not passed,
-a new `MeetingManager` instance will be created internally with each `MeetingProvider` when rendered; and, 
+a new `MeetingManager` instance will be created internally with each `MeetingProvider` when rendered; and,
 you will get the `MeetingManager` instance associated with that particular `MeetingProvider` when `useMeetingManager` hook is called.
 
 This approach has limitations. This should be used only in very specific cases where you want to share the meeting manager instance

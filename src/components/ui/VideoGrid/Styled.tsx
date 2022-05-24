@@ -1,10 +1,10 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import styled from 'styled-components';
 
-import { VideoGridProps } from './';
 import { AspectRatio } from '../../../hooks/useElementAspectRatio';
+import { VideoGridProps } from './';
 
 interface StyledGridProps extends VideoGridProps {
   ratio?: AspectRatio | null;
@@ -456,7 +456,7 @@ export const StyledGrid = styled.div<StyledGridProps>`
       styles += baseStyles || '';
     }
 
-    let mobileStyles =
+    const mobileStyles =
       responsiveStyles[`${size}.${ratio}${featured ? '.featured' : ''}`] ||
       responsiveStyles[`${size}${featured ? '.featured' : ''}`];
 

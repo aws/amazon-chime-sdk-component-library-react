@@ -1,13 +1,15 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
 
 import { useAudioInputs } from '../../../../providers/DevicesProvider';
-import { useSelectAudioInputDevice } from '../../../../hooks/sdk/useSelectAudioInputDevice';
+import { useLogger } from '../../../../providers/LoggerProvider';
+import { useMeetingManager } from '../../../../providers/MeetingProvider';
+import { BaseSdkProps } from '../../Base';
 import DeviceInput from '../DeviceInput';
 
-interface Props {
+interface Props extends BaseSdkProps {
   /** The message that will be shown when no microphone devices are found. */
   notFoundMsg?: string;
   /** The label that will be shown for microphone selection, it defaults to `Microphone source`. */
@@ -17,17 +19,28 @@ interface Props {
 export const MicSelection: React.FC<Props> = ({
   notFoundMsg = 'No microphone devices found',
   label = 'Microphone source',
+  ...rest
 }) => {
-  const selectAudioInput = useSelectAudioInputDevice();
+  const logger = useLogger();
   const { devices, selectedDevice } = useAudioInputs();
+  const meetingManager = useMeetingManager();
+
+  const handleSelect = async (deviceId: string): Promise<void> => {
+    try {
+      await meetingManager.startAudioInputDevice(deviceId);
+    } catch (error) {
+      logger.error('MicSelection failed to select mic');
+    }
+  };
 
   return (
     <DeviceInput
       label={label}
-      onChange={selectAudioInput}
+      onChange={handleSelect}
       devices={devices}
-      selectedDeviceId={selectedDevice}
+      selectedDevice={selectedDevice}
       notFoundMsg={notFoundMsg}
+      {...rest}
     />
   );
 };

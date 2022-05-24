@@ -1,7 +1,8 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, HTMLAttributes } from 'react';
+
 import { BaseProps } from '../Base';
 import { StyledModalBody } from './Styled';
 

@@ -1,5 +1,7 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
+
+import { AudioInputDevice, VideoInputDevice } from 'amazon-chime-sdk-js';
 
 export type Direction = 'up' | 'right' | 'down' | 'left';
 
@@ -8,17 +10,19 @@ export type DeviceType = {
   label: string;
 };
 
-export type SelectedDeviceId = string | null;
-
-export type DeviceTypeContext = {
+export type AudioInputContextType = {
   devices: DeviceType[];
-  selectedDevice: SelectedDeviceId;
-  selectDeviceError?: Error | null;
+  selectedDevice: AudioInputDevice | undefined;
 };
 
-export type DeviceConfig = {
-  /** Whether to include additional devices (such as "Color bars" for video, "440Hz" for audio) in the available devices list */
-  additionalDevices?: boolean;
+export type AudioOutputContextType = {
+  devices: DeviceType[];
+  selectedDevice: string | null;
+};
+
+export type VideoInputContextType = {
+  devices: DeviceType[];
+  selectedDevice: VideoInputDevice | undefined;
 };
 
 export type LocalAudioOutputContextType = {
@@ -30,6 +34,8 @@ export type LocalVideoContextType = {
   tileId: null | number;
   isVideoEnabled: boolean;
   setIsVideoEnabled: (isEnabled: boolean) => void;
+  hasReachedVideoLimit: boolean;
+  setHasReachedVideoLimit: (hasReached: boolean) => void;
   toggleVideo: () => Promise<void>;
 };
 
@@ -45,7 +51,9 @@ export enum MeetingStatus {
   Failed,
   Ended,
   JoinedFromAnotherDevice,
-};
+  Left,
+  TerminalFailure,
+}
 
 export type RosterAttendeeType = {
   chimeAttendeeId: string;
@@ -57,18 +65,31 @@ export type RosterType = {
   [attendeeId: string]: RosterAttendeeType;
 };
 
-export enum DevicePermissionStatus {
-  UNSET = 'UNSET',
+export enum DeviceLabelTriggerStatus {
+  UNTRIGGERED = 'UNTRIGGERED',
   IN_PROGRESS = 'IN_PROGRESS',
   GRANTED = 'GRANTED',
   DENIED = 'DENIED',
-};
+}
 
 export enum DeviceLabels {
-  None,
+  None = 1,
   Audio,
   Video,
   AudioAndVideo,
-};
+}
 
 export type DeviceLabelTrigger = () => Promise<MediaStream>;
+
+export type MeetingFeatures = {
+  Audio: { [key: string]: string };
+};
+
+export type CreateMeetingResponse = {
+  MeetingFeatures: MeetingFeatures;
+};
+
+export type JoinMeetingInfo = {
+  Meeting: CreateMeetingResponse;
+  Attendee: string;
+};

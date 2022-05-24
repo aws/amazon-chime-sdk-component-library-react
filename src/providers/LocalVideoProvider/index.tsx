@@ -1,28 +1,31 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { AudioVideoObserver, VideoTileState } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
-  useState,
-  useEffect,
-  useContext,
   useCallback,
+  useContext,
+  useEffect,
   useMemo,
+  useState,
 } from 'react';
-import { VideoTileState } from 'amazon-chime-sdk-js';
 
-import { useMeetingManager } from '../MeetingProvider';
-import { useAudioVideo } from '../AudioVideoProvider';
-
-import { videoInputSelectionToDevice } from '../../utils/device-utils';
 import { LocalVideoContextType } from '../../types';
+import { useAudioVideo } from '../AudioVideoProvider';
+import { useVideoInputs } from '../DevicesProvider';
+import { useLogger } from '../LoggerProvider';
+import { useMeetingManager } from '../MeetingProvider';
 
 const Context = createContext<LocalVideoContextType | null>(null);
 
 const LocalVideoProvider: React.FC = ({ children }) => {
+  const logger = useLogger();
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
+  const { selectedDevice } = useVideoInputs();
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
+  const [hasReachedVideoLimit, setHasReachedVideoLimit] = useState(false);
   const [tileId, setTileId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -34,52 +37,93 @@ const LocalVideoProvider: React.FC = ({ children }) => {
       setIsVideoEnabled(true);
     }
 
+    const observer: AudioVideoObserver = {
+      videoAvailabilityDidChange: (availability) => {
+        if (!availability.canStartLocalVideo) {
+          setHasReachedVideoLimit(true);
+        } else {
+          setHasReachedVideoLimit(false);
+        }
+        logger.info(
+          `video availability changed: canStartLocalVideo ${availability.canStartLocalVideo}`
+        );
+      },
+    };
+    audioVideo.addObserver(observer);
+
     return () => {
       setIsVideoEnabled(false);
+      audioVideo.removeObserver(observer);
     };
   }, [audioVideo]);
 
-  const toggleVideo = useCallback(async (): Promise<void> => {
-    if (isVideoEnabled || !meetingManager.selectedVideoInputDevice) {
-      audioVideo?.stopLocalVideoTile();
-      setIsVideoEnabled(false);
-    } else {
-      await audioVideo?.chooseVideoInputDevice(
-        videoInputSelectionToDevice(meetingManager.selectedVideoInputDevice)
-      );
-      audioVideo?.startLocalVideoTile();
-      setIsVideoEnabled(true);
+  useEffect(() => {
+    if (hasReachedVideoLimit) {
+      logger.warn('Reach the number of maximum active videos');
     }
-  }, [audioVideo, isVideoEnabled, meetingManager.selectedVideoInputDevice]);
+  }, [hasReachedVideoLimit]);
+
+  const toggleVideo = useCallback(async (): Promise<void> => {
+    try {
+      if (isVideoEnabled || !selectedDevice) {
+        if (!selectedDevice) {
+          logger.warn('There is no input video device chosen!');
+        }
+        await audioVideo?.stopVideoInput();
+        setIsVideoEnabled(false);
+      } else if (!hasReachedVideoLimit) {
+        await meetingManager.startVideoInputDevice(selectedDevice);
+        audioVideo?.startLocalVideoTile();
+        setIsVideoEnabled(true);
+      } else {
+        logger.error('Video limit is reached and can not turn on more videos!');
+      }
+    } catch (error) {
+      logger.error('Failed to toggle video');
+    }
+  }, [audioVideo, isVideoEnabled, hasReachedVideoLimit, selectedDevice]);
 
   useEffect(() => {
     if (!audioVideo) {
       return;
     }
 
-    const videoTileDidUpdate = (tileState: VideoTileState) => {
-      if (
-        !tileState.localTile ||
-        !tileState.tileId ||
-        tileId === tileState.tileId
-      ) {
-        return;
-      }
+    const observer: AudioVideoObserver = {
+      videoTileDidUpdate: (tileState: VideoTileState) => {
+        if (
+          !tileState.localTile ||
+          !tileState.tileId ||
+          tileId === tileState.tileId
+        ) {
+          return;
+        }
 
-      setTileId(tileState.tileId);
+        setTileId(tileState.tileId);
+      },
     };
+    audioVideo.addObserver(observer);
 
-    audioVideo.addObserver({
-      videoTileDidUpdate,
-    });
+    return () => audioVideo.removeObserver(observer);
   }, [audioVideo, tileId]);
 
-  const value = useMemo(() => ({ tileId, isVideoEnabled, setIsVideoEnabled, toggleVideo, }), [
-    tileId,
-    isVideoEnabled,
-    setIsVideoEnabled,
-    toggleVideo,
-    ]);
+  const value = useMemo(
+    () => ({
+      tileId,
+      isVideoEnabled,
+      setIsVideoEnabled,
+      hasReachedVideoLimit,
+      setHasReachedVideoLimit,
+      toggleVideo,
+    }),
+    [
+      tileId,
+      isVideoEnabled,
+      setIsVideoEnabled,
+      hasReachedVideoLimit,
+      setHasReachedVideoLimit,
+      toggleVideo,
+    ]
+  );
 
   return <Context.Provider value={value}>{children}</Context.Provider>;
 };

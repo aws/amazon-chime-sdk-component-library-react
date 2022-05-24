@@ -1,10 +1,10 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
 
-import { StyledRoster } from './Styled';
 import { BaseProps, FocusableProps } from '../Base';
+import { StyledRoster } from './Styled';
 
 export interface RosterProps extends BaseProps, FocusableProps {}
 

@@ -1,16 +1,16 @@
-// Copyright 2020-2021 Amazon.com, Inc. or its affiliates. All Rights Reserved.
+// Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
 import React, {
   ChangeEvent,
-  forwardRef,
-  Ref,
-  InputHTMLAttributes,
   CSSProperties,
+  forwardRef,
+  InputHTMLAttributes,
+  Ref,
 } from 'react';
 
-import { StyledSelectInput, StyledWrapper } from './Styled';
 import UpAndDownCaret from '../icons/UpAndDownCaret';
+import { StyledSelectInput, StyledWrapper } from './Styled';
 
 export type SelectOptions = {
   value: string | number;
