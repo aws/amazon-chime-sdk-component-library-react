@@ -27,16 +27,20 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
   const { selectedDevice } = useVideoInputs();
   const videoEl = useRef<HTMLVideoElement>(null);
   const meetingManager = useMeetingManager();
-  const { setIsVideoEnabled } = useLocalVideo();
+  const { isVideoEnabled } = useLocalVideo();
 
   useEffect(() => {
     const videoElement = videoEl.current;
     return () => {
-      if (videoElement) {
-        audioVideo?.stopVideoPreviewForVideoInput(videoElement);
-        audioVideo?.stopVideoInput();
-        setIsVideoEnabled(false);
+      if (!videoElement) {
+        return;
       }
+
+      if (!isVideoEnabled) {
+        audioVideo?.stopVideoInput();
+      }
+
+      audioVideo?.stopVideoPreviewForVideoInput(videoElement);
     };
   }, [audioVideo]);
 
@@ -47,9 +51,10 @@ export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
       }
 
       try {
-        await meetingManager.startVideoInputDevice(selectedDevice);
+        if (!isVideoEnabled) {
+          await meetingManager.startVideoInputDevice(selectedDevice);
+        }
         audioVideo.startVideoPreviewForVideoInput(videoEl.current);
-        setIsVideoEnabled(true);
       } catch (error) {
         logger.error('Failed to start video preview');
       }
