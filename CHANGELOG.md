@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.15.0] - 2022-02-03
 
 ### Fixed
+
 - Fix a bug in `BackgroundBlurProvider` and `BackgroundReplacementProvider` where the options objects are updated and causing re-rendering and destroying previous processor.
 - Fix a bug in `PreviewVideo` where the PreviewVideo component did not start when `audioVideo` changed.
 
@@ -28,16 +29,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Amazon Chime Echo Reduction feature. Allow builders to supply the response from a `CreateMeeting` or `CreateMeetingWithAttendees` call when adding a `VoiceFocusProvider` to the component tree. This enables optional features like Amazon Chime Echo Reduction to be added to devices when turning on Amazon Voice Focus.
 - Add `videoAvailabilityDidChange` as an audio observer in `LocalVideoProvider` and a new state `hasReachedVideoLimit` to disable the video button when the video limit is reached.
 - Add `keepLastFrameWhenPaused` as an optional parameter to allow to keep the last frame of the video when a remote video is paused via the pauseVideoTile.
+
 ### Changed
 
 ### Removed
 
 ## [2.14.0] - 2022-01-20
 
-
 ### Fixed
 
 ### Added
+
 - Add `BackgroundReplacementProvider` provider to support background replacement.
 
 ### Changed
@@ -49,9 +51,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 ### Added
+
 - Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` to `MeetingProvider` props.
 
 ### Changed
+
 - Change `additionalDevices` to a prop in `AudioInputControl`, `VideoInputControl`, `AudioInputVFControl`, `MicSelection`, and `CameraSelection` components to allow option to turn off that configuration.
 - Add `reconnectTimeoutMs` as an optional parameter to `MeetingManagerConfig` to manage the timeout for reconnection.
 
@@ -60,6 +64,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [2.12.0] - 2021-11-19
 
 ### Fixed
+
 - Fix the issue that Amazon Voice Focus does not get applied on new devices mid-meeting.
 
 ### Added
