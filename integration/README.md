@@ -158,6 +158,8 @@ Last, you need to [setup the Sauce Connect Proxy](https://docs.saucelabs.com/sec
 3. From your command line terminal, launch a tunnel with the below commands.
 
    > Note: The default tunnel name in `config.js` is "test-tunnel". it's recommended to use this tunnel name when you **test or debug the test suites locally** so you don't need to change anything there.
+   >
+   > If you don't assign value for `--tunnel-name` parameter, an unnamed tunnel will be created. **DO NOT create any unnamed tunnel. This operation will break our integration tests and trigger alerts.** According to [Sauce Labs documentation](https://docs.saucelabs.com/secure-connections/sauce-connect/setup-configuration/basic-setup/#using-tunnel-names), unnamed tunnel will automatically be used for all tests. This will cause all tests to come to this unnamed tunnel, queue up for execution and eventually fail due to timeouts. Also the active Sauce Labs session may exceed the limit.
 
    ```plaintext
    ./sc -u $SAUCE_USERNAME -k $SAUCE_ACCESS_KEY --region $SAUCE_DC --tunnel-name {TUNNEL_NAME}
