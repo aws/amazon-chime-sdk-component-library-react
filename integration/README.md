@@ -19,6 +19,7 @@ The `run-test` script in `/script` folder will:
 1. start the test demo
 2. run the test suites
 3. check the test result
+4. test
 
 To execute the `run-script` script, simply call:
 
