@@ -80,6 +80,7 @@ const MyApp = () => {
     data.Meeting,
     data.Attendee
   });
+  await meetingManager.start();
 
   return (
     <div>
@@ -116,6 +117,7 @@ const MyApp = () => {
 
   const meetingManager = useMeetingManager();
   await meetingManager.join(meetingSessionConfiguration);
+  await meetingManager.start();
 
   return <div>...</div>;
 };
@@ -149,7 +151,7 @@ const MyApp = () => {
     data.Meeting,
     data.Attendee
   });
-
+  await meetingManager.start();
   return (
     <div>
       ...
@@ -181,6 +183,7 @@ const MyApp = () => {
 
   const meetingManager = useMeetingManager();
   await meetingManager.join(meetingSessionConfiguration);
+  await meetingManager.start();
 
   return <div>...</div>;
 };
@@ -213,6 +216,7 @@ const MyApp = () => {
     data.Meeting,
     data.Attendee
   });
+  await meetingManager.start();
 
   return (
     <div>
@@ -247,6 +251,7 @@ const MyApp = () => {
 
   const meetingManager = useMeetingManager();
   await meetingManager.join(meetingSessionConfiguration, options);
+  await meetingManager.start();
 
   return <div>...</div>;
 };
@@ -268,6 +273,7 @@ const MyApp = () => {
     data.Meeting,
     data.Attendee
   });
+  await meetingManager.start();
 };
 ```
 
@@ -285,6 +291,7 @@ const MyApp = () => {
 
   const meetingManager = useMeetingManager();
   await meetingManager.join(meetingSessionConfiguration);
+  await meetingManager.start();
 };
 ```
 
@@ -305,6 +312,7 @@ const MyApp = () => {
     };
     try {
       await meetingManager.join(joinData);
+      await meetingManager.start();
     } catch {
       console.error('Something went wrong');
     }
@@ -339,6 +347,7 @@ const MyApp = () => {
         meetingSessionConfiguration,
         options
       );
+      await meetingManager.start();
     } catch {
       console.error('Something went wrong');
     }
