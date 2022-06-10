@@ -26,8 +26,14 @@ module.exports = {
     global: {
       statements: 89,
       branches: 59,
-      functions: 78,
+      functions: 74,
       lines: 90
     }
-  }
+  },
+  /**
+   * Use v8 to avoid installing three explicit babel dependencies to solve below bug:
+   * https://github.com/facebook/jest/issues/12925
+   * https://jestjs.io/docs/configuration#coverageprovider-string
+   */
+  coverageProvider: 'v8',
 };
