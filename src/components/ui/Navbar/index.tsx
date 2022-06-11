@@ -16,7 +16,7 @@ export interface NavbarProps extends FlexProps, BaseProps, FocusableProps {
   responsive?: boolean;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({
+export const Navbar: React.FC<React.PropsWithChildren<NavbarProps>> = ({
   children,
   className,
   responsive = true,

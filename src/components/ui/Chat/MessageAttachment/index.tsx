@@ -31,7 +31,7 @@ export interface MessageAttachmentProps
   size?: string;
 }
 
-export const MessageAttachment: FC<MessageAttachmentProps> = ({
+export const MessageAttachment: FC<React.PropsWithChildren<MessageAttachmentProps>> = ({
   size = 'Unknown',
   ...props
 }) => {

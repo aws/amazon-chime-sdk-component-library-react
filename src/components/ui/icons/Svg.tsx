@@ -18,7 +18,7 @@ export interface SvgProps extends React.SVGAttributes<HTMLOrSVGElement> {
   css?: string;
 }
 
-const Svg: React.FC<SvgProps> = ({
+const Svg: React.FC<React.PropsWithChildren<SvgProps>> = ({
   className,
   children,
   viewBox = '0 0 24 24',

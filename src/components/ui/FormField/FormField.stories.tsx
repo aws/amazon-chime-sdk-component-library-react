@@ -23,7 +23,7 @@ export default {
   component: FormField,
 };
 
-const TestInput: React.FC<{}> = (props) => {
+const TestInput: React.FC<React.PropsWithChildren<{}>> = (props) => {
   const [name, setName] = useState('');
 
   function handleChange(evt: any) {
@@ -67,7 +67,7 @@ export const BasicInputFormField = () => {
   );
 };
 
-const TestSelect: React.FC<{}> = (props) => {
+const TestSelect: React.FC<React.PropsWithChildren<{}>> = (props) => {
   const [value, setValue] = useState('');
   const handleChange = (e: any) => setValue(e.target.value);
 
@@ -123,7 +123,7 @@ export const SelectFormField = () => {
   );
 };
 
-const TestTextarea: React.FC<{}> = (props) => {
+const TestTextarea: React.FC<React.PropsWithChildren<{}>> = (props) => {
   const [value, setValue] = useState('');
 
   const handleChange = (e: any) => {
@@ -182,7 +182,7 @@ const options = [
   },
 ];
 
-const TestRadioGroup: React.FC<{}> = (props) => {
+const TestRadioGroup: React.FC<React.PropsWithChildren<{}>> = (props) => {
   const [value, setValue] = useState('');
 
   const handleChange = (evt: any) => {
@@ -203,7 +203,7 @@ const TestRadioGroup: React.FC<{}> = (props) => {
   );
 };
 
-const TestCheckbox: React.FC<{}> = (props) => {
+const TestCheckbox: React.FC<React.PropsWithChildren<{}>> = (props) => {
   const [state, setState] = React.useState({
     react: false,
     angular: false,
@@ -278,7 +278,7 @@ const radioOptions = [
   },
 ];
 
-const TestMixedInputs: React.FC<{}> = (props) => {
+const TestMixedInputs: React.FC<React.PropsWithChildren<{}>> = (props) => {
   const [state, setState] = useState({
     firstName: '',
     lastName: '',

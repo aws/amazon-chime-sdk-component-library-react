@@ -10,7 +10,7 @@ export interface ChannelListProps
   extends Omit<HTMLAttributes<HTMLUListElement & HTMLLIElement>, 'css'>,
     BaseProps {}
 
-export const ChannelList: FC<ChannelListProps> = (props) => {
+export const ChannelList: FC<React.PropsWithChildren<ChannelListProps>> = (props) => {
   return (
     <StyledChannelList {...props} data-testid="channel-list">
       {props.children}

@@ -13,7 +13,7 @@ interface Props extends BaseSdkProps {
   attendeeId: string;
 }
 
-export const MicrophoneActivity: React.FC<Props> = ({
+export const MicrophoneActivity: React.FC<React.PropsWithChildren<Props>> = ({
   attendeeId,
   ...rest
 }) => {

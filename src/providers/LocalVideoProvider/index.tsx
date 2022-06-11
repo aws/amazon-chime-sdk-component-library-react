@@ -19,7 +19,7 @@ import { useMeetingManager } from '../MeetingProvider';
 
 const Context = createContext<LocalVideoContextType | null>(null);
 
-const LocalVideoProvider: React.FC = ({ children }) => {
+const LocalVideoProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const logger = useLogger();
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();

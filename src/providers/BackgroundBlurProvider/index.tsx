@@ -46,7 +46,7 @@ const BackgroundBlurProviderContext = createContext<
   BackgroundBlurProviderState | undefined
 >(undefined);
 
-const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
+const BackgroundBlurProvider: FC<React.PropsWithChildren<Props>> = ({ spec, options, children }) => {
   const logger = useLogger();
   const [isBackgroundBlurSupported, setIsBackgroundBlurSupported] = useState<
     boolean | undefined

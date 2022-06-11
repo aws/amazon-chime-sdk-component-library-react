@@ -8,7 +8,7 @@ import { StyledRoster } from './Styled';
 
 export interface RosterProps extends BaseProps, FocusableProps {}
 
-export const Roster: React.FC<RosterProps> = ({ children, ...rest }) => {
+export const Roster: React.FC<React.PropsWithChildren<RosterProps>> = ({ children, ...rest }) => {
   return <StyledRoster {...rest}>{children}</StyledRoster>;
 };
 

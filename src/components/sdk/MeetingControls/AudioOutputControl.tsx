@@ -19,7 +19,7 @@ interface Props extends BaseSdkProps {
   label?: string;
 }
 
-const AudioOutputControl: React.FC<Props> = ({
+const AudioOutputControl: React.FC<React.PropsWithChildren<Props>> = ({
   label = 'Speaker',
   ...rest
 }) => {

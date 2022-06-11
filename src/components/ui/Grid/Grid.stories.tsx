@@ -20,7 +20,7 @@ export default {
   excludeStories: ['Child'],
 };
 
-export const Child: React.FC = ({ children }) => (
+export const Child: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => (
   <Flex
     layout="fill-space-centered"
     style={{ backgroundColor: '#232222', color: 'white' }}

@@ -51,7 +51,7 @@ const iconMapping = {
   info: <Information />,
 };
 
-export const Notification: React.FC<NotificationProps> = (props) => {
+export const Notification: React.FC<React.PropsWithChildren<NotificationProps>> = (props) => {
   const {
     tag,
     message,

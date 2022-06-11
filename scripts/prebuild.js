@@ -34,7 +34,6 @@ if (!process.env.GITHUB_ACTIONS) {
     .split(`\n`)
     .filter(commit => commit !== '');
 }
-
 let commit_files = [];
 commit_files = spawnOrFail('git', [
   'diff-tree',
@@ -55,7 +54,7 @@ if (uncommitted_files.length !== 0) {
   logger.error(
     `Error: there are uncommitted changes:\n ${uncommitted_files}`
   );
-  return process.exit(1);
+  process.exit(1);
 }
 
 if (
@@ -87,9 +86,9 @@ When bot submits PR two git context parameters are set.
     logger.error(
       `Error: Does not contain CHANGELOG.md in the commit ${commits[0]}\nPlease add CHANGELOG for library src changes.
     `);
-    return process.exit(1);
+    process.exit(1);
   }
   // Only require a changelog change for changes to the component library
   logger.log('Skipping CHANGELOG.md verification.');
-  return process.exit(0);
+  process.exit(0);
 }

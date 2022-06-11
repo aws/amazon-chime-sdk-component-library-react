@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Upgrade to support React 18
+
 ### Fixed
 
 ## [3.2.0] - 2022-04-11

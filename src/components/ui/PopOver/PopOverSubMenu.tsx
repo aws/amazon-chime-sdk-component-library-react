@@ -16,7 +16,7 @@ export interface PopOverSubMenuProps
   text: string;
 }
 
-export const PopOverSubMenu: FC<PopOverSubMenuProps> = ({
+export const PopOverSubMenu: FC<React.PropsWithChildren<PopOverSubMenuProps>> = ({
   text,
   children,
   ...rest

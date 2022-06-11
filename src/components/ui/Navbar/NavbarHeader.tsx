@@ -15,7 +15,7 @@ export interface NavbarHeaderProps extends BaseProps, FocusableProps {
   onClose?: () => void;
 }
 
-export const NavbarHeader: React.FC<NavbarHeaderProps> = (
+export const NavbarHeader: React.FC<React.PropsWithChildren<NavbarHeaderProps>> = (
   props: NavbarHeaderProps
 ) => (
   <StyledHeader {...props}>

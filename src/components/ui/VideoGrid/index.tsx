@@ -22,7 +22,7 @@ interface GridContext {
 const gridData = { usingGrid: true };
 const GridContext = createContext<GridContext | null>(null);
 
-export const VideoGrid: React.FC<VideoGridProps> = ({
+export const VideoGrid: React.FC<React.PropsWithChildren<VideoGridProps>> = ({
   size,
   children,
   layout = 'standard',

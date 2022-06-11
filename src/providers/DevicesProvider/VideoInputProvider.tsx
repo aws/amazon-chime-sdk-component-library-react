@@ -17,7 +17,7 @@ import { useMeetingManager } from '../MeetingProvider';
 
 const Context = createContext<VideoInputContextType | null>(null);
 
-const VideoInputProvider: React.FC = ({ children }) => {
+const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const logger = useLogger();
   const audioVideo = useAudioVideo();
   const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);

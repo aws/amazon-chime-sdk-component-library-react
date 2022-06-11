@@ -12,7 +12,7 @@ export interface CellProps extends SpaceProps, GridProps {
   className?: string;
 }
 
-export const Cell: React.FC<CellProps> = ({ className, children, ...rest }) => (
+export const Cell: React.FC<React.PropsWithChildren<CellProps>> = ({ className, children, ...rest }) => (
   <StyledCell className={className || ''} {...rest}>
     {children}
   </StyledCell>

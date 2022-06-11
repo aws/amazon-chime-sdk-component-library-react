@@ -37,7 +37,7 @@ interface VoiceFocusState {
 
 const VoiceFocusContext = createContext<VoiceFocusState | null>(null);
 
-const VoiceFocusProvider: React.FC<Props> = ({
+const VoiceFocusProvider: React.FC<React.PropsWithChildren<Props>> = ({
   spec,
   options,
   createMeetingResponse,

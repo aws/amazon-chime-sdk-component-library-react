@@ -54,7 +54,7 @@ const getFocusableElements = (node: HTMLElement): NodeListOf<HTMLElement> => {
   return node.querySelectorAll('button, [href]');
 };
 
-export const PopOver: FC<PopOverProps> = ({
+export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
   renderButton,
   renderButtonWrapper,
   onPopOverClick,
