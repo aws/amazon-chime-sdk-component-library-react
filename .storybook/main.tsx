@@ -13,13 +13,13 @@ module.exports = {
       propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
     },
   },
-  stories: ['../src/**/*.stories.@(ts|js|tsx|mdx)'],
+  stories: ['../src/components/ui/Badge/Badge.stories.@(tsx|mdx)'],
   addons: [
-    '@storybook/addon-knobs',
+    "storybook-addon-styled-component-theme/dist/preset",
     '@storybook/addon-storysource',
     '@storybook/addon-viewport',
-    'themeprovider-storybook',
     '@storybook/addon-a11y',
+    '@storybook/addon-controls',
     {
       name: '@storybook/addon-docs',
       options: {
@@ -30,3 +30,5 @@ module.exports = {
     },
   ],
 };
+
+// '../src/**/*.stories.@(ts|js|tsx|mdx)'
