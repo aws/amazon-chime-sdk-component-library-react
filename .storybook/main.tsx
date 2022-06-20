@@ -13,9 +13,9 @@ module.exports = {
       propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
     },
   },
-  stories: ['../src/**/*.stories.@(ts|js|tsx|mdx)'],
+  stories: ['../src/**/ui/FormField/*.stories.@(ts|js|tsx|mdx)'],
   addons: [
-    '@storybook/addon-knobs',
+    '@storybook/addon-controls',
     '@storybook/addon-storysource',
     '@storybook/addon-viewport',
     'themeprovider-storybook',

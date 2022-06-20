@@ -1,6 +1,5 @@
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
-import { withKnobs } from '@storybook/addon-knobs';
 import { withThemesProvider } from 'themeprovider-storybook';
 
 import { GlobalStyles } from '../src/theme/GlobalStyles';
@@ -30,5 +29,11 @@ const withGlobalStyles = (Story: any) => (
 export const decorators = [
   withGlobalStyles,
   withThemesProvider(themes),
-  withKnobs
 ];
+
+export const argTypes = {
+  tag: { table: { disable: true } },
+  id: { table: { disable: true } },
+  className: { table: { disable: true } },
+  css: { table: { disable: true } },
+};
