@@ -26,6 +26,29 @@ export const LocalVideo: React.FC<Props> = ({ nameplate, ...rest }) => {
   useApplyVideoObjectFit(videoEl);
 
   useEffect(() => {
+    if (!videoEl.current) {
+      return;
+    }
+
+    const videoElement = videoEl.current;
+    Object.defineProperty(videoEl.current.style, 'transform', {
+      get() {
+        return videoElement.style.getPropertyValue('transform');
+      },
+      set(value) {
+        var newTransform;
+        if (value === 'rotateY(180deg)') {
+          newTransform = 'scaleX(-1)';
+        } else {
+          newTransform = value;
+        }
+        videoElement.style.setProperty('transform', newTransform);
+      },
+    });
+
+  }, [])
+
+  useEffect(() => {
     if (!audioVideo || !tileId || !videoEl.current || !isVideoEnabled) {
       return;
     }
