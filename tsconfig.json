@@ -20,6 +20,7 @@
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
+    "typeRoots": ["./@types", "node_modules/@types"]
   },
   "include": ["src/**/*", "tst/**/*", "jest-snapshot.config.js", "jest.config.js"],
   "exclude": [
