@@ -15,6 +15,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Update tsconfig to include packages under `./@types` and `node_modules/@types` in the TypeScript compilation.
+- Move the definition of default theme from its implementation to its `d.ts` file under `./@types` to support [function themes](https://styled-components.com/docs/advanced#function-themes) usage of styled-component.
+
 ### Fixed
 
 ## [3.2.0] - 2022-04-11

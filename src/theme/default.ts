@@ -1,8 +1,6 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { Breakpoints } from './styled';
-
 export const fonts = {
   body: "'Ember', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;",
   monospace: 'Menlo, monospace',
@@ -21,19 +19,34 @@ export const zIndex = {
   notificationGroup: 40,
 };
 
-const breakpoints = [
-  '20rem', // 320px
-  '35.5rem', // 568px
-  '48rem', // 768px
-  '64rem', // 1024px
-  '90rem', // 1440px
-] as Breakpoints;
+enum BreakpointEnum {
+  xs = 'xs',
+  sm = 'sm',
+  md = 'md',
+  lg = 'lg',
+  xl = 'xl',
+}
 
-breakpoints.xs = breakpoints[0];
-breakpoints.sm = breakpoints[1];
-breakpoints.md = breakpoints[2];
-breakpoints.lg = breakpoints[3];
-breakpoints.xl = breakpoints[4];
+const breakpointValues = {
+  [BreakpointEnum.xs]: '20rem', // 320px phone
+  [BreakpointEnum.sm]: '35.5rem', // 568px tablet
+  [BreakpointEnum.md]: '48rem', // 768px small laptop
+  [BreakpointEnum.lg]: '64rem', // 1024px desktop
+  [BreakpointEnum.xl]: '90rem', // 1440px large screen
+};
+
+const breakpointAliaseValues = {
+  [0]: breakpointValues[BreakpointEnum.xs],
+  [1]: breakpointValues[BreakpointEnum.sm],
+  [2]: breakpointValues[BreakpointEnum.md],
+  [3]: breakpointValues[BreakpointEnum.lg],
+  [4]: breakpointValues[BreakpointEnum.xl],
+};
+
+const breakpoints = {
+  ...breakpointValues,
+  ...breakpointAliaseValues,
+};
 
 const mediaQueries = {
   min: {
