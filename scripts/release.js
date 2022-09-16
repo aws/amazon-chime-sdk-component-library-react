@@ -47,6 +47,7 @@ const deployDemo = (version) => {
   updateDependency(`amazon-chime-sdk-js@${latestNPMJSSdkVersion}`);
   process.chdir(path.join(__dirname, '../../amazon-chime-sdk/apps/meeting'));
   updateDependency('amazon-chime-sdk-component-library-react', `../../../amazon-chime-sdk-component-library-react/amazon-chime-sdk-component-library-react-${version}.tgz`);
+  spawnOrFail('rm', [`-rf ../../../amazon-chime-sdk-component-library-react/amazon-chime-sdk-component-library-react-${version}.tgz`]);
 
   process.chdir(path.join(__dirname, '../../amazon-chime-sdk/apps/meeting/serverless'));
   const formattedVersion = version.replace(/\./g, '-');
@@ -88,7 +89,7 @@ const checkNPMDepsInstall = () => {
   // Creates a new React test app, install component and sdk and build the test app to ensure no peer dependency warnings, errors or build issues
   logger.log('Install amazon-chime-sdk-component-library-react and amazon-chime-sdk-js sdk as dependencies, check if there is peer dependency warning for amazon-chime-sdk-component-library-react');
   process.chdir(path.join(__dirname, '../..'));
-  if (!fs.existsSync('dependency-check-app')){
+  if (!fs.existsSync('dependency-check-app')) {
     spawnOrFail('mkdir', ['dependency-check-app']);
   } else {
     spawnOrFail('rm', ['-rf dependency-check-app']);
@@ -102,7 +103,7 @@ const checkNPMDepsInstall = () => {
   checkWarning('npm', [`install -q ../amazon-chime-sdk-component-library-react/amazon-chime-sdk-component-library-react-${currentVersion}.tgz`], null, 'amazon-chime-sdk-component-library-react');
   process.chdir(path.join(__dirname, '..'));
   spawnOrFail('rm', ['-rf ../dependency-check-app']);
-}
+};
 
 const cleanUp = (remoteBranch) => {
   logger.warn(`Warning: Resetting HEAD${remoteBranch ? ` to ${remoteBranch}` : ''}.\nAll current staged and local changes will be lost.`);
