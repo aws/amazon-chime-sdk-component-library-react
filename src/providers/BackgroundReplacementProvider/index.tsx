@@ -6,12 +6,12 @@ import {
   BackgroundReplacementOptions,
   BackgroundReplacementProcessor,
   BackgroundReplacementVideoFrameProcessor,
+  BackgroundReplacementVideoFrameProcessorObserver,
   ConsoleLogger,
   DefaultVideoTransformDevice,
   Device,
   LogLevel,
   NoOpVideoFrameProcessor,
-  VideoFrameProcessor,
 } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
@@ -33,6 +33,10 @@ interface Props extends BaseSdkProps {
   /* A set of options that can be supplied when creating a background replacement video frame processor such as the background replacement image blob. For more information, refer to
    * [Amazon Chime SDK for JavaScript Background Filter Guide](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#adding-a-background-filter-to-your-application). */
   options?: BackgroundReplacementOptions;
+    /**
+   * Observer callback functions. The observer will be added to the background replacement processor on mount and removed on unmount.
+   */
+  observer?: BackgroundReplacementVideoFrameProcessorObserver;
 }
 
 interface BackgroundReplacementProviderState {
@@ -49,6 +53,7 @@ const BackgroundReplacementProviderContext = createContext<
 const BackgroundReplacementProvider: FC<Props> = ({
   spec,
   options,
+  observer,
   children,
 }) => {
   const logger = useLogger();
@@ -56,7 +61,7 @@ const BackgroundReplacementProvider: FC<Props> = ({
     isBackgroundReplacementSupported,
     setIsBackgroundReplacementSupported,
   ] = useState<boolean | undefined>(undefined);
-  const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>(
+  const [processor, setProcessor] = useState<BackgroundReplacementProcessor | undefined>(
     undefined
   );
 
@@ -103,6 +108,18 @@ const BackgroundReplacementProvider: FC<Props> = ({
       processor?.destroy();
     };
   }, [replacementSpec, replacementOptions]);
+
+  useEffect(() => {
+    if (!!processor && !!observer) {
+      processor.addObserver(observer);
+    }
+    
+    return () => {
+      if (!!processor && !!observer) {
+        processor.removeObserver(observer);
+      }
+    };
+  }, [observer, processor]);
 
   async function initializeBackgroundReplacement(): Promise<
     BackgroundReplacementProcessor | undefined
