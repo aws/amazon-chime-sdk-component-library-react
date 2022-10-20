@@ -7,6 +7,267 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.4.0] - 2022-09-13
+
+### Added
+
+- Refactor `toggleContentShare` function to allow specifying a `MediaStream` to share. This can be used to share non-screen share content.
+
+### Removed
+
+### Changed
+
+### Fixed
+
+## [3.3.0] - 2022-05-04
+
+### Added
+
+### Removed
+
+### Changed
+
+- Update tsconfig to include packages under `./@types` and `node_modules/@types` in the TypeScript compilation.
+- Move the definition of default theme from its implementation to its `d.ts` file under `./@types` to support [function themes](https://styled-components.com/docs/advanced#function-themes) usage of styled-component.
+
+### Fixed
+
+## [3.2.0] - 2022-04-11
+
+### Added
+
+- Add `audioSpeakerDelayMs`, `audioUpstreamRoundTripTimeMs`, `audioUpstreamJitterMs`, `audioDownstreamJitterMs` and `currentRoundTripTimeMs` metrics to `useMediaStreamMetrics` hook. Also add `rtcStatsReport` to expose the original [`RTCStatsReport`](https://developer.mozilla.org/en-US/docs/Web/API/RTCStatsReport) from [RTCPeerConnection.getStats()](https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection/getStats).
+
+### Removed
+
+### Changed
+
+- Improve "Handle Device Permission" guide in Quick Starts.
+- Upgrade `storybook` to a fixed `6.5.0-alpha.64` with `webpack v5` to fix security vulnerabilities and issues with external HTTP link rendering.
+- Update integration test demo to install `amazon-chime-sdk-component-library-react` from local instead of from npm. Update corresponding GitHub Action and scripts.
+
+### Fixed
+
+- Fix command line sample to install latest node dependencies in migration guides.
+- Clarify `setIsVideoEnabled` usage in `LocalVideoProvider` and `useLocalVideo` docs.
+
+## [3.0.0] - 2022-03-17
+
+Amazon Chime SDK React Components Library v3 is here !! 🎉🎉🎉
+
+Amazon Chime SDK React Components Library v3 includes major improvements for component style customization, `MeetingProvider/MeetingManager` configuration, device management, WebRTC metrics and logger.
+
+- **Component style customization**: Improve components for easier customization of style. Check out our [styling guide](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/styling-guide--page) for more information.
+- **`MeetingProvider/MeetingManager` configuration**: Improve `MeetingProvider`, `MeetingManager` and `MeetingManager.join()` API to allow configuring a meeting session right before joining a meeting instead of when `MeetingProvider` mounts.
+- **Device management**: Improve `types` for device selection components to better support basic and transformed devices. Remove `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hooks to standardize device selection through `MeetingManager` and throw error when selection fails.
+- **WebRTC metrics**: Publish the standardized WebRTC metrics for all supported browsers. Deprecate `useBandwidthMetrics` hook in favor of `useMediaStreamMetrics` hook.
+- **Logger**: Add `LoggerProvider` and `useLogger` components to enable universal logging in component library.
+
+Below is a list of all changes in Amazon Chime SDK React Components Library v3. Please refer to the [Migration from 2.0 to 3.0](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/migration-to-v3--page) for more information.
+
+### Added
+
+- Add `LoggerProvider` and `useLogger` components to enable universal logging in component library.
+- Add a new interface `MeetingManagerJoinOptions` containing `deviceLabels`, `eventController`, `enableWebAudio`, and `activeSpeakerPolicy` properties. This interface is used for optional parameter `options` of `MeetingManager.join()` API.
+- Add new method `selectVideoInputDevice(device: VideoInputDevice)` in `MeetingManager`. This method only updates the `MeetingManager.selectedVideoInputDevice` with the given `device` and publish this update via `selectedVideoInputDeviceObservers`. The original `selectedVideoInputDevice` method in V2 has been renamed to `startVideoInputDevice` in V3.
+- Extend and enable style customizing capabilities on the SDK components.
+- Add documentation for device management change.
+
+### Removed
+
+- Remove logging of the video transform device to avoid circular structure error.
+- Remove preset device selection options ("None" and "440 Hz" for audio input device. "None", "Blue", and "SMTP Color Bars" for video input device). Remove `appendSampleDevices` from Props of `CameraSelection`, `MicSelection`, `AudioInputControl`, `AudioInputVFcontrol`, and `VideoInputControl`. Remove `DeviceConfig` type. Remove `additionalDevices` from Props of `useAudioInputs` and `useVideoInputs` hook.
+- Remove `useSelectAudioInputDevice`, `useSelectAudioOutputDevice` and `useSelectVideoInputDevice` hook.
+- Remove use of the deprecated `enableUnifiedPlanForChromiumBasedBrowsers` configuration variable.
+- Remove all deprecated `MeetingSessionStatusCode`.  
+- Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
+- Remove `MeetingSessionConfiguration` properties from `MeetingProvider` props.
+- Remove `deviceLabels`, `eventController`, `logLevel`, `postLogConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
+- Deprecate `useBandwidthMetrics` hook as we already have `useMediaStreamMetrics`.
+
+### Changed
+
+- Update the `selectedDeviceId: string | null` to `selectedDevice: Device | TransformDevice`.
+- Update `MeetingManager` to use new `EventController` API.
+- Update `amazon-chime-sdk-js` dependency to v3.
+- Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
+- Update the `ChannelList` UI component to take in optional `lastChannelMessage` and `lastChannelMessageTimestamp` parameters. If any of them is set, it will display more detailed channel item view with last message content or timestamp.
+- Update `MeetingManager.join()` API to have a require parameter `meetingSessionConfiguration: MeetingSessionConfiguration` and an optional parameter `options?: MeetingManagerJoinOptions`. With `meetingSessionConfiguration` parameter builders have direct access to `MeetingSessionConfiguration` which allows more flexibility to customize the `MeetingSession`. With `options` parameter, builders can easily config the `enableWebAudio`, `logger`, `activeSpeakerPolicy`, `deviceLabels` and `eventController` before joining the meeting.
+- Rename `selectAudioInputDevice` to `startAudioInputDevice`, `selectVideoInputDevice` to `startVideoInputDevice`, and `selectAudioOutputDevice` to `startAudioOutputDevice`.
+- Rename `DevicePermissionStatus.UNSET` to `DevicePermissionStatus.UNTRIGGERED` and `DevicePermissionStatus` to `DeviceLabelTriggerStatus`.
+- Rename `useDevicePermissionStatus` to `useDeviceLabelTriggerStatus`.
+- Rename `devicePermissionsObservers` to `deviceLabelTriggerStatusObservers` and corresponding `subscribe`, `unsubscribe`, and `publish` functions.
+- Rename `deviceLabelTriggerChangeObservers` to `deviceLabelTriggerObservers` and corresponding `subscribe`, `unsubscribe`, and `publish` functions.
+- Rename the `global` property of `DefaultTheme` interface to `globalStyle` to avoid conflict with reserved keyword `global`.
+- Revert "Add Observer to select input device error" ([PR #493](https://github.com/aws/amazon-chime-sdk-component-library-react/pull/493)). `useAudioInputs` and `useVideoInputs` hook no longer return `selectDeviceError`. `selectAudioInputDevice`, `selectVideoInputDevice`, and `selectAudioOutputDevice` method of `MeetingManager` now throw error when failed. The device selection methods returned by `useSelectAudioInputDevice`, `useSelectVideoInputDevice`, and `useSelectAudioOutputDevice` hook are built on top of these `MeetingManager` methods, thus now they throw error when failed as well.
+
+### Fixed
+
+## [3.0.0-beta.0] - 2022-03-15
+
+### Added
+
+- Add styling guide documentation for customizing SDK and UI component CSS.
+- Extend and enable style customizing capabilities on the SDK components.
+- Add `MeetingSessionConfiguration` as a required parameter to `MeetingManager.join()` method. With this change the builders have direct access to `MeetingSessionConfiguration`, this will allow more flexibility to customize the `MeetingSession`.
+- Add `MeetingManagerJoinOptions` as a new interface for the `options` parameter of the `MeetingManager.join` method.
+- Add `deviceLabels`, `eventController`, `logLevel`, `postLoggerConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` to `MeetingManagerJoinOptions` interface.
+
+### Changed
+
+- Update `MeetingManager` to use new `EventController` API.
+- Update `amazon-chime-sdk-js` dependency to v3 beta.
+- Update the `compilerOptions.target` in `tsconfig.json` from `es5` to `ES2015 (ES6)`.
+- Rename the `global` property of `DefaultTheme` Interface to `globalStyle` to avoid conflict with reserved keyword `global`.
+- Change `Versioning.ts` to read from Git instead of manually hard-coded. This is the same behavior in `amazon-chime-sdk-js`.
+- Update the ChannelList UI component to take in optional `lastChannelMessage` and `lastChannelMessageTimestamp` parameters. If any of them is set, it will display more detailed channel item view with last message content or timestamp.
+
+### Removed
+
+- Remove use of the deprecated `enableUnifiedPlanForChromiumBasedBrowsers` configuration variable.
+- Remove all deprecated `MeetingSessionStatusCode`.  
+- Remove legacy metrics `videoDownstreamGoogFrameHeight`, `videoDownstreamGoogFrameWidth`, `videoUpstreamGoogFrameHeight` and `videoUpstreamGoogFrameWidth` from the `videoStreamMetrics` returned by the `useMediaStreamMetrics` hook to adopt to Amazon Chime SDK for JavaScript V3 changes ([aws/amazon-chime-sdk-js#2086](https://github.com/aws/amazon-chime-sdk-js/pull/2086)).
+- Deprecate `useBandwidthMetrics` hook as we already have `useMediaStreamMetrics`.
+- Remove `MeetingSessionConfiguration` properties from `MeetingProvider` props.
+- Remove `deviceLabels`, `eventController`, `logLevel`, `postLogConfig`, `logger`, `enableWebAudio`, and `activeSpeakerPolicy` from `MeetingProvider` props.
+
+### Fixed
+
+## [2.15.0] - 2022-02-03
+
+### Fixed
+
+- Fix a bug in `BackgroundBlurProvider` and `BackgroundReplacementProvider` where the options objects are updated and causing re-rendering and destroying previous processor.
+- Fix a bug in `PreviewVideo` where the PreviewVideo component did not start when `audioVideo` changed.
+
+### Added
+
+- Add Amazon Chime Echo Reduction feature. Allow builders to supply the response from a `CreateMeeting` or `CreateMeetingWithAttendees` call when adding a `VoiceFocusProvider` to the component tree. This enables optional features like Amazon Chime Echo Reduction to be added to devices when turning on Amazon Voice Focus.
+- Add `videoAvailabilityDidChange` as an audio observer in `LocalVideoProvider` and a new state `hasReachedVideoLimit` to disable the video button when the video limit is reached.
+- Add `keepLastFrameWhenPaused` as an optional parameter to allow to keep the last frame of the video when a remote video is paused via the pauseVideoTile.
+
+### Changed
+
+### Removed
+
+## [2.14.0] - 2022-01-20
+
+### Fixed
+
+### Added
+
+- Add `BackgroundReplacementProvider` provider to support background replacement.
+
+### Changed
+
+### Removed
+
+## [2.13.0] - 2022-01-06
+
+### Fixed
+
+### Added
+
+- Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` to `MeetingProvider` props.
+
+### Changed
+
+- Change `additionalDevices` to a prop in `AudioInputControl`, `VideoInputControl`, `AudioInputVFControl`, `MicSelection`, and `CameraSelection` components to allow option to turn off that configuration.
+- Add `reconnectTimeoutMs` as an optional parameter to `MeetingManagerConfig` to manage the timeout for reconnection.
+
+### Removed
+
+## [2.12.0] - 2021-11-19
+
+### Fixed
+
+- Fix the issue that Amazon Voice Focus does not get applied on new devices mid-meeting.
+
+### Added
+
+- Add `BackgroundBlurCheckbox` component to allow selecting background blur video filter for the `PreviewVideo` component.
+
+### Changed
+
+- The `PreviewVideo` component will listen to the `selectedVideoInputTransform` state, which means it can display regular `Device` video streams, along with `VideoTransformDevice` video streams as well.
+- `VideoInputBackgroundBlurControl` component is initialized with the `selectedVideoInputTransformDevice`.
+
+### Removed
+
+## [2.11.1] - 2021-10-25
+
+### Fixed
+
+- Revert back to publishing `audioVideo` update after listing devices. Publishing earlier before listing devices breaks `useAudioInputs`, `useAudioOutputs` and `useVideoInputs` hooks. The reason is device change observers may fail to get added to `audioVideo` based on builders implementation. Hence, falling back to what existed earlier.
+
+### Added
+
+### Changed
+
+### Removed
+
+## [2.11.0] - 2021-10-21
+
+### Fixed
+
+- Fix the issue that `AudioVideoObserver` was not removed as expected in `LocalVideoProvider`.
+- Fix `eventDidReceive` observer removal in `MeetingManager`.
+
+### Added
+
+- Add Eslint rules to enforce code style and fix issues.
+- Add logs for Amazon Voice Focus components.
+- Add FAQ link on audio outputs not available in FireFox and Safari.
+- Add `BackgroundBlurProvider` which provides a background blur video transform device.
+- Add `VideoInputBackgroundBlurControl` component which includes a checkbox for enabling background blur.
+- Add `unsubscribeFromSelectedVideoInputTransformDevice` which subscribes to changes to selected video devices.
+- Add `subscribeFromSelectedVideoInputTransformDevice`.
+- Add `publishSelectedVideoInputTransformDevice` which publishes a `Device | VideoTransformDevice` depending on what video device was chosen.
+
+### Changed
+
+- Update `useSelectVideoInputDevice` hook documentation and usage example.
+- Update package.json to include NPM 8.
+- Update `meetingManager.selectVideoInputDevice` to accept `VideoTransformDevice` as a parameter.
+
+### Removed
+
+## [2.10.1] - 2021-10-05
+
+### Fixed
+
+### Added
+
+### Removed
+
+- Revert the commit: Add Amazon Voice Focus to default device to fix the breaking issue [#636](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/636)
+
+## [2.10.0] - 2021-09-29
+
+### Fixed
+
+- Fix the issue that Amazon Voice Focus does not get applied on new devices mid-meeting.
+- Fix the issue where we call `meetingManager.leave` an additional time when we call `meetingManager.leave`.
+- Remove the observer in `LocalVideoProvider` when it is unmounted to fix memory leak.
+
+### Added
+
+- Add `activeSpeakerPolicy` and `videoUplinkBandwidthPolicy` in `MeetingManagerConfig` to allow builders to pass in custom policies.
+- For more flexibility, allow passing `MeetingManagerConfig` to `meetingManager.join` method. Passing the config here would override config passed through `MeetingProvider` props.
+- Add more details in the `AudioInputProvider` on storybook.
+- Add `MeetingStatus.Left` and set it when explicitly leaving the meeting.
+- Publish `MeetingStatus.Failed` when `audioVideoDidStop` gets triggered with one of the Failure types of `MeetingSessionStatus`.
+- Add `Terminal Failure` Meeting Status.
+
+### Changed
+
+- Remove the audio video observers in the `audioVideoDidStop()` function instead of `leave()` function in the `MeetingManager`.
+- Update `VoiceFocusProvider` and `useVoiceFocus` documentation in the storybook.
+
+### Removed
+
+- Remove setting the `MeetingStatus` to `MeetingStatus.Loading` when we call `meetingManager.leave`.
+
 ## [2.9.1] - 2021-09-02
 
 ### Fixed
@@ -104,7 +365,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- [Doc] Add documentation in introduction on how to use `MeetingSessionPostLogger` to post Amazon Chime JS SDK logs.
+- [Doc] Add documentation in introduction on how to use `MeetingSessionPostLogger` to post Amazon Chime SDK for JavaScript logs.
 - Add `useMediaStreamMetrics` hook to expose audio, video and bandwidth data.
 
 ### Changed

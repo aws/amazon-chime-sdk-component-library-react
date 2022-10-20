@@ -1,53 +1,62 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { DeviceType } from '../types';
-import { Device, DefaultDeviceController } from 'amazon-chime-sdk-js';
+import {
+  AudioTransformDevice,
+  DefaultDeviceController,
+  Device,
+  isAudioTransformDevice,
+  isVideoTransformDevice,
+  VideoTransformDevice,
+} from 'amazon-chime-sdk-js';
 
-export const getFormattedDropdownDeviceOptions = (
-  jsonObject: any
-): DeviceType[] => {
-  const formattedJSONObject = Object.entries(jsonObject).map(entry => ({
-    deviceId: entry[0].toLowerCase(),
-    label: entry[1] as string
-  }));
-  return formattedJSONObject;
-};
-
-export const videoInputSelectionToDevice = (deviceId: string): Device => {
-  if (deviceId === 'blue') {
-    return DefaultDeviceController.synthesizeVideoDevice('blue');
-  }
-  if (deviceId === 'smpte') {
-    return DefaultDeviceController.synthesizeVideoDevice('smpte');
-  }
-  if (deviceId === 'none') {
-    return null;
-  }
-  return deviceId;
-};
-
-export const audioInputSelectionToDevice = (deviceId: string): Device => {
-  if (deviceId === '440') {
-    return DefaultDeviceController.synthesizeAudioDevice(440);
-  }
-  if (deviceId === 'none') {
-    return null;
-  }
-  return deviceId;
-};
-
-export const isOptionActive = (
-  meetingManagerDeviceId: string | null,
+export const isOptionActive = async (
+  selectedDevice:
+    | Device
+    | AudioTransformDevice
+    | VideoTransformDevice
+    | null
+    | undefined,
   currentDeviceId: string
-): boolean => {
-  if (currentDeviceId === 'none' && meetingManagerDeviceId === null) {
-    return true;
-  }
-  return currentDeviceId === meetingManagerDeviceId;
+): Promise<boolean> => {
+  const selectedDeviceId = await getDeviceId(selectedDevice);
+  return selectedDeviceId === currentDeviceId;
 };
 
-// TODO: Remove this and use DefaultBrowserBehavior.supportsSetSinkId from JS SDK v2.x
-export const supportsSetSinkId = (): boolean => {
-  return 'setSinkId' in HTMLAudioElement.prototype;
+export const getDeviceId = async (
+  device:
+    | Device
+    | AudioTransformDevice
+    | VideoTransformDevice
+    | null
+    | undefined
+): Promise<string> => {
+  if (!device) {
+    return '';
+  }
+
+  let intrinsicDevice: Device | null;
+
+  if (isAudioTransformDevice(device) || isVideoTransformDevice(device)) {
+    intrinsicDevice = await device.intrinsicDevice();
+  } else {
+    intrinsicDevice = device;
+  }
+  const deviceId = DefaultDeviceController.getIntrinsicDeviceId(
+    intrinsicDevice
+  ) as string;
+
+  return deviceId;
+};
+
+export function isPrevNextUndefined<T>(prev: T, next: T): boolean {
+  const isPrevUndefined = prev === undefined;
+  const isNextUndefined = next === undefined;
+  return isPrevUndefined && isNextUndefined;
+}
+
+export function isPrevNextEmpty<T>(prev: T, next: T): boolean {
+  const isPrevEmpty = prev && Object.keys(prev).length === 0;
+  const isNextEmpty = next && Object.keys(next).length === 0;
+  return isPrevEmpty && isNextEmpty;
 }

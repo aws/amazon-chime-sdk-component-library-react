@@ -4,8 +4,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import Svg, { SvgProps } from '../Svg';
 import { Direction } from '../../../../types';
+import Svg, { SvgProps } from '../Svg';
 
 const dirTransform = {
   up: '0',

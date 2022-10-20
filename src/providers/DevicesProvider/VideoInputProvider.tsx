@@ -1,47 +1,40 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import { DeviceChangeObserver, VideoInputDevice } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
-  useEffect,
-  useState,
   useContext,
+  useEffect,
   useMemo,
+  useState,
 } from 'react';
-import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
+import { VideoInputContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
-import { DeviceTypeContext, DeviceConfig } from '../../types';
-import { VIDEO_INPUT } from '../../constants/additional-audio-video-devices';
-import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
 
-const Context = createContext<DeviceTypeContext | null>(null);
+const Context = createContext<VideoInputContextType | null>(null);
 
 const VideoInputProvider: React.FC = ({ children }) => {
+  const logger = useLogger();
   const audioVideo = useAudioVideo();
   const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);
   const meetingManager = useMeetingManager();
-  const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState(
-    meetingManager.selectedVideoInputDevice
-  );
-  const [selectVideoInputDeviceError, setSelectVideoInputDeviceError] = useState(
-    meetingManager.selectVideoInputDeviceError
-  );
+  const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState<
+    VideoInputDevice | undefined
+  >(meetingManager.selectedVideoInputDevice);
 
   useEffect(() => {
-    meetingManager.subscribeToSelectVideoInputDeviceError(setSelectVideoInputDeviceError);
+    meetingManager.subscribeToSelectedVideoInputDevice(
+      setSelectedVideoInputDevice
+    );
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectVideoInputDeviceError(setSelectVideoInputDeviceError);
-    };
-  }, []);
-
-  useEffect(() => {
-    meetingManager.subscribeToSelectedVideoInputDevice(setSelectedVideoInputDevice);
-
-    return (): void => {
-      meetingManager.unsubscribeFromSelectedVideoInputDevice(setSelectedVideoInputDevice);
+      meetingManager.unsubscribeFromSelectedVideoInputDevice(
+        setSelectedVideoInputDevice
+      );
     };
   }, []);
 
@@ -50,12 +43,12 @@ const VideoInputProvider: React.FC = ({ children }) => {
 
     const observer: DeviceChangeObserver = {
       videoInputsChanged: (newVideoInputs: MediaDeviceInfo[]) => {
-        console.log('VideoInputProvider - video inputs updated');
+        logger.info('VideoInputProvider - video inputs updated');
         setVideoInputs(newVideoInputs);
       },
     };
 
-    async function initVideoInput() {
+    async function initVideoInput(): Promise<void> {
       if (!audioVideo) {
         return;
       }
@@ -72,51 +65,36 @@ const VideoInputProvider: React.FC = ({ children }) => {
       initVideoInput();
     };
 
-    meetingManager.subscribeToDeviceLabelTriggerChange(callback);
+    meetingManager.subscribeToDeviceLabelTrigger(callback);
 
     initVideoInput();
 
     return () => {
       isMounted = false;
       audioVideo?.removeDeviceChangeObserver(observer);
-      meetingManager.unsubscribeFromDeviceLabelTriggerChange(callback);
+      meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
   }, [audioVideo]);
 
-  const contextValue: DeviceTypeContext = useMemo(
+  const contextValue: VideoInputContextType = useMemo(
     () => ({
       devices: videoInputs,
       selectedDevice: selectedVideoInputDevice,
-      selectDeviceError: selectVideoInputDeviceError,
     }),
-    [videoInputs, selectedVideoInputDevice, selectVideoInputDeviceError]
+    [videoInputs, selectedVideoInputDevice]
   );
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
-const useVideoInputs = (props?: DeviceConfig): DeviceTypeContext => {
-  const needAdditionalIO = props && props.additionalDevices;
-  const additionalIOJSON = props && VIDEO_INPUT;
+const useVideoInputs = (): VideoInputContextType => {
   const context = useContext(Context);
 
   if (!context) {
     throw new Error('useVideoInputs must be used within VideoInputProvider');
   }
 
-  let { devices } = context;
-  const { selectedDevice } = context;
-  const { selectDeviceError } = context;
-
-  if (needAdditionalIO) {
-    const additionalVideoInputs = getFormattedDropdownDeviceOptions(
-      additionalIOJSON
-    );
-    if (additionalVideoInputs !== null) {
-      devices = [...devices, ...additionalVideoInputs];
-    }
-  }
-  return { devices, selectedDevice, selectDeviceError };
+  return context;
 };
 
 export { VideoInputProvider, useVideoInputs };

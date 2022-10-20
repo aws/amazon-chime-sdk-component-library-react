@@ -2,12 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
-import React from 'react';
-import { fireEvent } from '@testing-library/dom';
 
-import ModalContext from '../../../../src/components/ui/Modal/ModalContext';
-import ModalButtonGroup from '../../../../src/components/ui/Modal/ModalButtonGroup';
+import { fireEvent } from '@testing-library/dom';
+import React from 'react';
+
 import ModalButton from '../../../../src/components/ui/Modal/ModalButton';
+import ModalButtonGroup from '../../../../src/components/ui/Modal/ModalButtonGroup';
+import ModalContext from '../../../../src/components/ui/Modal/ModalContext';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 
@@ -16,7 +17,7 @@ describe('ModalButtonGroup', () => {
   const secondaryButtonLbl = 'test-secondary';
   const onClose = jest.fn();
   const labelID = 'test-label';
-  const testContext = { onClose, labelID, dismissible: true, };
+  const testContext = { onClose, labelID, dismissible: true };
 
   it('renders a group with a primary Button', () => {
     const component = (
@@ -63,11 +64,8 @@ describe('ModalButtonGroup', () => {
         />
       </ModalContext.Provider>
     );
-    const {
-      getByTestId,
-      getByLabelText,
-      queryAllByLabelText,
-    } = renderWithTheme(lightTheme, component);
+    const { getByTestId, getByLabelText, queryAllByLabelText } =
+      renderWithTheme(lightTheme, component);
     const el = getByTestId('modal-button-group');
     expect(el).toBeInTheDocument();
     expect(getByLabelText('close')).toBeInTheDocument();
@@ -123,10 +121,7 @@ describe('ModalButtonGroup', () => {
         />
       </ModalContext.Provider>
     );
-    const { getByTestId } = renderWithTheme(
-      lightTheme,
-      component
-    );
+    const { getByTestId } = renderWithTheme(lightTheme, component);
     const modalButton = getByTestId('button');
     fireEvent.click(modalButton);
     expect(component.props.value.onClose).not.toHaveBeenCalled();

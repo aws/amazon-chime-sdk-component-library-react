@@ -4,8 +4,8 @@
 import React, { useEffect, useRef } from 'react';
 
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
-import { ContentTile } from '../../ui/ContentTile';
 import { useContentShareState } from '../../../providers/ContentShareProvider';
+import { ContentTile } from '../../ui/ContentTile';
 import { BaseSdkProps } from '../Base';
 
 interface Props extends BaseSdkProps {}

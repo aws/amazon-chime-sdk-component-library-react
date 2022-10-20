@@ -4,11 +4,11 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
+import { useApplyVideoObjectFit } from '../../../hooks/useApplyVideoObjectFit';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
-import { useApplyVideoObjectFit } from '../../../hooks/useApplyVideoObjectFit';
 
 interface Props extends BaseSdkProps {
   id?: string;

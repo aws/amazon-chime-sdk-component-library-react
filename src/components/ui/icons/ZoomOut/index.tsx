@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
+
 import Svg, { SvgProps } from '../Svg';
 
 const ZoomOut: React.SFC<SvgProps> = (props) => (
@@ -18,6 +19,6 @@ const ZoomOut: React.SFC<SvgProps> = (props) => (
   </Svg>
 );
 
-ZoomOut.displayName = "ZoomOut";
+ZoomOut.displayName = 'ZoomOut';
 
 export default ZoomOut;

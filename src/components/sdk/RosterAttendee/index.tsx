@@ -3,12 +3,15 @@
 
 import React from 'react';
 
-import RosterCell, { RosterCellProps } from '../../ui/Roster/RosterCell';
-import MicrophoneActivity from '../MicrophoneActivity';
-import { useRosterState } from '../../../providers/RosterProvider';
 import useAttendeeStatus from '../../../hooks/sdk/useAttendeeStatus';
+import { useRosterState } from '../../../providers/RosterProvider';
+import RosterCell, { RosterCellProps } from '../../ui/Roster/RosterCell';
+import { BaseSdkProps } from '../Base';
+import MicrophoneActivity from '../MicrophoneActivity';
 
-export interface RosterAttendeeProps extends Omit<RosterCellProps, 'name'> {
+export interface RosterAttendeeProps
+  extends Omit<RosterCellProps, 'name'>,
+    BaseSdkProps {
   /** The ID of a Chime meeting attendee. */
   attendeeId: string;
 }

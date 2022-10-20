@@ -4,6 +4,7 @@
 import styled from 'styled-components';
 
 import { fadeAnimation, slideDownAndScaleUp } from '../../../utils/animations';
+import { baseSpacing, baseStyles } from '../Base';
 import { ModalProps } from './';
 
 export const StyledModal = styled.div<ModalProps>`
@@ -12,11 +13,11 @@ export const StyledModal = styled.div<ModalProps>`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: ${props => props.theme.modal.wrapperBgd};
+  background-color: ${(props) => props.theme.modal.wrapperBgd};
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: ${props => props.theme.zIndex.modal};
+  z-index: ${(props) => props.theme.zIndex.modal};
   overflow-x: hidden;
   animation: ${fadeAnimation} 0.25s ease 0s forwards;
   will-change: opacity;
@@ -26,20 +27,20 @@ export const StyledModal = styled.div<ModalProps>`
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border-radius: ${props => props.theme.radii.default};
-    color: ${props => props.theme.modal.text};
-    background-color: ${props => props.theme.modal.bgd};
-    width: ${props => props.theme.modalSizes[props.size || 'md'].width};
-    box-shadow: ${props => props.theme.modal.shadow};
-    max-width: ${props =>
+    border-radius: ${(props) => props.theme.radii.default};
+    color: ${(props) => props.theme.modal.text};
+    background-color: ${(props) => props.theme.modal.bgd};
+    width: ${(props) => props.theme.modalSizes[props.size || 'md'].width};
+    box-shadow: ${(props) => props.theme.modal.shadow};
+    max-width: ${(props) =>
       props.size === 'fullscreen'
         ? props.theme.modalSizes[props.size].width
         : '90vw'};
-    height: ${props =>
+    height: ${(props) =>
       props.size === 'fullscreen'
         ? props.theme.modalSizes[props.size].height
         : 'auto'};
-    max-height: ${props => props.theme.modalSizes[props.size || 'md'].height};
+    max-height: ${(props) => props.theme.modalSizes[props.size || 'md'].height};
     will-change: transform, opacity;
     animation: ${slideDownAndScaleUp} 0.15s ease 0s forwards;
 
@@ -50,6 +51,9 @@ export const StyledModal = styled.div<ModalProps>`
       max-height: none;
     }
   }
+
+  ${baseSpacing}
+  ${baseStyles}
 `;
 
 export const StyledModalHeader = styled.header`
@@ -64,9 +68,12 @@ export const StyledModalHeader = styled.header`
   .ch-title {
     padding-right: 2rem;
     margin: 0;
-    font-size: ${props => props.theme.modal.titleSize};
-    font-weight: ${props => props.theme.modal.titleWeight};
+    font-size: ${(props) => props.theme.modal.titleSize};
+    font-weight: ${(props) => props.theme.modal.titleWeight};
   }
+
+  ${baseSpacing}
+  ${baseStyles}
 `;
 
 export const StyledModalBody = styled.div`
@@ -75,11 +82,14 @@ export const StyledModalBody = styled.div`
   padding: 0 1.5rem;
   flex-grow: 1;
   overflow-y: auto;
+
+  ${baseSpacing}
+  ${baseStyles}
 `;
 
 export const StyledModalButtonGroup = styled.footer`
   padding: 1.5rem;
-  border-top: 1px solid ${props => props.theme.modal.border};
+  border-top: 1px solid ${(props) => props.theme.modal.border};
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-between;
@@ -110,4 +120,7 @@ export const StyledModalButtonGroup = styled.footer`
       margin: 0.5rem 0 0;
     }
   }
+
+  ${baseSpacing}
+  ${baseStyles}
 `;

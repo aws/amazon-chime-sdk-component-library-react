@@ -1,15 +1,15 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, useMemo, HTMLAttributes, ReactNode, Ref } from 'react';
+import React, { FC, HTMLAttributes, ReactNode, Ref, useMemo } from 'react';
 
-import { BaseProps } from '../../Base';
-import { StyledChatBubbleContainer, StyledChatBubbleInfo } from './Styled';
-import PopOver from '../../PopOver';
-import { Dots } from '../../icons';
 import { IconButton } from '../../../..';
+import { BaseProps } from '../../Base';
 import { IconButtonProps } from '../../Button/IconButton';
+import { Dots } from '../../icons';
+import PopOver from '../../PopOver';
 import { Tooltipable, WithTooltip } from '../../WithTooltip';
+import { StyledChatBubbleContainer, StyledChatBubbleInfo } from './Styled';
 
 export type Message = {
   /** The displayed text of the message sent. */
@@ -40,8 +40,8 @@ export interface ChatBubbleContainerProps
   a11yLabel?: string;
 }
 
-export const ChatBubbleContainer: FC<ChatBubbleContainerProps> = React.forwardRef(
-  (props, ref: Ref<HTMLDivElement>) => {
+export const ChatBubbleContainer: FC<ChatBubbleContainerProps> =
+  React.forwardRef((props, ref: Ref<HTMLDivElement>) => {
     const {
       timestamp,
       actions,
@@ -52,12 +52,13 @@ export const ChatBubbleContainer: FC<ChatBubbleContainerProps> = React.forwardRe
 
     const IconButtonWithToolTip = useMemo(
       () => WithTooltip(IconButton, tooltipContainerId),
-    [tooltipContainerId]);
+      [tooltipContainerId]
+    );
 
-    const ButtonComponent = !!rest['data-tooltip']
+    const ButtonComponent = rest['data-tooltip']
       ? IconButtonWithToolTip
       : IconButton;
-    const buttonComponentProps = !!rest['data-tooltip-position']
+    const buttonComponentProps = rest['data-tooltip-position']
       ? { tooltipPosition: rest['data-tooltip-position'] }
       : {};
 
@@ -97,7 +98,6 @@ export const ChatBubbleContainer: FC<ChatBubbleContainerProps> = React.forwardRe
         </StyledChatBubbleInfo>
       </StyledChatBubbleContainer>
     );
-  }
-);
+  });
 
 export default ChatBubbleContainer;

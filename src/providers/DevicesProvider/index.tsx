@@ -1,14 +1,25 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import type { AudioInputDevice } from 'amazon-chime-sdk-js';
 import React from 'react';
 
 import { AudioInputProvider, useAudioInputs } from './AudioInputProvider';
 import { AudioOutputProvider, useAudioOutputs } from './AudioOutputProvider';
-import { VideoInputProvider, useVideoInputs } from './VideoInputProvider';
+import { useVideoInputs, VideoInputProvider } from './VideoInputProvider';
 
-const DevicesProvider: React.FC = ({ children }) => (
-  <AudioInputProvider>
+interface Props {
+  onDeviceReplacement?: (
+    nextDevice: string,
+    currentDevice: AudioInputDevice
+  ) => Promise<AudioInputDevice>;
+}
+
+const DevicesProvider: React.FC<Props> = ({
+  children,
+  onDeviceReplacement,
+}) => (
+  <AudioInputProvider onDeviceReplacement={onDeviceReplacement}>
     <AudioOutputProvider>
       <VideoInputProvider>{children}</VideoInputProvider>
     </AudioOutputProvider>

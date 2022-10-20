@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { SpaceProps, GridProps } from 'styled-system';
+import { GridProps, SpaceProps } from 'styled-system';
 
 import { StyledCell } from './Styled';
 

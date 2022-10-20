@@ -3,15 +3,13 @@
 
 import styled from 'styled-components';
 
+import { baseSpacing, baseStyles } from '../Base';
 import { MicVolumeIndicatorProps } from '.';
-import { baseStyles } from '../Base';
 
 export const StyledMicVolumeIndicator = styled.div<MicVolumeIndicatorProps>`
   position: relative;
   height: inherit;
   line-height: 0;
-
-  ${baseStyles}
 
   .ch-mic-icon {
     position: relative;
@@ -42,6 +40,9 @@ export const StyledMicVolumeIndicator = styled.div<MicVolumeIndicatorProps>`
         ? props.theme.colors.error.light
         : props.theme.colors.primary.light};
   }
+
+  ${baseSpacing}
+  ${baseStyles}
 `;
 
 export default StyledMicVolumeIndicator;

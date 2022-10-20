@@ -1,15 +1,15 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { memo, FC, HTMLAttributes } from 'react';
+import React, { FC, HTMLAttributes, memo } from 'react';
 
-import { RemoteVideo } from '../RemoteVideo';
-import { useRemoteVideoTileState } from '../../../providers/RemoteVideoTileProvider';
-import { useFeaturedTileState } from '../../../providers/FeaturedVideoTileProvider';
 import { useContentShareState } from '../../../providers/ContentShareProvider';
+import { useFeaturedTileState } from '../../../providers/FeaturedVideoTileProvider';
+import { useRemoteVideoTileState } from '../../../providers/RemoteVideoTileProvider';
 import { useRosterState } from '../../../providers/RosterProvider';
 import { useGridData } from '../../ui/VideoGrid';
 import { BaseSdkProps } from '../Base';
+import { RemoteVideo } from '../RemoteVideo';
 
 interface Props
   extends BaseSdkProps,

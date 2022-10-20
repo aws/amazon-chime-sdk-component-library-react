@@ -3,14 +3,14 @@
 
 import React, {
   ChangeEvent,
-  forwardRef,
-  Ref,
-  InputHTMLAttributes,
   CSSProperties,
+  forwardRef,
+  InputHTMLAttributes,
+  Ref,
 } from 'react';
 
-import { StyledSelectInput, StyledWrapper } from './Styled';
 import UpAndDownCaret from '../icons/UpAndDownCaret';
+import { StyledSelectInput, StyledWrapper } from './Styled';
 
 export type SelectOptions = {
   value: string | number;

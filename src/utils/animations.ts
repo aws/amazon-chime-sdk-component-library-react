@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { keyframes } from 'styled-components'
+import { keyframes } from 'styled-components';
 
 export const fadeAnimation = keyframes`
   0% {
@@ -21,4 +21,4 @@ export const slideDownAndScaleUp = keyframes`
     opacity: 1;
     transform: translateY(0) scale(1);
   }
-`
+`;

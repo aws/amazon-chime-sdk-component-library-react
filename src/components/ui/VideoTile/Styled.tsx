@@ -4,8 +4,8 @@
 import styled from 'styled-components';
 
 import { ellipsis } from '../../../utils/style';
+import { baseSpacing, baseStyles } from '../Base';
 import { VideoTileProps } from './';
-import { baseStyles, baseSpacing } from '../Base';
 
 export const StyledVideoTile = styled.div<VideoTileProps>`
   height: 100%;

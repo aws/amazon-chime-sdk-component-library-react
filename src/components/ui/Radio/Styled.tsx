@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 
-import { visuallyHidden, absoluteCenter } from '../../../utils/style';
+import { absoluteCenter, visuallyHidden } from '../../../utils/style';
 
 export const HiddenRadio = styled.input`
   ${visuallyHidden};

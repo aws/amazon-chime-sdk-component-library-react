@@ -2,8 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
-import React from 'react';
+
 import userEvent from '@testing-library/user-event';
+import React from 'react';
 
 import Textarea from '../../../../src/components/ui/Textarea';
 import lightTheme from '../../../../src/theme/light';

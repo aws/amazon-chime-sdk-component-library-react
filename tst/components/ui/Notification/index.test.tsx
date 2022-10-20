@@ -1,15 +1,16 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
 import '@testing-library/jest-dom';
-import { fireEvent, getByText } from '@testing-library/dom';
 
-import lightTheme from '../../../../src/theme/light';
-import { renderWithTheme } from '../../../test-helpers';
+import { fireEvent, getByText } from '@testing-library/dom';
+import React from 'react';
+
+import Echo from '../../../../src/components/ui/icons/Echo';
 import Notification from '../../../../src/components/ui/Notification';
 import { Severity } from '../../../../src/providers/NotificationProvider';
-import Echo from '../../../../src/components/ui/icons/Echo';
+import lightTheme from '../../../../src/theme/light';
+import { renderWithTheme } from '../../../test-helpers';
 
 const getNotificationComponent = () => (
   <Notification onClose={jest.fn()} severity={Severity.ERROR} message="Hello" />
@@ -17,13 +18,13 @@ const getNotificationComponent = () => (
 
 const getNotificationWithOptionalProps = () => (
   <Notification
-    icon={<Echo />} 
+    icon={<Echo />}
     onClose={jest.fn()}
     severity={Severity.SUCCESS}
-    message='Hello'
-    buttonProps={{ 
-      label: 'click me', 
-      onClick: jest.fn(), 
+    message="Hello"
+    buttonProps={{
+      label: 'click me',
+      onClick: jest.fn(),
     }}
   >
     <p>This is custom content</p>
@@ -82,7 +83,7 @@ describe('Notification', () => {
 describe('Notification with optional props', () => {
   it('renders a notification with a button', () => {
     const notificationComponent = getNotificationWithOptionalProps();
-    const {  getByText } = renderWithTheme(lightTheme, notificationComponent);
+    const { getByText } = renderWithTheme(lightTheme, notificationComponent);
     const button = getByText('click me');
     expect(button).toBeInTheDocument();
   });
@@ -91,7 +92,7 @@ describe('Notification with optional props', () => {
     const notificationComponent = getNotificationWithOptionalProps();
     const { getByTestId } = renderWithTheme(lightTheme, notificationComponent);
     const severityIconEl = getByTestId('severity-icon');
-    expect(severityIconEl.children[0].classList.contains('Svg')).toBe(true)
+    expect(severityIconEl.children[0].classList.contains('Svg')).toBe(true);
     expect(severityIconEl).toBeInTheDocument();
   });
 

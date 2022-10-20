@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
+
 import React from 'react';
 
 import ChannelList from '../../../../../src/components/ui/Chat/ChannelList';
@@ -15,6 +16,42 @@ describe('ChannelItem', () => {
     const component = <ChannelItem name="Channel 1" onClick={() => null} />;
     const { getByText } = renderWithTheme(lightTheme, component);
     const el = getByText('Channel 1');
+    expect(el).toBeInTheDocument();
+  });
+
+  it('renders a detailed ChannelItem if both lastChannelMessage and lastChannelMessageTimeStamp are set ', () => {
+      const component =
+          <ChannelItem
+              name="Channel 1"
+              lastChannelMessage =  'Alice: Hello!'
+              lastChannelMessageTimestamp = "5:01 pm"
+              onClick={() => null} />;
+      const { getByText } = renderWithTheme(lightTheme, component);
+      const el = getByText('Alice: Hello!');
+      expect(el).toBeInTheDocument();
+      const el2 = getByText('5:01 pm');
+      expect(el2).toBeInTheDocument();
+  });
+
+  it('renders a detailed ChannelItem when only lastChannelMessageTimeStamp is set ', () => {
+    const component =
+        <ChannelItem
+            name="Channel 1"
+            lastChannelMessageTimestamp = "5:01 pm"
+            onClick={() => null} />;
+    const { getByText } = renderWithTheme(lightTheme, component);
+    const el2 = getByText('5:01 pm');
+    expect(el2).toBeInTheDocument();
+  });
+
+  it('renders a detailed ChannelItem when only lastChannelMessage is set ', () => {
+    const component =
+        <ChannelItem
+            name="Channel 1"
+            lastChannelMessage =  'Alice: Hello!'
+            onClick={() => null} />;
+    const { getByText } = renderWithTheme(lightTheme, component);
+    const el = getByText('Alice: Hello!');
     expect(el).toBeInTheDocument();
   });
 

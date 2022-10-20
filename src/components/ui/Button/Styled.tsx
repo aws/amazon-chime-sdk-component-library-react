@@ -3,8 +3,8 @@
 
 import styled, { css } from 'styled-components';
 
-import { baseStyles, baseSpacing } from '../Base';
 import { visuallyHidden } from '../../../utils/style';
+import { baseSpacing, baseStyles } from '../Base';
 import { ButtonProps } from './';
 
 export const StyledButton = styled.button<ButtonProps>`
@@ -137,9 +137,18 @@ export const StyledSecondaryButton = css<ButtonProps>`
 `;
 
 const badgeLayout = {
-  'sm': css`top: -15%; left: 76%;`,
-  'md': css`top: 4%; left: 76%;`,
-  'lg': css`top: 10%; left: 76%;`,
+  sm: css`
+    top: -15%;
+    left: 76%;
+  `,
+  md: css`
+    top: 4%;
+    left: 76%;
+  `,
+  lg: css`
+    top: 10%;
+    left: 76%;
+  `,
 };
 
 export const StyledIconButton = css<ButtonProps>`
@@ -206,7 +215,7 @@ export const StyledIconButton = css<ButtonProps>`
     position: absolute;
     font-size: 0.55rem;
     z-index: 1;
-    ${({ iconSize }) => iconSize ? badgeLayout[iconSize] : badgeLayout['sm']}
+    ${({ iconSize }) => (iconSize ? badgeLayout[iconSize] : badgeLayout['sm'])}
   }
 `;
 

@@ -1,6 +1,8 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import VERSION from './version';
+
 export class Versioning {
   /**
    * Return string representation of SDK name
@@ -13,6 +15,6 @@ export class Versioning {
    * Return string representation of SDK version
    */
   static get sdkVersion(): string {
-    return '2.9.1';
+    return VERSION.semverString;
   }
 }

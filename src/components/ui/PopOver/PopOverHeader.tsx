@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, HTMLAttributes, ReactNode } from 'react';
-import { BaseProps } from '../Base';
 
+import { BaseProps } from '../Base';
 import { StyledPopOverHeader } from './Styled';
 
 export interface PopOverHeaderProps

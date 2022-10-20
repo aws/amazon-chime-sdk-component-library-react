@@ -2,13 +2,14 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
+
 import React from 'react';
 
-import RosterCell from '../../../../src/components/ui/Roster/RosterCell';
 import Roster from '../../../../src/components/ui/Roster';
+import RosterCell from '../../../../src/components/ui/Roster/RosterCell';
+import RosterHeader from '../../../../src/components/ui/Roster/RosterHeader';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
-import RosterHeader from '../../../../src/components/ui/Roster/RosterHeader';
 
 describe('Roster', () => {
   it('should render a search button when search is pressed', () => {

@@ -1,5 +1,5 @@
 module.exports = {
-  testRegex: './*\\.test\\.tsx$',
+  testRegex: './*\\.test\\.tsx?$',
   setupFilesAfterEnv: ['./tst/setupTests.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'jsx', 'node'],
   transform: {
@@ -24,10 +24,16 @@ module.exports = {
   coverageDirectory: 'coverage',
   coverageThreshold: {
     global: {
-      branches: 64,
-      functions: 72,
-      lines: 72,
-      statements: 71
+      statements: 89,
+      branches: 59,
+      functions: 74,
+      lines: 90
     }
-  }
+  },
+  /**
+   * Use v8 to avoid installing three explicit babel dependencies to solve below bug:
+   * https://github.com/facebook/jest/issues/12925
+   * https://jestjs.io/docs/configuration#coverageprovider-string
+   */
+  coverageProvider: 'v8',
 };

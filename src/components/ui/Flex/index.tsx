@@ -3,8 +3,8 @@
 
 import React, { FC } from 'react';
 
-import { StyledFlex } from './Styled';
 import { BaseProps } from '../Base';
+import { StyledFlex } from './Styled';
 
 type AlignItems =
   | 'baseline'

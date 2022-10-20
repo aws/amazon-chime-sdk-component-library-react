@@ -3,8 +3,8 @@
 
 import React, { FC, HTMLAttributes } from 'react';
 
-import ControlBarContext from './ControlBarContext';
 import { BaseProps } from '../Base';
+import ControlBarContext from './ControlBarContext';
 import { StyledControlBar } from './Styled';
 
 export type ControlBarLayout =

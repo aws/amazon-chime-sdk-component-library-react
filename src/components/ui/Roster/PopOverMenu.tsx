@@ -1,12 +1,12 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import classNames from 'classnames';
 import React, { useMemo } from 'react';
 
+import IconButton, { IconButtonProps } from '../Button/IconButton';
 import { Dots } from '../icons';
 import PopOver from '../PopOver';
-import IconButton, { IconButtonProps } from '../Button/IconButton';
-import classNames from 'classnames';
 import { Tooltipable, WithTooltip } from '../WithTooltip';
 
 interface PopOverMenuProps extends Tooltipable {
@@ -24,12 +24,13 @@ export const PopOverMenu = ({
 }: PopOverMenuProps) => {
   const IconButtonWithToolTip = useMemo(
     () => WithTooltip(IconButton, tooltipContainerId),
-  [tooltipContainerId]);
+    [tooltipContainerId]
+  );
 
-  const ButtonComponent = !!rest['data-tooltip']
+  const ButtonComponent = rest['data-tooltip']
     ? IconButtonWithToolTip
     : IconButton;
-  const buttonComponentProps = !!rest['data-tooltip-position']
+  const buttonComponentProps = rest['data-tooltip-position']
     ? { tooltipPosition: rest['data-tooltip-position'] }
     : {};
   return (

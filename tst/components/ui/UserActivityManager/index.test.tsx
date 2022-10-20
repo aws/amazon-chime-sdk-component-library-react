@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
+
 import React, { useState } from 'react';
 
 import UserActivityManager from '../../../../src/components/ui/UserActivityManager';

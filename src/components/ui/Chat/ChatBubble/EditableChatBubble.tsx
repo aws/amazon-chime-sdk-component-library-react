@@ -1,14 +1,14 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { FC, useState, HTMLAttributes, useRef, useEffect } from 'react';
+import React, { FC, HTMLAttributes, useEffect, useRef, useState } from 'react';
 
 import { BaseProps } from '../../Base';
-import { StyledChatBubble } from './Styled';
-import Input from '../../Input';
-import SecondaryButton from '../../Button/SecondaryButton';
 import PrimaryButton from '../../Button/PrimaryButton';
+import SecondaryButton from '../../Button/SecondaryButton';
+import Input from '../../Input';
 import { MessageVariant } from './ChatBubbleContainer';
+import { StyledChatBubble } from './Styled';
 
 export interface EditableChatBubbleProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,

@@ -1,25 +1,38 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import type {
+  AudioInputDevice,
+  DeviceChangeObserver,
+} from 'amazon-chime-sdk-js';
 import React, {
   createContext,
-  useEffect,
-  useState,
   useContext,
+  useEffect,
   useMemo,
   useRef,
+  useState,
 } from 'react';
-import { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 
+import { AudioInputContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
-import { getFormattedDropdownDeviceOptions } from '../../utils/device-utils';
-import { DeviceTypeContext, DeviceConfig } from '../../types';
-import { AUDIO_INPUT } from '../../constants/additional-audio-video-devices';
 
-const Context = createContext<DeviceTypeContext | null>(null);
+interface Props {
+  onDeviceReplacement?: (
+    nextDevice: string,
+    currentDevice: AudioInputDevice | undefined
+  ) => Promise<AudioInputDevice>;
+}
 
-const AudioInputProvider: React.FC = ({ children }) => {
+const Context = createContext<AudioInputContextType | null>(null);
+
+const AudioInputProvider: React.FC<Props> = ({
+  children,
+  onDeviceReplacement,
+}) => {
+  const logger = useLogger();
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
@@ -28,23 +41,26 @@ const AudioInputProvider: React.FC = ({ children }) => {
   );
   const selectedInputRef = useRef(selectedAudioInputDevice);
   selectedInputRef.current = selectedAudioInputDevice;
-  const [selectAudioInputDeviceError, setSelectAudioInputDeviceError] = useState(
-    meetingManager.selectAudioInputDeviceError
-  );
+
+  const replaceDevice = async (device: string): Promise<AudioInputDevice> => {
+    if (onDeviceReplacement) {
+      return onDeviceReplacement(
+        device,
+        meetingManager.selectedAudioInputDevice
+      );
+    }
+    return device;
+  };
 
   useEffect(() => {
-    meetingManager.subscribeToSelectAudioInputDeviceError(setSelectAudioInputDeviceError);
+    meetingManager.subscribeToSelectedAudioInputDevice(
+      setSelectedAudioInputDevice
+    );
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectAudioInputDeviceError(setSelectAudioInputDeviceError);
-    };
-  }, []);
-
-  useEffect(() => {
-    meetingManager.subscribeToSelectedAudioInputDevice(setSelectedAudioInputDevice);
-
-    return (): void => {
-      meetingManager.unsubscribeFromSelectedAudioInputDevice(setSelectedAudioInputDevice);
+      meetingManager.unsubscribeFromSelectedAudioInputDevice(
+        setSelectedAudioInputDevice
+      );
     };
   }, []);
 
@@ -53,37 +69,45 @@ const AudioInputProvider: React.FC = ({ children }) => {
 
     const observer: DeviceChangeObserver = {
       audioInputsChanged: async (newAudioInputs: MediaDeviceInfo[]) => {
-        console.log('AudioInputProvider - audio inputs updated');
+        logger.info('AudioInputProvider - audio inputs updated');
 
         const hasSelectedDevice = newAudioInputs.some(
           (device) => device.deviceId === selectedInputRef.current
         );
 
+        let nextInput: string = 'default';
         if (
           selectedInputRef.current &&
           !hasSelectedDevice &&
           newAudioInputs.length
         ) {
-          console.log(
+          logger.info(
             'Previously selected audio input lost. Selecting a default device.'
           );
-          meetingManager.selectAudioInputDevice(newAudioInputs[0].deviceId);
+          nextInput = newAudioInputs[0].deviceId;
+
+          // Safari and Firefox don't have this "default" as device Id
+          // Only Chrome have this "default" device
         } else if (selectedInputRef.current === 'default') {
-          console.log(
+          logger.info(
             `Audio devices updated and "default" device is selected. Reselecting input.`
           );
-          try {
-            await audioVideo?.chooseAudioInputDevice(selectedInputRef.current);
-          } catch (e) {
-            console.error(`Error in selecting audio input device - ${e}`);
-          }
+        }
+
+        const nextDevice = await replaceDevice(nextInput);
+        try {
+          await meetingManager.startAudioInputDevice(nextDevice);
+        } catch (e) {
+          logger.error(
+            `Failed to select audio input device on audioInputsChanged: ${e}`
+          );
         }
 
         setAudioInputs(newAudioInputs);
       },
     };
 
-    async function initAudioInput() {
+    async function initAudioInput(): Promise<void> {
       if (!audioVideo) {
         return;
       }
@@ -100,51 +124,36 @@ const AudioInputProvider: React.FC = ({ children }) => {
       initAudioInput();
     };
 
-    meetingManager.subscribeToDeviceLabelTriggerChange(callback);
+    meetingManager.subscribeToDeviceLabelTrigger(callback);
 
     initAudioInput();
 
     return () => {
       isMounted = false;
       audioVideo?.removeDeviceChangeObserver(observer);
-      meetingManager.unsubscribeFromDeviceLabelTriggerChange(callback);
+      meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
-  }, [audioVideo]);
+  }, [audioVideo, onDeviceReplacement]);
 
-  const contextValue: DeviceTypeContext = useMemo(
+  const contextValue: AudioInputContextType = useMemo(
     () => ({
       devices: audioInputs,
       selectedDevice: selectedAudioInputDevice,
-      selectDeviceError: selectAudioInputDeviceError,
     }),
-    [audioInputs, selectedAudioInputDevice, selectAudioInputDeviceError]
+    [audioInputs, selectedAudioInputDevice]
   );
 
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
-const useAudioInputs = (props?: DeviceConfig): DeviceTypeContext => {
-  const needAdditionalIO = props && props.additionalDevices;
+const useAudioInputs = (): AudioInputContextType => {
   const context = useContext(Context);
 
   if (!context) {
     throw new Error('useAudioInputs must be used within AudioInputProvider');
   }
 
-  let { devices } = context;
-  const { selectedDevice } = context;
-  const { selectDeviceError } = context;
-
-  if (needAdditionalIO) {
-    const additionalAudioInputs = getFormattedDropdownDeviceOptions(
-      AUDIO_INPUT
-    );
-    if (additionalAudioInputs !== null) {
-      devices = [...devices, ...additionalAudioInputs];
-    }
-  }
-
-  return { devices, selectedDevice, selectDeviceError };
+  return context;
 };
 
 export { AudioInputProvider, useAudioInputs };

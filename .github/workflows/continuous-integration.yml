@@ -5,7 +5,9 @@ name: CI Workflow
 
 on:
   pull_request:
-    branches: [ master ]
+    branches:
+      - main
+      - 'release-**.x'
 
 jobs:
   build:

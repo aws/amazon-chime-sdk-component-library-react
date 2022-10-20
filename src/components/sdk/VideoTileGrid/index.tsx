@@ -3,16 +3,16 @@
 
 import React from 'react';
 
-import { useRemoteVideoTileState } from '../../../providers/RemoteVideoTileProvider';
 import { useContentShareState } from '../../../providers/ContentShareProvider';
 import { useFeaturedTileState } from '../../../providers/FeaturedVideoTileProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
-import { ContentShare } from '../ContentShare';
-import { LocalVideo } from '../LocalVideo';
-import { FeaturedRemoteVideos } from '../FeaturedRemoteVideos';
-import { RemoteVideos } from '../RemoteVideos';
-import { VideoGrid, Layout } from '../../ui/VideoGrid';
+import { useRemoteVideoTileState } from '../../../providers/RemoteVideoTileProvider';
 import { BaseProps } from '../../ui/Base';
+import { Layout, VideoGrid } from '../../ui/VideoGrid';
+import { ContentShare } from '../ContentShare';
+import { FeaturedRemoteVideos } from '../FeaturedRemoteVideos';
+import { LocalVideo } from '../LocalVideo';
+import { RemoteVideos } from '../RemoteVideos';
 
 const fluidStyles = `
   height: 100%;

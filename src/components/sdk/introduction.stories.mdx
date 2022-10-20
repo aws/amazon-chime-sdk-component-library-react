@@ -15,13 +15,14 @@ npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js 
 ```
 
 2. Render a `ThemeProvider` and a `MeetingProvider` in the root of your application
-   * You can pass a default theme that we provide, or a customized theme that adheres to our theme's structure.
+
+- You can pass a default theme that we provide, or a customized theme that adheres to our theme's structure.
 
 ```jsx
 import { ThemeProvider } from 'styled-components';
 import {
   lightTheme,
-  MeetingProvider
+  MeetingProvider,
 } from 'amazon-chime-sdk-component-library-react';
 
 const Root = () => (
@@ -42,6 +43,7 @@ import {
   VideoTileGrid,
   useMeetingManager
 } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
 
 const MyApp = () => {
   const meetingManager = useMeetingManager();
@@ -51,15 +53,15 @@ const MyApp = () => {
     const response = await fetch('/my-server');
     const data = await response.json();
 
-    const joinData = {
-      meetingInfo: data.Meeting,
-      attendeeInfo: data.Attendee
-    };
+    // Initalize the `MeetingSessionConfiguration`
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
 
-    // Use the join API to create a meeting session using the above data
-    await meetingManager.join(joinData);
+    // Use the join API to create a meeting session using the MeetingSessionConfiguration
+    await meetingManager.join(
+      meetingSessionConfiguration
+    );
 
-    // At this point you could let users setup their devices, or by default 
+    // At this point you could let users setup their devices, or by default
     // the SDK will select the first device in the list for the s indicated
     // by `deviceLabels` (the default value is DeviceLabels.AudioAndVideo)
     ...

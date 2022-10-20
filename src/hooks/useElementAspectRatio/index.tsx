@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, useLayoutEffect, useState, RefObject } from 'react';
+import React, { RefObject, useEffect, useLayoutEffect, useState } from 'react';
 import ResizeObserver from 'resize-observer-polyfill';
 import { debounce } from 'throttle-debounce';
 

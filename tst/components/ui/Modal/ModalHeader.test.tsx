@@ -2,11 +2,12 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import '@testing-library/jest-dom';
-import React from 'react';
-import { fireEvent } from '@testing-library/dom';
 
-import ModalHeader from '../../../../src/components/ui/Modal/ModalHeader';
+import { fireEvent } from '@testing-library/dom';
+import React from 'react';
+
 import ModalContext from '../../../../src/components/ui/Modal/ModalContext';
+import ModalHeader from '../../../../src/components/ui/Modal/ModalHeader';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
 
@@ -27,7 +28,7 @@ describe('ModalHeader', () => {
         <ModalHeader title="Test Header" />
       </ModalContext.Provider>
     );
-   
+
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const closeButton = getByTestId('button');
     expect(closeButton).toBeInTheDocument();

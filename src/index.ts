@@ -68,6 +68,7 @@ export {
   MicSelection,
   SpeakerSelection,
   QualitySelection,
+  BackgroundBlurCheckbox,
 } from './components/sdk/DeviceSelection';
 export {
   AudioInputControl,
@@ -75,6 +76,7 @@ export {
   AudioOutputControl,
   ContentShareControl,
   VideoInputControl,
+  VideoInputBackgroundBlurControl,
 } from './components/sdk/MeetingControls';
 export { ContentShare } from './components/sdk/ContentShare';
 export { LocalVideo } from './components/sdk/LocalVideo';
@@ -115,7 +117,9 @@ export { useApplyVideoObjectFit } from './hooks/useApplyVideoObjectFit';
 export { useElementAspectRatio } from './hooks/useElementAspectRatio';
 
 export { useMeetingManager } from './providers/MeetingProvider';
-export { VoiceFocusProvider, useVoiceFocus } from './providers/VoiceFocusProvider';
+export { useVoiceFocus } from './providers/VoiceFocusProvider';
+export { useBackgroundBlur } from './providers/BackgroundBlurProvider';
+export { useBackgroundReplacement } from './providers/BackgroundReplacementProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRosterState } from './providers/RosterProvider';
 export { useRemoteVideoTileState } from './providers/RemoteVideoTileProvider';
@@ -136,16 +140,12 @@ export {
 export { useAttendeeStatus } from './hooks/sdk/useAttendeeStatus';
 export { useAttendeeAudioStatus } from './hooks/sdk/useAttendeeAudioStatus';
 export { useSelectVideoQuality } from './hooks/sdk/useSelectVideoQuality';
-export { useSelectVideoInputDevice } from './hooks/sdk/useSelectVideoInputDevice';
-export { useSelectAudioInputDevice } from './hooks/sdk/useSelectAudioInputDevice';
-export { useSelectAudioOutputDevice } from './hooks/sdk/useSelectAudioOutputDevice';
 export { useActiveSpeakersState } from './hooks/sdk/useActiveSpeakersState';
 export { useToggleLocalMute } from './hooks/sdk/useToggleLocalMute';
 export { useMeetingStatus } from './hooks/sdk/useMeetingStatus';
 export { useLocalAudioInputActivity } from './hooks/sdk/useLocalAudioInputActivity';
 export { useLocalAudioInputActivityPreview } from './hooks/sdk/useLocalAudioInputActivityPreview';
-export { useBandwidthMetrics } from './hooks/sdk/useBandwidthMetrics';
-export { useDevicePermissionStatus } from './hooks/sdk/useDevicePermissionStatus';
+export { useDeviceLabelTriggerStatus } from './hooks/sdk/useDeviceLabelTriggerStatus';
 export { useMediaStreamMetrics } from './hooks/sdk/useMediaStreamMetrics';
 
 // Providers
@@ -159,11 +159,23 @@ export { RosterProvider } from './providers/RosterProvider';
 export { DevicesProvider } from './providers/DevicesProvider';
 export { RemoteVideoTileProvider } from './providers/RemoteVideoTileProvider';
 export { FeaturedVideoTileProvider } from './providers/FeaturedVideoTileProvider';
+export { VoiceFocusProvider } from './providers/VoiceFocusProvider';
+export { BackgroundBlurProvider } from './providers/BackgroundBlurProvider';
+export { BackgroundReplacementProvider } from './providers/BackgroundReplacementProvider';
+
 export {
   UserActivityProvider,
   useUserActivityState,
 } from './providers/UserActivityProvider';
-export { useMeetingEvent, MeetingEventProvider } from './providers/MeetingEventProvider';
+export {
+  useMeetingEvent,
+  MeetingEventProvider,
+} from './providers/MeetingEventProvider';
+export {
+  LoggerProvider,
+  LoggerContext,
+  useLogger,
+} from './providers/LoggerProvider';
 
 // Themes
 export { lightTheme, darkTheme, GlobalStyles, StyledReset } from './theme';
@@ -175,9 +187,9 @@ export { RosterAttendeeType, RosterType } from './types';
 // enums
 export {
   MeetingStatus,
-  DevicePermissionStatus,
   DeviceLabels,
   DeviceLabelTrigger,
+  DeviceLabelTriggerStatus,
 } from './types';
 export { Severity, ActionType } from './providers/NotificationProvider';
 
@@ -185,7 +197,9 @@ export { Severity, ActionType } from './providers/NotificationProvider';
 export { MeetingManager } from './providers/MeetingProvider/MeetingManager';
 
 // Interface
+export { MeetingManagerJoinOptions } from './providers/MeetingProvider/types';
 export { NotificationType, Action } from './providers/NotificationProvider';
 
 // Utilities
 export { Versioning } from './versioning/Versioning';
+export { isOptionActive, getDeviceId } from './utils/device-utils';

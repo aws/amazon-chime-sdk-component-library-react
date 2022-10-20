@@ -3,10 +3,10 @@
 
 import React, { ReactNode, useMemo } from 'react';
 
-import { StyledNavbarItem } from './Styled';
-import PopOver, { Placement } from '../PopOver';
 import IconButton, { IconButtonProps } from '../Button/IconButton';
+import PopOver, { Placement } from '../PopOver';
 import { Tooltipable, WithTooltip } from '../WithTooltip';
+import { StyledNavbarItem } from './Styled';
 
 export interface NavbarItemProps extends IconButtonProps, Tooltipable {
   /* As part of IconButtonProps, any icon from the library for button in navbar item */
@@ -43,9 +43,10 @@ export const NavbarItem = ({
 }: NavbarItemProps) => {
   const IconButtonWithToolTip = useMemo(
     () => WithTooltip(IconButton, tooltipContainerId),
-  [tooltipContainerId]);
+    [tooltipContainerId]
+  );
 
-  const ButtonComponent = !!rest['data-tooltip']
+  const ButtonComponent = rest['data-tooltip']
     ? IconButtonWithToolTip
     : IconButton;
 

@@ -23,10 +23,10 @@ Installation involves adjusting your package.json to depend on version 2.x.x and
 
 ```
 npm uninstall amazon-chime-sdk-js
-npm install --save amazon-chime-sdk-component-library-react@2 amazon-chime-sdk-js
+npm install --save amazon-chime-sdk-component-library-react@2 amazon-chime-sdk-js@2
 ```
 
-## What’s New
+## What's New
 
 - Updated interface for `ChatBubble` component.
 - Using `forwardRef` in `ChatBubbleContainer` component.
@@ -45,10 +45,10 @@ If your code looks like this:
 
 ```
 <ChatBubble
-    variant="incoming"
-    senderName="Jane Doe"
-    time="9:47 AM"
-   content="Hello"
+  variant="incoming"
+  senderName="Jane Doe"
+  time="9:47 AM"
+  content="Hello"
 />
 ```
 
@@ -56,11 +56,11 @@ change it to this:
 
 ```
 <ChatBubble
-    variant="incoming"
-    senderName="Jane Doe"
-    time="9:47 AM"
- >
-    Hello
+  variant="incoming"
+  senderName="Jane Doe"
+  time="9:47 AM"
+>
+  Hello
 </ChatBubble>
 ```
 

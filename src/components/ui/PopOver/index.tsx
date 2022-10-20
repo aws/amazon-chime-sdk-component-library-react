@@ -1,15 +1,15 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import classnames from 'classnames';
 import React, {
-  FC,
   createRef,
-  useState,
+  FC,
   HTMLAttributes,
   useEffect,
+  useState,
 } from 'react';
-import { Manager, Reference, Popper } from 'react-popper';
-import classnames from 'classnames';
+import { Manager, Popper, Reference } from 'react-popper';
 
 import { KEY_CODES } from '../../../constants';
 import useClickOutside from '../../../hooks/useClickOutside';
@@ -84,7 +84,7 @@ export const PopOver: FC<PopOverProps> = ({
       // child nodes and manage focused elements
       return;
     }
-    if (!!node) {
+    if (node) {
       const nodes = getFocusableElements(node);
       const currentElement = document.activeElement;
 
@@ -124,7 +124,7 @@ export const PopOver: FC<PopOverProps> = ({
 
   const handlePopOverClick = () => {
     setIsOpen(!isOpen);
-    if(onPopOverClick) {
+    if (onPopOverClick) {
       onPopOverClick(isOpen);
     }
   };
@@ -158,11 +158,7 @@ export const PopOver: FC<PopOverProps> = ({
 
             if (renderButtonWrapper) {
               const { ref, ...rest } = props;
-              return (
-                <span ref={ref}>
-                  {renderButtonWrapper(isOpen, rest)}
-                </span>
-              );
+              return <span ref={ref}>{renderButtonWrapper(isOpen, rest)}</span>;
             }
 
             return null;

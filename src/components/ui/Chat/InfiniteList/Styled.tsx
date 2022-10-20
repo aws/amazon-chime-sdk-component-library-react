@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import styled, { keyframes } from 'styled-components';
-import { InfiniteListProps } from './';
 
-import { baseStyles, baseSpacing } from '../../Base';
+import { baseSpacing, baseStyles } from '../../Base';
+import { InfiniteListProps } from './';
 
 // Create the keyframes
 const rotate = keyframes`

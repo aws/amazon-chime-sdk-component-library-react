@@ -1,10 +1,10 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { createRef, useContext, createContext } from 'react';
+import React, { createContext, createRef, useContext } from 'react';
 
-import { StyledGrid } from './Styled';
 import useElementAspectRatio from '../../../hooks/useElementAspectRatio';
+import { StyledGrid } from './Styled';
 
 export type Layout = 'standard' | 'featured' | null;
 

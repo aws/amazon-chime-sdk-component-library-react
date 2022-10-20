@@ -1,32 +1,43 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { useState, useEffect } from 'react';
 import { ClientMetricReport } from 'amazon-chime-sdk-js';
+import { useEffect, useState } from 'react';
 
 import { useAudioVideo } from '../../providers/AudioVideoProvider';
-
-function isValidMetric(metric: any) {
-  return typeof metric === 'number' && !Number.isNaN(metric);
-}
 
 interface MediaStreamMetrics {
   audioPacketsSentFractionLossPercent: number | null; // Percentage of audio packets lost (1s) from client to server
   audioPacketsReceivedFractionLossPercent: number | null; // Percentage of audio packets lost from server to client
+  audioSpeakerDelayMs: number | null;
+  audioUpstreamRoundTripTimeMs: number | null;
+  audioUpstreamJitterMs: number | null;
+  audioDownstreamJitterMs: number | null;
+  currentRoundTripTimeMs: number | null;
   availableOutgoingBandwidth: number | null;
   availableIncomingBandwidth: number | null;
-  videoStreamMetrics: { [attendeeId: string]: { [ssrc: string]: {[key: string]: number} } };
+  rtcStatsReport: RTCStatsReport | null;
+  videoStreamMetrics: {
+    [attendeeId: string]: { [ssrc: string]: { [key: string]: number } };
+  };
 }
 
-export function useMediaStreamMetrics() {
+export function useMediaStreamMetrics(): MediaStreamMetrics {
   const audioVideo = useAudioVideo();
-  const [mediaStreamMetrics, setMediaStreamMetrics] = useState<MediaStreamMetrics>({
-    audioPacketsSentFractionLossPercent: null,
-    audioPacketsReceivedFractionLossPercent: null,
-    availableOutgoingBandwidth: null,
-    availableIncomingBandwidth: null,
-    videoStreamMetrics: {},
-  });
+  const [mediaStreamMetrics, setMediaStreamMetrics] =
+    useState<MediaStreamMetrics>({
+      audioPacketsSentFractionLossPercent: null,
+      audioPacketsReceivedFractionLossPercent: null,
+      audioSpeakerDelayMs: null,
+      audioUpstreamRoundTripTimeMs: null,
+      audioUpstreamJitterMs: null,
+      audioDownstreamJitterMs: null,
+      currentRoundTripTimeMs: null,
+      availableOutgoingBandwidth: null,
+      availableIncomingBandwidth: null,
+      rtcStatsReport: null,
+      videoStreamMetrics: {},
+    });
 
   useEffect(() => {
     if (!audioVideo) {
@@ -38,52 +49,29 @@ export function useMediaStreamMetrics() {
         const {
           audioPacketLossPercent,
           audioPacketsReceivedFractionLoss,
-          availableSendBandwidth,
-          availableReceiveBandwidth,
+          audioSpeakerDelayMs,
+          audioUpstreamRoundTripTimeMs,
+          audioUpstreamJitterMs,
+          audioDownstreamJitterMs,
+          currentRoundTripTimeMs,
           availableOutgoingBitrate,
           availableIncomingBitrate,
         } = clientMetricReport.getObservableMetrics();
-        let videoStreamMetrics = {};
-        let availableOutgoingBandwidth = 0;
-        let availableIncomingBandwidth = 0;
-        let audioPacketsSentFractionLossPercent = 0;
-        let audioPacketsReceivedFractionLossPercent = 0;
 
-        if (isValidMetric(audioPacketLossPercent)) {
-          audioPacketsSentFractionLossPercent =
-            Math.trunc(audioPacketLossPercent);
-        }
-
-        if (isValidMetric(audioPacketsReceivedFractionLoss)) {
-          audioPacketsReceivedFractionLossPercent =
-            Math.trunc(audioPacketsReceivedFractionLoss);
-        }
-
-        if (clientMetricReport.getObservableVideoMetrics) {
-          videoStreamMetrics = clientMetricReport.getObservableVideoMetrics();
-        }
-
-        if (isValidMetric(availableSendBandwidth)) {
-          availableOutgoingBandwidth =
-            availableSendBandwidth / 1000;
-        } else if (isValidMetric(availableOutgoingBitrate)) {
-          availableOutgoingBandwidth =
-            availableOutgoingBitrate / 1000;
-        }
-
-        if (isValidMetric(availableReceiveBandwidth)) {
-          availableIncomingBandwidth =
-            availableReceiveBandwidth / 1000;
-        } else if (isValidMetric(availableIncomingBitrate)) {
-          availableIncomingBandwidth =
-            availableIncomingBitrate / 1000;
-        }
+        // Return 0 if the metric value is NaN, otherwise return its integer part.
         setMediaStreamMetrics({
-          audioPacketsSentFractionLossPercent,
-          audioPacketsReceivedFractionLossPercent,
-          availableOutgoingBandwidth,
-          availableIncomingBandwidth,
-          videoStreamMetrics,
+          audioPacketsSentFractionLossPercent: audioPacketLossPercent | 0,
+          audioPacketsReceivedFractionLossPercent:
+            audioPacketsReceivedFractionLoss | 0,
+          audioSpeakerDelayMs: audioSpeakerDelayMs | 0,
+          audioUpstreamRoundTripTimeMs: audioUpstreamRoundTripTimeMs | 0,
+          audioUpstreamJitterMs: audioUpstreamJitterMs | 0,
+          audioDownstreamJitterMs: audioDownstreamJitterMs | 0,
+          currentRoundTripTimeMs: currentRoundTripTimeMs | 0,
+          availableOutgoingBandwidth: (availableOutgoingBitrate / 1000) | 0,
+          availableIncomingBandwidth: (availableIncomingBitrate / 1000) | 0,
+          rtcStatsReport: clientMetricReport.getRTCStatsReport(),
+          videoStreamMetrics: clientMetricReport.getObservableVideoMetrics(),
         });
       },
     };
