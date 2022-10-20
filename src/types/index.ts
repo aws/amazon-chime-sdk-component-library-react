@@ -41,7 +41,7 @@ export type LocalVideoContextType = {
 
 export type ContentShareControlContextType = {
   paused: boolean;
-  toggleContentShare: (sourceId?: string) => Promise<void>;
+  toggleContentShare: (source?: string | MediaStream) => Promise<void>;
   togglePauseContentShare: () => void;
 };
 
