@@ -12,3 +12,4 @@ tst/snapshots/**/__diff_output__
 integration/logs
 storybook-static
 src/versioning/version.ts
+*.tgz
