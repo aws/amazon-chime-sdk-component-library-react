@@ -117,7 +117,7 @@ const ContentShareProvider: React.FC = ({ children }) => {
   }, [isLocalShareLoading]);
 
   const toggleContentShare = useCallback(
-    async (sourceId?: string): Promise<void> => {
+    async (source?: string | MediaStream): Promise<void> => {
       if (!audioVideo) {
         return;
       }
@@ -125,8 +125,10 @@ const ContentShareProvider: React.FC = ({ children }) => {
       if (isLocalUserSharing || isLocalShareLoading) {
         audioVideo.stopContentShare();
       } else {
-        if (sourceId && typeof sourceId === 'string') {
-          audioVideo.startContentShareFromScreenCapture(sourceId);
+        if (source && typeof source === 'string') {
+          audioVideo.startContentShareFromScreenCapture(source);
+        } else if (source instanceof MediaStream) {
+          audioVideo.startContentShare(source);
         } else {
           audioVideo.startContentShareFromScreenCapture();
         }
