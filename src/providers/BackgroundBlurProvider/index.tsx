@@ -5,13 +5,13 @@ import {
   BackgroundBlurOptions,
   BackgroundBlurProcessor,
   BackgroundBlurVideoFrameProcessor,
-  BackgroundBlurVideoFrameProcessorObserver,
   BackgroundFilterSpec,
   ConsoleLogger,
   DefaultVideoTransformDevice,
   Device,
   LogLevel,
   NoOpVideoFrameProcessor,
+  VideoFrameProcessor,
 } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
@@ -33,10 +33,6 @@ interface Props extends BaseSdkProps {
   /** A set of options that can be supplied when creating a background blur video frame processor. For more information, refer to
    * [Amazon Chime SDK for JavaScript Background Filter Guide](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#adding-a-background-filter-to-your-application). */
   options?: BackgroundBlurOptions;
-  /**
-   * Observer callback functions. The observer will be added to the background blur processor on mount and removed on unmount.
-   */
-  observer?: BackgroundBlurVideoFrameProcessorObserver;
 }
 
 interface BackgroundBlurProviderState {
@@ -50,12 +46,12 @@ const BackgroundBlurProviderContext = createContext<
   BackgroundBlurProviderState | undefined
 >(undefined);
 
-const BackgroundBlurProvider: FC<Props> = ({ spec, options, observer, children }) => {
+const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
   const logger = useLogger();
   const [isBackgroundBlurSupported, setIsBackgroundBlurSupported] = useState<
     boolean | undefined
   >(undefined);
-  const [processor, setProcessor] = useState<BackgroundBlurProcessor | undefined>();
+  const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>();
 
   const blurSpec = useMemoCompare(
     spec,
@@ -100,18 +96,6 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, observer, children }
       processor?.destroy();
     };
   }, [blurOptions, blurSpec]);
-
-  useEffect(() => {
-    if (!!processor && !!observer) {
-      processor.addObserver(observer);
-    }
-    
-    return () => {
-      if (!!processor && !!observer) {
-        processor.removeObserver(observer);
-      }
-    };
-  }, [observer, processor]);
 
   async function initializeBackgroundBlur(): Promise<
     BackgroundBlurProcessor | undefined
