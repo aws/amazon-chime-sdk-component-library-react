@@ -18,6 +18,8 @@ before calling `createBackgroundBlurDevice`. Calling `createBackgroundBlurDevice
 `DefaultVideoTransformDevice` with new video processors. For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice).
 Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `createBackgroundBlurDevice` and use it as input if the `Props` of the provider were changed.
 
+You can access the current `backgroundBlurProcessor` applied to the video device that is generated when you call `createBackgroundBlurDevice`. You can apply observer notifications to the processor. Refer to [the guide for adding observer notifications to a BackgroundBlurProcessor](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#observer-notifications)
+
 Background blur related logs can be found in the browser developer tools when the `BackgroundBlurProvider` is used within the app component tree.
 
 ## Return Value

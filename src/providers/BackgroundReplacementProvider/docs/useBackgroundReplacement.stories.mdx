@@ -18,6 +18,8 @@ before calling `createBackgroundReplacementDevice`. Calling `createBackgroundRep
 `DefaultVideoTransformDevice` with new video processors. For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice);
 Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `createBackgroundReplacementDevice` and use it as input if the `Props` of the provider were changed.
 
+You can access the current `backgroundReplacementProcessor` applied to the video device that is generated when you call `createBackgroundBlurDevice`. You can apply observer notifications to the processor. Refer to [the guide for adding observer notifications to a BackgroundReplacementProcessor](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#observer-notifications)
+
 Background replacement related logs can be found in the browser developer tools when the `BackgroundReplacementProvider` is used within the app component tree.
 
 ## Return Value

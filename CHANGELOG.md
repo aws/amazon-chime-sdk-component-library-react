@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Refactor `toggleContentShare` function to allow specifying a `MediaStream` to share. This can be used to share non-screen share content.
+- Expose the background blur processor and background replacement processor from their respective providers - `BackgroundBlurProvider` and `BackgroundReplacementProvider`.
 
 ### Removed
 

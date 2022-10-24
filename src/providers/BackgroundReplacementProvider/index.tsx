@@ -11,7 +11,6 @@ import {
   Device,
   LogLevel,
   NoOpVideoFrameProcessor,
-  VideoFrameProcessor,
 } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
@@ -40,6 +39,7 @@ interface BackgroundReplacementProviderState {
     device: Device
   ) => Promise<DefaultVideoTransformDevice>;
   isBackgroundReplacementSupported: boolean | undefined;
+  backgroundReplacementProcessor: BackgroundReplacementProcessor | undefined;
 }
 
 const BackgroundReplacementProviderContext = createContext<
@@ -56,7 +56,7 @@ const BackgroundReplacementProvider: FC<Props> = ({
     isBackgroundReplacementSupported,
     setIsBackgroundReplacementSupported,
   ] = useState<boolean | undefined>(undefined);
-  const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>(
+  const [backgroundReplacementProcessor, setBackgroundReplacementProcessor] = useState<BackgroundReplacementProcessor | undefined>(
     undefined
   );
 
@@ -100,7 +100,7 @@ const BackgroundReplacementProvider: FC<Props> = ({
       logger.info(
         'Specs or options were changed. Destroying and re-initializing background replacement processor.'
       );
-      processor?.destroy();
+      backgroundReplacementProcessor?.destroy();
     };
   }, [replacementSpec, replacementOptions]);
 
@@ -125,7 +125,7 @@ const BackgroundReplacementProvider: FC<Props> = ({
       // the assets are not fetched successfully.
       if (createdProcessor instanceof NoOpVideoFrameProcessor) {
         logger.warn('Initialized NoOpVideoFrameProcessor');
-        setProcessor(undefined);
+        setBackgroundReplacementProcessor(undefined);
         setIsBackgroundReplacementSupported(false);
         return undefined;
       } else {
@@ -134,7 +134,7 @@ const BackgroundReplacementProvider: FC<Props> = ({
             createdProcessor
           )}`
         );
-        setProcessor(createdProcessor);
+        setBackgroundReplacementProcessor(createdProcessor);
         setIsBackgroundReplacementSupported(true);
         return createdProcessor;
       }
@@ -142,7 +142,7 @@ const BackgroundReplacementProvider: FC<Props> = ({
       logger.error(
         `Error creating a background replacement video frame processor device. ${error}`
       );
-      setProcessor(undefined);
+      setBackgroundReplacementProcessor(undefined);
       setIsBackgroundReplacementSupported(false);
       return undefined;
     }
@@ -183,6 +183,7 @@ const BackgroundReplacementProvider: FC<Props> = ({
   const value: BackgroundReplacementProviderState = {
     createBackgroundReplacementDevice,
     isBackgroundReplacementSupported,
+    backgroundReplacementProcessor
   };
 
   return (

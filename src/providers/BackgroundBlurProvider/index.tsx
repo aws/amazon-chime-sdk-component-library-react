@@ -11,7 +11,6 @@ import {
   Device,
   LogLevel,
   NoOpVideoFrameProcessor,
-  VideoFrameProcessor,
 } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
@@ -40,6 +39,7 @@ interface BackgroundBlurProviderState {
     device: Device
   ) => Promise<DefaultVideoTransformDevice>;
   isBackgroundBlurSupported: boolean | undefined;
+  backgroundBlurProcessor: BackgroundBlurProcessor | undefined
 }
 
 const BackgroundBlurProviderContext = createContext<
@@ -51,7 +51,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
   const [isBackgroundBlurSupported, setIsBackgroundBlurSupported] = useState<
     boolean | undefined
   >(undefined);
-  const [processor, setProcessor] = useState<VideoFrameProcessor | undefined>();
+  const [backgroundBlurProcessor, setBackgroundBlurProcessor] = useState<BackgroundBlurProcessor | undefined>();
 
   const blurSpec = useMemoCompare(
     spec,
@@ -93,7 +93,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
       logger.info(
         'Specs or options were changed. Destroying and re-initializing background blur processor.'
       );
-      processor?.destroy();
+      backgroundBlurProcessor?.destroy();
     };
   }, [blurOptions, blurSpec]);
 
@@ -117,7 +117,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
       // the assets are not fetched successfully.
       if (createdProcessor instanceof NoOpVideoFrameProcessor) {
         logger.warn('Initialized NoOpVideoFrameProcessor');
-        setProcessor(undefined);
+        setBackgroundBlurProcessor(undefined);
         setIsBackgroundBlurSupported(false);
         return undefined;
       } else {
@@ -126,7 +126,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
             createdProcessor
           )}`
         );
-        setProcessor(createdProcessor);
+        setBackgroundBlurProcessor(createdProcessor);
         setIsBackgroundBlurSupported(true);
         return createdProcessor;
       }
@@ -134,7 +134,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
       logger.error(
         `Error creating a background blur video frame processor device ${error}`
       );
-      setProcessor(undefined);
+      setBackgroundBlurProcessor(undefined);
       setIsBackgroundBlurSupported(false);
       return undefined;
     }
@@ -175,6 +175,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
   const value: BackgroundBlurProviderState = {
     createBackgroundBlurDevice,
     isBackgroundBlurSupported,
+    backgroundBlurProcessor,
   };
 
   return (
