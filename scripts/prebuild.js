@@ -36,6 +36,12 @@ if (!process.env.GITHUB_ACTIONS) {
 }
 
 let commit_files = [];
+
+if (commits.length === 0) {
+  logger.log(`Didn't find any new commit. Exiting process.`);
+  return process.exit(1);
+}
+
 commit_files = spawnOrFail('git', [
   'diff-tree',
   '--no-commit-id',
