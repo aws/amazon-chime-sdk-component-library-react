@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import ListHandRaise from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # ListHandRaise Icon
 
@@ -17,6 +18,7 @@ import { ListHandRaise } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <ListHandRaise width="2rem" />
   </Preview>

@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Dock from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Dock Icon
 
@@ -19,6 +20,7 @@ import { Dock } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Dock width="2rem" height="2rem" />
   </Preview>

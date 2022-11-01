@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Microphone from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Microphone Icon
 
@@ -21,6 +22,7 @@ import { Microphone } from 'amazon-chime-sdk-component-library-react';
 With custom width
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Microphone width="2rem" />
   </Preview>

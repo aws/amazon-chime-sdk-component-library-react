@@ -33,13 +33,14 @@ If there is already an existing Mini Test App for the features that you are work
     ```tsx
     import React from 'react';
     import { BrowserRouter, Route, Routes } from 'react-router-dom';
-    import { lightTheme } from 'amazon-chime-sdk-component-library-react';
+    import { lightTheme, GlobalStyles } from 'amazon-chime-sdk-component-library-react';
     import { ThemeProvider } from 'styled-components';
     import { Home } from './pages/Home';
     import { RosterTestApp } from './pages/RosterTestApp';
     
     const App: React.FC = () => (
       <ThemeProvider theme={lightTheme}>
+        <GlobalStyles />
         <BrowserRouter>
           <Routes>
             <Route path={routes.HOME} element={<Home />} />

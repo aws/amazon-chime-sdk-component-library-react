@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Phone from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Phone Icon
 
@@ -17,6 +18,7 @@ import { Phone } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Phone width="2rem" />
   </Preview>

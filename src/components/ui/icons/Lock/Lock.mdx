@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Lock from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Lock Icon
 
@@ -17,6 +18,7 @@ import { Lock } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Lock width="2rem" />
   </Preview>

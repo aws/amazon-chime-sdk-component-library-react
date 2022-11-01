@@ -1,7 +1,7 @@
 import { Preview } from '@storybook/addon-docs/blocks';
 import { ThemeProvider } from 'styled-components';
 
-import { lightTheme, darkTheme } from './';
+import { lightTheme, darkTheme, GlobalStyles } from './';
 import {
   Button,
   Checkbox,
@@ -13,7 +13,6 @@ import {
   RosterCell,
   SecondaryButton,
   Flex,
-  GlobalStyles
 } from '../';
 
 <Meta title="Themes" />
@@ -29,11 +28,13 @@ In Storybook, you can switch between themes for each component in **Themes** tab
 ```jsx
 import {
   lightTheme,
-  darkTheme
+  darkTheme,
+  GlobalStyles,
 } from 'amazon-chime-sdk-component-library-react';
 import { ThemeProvider } from 'styled-components';
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <MyApp />
 </ThemeProvider>;
 ```
@@ -43,6 +44,7 @@ import { ThemeProvider } from 'styled-components';
 #### Buttons in Light Theme
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Flex container alignItems="center" justifyContent="space-around">
       <Button label="Basic button" />
@@ -54,6 +56,7 @@ import { ThemeProvider } from 'styled-components';
 
 ```jsx
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Button label="Basic button" />
   <PrimaryButton label="Primary" icon={<Meeting />} />
   <SecondaryButton label="This is a secondary button" />
@@ -63,6 +66,7 @@ import { ThemeProvider } from 'styled-components';
 #### Buttons in Dark Theme
 
 <ThemeProvider theme={darkTheme}>
+  <GlobalStyles />
   <Preview>
     <Flex container alignItems="center" justifyContent="space-around">
       <Button label="Basic button" />
@@ -74,6 +78,7 @@ import { ThemeProvider } from 'styled-components';
 
 ```jsx
 <ThemeProvider theme={darkTheme}>
+  <GlobalStyles />
   <Button label="Basic button" />
   <PrimaryButton label="Primary" icon={<Meeting />} />
   <SecondaryButton label="This is a secondary button" />
@@ -83,7 +88,7 @@ import { ThemeProvider } from 'styled-components';
 #### Roster in Light Theme
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
+  <GlobalStyles />
   <Preview>
     <Roster>
       <RosterHeader
@@ -117,6 +122,7 @@ import { ThemeProvider } from 'styled-components';
 
 ```jsx
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Roster>
     <RosterHeader
       title="Present"
@@ -150,7 +156,7 @@ import { ThemeProvider } from 'styled-components';
 #### Roster in Dark Theme
 
 <ThemeProvider theme={darkTheme}>
-  <GlobalStyles/>
+  <GlobalStyles />
   <Preview>
     <Roster>
       <RosterHeader
@@ -184,6 +190,7 @@ import { ThemeProvider } from 'styled-components';
 
 ```jsx
 <ThemeProvider theme={darkTheme}>
+  <GlobalStyles />
   <Roster>
     <RosterHeader
       title="Present"

@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Dots from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Dots Icon
 
@@ -17,6 +18,7 @@ import { Dots } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Dots width="2rem" />
   </Preview>

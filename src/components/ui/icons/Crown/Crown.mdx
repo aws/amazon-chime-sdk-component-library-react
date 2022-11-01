@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Crown from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Crown Icon
 
@@ -17,6 +18,7 @@ import { Crown } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Crown width="2rem" />
   </Preview>

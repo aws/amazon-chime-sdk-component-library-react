@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import DropToAttach from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # DropToAttach Icon
 
@@ -17,6 +18,7 @@ import { DropToAttach } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <DropToAttach width="10rem" />
   </Preview>

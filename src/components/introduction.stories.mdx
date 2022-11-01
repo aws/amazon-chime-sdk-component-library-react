@@ -31,7 +31,7 @@ The server application and client application could be hosted either locally or 
 npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system
 ```
 
-2. Render a `ThemeProvider` and a `MeetingProvider` in the root of your application
+2. Render a `ThemeProvider`, `GlobalStyles` a `MeetingProvider` in the root of your application. Place the `GlobalStyles` under `ThemeProvider` to reset default global CSS styles.
 
 - You can pass a default theme that we provide, or a customized theme that adheres to our theme's structure.
 
@@ -40,10 +40,12 @@ import { ThemeProvider } from 'styled-components';
 import {
   MeetingProvider,
   lightTheme,
+  GlobalStyles,
 } from 'amazon-chime-sdk-component-library-react';
 
 const Root = () => (
   <ThemeProvider theme={lightTheme}>
+    <GlobalStyles />
     <MeetingProvider>
       <MyApp />
     </MeetingProvider>

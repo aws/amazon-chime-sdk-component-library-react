@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import SignalStrength from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # SignalStrength Icon
 
@@ -17,6 +18,7 @@ import { SignalStrength } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <SignalStrength width="2rem" />
   </Preview>

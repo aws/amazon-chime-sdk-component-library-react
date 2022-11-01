@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Like from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Like Icon
 
@@ -17,6 +18,7 @@ import { Like } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Like width="2rem" />
   </Preview>

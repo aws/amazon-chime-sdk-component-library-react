@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Search from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Search Icon
 
@@ -17,6 +18,7 @@ import { Search } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Search width="2rem" />
   </Preview>

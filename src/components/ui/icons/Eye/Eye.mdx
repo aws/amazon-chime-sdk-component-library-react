@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Eye from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Eye Icon
 
@@ -17,6 +18,7 @@ import { Eye } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Eye width="2rem" />
   </Preview>

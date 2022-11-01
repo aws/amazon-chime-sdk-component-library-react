@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import UpAndDownCaret from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Up and Down Caret Icon
 
@@ -19,6 +20,7 @@ import { UpAndDownCaret } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <UpAndDownCaret width="2rem" height="2rem" />
   </Preview>

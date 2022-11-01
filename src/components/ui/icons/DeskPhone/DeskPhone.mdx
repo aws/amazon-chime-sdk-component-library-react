@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import DeskPhone from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # DeskPhone Icon
 
@@ -19,6 +20,7 @@ import { DeskPhone } from 'amazon-chime-sdk-component-library-react';
 With custom width
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <DeskPhone width="2rem" />
   </Preview>

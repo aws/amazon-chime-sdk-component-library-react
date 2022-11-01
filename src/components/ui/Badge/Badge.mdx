@@ -6,29 +6,27 @@ import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 # Badge
+
 Badge contains a numeric value and indicates a running tally, such as the number of unread messages in a room.
 
 ## Importing
+
 ```javascript
 import { Badge } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Example
+
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
+  <GlobalStyles />
   <Preview>
-    <div style={{ 'alignItems': 'center', 'display': 'flex'}}>
-      <span style={{ 'marginRight': '0.5rem' }}>Number of new messages</span>
-      <Badge
-        value="50+"
-        status="default"
-      />
+    <div style={{ alignItems: 'center', display: 'flex' }}>
+      <span style={{ marginRight: '0.5rem' }}>Number of new messages</span>
+      <Badge value="50+" status="default" />
     </div>
-    <div style={{ 'marginLeft': '1rem', 'display': 'flex' }}>
-      <span style={{ 'marginRight': '0.5rem' }}>Lock badge</span>
-      <Badge
-        value={<Lock />}
-      />
+    <div style={{ marginLeft: '1rem', display: 'flex' }}>
+      <span style={{ marginRight: '0.5rem' }}>Lock badge</span>
+      <Badge value={<Lock />} />
     </div>
   </Preview>
 </ThemeProvider>
@@ -47,20 +45,17 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ### Using Alert Status
+
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
-    <div style={{ 'alignItems': 'center', 'display': 'flex'}}>
-      <span style={{ 'marginRight': '0.5rem' }}>Number of new messages</span>
-      <Badge
-        value="50+"
-        status="alert"
-      />
+    <div style={{ alignItems: 'center', display: 'flex' }}>
+      <span style={{ marginRight: '0.5rem' }}>Number of new messages</span>
+      <Badge value="50+" status="alert" />
     </div>
-    <div style={{ 'marginLeft': '1rem', 'display': 'flex' }}>
-      <span style={{ 'marginRight': '0.5rem' }}>Lock badge</span>
-      <Badge
-        value={<Lock />}
-      />
+    <div style={{ marginLeft: '1rem', display: 'flex' }}>
+      <span style={{ marginRight: '0.5rem' }}>Lock badge</span>
+      <Badge value={<Lock />} />
     </div>
   </Preview>
 </ThemeProvider>
@@ -79,4 +74,5 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Props
+
 <Props of={Badge} />

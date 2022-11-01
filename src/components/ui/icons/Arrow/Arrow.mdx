@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Arrow from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Arrow Icon
 
@@ -19,6 +20,7 @@ import { Arrow } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Arrow width="2rem" height="2rem" />
   </Preview>
@@ -31,6 +33,7 @@ With custom width and height
 Change the direction
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Arrow width="2rem" height="2rem" direction="right" />
   </Preview>

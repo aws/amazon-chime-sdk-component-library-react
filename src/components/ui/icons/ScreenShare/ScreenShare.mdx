@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import ScreenShare from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # ScreenShare Icon
 
@@ -17,6 +18,7 @@ import { ScreenShare } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <ScreenShare width="2rem" />
   </Preview>
