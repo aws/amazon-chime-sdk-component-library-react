@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Camera from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Camera Icon
 
@@ -19,6 +20,7 @@ import { Camera } from 'amazon-chime-sdk-component-library-react';
 With custom width, height and title
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Camera width="2rem" height="2rem" title="Camera on" />
   </Preview>
@@ -31,6 +33,7 @@ With custom width, height and title
 Disabled camera icon
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Camera width="2rem" height="2rem" disabled title="Camera off" />
   </Preview>

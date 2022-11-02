@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Spinner from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Spinner Icon
 
@@ -17,12 +18,13 @@ import { Spinner } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 With custom width and height
-<Preview>
-  <ThemeProvider theme={lightTheme}>
-    <Spinner width="2rem" height="2rem" />
-  </ThemeProvider>
-</Preview>
 
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Preview>
+    <Spinner width="2rem" height="2rem" />
+  </Preview>
+</ThemeProvider>
 
 ```jsx
 <Spinner width="2rem" height="2rem" />

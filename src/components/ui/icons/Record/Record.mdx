@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Record from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Record Icon
 
@@ -17,6 +18,7 @@ import { Record } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Record width="2rem" />
   </Preview>

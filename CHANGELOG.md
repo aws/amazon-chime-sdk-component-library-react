@@ -19,6 +19,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+* Update the documentation to use `GlobalStyles` along with `ThemeProvider`.
+
 ## [3.4.0] - 2022-09-13
 
 ### Added

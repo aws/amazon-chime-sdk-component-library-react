@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Remove from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Remove Icon
 
@@ -17,6 +18,7 @@ import { Remove } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Remove width="2rem" />
   </Preview>

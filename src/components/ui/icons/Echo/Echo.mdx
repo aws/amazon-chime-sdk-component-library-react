@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Echo from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Echo Icon
 
@@ -19,6 +20,7 @@ import { Echo } from 'amazon-chime-sdk-component-library-react';
 With custom width
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Echo width="2rem" />
   </Preview>

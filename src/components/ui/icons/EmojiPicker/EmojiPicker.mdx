@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import EmojiPicker from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # EmojiPicker Icon
 
@@ -19,6 +20,7 @@ import { EmojiPicker } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <EmojiPicker width="2rem" height="2rem" />
   </Preview>

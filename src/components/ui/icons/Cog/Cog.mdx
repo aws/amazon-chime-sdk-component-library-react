@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Cog from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Cog Icon
 
@@ -17,6 +18,7 @@ import { Cog } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Cog width="2rem" />
   </Preview>

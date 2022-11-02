@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Attendees from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Attendees Icon
 
@@ -19,6 +20,7 @@ import { Attendees } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Attendees width="2rem" height="2rem" />
   </Preview>

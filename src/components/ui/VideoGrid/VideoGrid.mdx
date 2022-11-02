@@ -21,23 +21,23 @@ import { VideoGrid, VideoTile } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
+  <GlobalStyles />
   <Preview>
-     <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
+    <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
       <VideoGrid>
         <VideoTile
           style={{
             border: '1px solid grey',
-            gridArea: ''
+            gridArea: '',
           }}
-          nameplate='Tile 1'
+          nameplate="Tile 1"
         />
         <VideoTile
           style={{
             border: '1px solid grey',
-            gridArea: ''
+            gridArea: '',
           }}
-          nameplate='Tile 2'
+          nameplate="Tile 2"
         />
       </VideoGrid>
     </div>
@@ -45,53 +45,53 @@ import { VideoGrid, VideoTile } from 'amazon-chime-sdk-component-library-react';
 </ThemeProvider>
 
 ```jsx
-  <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
-      <VideoGrid>
-        <VideoTile
-          style={{
-            border: '1px solid grey',
-            gridArea: ''
-          }}
-          nameplate='Tile 1'
-        />
-        <VideoTile
-          style={{
-            border: '1px solid grey',
-            gridArea: ''
-          }}
-          nameplate='Tile 2'
-        />
-      </VideoGrid>
-    </div>
+<div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
+  <VideoGrid>
+    <VideoTile
+      style={{
+        border: '1px solid grey',
+        gridArea: '',
+      }}
+      nameplate="Tile 1"
+    />
+    <VideoTile
+      style={{
+        border: '1px solid grey',
+        gridArea: '',
+      }}
+      nameplate="Tile 2"
+    />
+  </VideoGrid>
+</div>
 ```
 
 ## Example with featured layout
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
+  <GlobalStyles />
   <Preview>
-     <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
-      <VideoGrid layout='featured'>
+    <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
+      <VideoGrid layout="featured">
         <VideoTile
           style={{
             border: '1px solid grey',
-            gridArea: 'ft'
+            gridArea: 'ft',
           }}
-          nameplate='Featured Tile'
+          nameplate="Featured Tile"
         />
         <VideoTile
           style={{
             border: '1px solid grey',
-            gridArea: ''
+            gridArea: '',
           }}
-          nameplate='Tile 2'
+          nameplate="Tile 2"
         />
         <VideoTile
           style={{
             border: '1px solid grey',
-            gridArea: ''
+            gridArea: '',
           }}
-          nameplate='Tile 3'
+          nameplate="Tile 3"
         />
       </VideoGrid>
     </div>
@@ -99,31 +99,31 @@ import { VideoGrid, VideoTile } from 'amazon-chime-sdk-component-library-react';
 </ThemeProvider>
 
 ```jsx
-  <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
-    <VideoGrid layout='featured'>
-      <VideoTile
-        style={{
-          border: '1px solid grey',
-          gridArea: 'ft'
-        }}
-        nameplate='Featured Tile'
-      />
-      <VideoTile
-        style={{
-          border: '1px solid grey',
-          gridArea: ''
-        }}
-        nameplate='Tile 2'
-      />
-      <VideoTile
-        style={{
-          border: '1px solid grey',
-          gridArea: ''
-        }}
-        nameplate='Tile 3'
-      />
-    </VideoGrid>
-  </div>
+<div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
+  <VideoGrid layout="featured">
+    <VideoTile
+      style={{
+        border: '1px solid grey',
+        gridArea: 'ft',
+      }}
+      nameplate="Featured Tile"
+    />
+    <VideoTile
+      style={{
+        border: '1px solid grey',
+        gridArea: '',
+      }}
+      nameplate="Tile 2"
+    />
+    <VideoTile
+      style={{
+        border: '1px solid grey',
+        gridArea: '',
+      }}
+      nameplate="Tile 3"
+    />
+  </VideoGrid>
+</div>
 ```
 
 ## Props

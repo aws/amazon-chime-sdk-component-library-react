@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import LeaveMeeting from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # LeaveMeeting Icon
 
@@ -17,6 +18,7 @@ import { LeaveMeeting } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <LeaveMeeting width="2rem" />
   </Preview>

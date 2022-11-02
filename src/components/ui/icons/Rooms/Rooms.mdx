@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Rooms from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Rooms Icon
 
@@ -17,6 +18,7 @@ import { Rooms } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Rooms width="2rem" />
   </Preview>

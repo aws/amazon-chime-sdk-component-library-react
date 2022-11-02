@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Pin from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Pin Icon
 
@@ -19,6 +20,7 @@ import { Pin } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Pin width="2rem" height="2rem" />
   </Preview>

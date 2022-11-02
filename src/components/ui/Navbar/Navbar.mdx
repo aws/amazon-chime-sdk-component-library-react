@@ -9,7 +9,6 @@ import Flex from '../Flex';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
 
-
 # Navbar
 
 The Navbar component displays a vertical menu with navigation icon buttons and labels. Navbar is constructed using the NavbarHeader and NavbarItem components.
@@ -22,31 +21,28 @@ The Navbar component displays a vertical menu with navigation icon buttons and l
 import {
   Navbar,
   NavbarHeader,
-  NavbarItem
+  NavbarItem,
 } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Example
 
 ### Navbar Component
+
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
+  <GlobalStyles />
   <Preview>
     <Navbar flexDirection="column" container css="height: 50vh">
-      <NavbarHeader onClose={() => {}}/>
+      <NavbarHeader onClose={() => {}} />
       <Flex>
         <NavbarItem
           icon={<Information />}
           onClick={() => {}}
           label="Bridge Information"
         />
-        <NavbarItem
-          icon={<Attendees />}
-          onClick={() => {}}
-          label="Attendees"
-        />
+        <NavbarItem icon={<Attendees />} onClick={() => {}} label="Attendees" />
       </Flex>
-      <Flex marginTop='auto'>
+      <Flex marginTop="auto">
         <NavbarItem
           icon={<LeaveMeeting />}
           onClick={() => {}}
@@ -59,21 +55,17 @@ import {
 </ThemeProvider>
 
 ```jsx
-<Navbar flexDirection="column" container height='10%'>
-  <NavbarHeader onClose={() => {}}/>
+<Navbar flexDirection="column" container height="10%">
+  <NavbarHeader onClose={() => {}} />
   <Flex>
     <NavbarItem
       icon={<Information />}
       onClick={() => {}}
       label="Bridge Information"
     />
-    <NavbarItem
-      icon={<Attendees />}
-      onClick={() => {}}
-      label="Attendees"
-    />
+    <NavbarItem icon={<Attendees />} onClick={() => {}} label="Attendees" />
   </Flex>
-  <Flex marginTop='auto'>
+  <Flex marginTop="auto">
     <NavbarItem
       icon={<LeaveMeeting />}
       onClick={() => {}}
@@ -86,6 +78,7 @@ import {
 ## Props
 
 ### Navbar Props
+
 <Props of={Navbar} />
 
 # NavbarHeader
@@ -97,10 +90,11 @@ It gives a title to Navbar and also a close icon button to close the Navbar in m
 # Example
 
 ```javascript
-<NavbarHeader title="Menu" onClose={() => {}}/>
+<NavbarHeader title="Menu" onClose={() => {}} />
 ```
 
 ### NavbarHeader Props
+
 <Props of={NavbarHeader} />
 
 # NavbarItem
@@ -114,6 +108,7 @@ The label is displayed only on smaller screens with width defined by `theme.medi
 ### NavbarItem component
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <NavbarItem
     icon={<Information />}
     onClick={() => {}}
@@ -130,4 +125,5 @@ The label is displayed only on smaller screens with width defined by `theme.medi
 ```
 
 ### NavbarItem Props
+
 <Props of={NavbarItem} />

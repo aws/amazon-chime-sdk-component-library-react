@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Caret from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Caret Icon
 
@@ -21,6 +22,7 @@ import { Caret } from 'amazon-chime-sdk-component-library-react';
 With custom width
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Caret width="2rem" />
   </Preview>
@@ -33,6 +35,7 @@ With custom width
 Change the direction
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Caret width="2rem" direction="down" />
   </Preview>

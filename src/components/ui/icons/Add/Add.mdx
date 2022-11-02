@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Add from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Add Icon
 
@@ -19,6 +20,7 @@ import { Add } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Add width="2rem" height="2rem" />
   </Preview>
@@ -31,6 +33,7 @@ With custom width and height
 With title on hover
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles/>
   <Preview>
     <Add width="2rem" height="2rem" title="Add" />
   </Preview>

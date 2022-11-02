@@ -3,6 +3,7 @@ import { ThemeProvider } from 'styled-components';
 
 import Dislike from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
 
 # Dislike Icon
 
@@ -17,6 +18,7 @@ import { Dislike } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
   <Preview>
     <Dislike width="2rem" />
   </Preview>
