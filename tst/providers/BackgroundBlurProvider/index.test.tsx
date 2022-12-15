@@ -59,27 +59,9 @@ describe.only('BackgroundBlurProvider', () => {
     // happens when the component remounts. If it is happening more than
     // once, that means some dependency or parent is changing the parameters
     // erroneously.
-    expect(loggerInfoMock).toHaveBeenCalledTimes(4);
+    expect(loggerInfoMock).toHaveBeenCalledTimes(1);
     expect(loggerInfoMock).toHaveBeenCalledWith(
-      `Initializing background blur processor with, spec: ${JSON.stringify(
-        undefined
-      )}, options: ${JSON.stringify(blurOptions)}`
-    );
-    expect(loggerInfoMock).toHaveBeenCalledWith(
-      'Specs or options were changed. Destroying and re-initializing background blur processor.'
-    );
-
-    // Even though we are using a NoOpVideoFrameProcessor, the input specs
-    // and options that are passed to the amazon-chime-sdk-js are still
-    // run through `resolveOptions` and `resolveSpec` in the
-    // `BackgroundBlurVideoFrameProcessor` constructor so any invalid API
-    // boundary changes to those are still validated by this test. The
-    // first warning call is output by `BackgroundBlurVideoFrameProcessor`
-    // and we don't validate it strictly because there's a non-deterministic
-    // timestamp. Verifying the call count should be good enough.
-    expect(loggerWarnMock).toHaveBeenCalledTimes(2);
-    expect(loggerWarnMock).toHaveBeenLastCalledWith(
-      expect.stringContaining('Initialized NoOpVideoFrameProcessor')
+      'Specs or options were changed. Destroying background blur processor.'
     );
 
     // No errors should happen.
