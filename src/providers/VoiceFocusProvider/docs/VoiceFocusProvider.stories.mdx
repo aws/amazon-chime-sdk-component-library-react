@@ -8,6 +8,10 @@ import { VoiceFocusProvider } from '../';
 The `VoiceFocusProvider` provides a function transforming a normal audio device to an Amazon Voice Focus device, and whether Amazon Voice Focus is supported.
 Amazon Voice Focus related logs can be found in the browser developer tools when Amazon Voice Focus is enabled.
 
+The Voice Focus Provider manages the state of a `VoiceFocusDeviceTransformer` behind the scenes. When you call `addVoiceFocus` the provider will use the current `VoiceFocusDeviceTransformer`
+to create a new `VoiceFocusTransformerDevice` and provide it to the consumer. The `VoiceFocusDeviceTransformer` that is used to create a `VoiceFocusTransformDevice` will be destroyed when
+the provider is unmounted.
+
 This provider is independent from `MeetingProvider`. You can put `VoiceFocusProvider` wherever you want in the component tree to control the workflow of Voice Focus, so long
 as any component which relies on `VoiceFocusProvider` is nested within `VoiceFocusProvider`.
 

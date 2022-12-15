@@ -87,6 +87,11 @@ const AudioInputVFControl: React.FC<Props> = ({
     } else {
       setIsVoiceFocusEnabled(false);
     }
+    return () => {
+      if (selectedDevice instanceof VoiceFocusTransformDevice) {
+        selectedDevice.stop();
+      }
+    };
   }, [selectedDevice]);
 
   useEffect(() => {
