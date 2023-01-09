@@ -88,9 +88,12 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
   );
 
   useEffect(() => {
+    // One reason we need to initialize first, even though we'll destroy this background blur processor when we create a new device
+    // is because we need to check if background blur is supported by initializing the background blur processor to see if the browser supports
+    initializeBackgroundBlur();
     return () => {
       logger.info(
-        'Specs or options were changed. Destroying background blur processor.'
+        'Specs or options were changed. Destroying and re-initializing background blur processor.'
       );
       backgroundBlurProcessor?.destroy();
     };
@@ -147,9 +150,6 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
         selectedDevice
       )}`
     );
-    // TODO: We don't need to intialize a new processor every time we create a background blur device
-    // We could potentially check for if a processor exists already AND that the processor isn't destroyed.
-    // If both of those statements are true, then chooseNewInnerDevice instead of creating a new processor
     const currentProcessor = await initializeBackgroundBlur();
     try {
       const logger =
