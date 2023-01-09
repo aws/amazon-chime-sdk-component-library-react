@@ -95,9 +95,12 @@ const BackgroundReplacementProvider: FC<Props> = ({
   );
 
   useEffect(() => {
+    // One reason we need to initialize first, even though we'll destroy this background replacement processor when we create a new device
+    // is because we need to check if background replacement is supported by initializing the background replacement processor to see if the browser supports
+    initializeBackgroundReplacement();
     return () => {
       logger.info(
-        'Specs or options were changed. Destroying background replacement processor.'
+        'Specs or options were changed. Destroying and re-initializing background replacement processor.'
       );
       backgroundReplacementProcessor?.destroy();
     };
@@ -155,9 +158,6 @@ const BackgroundReplacementProvider: FC<Props> = ({
         selectedDevice
       )}`
     );
-    // TODO: We don't need to intialize a new processor every time we create a background replacement device
-    // We could potentially check for if a processor exists already AND that the processor isn't destroyed.
-    // If both of those statements are true, then chooseNewInnerDevice instead of creating a new processor
     const currentProcessor = await initializeBackgroundReplacement();
     try {
       const logger =

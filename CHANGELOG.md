@@ -17,10 +17,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 - Updated `VoiceFocusProvider` to destroy the Voice Focus worker thread on unmount.
+- Reverted changes to `BackgroundBlurProvider` and `BackgroundReplacemenProvider` to fix bug related to `isBackgroundBlurSupported` and `isBackgroundReplacementSupported` returning false.
 
 ### Fixed
 
 * Update the documentation to use `GlobalStyles` along with `ThemeProvider`.
+
 
 ## [3.4.0] - 2022-09-13
 
