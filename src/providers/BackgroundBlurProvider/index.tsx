@@ -39,7 +39,7 @@ interface BackgroundBlurProviderState {
     device: Device
   ) => Promise<DefaultVideoTransformDevice>;
   isBackgroundBlurSupported: boolean | undefined;
-  backgroundBlurProcessor: BackgroundBlurProcessor | undefined
+  backgroundBlurProcessor: BackgroundBlurProcessor | undefined;
 }
 
 const BackgroundBlurProviderContext = createContext<
@@ -51,7 +51,9 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
   const [isBackgroundBlurSupported, setIsBackgroundBlurSupported] = useState<
     boolean | undefined
   >(undefined);
-  const [backgroundBlurProcessor, setBackgroundBlurProcessor] = useState<BackgroundBlurProcessor | undefined>();
+  const [backgroundBlurProcessor, setBackgroundBlurProcessor] = useState<
+    BackgroundBlurProcessor | undefined
+  >();
 
   const blurSpec = useMemoCompare(
     spec,
@@ -88,12 +90,20 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
   );
 
   useEffect(() => {
-    // One reason we need to initialize first, even though we'll destroy this background blur processor when we create a new device
-    // is because we need to check if background blur is supported by initializing the background blur processor to see if the browser supports
-    initializeBackgroundBlur();
+    async function checkSupport() {
+      const isSupported =
+        await BackgroundBlurVideoFrameProcessor.isSupported();
+      if (isSupported) {
+        setIsBackgroundBlurSupported(true);
+      }
+    }
+    checkSupport();
+  }, []);
+
+  useEffect(() => {
     return () => {
       logger.info(
-        'Specs or options were changed. Destroying and re-initializing background blur processor.'
+        'Specs or options were changed. Destroying background blur processor.'
       );
       backgroundBlurProcessor?.destroy();
     };

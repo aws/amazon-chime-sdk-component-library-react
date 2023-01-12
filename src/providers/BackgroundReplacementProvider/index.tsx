@@ -56,9 +56,8 @@ const BackgroundReplacementProvider: FC<Props> = ({
     isBackgroundReplacementSupported,
     setIsBackgroundReplacementSupported,
   ] = useState<boolean | undefined>(undefined);
-  const [backgroundReplacementProcessor, setBackgroundReplacementProcessor] = useState<BackgroundReplacementProcessor | undefined>(
-    undefined
-  );
+  const [backgroundReplacementProcessor, setBackgroundReplacementProcessor] =
+    useState<BackgroundReplacementProcessor | undefined>(undefined);
 
   const replacementSpec = useMemoCompare(
     spec,
@@ -95,12 +94,20 @@ const BackgroundReplacementProvider: FC<Props> = ({
   );
 
   useEffect(() => {
-    // One reason we need to initialize first, even though we'll destroy this background replacement processor when we create a new device
-    // is because we need to check if background replacement is supported by initializing the background replacement processor to see if the browser supports
-    initializeBackgroundReplacement();
+    async function checkSupport() {
+      const isSupported =
+        await BackgroundReplacementVideoFrameProcessor.isSupported();
+      if (isSupported) {
+        setIsBackgroundReplacementSupported(true);
+      }
+    }
+    checkSupport();
+  }, []);
+
+  useEffect(() => {
     return () => {
       logger.info(
-        'Specs or options were changed. Destroying and re-initializing background replacement processor.'
+        'Specs or options were changed. Destroying background replacement processor.'
       );
       backgroundReplacementProcessor?.destroy();
     };
@@ -185,7 +192,7 @@ const BackgroundReplacementProvider: FC<Props> = ({
   const value: BackgroundReplacementProviderState = {
     createBackgroundReplacementDevice,
     isBackgroundReplacementSupported,
-    backgroundReplacementProcessor
+    backgroundReplacementProcessor,
   };
 
   return (
