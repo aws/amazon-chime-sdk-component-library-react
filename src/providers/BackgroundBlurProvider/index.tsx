@@ -155,6 +155,10 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
   const createBackgroundBlurDevice = async (
     selectedDevice: Device
   ): Promise<DefaultVideoTransformDevice> => {
+    logger.info(`Destroying current background blur processor`);
+    if (backgroundBlurProcessor) {
+      backgroundBlurProcessor.destroy();
+    }
     logger.info(
       `Calling createBackgroundBlurDevice with device: ${JSON.stringify(
         selectedDevice

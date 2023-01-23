@@ -160,6 +160,10 @@ const BackgroundReplacementProvider: FC<Props> = ({
   const createBackgroundReplacementDevice = async (
     selectedDevice: Device
   ): Promise<DefaultVideoTransformDevice> => {
+    logger.info(`Destroying current background replacement processor`);
+    if (backgroundReplacementProcessor) {
+      backgroundReplacementProcessor.destroy();
+    }
     logger.info(
       `Calling createBackgroundReplacementDevice with device: ${JSON.stringify(
         selectedDevice
