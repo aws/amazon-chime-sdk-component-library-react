@@ -59,6 +59,16 @@ options?: {
   // The `ActiveSpeakerPolicy` object that you want to be used in the meeting session.
   // For more information on `ActiveSpeakerPolicy`, check Amazon Chime SDK for JavaScript ActiveSpeakerPolicy (https://aws.github.io/amazon-chime-sdk-js/interfaces/activespeakerpolicy.html).
   activeSpeakerPolicy?: ActiveSpeakerPolicy;
+
+  /*
+    The `meetingManager.join` API by default lists and selects the first available audio input, output and video input device.
+    The audio and video devices listing and selection is needed for a successful meeting session start using `meetingManager.start` API following the `meetingManager.join` API call and then to start a video.
+    In cases where you want to control the devices listing and selection on your side before joining a meeting, you can set `skipDeviceSelection` to `true`.
+    With `skipDeviceSelection` being true`, the `meetingManager.join` API will not do any default devices listing and selection and it will be your responsibility to select the devices.
+    Default is `false`.
+    Note: Audio output device selection is only available in browsers that support `setSinkId`.
+  */
+  skipDeviceSelection?: boolean;
 }
 ```
 
