@@ -10,6 +10,8 @@ export interface MeetingManagerJoinOptions {
   eventController?: EventController;
   enableWebAudio?: boolean;
   activeSpeakerPolicy?: ActiveSpeakerPolicy;
+  // This will skip listing and selection of devices under `meetingManager.join()` method.
+  skipDeviceSelection?: boolean;
 }
 
 export interface AttendeeResponse {
@@ -22,6 +24,7 @@ export type ParsedJoinParams = {
   eventController: EventController | undefined;
   enableWebAudio: boolean;
   activeSpeakerPolicy: ActiveSpeakerPolicy;
+  skipDeviceSelection: boolean;
 };
 
 export type FullDeviceInfoType = {
