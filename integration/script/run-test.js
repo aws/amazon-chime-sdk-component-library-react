@@ -14,11 +14,21 @@ const red = '\x1b[31m%s\x1b[0m';
 let testTarget = 'test/*';
 
 const usage = () => {
-  console.log(`Usage: run-test -- [-t test] [-h host] [-b browser-version] [-p platform-name]`);
-  console.log(`  -t, --test                    Target test suite [default: all]`);
-  console.log(`  -h, --host                    Target browser and WebDriver server [default: sauce-chrome]`);
-  console.log(`  -v, --browser-version         Version of the browser to use [default: latest]`);
-  console.log(`  -p, --platform-name           Name of the operating system the browser should be running on [default: Windows 10]\n`);
+  console.log(
+    `Usage: run-test -- [-t test] [-h host] [-b browser-version] [-p platform-name]`
+  );
+  console.log(
+    `  -t, --test                    Target test suite [default: all]`
+  );
+  console.log(
+    `  -h, --host                    Target browser and WebDriver server [default: sauce-chrome]`
+  );
+  console.log(
+    `  -v, --browser-version         Version of the browser to use [default: latest]`
+  );
+  console.log(
+    `  -p, --platform-name           Name of the operating system the browser should be running on [default: Windows 10]\n`
+  );
   console.log(`Values:`);
   console.log(`  -t, --test`);
   console.log(`    all: ../test/*`);
@@ -30,11 +40,17 @@ const usage = () => {
   console.log(`    sauce-chrome: Run tests on Sauce Labs with Chrome`);
   console.log(`    sauce-firefox: Run tests on Sauce Labs with Firefox`);
   console.log(`    sauce-safari: Run tests on Sauce Labs with Safari\n`);
-  console.log(`Below options are only available when executing tests on Sauce Labs`);
+  console.log(
+    `Below options are only available when executing tests on Sauce Labs`
+  );
   console.log(`  -v, --browser-version`);
-  console.log(`    check example here: https://saucelabs.com/platform/platform-configurator#/`);
+  console.log(
+    `    check example here: https://saucelabs.com/platform/platform-configurator#/`
+  );
   console.log(`  -p, --platform-name`);
-  console.log(`    check example here: https://saucelabs.com/platform/platform-configurator#/\n`);
+  console.log(
+    `    check example here: https://saucelabs.com/platform/platform-configurator#/\n`
+  );
 };
 
 const parseArgs = () => {
@@ -45,19 +61,23 @@ const parseArgs = () => {
         usage();
         exit(0);
 
-      case 't': case 'test':
+      case 't':
+      case 'test':
         setTestTarget(value);
         break;
 
-      case 'h': case 'host':
+      case 'h':
+      case 'host':
         env.HOST = value;
         break;
 
-      case 'v': case 'browser-version':
+      case 'v':
+      case 'browser-version':
         env.BROWSER_VERSION = value;
         break;
 
-      case 'p': case 'platform-name':
+      case 'p':
+      case 'platform-name':
         env.PLATFORM_NAME = value;
         break;
 
@@ -89,7 +109,7 @@ const setTestTarget = (target) => {
 const runAsync = (command, args, options) => {
   options = {
     ...options,
-    shell: true
+    shell: true,
   };
   const child = spawn(command, args, options);
 
@@ -115,7 +135,7 @@ const runAsync = (command, args, options) => {
 const runSync = (command, args, options, printOutput = true) => {
   options = {
     ...options,
-    shell: true
+    shell: true,
   };
   const child = spawnSync(command, args, options);
 
@@ -129,24 +149,29 @@ const runSync = (command, args, options, printOutput = true) => {
   }
 
   if (child.status !== 0) {
-    console.log(red, `Command ${command} failed with exit code ${child.status} and signal ${child.signal}`);
+    console.log(
+      red,
+      `Command ${command} failed with exit code ${child.status} and signal ${child.signal}`
+    );
     console.log(red, child.stderr.toString());
   }
 
   return output;
 };
 
-const checkIfPortIsInUse = async port =>
-  new Promise(resolve => {
+const checkIfPortIsInUse = async (port) =>
+  new Promise((resolve) => {
     const server = require('http')
       .createServer()
-      .listen(port, 'localhost', () => {
-        server.close();
-        resolve(false);
+      .once('error', (err) => {
+        if (err && err.code === 'EADDRINUSE') {
+          resolve(true);
+        }
       })
-      .on('error', () => {
-        resolve(true);
-      });
+      .once('listening', () => {
+        server.once('close', () => resolve(false)).close();
+      })
+      .listen(port, '127.0.0.1');
   });
 
 const startTestDemo = () => {
@@ -164,7 +189,7 @@ const waitUntilTestDemoStarts = async () => {
   count = 0;
   threshold = 60;
 
-  while (count < 60) {
+  while (count < threshold) {
     const isInUse = await checkIfPortIsInUse(8080);
     if (isInUse === true) {
       console.log(green, ' Test demo has started successfully');
@@ -175,21 +200,33 @@ const waitUntilTestDemoStarts = async () => {
   }
 
   console.log(red, ' Test demo did not start successfully');
-  terminateTestDemo(pid);
+  terminateTestDemo();
   exit(1);
 };
 
 const startTesting = () => {
   console.log(green, ' Running test');
-  const testResult = runSync('mocha', [testTarget], { cwd: pathToIntegrationFolder });
+  const testResult = runSync('mocha', [testTarget], {
+    cwd: pathToIntegrationFolder,
+  });
   return testResult;
 };
 
 const terminateTestDemo = () => {
-  const demoPid = runSync('lsof', ['-i', ':9000', '-t'], null, printOutput = false);
+  const demoPid = runSync(
+    'lsof',
+    ['-i', ':9000', '-t'],
+    null,
+    (printOutput = false)
+  );
   if (demoPid) kill(demoPid, 'SIGKILL');
 
-  const serverPid = runSync('lsof', ['-i', ':8080', '-t'], null, printOutput = false);
+  const serverPid = runSync(
+    'lsof',
+    ['-i', ':8080', '-t'],
+    null,
+    (printOutput = false)
+  );
   if (serverPid) kill(serverPid, 'SIGKILL');
   console.log(green, 'Terminated the test demo');
 };
