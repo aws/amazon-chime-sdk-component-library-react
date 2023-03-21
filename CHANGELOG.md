@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Fixed
+- Fix a bug where the `isVideoEnabled` is still true even when the video device is unplugged. 
 
 - When audio inputs change in a meeting, `AudioInputProvider` will only automatically select a new audio input device if a meeting is joined with `DeviceLabels.Audio` or `DeviceLabels.AudioAndVideo` device labels.
 - Publish `MeetingStatus.Failed` only when a non-terminal failure is encountered. Currently, some Amazon Chime SDK for JavaScript meeting session statuses pass both the `sessionStatus.isFailure()` as well as `sessionStatus.isTerminal()` in JS SDK, thus, for a status if it is in both, it will be considered as non-terminal failure and `MeetingStatus.TerminalFailure` will never get set for such statuses. Check [MeetingSessionStatus](https://github.com/aws/amazon-chime-sdk-js/blob/main/src/meetingsession/MeetingSessionStatus.ts) file for more information on both methods in JS SDK.
