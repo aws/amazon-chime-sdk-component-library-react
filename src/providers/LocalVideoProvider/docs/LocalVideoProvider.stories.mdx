@@ -11,6 +11,8 @@ The React SDK depends on the Amazon Chime SDK for JavaScript, wherein, a single 
 To start/stop a video preview, please check `PreviewVideo` component [documentation](/docs/sdk-components-previewvideo--page).
 To start/stop user's local video, use `toggleVideo` function from the `LocalVideoProvider`.
 
+In the case of a video being unplugged, the React SDK will automatically stop the local video tile, and will not choose another video device automatically.
+
 ## State
 
 ```javascript

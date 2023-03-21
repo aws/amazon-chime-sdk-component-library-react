@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Fixed
+- Fix a bug where the `isVideoEnabled` is still true even when the video device is unplugged. 
 
 ## [3.5.0] - 2022-10-25
 
