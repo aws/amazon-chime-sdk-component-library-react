@@ -14,7 +14,7 @@ import React, {
   useState,
 } from 'react';
 
-import { AudioInputContextType } from '../../types';
+import { AudioInputContextType, DeviceLabels } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
@@ -70,6 +70,16 @@ const AudioInputProvider: React.FC<Props> = ({
     const observer: DeviceChangeObserver = {
       audioInputsChanged: async (newAudioInputs: MediaDeviceInfo[]) => {
         logger.info('AudioInputProvider - audio inputs updated');
+
+        if (
+          meetingManager.getDeviceLabels() !== DeviceLabels.Audio &&
+          meetingManager.getDeviceLabels() !== DeviceLabels.AudioAndVideo
+        ) {
+          logger.info(
+            'Device labels do not allow audio, skipping audio input selection on audioInputsChanged'
+          );
+          return;
+        }
 
         const hasSelectedDevice = newAudioInputs.some(
           (device) => device.deviceId === selectedInputRef.current
