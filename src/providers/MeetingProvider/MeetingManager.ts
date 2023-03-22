@@ -108,6 +108,12 @@ export class MeetingManager implements AudioVideoObserver {
 
   private eventDidReceiveRef: EventObserver;
 
+  private deviceLabels: DeviceLabels | DeviceLabelTrigger;
+  
+  public getDeviceLabels() : DeviceLabels | DeviceLabelTrigger {
+    return this.deviceLabels;
+  }
+
   constructor(logger: Logger) {
     this.logger = logger;
     this.eventDidReceiveRef = {
@@ -302,6 +308,12 @@ export class MeetingManager implements AudioVideoObserver {
   setupDeviceLabelTrigger(
     deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo
   ): void {
+    /**
+     * A builder can set device labels either using `meetingManager.join` or using `meetingManager.invokeDeviceProvider` methods.
+     * Both use `setupDeviceLabelTrigger` methods, thus, set the `deviceLabels` in this method.
+     */
+    this.deviceLabels = deviceLabels;
+
     let callback: DeviceLabelTrigger;
 
     if (typeof deviceLabels === 'function') {
