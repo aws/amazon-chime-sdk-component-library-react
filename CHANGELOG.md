@@ -14,7 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Changed
-
+- Updated `ContentShare` to have optional nameplate prop
 ### Fixed
 
 ## [3.5.0] - 2022-10-25
