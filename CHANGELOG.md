@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Fix a bug where the `isVideoEnabled` is still true even when the video device is unplugged. 
 
+- When audio inputs change in a meeting, `AudioInputProvider` will only automatically select a new audio input device if a meeting is joined with `DeviceLabels.Audio` or `DeviceLabels.AudioAndVideo` device labels.
+
 ## [3.5.0] - 2022-10-25
 
 ### Added
