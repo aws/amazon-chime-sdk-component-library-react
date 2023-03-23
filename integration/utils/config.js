@@ -27,6 +27,11 @@ const config = {
         // order of below two args is important for tests to pass.
         '--use-fake-device-for-media-stream',
         '--use-fake-ui-for-media-stream',
+        // copying over from JS SDK  per SauceLabs suggestion.
+        'disable-infobars',
+        'ignore-gpu-blacklist',
+        'test-type',
+        'disable-gpu'
       ],
     },
   },
