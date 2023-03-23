@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Applications depending on Chime SDK component library currently do not have a out of the box `MeetingStatus` to tell whether the JS SDK is in reconnection. Thus, add `audioVideoDidStartConnecting` with a new `MeetingStatus.Reconnecting` to aid such a use case.
+
 ### Removed
 
 ### Changed
@@ -18,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - When audio inputs change in a meeting, `AudioInputProvider` will only automatically select a new audio input device if a meeting is joined with `DeviceLabels.Audio` or `DeviceLabels.AudioAndVideo` device labels.
+- Publish `MeetingStatus.Failed` only when a non-terminal failure is encountered. Currently, some Amazon Chime SDK for JavaScript meeting session statuses pass both the `sessionStatus.isFailure()` as well as `sessionStatus.isTerminal()` in JS SDK, thus, for a status if it is in both, it will be considered as non-terminal failure and `MeetingStatus.TerminalFailure` will never get set for such statuses. Check [MeetingSessionStatus](https://github.com/aws/amazon-chime-sdk-js/blob/main/src/meetingsession/MeetingSessionStatus.ts) file for more information on both methods in JS SDK.
 
 ## [3.5.0] - 2022-10-25
 
