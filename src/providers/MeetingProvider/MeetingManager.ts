@@ -238,6 +238,16 @@ export class MeetingManager implements AudioVideoObserver {
     this.publishMeetingStatus();
   };
 
+  audioVideoDidStartConnecting = (reconnecting: boolean): void => {
+    if (this.meetingStatus === MeetingStatus.Reconnecting) {
+      return;
+    }
+    if (reconnecting) {
+      this.meetingStatus = MeetingStatus.Reconnecting;
+      this.publishMeetingStatus();
+    }
+  }
+
   audioVideoDidStop = (sessionStatus: MeetingSessionStatus): void => {
     const sessionStatusCode = sessionStatus.statusCode();
     switch (sessionStatusCode) {
@@ -261,7 +271,7 @@ export class MeetingManager implements AudioVideoObserver {
         break;
       default:
         // The following status codes are Failures according to MeetingSessionStatus
-        if (sessionStatus.isFailure()) {
+        if (sessionStatus.isFailure() && !sessionStatus.isTerminal()) {
           console.log(
             `[MeetingManager audioVideoDidStop] Non-Terminal failure occurred: ${sessionStatusCode}`
           );
@@ -290,6 +300,7 @@ export class MeetingManager implements AudioVideoObserver {
 
     this.audioVideoObservers = {
       audioVideoDidStart: this.audioVideoDidStart,
+      audioVideoDidStartConnecting: this.audioVideoDidStartConnecting,
       audioVideoDidStop: this.audioVideoDidStop,
     };
 
