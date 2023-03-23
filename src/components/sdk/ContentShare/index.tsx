@@ -8,7 +8,9 @@ import { useContentShareState } from '../../../providers/ContentShareProvider';
 import { ContentTile } from '../../ui/ContentTile';
 import { BaseSdkProps } from '../Base';
 
-interface Props extends BaseSdkProps {}
+interface Props extends BaseSdkProps {
+  nameplate?: string;
+}
 
 export const ContentShare: React.FC<Props> = ({ className, ...rest }) => {
   const audioVideo = useAudioVideo();

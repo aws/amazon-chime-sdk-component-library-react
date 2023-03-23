@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Changed
-
+- Updated `ContentShare` to have optional nameplate prop.
 ### Fixed
 - Fix a bug where the `isVideoEnabled` is still true even when the video device is unplugged. 
 
