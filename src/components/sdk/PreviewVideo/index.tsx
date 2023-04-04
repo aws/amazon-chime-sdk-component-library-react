@@ -21,7 +21,7 @@ const StyledPreview = styled(VideoTile)`
   }
 `;
 
-export const PreviewVideo: React.FC<BaseSdkProps> = (props) => {
+export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (props) => {
   const logger = useLogger();
   const audioVideo = useAudioVideo();
   const { selectedDevice } = useVideoInputs();

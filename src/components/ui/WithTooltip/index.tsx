@@ -35,7 +35,7 @@ const initialState: WithTooltipState = { show: false, bounds: null };
 
 export const WithTooltip =
   <P extends object>(
-    Component: React.ComponentType<P>,
+    Component: React.ComponentType<React.PropsWithChildren<P>>,
     container_id?: string
   ) =>
   (props: P & ToolTipProps) => {

@@ -12,7 +12,7 @@ interface Props extends BaseSdkProps {
   nameplate?: string;
 }
 
-export const ContentShare: React.FC<Props> = ({ className, ...rest }) => {
+export const ContentShare: React.FC<React.PropsWithChildren<Props>> = ({ className, ...rest }) => {
   const audioVideo = useAudioVideo();
   const { tileId } = useContentShareState();
   const videoEl = useRef<HTMLVideoElement | null>(null);

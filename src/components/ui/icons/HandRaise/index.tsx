@@ -11,7 +11,7 @@ export interface HandRaiseProps extends SvgProps {
   isRaised?: boolean;
 }
 
-const HandRaise: React.FC<HandRaiseProps> = ({ isRaised, ...rest }) => (
+const HandRaise: React.FC<React.PropsWithChildren<HandRaiseProps>> = ({ isRaised, ...rest }) => (
   <Svg {...rest}>
     {isRaised && <StyledCircle id="Circle" cx="12" cy="12" r="10" />}
     <path

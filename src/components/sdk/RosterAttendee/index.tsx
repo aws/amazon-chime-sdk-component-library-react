@@ -16,7 +16,7 @@ export interface RosterAttendeeProps
   attendeeId: string;
 }
 
-export const RosterAttendee: React.FC<RosterAttendeeProps> = ({
+export const RosterAttendee: React.FC<React.PropsWithChildren<RosterAttendeeProps>> = ({
   attendeeId,
   ...rest
 }) => {

@@ -40,7 +40,7 @@ export interface ChatBubbleContainerProps
   a11yLabel?: string;
 }
 
-export const ChatBubbleContainer: FC<ChatBubbleContainerProps> =
+export const ChatBubbleContainer: FC<React.PropsWithChildren<ChatBubbleContainerProps>> =
   React.forwardRef((props, ref: Ref<HTMLDivElement>) => {
     const {
       timestamp,

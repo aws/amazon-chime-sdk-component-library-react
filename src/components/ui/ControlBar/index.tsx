@@ -25,7 +25,7 @@ export interface ControlBarProps
   responsive?: boolean;
 }
 
-export const ControlBar: FC<ControlBarProps> = ({
+export const ControlBar: FC<React.PropsWithChildren<ControlBarProps>> = ({
   tag,
   layout,
   showLabels = false,

@@ -12,7 +12,7 @@ import Notification from '../Notification';
 import Portal from '../Portal';
 import { StyledNotificationGroup } from './Styled';
 
-export const NotificationGroup: React.FC = () => {
+export const NotificationGroup: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { notifications } = useNotificationState();
   const dispatch = useNotificationDispatch();
 

@@ -15,7 +15,7 @@ export interface RosterGroupProps extends BaseProps, FocusableProps {
   badge?: number;
 }
 
-export const RosterGroup: React.FC<RosterGroupProps> = ({
+export const RosterGroup: React.FC<React.PropsWithChildren<RosterGroupProps>> = ({
   tag,
   title,
   badge,

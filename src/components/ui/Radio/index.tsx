@@ -29,7 +29,7 @@ export interface RadioProps {
   testId?: string;
 }
 
-export const Radio: FC<RadioProps> = (props) => {
+export const Radio: FC<React.PropsWithChildren<RadioProps>> = (props) => {
   const { value, checked, label, icon, onChange, testId, ...rest } = props;
   const radioNode = useRef<HTMLInputElement>(null);
   const labelId = useUniqueId();

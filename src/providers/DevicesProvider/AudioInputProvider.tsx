@@ -28,7 +28,7 @@ interface Props {
 
 const Context = createContext<AudioInputContextType | null>(null);
 
-const AudioInputProvider: React.FC<Props> = ({
+const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   onDeviceReplacement,
 }) => {

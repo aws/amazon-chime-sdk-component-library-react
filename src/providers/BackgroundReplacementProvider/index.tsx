@@ -46,7 +46,7 @@ const BackgroundReplacementProviderContext = createContext<
   BackgroundReplacementProviderState | undefined
 >(undefined);
 
-const BackgroundReplacementProvider: FC<Props> = ({
+const BackgroundReplacementProvider: FC<React.PropsWithChildren<Props>> = ({
   spec,
   options,
   children,

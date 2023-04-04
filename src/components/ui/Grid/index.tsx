@@ -12,7 +12,7 @@ export interface GridProps extends BaseProps, SSGridProps {
   responsive?: boolean;
 }
 
-export const Grid: React.FC<GridProps> = ({
+export const Grid: React.FC<React.PropsWithChildren<GridProps>> = ({
   className,
   tag,
   children,

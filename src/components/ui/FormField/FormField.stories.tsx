@@ -59,7 +59,7 @@ interface FormFieldProps {
   placeholder?: string;
 }
 
-const TestInput: React.FC<FormFieldProps> = (props) => {
+const TestInput: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) => {
   const [name, setName] = useState('');
 
   function handleChange(evt: any) {
@@ -114,7 +114,7 @@ BasicInputFormField.argTypes = {
   ...commonHiddenArgTypes,
 };
 
-const TestSelect: React.FC<FormFieldProps> = (props) => {
+const TestSelect: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) => {
   const [value, setValue] = useState('');
   const handleChange = (e: any) => setValue(e.target.value);
 
@@ -160,7 +160,7 @@ SelectFormField.argTypes = {
   ...commonHiddenArgTypes,
 };
 
-const TestTextarea: React.FC<FormFieldProps> = (props) => {
+const TestTextarea: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) => {
   const [value, setValue] = useState('');
 
   const handleChange = (e: any) => {
@@ -211,7 +211,7 @@ TextareaFormField.argTypes = {
   ...commonHiddenArgTypes,
 };
 
-const TestRadioGroup: React.FC<FormFieldProps> = (props) => {
+const TestRadioGroup: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) => {
   const [value, setValue] = useState('');
 
   const handleChange = (evt: any) => {
@@ -258,7 +258,7 @@ RadioGroupFormField.argTypes = {
   ...commonHiddenArgTypes,
 };
 
-const TestCheckboxGroup: React.FC<{}> = (props) => {
+const TestCheckboxGroup: React.FC<React.PropsWithChildren<{}>> = (props) => {
   const [state, setState] = React.useState({
     react: false,
     angular: false,
@@ -301,7 +301,7 @@ CheckboxFormField.argTypes = {
   ...commonHiddenArgTypes,
 };
 
-const TestMixedInputs: React.FC<FormFieldProps> = (props) => {
+const TestMixedInputs: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) => {
   const [state, setState] = useState({
     firstName: '',
     lastName: '',

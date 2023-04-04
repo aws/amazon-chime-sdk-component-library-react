@@ -14,7 +14,7 @@ interface Props {
   logger: Logger;
 }
 
-export const LoggerProvider: React.FC<Props> = ({ logger, children }) => {
+export const LoggerProvider: React.FC<React.PropsWithChildren<Props>> = ({ logger, children }) => {
   return (
     <LoggerContext.Provider value={logger}>{children}</LoggerContext.Provider>
   );

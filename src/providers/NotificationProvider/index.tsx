@@ -16,7 +16,7 @@ import {
 const StateContext = React.createContext<StateType>(initialState);
 const DispatchContext = React.createContext<Dispatch<Action>>((): void => {});
 
-const NotificationProvider: React.FC = ({ children }) => {
+const NotificationProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <StateContext.Provider value={state}>

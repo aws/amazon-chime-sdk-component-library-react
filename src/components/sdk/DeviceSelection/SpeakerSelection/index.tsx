@@ -19,7 +19,7 @@ interface Props extends BaseSdkProps {
   onChange?: (selectedAudioOutputDevice: string) => void;
 }
 
-export const SpeakerSelection: React.FC<Props> = ({
+export const SpeakerSelection: React.FC<React.PropsWithChildren<Props>> = ({
   notFoundMsg = 'No speaker devices found',
   label = 'Speaker source',
   onChange,

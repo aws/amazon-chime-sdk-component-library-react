@@ -82,7 +82,7 @@ const SearchBar: any = ({ onChange, onClose, value }: any) => {
   );
 };
 
-export const RosterHeader: React.FC<RosterHeaderProps> = ({
+export const RosterHeader: React.FC<React.PropsWithChildren<RosterHeaderProps>> = ({
   tag,
   title,
   badge,

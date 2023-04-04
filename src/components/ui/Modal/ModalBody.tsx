@@ -10,7 +10,7 @@ interface ModalBodyProps
   extends Omit<HTMLAttributes<HTMLDivElement>, 'css'>,
     BaseProps {}
 
-export const ModalBody: FC<ModalBodyProps> = ({ children, ...rest }) => {
+export const ModalBody: FC<React.PropsWithChildren<ModalBodyProps>> = ({ children, ...rest }) => {
   return (
     <StyledModalBody data-testid="modal-body" {...rest}>
       {children}

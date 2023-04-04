@@ -27,7 +27,7 @@ export interface PopOverItemProps {
   testId?: string;
 }
 
-export const PopOverItem: FC<PopOverItemProps> = ({
+export const PopOverItem: FC<React.PropsWithChildren<PopOverItemProps>> = ({
   as = 'button',
   children,
   checked,

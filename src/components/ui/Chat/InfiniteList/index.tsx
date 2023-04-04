@@ -25,7 +25,7 @@ export interface InfiniteListProps
   items: ReactNode[];
 }
 
-export const InfiniteList: FC<InfiniteListProps> = (props) => {
+export const InfiniteList: FC<React.PropsWithChildren<InfiniteListProps>> = (props) => {
   const { isLoading, onLoad, items } = props;
 
   const listEnd = useRef<HTMLDivElement>(null);

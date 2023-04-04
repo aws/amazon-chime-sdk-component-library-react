@@ -15,7 +15,7 @@ export interface TextareaProps
   label: string;
 }
 
-export const Textarea: FC<TextareaProps> = React.forwardRef(
+export const Textarea: FC<React.PropsWithChildren<TextareaProps>> = React.forwardRef(
   ({ label, ...props }, ref: Ref<HTMLTextAreaElement>) => {
     return (
       <StyledTextarea

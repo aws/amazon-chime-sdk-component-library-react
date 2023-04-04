@@ -17,7 +17,7 @@ export interface ModalButtonGroupProps
   secondaryButtons?: ReactElement | ReactElement[];
 }
 
-export const ModalButtonGroup: FC<ModalButtonGroupProps> = ({
+export const ModalButtonGroup: FC<React.PropsWithChildren<ModalButtonGroupProps>> = ({
   primaryButtons,
   secondaryButtons,
   ...rest

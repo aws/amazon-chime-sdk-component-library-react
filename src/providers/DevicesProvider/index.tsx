@@ -15,7 +15,7 @@ interface Props {
   ) => Promise<AudioInputDevice>;
 }
 
-const DevicesProvider: React.FC<Props> = ({
+const DevicesProvider: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   onDeviceReplacement,
 }) => (

@@ -24,7 +24,7 @@ interface Props extends BaseSdkProps {
   unmutedIconTitle?: string;
 }
 
-const AudioInputControl: React.FC<Props> = ({
+const AudioInputControl: React.FC<React.PropsWithChildren<Props>> = ({
   muteLabel = 'Mute',
   unmuteLabel = 'Unmute',
   mutedIconTitle,

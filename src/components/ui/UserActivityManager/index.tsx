@@ -10,7 +10,7 @@ export interface Props {
   isActive?: boolean | null;
 }
 
-export const UserActivityManager: FC<Props> = ({ children }) => {
+export const UserActivityManager: FC<React.PropsWithChildren<Props>> = ({ children }) => {
   const { isUserActive } = useUserActivityState();
   return (
     <StyledUserActivityManager

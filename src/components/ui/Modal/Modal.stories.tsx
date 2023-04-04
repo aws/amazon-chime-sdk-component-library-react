@@ -38,7 +38,7 @@ const options = [
   },
 ];
 
-const TestRadioGroup: React.FC<{}> = (props) => {
+const TestRadioGroup: React.FC<React.PropsWithChildren<{}>> = (props) => {
   const [value, setValue] = useState('personal');
 
   const handleChange = (evt: any) => {
