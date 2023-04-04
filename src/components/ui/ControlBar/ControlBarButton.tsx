@@ -34,7 +34,9 @@ export interface ControlBarButtonProps
   children?: ReactNode | ReactNode[];
 }
 
-export const ControlBarButton: FC<React.PropsWithChildren<ControlBarButtonProps>> = ({
+export const ControlBarButton: FC<
+  React.PropsWithChildren<ControlBarButtonProps>
+> = ({
   icon,
   onClick,
   label,

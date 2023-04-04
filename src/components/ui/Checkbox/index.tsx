@@ -24,7 +24,9 @@ export interface StyledCheckboxProps {
   checked?: boolean;
 }
 
-export const Checkbox: FC<React.PropsWithChildren<CheckboxProps>> = (props: CheckboxProps) => {
+export const Checkbox: FC<React.PropsWithChildren<CheckboxProps>> = (
+  props: CheckboxProps
+) => {
   const { checked, onChange, value } = props;
   const checkboxNode = useRef<HTMLInputElement>(null);
 

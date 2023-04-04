@@ -17,10 +17,9 @@ interface Props extends BaseSdkProps {
   label?: string;
 }
 
-export const BackgroundBlurCheckbox: React.FC<React.PropsWithChildren<Props>> = ({
-  label = 'Blur my background',
-  ...rest
-}) => {
+export const BackgroundBlurCheckbox: React.FC<
+  React.PropsWithChildren<Props>
+> = ({ label = 'Blur my background', ...rest }) => {
   const logger = useLogger();
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
     useBackgroundBlur();

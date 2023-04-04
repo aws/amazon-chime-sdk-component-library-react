@@ -40,64 +40,65 @@ export interface ChatBubbleContainerProps
   a11yLabel?: string;
 }
 
-export const ChatBubbleContainer: FC<React.PropsWithChildren<ChatBubbleContainerProps>> =
-  React.forwardRef((props, ref: Ref<HTMLDivElement>) => {
-    const {
-      timestamp,
-      actions,
-      tooltipContainerId,
-      a11yLabel = 'Open channel options',
-      ...rest
-    } = props;
+export const ChatBubbleContainer: FC<
+  React.PropsWithChildren<ChatBubbleContainerProps>
+> = React.forwardRef((props, ref: Ref<HTMLDivElement>) => {
+  const {
+    timestamp,
+    actions,
+    tooltipContainerId,
+    a11yLabel = 'Open channel options',
+    ...rest
+  } = props;
 
-    const IconButtonWithToolTip = useMemo(
-      () => WithTooltip(IconButton, tooltipContainerId),
-      [tooltipContainerId]
-    );
+  const IconButtonWithToolTip = useMemo(
+    () => WithTooltip(IconButton, tooltipContainerId),
+    [tooltipContainerId]
+  );
 
-    const ButtonComponent = rest['data-tooltip']
-      ? IconButtonWithToolTip
-      : IconButton;
-    const buttonComponentProps = rest['data-tooltip-position']
-      ? { tooltipPosition: rest['data-tooltip-position'] }
-      : {};
+  const ButtonComponent = rest['data-tooltip']
+    ? IconButtonWithToolTip
+    : IconButton;
+  const buttonComponentProps = rest['data-tooltip-position']
+    ? { tooltipPosition: rest['data-tooltip-position'] }
+    : {};
 
-    return (
-      <StyledChatBubbleContainer
-        data-testid="chat-bubble-container"
-        ref={ref}
-        actions={actions}
-        {...rest}
-      >
-        {props.children}
-        <StyledChatBubbleInfo>
-          {timestamp && (
-            <span className="ch-timestamp" data-testid="message-time">
-              {timestamp}
-            </span>
-          )}
-          {actions && (
-            <PopOver
-              a11yLabel={a11yLabel}
-              placement="bottom-end"
-              renderButtonWrapper={(
-                isActive: boolean,
-                props: IconButtonProps
-              ) => (
-                <ButtonComponent
-                  {...buttonComponentProps}
-                  icon={<Dots width="1.5rem" height="1.5rem" />}
-                  selected={isActive}
-                  {...props}
-                  label={a11yLabel}
-                />
-              )}
-              children={actions}
-            />
-          )}
-        </StyledChatBubbleInfo>
-      </StyledChatBubbleContainer>
-    );
-  });
+  return (
+    <StyledChatBubbleContainer
+      data-testid="chat-bubble-container"
+      ref={ref}
+      actions={actions}
+      {...rest}
+    >
+      {props.children}
+      <StyledChatBubbleInfo>
+        {timestamp && (
+          <span className="ch-timestamp" data-testid="message-time">
+            {timestamp}
+          </span>
+        )}
+        {actions && (
+          <PopOver
+            a11yLabel={a11yLabel}
+            placement="bottom-end"
+            renderButtonWrapper={(
+              isActive: boolean,
+              props: IconButtonProps
+            ) => (
+              <ButtonComponent
+                {...buttonComponentProps}
+                icon={<Dots width="1.5rem" height="1.5rem" />}
+                selected={isActive}
+                {...props}
+                label={a11yLabel}
+              />
+            )}
+            children={actions}
+          />
+        )}
+      </StyledChatBubbleInfo>
+    </StyledChatBubbleContainer>
+  );
+});
 
 export default ChatBubbleContainer;

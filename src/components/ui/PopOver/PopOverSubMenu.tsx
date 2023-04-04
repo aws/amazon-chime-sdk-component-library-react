@@ -16,11 +16,9 @@ export interface PopOverSubMenuProps
   text: string;
 }
 
-export const PopOverSubMenu: FC<React.PropsWithChildren<PopOverSubMenuProps>> = ({
-  text,
-  children,
-  ...rest
-}) => {
+export const PopOverSubMenu: FC<
+  React.PropsWithChildren<PopOverSubMenuProps>
+> = ({ text, children, ...rest }) => {
   const getButtonContents = (isOpen: boolean) => {
     return (
       <>

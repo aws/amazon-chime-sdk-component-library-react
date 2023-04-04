@@ -21,7 +21,9 @@ const TILE_TRANSITION_DELAY = 1500;
 
 const FeaturedTileContext = createContext<FeaturedTileState | null>(null);
 
-const FeaturedVideoTileProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+const FeaturedVideoTileProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const meetingManager = useMeetingManager();
   const { attendeeIdToTileId } = useRemoteVideoTileState();
   const activeTileRef = useRef<number | null>(null);

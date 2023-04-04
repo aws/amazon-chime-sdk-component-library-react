@@ -32,7 +32,9 @@ export interface ChannelItemProps
   lastChannelMessageTimestamp?: string;
 }
 
-export const ChannelItem: FC<React.PropsWithChildren<ChannelItemProps>> = (props) => {
+export const ChannelItem: FC<React.PropsWithChildren<ChannelItemProps>> = (
+  props
+) => {
   const {
     name,
     actions,

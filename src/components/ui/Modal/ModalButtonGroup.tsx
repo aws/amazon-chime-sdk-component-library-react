@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { FC, HTMLAttributes, ReactElement } from 'react';
-import { useLogger } from '../../../providers/LoggerProvider';
 
+import { useLogger } from '../../../providers/LoggerProvider';
 import { BaseProps } from '../Base';
 import { useModalContext } from './ModalContext';
 import { StyledModalButtonGroup } from './Styled';
@@ -17,11 +17,9 @@ export interface ModalButtonGroupProps
   secondaryButtons?: ReactElement | ReactElement[];
 }
 
-export const ModalButtonGroup: FC<React.PropsWithChildren<ModalButtonGroupProps>> = ({
-  primaryButtons,
-  secondaryButtons,
-  ...rest
-}) => {
+export const ModalButtonGroup: FC<
+  React.PropsWithChildren<ModalButtonGroupProps>
+> = ({ primaryButtons, secondaryButtons, ...rest }) => {
   const logger = useLogger();
   const context = useModalContext();
 

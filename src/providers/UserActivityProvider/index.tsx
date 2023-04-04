@@ -14,7 +14,9 @@ export const UserActivityContext = createContext<UserActivityState | null>(
   null
 );
 
-const UserActivityProvider: FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+const UserActivityProvider: FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const ref = useRef<any>(null);
   const { isFocused } = useFocusIn(ref);
   const { isMouseMoving } = useMouseMove(ref);

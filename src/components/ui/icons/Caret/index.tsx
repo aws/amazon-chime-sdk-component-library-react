@@ -25,7 +25,10 @@ const StyledCaret = styled(Svg)<CaretProps>`
     `rotate(${dirTransform[direction || 'up']}deg)`};
 `;
 
-const Caret: React.FC<React.PropsWithChildren<CaretProps>> = ({ direction = 'up', ...rest }) => {
+const Caret: React.FC<React.PropsWithChildren<CaretProps>> = ({
+  direction = 'up',
+  ...rest
+}) => {
   return (
     <StyledCaret direction={direction} {...rest}>
       <path

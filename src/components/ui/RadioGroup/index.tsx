@@ -23,7 +23,9 @@ export interface RadioGroupProps {
   value: string;
 }
 
-export const RadioGroup: FC<React.PropsWithChildren<RadioGroupProps>> = (props) => {
+export const RadioGroup: FC<React.PropsWithChildren<RadioGroupProps>> = (
+  props
+) => {
   const { options, value, onChange } = props;
   return (
     <>

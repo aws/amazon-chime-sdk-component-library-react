@@ -10,7 +10,10 @@ interface CameraProps extends SvgProps {
   disabled?: boolean;
 }
 
-const Camera: React.FC<React.PropsWithChildren<CameraProps>> = ({ disabled = false, ...rest }) => (
+const Camera: React.FC<React.PropsWithChildren<CameraProps>> = ({
+  disabled = false,
+  ...rest
+}) => (
   <Svg {...rest}>
     {disabled ? (
       <path

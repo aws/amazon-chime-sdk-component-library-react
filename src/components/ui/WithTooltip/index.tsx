@@ -3,8 +3,8 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useLogger } from '../../../providers/LoggerProvider';
 
+import { useLogger } from '../../../providers/LoggerProvider';
 import { StyledTooltip } from './Styled';
 
 export type ToolTipPositionType = 'top' | 'bottom' | 'right' | 'left';

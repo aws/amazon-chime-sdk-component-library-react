@@ -19,7 +19,10 @@ const StyledLocalVideo = styled<any>(VideoTile)`
   ${(props) => (!props.active ? 'display: none' : '')};
 `;
 
-export const LocalVideo: React.FC<React.PropsWithChildren<Props>> = ({ nameplate, ...rest }) => {
+export const LocalVideo: React.FC<React.PropsWithChildren<Props>> = ({
+  nameplate,
+  ...rest
+}) => {
   const { tileId, isVideoEnabled } = useLocalVideo();
   const audioVideo = useAudioVideo();
   const videoEl = useRef<HTMLVideoElement>(null);

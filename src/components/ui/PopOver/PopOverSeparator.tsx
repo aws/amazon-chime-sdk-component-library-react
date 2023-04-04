@@ -10,7 +10,9 @@ export interface PopOverSeparatorProps
   extends Omit<HTMLAttributes<HTMLLIElement>, 'css'>,
     BaseProps {}
 
-export const PopOverSeparator: FC<React.PropsWithChildren<PopOverSeparatorProps>> = (props) => (
+export const PopOverSeparator: FC<
+  React.PropsWithChildren<PopOverSeparatorProps>
+> = (props) => (
   <StyledPopOverSeparator data-testid="popover-separator" {...props} />
 );
 

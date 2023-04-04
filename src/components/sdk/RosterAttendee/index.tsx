@@ -16,10 +16,9 @@ export interface RosterAttendeeProps
   attendeeId: string;
 }
 
-export const RosterAttendee: React.FC<React.PropsWithChildren<RosterAttendeeProps>> = ({
-  attendeeId,
-  ...rest
-}) => {
+export const RosterAttendee: React.FC<
+  React.PropsWithChildren<RosterAttendeeProps>
+> = ({ attendeeId, ...rest }) => {
   const { muted, videoEnabled, sharingContent } = useAttendeeStatus(attendeeId);
   const { roster } = useRosterState();
   const attendeeName = roster[attendeeId]?.name || '';

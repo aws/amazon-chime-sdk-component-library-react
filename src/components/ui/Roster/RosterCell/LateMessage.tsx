@@ -6,7 +6,9 @@ import React from 'react';
 import { Clock } from '../../icons';
 import { StyledLateMessage } from './Styled';
 
-const LateMessage: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => (
+const LateMessage: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => (
   <StyledLateMessage>
     <Clock />
     {children}

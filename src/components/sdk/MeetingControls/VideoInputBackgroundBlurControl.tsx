@@ -26,7 +26,9 @@ interface Props extends BaseSdkProps {
   backgroundBlurLabel?: string;
 }
 
-const VideoInputBackgroundBlurControl: React.FC<React.PropsWithChildren<Props>> = ({
+const VideoInputBackgroundBlurControl: React.FC<
+  React.PropsWithChildren<Props>
+> = ({
   label = 'Video',
   backgroundBlurLabel = 'Enable Background Blur',
   ...rest

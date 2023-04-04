@@ -31,10 +31,9 @@ export interface MessageAttachmentProps
   size?: string;
 }
 
-export const MessageAttachment: FC<React.PropsWithChildren<MessageAttachmentProps>> = ({
-  size = 'Unknown',
-  ...props
-}) => {
+export const MessageAttachment: FC<
+  React.PropsWithChildren<MessageAttachmentProps>
+> = ({ size = 'Unknown', ...props }) => {
   const { name, downloadUrl, renderImg, imgUrl, imgOnClick, imgOnLoad } = props;
 
   return (

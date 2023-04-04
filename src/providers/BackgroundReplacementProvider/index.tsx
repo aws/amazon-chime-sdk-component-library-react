@@ -56,9 +56,8 @@ const BackgroundReplacementProvider: FC<React.PropsWithChildren<Props>> = ({
     isBackgroundReplacementSupported,
     setIsBackgroundReplacementSupported,
   ] = useState<boolean | undefined>(undefined);
-  const [backgroundReplacementProcessor, setBackgroundReplacementProcessor] = useState<BackgroundReplacementProcessor | undefined>(
-    undefined
-  );
+  const [backgroundReplacementProcessor, setBackgroundReplacementProcessor] =
+    useState<BackgroundReplacementProcessor | undefined>(undefined);
 
   const replacementSpec = useMemoCompare(
     spec,
@@ -185,7 +184,7 @@ const BackgroundReplacementProvider: FC<React.PropsWithChildren<Props>> = ({
   const value: BackgroundReplacementProviderState = {
     createBackgroundReplacementDevice,
     isBackgroundReplacementSupported,
-    backgroundReplacementProcessor
+    backgroundReplacementProcessor,
   };
 
   return (

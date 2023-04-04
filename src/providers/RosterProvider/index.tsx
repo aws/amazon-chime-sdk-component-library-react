@@ -14,7 +14,9 @@ interface RosterContextValue {
 
 const RosterContext = React.createContext<RosterContextValue | null>(null);
 
-const RosterProvider: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => {
+const RosterProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
   const rosterRef = useRef<RosterType>({});

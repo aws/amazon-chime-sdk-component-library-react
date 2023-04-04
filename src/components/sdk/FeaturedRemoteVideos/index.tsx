@@ -15,7 +15,9 @@ interface Props
   extends BaseSdkProps,
     Omit<HTMLAttributes<HTMLDivElement>, 'css'> {}
 
-export const FeaturedRemoteVideos: FC<React.PropsWithChildren<Props>> = (props) => {
+export const FeaturedRemoteVideos: FC<React.PropsWithChildren<Props>> = (
+  props
+) => {
   const gridData = useGridData();
   const { roster } = useRosterState();
   const { tileId: featuredTileId } = useFeaturedTileState();

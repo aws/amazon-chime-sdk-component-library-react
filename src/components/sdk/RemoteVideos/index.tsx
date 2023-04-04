@@ -8,7 +8,9 @@ import { useRosterState } from '../../../providers/RosterProvider';
 import { BaseSdkProps } from '../Base';
 import { RemoteVideo } from '../RemoteVideo';
 
-export const RemoteVideos: React.FC<React.PropsWithChildren<BaseSdkProps>> = (props) => {
+export const RemoteVideos: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
+  props
+) => {
   const { roster } = useRosterState();
   const { tiles, tileIdToAttendeeId } = useRemoteVideoTileState();
 

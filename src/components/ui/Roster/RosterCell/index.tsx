@@ -61,7 +61,9 @@ function getVideoIcon(
   return null;
 }
 
-export const RosterCell: React.FC<React.PropsWithChildren<RosterCellProps>> = (props) => {
+export const RosterCell: React.FC<React.PropsWithChildren<RosterCellProps>> = (
+  props
+) => {
   const {
     tag,
     name,
