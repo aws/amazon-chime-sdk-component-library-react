@@ -6,6 +6,7 @@ import React, {
   createRef,
   FC,
   HTMLAttributes,
+  ReactNode,
   useEffect,
   useState,
 } from 'react';
@@ -37,15 +38,13 @@ export interface PopOverProps
   /** Defines the placement of PopOver menu. */
   placement?: Placement;
   /** Defines the function to render the inner contents of the popover button element */
-  renderButton?: (isActive: boolean) => {};
+  renderButton?: (isActive: boolean) => ReactNode;
   /** Alternative to renderButton, defines the function to render the full popover button element (as opposed to just its contents). This is used if you want full control over the button rendering. The button must forwardRef */
-  renderButtonWrapper?: (isActive: boolean, props: any) => {};
+  renderButtonWrapper?: (isActive: boolean, props: any) => ReactNode;
   /** The callback fired when the render button is clicked. */
   onPopOverClick?: (isOpen: boolean) => void;
   /** The label used for availability. */
   a11yLabel: string;
-  /** The elements that populate the menu */
-  children: any;
   /** Allow the popover to stay open for multiple clicks. */
   closeOnClick?: boolean;
 }
