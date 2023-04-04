@@ -10,7 +10,8 @@ module.exports = {
     reactDocgen: 'react-docgen-typescript',
     reactDocgenTypescriptOptions: {
       shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
+      propFilter: (prop) =>
+        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
     },
   },
   stories: ['../src/**/ui/FormField/*.stories.@(ts|js|tsx|mdx)'],
@@ -18,7 +19,7 @@ module.exports = {
     '@storybook/addon-controls',
     '@storybook/addon-storysource',
     '@storybook/addon-viewport',
-    'themeprovider-storybook',
+    '@storybook/addon-styling',
     '@storybook/addon-a11y',
     {
       name: '@storybook/addon-docs',
@@ -29,4 +30,5 @@ module.exports = {
       },
     },
   ],
+  framework: '@storybook/react',
 };

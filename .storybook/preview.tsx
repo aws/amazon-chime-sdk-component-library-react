@@ -1,12 +1,10 @@
 import React from 'react';
-import { createGlobalStyle } from 'styled-components';
-import { withThemesProvider } from 'themeprovider-storybook';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { withThemeFromJSXProvider } from '@storybook/addon-styling';
 
 import { GlobalStyles } from '../src/theme/GlobalStyles';
 import lightTheme from '../src/theme/light';
 import darkTheme from '../src/theme/dark';
-
-const themes = [lightTheme, darkTheme];
 
 const StorybookStyle = createGlobalStyle`
   #root {
@@ -18,17 +16,16 @@ const StorybookStyle = createGlobalStyle`
   }
 `;
 
-const withGlobalStyles = (Story: any) => (
-  <>
-    <GlobalStyles />
-    <StorybookStyle />
-    <Story />
-  </>
-);
-
 export const decorators = [
-  withGlobalStyles,
-  withThemesProvider(themes),
+  withThemeFromJSXProvider({
+    themes: {
+      light: lightTheme,
+      dark: darkTheme,
+    },
+    defaultTheme: 'light',
+    Provider: ThemeProvider,
+    GlobalStyles: GlobalStyles,
+  }),
 ];
 
 export const argTypes = {
