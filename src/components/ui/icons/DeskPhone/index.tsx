@@ -12,7 +12,7 @@ interface DeskPhoneProps extends SvgProps {
   poorConnection?: boolean;
 }
 
-const DeskPhone: React.SFC<DeskPhoneProps> = ({
+const DeskPhone: React.FC<DeskPhoneProps> = ({
   disabled = false,
   poorConnection = false,
   ...rest

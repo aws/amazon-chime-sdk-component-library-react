@@ -5,7 +5,7 @@ import React from 'react';
 
 import Svg, { SvgProps } from '../Svg';
 
-const DropToAttach: React.SFC<SvgProps> = (props) => (
+const DropToAttach: React.FC<SvgProps> = (props) => (
   <Svg {...props} viewBox="0 0 130 130">
     <path
       fill="#FFF"

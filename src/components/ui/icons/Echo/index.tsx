@@ -10,7 +10,7 @@ interface EchoProps extends SvgProps {
   poorConnection?: boolean;
 }
 
-const Echo: React.SFC<EchoProps> = ({
+const Echo: React.FC<EchoProps> = ({
   muted = false,
   poorConnection = false,
   ...rest

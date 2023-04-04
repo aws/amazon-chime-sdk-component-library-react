@@ -5,7 +5,7 @@ import React from 'react';
 
 import Svg, { SvgProps } from '../Svg';
 
-const ZoomOut: React.SFC<SvgProps> = (props) => (
+const ZoomOut: React.FC<SvgProps> = (props) => (
   <Svg {...props}>
     <g fill="none" fillRule="evenodd">
       <g>

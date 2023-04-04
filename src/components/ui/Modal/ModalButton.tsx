@@ -10,7 +10,7 @@ export interface ModalButtonProps extends ButtonProps {
   closesModal?: boolean;
 }
 
-export const ModalButton: React.SFC<ModalButtonProps> = ({
+export const ModalButton: React.FC<ModalButtonProps> = ({
   closesModal,
   ...rest
 }) => {

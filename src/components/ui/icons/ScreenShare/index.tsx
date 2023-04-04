@@ -5,7 +5,7 @@ import React from 'react';
 
 import Svg, { SvgProps } from '../Svg';
 
-const ScreenShare: React.SFC<SvgProps> = ({
+const ScreenShare: React.FC<SvgProps> = ({
   title = 'Screen share',
   ...rest
 }) => (
