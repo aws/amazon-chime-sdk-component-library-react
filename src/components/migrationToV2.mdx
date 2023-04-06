@@ -1,3 +1,5 @@
+import { Meta } from '@storybook/blocks';
+
 <Meta title="Migration to V2" />
 
 # Migration from 1.0 to 2.0
@@ -5,6 +7,7 @@
 Version 2 of the Amazon Chime React Component Library makes a small number of interface changes, as well as removing some deprecated interfaces.
 
 ### IMPORTANT - Version 2 of the library also requires a dependency to version 2.4.1 or higher of the
+
 amazon-chime-sdk-js.
 
 In many cases you should not need to adjust your application code at all. This will be the case if:
@@ -43,7 +46,7 @@ The `ChatBubble` component no longer accepts a content prop, which was previousl
 
 If your code looks like this:
 
-```
+```jsx
 <ChatBubble
   variant="incoming"
   senderName="Jane Doe"
@@ -54,7 +57,7 @@ If your code looks like this:
 
 change it to this:
 
-```
+```jsx
 <ChatBubble
   variant="incoming"
   senderName="Jane Doe"
@@ -70,13 +73,13 @@ The library now strictly enforces the type of device permission status from `str
 
 If your code looks like this:
 
-```
+```jsx
 const [permission, setPermission] = useState<string>('');
 ```
 
 change it to this:
 
-```
+```jsx
 const [permission, setPermission] = useState<DevicePermissionStatus>(
   DevicePermissionStatus.UNSET
 );
@@ -88,7 +91,7 @@ The IconButton now has its’ own positioning context to accommodate the `badge`
 
 If your code looks like this:
 
-```
+```jsx
 <Button
   variant="icon"
   css="position: absolute;"
@@ -98,7 +101,7 @@ If your code looks like this:
 
 change it to something like this:
 
-```
+```jsx
 <span style={{position: 'relative'}}>
   <Button
     variant="icon"
@@ -114,7 +117,7 @@ The NavBarItem now uses the `children` prop to render a `PopOver` instead of the
 
 If your code looks like this:
 
-```
+```jsx
 <NavBarItem
   icon={<MyIcon/>}
   onClick={myFn}
@@ -125,7 +128,7 @@ If your code looks like this:
 
 change it to something like this:
 
-```
+```jsx
 <NavBarItem
   icon={<MyIcon/>}
   onClick={myFn}

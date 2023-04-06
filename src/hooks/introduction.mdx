@@ -104,13 +104,12 @@ import {
 
 const MyVideoGrid = () => {
   const { tiles } = useRemoteVideoTileState();
-  const videos = tiles.map((tileId) => <RemoteVideo tileId={tileId} />)
+  const videos = tiles.map((tileId) => <RemoteVideo tileId={tileId} />);
 
   return (
     <div className={`grid grid--size-${tiles.length}`}>
-      { tiles.length ? videos : "No remote videos available" }
+      {tiles.length ? videos : 'No remote videos available'}
     </div>
   );
 };
-}
 ```

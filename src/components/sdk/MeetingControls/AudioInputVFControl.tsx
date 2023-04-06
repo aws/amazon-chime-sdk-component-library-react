@@ -41,7 +41,7 @@ interface Props extends BaseSdkProps {
   voiceFocusOffLabel?: string;
 }
 
-const AudioInputVFControl: React.FC<React.PropsWithChildren<Props>> = ({
+export const AudioInputVFControl: React.FC<React.PropsWithChildren<Props>> = ({
   muteLabel = 'Mute',
   unmuteLabel = 'Unmute',
   mutedIconTitle,

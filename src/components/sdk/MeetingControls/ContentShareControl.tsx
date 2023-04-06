@@ -21,7 +21,7 @@ interface Props extends BaseSdkProps {
   iconTitle?: string;
 }
 
-const ContentShareControl: React.FC<React.PropsWithChildren<Props>> = ({
+export const ContentShareControl: React.FC<React.PropsWithChildren<Props>> = ({
   label = 'Content',
   pauseLabel = 'Pause',
   unpauseLabel = 'Unpause',

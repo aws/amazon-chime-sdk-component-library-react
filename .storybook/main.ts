@@ -1,5 +1,4 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
-
 const config: StorybookConfig = {
   typescript: {
     check: false,
@@ -11,10 +10,7 @@ const config: StorybookConfig = {
         prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
     },
   },
-  stories: [
-    '../src/**/ui/Badge/*.mdx',
-    '../src/**/ui/Badge/*.stories.@(ts|js|tsx|mdx)',
-  ],
+  stories: ['../src/components/sdk/**/*.mdx', '../src/components/*.mdx'],
   addons: [
     {
       name: '@storybook/addon-essentials',

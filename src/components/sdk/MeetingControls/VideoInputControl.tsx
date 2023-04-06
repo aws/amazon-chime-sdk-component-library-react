@@ -18,7 +18,7 @@ interface Props extends BaseSdkProps {
   label?: string;
 }
 
-const VideoInputControl: React.FC<React.PropsWithChildren<Props>> = ({
+export const VideoInputControl: React.FC<React.PropsWithChildren<Props>> = ({
   label = 'Video',
   ...rest
 }) => {
