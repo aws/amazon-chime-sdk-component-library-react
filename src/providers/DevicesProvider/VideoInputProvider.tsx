@@ -17,7 +17,7 @@ import { useMeetingManager } from '../MeetingProvider';
 
 const Context = createContext<VideoInputContextType | null>(null);
 
-const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const logger = useLogger();
@@ -89,7 +89,7 @@ const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
-const useVideoInputs = (): VideoInputContextType => {
+export const useVideoInputs = (): VideoInputContextType => {
   const context = useContext(Context);
 
   if (!context) {
@@ -98,5 +98,3 @@ const useVideoInputs = (): VideoInputContextType => {
 
   return context;
 };
-
-export { VideoInputProvider, useVideoInputs };

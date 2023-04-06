@@ -16,9 +16,9 @@ import {
 const StateContext = React.createContext<StateType>(initialState);
 const DispatchContext = React.createContext<Dispatch<Action>>((): void => {});
 
-const NotificationProvider: React.FC<React.PropsWithChildren<unknown>> = ({
-  children,
-}) => {
+export const NotificationProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
   return (
     <StateContext.Provider value={state}>
@@ -29,22 +29,14 @@ const NotificationProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   );
 };
 
-const useNotificationState = () => {
+export const useNotificationState = () => {
   const state = useContext(StateContext);
   return state;
 };
 
-const useNotificationDispatch = () => {
+export const useNotificationDispatch = () => {
   const dispatch = useContext(DispatchContext);
   return dispatch;
 };
 
-export {
-  NotificationProvider,
-  useNotificationState,
-  useNotificationDispatch,
-  Severity,
-  NotificationType,
-  ActionType,
-  Action,
-};
+export { Severity, NotificationType, ActionType, Action };

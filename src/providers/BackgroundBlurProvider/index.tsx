@@ -46,7 +46,7 @@ const BackgroundBlurProviderContext = createContext<
   BackgroundBlurProviderState | undefined
 >(undefined);
 
-const BackgroundBlurProvider: FC<React.PropsWithChildren<Props>> = ({
+export const BackgroundBlurProvider: FC<React.PropsWithChildren<Props>> = ({
   spec,
   options,
   children,
@@ -193,7 +193,7 @@ const BackgroundBlurProvider: FC<React.PropsWithChildren<Props>> = ({
   );
 };
 
-const useBackgroundBlur = (): BackgroundBlurProviderState => {
+export const useBackgroundBlur = (): BackgroundBlurProviderState => {
   const context = useContext(BackgroundBlurProviderContext);
 
   if (!context) {
@@ -203,5 +203,3 @@ const useBackgroundBlur = (): BackgroundBlurProviderState => {
   }
   return context;
 };
-
-export { BackgroundBlurProvider, useBackgroundBlur };

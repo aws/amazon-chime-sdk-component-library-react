@@ -28,7 +28,7 @@ interface Props {
 
 const Context = createContext<AudioInputContextType | null>(null);
 
-const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
+export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   onDeviceReplacement,
 }) => {
@@ -156,7 +156,7 @@ const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
-const useAudioInputs = (): AudioInputContextType => {
+export const useAudioInputs = (): AudioInputContextType => {
   const context = useContext(Context);
 
   if (!context) {
@@ -165,5 +165,3 @@ const useAudioInputs = (): AudioInputContextType => {
 
   return context;
 };
-
-export { AudioInputProvider, useAudioInputs };

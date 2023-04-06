@@ -9,9 +9,9 @@ import { initialState, reducer, State, VideoTileActionType } from './state';
 
 const Context = createContext<State | null>(null);
 
-const RemoteVideoTileProvider: React.FC<React.PropsWithChildren<unknown>> = ({
-  children,
-}) => {
+export const RemoteVideoTileProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const audioVideo = useAudioVideo();
   const [state, dispatch] = useReducer(reducer, initialState);
 
@@ -63,7 +63,7 @@ const RemoteVideoTileProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   return <Context.Provider value={state}>{children}</Context.Provider>;
 };
 
-const useRemoteVideoTileState = (): State => {
+export const useRemoteVideoTileState = (): State => {
   const state = useContext(Context);
 
   if (!state) {
@@ -74,5 +74,3 @@ const useRemoteVideoTileState = (): State => {
 
   return state;
 };
-
-export { RemoteVideoTileProvider, useRemoteVideoTileState };

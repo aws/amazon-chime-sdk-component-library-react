@@ -16,9 +16,9 @@ type MeetingEventProviderContextType =
 export const MeetingEventProviderContext =
   createContext<MeetingEventProviderContextType>(undefined);
 
-const MeetingEventProvider: React.FC<React.PropsWithChildren<unknown>> = ({
-  children,
-}) => {
+export const MeetingEventProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const [meetingEvent, setMeetingEvent] =
     useState<MeetingEventProviderContextType>();
   const meetingManager = useMeetingManager();
@@ -45,9 +45,7 @@ const MeetingEventProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   );
 };
 
-const useMeetingEvent = (): MeetingEventProviderContextType => {
+export const useMeetingEvent = (): MeetingEventProviderContextType => {
   const meetingEvent = useContext(MeetingEventProviderContext);
   return meetingEvent;
 };
-
-export { useMeetingEvent, MeetingEventProvider };

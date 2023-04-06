@@ -46,11 +46,9 @@ const BackgroundReplacementProviderContext = createContext<
   BackgroundReplacementProviderState | undefined
 >(undefined);
 
-const BackgroundReplacementProvider: FC<React.PropsWithChildren<Props>> = ({
-  spec,
-  options,
-  children,
-}) => {
+export const BackgroundReplacementProvider: FC<
+  React.PropsWithChildren<Props>
+> = ({ spec, options, children }) => {
   const logger = useLogger();
   const [
     isBackgroundReplacementSupported,
@@ -194,16 +192,15 @@ const BackgroundReplacementProvider: FC<React.PropsWithChildren<Props>> = ({
   );
 };
 
-const useBackgroundReplacement = (): BackgroundReplacementProviderState => {
-  const context = useContext(BackgroundReplacementProviderContext);
+export const useBackgroundReplacement =
+  (): BackgroundReplacementProviderState => {
+    const context = useContext(BackgroundReplacementProviderContext);
 
-  if (!context) {
-    throw new Error(
-      'useBackgroundReplacement must be used within BackgroundReplacementProvider'
-    );
-  }
+    if (!context) {
+      throw new Error(
+        'useBackgroundReplacement must be used within BackgroundReplacementProvider'
+      );
+    }
 
-  return context;
-};
-
-export { BackgroundReplacementProvider, useBackgroundReplacement };
+    return context;
+  };

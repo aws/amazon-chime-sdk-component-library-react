@@ -37,7 +37,7 @@ interface VoiceFocusState {
 
 const VoiceFocusContext = createContext<VoiceFocusState | null>(null);
 
-const VoiceFocusProvider: React.FC<React.PropsWithChildren<Props>> = ({
+export const VoiceFocusProvider: React.FC<React.PropsWithChildren<Props>> = ({
   spec,
   options,
   createMeetingResponse,
@@ -161,7 +161,7 @@ const VoiceFocusProvider: React.FC<React.PropsWithChildren<Props>> = ({
         setVoiceFocusDevice(null);
         setIsVoiceFocusSupported(transformer && transformer.isSupported());
       })
-      .catch((e) => {
+      .catch(() => {
         if (canceled()) {
           return;
         }
@@ -180,7 +180,7 @@ const VoiceFocusProvider: React.FC<React.PropsWithChildren<Props>> = ({
     options: VoiceFocusDeviceOptions | undefined,
     canceled: () => boolean,
     createMeetingResponse: JoinMeetingInfo | undefined
-  ) {
+  ): Promise<void> {
     // Throw away the old one and reinitialize.
     voiceFocusDevice?.stop();
     if (voiceFocusTransformer) {
@@ -262,7 +262,7 @@ const VoiceFocusProvider: React.FC<React.PropsWithChildren<Props>> = ({
   );
 };
 
-const useVoiceFocus = (): VoiceFocusState => {
+export const useVoiceFocus = (): VoiceFocusState => {
   const context = useContext(VoiceFocusContext);
 
   if (!context) {
@@ -270,5 +270,3 @@ const useVoiceFocus = (): VoiceFocusState => {
   }
   return context;
 };
-
-export { VoiceFocusProvider, useVoiceFocus };

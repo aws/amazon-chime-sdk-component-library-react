@@ -15,7 +15,7 @@ interface Props {
   ) => Promise<AudioInputDevice>;
 }
 
-const DevicesProvider: React.FC<React.PropsWithChildren<Props>> = ({
+export const DevicesProvider: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   onDeviceReplacement,
 }) => (
@@ -26,4 +26,4 @@ const DevicesProvider: React.FC<React.PropsWithChildren<Props>> = ({
   </AudioInputProvider>
 );
 
-export { DevicesProvider, useAudioInputs, useAudioOutputs, useVideoInputs };
+export { useAudioInputs, useAudioOutputs, useVideoInputs };

@@ -14,7 +14,7 @@ interface RosterContextValue {
 
 const RosterContext = React.createContext<RosterContextValue | null>(null);
 
-const RosterProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+export const RosterProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const meetingManager = useMeetingManager();
@@ -106,7 +106,7 @@ const RosterProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   );
 };
 
-function useRosterState(): RosterContextValue {
+export function useRosterState(): RosterContextValue {
   const state = useContext(RosterContext);
 
   if (!state) {
@@ -115,5 +115,3 @@ function useRosterState(): RosterContextValue {
 
   return state;
 }
-
-export { RosterProvider, useRosterState };

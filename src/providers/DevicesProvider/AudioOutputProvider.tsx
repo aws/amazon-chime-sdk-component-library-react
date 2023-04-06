@@ -17,9 +17,9 @@ import { useMeetingManager } from '../MeetingProvider';
 
 const AudioOutputContext = createContext<AudioOutputContextType | null>(null);
 
-const AudioOutputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
-  children,
-}) => {
+export const AudioOutputProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const logger = useLogger();
   const audioVideo = useAudioVideo();
   const [audioOutputs, setAudioOutputs] = useState<MediaDeviceInfo[]>([]);
@@ -93,7 +93,7 @@ const AudioOutputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   );
 };
 
-const useAudioOutputs = (): AudioOutputContextType => {
+export const useAudioOutputs = (): AudioOutputContextType => {
   const context = useContext(AudioOutputContext);
 
   if (!context) {
@@ -102,5 +102,3 @@ const useAudioOutputs = (): AudioOutputContextType => {
 
   return context;
 };
-
-export { AudioOutputProvider, useAudioOutputs };

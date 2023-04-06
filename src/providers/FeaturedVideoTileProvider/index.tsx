@@ -21,9 +21,9 @@ const TILE_TRANSITION_DELAY = 1500;
 
 const FeaturedTileContext = createContext<FeaturedTileState | null>(null);
 
-const FeaturedVideoTileProvider: React.FC<React.PropsWithChildren<unknown>> = ({
-  children,
-}) => {
+export const FeaturedVideoTileProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const meetingManager = useMeetingManager();
   const { attendeeIdToTileId } = useRemoteVideoTileState();
   const activeTileRef = useRef<number | null>(null);
@@ -101,7 +101,7 @@ const FeaturedVideoTileProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   );
 };
 
-function useFeaturedTileState(): FeaturedTileState {
+export function useFeaturedTileState(): FeaturedTileState {
   const state = useContext(FeaturedTileContext);
 
   if (!state) {
@@ -112,5 +112,3 @@ function useFeaturedTileState(): FeaturedTileState {
 
   return state;
 }
-
-export { FeaturedVideoTileProvider, useFeaturedTileState };
