@@ -1,3 +1,5 @@
+import { Meta } from '@storybook/blocks';
+
 <Meta title="SDK Hooks/useDeviceLabelTriggerStatus" />
 
 # useDeviceLabelTriggerStatus
@@ -16,6 +18,7 @@ enum DeviceLabelTriggerStatus {
 ```
 
 `DeviceLabelTriggerStatus.UNTRIGGERED` could mean three cases:
+
 1. `DeviceLabelTrigger` is not triggered to request device permission.
 2. Device permission is already granted before and thus `DeviceLabelTrigger` can not be triggered.
 3. Device permission is already denied before and thus `DeviceLabelTrigger` can not be triggered.

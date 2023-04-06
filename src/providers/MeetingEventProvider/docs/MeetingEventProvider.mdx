@@ -1,5 +1,4 @@
-import { Meta, ArgTypes } from '@storybook/blocks';
-import { MeetingEventProvider } from '../';
+import { Meta } from '@storybook/blocks';
 
 <Meta title="SDK Providers/MeetingEventProvider" />
 
@@ -23,7 +22,10 @@ If you are using `MeetingProvider`, the `MeetingEventProvider` is rendered by de
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useMeetingEvent } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useMeetingEvent,
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -39,4 +41,5 @@ const MeetingEventReceiver = () => {
 ```
 
 ### Dependencies
+
 - [MeetingProvider](/story/sdk-providers-meetingprovider--page)

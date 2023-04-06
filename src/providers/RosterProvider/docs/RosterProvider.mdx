@@ -1,3 +1,5 @@
+import { Meta } from '@storybook/blocks';
+
 <Meta title="SDK Providers/RosterProvider" />
 
 # RosterProvider
@@ -8,13 +10,14 @@ The `RosterProvider` provides the state of the roster. You must provide the `Mee
 
 ```javascript
 {
- [AttendeeId: string]: {
-   chimeAttendeeId: string;
-   externalUserId?: string;
-   name?: string;
- }
+  [AttendeeId: string]: {
+    chimeAttendeeId: string;
+    externalUserId?: string;
+    name?: string;
+  }
 }
 ```
+
 You can access the state by using the [useRosterState](/docs/sdk-hooks-userosterstate--page) hook.
 
 ## Usage
@@ -28,7 +31,7 @@ import {
   useRosterState,
   Roster,
   RosterGroup,
-  RosterAttendee
+  RosterAttendee,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -41,7 +44,7 @@ const MyChild = () => {
   const { roster } = useRosterState();
   const attendees = Object.values(roster);
 
-  const attendeeItems = attendees.map(attendee => {
+  const attendeeItems = attendees.map((attendee) => {
     const { chimeAttendeeId, name } = attendee;
     return (
       <RosterAttendee key={chimeAttendeeId} attendeeId={chimeAttendeeId} />

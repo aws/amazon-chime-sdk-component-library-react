@@ -1,3 +1,5 @@
+import { Meta } from '@storybook/blocks';
+
 <Meta title="UI Hooks/Notification/useNotificationDispatch" />
 
 # useNotificationDispatch
@@ -42,7 +44,7 @@ import React from 'react';
 import {
   NotificationProvider,
   useNotificationDispatch,
-  NotificationGroup
+  NotificationGroup,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -57,13 +59,13 @@ const AddNotificationButton = () => {
 
   const payload: any = {
     severity: Severity.INFO,
-    message: 'Information'
+    message: 'Information',
   };
 
   const addNotification = (e: any) => {
     dispatch({
       type: ActionType.ADD,
-      payload: payload
+      payload: payload,
     });
   };
 

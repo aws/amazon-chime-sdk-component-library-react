@@ -1,3 +1,5 @@
+import { Meta } from '@storybook/blocks';
+
 <Meta title="SDK Hooks/useRosterState" />
 
 # useRosterState
@@ -10,11 +12,11 @@ You have to provide the `MeetingManager` with a `getAttendee` function in order 
 
 ```javascript
 {
- [AttendeeId: string]: {
-   chimeAttendeeId: string;
-   externalUserId?: string;
-   name?: string;
- }
+  [AttendeeId: string]: {
+    chimeAttendeeId: string;
+    externalUserId?: string;
+    name?: string;
+  }
 }
 ```
 
@@ -35,7 +37,7 @@ import {
   useRosterState,
   Roster,
   RosterGroup,
-  RosterAttendee
+  RosterAttendee,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -48,7 +50,7 @@ const MyChild = () => {
   const { roster } = useRosterState();
   const attendees = Object.values(roster);
 
-  const attendeeItems = attendees.map(attendee => {
+  const attendeeItems = attendees.map((attendee) => {
     const { chimeAttendeeId, name } = attendee;
     return (
       <RosterAttendee key={chimeAttendeeId} attendeeId={chimeAttendeeId} />

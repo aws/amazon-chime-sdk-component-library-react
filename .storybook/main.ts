@@ -10,7 +10,12 @@ const config: StorybookConfig = {
         prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
     },
   },
-  stories: ['../src/components/sdk/**/*.mdx', '../src/components/*.mdx'],
+  stories: [
+    '../src/components/sdk/**/*.mdx',
+    '../src/components/*.mdx',
+    '../src/hooks/**/*.mdx',
+    '../src/providers/**/*.mdx',
+  ],
   addons: [
     {
       name: '@storybook/addon-essentials',

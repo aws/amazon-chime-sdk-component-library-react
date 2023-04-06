@@ -1,3 +1,5 @@
+import { Meta } from '@storybook/blocks';
+
 <Meta title="SDK Hooks/useMeetingEvent" />
 
 # useMeetingEvent
@@ -8,6 +10,7 @@ Please note that the `MeetingEventProvider` provides only the latest meeting eve
 ### Return Value
 
 Return value will be `undefined` unless any Amazon Chime SDK meeting event is received.
+
 > Note: [EventName](https://aws.github.io/amazon-chime-sdk-js/globals.html#eventname) and [EventAttributes](https://aws.github.io/amazon-chime-sdk-js/interfaces/eventattributes.html) are types from [Amazon Chime SDK for JavaScript](https://github.com/aws/amazon-chime-sdk-js).
 
 ```typescript
@@ -29,7 +32,10 @@ This hook depends on the `MeetingEventProvider`.
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useMeetingEvent } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useMeetingEvent,
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -45,5 +51,6 @@ const MeetingEventReceiver = () => {
 ```
 
 ### Dependencies
+
 - [MeetingProvider](/story/sdk-providers-meetingprovider--page)
 - [MeetingEventProvider](/story/sdk-providers-meetingeventprovider--page)

@@ -1,3 +1,6 @@
+import { Meta, ArgTypes } from '@storybook/blocks';
+import { AudioInputProvider } from '../AudioInputProvider.tsx';
+
 <Meta title="SDK Providers/AudioInputProvider" />
 
 # AudioInputProvider
@@ -23,18 +26,22 @@ The `AudioInputProvider` provides a list of the user's available audio input dev
 NOTE:
 
 1. In Chrome, there is a "default" device which can used as the current audio input device. When a new device is added during the
-meeting, the new device will become the current audio input device also the new "default" device. If you want to get this device change,
-it would be better to use `devices`. When a new "default" device is added, the `devices` list will have changed. We suggest you to
-watch for changes to `devices[0]` - this will indicate when the "default" device has changed. `selectedDevice` will not be updated when
-switching to a new audio device since it stands for the deviceId, and the value of deviceId remains the same, still being `default`.
-The deviceId that was previously in use was `default`. When you switch to a new device, that device becomes "default" device. Since the old
-deviceId was `default` and the new deviceId is still `default`, so `selectedDevice` does not change. But actually they correspond to different physical devices.
+   meeting, the new device will become the current audio input device also the new "default" device. If you want to get this device change,
+   it would be better to use `devices`. When a new "default" device is added, the `devices` list will have changed. We suggest you to
+   watch for changes to `devices[0]` - this will indicate when the "default" device has changed. `selectedDevice` will not be updated when
+   switching to a new audio device since it stands for the deviceId, and the value of deviceId remains the same, still being `default`.
+   The deviceId that was previously in use was `default`. When you switch to a new device, that device becomes "default" device. Since the old
+   deviceId was `default` and the new deviceId is still `default`, so `selectedDevice` does not change. But actually they correspond to different physical devices.
 
 2. If you are joining a meeting with `DeviceLabels.None` or overriding the default device label trigger function (Check "Get Device Permissions From the Browser" under the [quickstarts](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/quick-starts--page) for more information),
-then, the `AudioInputProvider` will not automatically select an audio input device when audio input device list changes. To keep the auto-selection of the audio input device on audio input changes,
-you have to either provide `DeviceLabels.Audio` or `DeviceLabels.AudioVideo` to `meetingManager.join` API or `meetingManager.invokeDeviceProvider` API.
+   then, the `AudioInputProvider` will not automatically select an audio input device when audio input device list changes. To keep the auto-selection of the audio input device on audio input changes,
+   you have to either provide `DeviceLabels.Audio` or `DeviceLabels.AudioVideo` to `meetingManager.join` API or `meetingManager.invokeDeviceProvider` API.
 
 You can access the state by using the [useAudioInputs](/docs/sdk-hooks-useaudioinputs--page) hook.
+
+## Props
+
+<ArgTypes of={AudioInputProvider} />
 
 ## Importing
 
@@ -67,7 +74,9 @@ const MyChild = () => {
 
   return (
     <div>
-      <p>Current Selected Audio Input Device: {JSON.stringify(selectedDevice)}</p>
+      <p>
+        Current Selected Audio Input Device: {JSON.stringify(selectedDevice)}
+      </p>
       <p>Devices</p>
       <ul>{items}</ul>
     </div>

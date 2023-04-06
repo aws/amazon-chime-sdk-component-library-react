@@ -1,5 +1,7 @@
 import useToggleLocalMute from '../useToggleLocalMute';
 
+import { Meta } from '@storybook/blocks';
+
 <Meta title="SDK Hooks/useToggleLocalMute" />
 
 # useToggleLocalMute
@@ -14,7 +16,7 @@ The `useToggleLocalMute` hook returns the state of whether the local user is mut
   muted: boolean;
 
   // A function to toggle the local user's mute state
- toggleMute: () => void;
+  toggleMute: () => void;
 }
 ```
 
@@ -30,7 +32,10 @@ The hook depends on the `AudioVideoProvider`. If you are using `MeetingProvider`
 
 ```jsx
 import React from 'react';
-import { MeetingProvider, useToggleLocalMute } from 'amazon-chime-sdk-component-library-react';
+import {
+  MeetingProvider,
+  useToggleLocalMute,
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
@@ -42,11 +47,9 @@ const MyChild = () => {
   const { muted, toggleMute } = useToggleLocalMute();
 
   return (
-    <button onClick={toggleMute}>
-      { muted ? 'Umute myself' : 'Mute}
-    </button>
-  )
-}
+    <button onClick={toggleMute}>{muted ? 'Unmute myself' : 'Mute'}</button>
+  );
+};
 ```
 
 ### Dependencies

@@ -1,3 +1,5 @@
+import { Meta } from '@storybook/blocks';
+
 <Meta title="SDK Hooks/useActiveSpeakersState" />
 
 # useActiveSpeakersState
@@ -29,7 +31,7 @@ The hook depends on the `MeetingProvider`.
 import React from 'react';
 import {
   MeetingProvider,
-  useActiveSpeakersState
+  useActiveSpeakersState,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -40,7 +42,7 @@ const App = () => (
 
 const MyChild = () => {
   const activeSpeakers = useActiveSpeakersState();
-  const list = activeSpeakers.map(id => (
+  const list = activeSpeakers.map((id) => (
     <li>Attendee {id} is an active speaker</li>
   ));
 

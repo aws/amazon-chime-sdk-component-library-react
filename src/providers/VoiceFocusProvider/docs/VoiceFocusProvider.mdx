@@ -23,9 +23,9 @@ as any component which relies on `VoiceFocusProvider` is nested within `VoiceFoc
   isVoiceFocusSupported: boolean | undefined;
 
   // A function to transform an audio input device to an Amazon Voice Focus device.
-  addVoiceFocus: (device: Device) => Promise<Device | VoiceFocusTransformDevice>;
+  addVoiceFocus: (device: Device) =>
+    Promise<Device | VoiceFocusTransformDevice>;
 }
-
 ```
 
 You should see either "Amazon Voice Focus is supported." or "Amazon Voice Focus is not supported." in your browser developer tools based on whether
@@ -45,8 +45,9 @@ import { VoiceFocusProvider } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Usage
-`joinInfo` here is the response of [CreateMeeting](https://docs.aws.amazon.com/chime-sdk/latest/APIReference/API_CreateMeeting.html) 
-from  [Amazon Chime SDK Meetings endpoint](https://docs.aws.amazon.com/chime-sdk/latest/dg/meeting-namespace-migration.html).
+
+`joinInfo` here is the response of [CreateMeeting](https://docs.aws.amazon.com/chime-sdk/latest/APIReference/API_CreateMeeting.html)
+from [Amazon Chime SDK Meetings endpoint](https://docs.aws.amazon.com/chime-sdk/latest/dg/meeting-namespace-migration.html).
 `joinInfo` is needed here so as to decide whether download Voice Focus or Echo Reduction model according to `CreatingMeetingResponse`.
 
 ```jsx
@@ -71,7 +72,7 @@ function voiceFocusName(name: string): VoiceFocusModelName {
 
 function getVoiceFocusSpecName(): VoiceFocusModelName {
   if (
-    joinInfo && 
+    joinInfo &&
     joinInfo.Meeting?.MeetingFeatures?.Audio?.EchoReduction === 'AVAILABLE'
   ) {
     return voiceFocusName('ns_es');
@@ -86,12 +87,13 @@ const vfConfigValue = {
 
 const App = () => {
   return (
-  <VoiceFocusProvider {...vfConfigValue}>
-    <MeetingProvider>
-      <MyChild />
-    </MeetingProvider>
-  </VoiceFocusProvider>
-);
+    <VoiceFocusProvider {...vfConfigValue}>
+      <MeetingProvider>
+        <MyChild />
+      </MeetingProvider>
+    </VoiceFocusProvider>
+  );
+};
 
 const MyChild = () => {
   const meetingManager = useMeetingManager();

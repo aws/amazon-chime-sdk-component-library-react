@@ -1,10 +1,12 @@
+import { Meta } from '@storybook/blocks';
+
 <Meta title="SDK Providers/FeaturedVideoTileProvider" />
 
 # FeaturedVideoTileProvider
 
 The `FeaturedVideoTileProvider` provides the tile ID of the **most** active speaker, if the speaker is sharing video. If there are no active speakers, or the active speaker is not sharing video, there will be no tile ID.
 
-### State
+## State
 
 ```javascript
 {
@@ -22,7 +24,7 @@ If you are using `MeetingProvider`, the `FeaturedVideoTileProvider` is rendered 
 import React from 'react';
 import {
   MeetingProvider,
-  useFeaturedTileState
+  useFeaturedTileState,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -49,7 +51,7 @@ import React from 'react';
 import {
   RemoteVideoTileProvider,
   ActiveSpeakersProvider,
-  FeaturedVideoTileProvider
+  FeaturedVideoTileProvider,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (

@@ -1,3 +1,5 @@
+import { Meta } from '@storybook/blocks';
+
 <Meta title="SDK Hooks/useRemoteVideoTileState" />
 
 # useRemoteVideoTileState
@@ -41,7 +43,7 @@ import React from 'react';
 import {
   MeetingProvider,
   useRemoteVideoTileState,
-  RemoteVideo
+  RemoteVideo,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -53,7 +55,7 @@ const App = () => (
 const MyChild = () => {
   const { tiles } = useRemoteVideoTileState();
 
-  const videos = tiles.map(tileId => <RemoteVideo tileId={tileId} />);
+  const videos = tiles.map((tileId) => <RemoteVideo tileId={tileId} />);
 
   return <>{videos}</>;
 };
