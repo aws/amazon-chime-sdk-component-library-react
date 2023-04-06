@@ -6,15 +6,6 @@ import { GlobalStyles } from '../src/theme/GlobalStyles';
 import lightTheme from '../src/theme/light';
 import darkTheme from '../src/theme/dark';
 
-const StorybookStyle = createGlobalStyle`
-  #root {
-    height: 100vh;
-  }
-
-  .sb-show-main {
-    padding: 0 !important;
-  }
-`;
 
 export const decorators = [
   withThemeFromJSXProvider({

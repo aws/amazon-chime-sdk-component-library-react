@@ -1,10 +1,19 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
-import { ThemeProvider } from 'styled-components';
+import {
+  Canvas,
+  Meta,
+  Story,
+  Controls,
+  ArgTypes,
+  ArgsTable,
+} from '@storybook/blocks';
+import * as BadgeStories from './Badge.stories.tsx';
 
 import { Badge } from './';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
 import { Lock } from '../icons';
+
+<Meta of={BadgeStories} />
 
 # Badge
 
@@ -18,19 +27,10 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
 
 ## Example
 
-<ThemeProvider theme={lightTheme}>
-  <GlobalStyles />
-  <Preview>
-    <div style={{ alignItems: 'center', display: 'flex' }}>
-      <span style={{ marginRight: '0.5rem' }}>Number of new messages</span>
-      <Badge value="50+" status="default" />
-    </div>
-    <div style={{ marginLeft: '1rem', display: 'flex' }}>
-      <span style={{ marginRight: '0.5rem' }}>Lock badge</span>
-      <Badge value={<Lock />} />
-    </div>
-  </Preview>
-</ThemeProvider>
+<Canvas>
+  <Story of={BadgeStories.BasicBadge} />
+  <Story of={BadgeStories.IconBadge} />
+</Canvas>
 
 ```jsx
 <Badge
@@ -47,19 +47,8 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
 
 ### Using Alert Status
 
-<ThemeProvider theme={lightTheme}>
-  <GlobalStyles />
-  <Preview>
-    <div style={{ alignItems: 'center', display: 'flex' }}>
-      <span style={{ marginRight: '0.5rem' }}>Number of new messages</span>
-      <Badge value="50+" status="alert" />
-    </div>
-    <div style={{ marginLeft: '1rem', display: 'flex' }}>
-      <span style={{ marginRight: '0.5rem' }}>Lock badge</span>
-      <Badge value={<Lock />} />
-    </div>
-  </Preview>
-</ThemeProvider>
+<Canvas of={BadgeStories.BasicBadge} />
+<Canvas of={BadgeStories.IconBadge} />
 
 ```jsx
 <Badge
@@ -76,4 +65,4 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Badge} />
+<ArgsTable />

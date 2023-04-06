@@ -28,32 +28,53 @@
     "plugin:prettier/recommended",
     "eslint:recommended",
     "plugin:react/recommended",
-    "prettier"
+    "prettier",
+    "plugin:storybook/recommended"
   ],
   "rules": {
     // Best Practices
     "no-var": "error",
-    "prefer-const" : "error",
+    "prefer-const": "error",
     "no-eval": "error",
-    "max-len": ["error", { "code": 120 }],
-    "semi": ["error", "always"],
-    "eqeqeq": ["error", "always"],
-    "indent": ["error", 2, { "SwitchCase": 1 }],
+    "max-len": [
+      "error",
+      {
+        "code": 120
+      }
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "eqeqeq": [
+      "error",
+      "always"
+    ],
+    "indent": [
+      "error",
+      2,
+      {
+        "SwitchCase": 1
+      }
+    ],
     "simple-import-sort/imports": "error",
-
     // Stylistic Issues
     "no-trailing-spaces": "error",
     "brace-style": "error",
-    "spaced-comment": ["error", "always"],
-    "eol-last": ["error", "always"],
-
+    "spaced-comment": [
+      "error",
+      "always"
+    ],
+    "eol-last": [
+      "error",
+      "always"
+    ],
     // React
     "react/prop-types": "off",
     "react/display-name": "off",
     "react/react-in-jsx-scope": "off",
     "react-hooks/rules-of-hooks": "error", // Checks rules of Hooks
     "react-hooks/exhaustive-deps": "warn", // Checks effect dependencies
-
     //TypeScript
     "@typescript-eslint/ban-ts-comment": "off",
     "@typescript-eslint/no-empty-function": "off",

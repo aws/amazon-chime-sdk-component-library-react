@@ -9,11 +9,6 @@ import { Information, Lock, Pin } from '../icons';
 
 export default {
   title: 'UI Components/Badge',
-  parameters: {
-    docs: {
-      page: mdx.parameters.docs.page().props.children.type,
-    },
-  },
   component: Badge,
 };
 
@@ -54,7 +49,7 @@ export const IconBadge = (args) => {
 };
 
 IconBadge.args = {
-  value: <Lock />,
+  value: 'lock',
   status: 'default',
 };
 
