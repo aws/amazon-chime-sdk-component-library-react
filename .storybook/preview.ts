@@ -1,11 +1,9 @@
-import React from 'react';
-import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 import { withThemeFromJSXProvider } from '@storybook/addon-styling';
 
 import { GlobalStyles } from '../src/theme/GlobalStyles';
 import lightTheme from '../src/theme/light';
 import darkTheme from '../src/theme/dark';
-
 
 export const decorators = [
   withThemeFromJSXProvider({
@@ -24,4 +22,9 @@ export const argTypes = {
   id: { table: { disable: true } },
   className: { table: { disable: true } },
   css: { table: { disable: true } },
+  testId: { table: { disable: true } }, 
+};
+
+export const parameters = {
+  layout: 'centered',
 };

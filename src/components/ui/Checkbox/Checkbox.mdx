@@ -1,9 +1,11 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
-
+import * as CheckboxStories from './Checkbox.stories.tsx';
 import Checkbox from './';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+
+<Meta of={CheckboxStories} />
 
 # Checkbox
 
@@ -18,11 +20,11 @@ import { Checkbox } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Checkbox value="" checked onChange={() => console.log('change')} />
     <Checkbox value="" checked={false} onChange={() => console.log('change')} />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -32,4 +34,4 @@ import { Checkbox } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Checkbox} />
+<ArgTypes of={Checkbox} />

@@ -11,10 +11,18 @@ const config: StorybookConfig = {
     },
   },
   stories: [
-    '../src/components/sdk/**/*.mdx',
-    '../src/components/*.mdx',
     '../src/hooks/**/*.mdx',
     '../src/providers/**/*.mdx',
+    '../src/components/*.mdx',
+    '../src/components/sdk/**/*.mdx',
+    '../src/components/ui/Badge/*.mdx',
+    '../src/components/ui/Badge/*.stories.tsx',
+    '../src/components/ui/Button/*.mdx',
+    '../src/components/ui/Button/*.stories.tsx',
+    '../src/components/ui/Checkbox/*.mdx',
+    '../src/components/ui/Checkbox/*.stories.tsx',
+    '../src/components/ui/FormField/*.mdx',
+    '../src/components/ui/FormField/*.stories.tsx',
   ],
   addons: [
     {

@@ -1,13 +1,16 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
+import * as ButtonStories from './Button.stories.tsx';
+import { lightTheme } from '../../../theme/';
+import { GlobalStyles } from '../../../theme/GlobalStyles';
 
 import Button from './';
 import PrimaryButton from './PrimaryButton';
 import SecondaryButton from './SecondaryButton';
 import IconButton from './IconButton';
 import Meeting from '../icons/Meeting';
-import { lightTheme } from '../../../theme/';
-import { GlobalStyles } from '../../../theme/GlobalStyles';
+
+<Meta of={ButtonStories} />
 
 # Button
 
@@ -20,7 +23,7 @@ import {
   Button,
   PrimaryButton,
   SecondaryButton,
-  IconButton
+  IconButton,
 } from 'amazon-chime-sdk-component-library-react';
 ```
 
@@ -29,10 +32,10 @@ import {
 ### Standard Button
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Button label="Basic button" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -42,11 +45,11 @@ import {
 ### PrimaryButton
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <PrimaryButton label="Primary" />
     <PrimaryButton label="Primary" icon={<Meeting />} />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -57,10 +60,10 @@ import {
 ### SecondaryButton
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <SecondaryButton label="This is a secondary button" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -70,11 +73,11 @@ import {
 ### IconButton
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <IconButton icon={<Meeting />} />
     <IconButton selected icon={<Meeting />} />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -84,4 +87,4 @@ import {
 
 ## Props
 
-<Props of={Button} />
+<ArgTypes of={Button} />

@@ -2,26 +2,19 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import Flex from '../Flex';
 import Checkbox from './';
-import CheckboxDocs from './Checkbox.mdx';
 
 export default {
   title: 'UI Components/Form/Checkbox',
-  parameters: {
-    docs: {
-      page: CheckboxDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Checkbox,
 };
 
 export const _Checkbox = (args) => {
   return (
-    <Flex layout="fill-space-centered">
+    <>
+      <span style={{ marginRight: '0.5rem' }}>Enabled</span>
       <Checkbox {...args} />
-    </Flex>
+    </>
   );
 };
 

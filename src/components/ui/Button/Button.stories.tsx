@@ -7,35 +7,24 @@ import { Button } from './';
 import PrimaryButton from './PrimaryButton';
 import SecondaryButton from './SecondaryButton';
 import IconButton from './IconButton';
-import ButtonDocs from './Button.mdx';
-import Flex from '../Flex';
 import Badge from '../Badge';
 import Caution from '../icons/Caution';
 import SignalStrength from '../icons/SignalStrength';
 
 export default {
   title: 'UI Components/Form/Buttons',
-  parameters: {
-    docs: {
-      page: ButtonDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Button,
 };
 
-export const BasicButton = (args) => (
-  <Flex layout="fill-space-centered">
-    <Button {...args} />
-  </Flex>
-);
+export const _Button = (args) => <Button {...args} />;
 
-BasicButton.args = {
+_Button.args = {
   label: 'Basic Button',
   disabled: false,
   selected: false,
 };
 
-BasicButton.argTypes = {
+_Button.argTypes = {
   disabled: { control: 'boolean' },
   selected: { table: { disable: true } },
   icon: { table: { disable: true } },
@@ -43,15 +32,11 @@ BasicButton.argTypes = {
   iconSize: { table: { disable: true } },
 };
 
-BasicButton.story = {
+_Button.story = {
   name: 'Basic Button',
 };
 
-export const _PrimaryButton = (args) => (
-  <Flex layout="fill-space-centered">
-    <PrimaryButton {...args} />
-  </Flex>
-);
+export const _PrimaryButton = (args) => <PrimaryButton {...args} />;
 
 _PrimaryButton.args = {
   label: 'Primary Button',
@@ -71,11 +56,7 @@ _PrimaryButton.story = {
   name: 'Primary button',
 };
 
-export const _SecondaryButton = (args) => (
-  <Flex layout="fill-space-centered">
-    <SecondaryButton {...args} />
-  </Flex>
-);
+export const _SecondaryButton = (args) => <SecondaryButton {...args} />;
 
 _SecondaryButton.args = {
   label: 'Secondary Button',
@@ -95,11 +76,7 @@ _SecondaryButton.story = {
 };
 
 export const _IconButton = (args) => {
-  return (
-    <Flex layout="fill-space-centered">
-      <IconButton {...args} />
-    </Flex>
-  );
+  return <IconButton {...args} />;
 };
 
 _IconButton.args = {

@@ -9,16 +9,9 @@ import Checkbox from '../Checkbox';
 import Textarea from '../Textarea';
 import Select from '../Select';
 import RadioGroup from '../RadioGroup';
-import Flex from '../Flex';
-import FormFieldDocs from './FormField.mdx';
 
 export default {
   title: 'UI Components/Form/FormField',
-  parameters: {
-    docs: {
-      page: FormFieldDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: FormField,
 };
 
@@ -59,7 +52,9 @@ interface FormFieldProps {
   placeholder?: string;
 }
 
-const TestInput: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) => {
+const TestInput: React.FC<React.PropsWithChildren<FormFieldProps>> = (
+  props
+) => {
   const [name, setName] = useState('');
 
   function handleChange(evt: any) {
@@ -87,11 +82,9 @@ const TestInput: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) => 
 
 export const BasicInputFormField = (args) => {
   return (
-    <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem' }}>
-        <TestInput {...args} />
-      </div>
-    </Flex>
+    <div style={{ width: '20rem' }}>
+      <TestInput {...args} />
+    </div>
   );
 };
 
@@ -114,7 +107,9 @@ BasicInputFormField.argTypes = {
   ...commonHiddenArgTypes,
 };
 
-const TestSelect: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) => {
+const TestSelect: React.FC<React.PropsWithChildren<FormFieldProps>> = (
+  props
+) => {
   const [value, setValue] = useState('');
   const handleChange = (e: any) => setValue(e.target.value);
 
@@ -135,11 +130,9 @@ const TestSelect: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) =>
 
 export const SelectFormField = (args) => {
   return (
-    <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem' }}>
-        <TestSelect {...args} />
-      </div>
-    </Flex>
+    <div style={{ width: '20rem' }}>
+      <TestSelect {...args} />
+    </div>
   );
 };
 
@@ -160,7 +153,9 @@ SelectFormField.argTypes = {
   ...commonHiddenArgTypes,
 };
 
-const TestTextarea: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) => {
+const TestTextarea: React.FC<React.PropsWithChildren<FormFieldProps>> = (
+  props
+) => {
   const [value, setValue] = useState('');
 
   const handleChange = (e: any) => {
@@ -184,11 +179,9 @@ const TestTextarea: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) 
 
 export const TextareaFormField = (args) => {
   return (
-    <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem' }}>
-        <TestTextarea {...args} />
-      </div>
-    </Flex>
+    <div style={{ width: '20rem' }}>
+      <TestTextarea {...args} />
+    </div>
   );
 };
 
@@ -211,7 +204,9 @@ TextareaFormField.argTypes = {
   ...commonHiddenArgTypes,
 };
 
-const TestRadioGroup: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) => {
+const TestRadioGroup: React.FC<React.PropsWithChildren<FormFieldProps>> = (
+  props
+) => {
   const [value, setValue] = useState('');
 
   const handleChange = (evt: any) => {
@@ -234,11 +229,9 @@ const TestRadioGroup: React.FC<React.PropsWithChildren<FormFieldProps>> = (props
 
 export const RadioGroupFormField = (args) => {
   return (
-    <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem' }}>
-        <TestRadioGroup {...args} />
-      </div>
-    </Flex>
+    <div style={{ width: '20rem' }}>
+      <TestRadioGroup {...args} />
+    </div>
   );
 };
 
@@ -275,20 +268,36 @@ const TestCheckboxGroup: React.FC<React.PropsWithChildren<{}>> = (props) => {
 
   return (
     <>
-      <FormField field={Checkbox} label="React" value="react" checked={state.react} onChange={handleChange} />
-      <FormField field={Checkbox} label="Angular" value="angular" checked={state.angular} onChange={handleChange} />
-      <FormField field={Checkbox} label="Vue" value="vue" checked={state.vue} onChange={handleChange} />
+      <FormField
+        field={Checkbox}
+        label="React"
+        value="react"
+        checked={state.react}
+        onChange={handleChange}
+      />
+      <FormField
+        field={Checkbox}
+        label="Angular"
+        value="angular"
+        checked={state.angular}
+        onChange={handleChange}
+      />
+      <FormField
+        field={Checkbox}
+        label="Vue"
+        value="vue"
+        checked={state.vue}
+        onChange={handleChange}
+      />
     </>
   );
 };
 
 export const CheckboxFormField = () => {
   return (
-    <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem' }}>
-        <TestCheckboxGroup />
-      </div>
-    </Flex>
+    <div style={{ width: '20rem' }}>
+      <TestCheckboxGroup />
+    </div>
   );
 };
 
@@ -301,7 +310,9 @@ CheckboxFormField.argTypes = {
   ...commonHiddenArgTypes,
 };
 
-const TestMixedInputs: React.FC<React.PropsWithChildren<FormFieldProps>> = (props) => {
+const TestMixedInputs: React.FC<React.PropsWithChildren<FormFieldProps>> = (
+  props
+) => {
   const [state, setState] = useState({
     firstName: '',
     lastName: '',
@@ -312,7 +323,8 @@ const TestMixedInputs: React.FC<React.PropsWithChildren<FormFieldProps>> = (prop
   });
 
   function handleChange(evt: any) {
-    const value = evt.target.type === 'checkbox' ? evt.target.checked : evt.target.value;
+    const value =
+      evt.target.type === 'checkbox' ? evt.target.checked : evt.target.value;
 
     setState({
       ...state,
@@ -386,11 +398,9 @@ const TestMixedInputs: React.FC<React.PropsWithChildren<FormFieldProps>> = (prop
 
 export const MixedInputsFormField = (args) => {
   return (
-    <Flex layout="fill-space-centered">
-      <div style={{ width: '20rem' }}>
-        <TestMixedInputs {...args} />
-      </div>
-    </Flex>
+    <div style={{ width: '20rem' }}>
+      <TestMixedInputs {...args} />
+    </div>
   );
 };
 

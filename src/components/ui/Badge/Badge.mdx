@@ -1,12 +1,7 @@
-import {
-  Canvas,
-  Meta,
-  Story,
-  ArgTypes,
-} from '@storybook/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import { ThemeProvider } from 'styled-components';
 import * as BadgeStories from './Badge.stories.tsx';
-
-import { Badge } from './';
+import Badge from './';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
 import { Lock } from '../icons';
@@ -25,28 +20,55 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
 
 ## Example
 
-<Canvas>
-  <Story of={BadgeStories.BasicBadge} />
-  <Story of={BadgeStories.IconBadge} />
-</Canvas>
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <div style={{ alignItems: 'center', display: 'flex' }}>
+      <span style={{ marginRight: '0.5rem' }}>Number of new messages</span>
+      <Badge value="50+" />
+    </div>
+    <div style={{ marginLeft: '1rem', display: 'flex' }}>
+      <span style={{ marginRight: '0.5rem' }}>Lock badge</span>
+      <Badge value={<Lock />} />
+    </div>
+    <div style={{ marginLeft: '1rem', display: 'flex' }}>
+      <span style={{ marginRight: '0.5rem' }}>Big lock badge</span>
+      <Badge value={<Lock width="2rem" />} />
+    </div>
+  </Canvas>
+</ThemeProvider>
 
 ```jsx
 <Badge
   value="50+"
-  status="default"
 />
 <Badge
   value={<Lock />}
 />
 <Badge
-  value={<Lock width="3rem" />}
+  value={<Lock width="2rem" />}
 />
 ```
 
 ### Using Alert Status
 
-<Canvas of={BadgeStories.BasicBadge} />
-<Canvas of={BadgeStories.IconBadge} />
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <div style={{ alignItems: 'center', display: 'flex' }}>
+      <span style={{ marginRight: '0.5rem' }}>Number of new messages</span>
+      <Badge value="50+" status="alert" />
+    </div>
+    <div style={{ marginLeft: '1rem', display: 'flex' }}>
+      <span style={{ marginRight: '0.5rem' }}>Lock badge</span>
+      <Badge value={<Lock />} status="alert" />
+    </div>
+    <div style={{ marginLeft: '1rem', display: 'flex' }}>
+      <span style={{ marginRight: '0.5rem' }}>Big lock badge</span>
+      <Badge value={<Lock width="2rem" />} status="alert" />
+    </div>
+  </Canvas>
+</ThemeProvider>
 
 ```jsx
 <Badge
@@ -55,9 +77,11 @@ import { Badge } from 'amazon-chime-sdk-component-library-react';
 />
 <Badge
   value={<Lock />}
+  status="alert"
 />
 <Badge
-  value={<Lock width="3rem" />}
+  value={<Lock width="2rem" />}
+  status="alert"
 />
 ```
 

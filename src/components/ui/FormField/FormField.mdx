@@ -1,6 +1,6 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
-
+import * as FormFieldStories from './FormField.stories.tsx';
 import Checkbox from '../Checkbox';
 import Flex from '../Flex';
 import FormField from './';
@@ -10,6 +10,8 @@ import Select from '../Select';
 import Textarea from '../Textarea';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+
+<Meta of={FormFieldStories} />
 
 # FormField
 
@@ -28,8 +30,8 @@ import { FormField } from 'amazon-chime-sdk-component-library-react';
 With layout `stack` and `informational` text.
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Flex layout="fill-space-centered">
       <FormField
         field={Input}
@@ -43,7 +45,7 @@ With layout `stack` and `informational` text.
         infoText="This is some informational text"
       />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -63,8 +65,8 @@ With layout `stack` and `informational` text.
 With layout `horizontal` and `error` text.
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Flex layout="fill-space-centered">
       <FormField
         field={Input}
@@ -78,7 +80,7 @@ With layout `horizontal` and `error` text.
         infoText="This is some informational text"
       />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -98,14 +100,14 @@ With layout `horizontal` and `error` text.
 ### Select Field
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Flex layout="fill-space-centered">
       <FormField
         field={Select}
         options={[
           { value: 'react', label: 'React' },
-          { value: 'angular', label: 'Angular' }
+          { value: 'angular', label: 'Angular' },
         ]}
         onChange={() => {}}
         value="react"
@@ -116,7 +118,7 @@ With layout `horizontal` and `error` text.
         infoText="This is some informational text"
       />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -124,7 +126,7 @@ With layout `horizontal` and `error` text.
   field={Select}
   options={[
     { value: 'react', label: 'React' },
-    { value: 'angular', label: 'Angular' }
+    { value: 'angular', label: 'Angular' },
   ]}
   onChange={() => {}}
   value="react"
@@ -139,8 +141,8 @@ With layout `horizontal` and `error` text.
 ### Textarea Field
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Flex layout="fill-space-centered">
       <FormField
         field={Textarea}
@@ -154,7 +156,7 @@ With layout `horizontal` and `error` text.
         infoText="This is some informational text"
       />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -174,8 +176,8 @@ With layout `horizontal` and `error` text.
 ### Checkbox Field
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Flex layout="fill-space-centered">
       <FormField
         field={Checkbox}
@@ -193,7 +195,7 @@ With layout `horizontal` and `error` text.
         onChange={() => {}}
       />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -216,14 +218,14 @@ With layout `horizontal` and `error` text.
 ### Radio Group Field
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Flex layout="fill-space-centered">
       <FormField
         options={[
           { value: 'react', label: 'React' },
           { value: 'angular', label: 'Angular' },
-          { value: 'vue', label: 'Vue' }
+          { value: 'vue', label: 'Vue' },
         ]}
         field={RadioGroup}
         onChange={() => {}}
@@ -234,7 +236,7 @@ With layout `horizontal` and `error` text.
         infoText="This is some informational text"
       />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -242,7 +244,7 @@ With layout `horizontal` and `error` text.
   options={[
     { value: 'react', label: 'React' },
     { value: 'angular', label: 'Angular' },
-    { value: 'vue', label: 'Vue' }
+    { value: 'vue', label: 'Vue' },
   ]}
   field={RadioGroup}
   onChange={() => {}}
@@ -256,4 +258,4 @@ With layout `horizontal` and `error` text.
 
 ## Props
 
-<Props of={FormField} />
+<ArgTypes of={FormField} />
