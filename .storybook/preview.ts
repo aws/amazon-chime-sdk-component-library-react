@@ -22,7 +22,10 @@ export const argTypes = {
   id: { table: { disable: true } },
   className: { table: { disable: true } },
   css: { table: { disable: true } },
-  testId: { table: { disable: true } }, 
+  testId: { table: { disable: true } },
+  viewBox: { table: { disable: true } },
+  height: { table: { disable: true } },
+  title: { table: { disable: true } },
 };
 
 export const parameters = {

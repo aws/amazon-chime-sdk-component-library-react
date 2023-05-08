@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import DeskPhone from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as DeskPhoneStories from './DeskPhone.stories.tsx';
+
+<Meta of={DeskPhoneStories} />
 
 # DeskPhone Icon
 
@@ -21,9 +24,9 @@ With custom width
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <DeskPhone width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -33,9 +36,9 @@ With custom width
 Disabled DeskPhone icon
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <Canvas>
     <DeskPhone width="2rem" disabled />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -44,4 +47,4 @@ Disabled DeskPhone icon
 
 ## Props
 
-<Props of={DeskPhone} />
+<ArgTypes of={DeskPhone} />

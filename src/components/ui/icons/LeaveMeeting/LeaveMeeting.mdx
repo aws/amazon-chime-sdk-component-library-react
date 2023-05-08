@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import LeaveMeeting from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as LeaveMeetingStories from './LeaveMeeting.stories.tsx';
+
+<Meta of={LeaveMeetingStories} />
 
 # LeaveMeeting Icon
 
@@ -19,9 +22,9 @@ import { LeaveMeeting } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <LeaveMeeting width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +33,4 @@ import { LeaveMeeting } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={LeaveMeeting} />
+<ArgTypes of={LeaveMeeting} />

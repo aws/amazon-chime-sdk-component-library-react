@@ -11,7 +11,7 @@ export interface HandRaiseProps extends SvgProps {
   isRaised?: boolean;
 }
 
-const HandRaise: React.FC<React.PropsWithChildren<HandRaiseProps>> = ({
+export const HandRaise: React.FC<React.PropsWithChildren<HandRaiseProps>> = ({
   isRaised,
   ...rest
 }) => (

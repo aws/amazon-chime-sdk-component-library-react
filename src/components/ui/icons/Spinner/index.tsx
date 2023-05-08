@@ -5,7 +5,7 @@ import React from 'react';
 
 import Svg, { SvgProps } from '../Svg';
 
-const Spinner: React.FC<React.PropsWithChildren<SvgProps>> = (props) => (
+export const Spinner: React.FC<React.PropsWithChildren<SvgProps>> = (props) => (
   <Svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
     <g fill="none" fillRule="evenodd">
       <path d="M0 0H24V24H0z" />

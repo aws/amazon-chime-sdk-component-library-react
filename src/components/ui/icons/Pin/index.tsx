@@ -10,7 +10,7 @@ interface PinProps extends SvgProps {
   unpin?: boolean;
 }
 
-const Pin: React.FC<React.PropsWithChildren<PinProps>> = ({
+export const Pin: React.FC<React.PropsWithChildren<PinProps>> = ({
   unpin,
   ...rest
 }) => (

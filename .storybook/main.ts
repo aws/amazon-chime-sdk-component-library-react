@@ -15,6 +15,7 @@ const config: StorybookConfig = {
     '../src/providers/**/*.mdx',
     '../src/components/*.mdx',
     '../src/components/sdk/**/*.mdx',
+    '../src/components/ui/icons/*/**.@(stories.tsx|mdx)',
     '../src/components/ui/Badge/*.mdx',
     '../src/components/ui/Badge/*.stories.tsx',
     '../src/components/ui/Button/*.mdx',

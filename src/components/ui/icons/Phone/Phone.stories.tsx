@@ -2,24 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import { text } from '@storybook/addon-knobs';
 import Phone from '.';
-import PhoneIconDocs from './Phone.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/Phone',
-  parameters: {
-    docs: {
-      page: PhoneIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Phone,
 };
 
-export const _Phone = () => (
-  <Flex layout="fill-space-centered">
-    <Phone width={text('width', '2rem')} />
-  </Flex>
-);
+export const _Phone = (args) => <Phone {...args} />;
+
+_Phone.argTypes = {
+  width: { control: 'text' },
+};
+
+_Phone.args = {
+  width: '2rem',
+};
+
+_Phone.story = {
+  name: 'Phone',
+};

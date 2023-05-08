@@ -10,7 +10,7 @@ interface DockProps extends SvgProps {
   undock?: boolean;
 }
 
-const Dock: React.FC<React.PropsWithChildren<DockProps>> = ({
+export const Dock: React.FC<React.PropsWithChildren<DockProps>> = ({
   undock,
   ...rest
 }) => (

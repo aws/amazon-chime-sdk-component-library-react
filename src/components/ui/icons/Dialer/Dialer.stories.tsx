@@ -2,24 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import { text } from '@storybook/addon-knobs';
 import Dialer from '.';
-import DialerIconDocs from './Dialer.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/Dialer',
-  parameters: {
-    docs: {
-      page: DialerIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Dialer,
 };
 
-export const _Dialer = () => (
-  <Flex layout="fill-space-centered">
-    <Dialer width={text('width', '2rem')} />
-  </Flex>
-);
+export const _Dialer = (args) => <Dialer {...args} />;
+
+_Dialer.argTypes = {
+  width: { control: 'text' },
+};
+
+_Dialer.args = {
+  width: '2rem',
+};
+
+_Dialer.story = {
+  name: 'Dialer',
+};

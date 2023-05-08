@@ -10,7 +10,7 @@ interface SoundProps extends SvgProps {
   disabled?: boolean;
 }
 
-const Sound: React.FC<React.PropsWithChildren<SoundProps>> = ({
+export const Sound: React.FC<React.PropsWithChildren<SoundProps>> = ({
   disabled,
   ...rest
 }) => (

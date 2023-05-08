@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Cog from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as CogStories from './Cog.stories.tsx';
+
+<Meta of={CogStories} />
 
 # Cog Icon
 
@@ -19,9 +22,9 @@ import { Cog } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Cog width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +33,4 @@ import { Cog } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Cog} />
+<ArgTypes of={Cog} />

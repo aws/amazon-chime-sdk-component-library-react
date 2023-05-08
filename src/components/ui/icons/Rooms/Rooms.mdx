@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Rooms from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as RoomsStories from './Rooms.stories.tsx';
+
+<Meta of={RoomsStories} />
 
 # Rooms Icon
 
@@ -19,9 +22,9 @@ import { Rooms } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Rooms width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +33,4 @@ import { Rooms } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Rooms} />
+<ArgTypes of={Rooms} />

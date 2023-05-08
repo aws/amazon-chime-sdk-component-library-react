@@ -2,24 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import { text } from '@storybook/addon-knobs';
 import Record from '.';
-import RecordIconDocs from './Record.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/Record',
-  parameters: {
-    docs: {
-      page: RecordIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Record,
 };
 
-export const _Record = () => (
-  <Flex layout="fill-space-centered">
-    <Record width={text('width', '2rem')} />
-  </Flex>
-);
+export const _Record = (args) => <Record {...args} />;
+
+_Record.argTypes = {
+  width: { control: 'text' },
+};
+
+_Record.args = {
+  width: '2rem',
+};
+
+_Record.story = {
+  name: 'Record',
+};

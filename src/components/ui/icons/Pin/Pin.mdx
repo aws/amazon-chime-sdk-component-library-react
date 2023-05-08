@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Pin from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as PinStories from './Pin.stories.tsx';
+
+<Meta of={PinStories} />
 
 # Pin Icon
 
@@ -21,9 +24,9 @@ With custom width and height
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Pin width="2rem" height="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -33,9 +36,9 @@ With custom width and height
 Unpin icon
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <Canvas>
     <Pin width="2rem" height="2rem" unpin title="Unpin" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -44,4 +47,4 @@ Unpin icon
 
 ## Props
 
-<Props of={Pin} />
+<ArgTypes of={Pin} />

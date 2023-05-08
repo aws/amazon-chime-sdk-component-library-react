@@ -7,7 +7,7 @@ import Svg, { SvgProps } from '../Svg';
 
 interface ListHandRaiseProps extends SvgProps {}
 
-const ListHandRaise: React.FC<React.PropsWithChildren<ListHandRaiseProps>> = ({
+export const ListHandRaise: React.FC<React.PropsWithChildren<ListHandRaiseProps>> = ({
   ...rest
 }) => (
   <Svg {...rest}>

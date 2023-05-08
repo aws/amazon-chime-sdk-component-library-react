@@ -2,27 +2,25 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import { boolean, text } from '@storybook/addon-knobs';
 import Sound from '.';
-import SoundIconDocs from './Sound.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/Sound',
-  parameters: {
-    docs: {
-      page: SoundIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Sound,
 };
 
-export const _Sound = () => (
-  <Flex layout="fill-space-centered">
-    <Sound
-      disabled={boolean('disabled', false)}
-      width={text('width', '2rem')}
-    />
-  </Flex>
-);
+export const _Sound = (args) => <Sound {...args} />;
+
+_Sound.argTypes = {
+  width: { control: 'text' },
+  disabled: { control: 'boolean' },
+};
+
+_Sound.args = {
+  width: '2rem',
+  disabled: false,
+};
+
+_Sound.story = {
+  name: 'Sound',
+};

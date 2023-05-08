@@ -5,7 +5,7 @@ import React from 'react';
 
 import Svg, { SvgProps } from '../Svg';
 
-const ConnectionProblem: React.FC<React.PropsWithChildren<SvgProps>> = (
+export const ConnectionProblem: React.FC<React.PropsWithChildren<SvgProps>> = (
   props
 ) => (
   <Svg {...props}>

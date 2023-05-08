@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Caution from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as CautionStories from './Caution.stories.tsx';
+
+<Meta of={CautionStories} />
 
 # Caution Icon
 
@@ -19,9 +22,9 @@ import { Caution } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Caution width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +33,4 @@ import { Caution } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Caution} />
+<ArgTypes of={Caution} />
