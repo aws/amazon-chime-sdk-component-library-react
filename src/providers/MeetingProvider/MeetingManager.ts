@@ -109,8 +109,8 @@ export class MeetingManager implements AudioVideoObserver {
   private eventDidReceiveRef: EventObserver;
 
   private deviceLabels: DeviceLabels | DeviceLabelTrigger;
-  
-  public getDeviceLabels() : DeviceLabels | DeviceLabelTrigger {
+
+  getDeviceLabels(): DeviceLabels | DeviceLabelTrigger {
     return this.deviceLabels;
   }
 
@@ -246,7 +246,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.meetingStatus = MeetingStatus.Reconnecting;
       this.publishMeetingStatus();
     }
-  }
+  };
 
   audioVideoDidStop = (sessionStatus: MeetingSessionStatus): void => {
     const sessionStatusCode = sessionStatus.statusCode();
@@ -368,7 +368,7 @@ export class MeetingManager implements AudioVideoObserver {
           console.error('MeetingManager failed to get device permissions');
           this.deviceLabelTriggerStatus = DeviceLabelTriggerStatus.DENIED;
           this.publishDeviceLabelTriggerStatus();
-          throw new Error(error);
+          throw error;
         }
       };
     }
@@ -478,11 +478,15 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedAudioInputDevice = device;
       this.publishSelectedAudioInputDevice();
     } catch (error) {
-      console.error(
-        'MeetingManager failed to select audio input device',
-        error
+      const newError = new Error(
+        'MeetingManager failed to select audio input device.'
       );
-      throw new Error('MeetingManager failed to select audio input device');
+      if (error instanceof Error) {
+        newError.name = error.name;
+        newError.message += ' ' + error.message;
+      }
+      console.error(newError);
+      throw newError;
     }
   };
 
@@ -506,11 +510,15 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedVideoInputDevice = device;
       this.publishSelectedVideoInputDevice();
     } catch (error) {
-      console.error(
-        'MeetingManager failed to select video input device',
-        error
+      const newError = new Error(
+        'MeetingManager failed to select video input device.'
       );
-      throw new Error('MeetingManager failed to select video input device');
+      if (error instanceof Error) {
+        newError.name = error.name;
+        newError.message += ' ' + error.message;
+      }
+      console.error(newError);
+      throw newError;
     }
   };
 
