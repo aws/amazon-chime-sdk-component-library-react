@@ -60,10 +60,11 @@ export const EqualColumns: Story = {
 };
 
 export const StackStory: Story = {
+  args: { layout: 'stack' },
   argTypes: { ...commonHiddenArgTypes },
   render: (args) => {
     return (
-      <Stack layout="stack">
+      <Stack {...args}>
         <StackChild as="article" />
         <StackChild as="article" />
         <StackChild as="article" />
@@ -73,6 +74,6 @@ export const StackStory: Story = {
   },
 };
 
-StackStory.storyName = 'Stack'
+StackStory.storyName = 'Stack';
 
 export default meta;
