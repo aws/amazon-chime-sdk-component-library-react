@@ -26,6 +26,8 @@ const config: StorybookConfig = {
     '../src/components/ui/FormField/*.stories.tsx',
     '../src/components/ui/Radio/*.mdx',
     '../src/components/ui/Radio/*.stories.tsx',
+    '../src/components/ui/Flex/docs/*.mdx',
+    '../src/components/ui/Flex/docs/*.stories.tsx',
   ],
   addons: [
     {
