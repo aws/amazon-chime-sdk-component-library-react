@@ -15,6 +15,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `startAudioInputDevice`, `startVideoInputDevice`, and `setupDeviceLabelTrigger` of `MeetingManager` now throw errors with the original error `name` returned by the `getUserMedia` call. See details in [issue #888](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/888).
+
 ### Fixed
 
 ## [3.6.0] - 2023-01-06
