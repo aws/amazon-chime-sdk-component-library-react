@@ -2,12 +2,15 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { select } from '@storybook/addon-knobs';
 import styled from 'styled-components';
 
 import Flex from '../Flex';
 import Select from './';
-import SelectDocs from './Select.mdx';
+
+export default {
+  title: 'UI Components/Form/Select',
+  component: Select,
+};
 
 const options = [
   {
@@ -32,15 +35,11 @@ const StyledSelect = styled(Select)`
   width: 10rem;
 `;
 
-export const BasicSelect = () => {
+export const BasicSelect = (args) => {
   return (
     <Flex layout="fill-space-centered">
       <StyledSelect
-        value={select(
-          'value',
-          options.map((option) => option.value),
-          'no_fruit_selected'
-        )}
+        value={args.value}
         options={options}
         aria-label="basic select input"
         onChange={(e: any) => {
@@ -51,16 +50,23 @@ export const BasicSelect = () => {
   );
 };
 
-BasicSelect.story = {
-  name: 'Basic select',
+BasicSelect.argTypes = {
+  value: {
+    control: 'select',
+    options: options.map((option) => option.value),
+    mapping: options.reduce((mapping, option) => {
+      mapping[option.label] = option.value;
+      return mapping;
+    }, {}),
+  },
+  options: { table: { disable: true } },
+  onChange: { table: { disable: true } },
 };
 
-export default {
-  title: 'UI Components/Form/Select',
-  parameters: {
-    docs: {
-      page: SelectDocs.parameters.docs.page().props.children.type,
-    },
-  },
-  component: Select,
+BasicSelect.args = {
+  value: 'no_fruit_selected',
+};
+
+BasicSelect.story = {
+  name: 'Basic select',
 };

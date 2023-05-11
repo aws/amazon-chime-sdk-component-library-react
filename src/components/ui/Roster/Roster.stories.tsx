@@ -2,26 +2,22 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
-import { text, select, boolean, number } from '@storybook/addon-knobs';
 
 import Flex from '../Flex';
 import Roster from './';
 import RosterGroup from './RosterGroup';
 import RosterCell from './RosterCell';
 import RosterHeader from './RosterHeader';
-import RosterDocs from './Roster.mdx';
 import IconButton from '../Button/IconButton';
 import SignalStrength from '../icons/SignalStrength';
 import Cog from '../icons/Cog';
 
 export default {
   title: 'UI Components/Roster',
-  parameters: {
-    docs: {
-      page: RosterDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Roster,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 const Menu = () => (
@@ -41,6 +37,11 @@ const HeaderMenu = () => (
     </div>
   </>
 );
+const commonHiddenArgTypes = {
+  tabIndex: { table: { disable: true } },
+  onFocus: { table: { disable: true } },
+  onBlur: { table: { disable: true } },
+};
 
 export const _Roster = () => {
   const [search, setSearch] = useState('');
@@ -61,7 +62,6 @@ export const _Roster = () => {
           onSearch={handleSearch}
           menu={<HeaderMenu />}
           a11yMenuLabel="Roster options"
-          onMobileToggleClick={() => alert('Open Navigation')}
         />
         <RosterGroup>
           <RosterCell
@@ -91,14 +91,13 @@ export const _Roster = () => {
   );
 };
 
-export const _RosterGroup = () => {
-  const title = text('title', 'Left');
-  const badge = number('badge', 2);
+_Roster.story = 'Roster';
 
+export const _RosterGroup = (args) => {
   return (
     <Flex container layout="fill-space-centered" css="height: 100vh;">
       <Flex css="width: 100%; max-width: 280px;">
-        <RosterGroup title={title} badge={badge}>
+        <RosterGroup title={args.title} badge={args.badge}>
           <RosterCell name="Michael Scarn" subtitle="FBI agent" />
           <RosterCell name="Prison Mike" subtitle="Inmate" />
           <RosterCell name="Date Mike" subtitle="Bachelor" />
@@ -109,12 +108,20 @@ export const _RosterGroup = () => {
   );
 };
 
+_RosterGroup.argTypes = {
+  title: { control: 'text', table: { disable: false } },
+  badge: { control: 'number' },
+  ...commonHiddenArgTypes,
+};
+
+_RosterGroup.args = {
+  title: 'Left',
+  badge: 2,
+};
+
 _RosterGroup.story = 'RosterGroup';
 
-export const _RosterHeader = () => {
-  const title = text('title', 'Present');
-  const badge = number('badge', 4);
-  const children = text('children', '');
+export const _RosterHeader = (args) => {
   const [search, setSearch] = useState('');
 
   const handleSearch = (e) => setSearch(e.target.value);
@@ -123,16 +130,13 @@ export const _RosterHeader = () => {
     <Flex container layout="fill-space-centered" css="height: 100vh;">
       <Flex css="width: 100%; max-width: 280px;">
         <RosterHeader
-          title={title}
-          badge={badge}
+          title={args.title}
+          badge={args.badge}
           onClose={() => alert('Closing')}
           searchValue={search}
           onSearch={handleSearch}
           menu={<Menu />}
-        >
-          {children}
-        </RosterHeader>
-
+        />
         <RosterGroup>
           <RosterCell name="Michael Scarn" subtitle="FBI agent" />
           <RosterCell name="Prison Mike" subtitle="Inmate" />
@@ -144,22 +148,29 @@ export const _RosterHeader = () => {
   );
 };
 
+_RosterHeader.argTypes = {
+  title: { control: 'text', table: { disable: false } },
+  badge: { control: 'number' },
+  ...commonHiddenArgTypes,
+};
+
+_RosterHeader.args = {
+  title: 'Present',
+  badge: 4,
+};
+
 _RosterHeader.story = 'RosterHeader';
 
-export const _RosterHeaderWithNavigationIcon = () => {
-  const title = text('title', 'Present');
-  const badge = number('badge', 4);
-
+export const _RosterHeaderWithNavigationIcon = (args) => {
   const [search, setSearch] = useState('');
-
   const handleSearch = (e) => setSearch(e.target.value);
 
   return (
     <Flex container layout="fill-space-centered" css="height: 100vh;">
       <Flex css="width: 100%; max-width: 280px;">
         <RosterHeader
-          title={title}
-          badge={badge}
+          title={args.title}
+          badge={args.badge}
           onClose={() => alert('Closing')}
           searchValue={search}
           onSearch={handleSearch}
@@ -177,22 +188,29 @@ export const _RosterHeaderWithNavigationIcon = () => {
   );
 };
 
+_RosterHeaderWithNavigationIcon.argTypes = {
+  title: { control: 'text', table: { disable: false } },
+  badge: { control: 'number' },
+  ...commonHiddenArgTypes
+};
+
+_RosterHeaderWithNavigationIcon.args = {
+  title: 'Present',
+  badge: 4,
+};
+
 _RosterHeaderWithNavigationIcon.story = 'RosterHeaderWithNavigationIcon';
 
-export const _RosterHeaderWithCustomElements = () => {
-  const title = text('title', 'Present');
-  const badge = number('badge', 4);
-
+export const _RosterHeaderWithCustomElements = (args) => {
   const [search, setSearch] = useState('');
-
   const handleSearch = (e) => setSearch(e.target.value);
 
   return (
     <Flex container layout="fill-space-centered" css="height: 100vh;">
       <Flex css="width: 100%; max-width: 280px;">
         <RosterHeader
-          title={title}
-          badge={badge}
+          title={args.title}
+          badge={args.badge}
           onClose={() => alert('Closing')}
           searchValue={search}
           onSearch={handleSearch}
@@ -212,42 +230,60 @@ export const _RosterHeaderWithCustomElements = () => {
   );
 };
 
+_RosterHeaderWithCustomElements.argTypes = {
+  title: { control: 'text', table: { disable: false } },
+  badge: { control: 'number' },
+  ...commonHiddenArgTypes
+};
+
+_RosterHeaderWithCustomElements.args = {
+  title: 'Present',
+  badge: 4,
+};
+
 _RosterHeaderWithCustomElements.story = '_RosterHeaderWithCustomElements';
 
-export const _RosterCell = () => {
-  const name = text('name', 'Stanley Hudson');
-  const subtitle = text('subtitle', 'Bagel savant');
-  const muted = boolean('muted', false);
-  const videoEnabled = boolean('videoEnabled', false);
-  const sharingContent = boolean('sharingContent', false);
-  const poorConnection = boolean('poorConnection', false);
-  const runningLate = text('runningLate', '');
-  const micPosition = select(
-    'micPosition',
-    {
-      grouped: 'grouped',
-      leading: 'leading',
-    },
-    'grouped'
-  );
-
+export const _RosterCell = (args) => {
   return (
     <Flex container layout="fill-space-centered" css="height: 100vh;">
       <Flex css="width: 100%; max-width: 280px;">
         <RosterCell
-          name={name}
-          subtitle={subtitle}
-          muted={muted}
-          videoEnabled={videoEnabled}
-          sharingContent={sharingContent}
-          runningLate={runningLate}
-          micPosition={micPosition}
-          poorConnection={poorConnection}
+          name={args.name}
+          subtitle={args.subtitle}
+          muted={args.muted}
+          videoEnabled={args.videoEnabled}
+          sharingContent={args.sharingContent}
+          runningLate={args.runningLate}
+          micPosition={args.micPosition}
+          poorConnection={args.poorConnection}
           menu={<Menu />}
         />
       </Flex>
     </Flex>
   );
+};
+
+_RosterCell.argTypes = {
+  name: { control: 'text' },
+  subtitle: { control: 'text' },
+  runningLate: { control: 'text' },
+  muted: { control: 'boolean' },
+  videoEnabled: { control: 'boolean' },
+  sharingContent: { control: 'boolean' },
+  poorConnection: { control: 'boolean' },
+  micPosition: { control: 'select', options: ['grouped', 'leading'] },
+  ...commonHiddenArgTypes
+};
+
+_RosterCell.args = {
+  name: 'Stanley Hudson',
+  subtitle: 'Bagel savant',
+  runningLate: '',
+  muted: false,
+  videoEnabled: false,
+  sharingContent: false,
+  poorConnection: false,
+  micPosition: 'grouped',
 };
 
 _RosterCell.story = 'RosterCell';

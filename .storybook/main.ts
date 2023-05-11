@@ -34,6 +34,10 @@ const config: StorybookConfig = {
     '../src/components/ui/NotificationGroup/**.@(stories.tsx|mdx)',
     '../src/components/ui/PopOver/**.@(stories.tsx|mdx)',
     '../src/components/ui/Portal/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Select/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Textarea/**.@(stories.tsx|mdx)',
+    '../src/components/ui/RadioGroup/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Roster/**.@(stories.tsx|mdx)',
   ],
   addons: [
     {
