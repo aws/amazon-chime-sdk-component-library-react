@@ -11,19 +11,14 @@ import {
   ActionType,
   Severity,
 } from '../../../providers/NotificationProvider';
-import NotificationGroupDocs from './NotificationGroup.mdx';
-
 import Button from '../Button';
-import Flex from '../Flex';
 
 export default {
   title: 'UI Components/NotificationGroup',
-  parameters: {
-    docs: {
-      page: NotificationGroupDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: NotificationGroup,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
 const StyledWrapper = styled.div`

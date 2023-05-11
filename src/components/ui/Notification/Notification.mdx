@@ -1,4 +1,4 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import { Notification } from '.';
@@ -11,6 +11,7 @@ import { GlobalStyles } from '../../../theme/GlobalStyles';
 The Notification component displays various types of notifications based on severity.
 
 There are four types of notification severity:
+
 - Error
 - Success
 - Info
@@ -25,25 +26,31 @@ import { Notification } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 ### Notification Component
-<ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Notification
-    onClose={() => {console.log('Close notification')}}
-    severity={Severity.ERROR}
-    message='Failed to join the meeting'
-  />
-</ThemeProvider>
 
+<ThemeProvider theme={lightTheme}>
+  <Canvas>
+    <Notification
+      onClose={() => {
+        console.log('Close notification');
+      }}
+      severity={Severity.ERROR}
+      message="Failed to join the meeting"
+    />
+  </Canvas>
+</ThemeProvider>
 
 ```jsx
 <Notification
-  onClose={() => {console.log('Close notification')}}
+  onClose={() => {
+    console.log('Close notification');
+  }}
   severity={Severity.ERROR}
-  message='Failed to join the meeting'
+  message="Failed to join the meeting"
 />
 ```
 
 #### Severity
+
 ```jsx
 enum Severity {
   ERROR = 'error',
@@ -56,4 +63,5 @@ enum Severity {
 ## Props
 
 ### Notification Props
-<Props of={Notification} />
+
+<ArgTypes of={Notification} />

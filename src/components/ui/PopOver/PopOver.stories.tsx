@@ -12,15 +12,9 @@ import PopOverHeader from './PopOverHeader';
 import Meeting from '../icons/Meeting';
 import Flex from '../Flex';
 import Heading from '../Heading';
-import PopOverDocs from './PopOver.mdx';
 
 export default {
   title: 'UI Components/PopOver',
-  parameters: {
-    docs: {
-      page: PopOverDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: PopOver,
 };
 

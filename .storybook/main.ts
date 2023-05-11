@@ -30,6 +30,10 @@ const config: StorybookConfig = {
     '../src/components/ui/Modal/**.@(stories.tsx|mdx)',
     '../src/components/ui/Navbar/**.@(stories.tsx|mdx)',
     '../src/components/ui/Flex/docs/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Notification/**.@(stories.tsx|mdx)',
+    '../src/components/ui/NotificationGroup/**.@(stories.tsx|mdx)',
+    '../src/components/ui/PopOver/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Portal/**.@(stories.tsx|mdx)',
   ],
   addons: [
     {

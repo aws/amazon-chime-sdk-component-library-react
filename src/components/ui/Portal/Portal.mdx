@@ -1,4 +1,4 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Portal from './';
@@ -19,15 +19,59 @@ import { Portal } from 'amazon-chime-sdk-component-library-react';
 
 ## Example
 
+<ThemeProvider theme={lightTheme}>
+  <Canvas>
+    <Flex layout="fill-space-centered">
+      <Flex
+        layout="equal-columns"
+        style={{ width: '20rem' }}
+      >
+        <Portal rootId="root-div-1">
+          <div
+            style={{
+              backgroundColor: 'lightgray',
+              padding: '1rem',
+              borderRadius: '0.5rem',
+            }}
+          >
+            Portal content
+          </div>
+        </Portal>
+        <div
+          id="root-div-1"
+          style={{
+            border: '1px solid lightblue',
+            borderRadius: '1rem',
+            padding: '1rem',
+          }}
+        >
+          Root Div 1
+        </div>
+        <div
+          id="root-div-2"
+          style={{
+            border: '1px solid lightgreen',
+            borderRadius: '1rem',
+            padding: '1rem',
+          }}
+        >
+          Root Div 2
+        </div>
+      </Flex>
+    </Flex>
+  </Canvas>
+</ThemeProvider>
+
 ```jsx
-<Flex layout="fill-space-centered">
-  <div id="root-div">Root Div</div>
-  <Portal rootId="root-div">
+<Flex layout="equal-columns" justifyContent="space-between">
+  <Portal rootId="root-div-1">
     <div>Portal content</div>
   </Portal>
+  <div id="root-div-1">Root Div 1</div>
+  <div id="root-div-2">Root Div 2</div>
 </Flex>
 ```
 
 ## Props
 
-<Props of={Portal} />
+<ArgTypes of={Portal} />
