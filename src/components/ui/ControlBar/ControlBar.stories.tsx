@@ -2,12 +2,10 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
-import { select, boolean } from '@storybook/addon-knobs';
 
 import { Microphone, Camera, Dialer, Sound, Phone, Laptop } from '../icons';
 import ControlBar from '.';
 import ControlBarButton from './ControlBarButton';
-import ControlBarDocs from './ControlBar.mdx';
 
 import PopOverItem from '../PopOver/PopOverItem';
 import PopOverSubMenu from '../PopOver/PopOverSubMenu';
@@ -16,13 +14,16 @@ import PopOverHeader from '../PopOver/PopOverHeader';
 
 export default {
   title: 'UI Components/ControlBar',
-  parameters: {
-    docs: {
-      page: ControlBarDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: ControlBar,
   excludeStories: ['ControlBarForDocs'],
+  parameters: {
+    layout: 'padded',
+    docs: {
+      source: {
+        code: 'disabled',
+      },
+    },
+  },
 };
 
 export const ControlBarForDocs = () => {
@@ -118,7 +119,7 @@ export const ControlBarForDocs = () => {
   );
 };
 
-export const _ControlBar = () => {
+export const _ControlBar = (args) => {
   const [muted, setMuted] = useState(false);
   const [cameraActive, setCameraActive] = useState(false);
 
@@ -180,22 +181,7 @@ export const _ControlBar = () => {
   };
 
   return (
-    <ControlBar
-      showLabels={boolean('show labels', true)}
-      responsive={boolean('responsive', true)}
-      layout={select(
-        'layout',
-        {
-          top: 'top',
-          bottom: 'bottom',
-          right: 'right',
-          left: 'left',
-          undockedVertical: 'undocked-vertical',
-          undockedHorizontal: 'undocked-horizontal',
-        },
-        'top'
-      )}
-    >
+    <ControlBar {...args}>
       <ControlBarButton {...microphoneButtonProps} />
       <ControlBarButton {...volumeButtonProps}>
         <PopOverItem as="button" onClick={() => console.log('clicked')}>
@@ -228,4 +214,30 @@ export const _ControlBar = () => {
       </ControlBarButton>
     </ControlBar>
   );
+};
+
+_ControlBar.argTypes = {
+  showLabels: { control: 'boolean' },
+  responsive: { control: 'boolean' },
+  layout: {
+    control: 'select',
+    options: [
+      'top',
+      'bottom',
+      'right',
+      'left',
+      'undocked-horizontal',
+      'undocked-vertical',
+    ],
+  },
+};
+
+_ControlBar.args = {
+  showLabels: true,
+  responsive: true,
+  layout: 'top',
+};
+
+_ControlBar.story = {
+  name: 'ControlBar',
 };

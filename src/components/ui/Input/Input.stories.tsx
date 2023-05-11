@@ -2,74 +2,105 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
-import { select, boolean } from '@storybook/addon-knobs';
 
 import Crown from '../icons/Crown';
 import Input from './';
 import SearchInput from './SearchInput';
-import Flex from '../Flex';
-import InputDocs from './Input.mdx';
 
 export default {
   title: 'UI Components/Form/TextInputs',
-  parameters: {
-    docs: {
-      page: InputDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Input,
 };
 
-export const BasicInput = () => {
+export const BasicInput = (args) => {
   const [input, setInput] = useState('');
 
   return (
-    <Flex layout="fill-space-centered" css="height: 100vh">
-      <Input
-        showClear={boolean('showClear', true)}
-        onChange={(e) => setInput(e.target.value)}
-        sizing={select('size', { sm: 'sm', md: 'md' }, 'md')}
-        value={input}
-        placeholder="a basic input"
-        type="text"
-      />
-    </Flex>
+    <Input
+      {...args}
+      onChange={(e) => setInput(e.target.value)}
+      value={input}
+      placeholder="a basic input"
+      type="text"
+    />
   );
 };
 
-export const InputWithIcon = () => {
+const commonHiddenArgTypes = {
+  onChange: { table: { disable: true } },
+  onClear: { table: { disable: true } },
+  value: { table: { disable: true } },
+  leadingIcon: { table: { disable: true } },
+};
+
+BasicInput.argTypes = {
+  showClear: { control: 'boolean' },
+  sizing: { control: 'select', options: ['sm', 'md'] },
+  ...commonHiddenArgTypes,
+};
+
+BasicInput.args = {
+  showClear: true,
+  sizing: 'md',
+};
+
+BasicInput.story = {
+  name: 'Basic Input',
+};
+
+export const InputWithIcon = (args) => {
   const [input, setInput] = useState('');
 
   return (
-    <Flex layout="fill-space-centered" css="height: 100vh">
-      <Input
-        showClear={boolean('showClear', true)}
-        onChange={(e) => setInput(e.target.value)}
-        value={input}
-        placeholder="input with an icon"
-        sizing={select('size', { sm: 'sm', md: 'md' }, 'md')}
-        type="text"
-        leadingIcon={<Crown />}
-      />
-    </Flex>
+    <Input
+      {...args}
+      onChange={(e) => setInput(e.target.value)}
+      value={input}
+      placeholder="input with an icon"
+      type="text"
+      leadingIcon={<Crown />}
+    />
   );
+};
+
+InputWithIcon.argTypes = {
+  showClear: { control: 'boolean' },
+  sizing: { control: 'select', options: ['sm', 'md'] },
+  ...commonHiddenArgTypes,
+};
+
+InputWithIcon.args = {
+  showClear: true,
+  sizing: 'md',
 };
 
 InputWithIcon.story = {
   name: 'Input With Icon',
 };
 
-export const _SearchInput = () => {
+export const _SearchInput = (args) => {
   const [search, setSearch] = useState('');
 
   return (
-    <Flex layout="fill-space-centered" css="height: 100vh">
-      <SearchInput
-        showClear={boolean('showClear', true)}
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        placeholder="a search input"
-      />
-    </Flex>
+    <SearchInput
+      {...args}
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      placeholder="a search input"
+    />
   );
+};
+
+_SearchInput.argTypes = {
+  showClear: { control: 'boolean' },
+  sizing: { table: { disable: true } },
+  ...commonHiddenArgTypes,
+};
+
+_SearchInput.args = {
+  showClear: true,
+};
+
+_SearchInput.story = {
+  name: 'Search Input',
 };

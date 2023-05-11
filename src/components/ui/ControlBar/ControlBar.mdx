@@ -1,4 +1,4 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import ControlBar from '.';
@@ -6,6 +6,10 @@ import ControlBarButton from './ControlBarButton';
 import { ControlBarForDocs } from './ControlBar.stories';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+
+import * as ContentBarStories from './ControlBar.stories.tsx';
+
+<Meta of={ContentBarStories} />
 
 # ControlBar
 
@@ -22,19 +26,19 @@ The ControlBar component contains one or more `ControlBarButton` components, whi
 ```javascript
 import {
   ControlBar,
-  ControlBarButton
+  ControlBarButton,
 } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
-    <div style={{height: '50vh', position: 'relative'}}>
+  <GlobalStyles />
+  <Canvas>
+    <div style={{ height: '50vh', position: 'relative' }}>
       <ControlBarForDocs />
     </div>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -44,7 +48,7 @@ const [cameraActive, setCameraActive] = useState(false);
 const microphoneButtonProps = {
   icon: muted ? <Microphone muted /> : <Microphone />,
   onClick: () => setMuted(!muted),
-  label: 'Mute'
+  label: 'Mute',
 };
 
 const cameraButtonProps = {
@@ -52,27 +56,27 @@ const cameraButtonProps = {
   popOver: [
     {
       onClick: () => console.log('camera popover option 1'),
-      children: <span>Some option text</span>
+      children: <span>Some option text</span>,
     },
     {
       onClick: () => console.log('camera popover option 2'),
-      children: <span>More option text</span>
-    }
+      children: <span>More option text</span>,
+    },
   ],
   onClick: () => setCameraActive(!cameraActive),
-  label: 'Camera'
+  label: 'Camera',
 };
 
 const dialButtonProps = {
   icon: <Dialer />,
   onClick: () => console.log('Toggle dial pad'),
-  label: 'Dial'
+  label: 'Dial',
 };
 
 const hangUpButtonProps = {
   icon: <Phone />,
   onClick: () => console.log('End meeting'),
-  label: 'End'
+  label: 'End',
 };
 
 const volumeButtonProps = {
@@ -81,20 +85,20 @@ const volumeButtonProps = {
   popOver: [
     {
       onClick: () => console.log('volume popover option 1'),
-      children: <span>Some option text</span>
+      children: <span>Some option text</span>,
     },
     {
       onClick: () => console.log('volume popover option 2'),
-      children: <span>More option text</span>
-    }
+      children: <span>More option text</span>,
+    },
   ],
-  label: 'Volume'
+  label: 'Volume',
 };
 
 const laptopButtonProps = {
   icon: <Laptop />,
   onClick: () => console.log('Screen button clicked'),
-  label: 'Screen'
+  label: 'Screen',
 };
 
 return (
@@ -112,7 +116,9 @@ return (
 ## Props
 
 #### ControlBar Component
-<Props of={ControlBar} />
+
+<ArgTypes of={ControlBar} />
 
 #### ControlBarButton Component
-<Props of={ControlBarButton} />
+
+<ArgTypes of={ControlBarButton} />

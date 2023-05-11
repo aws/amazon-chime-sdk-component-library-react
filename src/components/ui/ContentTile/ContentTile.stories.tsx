@@ -2,29 +2,31 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
 import { ContentTile } from './';
-import { Flex } from '../Flex';
-import ContentTileDocs from './ContentTile.mdx';
 
 export default {
   title: 'UI Components/Video/ContentTile',
-  parameters: {
-    docs: {
-      page: ContentTileDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: ContentTile,
 };
 
-export const _ContentTile = () => {
+export const _ContentTile = (args) => {
   return (
-    <Flex css="height: 100vh" layout="fill-space-centered">
-      <div style={{ height: '30rem', width: '50rem', margin: '2rem auto' }}>
-        <ContentTile nameplate="Content share" />
-      </div>
-    </Flex>
+    <div style={{ height: '30rem', width: '50rem', margin: '2rem auto' }}>
+      <ContentTile {...args} />
+    </div>
   );
+};
+
+_ContentTile.argTypes = {
+  nameplate: { control: 'text' },
+  objectFit: { table: { disable: true } },
+  theme: { table: { disable: true } },
+  as: { table: { disable: true } },
+  forwardedAs: { table: { disable: true } },
+};
+
+_ContentTile.args = {
+  nameplate: 'Content share',
 };
 
 _ContentTile.story = {

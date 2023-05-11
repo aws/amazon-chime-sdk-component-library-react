@@ -1,4 +1,5 @@
 import type { StorybookConfig } from '@storybook/react-webpack5';
+
 const config: StorybookConfig = {
   typescript: {
     check: false,
@@ -16,18 +17,19 @@ const config: StorybookConfig = {
     '../src/components/*.mdx',
     '../src/components/sdk/**/*.mdx',
     '../src/components/ui/icons/*/**.@(stories.tsx|mdx)',
-    '../src/components/ui/Badge/*.mdx',
-    '../src/components/ui/Badge/*.stories.tsx',
-    '../src/components/ui/Button/*.mdx',
-    '../src/components/ui/Button/*.stories.tsx',
-    '../src/components/ui/Checkbox/*.mdx',
-    '../src/components/ui/Checkbox/*.stories.tsx',
-    '../src/components/ui/FormField/*.mdx',
-    '../src/components/ui/FormField/*.stories.tsx',
-    '../src/components/ui/Radio/*.mdx',
-    '../src/components/ui/Radio/*.stories.tsx',
-    '../src/components/ui/Flex/docs/*.mdx',
-    '../src/components/ui/Flex/docs/*.stories.tsx',
+    '../src/components/ui/Badge/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Button/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Checkbox/**.@(stories.tsx|mdx)',
+    '../src/components/ui/ContentTile/**.@(stories.tsx|mdx)',
+    '../src/components/ui/ControlBar/**.@(stories.tsx|mdx)',
+    '../src/components/ui/FormField/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Radio/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Heading/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Label/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Input/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Modal/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Navbar/**.@(stories.tsx|mdx)',
+    '../src/components/ui/Flex/docs/**.@(stories.tsx|mdx)',
   ],
   addons: [
     {

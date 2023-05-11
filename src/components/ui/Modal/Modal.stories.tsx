@@ -2,7 +2,6 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React, { useState } from 'react';
-import { select } from '@storybook/addon-knobs';
 
 import Flex from '../Flex';
 import FormField from '../FormField';
@@ -13,16 +12,10 @@ import ModalBody from './ModalBody';
 import ModalButton from './ModalButton';
 import ModalButtonGroup from './ModalButtonGroup';
 import PrimaryButton from '../Button/PrimaryButton';
-import ModalDocs from './Modal.mdx';
 import Heading from '../Heading';
 
 export default {
   title: 'UI Components/Modal',
-  parameters: {
-    docs: {
-      page: ModalDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Modal,
   excludeStories: ['ModalDemo'],
 };
@@ -56,7 +49,13 @@ const TestRadioGroup: React.FC<React.PropsWithChildren<{}>> = (props) => {
   );
 };
 
-export const BasicExample = () => {
+const commonHiddenArgTypes = {
+  onClose: { table: { disable: true } },
+  rootId: { table: { disable: true } },
+  dismissible: { table: { disable: true } },
+};
+
+export const BasicModal = (args) => {
   const [showModal, setShowModal] = useState(false);
   const toggleModal = () => setShowModal(!showModal);
 
@@ -67,11 +66,7 @@ export const BasicExample = () => {
           <Heading level={6}>Modal basic example</Heading>
           <PrimaryButton onClick={toggleModal} label="toggle modal" />
           {showModal && (
-            <Modal
-              size={select('size', ['md', 'lg', 'fullscreen'], 'md')}
-              onClose={toggleModal}
-              rootId="modal-root"
-            >
+            <Modal {...args} onClose={toggleModal} rootId="modal-root">
               <ModalHeader title="Start an instant meeting" />
 
               <ModalBody>
@@ -111,9 +106,18 @@ export const BasicExample = () => {
   );
 };
 
-BasicExample.story = 'Basic Example';
+BasicModal.argTypes = {
+  size: { control: 'select', options: ['md', 'lg', 'fullscreen'] },
+  ...commonHiddenArgTypes,
+};
 
-export const largeContent = () => {
+BasicModal.args = {
+  size: 'md',
+};
+
+BasicModal.story = 'Basic Modal';
+
+export const ScrollableModal = (args) => {
   const [showModal, setShowModal] = useState(false);
   const toggleModal = () => setShowModal(!showModal);
 
@@ -125,11 +129,7 @@ export const largeContent = () => {
           <PrimaryButton onClick={toggleModal} label="toggle modal" />
 
           {showModal && (
-            <Modal
-              size={select('size', ['md', 'lg', 'fullscreen'], 'md')}
-              onClose={toggleModal}
-              rootId="modal-root"
-            >
+            <Modal {...args} onClose={toggleModal} rootId="modal-root">
               <ModalHeader title="Scrollable content example" />
               <ModalBody>
                 <div style={{ margin: '0 0 1rem' }}>
@@ -269,11 +269,20 @@ export const largeContent = () => {
   );
 };
 
-largeContent.story = {
-  name: 'Large Content Example',
+ScrollableModal.argTypes = {
+  size: { control: 'select', options: ['md', 'lg', 'fullscreen'] },
+  ...commonHiddenArgTypes,
 };
 
-export const PersistentExample = () => {
+ScrollableModal.args = {
+  size: 'md',
+};
+
+ScrollableModal.story = {
+  name: 'Scrollable Modal',
+};
+
+export const PersistentModal = (args) => {
   const [showModal, setShowModal] = useState(false);
   const toggleModal = () => setShowModal(!showModal);
 
@@ -285,7 +294,7 @@ export const PersistentExample = () => {
           <PrimaryButton onClick={toggleModal} label="open modal" />
           {showModal && (
             <Modal
-              size={select('size', ['md', 'lg', 'fullscreen'], 'md')}
+              {...args}
               onClose={null}
               rootId="modal-root"
               dismissible={false}
@@ -294,31 +303,29 @@ export const PersistentExample = () => {
               <ModalBody>
                 <p style={{ margin: '0 0 1rem' }}>
                   Vivamus nisi justo, sagittis eu dolor vel, pretium placerat
-                  dolor. Vestibulum ante ipsum primis in faucibus orci luctus
-                  et ultrices posuere cubilia curae; Nullam condimentum nisi
-                  velit, id pellentesque quam facilisis dapibus. Donec orci
-                  est, faucibus at dapibus sit amet, hendrerit vitae libero.
-                  Quisque sed pellentesque diam. Fusce vitae imperdiet nisi, a
-                  elementum ante. Lorem ipsum dolor sit amet, consectetur
-                  adipiscing elit. Sed fringilla pharetra nunc, sed ornare
-                  urna congue a.
+                  dolor. Vestibulum ante ipsum primis in faucibus orci luctus et
+                  ultrices posuere cubilia curae; Nullam condimentum nisi velit,
+                  id pellentesque quam facilisis dapibus. Donec orci est,
+                  faucibus at dapibus sit amet, hendrerit vitae libero. Quisque
+                  sed pellentesque diam. Fusce vitae imperdiet nisi, a elementum
+                  ante. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Sed fringilla pharetra nunc, sed ornare urna congue a.
                 </p>
                 <p style={{ margin: '0 0 1rem' }}>
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Suspendisse urna eros, vestibulum quis gravida quis, tempus
-                  in sapien. Sed aliquet velit lectus, ac tempus dui iaculis
-                  ac. Morbi ullamcorper laoreet magna ac commodo. Aenean
-                  pharetra nulla sapien, nec interdum dolor semper quis. Ut
-                  posuere libero at scelerisque iaculis. Phasellus eu arcu
-                  ullamcorper, ultrices turpis id, pretium tellus. Integer
-                  accumsan ultrices semper. Maecenas eu scelerisque metus, nec
-                  pulvinar odio. Nunc imperdiet efficitur vehicula. Curabitur
-                  laoreet ut tellus quis sagittis. Nulla auctor vitae felis
-                  quis convallis. Nunc hendrerit imperdiet elit at auctor.
-                  Integer condimentum euismod orci vitae venenatis. Proin
-                  maximus in sem vitae auctor. Aliquam egestas, lorem vel
-                  volutpat pharetra, dolor felis malesuada lorem, vitae
-                  fermentum eros erat tempor lacus.
+                  Suspendisse urna eros, vestibulum quis gravida quis, tempus in
+                  sapien. Sed aliquet velit lectus, ac tempus dui iaculis ac.
+                  Morbi ullamcorper laoreet magna ac commodo. Aenean pharetra
+                  nulla sapien, nec interdum dolor semper quis. Ut posuere
+                  libero at scelerisque iaculis. Phasellus eu arcu ullamcorper,
+                  ultrices turpis id, pretium tellus. Integer accumsan ultrices
+                  semper. Maecenas eu scelerisque metus, nec pulvinar odio. Nunc
+                  imperdiet efficitur vehicula. Curabitur laoreet ut tellus quis
+                  sagittis. Nulla auctor vitae felis quis convallis. Nunc
+                  hendrerit imperdiet elit at auctor. Integer condimentum
+                  euismod orci vitae venenatis. Proin maximus in sem vitae
+                  auctor. Aliquam egestas, lorem vel volutpat pharetra, dolor
+                  felis malesuada lorem, vitae fermentum eros erat tempor lacus.
                 </p>
               </ModalBody>
             </Modal>
@@ -329,7 +336,16 @@ export const PersistentExample = () => {
   );
 };
 
-PersistentExample.story = 'Persistent Modal Example';
+PersistentModal.argTypes = {
+  size: { control: 'select', options: ['md', 'lg', 'fullscreen'] },
+  ...commonHiddenArgTypes,
+};
+
+PersistentModal.args = {
+  size: 'md',
+};
+
+PersistentModal.story = 'Persistent Modal';
 
 export const ModalDemo = () => {
   const [isOpen, setIsOpen] = useState(false);

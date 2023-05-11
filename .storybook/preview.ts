@@ -26,6 +26,7 @@ export const argTypes = {
   viewBox: { table: { disable: true } },
   height: { table: { disable: true } },
   title: { table: { disable: true } },
+  children: { table: { disable: true } },
 };
 
 export const parameters = {
