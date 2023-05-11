@@ -148,6 +148,7 @@ export class MeetingManager implements AudioVideoObserver {
       eventController,
       enableWebAudio,
       activeSpeakerPolicy,
+      skipDeviceSelection
     } = this.parseJoinParams(options);
     this.meetingSessionConfiguration = meetingSessionConfiguration;
     this.meetingId = this.meetingSessionConfiguration.meetingId;
@@ -172,7 +173,11 @@ export class MeetingManager implements AudioVideoObserver {
 
     this.setupAudioVideoObservers();
     this.setupDeviceLabelTrigger(deviceLabels);
-    await this.listAndSelectDevices(deviceLabels);
+    if (!skipDeviceSelection) {
+      this.logger.info('[MeetingManager.join] listing and selecting devices');
+      await this.listAndSelectDevices(deviceLabels);
+    }
+    
     this.publishAudioVideo();
     this.setupActiveSpeakerDetection(activeSpeakerPolicy);
     this.meetingStatus = MeetingStatus.Loading;
@@ -189,12 +194,14 @@ export class MeetingManager implements AudioVideoObserver {
     const enableWebAudio: boolean = options?.enableWebAudio || false;
     const activeSpeakerPolicy: ActiveSpeakerPolicy =
       options?.activeSpeakerPolicy || new DefaultActiveSpeakerPolicy();
+    const skipDeviceSelection = options?.skipDeviceSelection || false;
 
     return {
       deviceLabels,
       eventController,
       enableWebAudio,
       activeSpeakerPolicy,
+      skipDeviceSelection
     };
   }
 

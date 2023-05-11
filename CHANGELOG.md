@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add `skipDeviceSelection` option on the `MeetingManager.join` API. The `MeetingManager.join` by default lists and selects audio input, output and video input devices. Use `skipDeviceSelection` flag to skip this default device selection. This is helpful when builders want to fully control device selection as part of meeting initialization. This also avoids no-audio issues in Safari which happens due to listing and selecting devices multiple times.
+
 ### Removed
 
 ### Changed

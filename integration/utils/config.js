@@ -31,7 +31,8 @@ const config = {
         'disable-infobars',
         'ignore-gpu-blacklist',
         'test-type',
-        'disable-gpu'
+        'disable-gpu',
+        '--disable-features=EnableEphemeralFlashPermission'
       ],
     },
   },
