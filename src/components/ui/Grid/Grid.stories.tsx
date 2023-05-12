@@ -2,25 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { boolean, number, text } from '@storybook/addon-knobs';
 
 import Flex from '../Flex';
 import Grid from './';
 import Cell from './Cell';
-import GridDocs from './Grid.mdx';
 
 export default {
   title: 'UI Components/Grid',
-  parameters: {
-    docs: {
-      page: GridDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Grid,
   excludeStories: ['Child'],
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
-export const Child: React.FC<React.PropsWithChildren<unknown>> = ({ children }) => (
+export const Child: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => (
   <Flex
     layout="fill-space-centered"
     style={{ backgroundColor: '#232222', color: 'white' }}
@@ -29,26 +27,37 @@ export const Child: React.FC<React.PropsWithChildren<unknown>> = ({ children }) 
   </Flex>
 );
 
-export const BasicGrid = () => {
-  const childCount = number('Grid items count', 5);
-  const children = new Array(childCount)
+export const BasicGrid = (args) => {
+  const children = new Array(args.size)
     .fill(0)
     .map((x, i) => <Child key={i}>Child</Child>);
 
-  const props = {
-    responsive: boolean('responsive', true),
-    gridGap: text('gridGap', '.5rem'),
-    gridAutoFlow: text('gridAutoFlow', ''),
-    gridTemplateRows: text('gridTemplateRows', ''),
-    gridTemplateColumns: text('gridTemplateColumns', 'repeat(2, 1fr) 4fr'),
-  };
-
   return (
     <div style={{ height: '100vh' }}>
-      <Grid {...props}>{children}</Grid>
+      <Grid {...args}>{children}</Grid>
     </div>
   );
 };
+
+BasicGrid.argTypes = {
+  size: { control: 'number' },
+  responsive: { control: 'boolean' },
+  gridGap: { control: 'text' },
+  gridAutoFlow: { control: 'text' },
+  gridTemplateRows: { control: 'text' },
+  gridTemplateColumns: { control: 'text' },
+};
+
+BasicGrid.args = {
+  size: 4,
+  responsive: true,
+  gridGap: '.5rem',
+  gridAutoFlow: '',
+  gridTemplateRows: '',
+  gridTemplateColumns: 'repeat(2, 1fr) 4fr',
+};
+
+BasicGrid.story = 'Basic Grid';
 
 export const NamedGrid = () => {
   return (

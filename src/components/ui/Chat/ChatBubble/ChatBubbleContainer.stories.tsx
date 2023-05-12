@@ -9,15 +9,8 @@ import ChatBubble from './';
 import PopOverItem from '../../PopOver/PopOverItem';
 import { formatTime } from '../../Utilities';
 
-import ChatBubbleContainerDocs from './ChatBubbleContainer.mdx';
-
 export default {
   title: 'UI Components/Chat/ChatBubbleContainer',
-  parameters: {
-    docs: {
-      page: ChatBubbleContainerDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: ChatBubbleContainer,
 };
 

@@ -19,34 +19,29 @@ export const zIndex = {
   notificationGroup: 40,
 };
 
-enum BreakpointEnum {
-  xs = 'xs',
-  sm = 'sm',
-  md = 'md',
-  lg = 'lg',
-  xl = 'xl',
-}
-
-const breakpointValues = {
-  [BreakpointEnum.xs]: '20rem', // 320px phone
-  [BreakpointEnum.sm]: '35.5rem', // 568px tablet
-  [BreakpointEnum.md]: '48rem', // 768px small laptop
-  [BreakpointEnum.lg]: '64rem', // 1024px desktop
-  [BreakpointEnum.xl]: '90rem', // 1440px large screen
+// To fix the error: cache.breakpoints.map is not a function
+// https://github.com/styled-system/styled-system/issues/1318
+type Breakpoints = Array<string> & {
+  xs?: string;
+  sm?: string;
+  md?: string;
+  lg?: string;
+  xl?: string;
 };
 
-const breakpointAliaseValues = {
-  [0]: breakpointValues[BreakpointEnum.xs],
-  [1]: breakpointValues[BreakpointEnum.sm],
-  [2]: breakpointValues[BreakpointEnum.md],
-  [3]: breakpointValues[BreakpointEnum.lg],
-  [4]: breakpointValues[BreakpointEnum.xl],
-};
+const breakpoints: Breakpoints = [
+  '20rem',
+  '35.5rem',
+  '48rem',
+  '64rem',
+  '90rem',
+];
 
-const breakpoints = {
-  ...breakpointValues,
-  ...breakpointAliaseValues,
-};
+breakpoints.xs = breakpoints[0]; // 320px phone
+breakpoints.sm = breakpoints[1]; // 568px tablet
+breakpoints.md = breakpoints[2]; // 768px small laptop
+breakpoints.lg = breakpoints[3]; // 1024px desktop
+breakpoints.xl = breakpoints[4]; // 1440px large screen
 
 const mediaQueries = {
   min: {

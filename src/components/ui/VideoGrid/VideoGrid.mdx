@@ -1,10 +1,13 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import VideoGrid from '.';
 import VideoTile from '../VideoTile';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as VideoGridStories from './VideoGrid.stories.tsx';
+
+<Meta of={VideoGridStories} />
 
 # VideoGrid
 
@@ -22,7 +25,7 @@ import { VideoGrid, VideoTile } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
       <VideoGrid>
         <VideoTile
@@ -41,7 +44,7 @@ import { VideoGrid, VideoTile } from 'amazon-chime-sdk-component-library-react';
         />
       </VideoGrid>
     </div>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -69,7 +72,7 @@ import { VideoGrid, VideoTile } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
       <VideoGrid layout="featured">
         <VideoTile
@@ -95,7 +98,7 @@ import { VideoGrid, VideoTile } from 'amazon-chime-sdk-component-library-react';
         />
       </VideoGrid>
     </div>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -130,8 +133,8 @@ import { VideoGrid, VideoTile } from 'amazon-chime-sdk-component-library-react';
 
 #### VideoGrid component
 
-<Props of={VideoGrid} />
+<ArgTypes of={VideoGrid} />
 
 #### VideoTile component
 
-<Props of={VideoTile} />
+<ArgTypes of={VideoTile} />

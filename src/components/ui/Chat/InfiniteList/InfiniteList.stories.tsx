@@ -5,15 +5,9 @@ import React, { useState } from 'react';
 
 import Flex from '../../Flex';
 import InfiniteList from './';
-import InfiniteListDocs from './InfiniteList.mdx';
 
 export default {
   title: 'UI Components/Chat/InfiniteList',
-  parameters: {
-    docs: {
-      page: InfiniteListDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: InfiniteList,
 };
 
@@ -25,7 +19,7 @@ export const BasicInfiniteList = () => {
 
   const createBatch = (batchNum) => {
     if (batchNum <= numberOfBatches) {
-      const batch = [];
+      const batch: JSX.Element[] = [];
       for (let i = 1; i <= batchSize; i++) {
         batch.push(
           <div

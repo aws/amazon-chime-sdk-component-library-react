@@ -2,28 +2,17 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { boolean } from '@storybook/addon-knobs';
 
 import Flex from '../../Flex';
 import ChatBubble from './';
 import MessageAttachment from '../MessageAttachment';
 
-import ChatBubbleDocs from './ChatBubble.mdx';
-
 export default {
   title: 'UI Components/Chat/ChatBubble',
-  parameters: {
-    docs: {
-      page: ChatBubbleDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: ChatBubble,
 };
 
-export const _ChatBubble = () => {
-  const showTail = boolean('showTail', false);
-  const showName = boolean('showName', true);
-
+export const _ChatBubble = (args) => {
   const containerStyles = `
     display: flex; 
     flex-direction: column;
@@ -37,81 +26,46 @@ export const _ChatBubble = () => {
   return (
     <Flex layout="fill-space-centered" css={containerStyles}>
       <ChatBubble
-        variant="incoming"
-        senderName="Kam Chancellor"
-        showTail={showTail}
-        showName={showName}
+        variant={args.variant}
+        senderName={args.senderName}
+        timestamp={args.timestamp}
+        showTail={args.showTail}
         css={bubbleStyles}
       >
-        This is an incoming message.
-      </ChatBubble>
-      <ChatBubble
-        variant="outgoing"
-        senderName="Jamal Adams"
-        showTail={showTail}
-        showName={showName}
-        css={bubbleStyles}
-      >
-        This is an outgoing message with longer text. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum
+        {args.message}
+        {args.withAttachment && (
+          <MessageAttachment
+            name="Report.pdf"
+            size="23.3KB"
+            downloadUrl="https://test.com/download/Report.pdf"
+            css="margin-top: 1rem"
+          />
+        )}
       </ChatBubble>
     </Flex>
   );
+};
+
+_ChatBubble.argTypes = {
+  showTail: { control: 'boolean' },
+  variant: { control: 'select', options: ['incoming', 'outgoing'] },
+  senderName: { control: 'text' },
+  message: { control: 'text' },
+  timestamp: { control: 'text' },
+  withAttachment: { control: 'boolean' },
+  redacted: { table: { disable: true } },
+};
+
+_ChatBubble.args = {
+  showTail: false,
+  variant: 'incoming',
+  message:
+    'This is a long message. This amount of text reaches the max length and goes onto the next line.',
+  senderName: 'Kam Chancellor',
+  timestamp: '2022-02-22',
+  withAttachment: false,
 };
 
 _ChatBubble.story = {
   name: 'ChatBubble',
-};
-
-export const ChatBubbleWithMessageAttachment = () => {
-  const showTail = boolean('showTail', false);
-  const showName = boolean('showName', true);
-
-  const containerStyles = `
-    display: flex; 
-    flex-direction: column;
-    padding-top: 1rem;
-  `;
-
-  const bubbleStyles = `
-    margin: 1rem;
-  `;
-
-  return (
-    <Flex layout="fill-space-centered" css={containerStyles}>
-      <ChatBubble
-        variant="outgoing"
-        senderName="Fred Miller"
-        showTail={showTail}
-        showName={showName}
-        css={bubbleStyles}
-      >
-        This is an outgoing message with attachment
-        <MessageAttachment
-          name="Report.pdf"
-          size="23.3KB"
-          downloadUrl="https://test.com/download/Report.pdf"
-          css="margin-top: 1rem"
-        />
-      </ChatBubble>
-      <ChatBubble
-        variant="incoming"
-        senderName="Sarah Anderson"
-        showTail={showTail}
-        showName={showName}
-        css={bubbleStyles}
-      >
-        This is an incoming message with attachment. It is much longer. This amount of text reaches the max length and goes onto the next line.
-        <MessageAttachment
-          name="Report.pdf"
-          size="23.3KB"
-          downloadUrl="https://test.com/download/Report.pdf"
-          css="margin-top: 1rem"
-        />
-      </ChatBubble>
-    </Flex>
-  );
-};
-
-ChatBubbleWithMessageAttachment.story = {
-  name: 'ChatBubble with MessageAttachment',
 };

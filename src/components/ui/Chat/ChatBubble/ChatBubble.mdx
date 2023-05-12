@@ -1,10 +1,13 @@
-import { Props, Canvas } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import ChatBubble from './';
 import MessageAttachment from '../MessageAttachment';
 import { lightTheme } from '../../../../theme';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as ChatBubbleStories from './ChatBubble.stories.tsx';
+
+<Meta of={ChatBubbleStories} />
 
 # ChatBubble
 
@@ -43,11 +46,7 @@ import {
     >
       You should have put him in custardy.
     </ChatBubble>
-    <ChatBubble
-      variant="outgoing"
-      senderName="Fred Miller"
-      css="margin: 1rem;"
-    >
+    <ChatBubble variant="outgoing" senderName="Fred Miller" css="margin: 1rem;">
       This is an outgoing message with attachment
       <MessageAttachment
         name="Report.pdf"
@@ -91,4 +90,4 @@ import {
 
 ## Props
 
-<Props of={ChatBubble} />
+<ArgTypes of={ChatBubble} />

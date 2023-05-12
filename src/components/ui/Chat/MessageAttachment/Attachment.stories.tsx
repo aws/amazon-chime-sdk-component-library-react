@@ -5,15 +5,9 @@ import React from 'react';
 
 import Flex from '../../Flex';
 import MessageAttachment from '.';
-import MessageAttachmentDocs from './Attachment.mdx';
 
 export default {
   title: 'UI Components/Chat/MessageAttachment',
-  parameters: {
-    docs: {
-      page: MessageAttachmentDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: MessageAttachment,
 };
 

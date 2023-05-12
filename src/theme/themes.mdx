@@ -1,10 +1,9 @@
-import { Preview } from '@storybook/addon-docs/blocks';
+import { Meta, Canvas } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import { lightTheme, darkTheme, GlobalStyles } from './';
 import {
   Button,
-  Checkbox,
   Meeting,
   PrimaryButton,
   Roster,
@@ -45,13 +44,13 @@ import { ThemeProvider } from 'styled-components';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Flex container alignItems="center" justifyContent="space-around">
       <Button label="Basic button" />
       <PrimaryButton label="Primary" icon={<Meeting />} />
       <SecondaryButton label="This is a secondary button" />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -67,13 +66,13 @@ import { ThemeProvider } from 'styled-components';
 
 <ThemeProvider theme={darkTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Flex container alignItems="center" justifyContent="space-around">
       <Button label="Basic button" />
       <PrimaryButton label="Primary" icon={<Meeting />} />
       <SecondaryButton label="This is a secondary button" />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -89,7 +88,7 @@ import { ThemeProvider } from 'styled-components';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Roster>
       <RosterHeader
         title="Present"
@@ -117,7 +116,7 @@ import { ThemeProvider } from 'styled-components';
         <RosterCell name="Mike the Magic" subtitle="Magician" />
       </RosterGroup>
     </Roster>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -157,7 +156,7 @@ import { ThemeProvider } from 'styled-components';
 
 <ThemeProvider theme={darkTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Roster>
       <RosterHeader
         title="Present"
@@ -185,7 +184,7 @@ import { ThemeProvider } from 'styled-components';
         <RosterCell name="Mike the Magic" subtitle="Magician" />
       </RosterGroup>
     </Roster>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx

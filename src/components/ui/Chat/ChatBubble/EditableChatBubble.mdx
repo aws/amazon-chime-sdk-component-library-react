@@ -1,9 +1,12 @@
-import { Props, Canvas } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import EditableChatBubble from './EditableChatBubble';
 import { lightTheme } from '../../../../theme';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as EditableChatBubbleStories from './EditableChatBubble.stories.tsx';
+
+<Meta of={EditableChatBubbleStories} />
 
 # EditableChatBubble
 
@@ -43,4 +46,4 @@ import { EditableChatBubble } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={EditableChatBubble} />
+<ArgTypes of={EditableChatBubble} />
