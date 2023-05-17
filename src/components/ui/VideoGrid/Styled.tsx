@@ -24,7 +24,7 @@ const sortedRatios: AspectRatio[] = [
 
 const ratioStyles = {
   '1': 'grid-template: 1fr / 1fr;',
-  '1.slim': 'grid-template: repeat(2, 1fr) / 1fr;',
+  '1.slim': 'grid-template: repeat(1, 1fr) / 1fr;',
   '1.r2by3': 'grid-template: 1fr / 1fr;',
 
   '1.featured': `grid-template: "ft" 1fr / 1fr;`,
