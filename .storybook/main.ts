@@ -29,6 +29,9 @@ const config: StorybookConfig = {
   },
   docs: {
     autodocs: true,
+    // Storybook 7 appends "--page" to the URL of auto-generated documentation.
+    // By default, Storybook uses the "Docs" name that would break all our existing links.
+    defaultName: 'Page',
   },
 };
 export default config;
