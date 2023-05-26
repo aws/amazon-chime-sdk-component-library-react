@@ -117,7 +117,7 @@ describe('ModalButtonGroup', () => {
     const component = (
       <ModalContext.Provider value={context}>
         <ModalButtonGroup
-          primaryButtons={[<ModalButton label="close" closesModal />]}
+          primaryButtons={[<ModalButton label="close" closesModal key="close-button"/>]}
         />
       </ModalContext.Provider>
     );

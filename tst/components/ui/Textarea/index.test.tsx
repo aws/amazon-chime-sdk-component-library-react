@@ -48,14 +48,14 @@ describe('Textarea', () => {
     expect(textarea).toHaveDisplayValue(value);
   });
 
-  it('should call onChange event handler when input', () => {
+  it('should call onChange event handler when input', async () => {
     const component = (
       <Textarea value={value} onChange={mockFunction} label={label} />
     );
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const textarea = getByTestId('textarea');
 
-    userEvent.type(textarea, 'updated content');
+    await userEvent.type(textarea, 'updated content');
     expect(mockFunction).toHaveBeenCalledTimes(15);
   });
 });
