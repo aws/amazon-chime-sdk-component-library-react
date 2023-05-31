@@ -2,24 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import { text } from '@storybook/addon-knobs';
 import Presenter from '.';
-import PresenterIconDocs from './Presenter.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/Presenter',
-  parameters: {
-    docs: {
-      page: PresenterIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Presenter,
 };
 
-export const _Presenter = () => (
-  <Flex layout="fill-space-centered">
-    <Presenter width={text('width', '2rem')} />
-  </Flex>
-);
+export const _Presenter = (args) => <Presenter {...args} />;
+
+_Presenter.argTypes = {
+  width: { control: 'text' },
+};
+
+_Presenter.args = {
+  width: '2rem',
+};
+
+_Presenter.story = {
+  name: 'Presenter',
+};

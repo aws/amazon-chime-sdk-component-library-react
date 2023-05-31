@@ -12,7 +12,7 @@ const trapFocus = (e: KeyboardEvent, content: HTMLElement) => {
   );
   const firstFocusableEl = focusableElements[0];
   const lastFocusableEl = focusableElements[focusableElements.length - 1];
-  if (e.keyCode === KEY_CODES.TAB) {
+  if (e.keyCode === KEY_CODES.TAB || e.code === 'Tab') {
     if (e.shiftKey && document.activeElement === firstFocusableEl) {
       e.preventDefault();
       lastFocusableEl.focus();

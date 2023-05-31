@@ -1,0 +1,133 @@
+import { Meta, ArgTypes } from '@storybook/blocks';
+import { BackgroundReplacementProvider } from '../';
+
+<Meta title="SDK Providers/BackgroundReplacementProvider" />
+
+# BackgroundReplacementProvider
+
+The `BackgroundReplacementProvider` provides a function transforming a normal video device to a `DefaultVideoTransformDevice`, and also whether or not the background replacement feature is supported.
+Background replacement related logs can be found in the browser developer tools when the `BackgroundReplacementProvider` is used within the app component tree.
+
+This provider is independent from `MeetingProvider`. You can put `BackgroundReplacementProvider` wherever you want in the component tree so long as any component that relies on
+`BackgroundReplacementProvider` is nested within `BackgroundReplacementProvider`. The `BackgroundReplacementProvider` loads the required worker assets
+when mounted, which may impact performance.
+
+## State
+
+```typescript
+{
+  // Whether background replacement is supported. The default value is undefined, then changes to true or false.
+  isBackgroundReplacementSupported: boolean | undefined;
+
+  // A function to transform a video input device to a `DefaultVideoTransformDevice`.
+  createBackgroundReplacementDevice: (device: Device) => Promise<DefaultVideoTransformDevice>;
+}
+
+```
+
+You should see either "processor is supported" or "processor is not supported" in your browser developer tools based on whether or not
+background replacement is supported on your device and browser version. For more information on if background replacement is supported, refer
+to [Integrating background filters into your Amazon Chime SDK for JavaScript application](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#integrating-background-filters-into-your-amazon-chime-sdk-for-javascript-application).
+
+You can check whether or not the processor has been loaded correctly by checking the state of `isBackgroundReplacementSupported`.
+`createBackgroundReplacementDevice` may throw an error if the processor was not loaded. You should check whether or not the processor has been loaded correctly by checking the state of `isBackgroundReplacementSupported`
+before calling `createBackgroundReplacementDevice`. Calling `createBackgroundReplacementDevice` will create a `DefaultVideoTransformDevice`. Users would also need to call `DefaultVideoTransformDevice.stop` when constructing a new
+`DefaultVideoTransformDevice` with `createBackgroundReplacementDevice` in order to destroy the processors running previously. Once you call `DefaultVideoTransformDevice.stop`, you should discard the old `DefaultVideoTransformDevice`.
+For more information, refer to [Video Processing APIs](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/10_Video_Processor.md#stopping-videotransformdevice).
+
+You can access the current `backgroundReplacementProcessor` applied to the video device that is generated when you call `createBackgroundBlurDevice`. You can apply observer notifications to the processor. Refer to [the guide for adding observer notifications to a BackgroundReplacementProcessor](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#observer-notifications)
+
+One thing to note is that calling `meetingManager.startVideoInputDevice()` with a `Device` type while the current selected video input device is a `VideoTransformDevice`
+will automatically stop any processors running within a `DefaultVideoTransformDevice` that was previously running. Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `createBackgroundReplacementDevice`.
+if the Props of the provider were changed.
+
+You can access the state by using the [useBackgroundReplacement](/docs/sdk-hooks-useBackgroundReplacement--page) hook.
+
+## Props
+
+<ArgTypes of={BackgroundReplacementProvider} />
+
+## Importing
+
+```javascript
+import { BackgroundReplacementProvider } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  isVideoTranformDevice,
+  VideoTransformDevice,
+} from 'amazon-chime-sdk-js';
+import {
+  MeetingProvider,
+  BackgroundReplacementProvider,
+  useMeetingManager,
+  useBackgroundReplacement,
+  useVideoInputs,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <BackgroundReplacementProvider>
+    <MeetingProvider>
+      <MyChild />
+    </MeetingProvider>
+  </BackgroundReplacementProvider>
+);
+
+const MyChild = () => {
+  const meetingManager = useMeetingManager();
+  const { selectedDevice } = useVideoInputs();
+  const [isVideoTransformChecked, setIsVideoTransformCheckOn] = useState(false);
+  const {
+    isBackgroundReplacementSupported,
+    createBackgroundReplacementDevice,
+  } = useBackgroundReplacement();
+
+  useEffect(() => {
+    async function toggleBackgroundReplacement() {
+      try {
+        let current = selectedDevice;
+        if (isVideoTransformChecked) {
+          current = await createBackgroundReplacementDevice(selectedDevice);
+        } else {
+          if (isVideoTransformDevice(selectedDevice)) {
+            let intrinsicDevice = await selectedDevice.intrinsicDevice();
+            selectedDevice.stop();
+            current = intrinsicDevice;
+          }
+        }
+        await meetingManager.startVideoInputDevice(current);
+      } catch (error) {
+        // Handle device selection failure here
+        console.error('Failed to toggle Background Replacement');
+      }
+    }
+
+    toggleBackgroundReplacement();
+  }, [isVideoTransformChecked]);
+
+  const onClick = () => {
+    setisVideoTransformCheckOn((current) => !current);
+  };
+
+  return (
+    <div>
+      {isBackgroundReplacementSupported && (
+        <button onClick={onClick}>
+          {isVideoTranformDevice(selectedDevice)
+            ? 'Background Replacement Enabled'
+            : 'Enable Background Replacement'}
+        </button>
+      )}
+    </div>
+  );
+};
+```
+
+### Dependencies
+
+- `MeetingProvider`
+- `BackgroundReplacementProvider`

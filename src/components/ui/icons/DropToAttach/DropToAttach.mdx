@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import DropToAttach from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as DropToAttachStories from './DropToAttach.stories.tsx';
+
+<Meta of={DropToAttachStories} />
 
 # DropToAttach Icon
 
@@ -19,9 +22,9 @@ import { DropToAttach } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <DropToAttach width="10rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +33,4 @@ import { DropToAttach } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={DropToAttach} />
+<ArgTypes of={DropToAttach} />

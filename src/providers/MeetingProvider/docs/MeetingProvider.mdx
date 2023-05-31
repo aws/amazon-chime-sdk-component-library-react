@@ -1,0 +1,88 @@
+import { Meta, ArgTypes } from '@storybook/blocks';
+import { MeetingProvider } from '../';
+
+<Meta title="SDK Providers/MeetingProvider" />
+
+# MeetingProvider
+
+The `MeetingProvider` is the **root provider** for building a realtime meeting application. It is responsible for rendering out a series of providers and providing a `MeetingManager` class that helps integration with the Chime JavaScript SDK. The `MeetingManager` has APIs for joining, starting, and leaving a meeting.
+
+You can access the `MeetingManager` instance with the `useMeetingManager` hook.
+
+## Importing
+
+```jsx
+import { MeetingProvider } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+1. Render the `MeetingProvider` near the root of your application.
+
+```jsx
+import React from 'react';
+import { MeetingProvider } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyApp />
+  </MeetingProvider>
+);
+```
+
+2. Render two `MeetingProvider`s near the root of your application with the same `MeetingManager` instance.
+
+**IMPORTANT NOTE**
+This approach has limitations. This should be used only in very specific cases where you want to share the meeting manager instance
+variable values or you will not use video, roster and audio at both places. Still, the hooks and providers may not work as expected as `MeetingProvider` wraps all the other providers.
+The video will not work due to limitations of JS SDK to bind a video stream to a single video tile only. Please check [this](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/492#issuecomment-846317339) issue for more details.
+
+Please make sure your app calls `meetingManager.join(meetingSessionConfiguration)` only once. The `join` method needs `MeetingSessionConfiguration` as a required parameter. `MeetingSessionConfiguration` should be created with the same `attendeeInfo`.
+Otherwise, the previous attendee who joined the meeting will leave the meeting with [AudioJoinedFromAnotherDevice](https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice).
+
+```jsx
+import { ConsoleLogger } from 'amazon-chime-sdk-js';
+import { MeetingProvider, useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+
+const Root = () => {
+  const meetingManager = new MeetingManager(new ConsoleLogger('LoggerName'));
+
+  return (
+    <MeetingProvider meetingManager={meetingManager}>
+      <MyApp1 />
+    </MeetingProvider>
+
+    <MeetingProvider meetingManager={meetingManager}>
+      <MyApp2 />
+    </MeetingProvider>
+  );
+}
+```
+
+## Props
+
+<ArgTypes of={MeetingProvider} />
+
+### Prop values
+
+#### onDeviceReplacement
+
+When a selected device is disconnected, or when the Operating System (OS) default device is selected and is changed by the OS (e.g., if a Bluetooth headset is disconnected),
+the `AudioInputProvider` encapsulated by `DevicesProvider` is forced to automatically select a new audio input. This behaves as expected when the selected device is an ordinary device provided by the browser.
+However, when your application is using a transform device like Amazon Voice Focus, the `AudioInputProvider` needs a way to transform the newly selected device to avoid reverting to a non-transform device.
+This is accomplished by exposing a `onDeviceReplacement` prop on `MeetingProvider` and `DevicesProvider`, allowing your application to customize the behavior of this device reselection step.
+Provide a function that accepts a `Device` as input and returns a `Device` or `AudioTransformDevice` of your choice.
+
+#### meetingManager
+
+There may be use cases to re-use the same `MeetingManager` instance across multiple different `MeetingProvider`s.
+Hence, you can create a new `MeetingManager` instance and then pass it as a prop to your `MeetingProvider`s. If not passed,
+a new `MeetingManager` instance will be created internally with each `MeetingProvider` when rendered; and,
+you will get the `MeetingManager` instance associated with that particular `MeetingProvider` when `useMeetingManager` hook is called.
+
+This approach has limitations. This should be used only in very specific cases where you want to share the meeting manager instance
+variable values and you will not use video, roster and audio at both places. Still, the hooks and providers may not work as expected as `MeetingProvider` wraps all the other providers.
+The video will not work due to limitations of JS SDK to bind a video stream to a single video tile only. Please check [this](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/492#issuecomment-846317339) issue for more details.
+
+Please make sure your app calls `meetingManager.join()` only once with the same `attendeeInfo`.
+Otherwise, the previous attendee who joined the meeting will leave the meeting with [AudioJoinedFromAnotherDevice](https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice).

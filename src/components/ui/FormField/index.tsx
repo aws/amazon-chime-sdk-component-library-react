@@ -15,12 +15,12 @@ import { TextareaProps } from '../Textarea';
 import { StyledFormField } from './Styled';
 
 export type FieldType =
-  | FC<InputProps>
-  | FC<SelectProps>
-  | FC<TextareaProps>
-  | FC<CheckboxProps>
-  | FC<RadioGroupProps>
-  | FC<RadioProps>;
+  | FC<React.PropsWithChildren<InputProps>>
+  | FC<React.PropsWithChildren<SelectProps>>
+  | FC<React.PropsWithChildren<TextareaProps>>
+  | FC<React.PropsWithChildren<CheckboxProps>>
+  | FC<React.PropsWithChildren<RadioGroupProps>>
+  | FC<React.PropsWithChildren<RadioProps>>;
 
 export interface FieldProps {
   /** The callback fired when the state is changed. */

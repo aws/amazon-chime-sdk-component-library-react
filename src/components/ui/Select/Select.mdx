@@ -1,9 +1,13 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Select from './';
+import Flex from '../Flex';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as SelectStories from './Select.stories.tsx';
+
+<Meta of={SelectStories} />
 
 # Select
 
@@ -19,7 +23,7 @@ import { Select } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Flex layout="fill-space-centered">
       <div style={{ height: 'auto', width: '15rem', margin: '2rem auto' }}>
         <Select
@@ -35,7 +39,7 @@ import { Select } from 'amazon-chime-sdk-component-library-react';
         />
       </div>
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -58,4 +62,4 @@ import { Select } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Select} />
+<ArgTypes of={Select} />

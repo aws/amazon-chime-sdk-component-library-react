@@ -1,11 +1,13 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import ChannelList from './';
 import { _ChannelList } from './ChannelList.stories.tsx';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
-import PopOverItem from '../../PopOver/PopOverItem';
+import * as ChannelListStories from './ChannelList.stories.tsx';
+
+<Meta of={ChannelListStories} />
 
 # ChannelList
 
@@ -21,9 +23,9 @@ import { ChannelList } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
-  <Preview>
+  <Canvas>
     <_ChannelList />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -46,4 +48,4 @@ import { ChannelList } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={ChannelList} />
+<ArgTypes of={ChannelList} />

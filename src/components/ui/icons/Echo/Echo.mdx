@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Echo from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as EchoStories from './Echo.stories.tsx';
+
+<Meta of={EchoStories} />
 
 # Echo Icon
 
@@ -21,9 +24,9 @@ With custom width
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Echo width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -33,9 +36,9 @@ With custom width
 Muted Echo icon
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <Canvas>
     <Echo width="2rem" muted />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -44,4 +47,4 @@ Muted Echo icon
 
 ## Props
 
-<Props of={Echo} />
+<ArgTypes of={Echo} />

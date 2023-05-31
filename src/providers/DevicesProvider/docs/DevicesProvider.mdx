@@ -1,0 +1,54 @@
+import { Meta, ArgTypes } from '@storybook/blocks';
+import { DevicesProvider } from '../';
+
+<Meta title="SDK Providers/DevicesProvider" />
+
+# DevicesProvider
+
+The `DevicesProvider` renders the audio and video providers, which provide state around the available and currently selected audio and video devices.
+
+## Props
+
+<ArgTypes of={DevicesProvider} />
+
+## Importing
+
+```jsx
+import { DevicesProvider } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+If you are using `MeetingProvider`, `DevicesProvider` is rendered by default.
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useVideoInputs,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const { devices, selectedDevice } = useVideoInputs();
+  const items = devices.map((device) => <li>{device.label}</li>);
+
+  return (
+    <div>
+      <p>Current Selected Device: {selectedDevice}</p>
+      <p>Devices</p>
+      <ul>{items}</ul>
+    </div>
+  );
+};
+```
+
+### Dependencies
+
+- `AudioVideoProvider`
+- `MeetingProvider`

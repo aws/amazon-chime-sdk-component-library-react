@@ -3,10 +3,8 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { text } from '@storybook/addon-knobs';
 
 import Textarea from './';
-import TextareaDocs from './Textarea.mdx';
 
 const Wrapper = styled.div`
   width: 30rem;
@@ -15,21 +13,29 @@ const Wrapper = styled.div`
 
 export default {
   title: 'UI Components/Form/Textarea',
-  parameters: {
-    docs: {
-      page: TextareaDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Textarea,
 };
 
-export const _Textarea = () => (
+export const _Textarea = (args) => (
   <Wrapper>
     <Textarea
-      placeholder="text goes here"
+      placeholder={args.placeholder}
       label="my test label"
-      value={text('value', 'some sample text')}
+      value={args.value}
       onChange={() => console.log('changed')}
     />
   </Wrapper>
 );
+
+_Textarea.argTypes = {
+  placeholder: { control: 'text' },
+  value: { control: 'text' },
+  onChange: { table: { disable: true } },
+  label: { table: { disable: true } },
+};
+
+_Textarea.args = {
+  placeholder: 'Enter your input',
+};
+
+_Textarea.story = 'Textarea';

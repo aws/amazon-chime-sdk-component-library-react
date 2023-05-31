@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import SignalStrength from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as SignalStrengthStories from './SignalStrength.stories.tsx';
+
+<Meta of={SignalStrengthStories} />
 
 # SignalStrength Icon
 
@@ -19,9 +22,9 @@ import { SignalStrength } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <SignalStrength width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +33,4 @@ import { SignalStrength } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={SignalStrength} />
+<ArgTypes of={SignalStrength} />

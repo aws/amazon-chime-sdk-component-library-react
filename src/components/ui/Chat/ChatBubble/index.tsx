@@ -24,7 +24,7 @@ export interface ChatBubbleProps
   children?: ReactNode | ReactNode[];
 }
 
-export const ChatBubble: FC<ChatBubbleProps> = ({
+export const ChatBubble: FC<React.PropsWithChildren<ChatBubbleProps>> = ({
   variant,
   senderName,
   timestamp,

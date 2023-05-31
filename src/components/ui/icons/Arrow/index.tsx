@@ -24,7 +24,10 @@ const StyledArrow = styled(Svg)<ArrowProps>`
     `rotate(${dirTransform[direction || 'up']}deg)`};
 `;
 
-const Arrow: React.SFC<ArrowProps> = ({ direction = 'up', ...rest }) => (
+export const Arrow: React.FC<React.PropsWithChildren<ArrowProps>> = ({
+  direction = 'up',
+  ...rest
+}) => (
   <StyledArrow direction={direction} {...rest}>
     <path
       transform-origin="center"

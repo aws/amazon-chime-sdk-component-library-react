@@ -16,7 +16,7 @@ interface Props extends BaseSdkProps {
   label?: string;
 }
 
-export const CameraSelection: React.FC<Props> = ({
+export const CameraSelection: React.FC<React.PropsWithChildren<Props>> = ({
   notFoundMsg = 'No camera devices found',
   label = 'Camera source',
   ...rest

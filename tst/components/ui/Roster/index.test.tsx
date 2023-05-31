@@ -10,6 +10,7 @@ import RosterCell from '../../../../src/components/ui/Roster/RosterCell';
 import RosterHeader from '../../../../src/components/ui/Roster/RosterHeader';
 import lightTheme from '../../../../src/theme/light';
 import { renderWithTheme } from '../../../test-helpers';
+import { fireEvent } from '@testing-library/react';
 
 describe('Roster', () => {
   it('should render a search button when search is pressed', () => {
@@ -28,10 +29,21 @@ describe('Roster', () => {
       component
     );
     expect.not.arrayContaining(queryAllByLabelText('Search'));
-    getByLabelText('Open search').click();
-    const searchLbl = getByLabelText('Search');
-    expect(searchLbl).toBeInTheDocument();
-    getByLabelText('clear Search').click();
+    fireEvent(
+      getByLabelText('Open search'),
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      })
+    );
+    expect(getByLabelText('Search')).toBeInTheDocument();
+    fireEvent(
+      getByLabelText('clear Search'),
+      new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+      })
+    );
   });
 });
 

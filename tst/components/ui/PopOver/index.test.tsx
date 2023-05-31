@@ -205,8 +205,8 @@ describe('PopOver', () => {
     const toggle = getByTestId('popover-toggle');
     click(toggle);
     const option2 = getByTestId('option 2');
-    userEvent.tab();
-    userEvent.tab();
+    await userEvent.tab();
+    await userEvent.tab();
     await waitFor(() => expect(option2).toHaveFocus());
   });
 

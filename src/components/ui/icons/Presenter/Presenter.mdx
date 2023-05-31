@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Presenter from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as PresenterStories from './Presenter.stories.tsx';
+
+<Meta of={PresenterStories} />
 
 # Presenter Icon
 
@@ -19,9 +22,9 @@ import { Presenter } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Presenter width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +33,4 @@ import { Presenter } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Presenter} />
+<ArgTypes of={Presenter} />

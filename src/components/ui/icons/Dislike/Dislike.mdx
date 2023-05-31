@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Dislike from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as DislikeStories from './Dislike.stories.tsx';
+
+<Meta of={DislikeStories} />
 
 # Dislike Icon
 
@@ -19,9 +22,9 @@ import { Dislike } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Dislike width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +33,4 @@ import { Dislike } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Dislike} />
+<ArgTypes of={Dislike} />

@@ -14,7 +14,9 @@ export const UserActivityContext = createContext<UserActivityState | null>(
   null
 );
 
-const UserActivityProvider: FC = ({ children }) => {
+export const UserActivityProvider: FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const ref = useRef<any>(null);
   const { isFocused } = useFocusIn(ref);
   const { isMouseMoving } = useMouseMove(ref);
@@ -35,7 +37,7 @@ const UserActivityProvider: FC = ({ children }) => {
   );
 };
 
-function useUserActivityState(): UserActivityState {
+export function useUserActivityState(): UserActivityState {
   const state = useContext(UserActivityContext);
 
   if (!state) {
@@ -46,5 +48,3 @@ function useUserActivityState(): UserActivityState {
 
   return state;
 }
-
-export { UserActivityProvider, useUserActivityState };

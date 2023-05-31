@@ -39,19 +39,25 @@ interface BackgroundBlurProviderState {
     device: Device
   ) => Promise<DefaultVideoTransformDevice>;
   isBackgroundBlurSupported: boolean | undefined;
-  backgroundBlurProcessor: BackgroundBlurProcessor | undefined
+  backgroundBlurProcessor: BackgroundBlurProcessor | undefined;
 }
 
 const BackgroundBlurProviderContext = createContext<
   BackgroundBlurProviderState | undefined
 >(undefined);
 
-const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
+export const BackgroundBlurProvider: FC<React.PropsWithChildren<Props>> = ({
+  spec,
+  options,
+  children,
+}) => {
   const logger = useLogger();
   const [isBackgroundBlurSupported, setIsBackgroundBlurSupported] = useState<
     boolean | undefined
   >(undefined);
-  const [backgroundBlurProcessor, setBackgroundBlurProcessor] = useState<BackgroundBlurProcessor | undefined>();
+  const [backgroundBlurProcessor, setBackgroundBlurProcessor] = useState<
+    BackgroundBlurProcessor | undefined
+  >();
 
   const blurSpec = useMemoCompare(
     spec,
@@ -187,7 +193,7 @@ const BackgroundBlurProvider: FC<Props> = ({ spec, options, children }) => {
   );
 };
 
-const useBackgroundBlur = (): BackgroundBlurProviderState => {
+export const useBackgroundBlur = (): BackgroundBlurProviderState => {
   const context = useContext(BackgroundBlurProviderContext);
 
   if (!context) {
@@ -197,5 +203,3 @@ const useBackgroundBlur = (): BackgroundBlurProviderState => {
   }
   return context;
 };
-
-export { BackgroundBlurProvider, useBackgroundBlur };

@@ -1,0 +1,129 @@
+import { Meta, ArgTypes } from '@storybook/blocks';
+import { LoggerProvider } from '../';
+
+<Meta title="SDK Providers/LoggerProvider" />
+
+# LoggerProvider
+
+The `LoggerProvider` takes in a class implementing [Logger](https://aws.github.io/amazon-chime-sdk-js/interfaces/logger.html) interface from Amazon Chime SDK for JavaScript as a required `prop` and provides it to
+children components wrapped under `LoggerProvider`.
+
+Children components can use `useLogger` custom hook which returns the `logger` object for logging.
+This custom hook provides [`ConsoleLogger`](https://aws.github.io/amazon-chime-sdk-js/classes/consolelogger.html) as the default logger, if not overriden by `LoggerProvider` `logger` prop.
+
+## Props
+
+<ArgTypes of={LoggerProvider} />
+
+## Importing
+
+```jsx
+import { LoggerProvider, useLogger } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+You have to explicitly use the `LoggerProvider` if you want to provide a custom `Logger` for logging in your app.
+The `amazon-chime-sdk-component-library-react` will use this same custom logger for logging.
+
+If you do not use `LoggerProvider`, `useLogger` will just provide the `ConsoleLogger` as the default logger.
+
+### Using single `LoggerProvider`
+
+```jsx
+import React from 'react';
+import { POSTLogger, LogLevel } from 'amazon-chime-sdk-js';
+import { LoggerProvider, useLogger } from 'amazon-chime-sdk-component-library-react';
+
+const postLogger = new POSTLogger({
+  url: 'URL to POST logs',
+  LogLevel.INFO,
+  metadata: {
+    appName: 'ChimeComponentLibraryReactDemo',
+  },
+});
+
+const App = () => (
+  <div className='App'>
+    <LoggerProvider logger={postLogger}>
+      <MyComponent1 />
+    </LoggerProvider>
+    <MyComponent2 />
+  </div>
+);
+
+const MyComponent1 = () => {
+  // logger is a POSTLogger object.
+  const logger = useLogger();
+  logger.info('info');
+  logger.error('error');
+  logger.warn('warn');
+  logger.debug('debug');
+  return null;
+};
+
+const MyComponent2 = () => {
+  // logger is a ConsoleLogger object.
+  const logger = useLogger();
+  logger.info('info');
+  logger.error('error');
+  logger.warn('warn');
+  logger.debug('debug');
+  return null;
+};
+```
+
+### Using multiple `LoggerProvider`'s
+
+```jsx
+import React from 'react';
+import { POSTLogger, LogLevel } from 'amazon-chime-sdk-js';
+import { LoggerProvider, useLogger } from 'amazon-chime-sdk-component-library-react';
+
+const meetingPOSTLogger = new POSTLogger({
+  url: 'URL to POST logs',
+  LogLevel.INFO,
+  metadata: {
+    appName: 'ChimeComponentLibraryReactDemo-Meeting',
+  },
+});
+
+const chatPOSTLogger = new POSTLogger({
+  url: 'URL to POST logs',
+  LogLevel.INFO,
+  metadata: {
+    appName: 'ChimeComponentLibraryReactDemo-Chat',
+  },
+});
+
+const App = () => (
+  <div className='App'>
+    <LoggerProvider logger={meetingPOSTLogger}>
+      <MyMeetingComponent />
+    </LoggerProvider>
+    <LoggerProvider logger={chatPOSTLogger}>
+      <MyChatComponent />
+    </LoggerProvider>
+  </div>
+);
+
+const MyMeetingComponent = () => {
+  // logger is a meetingPOSTLogger object.
+  const logger = useLogger();
+  logger.info('info');
+  logger.error('error');
+  logger.warn('warn');
+  logger.debug('debug');
+  return null;
+};
+
+const MyChatComponent = () => {
+  // logger is a chatPOSTLogger object.
+  const logger = useLogger();
+  logger.info('info');
+  logger.error('error');
+  logger.warn('warn');
+  logger.debug('debug');
+  return null;
+};
+```

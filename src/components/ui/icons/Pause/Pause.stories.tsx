@@ -2,24 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import { text } from '@storybook/addon-knobs';
 import Pause from '.';
-import PauseIconDocs from './Pause.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/Pause',
-  parameters: {
-    docs: {
-      page: PauseIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Pause,
 };
 
-export const _Pause = () => (
-  <Flex layout="fill-space-centered">
-    <Pause width={text('width', '2rem')} />
-  </Flex>
-);
+export const _Pause = (args) => <Pause {...args} />;
+
+_Pause.argTypes = {
+  width: { control: 'text' },
+};
+
+_Pause.args = {
+  width: '2rem',
+};
+
+_Pause.story = {
+  name: 'Pause',
+};

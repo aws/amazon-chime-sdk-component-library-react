@@ -1,17 +1,16 @@
-import { Preview, Story, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
-import { useState } from 'react';
 
 import Modal from './';
 import ModalHeader from './ModalHeader';
-import ModalBody from './ModalBody';
 import ModalButton from './ModalButton';
 import ModalButtonGroup from './ModalButtonGroup';
-import ModalContext from './ModalContext';
 import { ModalDemo } from './Modal.stories';
 import { lightTheme } from '../../../theme/';
-import PrimaryButton from '../Button/PrimaryButton';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as ModalStories from './Modal.stories.tsx';
+
+<Meta of={ModalStories} />
 
 # Modal
 
@@ -27,17 +26,17 @@ import {
   ModalHeader,
   ModalBody,
   ModalButtonGroup,
-  ModalButton
+  ModalButton,
 } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <ModalDemo />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -49,14 +48,14 @@ import {
         <p>This is information presented in a modal</p>
         <ModalButtonGroup
           primaryButtons={[
-            <ModalButton onClick={() => {}} label="submit" variant="primary" />
+            <ModalButton onClick={() => {}} label="submit" variant="primary" />,
           ]}
           secondaryButtons={[
             <ModalButton
               onClick={() => {}}
               label="More info"
               variant="secondary"
-            />
+            />,
           ]}
         />
       </ModalBody>
@@ -69,16 +68,16 @@ import {
 
 ### Modal
 
-<Props of={Modal} />
+<ArgTypes of={Modal} />
 
 ### ModalHeader
 
-<Props of={ModalHeader} />
+<ArgTypes of={ModalHeader} />
 
 ### ModalButtonGroup
 
-<Props of={ModalButtonGroup} />
+<ArgTypes of={ModalButtonGroup} />
 
 ### ModalButton
 
-<Props of={ModalButton} />
+<ArgTypes of={ModalButton} />

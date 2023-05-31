@@ -27,7 +27,7 @@ interface Props extends BaseSdkProps {
   onChange: (deviceId: string) => void;
 }
 
-const DeviceInput: React.FC<Props> = ({
+const DeviceInput: React.FC<React.PropsWithChildren<Props>> = ({
   onChange,
   label,
   devices,

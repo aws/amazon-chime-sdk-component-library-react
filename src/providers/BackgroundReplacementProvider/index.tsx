@@ -46,19 +46,16 @@ const BackgroundReplacementProviderContext = createContext<
   BackgroundReplacementProviderState | undefined
 >(undefined);
 
-const BackgroundReplacementProvider: FC<Props> = ({
-  spec,
-  options,
-  children,
-}) => {
+export const BackgroundReplacementProvider: FC<
+  React.PropsWithChildren<Props>
+> = ({ spec, options, children }) => {
   const logger = useLogger();
   const [
     isBackgroundReplacementSupported,
     setIsBackgroundReplacementSupported,
   ] = useState<boolean | undefined>(undefined);
-  const [backgroundReplacementProcessor, setBackgroundReplacementProcessor] = useState<BackgroundReplacementProcessor | undefined>(
-    undefined
-  );
+  const [backgroundReplacementProcessor, setBackgroundReplacementProcessor] =
+    useState<BackgroundReplacementProcessor | undefined>(undefined);
 
   const replacementSpec = useMemoCompare(
     spec,
@@ -185,7 +182,7 @@ const BackgroundReplacementProvider: FC<Props> = ({
   const value: BackgroundReplacementProviderState = {
     createBackgroundReplacementDevice,
     isBackgroundReplacementSupported,
-    backgroundReplacementProcessor
+    backgroundReplacementProcessor,
   };
 
   return (
@@ -195,16 +192,15 @@ const BackgroundReplacementProvider: FC<Props> = ({
   );
 };
 
-const useBackgroundReplacement = (): BackgroundReplacementProviderState => {
-  const context = useContext(BackgroundReplacementProviderContext);
+export const useBackgroundReplacement =
+  (): BackgroundReplacementProviderState => {
+    const context = useContext(BackgroundReplacementProviderContext);
 
-  if (!context) {
-    throw new Error(
-      'useBackgroundReplacement must be used within BackgroundReplacementProvider'
-    );
-  }
+    if (!context) {
+      throw new Error(
+        'useBackgroundReplacement must be used within BackgroundReplacementProvider'
+      );
+    }
 
-  return context;
-};
-
-export { BackgroundReplacementProvider, useBackgroundReplacement };
+    return context;
+  };

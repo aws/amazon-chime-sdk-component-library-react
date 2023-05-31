@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import ConnectionProblem from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as ConnectionProblemStories from './ConnectionProblem.stories.tsx';
+
+<Meta of={ConnectionProblemStories} />
 
 # ConnectionProblem Icon
 
@@ -19,9 +22,9 @@ import { ConnectionProblem } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <ConnectionProblem width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +33,4 @@ import { ConnectionProblem } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={ConnectionProblem} />
+<ArgTypes of={ConnectionProblem} />

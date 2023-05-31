@@ -42,12 +42,12 @@ describe('Input', () => {
     expect(input).toHaveAttribute('type', 'text');
   });
 
-  it('should call onChange event handler once if changes input', () => {
+  it('should call onChange event handler once if changes input', async () => {
     const component = <Input value={value} onChange={mockFunction} />;
     const { getByTestId } = renderWithTheme(lightTheme, component);
     const input = getByTestId('input');
 
-    userEvent.type(input, 'hello');
+    await userEvent.type(input, 'hello');
     expect(mockFunction).toHaveBeenCalledTimes(5);
   });
 
@@ -60,7 +60,7 @@ describe('Input', () => {
     expect(queryByLabelText('clear')).toBeNull();
   });
 
-  it('should clear input when clear button is pressed', () => {
+  it('should clear input when clear button is pressed', async () => {
     const Consumer = () => {
       const [val, setVal] = useState('');
       const onChange = (e: any) => {
@@ -78,19 +78,19 @@ describe('Input', () => {
     const input = getByTestId('input');
     const btn = getByLabelText('clear');
 
-    userEvent.type(input, 'hello world');
-    userEvent.click(btn);
+    await userEvent.type(input, 'hello world');
+    await userEvent.click(btn);
     expect(input).toHaveValue('');
   });
 
-  it('should call onClear when clear button is pressed', () => {
+  it('should call onClear when clear button is pressed', async () => {
     const component = (
       <Input value={value} onClear={mockFunction} onChange={() => {}} />
     );
     const { getByLabelText } = renderWithTheme(lightTheme, component);
     const btn = getByLabelText('clear');
 
-    userEvent.click(btn);
+    await userEvent.click(btn);
     expect(mockFunction).toHaveBeenCalledTimes(1);
   });
 

@@ -1,4 +1,4 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Navbar from '.';
@@ -8,6 +8,9 @@ import { Attendees, LeaveMeeting, Information } from '../icons';
 import Flex from '../Flex';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as NavbarStories from './Navbar.stories.tsx';
+
+<Meta of={NavbarStories} />
 
 # Navbar
 
@@ -31,7 +34,7 @@ import {
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Navbar flexDirection="column" container css="height: 50vh">
       <NavbarHeader onClose={() => {}} />
       <Flex>
@@ -51,7 +54,7 @@ import {
         />
       </Flex>
     </Navbar>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -79,7 +82,7 @@ import {
 
 ### Navbar Props
 
-<Props of={Navbar} />
+<ArgTypes of={Navbar} />
 
 # NavbarHeader
 
@@ -95,7 +98,7 @@ It gives a title to Navbar and also a close icon button to close the Navbar in m
 
 ### NavbarHeader Props
 
-<Props of={NavbarHeader} />
+<ArgTypes of={NavbarHeader} />
 
 # NavbarItem
 
@@ -126,4 +129,4 @@ The label is displayed only on smaller screens with width defined by `theme.medi
 
 ### NavbarItem Props
 
-<Props of={NavbarItem} />
+<ArgTypes of={NavbarItem} />

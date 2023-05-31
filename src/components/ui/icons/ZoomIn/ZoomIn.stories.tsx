@@ -2,20 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import { text } from '@storybook/addon-knobs';
 import ZoomIn from '.';
-import ZoomInIconDocs from './ZoomIn.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/ZoomIn',
-  parameters: {
-    docs: {
-      page: ZoomInIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
-  component: ZoomIn
+  component: ZoomIn,
 };
 
-export const _ZoomIn = () => <Flex layout="fill-space-centered"><ZoomIn width={text('width', '2rem')} /></Flex>;
+export const _ZoomIn = (args) => <ZoomIn {...args} />;
+
+_ZoomIn.argTypes = {
+  width: { control: 'text' },
+};
+
+_ZoomIn.args = {
+  width: '2rem',
+};
+
+_ZoomIn.story = {
+  name: 'ZoomIn',
+};

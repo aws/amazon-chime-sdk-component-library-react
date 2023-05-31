@@ -1,15 +1,15 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import PopOver from './';
 import PopOverHeader from './PopOverHeader';
-import PopOverSeparator from './PopOverSeparator';
 import PopOverItem from './PopOverItem';
 import PopOverSubMenu from './PopOverSubMenu';
 import { lightTheme } from '../../../theme/';
-import Meeting from '../icons/Meeting';
 import PrimaryButton from '../Button/PrimaryButton';
-import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as PopOverStories from './PopOver.stories.tsx';
+
+<Meta of={PopOverStories} />
 
 # PopOver
 
@@ -32,88 +32,94 @@ import {
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <Canvas>
     <PopOver
-      a11yLabel='Click me'
-      renderButton={
-        isOpen => <PrimaryButton style={{ backgroundColor: `${isOpen ? `#0042bb` : '#075fff'}`}} label='Open PopOver'/>
-      }
+      a11yLabel="Click me"
+      renderButton={(isOpen) => (
+        <PrimaryButton
+          style={{ backgroundColor: `${isOpen ? `#0042bb` : '#075fff'}` }}
+          label="Open PopOver"
+        />
+      )}
     >
-      <PopOverHeader
-        title='Title text'
-        subtitle='Subtitle text'
-      />
+      <PopOverHeader title="Title text" subtitle="Subtitle text" />
       <PopOverItem
-        as='a'
-        href='https://www.amazon.com'
+        as="a"
+        href="https://www.amazon.com"
         children={<span>Visit amazon.com</span>}
       />
       <PopOverItem
-        as='button'
+        as="button"
         onClick={() => {}}
         children={<span>Option 1</span>}
       />
-      <PopOverSubMenu text='This is a submenu'>
+      <PopOverSubMenu text="This is a submenu">
         <PopOverItem
-          as='button'
+          as="button"
           onClick={() => {}}
           children={<span>Option 2</span>}
         />
         <PopOverItem
-          as='button'
+          as="button"
           onClick={() => {}}
           children={<span>Option 3</span>}
         />
       </PopOverSubMenu>
     </PopOver>
     <div style={{ height: '15rem' }} /> {/* Just to force some more space in the preview window */}
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
 <PopOver
-  a11yLabel='Click me'
-  renderButton={isOpen => <PrimaryButton style={{ backgroundColor: `${isOpen ? `#0042bb` : '#075fff'}`}} label='Open PopOver'/>}
+  a11yLabel="Click me"
+  renderButton={(isOpen) => (
+    <PrimaryButton
+      style={{ backgroundColor: `${isOpen ? `#0042bb` : '#075fff'}` }}
+      label="Open PopOver"
+    />
+  )}
 >
-  <PopOverHeader
-    title='Title text'
-    subtitle='Subtitle text'
-  />
+  <PopOverHeader title="Title text" subtitle="Subtitle text" />
   <PopOverItem
-    as='a'
-    href='https://www.amazon.com'
+    as="a"
+    href="https://www.amazon.com"
     children={<span>Visit amazon.com</span>}
   />
   <PopOverItem
-    as='button'
+    as="button"
     onClick={() => {}}
     children={<span>Option 1</span>}
   />
-  <PopOverSubMenu text='This is a submenu'>
+  <PopOverSubMenu text="This is a submenu">
     <PopOverItem
-        as='button'
-        onClick={() => {}}
-        children={<span>Option 2</span>}
+      as="button"
+      onClick={() => {}}
+      children={<span>Option 2</span>}
     />
     <PopOverItem
-        as='button'
-        onClick={() => {}}
-        children={<span>Option 3</span>}
+      as="button"
+      onClick={() => {}}
+      children={<span>Option 3</span>}
     />
   </PopOverSubMenu>
 </PopOver>
 ```
 
 ## Props
+
 ### PopOver Props
-<Props of={PopOver} />
+
+<ArgTypes of={PopOver} />
 
 ### PopOverHeader Props
-<Props of={PopOverHeader} />
+
+<ArgTypes of={PopOverHeader} />
 
 ### PopOverItem Props
-<Props of={PopOverItem} />
+
+<ArgTypes of={PopOverItem} />
 
 ### PopOverSubMenu Props
-<Props of={PopOverSubMenu} />
+
+<ArgTypes of={PopOverSubMenu} />

@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Clock from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as ClockStories from './Clock.stories.tsx';
+
+<Meta of={ClockStories} />
 
 # Clock Icon
 
@@ -19,9 +22,9 @@ import { Clock } from 'amazon-chime-sdk-component-library-react';
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Clock width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +33,4 @@ import { Clock } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Clock} />
+<ArgTypes of={Clock} />

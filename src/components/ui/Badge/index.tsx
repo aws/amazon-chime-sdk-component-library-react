@@ -13,7 +13,7 @@ export interface BadgeProps extends BaseProps {
   status?: 'default' | 'alert';
 }
 
-export const Badge: FC<BadgeProps> = ({
+export const Badge: FC<React.PropsWithChildren<BadgeProps>> = ({
   value,
   status = 'default',
   className,

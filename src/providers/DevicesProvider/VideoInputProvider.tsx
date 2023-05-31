@@ -17,7 +17,9 @@ import { useMeetingManager } from '../MeetingProvider';
 
 const Context = createContext<VideoInputContextType | null>(null);
 
-const VideoInputProvider: React.FC = ({ children }) => {
+export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const logger = useLogger();
   const audioVideo = useAudioVideo();
   const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);
@@ -87,7 +89,7 @@ const VideoInputProvider: React.FC = ({ children }) => {
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
-const useVideoInputs = (): VideoInputContextType => {
+export const useVideoInputs = (): VideoInputContextType => {
   const context = useContext(Context);
 
   if (!context) {
@@ -96,5 +98,3 @@ const useVideoInputs = (): VideoInputContextType => {
 
   return context;
 };
-
-export { VideoInputProvider, useVideoInputs };

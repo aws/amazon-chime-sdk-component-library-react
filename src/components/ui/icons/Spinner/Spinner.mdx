@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Spinner from './';
 import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as SpinnerStories from './Spinner.stories.tsx';
+
+<Meta of={SpinnerStories} />
 
 # Spinner Icon
 
@@ -21,9 +24,9 @@ With custom width and height
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles />
-  <Preview>
+  <Canvas>
     <Spinner width="2rem" height="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -32,4 +35,4 @@ With custom width and height
 
 ## Props
 
-<Props of={Spinner} />
+<ArgTypes of={Spinner} />

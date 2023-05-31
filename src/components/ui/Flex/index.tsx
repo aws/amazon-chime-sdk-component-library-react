@@ -54,7 +54,7 @@ export interface FlexProps extends BaseProps {
   style?: {};
 }
 
-export const Flex: FC<FlexProps> = ({
+export const Flex: FC<React.PropsWithChildren<FlexProps>> = ({
   children,
   className,
   tag,

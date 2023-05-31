@@ -4,18 +4,11 @@
 import React from 'react';
 
 import { RadioGroup } from './';
-import RadioGroupDocs from './RadioGroup.mdx';
-import Flex from '../Flex';
 import Like from '../icons/Like';
 import Dislike from '../icons/Dislike';
 
 export default {
   title: 'UI Components/Form/RadioGroup',
-  parameters: {
-    docs: {
-      page: RadioGroupDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: RadioGroup,
 };
 
@@ -35,13 +28,11 @@ const options = [
 ];
 
 export const _RadioGroup = () => (
-  <Flex layout="fill-space-centered">
-    <RadioGroup
-      options={options}
-      value="monkeynuts"
-      onChange={() => console.log('change')}
-    />
-  </Flex>
+  <RadioGroup
+    options={options}
+    value="monkeynuts"
+    onChange={() => console.log('change')}
+  />
 );
 
 const optionWithIcons = [
@@ -57,20 +48,18 @@ const optionWithIcons = [
   },
 ];
 
-export const _RadioGroupIcon = () => (
-  <Flex layout="fill-space-centered">
-    <RadioGroup
-      options={optionWithIcons}
-      value="like"
-      onChange={() => console.log('change')}
-    />
-  </Flex>
+export const _RadioGroupWithIcon = () => (
+  <RadioGroup
+    options={optionWithIcons}
+    value="like"
+    onChange={() => console.log('change')}
+  />
 );
 
 _RadioGroup.story = {
   name: 'RadioGroup',
 };
 
-_RadioGroupIcon.story = {
+_RadioGroupWithIcon.story = {
   name: 'RadioGroup with Icon',
 };

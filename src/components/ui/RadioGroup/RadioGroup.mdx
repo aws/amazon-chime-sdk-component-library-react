@@ -1,10 +1,13 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Flex from '../Flex';
 import RadioGroup from './';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as RadioGroupStories from './RadioGroup.stories.tsx';
+
+<Meta of={RadioGroupStories} />
 
 # RadioGroup
 
@@ -19,20 +22,20 @@ import { RadioGroup } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Flex layout="fill-space-centered">
       <RadioGroup
         options={[
           { value: 'bananas', label: 'Bananas' },
           { value: 'monkeynuts', label: 'Monkeynuts' },
-          { value: 'grapes', label: 'Grapes' }
+          { value: 'grapes', label: 'Grapes' },
         ]}
         value="monkeynuts"
         onChange={() => {}}
       />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -41,7 +44,7 @@ import { RadioGroup } from 'amazon-chime-sdk-component-library-react';
     options={[
       { value: 'bananas', label: 'Bananas' },
       { value: 'monkeynuts', label: 'Monkeynuts' },
-      { value: 'grapes', label: 'Grapes' }
+      { value: 'grapes', label: 'Grapes' },
     ]}
     value="monkeynuts"
     onChange={() => {}}
@@ -51,4 +54,4 @@ import { RadioGroup } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={RadioGroup} />
+<ArgTypes of={RadioGroup} />

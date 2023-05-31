@@ -1,4 +1,4 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Grid from './';
@@ -6,6 +6,9 @@ import Cell from './Cell';
 import { Child } from './Grid.stories';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as GridStories from './Grid.stories.tsx';
+
+<Meta of={GridStories} />
 
 # Grid
 
@@ -25,7 +28,7 @@ You can place children components based on grid props, e.g. `gridGap`, `gridTemp
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
-  <Preview>
+  <Canvas>
     <Grid
       style={{ height: '30vh' }}
       responsive
@@ -41,7 +44,7 @@ You can place children components based on grid props, e.g. `gridGap`, `gridTemp
       <Child>Child</Child>
       <Child>Child</Child>
     </Grid>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -70,7 +73,7 @@ Then, on the grid container, you can use the `gridTemplateAreas` property to def
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
-  <Preview>
+  <Canvas>
     <Grid
       style={{ height: '30vh' }}
       gridGap=".25rem"
@@ -95,7 +98,7 @@ Then, on the grid container, you can use the `gridTemplateAreas` property to def
       <Child>Other</Child>
       <Child>Other</Child>
     </Grid>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -127,4 +130,4 @@ Then, on the grid container, you can use the `gridTemplateAreas` property to def
 
 ## Props
 
-<Props of={Grid} />
+<ArgTypes of={Grid} />
