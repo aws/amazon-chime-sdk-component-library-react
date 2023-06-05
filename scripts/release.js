@@ -97,9 +97,12 @@ const checkNPMDepsInstall = () => {
   }
   process.chdir(path.join(__dirname, '../../dependency-check-app'));
   spawnOrFail('npm', ['init -y']);
-  // Currently, install 17 version as this now install 18.0.0 which we do not support yet.
-  spawnOrFail('npm', ['install react@17.0.1 react-dom@17.0.1']);
-  spawnOrFail('npm', [`install amazon-chime-sdk-js@${latestNPMJSSdkVersion} styled-components styled-system`]);
+  spawnOrFail('npm', ['install react react-dom']);
+
+  // As of June 5, 2023, running `npm install styled-components` fails due to this issue.
+  // https://github.com/styled-components/styled-components/issues/3998
+  // You must specify the version using `@version`.
+  spawnOrFail('npm', [`install amazon-chime-sdk-js@${latestNPMJSSdkVersion} styled-components@5.3.6 styled-system`]);
   checkWarning('npm', [`install -q ../amazon-chime-sdk-component-library-react/amazon-chime-sdk-component-library-react-${currentVersion}.tgz`], null, 'amazon-chime-sdk-component-library-react');
   process.chdir(path.join(__dirname, '..'));
   spawnOrFail('rm', ['-rf ../dependency-check-app']);
