@@ -1,8 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Laptop from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as LaptopStories from './Laptop.stories.tsx';
+
+<Meta of={LaptopStories} />
 
 # Laptop Icon
 
@@ -17,9 +21,10 @@ import { Laptop } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Laptop width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -28,4 +33,4 @@ import { Laptop } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Laptop} />
+<ArgTypes of={Laptop} />

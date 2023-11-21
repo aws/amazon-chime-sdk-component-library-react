@@ -10,7 +10,9 @@ type AudioVideoValue = AudioVideoFacade | null;
 
 export const AudioVideoContext = createContext<AudioVideoValue>(null);
 
-const AudioVideoProvider: React.FC = ({ children }) => {
+export const AudioVideoProvider: React.FC<React.PropsWithChildren<unknown>> = ({
+  children,
+}) => {
   const meetingManager = useMeetingManager();
   const [audioVideo, setAudioVideo] = useState<AudioVideoValue>(null);
 
@@ -31,10 +33,8 @@ const AudioVideoProvider: React.FC = ({ children }) => {
   );
 };
 
-const useAudioVideo = (): AudioVideoValue => {
+export const useAudioVideo = (): AudioVideoValue => {
   const audioVideo = useContext(AudioVideoContext);
 
   return audioVideo;
 };
-
-export { useAudioVideo, AudioVideoProvider };

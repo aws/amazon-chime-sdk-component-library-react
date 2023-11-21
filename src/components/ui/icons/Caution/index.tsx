@@ -14,7 +14,7 @@ export interface CautionProps extends SvgProps {
   variant?: CautionVariant;
 }
 
-const Caution: FC<CautionProps> = (props) => (
+export const Caution: FC<React.PropsWithChildren<CautionProps>> = (props) => (
   <Svg {...props}>
     <StyledCaution fill="currentColor" variant={props.variant}>
       <path

@@ -1,8 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import ZoomOut from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as ZoomOutStories from './ZoomOut.stories.tsx';
+
+<Meta of={ZoomOutStories} />
 
 # ZoomOut Icon
 
@@ -17,9 +21,10 @@ import { ZoomOut } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <ZoomOut width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -28,4 +33,4 @@ import { ZoomOut } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={ZoomOut} />
+<ArgTypes of={ZoomOut} />

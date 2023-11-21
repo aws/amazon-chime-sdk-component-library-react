@@ -1,4 +1,4 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Crown from '../icons/Crown';
@@ -7,6 +7,9 @@ import Input from './';
 import SearchInput from './SearchInput';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as InputStories from './Input.stories.tsx';
+
+<Meta of={InputStories} />
 
 # Input/SearchInput
 
@@ -23,26 +26,26 @@ import { Input, SearchInput } from 'amazon-chime-sdk-component-library-react';
 ### Basic Input
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Flex layout="fill-space-centered">
       <Input
         showClear
-        onChange={e => {}}
+        onChange={(e) => {}}
         sizing="md"
         value="input value"
         placeholder="input"
         type="text"
       />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
 <Flex layout="fill-space-centered">
   <Input
     showClear
-    onChange={e => {}}
+    onChange={(e) => {}}
     sizing="md"
     value="input value"
     placeholder="input"
@@ -54,12 +57,12 @@ import { Input, SearchInput } from 'amazon-chime-sdk-component-library-react';
 ### Input with Icon
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Flex layout="fill-space-centered">
       <Input
         showClear={false}
-        onChange={e => {}}
+        onChange={(e) => {}}
         value="icon input value"
         placeholder="input with an icon"
         sizing="sm"
@@ -67,14 +70,14 @@ import { Input, SearchInput } from 'amazon-chime-sdk-component-library-react';
         leadingIcon={<Crown />}
       />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
 <Flex layout="fill-space-centered">
   <Input
     showClear={false}
-    onChange={e => {}}
+    onChange={(e) => {}}
     value="icon input value"
     placeholder="input with an icon"
     sizing="sm"
@@ -87,32 +90,30 @@ import { Input, SearchInput } from 'amazon-chime-sdk-component-library-react';
 ### Search Input Component
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Flex layout="fill-space-centered">
       <SearchInput
         showClear
         value="search input value"
-        onChange={e => {}}
+        onChange={(e) => {}}
         placeholder="a search input"
       />
     </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
 <Flex layout="fill-space-centered">
-  <Flex layout="fill-space-centered">
-    <SearchInput
-      showClear
-      value="search input value"
-      onChange={e => {}}
-      placeholder="a search input"
-    />
-  </Flex>
+  <SearchInput
+    showClear
+    value="search input value"
+    onChange={(e) => {}}
+    placeholder="a search input"
+  />
 </Flex>
 ```
 
 ## Props
 
-<Props of={Input} />
+<ArgTypes of={Input} />

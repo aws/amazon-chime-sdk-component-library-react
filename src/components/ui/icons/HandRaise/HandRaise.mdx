@@ -1,8 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import HandRaise from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as HandRaiseStories from './HandRaise.stories.tsx';
+
+<Meta of={HandRaiseStories} />
 
 # HandRaise Icon
 
@@ -19,9 +23,10 @@ import { HandRaise } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <HandRaise width="2rem" height="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -31,9 +36,9 @@ With custom width and height
 HandRaised icon
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <Canvas>
     <HandRaise width="2rem" height="2rem" isRaised title="Raised Hand" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -42,4 +47,4 @@ HandRaised icon
 
 ## Props
 
-<Props of={HandRaise} />
+<ArgTypes of={HandRaise} />

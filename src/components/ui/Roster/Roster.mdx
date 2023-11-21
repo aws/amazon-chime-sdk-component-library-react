@@ -1,4 +1,4 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import RosterCell from './RosterCell';
@@ -8,6 +8,9 @@ import Roster from './';
 import Flex from '../Flex';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as RosterStories from './Roster.stories.tsx';
+
+<Meta of={RosterStories} />
 
 # Roster
 
@@ -33,7 +36,7 @@ import {
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
-  <Preview>
+  <Canvas>
   <Flex
     container
     css="height: 50vh; background: #f6f9fc;"
@@ -66,7 +69,7 @@ import {
       </RosterGroup>
     </Roster>
   </Flex>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -109,7 +112,7 @@ Additionally, custom elements can be rendered into the RosterHeader via the 'chi
 
 <ThemeProvider theme={lightTheme}>
   <GlobalStyles/>
-  <Preview>
+  <Canvas>
     <RosterHeader
       title="Present"
       badge={2}
@@ -117,7 +120,7 @@ Additionally, custom elements can be rendered into the RosterHeader via the 'chi
       searchValue="Michael"
       onSearch={() => {}}
     />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -131,7 +134,7 @@ Additionally, custom elements can be rendered into the RosterHeader via the 'chi
 ```
 
 ### RosterHeader Props
-<Props of={RosterHeader} />
+<ArgTypes of={RosterHeader} />
 
 # RosterGroup
 
@@ -162,7 +165,7 @@ The RosterGroup component displays multiple RosterCell components grouped by a c
 </RosterGroup>
 ```
 ### RosterGroup Props
-<Props of={RosterGroup} />
+<ArgTypes of={RosterGroup} />
 
 # RosterCell
 
@@ -258,4 +261,4 @@ RosterCell Component with `micPosition grouped`
 ```
 
 ### RosterCell Props
-<Props of={RosterCell} />
+<ArgTypes of={RosterCell} />

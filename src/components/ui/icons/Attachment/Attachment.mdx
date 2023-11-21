@@ -1,8 +1,13 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Attachment from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+
+import * as AttachmentStories from './Attachment.stories.tsx';
+
+<Meta of={AttachmentStories} />
 
 # Attachment Icon
 
@@ -19,9 +24,10 @@ import { Attachment } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Attachment width="2rem" height="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +36,4 @@ With custom width and height
 
 ## Props
 
-<Props of={Attachment} />
+<ArgTypes of={Attachment} />

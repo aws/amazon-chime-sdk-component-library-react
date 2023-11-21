@@ -1,8 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Attendees from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as AttendeesStories from './Attendees.stories.tsx';
+
+<Meta of={AttendeesStories} />
 
 # Attendees Icon
 
@@ -19,9 +23,10 @@ import { Attendees } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Attendees width="2rem" height="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -30,4 +35,4 @@ With custom width and height
 
 ## Props
 
-<Props of={Attendees} />
+<ArgTypes of={Attendees} />

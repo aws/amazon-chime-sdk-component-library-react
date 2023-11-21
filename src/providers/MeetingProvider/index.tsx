@@ -30,7 +30,7 @@ interface Props {
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
 
-export const MeetingProvider: React.FC<Props> = ({
+export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
   onDeviceReplacement,
   meetingManager: meetingManagerProp,
   children,

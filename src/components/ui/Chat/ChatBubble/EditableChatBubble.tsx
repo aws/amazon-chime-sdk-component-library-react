@@ -33,7 +33,9 @@ export interface EditableChatBubbleProps
   cancelLabel?: string;
 }
 
-export const EditableChatBubble: FC<EditableChatBubbleProps> = (props) => {
+export const EditableChatBubble: FC<
+  React.PropsWithChildren<EditableChatBubbleProps>
+> = (props) => {
   const {
     showName = true,
     variant,

@@ -18,7 +18,7 @@ export interface ModalHeaderProps
   displayClose?: boolean;
 }
 
-export const ModalHeader: FC<ModalHeaderProps> = ({
+export const ModalHeader: FC<React.PropsWithChildren<ModalHeaderProps>> = ({
   tag: Tag = 'div',
   displayClose = true,
   title,

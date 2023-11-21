@@ -1,8 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Add from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as AddStories from './Add.stories.tsx';
+
+<Meta of={AddStories} />
 
 # Add Icon
 
@@ -19,9 +23,10 @@ import { Add } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Add width="2rem" height="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -31,9 +36,10 @@ With custom width and height
 With title on hover
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Add width="2rem" height="2rem" title="Add" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -42,4 +48,4 @@ With title on hover
 
 ## Props
 
-<Props of={Add} />
+<ArgTypes of={Add} />

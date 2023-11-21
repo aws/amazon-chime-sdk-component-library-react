@@ -27,7 +27,7 @@ export interface ModalProps
   dismissible?: boolean;
 }
 
-export const Modal: FC<ModalProps> = ({
+export const Modal: FC<React.PropsWithChildren<ModalProps>> = ({
   size = 'md',
   onClose = () => null,
   children,

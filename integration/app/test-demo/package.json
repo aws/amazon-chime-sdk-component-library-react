@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "dependencies": {
     "amazon-chime-sdk-component-library-react": "file:../../..",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "styled-components": "^5.3.3",
     "styled-system": "^5.1.5"
   },
@@ -13,7 +13,7 @@
     "@types/react-dom": "^17.0.11",
     "@types/react-router-dom": "^5.3.0",
     "@types/styled-components": "^5.1.15",
-    "aws-sdk": "^2.1031.0",
+    "aws-sdk": "^2.1354.0",
     "compression": "^1.7.4",
     "concurrently": "^6.4.0",
     "html-webpack-plugin": "^5.5.0",

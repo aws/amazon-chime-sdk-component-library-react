@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { act } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import {
   AudioVideoObserver,
   DefaultAudioVideoFacade,

@@ -3,8 +3,8 @@
 
 import React, { useCallback, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom';
-import { useLogger } from '../../../providers/LoggerProvider';
 
+import { useLogger } from '../../../providers/LoggerProvider';
 import { StyledTooltip } from './Styled';
 
 export type ToolTipPositionType = 'top' | 'bottom' | 'right' | 'left';
@@ -35,7 +35,7 @@ const initialState: WithTooltipState = { show: false, bounds: null };
 
 export const WithTooltip =
   <P extends object>(
-    Component: React.ComponentType<P>,
+    Component: React.ComponentType<React.PropsWithChildren<P>>,
     container_id?: string
   ) =>
   (props: P & ToolTipProps) => {

@@ -1,28 +1,20 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React from 'react';
-import { boolean } from '@storybook/addon-knobs';
+import React, { useState } from 'react';
 
 import Flex from '../../Flex';
 import EditableChatBubble from './EditableChatBubble';
 
-import EditableChatBubbleDocs from './EditableChatBubble.mdx';
-
 export default {
   title: 'UI Components/Chat/EditableChatBubble',
-  parameters: {
-    docs: {
-      page: EditableChatBubbleDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: EditableChatBubble,
+  parameters: {
+    layout: 'fullscreen',
+  },
 };
 
-export const _EditableChatBubble = () => {
-  const showTail = boolean('showTail', false);
-  const showName = boolean('showName', true);
-
+export const _EditableChatBubble = (args) => {
   const containerStyles = `
     display: flex; 
     flex-direction: column;
@@ -46,17 +38,40 @@ export const _EditableChatBubble = () => {
   return (
     <Flex layout="fill-space-centered" css={containerStyles}>
       <EditableChatBubble
-        variant="outgoing"
-        senderName="Michael Scott"
+        variant={args.variant}
+        senderName={args.senderName}
         content="This messsage has typos that ned to be fixxed."
-        showTail={showTail}
+        showTail={args.showTail}
+        showName={args.boolean}
+        saveLabel={args.saveLabel}
+        cancelLabel={args.cancelLabel}
         css={bubbleStyles}
-        showName={showName}
         save={save}
         cancel={cancel}
       />
     </Flex>
   );
+};
+
+_EditableChatBubble.argTypes = {
+  showTail: { control: 'boolean' },
+  showName: { control: 'boolean' },
+  variant: { control: 'select', options: ['incoming', 'outgoing'] },
+  senderName: { control: 'text' },
+  saveLabel: { control: 'text' },
+  cancelLabel: { control: 'text' },
+  content: { table: { disable: true } },
+  save: { table: { disable: true } },
+  cancel: { table: { disable: true } },
+};
+
+_EditableChatBubble.args = {
+  showTail: false,
+  showName: true,
+  variant: 'outgoing',
+  senderName: 'Michael Scott',
+  saveLabel: 'Save',
+  cancelLabel: 'Cancel',
 };
 
 _EditableChatBubble.story = {

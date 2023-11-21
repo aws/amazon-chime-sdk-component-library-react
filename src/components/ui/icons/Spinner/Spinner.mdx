@@ -1,8 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Spinner from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as SpinnerStories from './Spinner.stories.tsx';
+
+<Meta of={SpinnerStories} />
 
 # Spinner Icon
 
@@ -17,12 +21,13 @@ import { Spinner } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 With custom width and height
-<Preview>
-  <ThemeProvider theme={lightTheme}>
-    <Spinner width="2rem" height="2rem" />
-  </ThemeProvider>
-</Preview>
 
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <Spinner width="2rem" height="2rem" />
+  </Canvas>
+</ThemeProvider>
 
 ```jsx
 <Spinner width="2rem" height="2rem" />
@@ -30,4 +35,4 @@ With custom width and height
 
 ## Props
 
-<Props of={Spinner} />
+<ArgTypes of={Spinner} />

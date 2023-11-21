@@ -62,12 +62,6 @@ git clone https://github.com/aws/amazon-chime-sdk-component-library-react.git
 npm install
 ```
 
-### To run the Storybook server locally
-
-```
-npm start
-```
-
 ### Build
 
 ```
@@ -75,6 +69,14 @@ npm run build
 ```
 
 Once you build, check and resolve any warnings you may get like unresolved dependencies or circular dependencies. Remove these as it will help in bundling the library warning/error free.
+
+### To run the Storybook server locally
+
+`amazon-chime-sdk-component-library-react` uses [Storybook](https://storybook.js.org/) for documentation.
+
+```
+npm start
+```
 
 ### Test
 

@@ -1,0 +1,146 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="Introduction" />
+
+# amazon-chime-sdk-component-library-react
+
+React components for building realtime meeting applications with Amazon Chime.
+
+- [UI Components](/docs/ui-components-badge--page)
+- [SDK Components](/docs/sdk-components-introduction--page)
+- [UI Providers](/docs/ui-providers-notificationprovider--page)
+- [SDK Providers](/docs/sdk-providers-introduction--page)
+- [UI Hooks](/docs/ui-hooks-notification-usenotificationdispatch--page)
+- [SDK Hooks](/docs/ui-hooks-notification-usenotificationdispatch--page)
+- [Themes](/docs/themes--page)
+
+For the majority of use cases, an Amazon Chime application consists of **a server application** and **a client application**.
+
+- A server application – Manages meeting and attendee resources, and serves those resources to the client application. The server application is created in the AWS account and must have access to the IAM role mentioned previously.
+
+- A client application – Receives meeting and attendee information from the server application, and uses that information to make media.
+
+The server application and client application could be hosted either locally or in the cloud (serverless).
+
+- For hosting locally, see the [client application](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/src) and [server application](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js).
+- For hosting in the cloud, see the [serverless example](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting/serverless).
+
+## Getting Started
+
+1. Add amazon-chime-sdk-component-library-react and the necessary peer dependencies to your project
+
+```sh
+npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system
+```
+
+2. Render a `ThemeProvider`, `GlobalStyles` a `MeetingProvider` in the root of your application. Place the `GlobalStyles` under `ThemeProvider` to reset default global CSS styles.
+
+- You can pass a default theme that we provide, or a customized theme that adheres to our theme's structure.
+
+```jsx
+import { ThemeProvider } from 'styled-components';
+import {
+  MeetingProvider,
+  lightTheme,
+  GlobalStyles,
+} from 'amazon-chime-sdk-component-library-react';
+
+const Root = () => (
+  <ThemeProvider theme={lightTheme}>
+    <GlobalStyles />
+    <MeetingProvider>
+      <MyApp />
+    </MeetingProvider>
+  </ThemeProvider>
+);
+```
+
+3. Join a meeting
+
+To join a meeting, you need to do the following sub steps:
+
+- Fetch the meeting and attendee data from Chime
+
+- Initialize `MeetingSessionConfiguration`
+
+- Create and join the meeting
+
+First, you need to fetch the meeting and attendee data from Chime's [CreateAttendee](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateAttendee.html) and [CreateMeeting](https://docs.aws.amazon.com/chime/latest/APIReference/API_CreateMeeting.html) APIs.
+
+- Check the [Getting responses from your server application](https://github.com/aws/amazon-chime-sdk-js#getting-responses-from-your-server-application) for details.
+- Check the [MeetingForm component](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/containers/MeetingForm/index.tsx), the [API calls](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/utils/api.ts), and [server application](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/server.js) in our [React meeting demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting) as examples.
+
+Then, initialize `MeetingSessionConfiguration` with the meeting and attendee data from the last step. You can choose to modify the `MeetingSessionConfiguration` properties to customize the meeting to your preference.
+
+Updating the `MeetingSessionConfiguration` props is an optional step. You can learn more about the available props here: [MeetingSessionConfiguration](https://aws.github.io/amazon-chime-sdk-js/classes/meetingsessionconfiguration.html)
+
+Lastly, pass the `MeetingSessionConfiguration` to the `join` method to create a meeting session. You can now start the meeting session and join the meeting.
+
+```jsx
+import { useMeetingManager } from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+
+  const joinMeeting = async () => {
+    // Fetch the meeting and attendee data from your server application
+    const response = await fetch('/my-server');
+    const data = await response.json();
+
+    // Initalize the `MeetingSessionConfiguration`
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+
+    // Create a `MeetingSession` using `join()` function with the `MeetingSessionConfiguration`
+    await meetingManager.join(meetingSessionConfiguration);
+
+    // At this point you could let users setup their devices, or by default
+    // the SDK will select the first device in the list for the kind indicated
+    // by `deviceLabels` (the default value is DeviceLabels.AudioAndVideo)
+    ...
+
+    // Start the `MeetingSession` to join the meeting
+    await meetingManager.start();
+  };
+
+  return <button onClick={joinMeeting}>Join</button>;
+};
+```
+
+4. Use the SDK components to build out your app
+
+After joining the meeting, you can use the SDK components to render video tiles, meeting controls (such as mute buttons), content share, and more.
+
+For example, the VideoTileGrid will render out all attendee's videos and content share videos of the meeting session into a responsive grid.
+
+```jsx
+import { VideoTileGrid } from 'amazon-chime-sdk-component-library-react';
+
+const MyMeetingView = () => {
+  <VideoTileGrid />;
+};
+```
+
+For more common use cases, please review our [Quick Starts](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/quick-starts--page) guide.
+
+## FAQ
+
+#### How do I build out my own UI using the existing providers?
+
+We provide a set of hooks that you can use that help make building the UI simple.
+
+For example, if you want to build your own mute button, use the `useToggleLocalMute` hook which returns a function to toggle the mute status, and the current mute state.
+
+```jsx
+import { useToggleLocalMute } from 'amazon-chime-sdk-component-library-react';
+
+const MyMuteButton = () => {
+  const { muted, toggleMute } = useToggleLocalMute();
+
+  return (
+    <button onClick={toggleMute}>
+      {muted ? 'Unmute myself' : 'Mute myself'}
+    </button>
+  );
+};
+```

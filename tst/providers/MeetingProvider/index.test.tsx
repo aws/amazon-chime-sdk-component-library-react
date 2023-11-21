@@ -17,7 +17,7 @@ import { MeetingManagerJoinOptions } from '../../../src/providers/MeetingProvide
 
 import '@testing-library/jest-dom';
 
-import { act, renderHook } from '@testing-library/react-hooks';
+import { act, renderHook } from '@testing-library/react';
 import React from 'react';
 
 import { MeetingProvider, useMeetingManager } from '../../../src/providers/MeetingProvider';

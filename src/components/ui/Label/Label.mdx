@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Label from './';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as LabelStories from './Label.stories.tsx';
+
+<Meta of={LabelStories} />
 
 # Label
 
@@ -18,20 +21,18 @@ import { Label } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
-    <Flex layout="fill-space-centered">
-      <Label>Hello World</Label>
-    </Flex>
-  </Preview>
+  <GlobalStyles />
+  <Canvas>
+    <Label>Hello World</Label>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
 <Flex layout="fill-space-centered">
-    <Label>Hello World</Label>
+  <Label>Hello World</Label>
 </Flex>
 ```
 
 ## Props
 
-<Props of={Label} />
+<ArgTypes of={Label} />

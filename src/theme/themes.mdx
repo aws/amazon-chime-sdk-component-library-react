@@ -1,0 +1,221 @@
+import { Meta, Canvas } from '@storybook/blocks';
+import { ThemeProvider } from 'styled-components';
+
+import { lightTheme, darkTheme, GlobalStyles } from './';
+import {
+  Button,
+  Meeting,
+  PrimaryButton,
+  Roster,
+  RosterGroup,
+  RosterHeader,
+  RosterCell,
+  SecondaryButton,
+  Flex,
+} from '../';
+
+<Meta title="Themes" />
+
+# Themes
+
+The Chime SDK Components Library provides **_light_** and **_dark_** themes. You can customize your application by applying a theme to all components.
+
+In Storybook, you can switch between themes for each component in **Themes** tab in **Canvas** view. You can refer to the usage and some examples below.
+
+## Usage
+
+```jsx
+import {
+  lightTheme,
+  darkTheme,
+  GlobalStyles,
+} from 'amazon-chime-sdk-component-library-react';
+import { ThemeProvider } from 'styled-components';
+
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <MyApp />
+</ThemeProvider>;
+```
+
+## Example
+
+#### Buttons in Light Theme
+
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <Flex container alignItems="center" justifyContent="space-around">
+      <Button label="Basic button" />
+      <PrimaryButton label="Primary" icon={<Meeting />} />
+      <SecondaryButton label="This is a secondary button" />
+    </Flex>
+  </Canvas>
+</ThemeProvider>
+
+```jsx
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Button label="Basic button" />
+  <PrimaryButton label="Primary" icon={<Meeting />} />
+  <SecondaryButton label="This is a secondary button" />
+</ThemeProvider>
+```
+
+#### Buttons in Dark Theme
+
+<ThemeProvider theme={darkTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <Flex container alignItems="center" justifyContent="space-around">
+      <Button label="Basic button" />
+      <PrimaryButton label="Primary" icon={<Meeting />} />
+      <SecondaryButton label="This is a secondary button" />
+    </Flex>
+  </Canvas>
+</ThemeProvider>
+
+```jsx
+<ThemeProvider theme={darkTheme}>
+  <GlobalStyles />
+  <Button label="Basic button" />
+  <PrimaryButton label="Primary" icon={<Meeting />} />
+  <SecondaryButton label="This is a secondary button" />
+</ThemeProvider>
+```
+
+#### Roster in Light Theme
+
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <Roster>
+      <RosterHeader
+        title="Present"
+        badge={2}
+        onClose={() => {}}
+        searchValue="Michael"
+        onSearch={() => {}}
+      />
+      <RosterGroup>
+        <RosterCell
+          name="Michael Scott"
+          subtitle="Regional Manager"
+          muted={false}
+          videoEnabled={true}
+        />
+        <RosterCell
+          name="Michael Scarn"
+          subtitle="FBI agent"
+          muted={true}
+          videoEnabled={false}
+        />
+      </RosterGroup>
+      <RosterGroup title="Left" badge={2}>
+        <RosterCell name="Dwight" subtitle="Assistant regional manager" />
+        <RosterCell name="Mike the Magic" subtitle="Magician" />
+      </RosterGroup>
+    </Roster>
+  </Canvas>
+</ThemeProvider>
+
+```jsx
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Roster>
+    <RosterHeader
+      title="Present"
+      badge={2}
+      onClose={() => {}}
+      searchValue="Michael"
+      onSearch={() => {}}
+    />
+    <RosterGroup>
+      <RosterCell
+        name="Michael Scott"
+        subtitle="Regional Manager"
+        muted={false}
+        videoEnabled={true}
+      />
+      <RosterCell
+        name="Michael Scarn"
+        subtitle="FBI agent"
+        muted={true}
+        videoEnabled={false}
+      />
+    </RosterGroup>
+    <RosterGroup title="Left" badge={2}>
+      <RosterCell name="Dwight" subtitle="Assistant regional manager" />
+      <RosterCell name="Mike the Magic" subtitle="Magician" />
+    </RosterGroup>
+  </Roster>
+</ThemeProvider>
+```
+
+#### Roster in Dark Theme
+
+<ThemeProvider theme={darkTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <Roster>
+      <RosterHeader
+        title="Present"
+        badge={2}
+        onClose={() => {}}
+        searchValue="Michael"
+        onSearch={() => {}}
+      />
+      <RosterGroup>
+        <RosterCell
+          name="Michael Scott"
+          subtitle="Regional Manager"
+          muted={false}
+          videoEnabled={true}
+        />
+        <RosterCell
+          name="Michael Scarn"
+          subtitle="FBI agent"
+          muted={true}
+          videoEnabled={false}
+        />
+      </RosterGroup>
+      <RosterGroup title="Left" badge={2}>
+        <RosterCell name="Dwight" subtitle="Assistant regional manager" />
+        <RosterCell name="Mike the Magic" subtitle="Magician" />
+      </RosterGroup>
+    </Roster>
+  </Canvas>
+</ThemeProvider>
+
+```jsx
+<ThemeProvider theme={darkTheme}>
+  <GlobalStyles />
+  <Roster>
+    <RosterHeader
+      title="Present"
+      badge={2}
+      onClose={() => {}}
+      searchValue="Michael"
+      onSearch={() => {}}
+    />
+    <RosterGroup>
+      <RosterCell
+        name="Michael Scott"
+        subtitle="Regional Manager"
+        muted={false}
+        videoEnabled={true}
+      />
+      <RosterCell
+        name="Michael Scarn"
+        subtitle="FBI agent"
+        muted={true}
+        videoEnabled={false}
+      />
+    </RosterGroup>
+    <RosterGroup title="Left" badge={2}>
+      <RosterCell name="Dwight" subtitle="Assistant regional manager" />
+      <RosterCell name="Mike the Magic" subtitle="Magician" />
+    </RosterGroup>
+  </Roster>
+</ThemeProvider>
+```

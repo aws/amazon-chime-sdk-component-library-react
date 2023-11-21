@@ -14,7 +14,7 @@ import React, {
   useState,
 } from 'react';
 
-import { AudioInputContextType } from '../../types';
+import { AudioInputContextType, DeviceLabels } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
 import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
@@ -28,7 +28,7 @@ interface Props {
 
 const Context = createContext<AudioInputContextType | null>(null);
 
-const AudioInputProvider: React.FC<Props> = ({
+export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   onDeviceReplacement,
 }) => {
@@ -70,6 +70,16 @@ const AudioInputProvider: React.FC<Props> = ({
     const observer: DeviceChangeObserver = {
       audioInputsChanged: async (newAudioInputs: MediaDeviceInfo[]) => {
         logger.info('AudioInputProvider - audio inputs updated');
+
+        if (
+          meetingManager.getDeviceLabels() !== DeviceLabels.Audio &&
+          meetingManager.getDeviceLabels() !== DeviceLabels.AudioAndVideo
+        ) {
+          logger.info(
+            'Device labels do not allow audio, skipping audio input selection on audioInputsChanged'
+          );
+          return;
+        }
 
         const hasSelectedDevice = newAudioInputs.some(
           (device) => device.deviceId === selectedInputRef.current
@@ -146,7 +156,7 @@ const AudioInputProvider: React.FC<Props> = ({
   return <Context.Provider value={contextValue}>{children}</Context.Provider>;
 };
 
-const useAudioInputs = (): AudioInputContextType => {
+export const useAudioInputs = (): AudioInputContextType => {
   const context = useContext(Context);
 
   if (!context) {
@@ -155,5 +165,3 @@ const useAudioInputs = (): AudioInputContextType => {
 
   return context;
 };
-
-export { AudioInputProvider, useAudioInputs };

@@ -1,8 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Eye from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as EyeStories from './Eye.stories.tsx';
+
+<Meta of={EyeStories} />
 
 # Eye Icon
 
@@ -17,9 +21,10 @@ import { Eye } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Eye width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -28,4 +33,4 @@ import { Eye } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Eye} />
+<ArgTypes of={Eye} />

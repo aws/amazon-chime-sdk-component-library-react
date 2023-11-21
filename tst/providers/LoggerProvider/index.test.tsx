@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { renderHook } from '@testing-library/react-hooks';
+import { renderHook } from '@testing-library/react';
 import { ConsoleLogger, LogLevel } from 'amazon-chime-sdk-js';
 import {
   LoggerProvider,

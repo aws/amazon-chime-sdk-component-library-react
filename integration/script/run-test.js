@@ -1,0 +1,251 @@
+#!/usr/bin/env node
+
+const { argv, env, kill, exit } = require('process');
+const { spawnSync, spawn } = require('child_process');
+const args = require('minimist')(argv.slice(2));
+const path = require('path');
+
+const pathToIntegrationFolder = path.resolve(__dirname, '..');
+const pathToTestDemoFolder = path.resolve(__dirname, '../app/test-demo');
+
+const green = '\x1b[32m%s\x1b[0m';
+const red = '\x1b[31m%s\x1b[0m';
+
+let testTarget = 'test/*';
+
+const usage = () => {
+  console.log(
+    `Usage: run-test -- [-t test] [-h host] [-b browser-version] [-p platform-name]`
+  );
+  console.log(
+    `  -t, --test                    Target test suite [default: all]`
+  );
+  console.log(
+    `  -h, --host                    Target browser and WebDriver server [default: sauce-chrome]`
+  );
+  console.log(
+    `  -v, --browser-version         Version of the browser to use [default: latest]`
+  );
+  console.log(
+    `  -p, --platform-name           Name of the operating system the browser should be running on [default: Windows 10]\n`
+  );
+  console.log(`Values:`);
+  console.log(`  -t, --test`);
+  console.log(`    all: ../test/*`);
+  console.log(`    roster: ../test/roster-test.js\n`);
+  console.log(`  -h, --host`);
+  console.log(`    chrome: Run tests locally with Chrome`);
+  console.log(`    firefox: Run tests locally with Firefox`);
+  console.log(`    safari: Run tests locally with Safari`);
+  console.log(`    sauce-chrome: Run tests on Sauce Labs with Chrome`);
+  console.log(`    sauce-firefox: Run tests on Sauce Labs with Firefox`);
+  console.log(`    sauce-safari: Run tests on Sauce Labs with Safari\n`);
+  console.log(
+    `Below options are only available when executing tests on Sauce Labs`
+  );
+  console.log(`  -v, --browser-version`);
+  console.log(
+    `    check example here: https://saucelabs.com/platform/platform-configurator#/`
+  );
+  console.log(`  -p, --platform-name`);
+  console.log(
+    `    check example here: https://saucelabs.com/platform/platform-configurator#/\n`
+  );
+};
+
+const parseArgs = () => {
+  for (const [key, value] of Object.entries(args)) {
+    if (key === '_') continue;
+    switch (key) {
+      case 'help':
+        usage();
+        exit(0);
+
+      case 't':
+      case 'test':
+        setTestTarget(value);
+        break;
+
+      case 'h':
+      case 'host':
+        env.HOST = value;
+        break;
+
+      case 'v':
+      case 'browser-version':
+        env.BROWSER_VERSION = value;
+        break;
+
+      case 'p':
+      case 'platform-name':
+        env.PLATFORM_NAME = value;
+        break;
+
+      default:
+        console.log(red, `Invalid argument ${key}`);
+        usage();
+        exit(1);
+    }
+  }
+};
+
+const setTestTarget = (target) => {
+  switch (target) {
+    case 'all':
+      testTarget = 'test/*';
+      break;
+
+    case 'roster':
+      testTarget = 'test/roster_test.js';
+      break;
+
+    default:
+      testTarget = 'test/*';
+      break;
+  }
+};
+
+// Run the command asynchronously without blocking the Node.js event loop.
+const runAsync = (command, args, options) => {
+  options = {
+    ...options,
+    shell: true,
+  };
+  const child = spawn(command, args, options);
+
+  child.stdout.setEncoding('utf8');
+  child.stdout.on('data', (data) => {
+    console.log(data);
+  });
+
+  child.stderr.setEncoding('utf8');
+  child.stderr.on('data', (error) => {
+    console.log(red, error);
+  });
+
+  child.on('close', (code) => {
+    console.log(red, `Command ${command} exited with ${code}`);
+  });
+
+  return child.pid;
+};
+
+// Run the command synchronously with blocking the Node.js event loop
+// until the spawned process either exits or is terminated.
+const runSync = (command, args, options, printOutput = true) => {
+  options = {
+    ...options,
+    shell: true,
+  };
+  const child = spawnSync(command, args, options);
+
+  const output = child.stdout.toString();
+  if (printOutput) {
+    console.log(output);
+  }
+
+  if (child.error) {
+    console.log(red, `Command ${command} failed with ${child.error.code}`);
+  }
+
+  if (child.status !== 0) {
+    console.log(
+      red,
+      `Command ${command} failed with exit code ${child.status} and signal ${child.signal}`
+    );
+    console.log(red, child.stderr.toString());
+  }
+
+  return output;
+};
+
+const checkIfPortIsInUse = async (port) =>
+  new Promise((resolve) => {
+    const server = require('http')
+      .createServer()
+      .once('error', (err) => {
+        if (err && err.code === 'EADDRINUSE') {
+          resolve(true);
+        }
+      })
+      .once('listening', () => {
+        server.once('close', () => resolve(false)).close();
+      })
+      .listen(port, '127.0.0.1');
+  });
+
+const startTestDemo = () => {
+  console.log(green, 'Installing dependencies in test demo');
+  runSync('npm', ['install'], { cwd: pathToTestDemoFolder });
+
+  console.log(green, ' Starting the test demo');
+  // The test demo will keep running until the process is terminated,
+  // so we should execute this command asynchronously without blocking other commands.
+  runAsync('npm', ['run', 'start:fast'], { cwd: pathToTestDemoFolder });
+};
+
+const waitUntilTestDemoStarts = async () => {
+  console.log(green, ' Waiting for test demo to start');
+  count = 0;
+  threshold = 60;
+
+  while (count < threshold) {
+    const isInUse = await checkIfPortIsInUse(8080);
+    if (isInUse === true) {
+      console.log(green, ' Test demo has started successfully');
+      return;
+    }
+    count += 1;
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+  }
+
+  console.log(red, ' Test demo did not start successfully');
+  terminateTestDemo();
+  exit(1);
+};
+
+const startTesting = () => {
+  console.log(green, ' Running test');
+  const testResult = runSync('mocha', [testTarget], {
+    cwd: pathToIntegrationFolder,
+  });
+  return testResult;
+};
+
+const terminateTestDemo = () => {
+  const demoPid = runSync(
+    'lsof',
+    ['-i', ':9000', '-t'],
+    null,
+    (printOutput = false)
+  );
+  if (demoPid) kill(demoPid, 'SIGKILL');
+
+  const serverPid = runSync(
+    'lsof',
+    ['-i', ':8080', '-t'],
+    null,
+    (printOutput = false)
+  );
+  if (serverPid) kill(serverPid, 'SIGKILL');
+  console.log(green, 'Terminated the test demo');
+};
+
+const checkTestResult = (result) => {
+  if (!result || result.includes('failing')) {
+    console.log(red, 'Did not pass all tests, failed');
+    exit(1);
+  } else {
+    console.log(green, 'Passed all tests, succeeded');
+    exit(0);
+  }
+};
+
+(async () => {
+  parseArgs();
+  startTestDemo();
+  await waitUntilTestDemoStarts();
+  const testResult = startTesting();
+  terminateTestDemo();
+  checkTestResult(testResult);
+})();

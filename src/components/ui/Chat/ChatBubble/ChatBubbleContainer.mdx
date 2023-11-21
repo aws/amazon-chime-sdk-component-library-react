@@ -1,9 +1,13 @@
-import { Props, Canvas } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import ChatBubbleContainer from './ChatBubbleContainer';
 import { lightTheme } from '../../../../theme';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import PopOverItem from '../../PopOver/PopOverItem.tsx';
+import * as ChatBubbleContainerStories from './ChatBubbleContainer.stories.tsx';
+
+<Meta of={ChatBubbleContainerStories} />
 
 # ChatBubbleContainer
 
@@ -46,4 +50,4 @@ import { ChatBubbleContainer } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={ChatBubbleContainer} />
+<ArgTypes of={ChatBubbleContainer} />

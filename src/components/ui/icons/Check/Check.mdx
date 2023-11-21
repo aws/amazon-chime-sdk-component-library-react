@@ -1,8 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Check from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as CheckStories from './Check.stories.tsx';
+
+<Meta of={CheckStories} />
 
 # Check Icon
 
@@ -17,9 +21,10 @@ import { Check } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Check width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -28,4 +33,4 @@ import { Check } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Check} />
+<ArgTypes of={Check} />

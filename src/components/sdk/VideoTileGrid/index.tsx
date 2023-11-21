@@ -40,7 +40,7 @@ interface Props extends BaseProps {
   layout?: Layout;
 }
 
-export const VideoTileGrid: React.FC<Props> = ({
+export const VideoTileGrid: React.FC<React.PropsWithChildren<Props>> = ({
   noRemoteVideoView,
   layout = 'featured',
   ...rest

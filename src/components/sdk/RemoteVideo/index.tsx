@@ -17,7 +17,7 @@ interface Props
   name?: string;
 }
 
-export const RemoteVideo: React.FC<Props> = ({
+export const RemoteVideo: React.FC<React.PropsWithChildren<Props>> = ({
   name,
   className,
   tileId,

@@ -17,7 +17,9 @@ import { useLogger } from '../LoggerProvider';
 
 const Context = createContext<LocalAudioOutputContextType | null>(null);
 
-const LocalAudioOutputProvider: React.FC = ({ children }) => {
+export const LocalAudioOutputProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const logger = useLogger();
   const audioVideo = useAudioVideo();
   const [isAudioOn, setIsAudioOn] = useState(true);
@@ -74,7 +76,7 @@ const LocalAudioOutputProvider: React.FC = ({ children }) => {
   );
 };
 
-const useLocalAudioOutput = (): LocalAudioOutputContextType => {
+export const useLocalAudioOutput = (): LocalAudioOutputContextType => {
   const context = useContext(Context);
   if (!context) {
     throw new Error(
@@ -83,5 +85,3 @@ const useLocalAudioOutput = (): LocalAudioOutputContextType => {
   }
   return context;
 };
-
-export { LocalAudioOutputProvider, useLocalAudioOutput };

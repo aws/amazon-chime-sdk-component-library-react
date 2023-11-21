@@ -2,24 +2,25 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import { boolean, text } from '@storybook/addon-knobs';
 import Pin from '.';
-import PinIconDocs from './Pin.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/Pin',
-  parameters: {
-    docs: {
-      page: PinIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Pin,
 };
 
-export const _Pin = () => (
-  <Flex layout="fill-space-centered">
-    <Pin unpin={boolean('unpin', false)} width={text('width', '2rem')} />
-  </Flex>
-);
+export const _Pin = (args) => <Pin {...args} />;
+
+_Pin.argTypes = {
+  width: { control: 'text' },
+  unpin: { control: 'boolean' },
+};
+
+_Pin.args = {
+  width: '2rem',
+  unpin: false,
+};
+
+_Pin.story = {
+  name: 'Pin',
+};

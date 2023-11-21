@@ -1,8 +1,13 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Camera from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+
+import * as CameraStories from './Camera.stories.tsx';
+
+<Meta of={CameraStories} />
 
 # Camera Icon
 
@@ -19,9 +24,10 @@ import { Camera } from 'amazon-chime-sdk-component-library-react';
 With custom width, height and title
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Camera width="2rem" height="2rem" title="Camera on" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -31,9 +37,10 @@ With custom width, height and title
 Disabled camera icon
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Camera width="2rem" height="2rem" disabled title="Camera off" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -42,4 +49,4 @@ Disabled camera icon
 
 ## Props
 
-<Props of={Camera} />
+<ArgTypes of={Camera} />

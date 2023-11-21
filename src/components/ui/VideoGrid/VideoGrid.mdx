@@ -1,14 +1,17 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import VideoGrid from '.';
 import VideoTile from '../VideoTile';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as VideoGridStories from './VideoGrid.stories.tsx';
+
+<Meta of={VideoGridStories} />
 
 # VideoGrid
 
-The VideoGrid component adapts to screen size and orientation, ensuring consistent rendering of up to 25 [VideoTiles](/docs/ui-components-video-videotile--video-tiles).
+The VideoGrid component adapts to screen size and orientation, ensuring consistent rendering of up to 25 [VideoTile](/docs/ui-components-video-videotile--page).
 
 It also supports a 'featured' layout, which will give a single tile a larger portion of the available space, and lay out the other tiles as smaller, 'thumbnail' styled, videos.
 
@@ -21,117 +24,117 @@ import { VideoGrid, VideoTile } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
-     <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
+  <GlobalStyles />
+  <Canvas>
+    <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
       <VideoGrid>
         <VideoTile
           style={{
             border: '1px solid grey',
-            gridArea: ''
+            gridArea: '',
           }}
-          nameplate='Tile 1'
+          nameplate="Tile 1"
         />
         <VideoTile
           style={{
             border: '1px solid grey',
-            gridArea: ''
+            gridArea: '',
           }}
-          nameplate='Tile 2'
+          nameplate="Tile 2"
         />
       </VideoGrid>
     </div>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
-  <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
-      <VideoGrid>
-        <VideoTile
-          style={{
-            border: '1px solid grey',
-            gridArea: ''
-          }}
-          nameplate='Tile 1'
-        />
-        <VideoTile
-          style={{
-            border: '1px solid grey',
-            gridArea: ''
-          }}
-          nameplate='Tile 2'
-        />
-      </VideoGrid>
-    </div>
+<div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
+  <VideoGrid>
+    <VideoTile
+      style={{
+        border: '1px solid grey',
+        gridArea: '',
+      }}
+      nameplate="Tile 1"
+    />
+    <VideoTile
+      style={{
+        border: '1px solid grey',
+        gridArea: '',
+      }}
+      nameplate="Tile 2"
+    />
+  </VideoGrid>
+</div>
 ```
 
 ## Example with featured layout
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
-     <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
-      <VideoGrid layout='featured'>
+  <GlobalStyles />
+  <Canvas>
+    <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
+      <VideoGrid layout="featured">
         <VideoTile
           style={{
             border: '1px solid grey',
-            gridArea: 'ft'
+            gridArea: 'ft',
           }}
-          nameplate='Featured Tile'
+          nameplate="Featured Tile"
         />
         <VideoTile
           style={{
             border: '1px solid grey',
-            gridArea: ''
+            gridArea: '',
           }}
-          nameplate='Tile 2'
+          nameplate="Tile 2"
         />
         <VideoTile
           style={{
             border: '1px solid grey',
-            gridArea: ''
+            gridArea: '',
           }}
-          nameplate='Tile 3'
+          nameplate="Tile 3"
         />
       </VideoGrid>
     </div>
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
-  <div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
-    <VideoGrid layout='featured'>
-      <VideoTile
-        style={{
-          border: '1px solid grey',
-          gridArea: 'ft'
-        }}
-        nameplate='Featured Tile'
-      />
-      <VideoTile
-        style={{
-          border: '1px solid grey',
-          gridArea: ''
-        }}
-        nameplate='Tile 2'
-      />
-      <VideoTile
-        style={{
-          border: '1px solid grey',
-          gridArea: ''
-        }}
-        nameplate='Tile 3'
-      />
-    </VideoGrid>
-  </div>
+<div style={{ padding: '1rem', height: '70vh', boxSizing: 'border-box' }}>
+  <VideoGrid layout="featured">
+    <VideoTile
+      style={{
+        border: '1px solid grey',
+        gridArea: 'ft',
+      }}
+      nameplate="Featured Tile"
+    />
+    <VideoTile
+      style={{
+        border: '1px solid grey',
+        gridArea: '',
+      }}
+      nameplate="Tile 2"
+    />
+    <VideoTile
+      style={{
+        border: '1px solid grey',
+        gridArea: '',
+      }}
+      nameplate="Tile 3"
+    />
+  </VideoGrid>
+</div>
 ```
 
 ## Props
 
 #### VideoGrid component
 
-<Props of={VideoGrid} />
+<ArgTypes of={VideoGrid} />
 
 #### VideoTile component
 
-<Props of={VideoTile} />
+<ArgTypes of={VideoTile} />

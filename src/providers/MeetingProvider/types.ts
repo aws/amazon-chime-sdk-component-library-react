@@ -10,6 +10,7 @@ export interface MeetingManagerJoinOptions {
   eventController?: EventController;
   enableWebAudio?: boolean;
   activeSpeakerPolicy?: ActiveSpeakerPolicy;
+  skipDeviceSelection?: boolean;
 }
 
 export interface AttendeeResponse {
@@ -22,6 +23,7 @@ export type ParsedJoinParams = {
   eventController: EventController | undefined;
   enableWebAudio: boolean;
   activeSpeakerPolicy: ActiveSpeakerPolicy;
+  skipDeviceSelection: boolean;
 };
 
 export type FullDeviceInfoType = {

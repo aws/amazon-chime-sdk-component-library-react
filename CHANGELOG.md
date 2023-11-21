@@ -7,11 +7,73 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.8.0] - 2023-06-05
+
+### Added
+
+### Removed
+
+### Changed
+
+### Fixed
+
+## [3.7.0] - 2023-04-25
+
+### Added
+
+- Add `skipDeviceSelection` option on the `MeetingManager.join` API. The `MeetingManager.join` by default lists and selects audio input, output and video input devices. Use `skipDeviceSelection` flag to skip this default device selection. This is helpful when builders want to fully control device selection as part of meeting initialization. This also avoids no-audio issues in Safari which happens due to listing and selecting devices multiple times.
+
+### Removed
+
+### Changed
+
+- `startAudioInputDevice`, `startVideoInputDevice`, and `setupDeviceLabelTrigger` of `MeetingManager` now throw errors with the original error `name` returned by the `getUserMedia` call. See details in [issue #888](https://github.com/aws/amazon-chime-sdk-component-library-react/issues/888).
+- Migrate SDK to react 18 based.
+- Migrate storybook to v7.
+- Migrate stories to ArgTypes based.
+- Add support for react 18.
+
+### Fixed
+
+## [3.6.0] - 2023-01-06
+
+### Added
+
+- Applications depending on Chime SDK component library currently do not have a out of the box `MeetingStatus` to tell whether the JS SDK is in reconnection. Thus, add `audioVideoDidStartConnecting` with a new `MeetingStatus.Reconnecting` to aid such a use case.
+
+### Removed
+
+### Changed
+- Updated `ContentShare` to have optional nameplate prop.
+### Fixed
+- Fix a bug where the `isVideoEnabled` is still true even when the video device is unplugged. 
+
+- When audio inputs change in a meeting, `AudioInputProvider` will only automatically select a new audio input device if a meeting is joined with `DeviceLabels.Audio` or `DeviceLabels.AudioAndVideo` device labels.
+- Publish `MeetingStatus.Failed` only when a non-terminal failure is encountered. Currently, some Amazon Chime SDK for JavaScript meeting session statuses pass both the `sessionStatus.isFailure()` as well as `sessionStatus.isTerminal()` in JS SDK, thus, for a status if it is in both, it will be considered as non-terminal failure and `MeetingStatus.TerminalFailure` will never get set for such statuses. Check [MeetingSessionStatus](https://github.com/aws/amazon-chime-sdk-js/blob/main/src/meetingsession/MeetingSessionStatus.ts) file for more information on both methods in JS SDK.
+
+## [3.5.0] - 2022-10-25
+
+### Added
+
+* Add support for Node.js 18.
+
+### Removed
+
+### Changed
+- Updated `VoiceFocusProvider` to destroy the Voice Focus worker thread on unmount.
+- Reverted changes to `BackgroundBlurProvider` and `BackgroundReplacemenProvider` to fix bug related to `isBackgroundBlurSupported` and `isBackgroundReplacementSupported` returning false.
+
+### Fixed
+
+* Update the documentation to use `GlobalStyles` along with `ThemeProvider`.
+
+
 ## [3.4.0] - 2022-09-13
 
 ### Added
 
 - Refactor `toggleContentShare` function to allow specifying a `MediaStream` to share. This can be used to share non-screen share content.
+- Expose the background blur processor and background replacement processor from their respective providers - `BackgroundBlurProvider` and `BackgroundReplacementProvider`.
 
 ### Removed
 

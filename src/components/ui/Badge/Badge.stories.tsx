@@ -2,44 +2,45 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-import { select } from '@storybook/addon-knobs';
-import Flex from '../Flex';
-import { Badge } from './';
-import mdx from './Badge.mdx';
+import Badge from './';
 import { Lock } from '../icons';
 
 export default {
   title: 'UI Components/Badge',
-  parameters: {
-    docs: {
-      page: mdx.parameters.docs.page().props.children.type,
-    },
-  },
   component: Badge,
 };
 
-export const BasicBadge = () => {
+export const _Badge = (args) => {
   return (
-    <Flex layout="fill-space-centered">
-      <div style={{ alignItems: 'center', display: 'flex' }}>
-        <span style={{ marginRight: '0.5rem' }}>Number of new messages</span>
-        <Badge
-          value="50+"
-          status={select(
-            'status',
-            { default: 'default', alert: 'alert' },
-            'default'
-          )}
-        />
-      </div>
-      <div style={{ marginLeft: '1rem', display: 'flex' }}>
-        <span style={{ marginRight: '0.5rem' }}>Lock badge</span>
-        <Badge value={<Lock />} />
-      </div>
-    </Flex>
+    <>
+      <span style={{ marginRight: '0.5rem' }}>Number of new messages</span>
+      <Badge {...args} />
+    </>
   );
 };
 
-BasicBadge.story = {
-  name: 'Basic Badge',
+_Badge.args = {
+  value: 'text',
+  status: 'default',
+};
+
+const options = {
+  text: '50+',
+  icon: <Lock />,
+  iconWithWidth: <Lock width="2rem" />,
+};
+
+_Badge.argTypes = {
+  value: {
+    options: Object.keys(options),
+    mapping: options,
+    control: {
+      type: 'radio',
+    },
+  },
+  status: { control: 'radio', options: ['default', 'alert'] },
+};
+
+_Badge.story = {
+  name: 'Badge',
 };

@@ -1,8 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Dock from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as DockStories from './Dock.stories.tsx';
+
+<Meta of={DockStories} />
 
 # Dock Icon
 
@@ -19,9 +23,10 @@ import { Dock } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Dock width="2rem" height="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -31,9 +36,9 @@ With custom width and height
 Undock icon
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <Canvas>
     <Dock width="2rem" height="2rem" undock title="Undock" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -42,4 +47,4 @@ Undock icon
 
 ## Props
 
-<Props of={Dock} />
+<ArgTypes of={Dock} />

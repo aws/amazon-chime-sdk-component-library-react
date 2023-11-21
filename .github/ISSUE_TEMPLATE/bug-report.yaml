@@ -23,8 +23,6 @@ body:
         required: true
       - label: README [page](https://github.com/aws/amazon-chime-sdk-component-library-react#readme)
         required: true
-      - label: How-to [documentation](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/story/how-tos--page)
-        required: true
       - label: React SDK meeting [demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting#readme---react-meeting-demo)
         required: true
   - type: textarea

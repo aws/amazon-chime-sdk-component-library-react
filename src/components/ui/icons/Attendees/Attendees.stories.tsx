@@ -3,23 +3,23 @@
 
 import React from 'react';
 
-import { text } from '@storybook/addon-knobs';
 import Attendees from '.';
-import AttendeesIconDocs from './Attendees.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/Attendees',
-  parameters: {
-    docs: {
-      page: AttendeesIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Attendees,
 };
 
-export const _Attendees = () => (
-  <Flex layout="fill-space-centered">
-    <Attendees width={text('width', '2rem')} />
-  </Flex>
-);
+export const _Attendees = (args) => <Attendees {...args} />;
+
+_Attendees.argTypes = {
+  width: { control: 'text' },
+};
+
+_Attendees.args = {
+  width: '2rem',
+};
+
+_Attendees.story = {
+  name: 'Attendees',
+};

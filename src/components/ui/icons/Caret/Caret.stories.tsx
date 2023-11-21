@@ -2,31 +2,25 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import { select, text } from '@storybook/addon-knobs';
 import Caret from './';
-import CaretIconDocs from './Caret.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/Caret',
-  parameters: {
-    docs: {
-      page: CaretIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Caret,
 };
 
-export const _Caret = () => (
-  <Flex layout="fill-space-centered">
-    <Caret
-      direction={select(
-        'direction',
-        { up: 'up', right: 'right', down: 'down', left: 'left' },
-        'down'
-      )}
-      width={text('width', '2rem')}
-    />
-  </Flex>
-);
+export const _Caret = (args) => <Caret {...args} />;
+
+_Caret.argTypes = {
+  width: { control: 'text' },
+  direction: { control: 'select', options: ['up', 'right', 'down', 'left'] },
+};
+
+_Caret.args = {
+  width: '2rem',
+  direction: 'down',
+};
+
+_Caret.story = {
+  name: 'Caret',
+};

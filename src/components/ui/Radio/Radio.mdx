@@ -1,9 +1,15 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
-import { ThemeProvider } from 'styled-components';
+{/* Replace `Preview` with `Canvas` and `Props` with `ArgTypes` from `@storybook/blocks` */}
 
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import { ThemeProvider } from 'styled-components';
+import * as RadioStories from './Radio.stories.tsx';
 import Radio from './';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+
+{/* `Meta` attaches this .mdx doc to a story (.story.tsx) so they will be placed under same path */}
+
+<Meta of={RadioStories} />
 
 # Radio
 
@@ -20,16 +26,16 @@ import { Radio } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
-    <Radio value="apple" label="Radio Input" checked onChange={e => {}} />
-  </Preview>
+  <GlobalStyles />
+  <Canvas>
+    <Radio value="apple" label="Radio Input" checked onChange={(e) => {}} />
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
-<Radio value="apple" label="Radio Input" checked onChange={e => {}} />
+<Radio value="apple" label="Radio Input" checked onChange={(e) => {}} />
 ```
 
 ## Props
 
-<Props of={Radio} />
+<ArgTypes of={Radio} />

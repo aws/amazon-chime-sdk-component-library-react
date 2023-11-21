@@ -1,0 +1,34 @@
+import { Meta, ArgTypes } from '@storybook/blocks';
+import { VideoTileGrid } from './';
+
+<Meta title="SDK Components/VideoTileGrid" />
+
+# VideoTileGrid
+
+The `VideoTileGrid` component renders all meeting session video tiles in a responsive grid layout. This includes the local tile, remote tiles, and content share tile. By default a user joins without video, so in order to see the VideoTileGrid there must be at least one video tile being shared. To start sharing a video, see the [LocalVideo](?path=/docs/sdk-components-localvideo--page) component. 
+
+## Importing
+
+```javascript
+import { VideoTileGrid } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  VideoTileGrid
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <VideoTileGrid />
+  </MeetingProvider>
+);
+```
+
+## Props
+
+<ArgTypes of={VideoTileGrid} />

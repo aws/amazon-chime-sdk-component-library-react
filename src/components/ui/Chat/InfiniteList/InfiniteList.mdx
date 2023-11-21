@@ -1,4 +1,4 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Flex from '../../Flex';
@@ -6,6 +6,9 @@ import { lightTheme } from '../../../../theme/';
 import { GlobalStyles } from '../../../../theme/GlobalStyles';
 import InfiniteList from './';
 import { BasicInfiniteList } from './InfiniteList.stories.tsx';
+import * as InfiniteListStories from './InfiniteList.stories.tsx';
+
+<Meta of={InfiniteListStories} />
 
 # InfiniteList
 
@@ -20,14 +23,14 @@ import { InfiniteList } from 'amazon-chime-sdk-component-library-react';
 
 ## Example
 
-<Preview>
+<Canvas>
   <ThemeProvider theme={lightTheme}>
     <GlobalStyles />
     <Flex layout="fill-space-centered">
       <BasicInfiniteList />
     </Flex>
   </ThemeProvider>
-</Preview>
+</Canvas>
 
 ```jsx
 <InfiniteList
@@ -45,4 +48,4 @@ import { InfiniteList } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={InfiniteList} />
+<ArgTypes of={InfiniteList} />

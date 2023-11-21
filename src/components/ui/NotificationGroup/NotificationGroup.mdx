@@ -1,7 +1,7 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
-import { ThemeProvider } from 'styled-components';
-import { lightTheme } from '../../../theme/';
-import { NotificationGroup } from '.';
+import { Meta } from '@storybook/blocks';
+import * as NotificationGroupStories from './NotificationGroup.stories.tsx';
+
+<Meta of={NotificationGroupStories} />
 
 # NotificationGroup
 
@@ -26,4 +26,5 @@ import { NotificationGroup } from 'amazon-chime-sdk-component-library-react';
 Note: Check for working under the `Canvas` section for this component.
 
 ## Dependencies
+
 - `NotificationProvider`

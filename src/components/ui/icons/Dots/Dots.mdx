@@ -1,8 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Dots from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as DotsStories from './Dots.stories.tsx';
+
+<Meta of={DotsStories} />
 
 # Dots Icon
 
@@ -17,9 +21,10 @@ import { Dots } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Dots width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -28,4 +33,4 @@ import { Dots } from 'amazon-chime-sdk-component-library-react';
 
 ## Props
 
-<Props of={Dots} />
+<ArgTypes of={Dots} />

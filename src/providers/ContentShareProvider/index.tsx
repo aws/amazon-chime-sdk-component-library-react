@@ -25,7 +25,9 @@ const ContentShareContext = createContext<ContentShareState | null>(null);
 const ContentShareControlContext =
   createContext<ContentShareControlContextType | null>(null);
 
-const ContentShareProvider: React.FC = ({ children }) => {
+export const ContentShareProvider: React.FC<
+  React.PropsWithChildren<unknown>
+> = ({ children }) => {
   const audioVideo = useAudioVideo();
   const [state, dispatch] = useReducer(reducer, initialState);
   const { paused, isLocalUserSharing, isLocalShareLoading } = state;
@@ -178,7 +180,7 @@ const ContentShareProvider: React.FC = ({ children }) => {
   );
 };
 
-const useContentShareState = (): ContentShareState => {
+export const useContentShareState = (): ContentShareState => {
   const contentShareState = useContext(ContentShareContext);
 
   if (!contentShareState) {
@@ -190,7 +192,7 @@ const useContentShareState = (): ContentShareState => {
   return contentShareState;
 };
 
-const useContentShareControls = (): ContentShareControlContextType => {
+export const useContentShareControls = (): ContentShareControlContextType => {
   const context = useContext(ContentShareControlContext);
 
   if (!context) {
@@ -200,5 +202,3 @@ const useContentShareControls = (): ContentShareControlContextType => {
   }
   return context;
 };
-
-export { ContentShareProvider, useContentShareState, useContentShareControls };

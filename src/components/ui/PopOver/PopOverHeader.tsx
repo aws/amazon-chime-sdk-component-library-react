@@ -17,7 +17,7 @@ export interface PopOverHeaderProps
   imgSrc?: string;
 }
 
-export const PopOverHeader: FC<PopOverHeaderProps> = ({
+export const PopOverHeader: FC<React.PropsWithChildren<PopOverHeaderProps>> = ({
   title,
   subtitle,
   imgSrc,

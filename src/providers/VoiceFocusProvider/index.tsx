@@ -37,7 +37,7 @@ interface VoiceFocusState {
 
 const VoiceFocusContext = createContext<VoiceFocusState | null>(null);
 
-const VoiceFocusProvider: React.FC<Props> = ({
+export const VoiceFocusProvider: React.FC<React.PropsWithChildren<Props>> = ({
   spec,
   options,
   createMeetingResponse,
@@ -90,15 +90,9 @@ const VoiceFocusProvider: React.FC<Props> = ({
     logger.info(
       `Add Amazon Voice Focus to the following audio input device ${device}`
     );
-
-    if (voiceFocusDevice) {
-      const vf = await voiceFocusDevice.chooseNewInnerDevice(device);
-      logger.info(
-        'Re-used the same internal state to create an Amazon Voice Focus transform device.'
-      );
-      setVoiceFocusDevice(vf);
-      return vf;
-    }
+    // TODO: We don't need to intialize a new transformer every time we create a voice focus transformer device
+    // We could potentially check for if a transformer exists already AND that the voiceFocusDevice exists and hasnt been stopped.
+    // If both of those statements are true, then chooseNewInnerDevice instead of creating a new processor
 
     if (!isVoiceFocusSupported) {
       logger.debug('Not supported, not creating device.');
@@ -167,7 +161,7 @@ const VoiceFocusProvider: React.FC<Props> = ({
         setVoiceFocusDevice(null);
         setIsVoiceFocusSupported(transformer && transformer.isSupported());
       })
-      .catch((e) => {
+      .catch(() => {
         if (canceled()) {
           return;
         }
@@ -186,8 +180,12 @@ const VoiceFocusProvider: React.FC<Props> = ({
     options: VoiceFocusDeviceOptions | undefined,
     canceled: () => boolean,
     createMeetingResponse: JoinMeetingInfo | undefined
-  ) {
+  ): Promise<void> {
     // Throw away the old one and reinitialize.
+    voiceFocusDevice?.stop();
+    if (voiceFocusTransformer) {
+      VoiceFocusDeviceTransformer.destroyVoiceFocus(voiceFocusTransformer);
+    }
     setVoiceFocusTransformer(null);
     setVoiceFocusDevice(null);
     createVoiceFocusDeviceTransformer(
@@ -226,7 +224,31 @@ const VoiceFocusProvider: React.FC<Props> = ({
         `Current Amazon Voice Focus transform device: ${voiceFocusDevice}`
       );
     }
+    return () => {
+      if (voiceFocusDevice) {
+        logger.info(
+          'Destroying voice focus device : ' + JSON.stringify(voiceFocusDevice)
+        );
+        voiceFocusDevice?.stop();
+      } else {
+        logger.info("Voice focus device doesn't exist");
+      }
+    };
   }, [voiceFocusDevice]);
+
+  useEffect(() => {
+    return () => {
+      if (voiceFocusTransformer) {
+        VoiceFocusDeviceTransformer.destroyVoiceFocus(voiceFocusTransformer);
+        logger.info(
+          'Destroying voice focus transformer : ' +
+            JSON.stringify(voiceFocusTransformer)
+        );
+      } else {
+        logger.info("VoiceFocusTransformer doesn't exist");
+      }
+    };
+  }, [voiceFocusTransformer]);
 
   const value: VoiceFocusState = {
     isVoiceFocusSupported,
@@ -240,7 +262,7 @@ const VoiceFocusProvider: React.FC<Props> = ({
   );
 };
 
-const useVoiceFocus = (): VoiceFocusState => {
+export const useVoiceFocus = (): VoiceFocusState => {
   const context = useContext(VoiceFocusContext);
 
   if (!context) {
@@ -248,5 +270,3 @@ const useVoiceFocus = (): VoiceFocusState => {
   }
   return context;
 };
-
-export { VoiceFocusProvider, useVoiceFocus };

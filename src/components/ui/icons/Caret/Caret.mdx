@@ -1,8 +1,13 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Caret from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+
+import * as CaretStories from './Caret.stories.tsx';
+
+<Meta of={CaretStories} />
 
 # Caret Icon
 
@@ -21,9 +26,10 @@ import { Caret } from 'amazon-chime-sdk-component-library-react';
 With custom width
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Caret width="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -33,9 +39,10 @@ With custom width
 Change the direction
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Caret width="2rem" direction="down" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -44,4 +51,4 @@ Change the direction
 
 ## Props
 
-<Props of={Caret} />
+<ArgTypes of={Caret} />

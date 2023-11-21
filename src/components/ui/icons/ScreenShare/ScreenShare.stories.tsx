@@ -2,24 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import { text } from '@storybook/addon-knobs';
 import ScreenShare from '.';
-import ScreenShareIconDocs from './ScreenShare.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/ScreenShare',
-  parameters: {
-    docs: {
-      page: ScreenShareIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: ScreenShare,
 };
 
-export const _ScreenShare = () => (
-  <Flex layout="fill-space-centered">
-    <ScreenShare width={text('width', '2rem')} />
-  </Flex>
-);
+export const _ScreenShare = (args) => <ScreenShare {...args} />;
+
+_ScreenShare.argTypes = {
+  width: { control: 'text' },
+};
+
+_ScreenShare.args = {
+  width: '2rem',
+};
+
+_ScreenShare.story = {
+  name: 'ScreenShare',
+};

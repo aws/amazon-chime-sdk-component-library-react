@@ -1,9 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import VideoTile from '.';
 import { lightTheme } from '../../../theme/';
 import { GlobalStyles } from '../../../theme/GlobalStyles';
+import * as VideoTileStories from './VideoTile.stories.tsx';
+
+<Meta of={VideoTileStories} />
 
 # VideoTile
 
@@ -18,21 +21,20 @@ import { VideoTile } from 'amazon-chime-sdk-component-library-react';
 ## Example
 
 <ThemeProvider theme={lightTheme}>
-  <GlobalStyles/>
-  <Preview>
-    <Flex css="height: 100vh" layout="fill-space-centered">
-      <div style={{ height: "15rem", width: '25rem', margin: '2rem auto' }}>
-        <VideoTile nameplate="Test name" />
-      </div>
-    </Flex>
-  </Preview>
+  <GlobalStyles />
+  <Canvas>
+    <div style={{ height: '15rem', width: '25rem', margin: '2rem auto' }}>
+      <VideoTile nameplate="Test name" />
+    </div>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
-  <VideoTile  nameplate="Test name"/>
+<VideoTile nameplate="Test name" />
 ```
 
 ## Props
 
 #### VideoTile component
-<Props of={VideoTile} />
+
+<ArgTypes of={VideoTile} />

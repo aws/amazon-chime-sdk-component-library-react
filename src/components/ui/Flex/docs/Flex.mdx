@@ -1,0 +1,124 @@
+import { ThemeProvider } from 'styled-components';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as flexStories from './Flex.stories.tsx';
+import Flex from '..';
+import { lightTheme } from '../../../../theme/';
+import { Block, Title } from './common';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+
+<Meta of={flexStories} />
+
+# Flex
+
+The Flex component is a one-dimensional layout model. It offers space distribution between items and powerful alignment capabilities in a page layout.
+
+It provides several defined layouts, e.g. `fill-space`, `fill-space-centerd`, `equal-columns`, and `stack`.
+
+## Importing
+
+```javascript
+import { Flex } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Example
+
+With layout `fill-space`
+
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <Flex layout="fill-space">
+      <Title>fill-space</Title>
+    </Flex>
+  </Canvas>
+</ThemeProvider>
+
+```jsx
+<Flex layout="fill-space">
+  <Title>fill-space</Title>
+</Flex>
+```
+
+With Layout `fill-space-centered`
+
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <Flex layout="fill-space-centered">
+      <Title>fill-space-centered</Title>
+    </Flex>
+  </Canvas>
+</ThemeProvider>
+
+```jsx
+<Flex layout="fill-space-centered">
+  <Title>fill-space-centered</Title>
+</Flex>
+```
+
+With Layout `equal-columns`
+
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <Flex layout="equal-columns">
+      <Block tag="article" />
+      <Block tag="article" />
+      <Block tag="article" />
+      <Block tag="article" />
+    </Flex>
+  </Canvas>
+</ThemeProvider>
+
+```jsx
+<Flex layout="equal-columns">
+  <Block tag="article" />
+  <Block tag="article" />
+  <Block tag="article" />
+  <Block tag="article" />
+</Flex>
+```
+
+With Layout `stack`
+
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <Flex layout="stack">
+      <Block tag="article" />
+      <Block tag="article" />
+      <Block tag="article" />
+      <Block tag="article" />
+    </Flex>
+  </Canvas>
+</ThemeProvider>
+
+```jsx
+<Flex layout="stack">
+  <Block tag="article" />
+  <Block tag="article" />
+  <Block tag="article" />
+  <Block tag="article" />
+</Flex>
+```
+
+With container `true`
+
+<ThemeProvider theme={lightTheme}>
+  <GlobalStyles />
+  <Canvas>
+    <Flex container>
+      <Title>placeholder</Title>
+    </Flex>
+  </Canvas>
+</ThemeProvider>
+
+```jsx
+<Flex container>
+  <Title>placeholder</Title>
+</Flex>
+```
+
+## Props
+
+<ArgTypes of={Flex} />

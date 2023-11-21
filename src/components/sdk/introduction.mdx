@@ -1,0 +1,84 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="SDK Components/Introduction" />
+
+# SDK Components
+
+SDK Components provide you the capability to build out a realtime meeting experience easily. They have a dependency on providers being rendered in your application tree, which subsequently have a dependency on the `amazon-chime-sdk-js`.
+
+SDK components are aimed at accelerating your Amazon Chime SDK application development.
+
+## Getting Started
+
+1. Add amazon-chime-sdk-component-library-react and the necessary peer dependencies to your project
+
+```sh
+npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system
+```
+
+2. Render a `ThemeProvider`, `GlobalStyles` a `MeetingProvider` in the root of your application. Place the `GlobalStyles` under `ThemeProvider` to reset default global CSS styles.
+
+- You can pass a default theme that we provide, or a customized theme that adheres to our theme's structure.
+
+```jsx
+import { ThemeProvider } from 'styled-components';
+import {
+  lightTheme,
+  MeetingProvider,
+  GlobalStyles,
+} from 'amazon-chime-sdk-component-library-react';
+
+const Root = () => (
+  <ThemeProvider theme={lightTheme}>
+    <GlobalStyles />
+    <MeetingProvider>
+      <MyApp />
+    </MeetingProvider>
+  </ThemeProvider>
+);
+```
+
+3. Use the SDK components to build your app
+
+_Note_ - Some components won't render anything unless there is an active meeting. To join a meeting, you need to use the `join` and `start` APIs that are provided through the [useMeetingManager](/docs/sdk-hooks-usemeetingmanager--page) hook.
+
+```jsx
+import {
+  VideoTileGrid,
+  useMeetingManager
+} from 'amazon-chime-sdk-component-library-react';
+import { MeetingSessionConfiguration } from 'amazon-chime-sdk-js';
+
+const MyApp = () => {
+  const meetingManager = useMeetingManager();
+
+  const joinMeeting = async () => {
+    // Fetch the meeting and attendee data from your server application
+    const response = await fetch('/my-server');
+    const data = await response.json();
+
+    // Initialize the `MeetingSessionConfiguration`
+    const meetingSessionConfiguration = new MeetingSessionConfiguration(data.Meeting, data.Attendee);
+
+    // Use the join API to create a meeting session using the MeetingSessionConfiguration
+    await meetingManager.join(
+      meetingSessionConfiguration
+    );
+
+    // At this point you could let users setup their devices, or by default
+    // the SDK will select the first device in the list for the s indicated
+    // by `deviceLabels` (the default value is DeviceLabels.AudioAndVideo)
+    ...
+
+    // Start the session to join the meeting
+    await meetingManager.start();
+  };
+
+  return (
+    <>
+      <button onClick={joinMeeting}>Join</button>
+      <VideoTileGrid />
+    </>
+  );
+};
+```

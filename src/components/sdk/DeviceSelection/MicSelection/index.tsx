@@ -16,7 +16,7 @@ interface Props extends BaseSdkProps {
   label?: string;
 }
 
-export const MicSelection: React.FC<Props> = ({
+export const MicSelection: React.FC<React.PropsWithChildren<Props>> = ({
   notFoundMsg = 'No microphone devices found',
   label = 'Microphone source',
   ...rest

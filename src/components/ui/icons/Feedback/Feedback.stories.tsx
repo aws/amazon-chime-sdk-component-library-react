@@ -2,24 +2,23 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import React from 'react';
-
-import { text } from '@storybook/addon-knobs';
 import Feedback from '.';
-import FeedbackIconDocs from './Feedback.mdx';
-import Flex from '../../Flex';
 
 export default {
   title: 'UI Components/Icons/Feedback',
-  parameters: {
-    docs: {
-      page: FeedbackIconDocs.parameters.docs.page().props.children.type,
-    },
-  },
   component: Feedback,
 };
 
-export const _Feedback = () => (
-  <Flex layout="fill-space-centered">
-    <Feedback width={text('width', '2rem')} />
-  </Flex>
-);
+export const _Feedback = (args) => <Feedback {...args} />;
+
+_Feedback.argTypes = {
+  width: { control: 'text' },
+};
+
+_Feedback.args = {
+  width: '2rem',
+};
+
+_Feedback.story = {
+  name: 'Feedback',
+};

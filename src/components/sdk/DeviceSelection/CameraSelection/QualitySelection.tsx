@@ -19,7 +19,7 @@ interface Props extends BaseSdkProps {
   labelForUnselected?: string;
 }
 
-export const QualitySelection: React.FC<Props> = ({
+export const QualitySelection: React.FC<React.PropsWithChildren<Props>> = ({
   label = 'Video quality',
   labelForUnselected = 'Select video quality',
   ...rest

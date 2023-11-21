@@ -108,6 +108,12 @@ export class MeetingManager implements AudioVideoObserver {
 
   private eventDidReceiveRef: EventObserver;
 
+  private deviceLabels: DeviceLabels | DeviceLabelTrigger;
+
+  getDeviceLabels(): DeviceLabels | DeviceLabelTrigger {
+    return this.deviceLabels;
+  }
+
   constructor(logger: Logger) {
     this.logger = logger;
     this.eventDidReceiveRef = {
@@ -142,6 +148,7 @@ export class MeetingManager implements AudioVideoObserver {
       eventController,
       enableWebAudio,
       activeSpeakerPolicy,
+      skipDeviceSelection
     } = this.parseJoinParams(options);
     this.meetingSessionConfiguration = meetingSessionConfiguration;
     this.meetingId = this.meetingSessionConfiguration.meetingId;
@@ -166,7 +173,11 @@ export class MeetingManager implements AudioVideoObserver {
 
     this.setupAudioVideoObservers();
     this.setupDeviceLabelTrigger(deviceLabels);
-    await this.listAndSelectDevices(deviceLabels);
+    if (!skipDeviceSelection) {
+      this.logger.info('[MeetingManager.join] listing and selecting devices');
+      await this.listAndSelectDevices(deviceLabels);
+    }
+    
     this.publishAudioVideo();
     this.setupActiveSpeakerDetection(activeSpeakerPolicy);
     this.meetingStatus = MeetingStatus.Loading;
@@ -183,12 +194,14 @@ export class MeetingManager implements AudioVideoObserver {
     const enableWebAudio: boolean = options?.enableWebAudio || false;
     const activeSpeakerPolicy: ActiveSpeakerPolicy =
       options?.activeSpeakerPolicy || new DefaultActiveSpeakerPolicy();
+    const skipDeviceSelection = options?.skipDeviceSelection || false;
 
     return {
       deviceLabels,
       eventController,
       enableWebAudio,
       activeSpeakerPolicy,
+      skipDeviceSelection
     };
   }
 
@@ -232,6 +245,16 @@ export class MeetingManager implements AudioVideoObserver {
     this.publishMeetingStatus();
   };
 
+  audioVideoDidStartConnecting = (reconnecting: boolean): void => {
+    if (this.meetingStatus === MeetingStatus.Reconnecting) {
+      return;
+    }
+    if (reconnecting) {
+      this.meetingStatus = MeetingStatus.Reconnecting;
+      this.publishMeetingStatus();
+    }
+  };
+
   audioVideoDidStop = (sessionStatus: MeetingSessionStatus): void => {
     const sessionStatusCode = sessionStatus.statusCode();
     switch (sessionStatusCode) {
@@ -255,7 +278,7 @@ export class MeetingManager implements AudioVideoObserver {
         break;
       default:
         // The following status codes are Failures according to MeetingSessionStatus
-        if (sessionStatus.isFailure()) {
+        if (sessionStatus.isFailure() && !sessionStatus.isTerminal()) {
           console.log(
             `[MeetingManager audioVideoDidStop] Non-Terminal failure occurred: ${sessionStatusCode}`
           );
@@ -284,6 +307,7 @@ export class MeetingManager implements AudioVideoObserver {
 
     this.audioVideoObservers = {
       audioVideoDidStart: this.audioVideoDidStart,
+      audioVideoDidStartConnecting: this.audioVideoDidStartConnecting,
       audioVideoDidStop: this.audioVideoDidStop,
     };
 
@@ -302,6 +326,12 @@ export class MeetingManager implements AudioVideoObserver {
   setupDeviceLabelTrigger(
     deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo
   ): void {
+    /**
+     * A builder can set device labels either using `meetingManager.join` or using `meetingManager.invokeDeviceProvider` methods.
+     * Both use `setupDeviceLabelTrigger` methods, thus, set the `deviceLabels` in this method.
+     */
+    this.deviceLabels = deviceLabels;
+
     let callback: DeviceLabelTrigger;
 
     if (typeof deviceLabels === 'function') {
@@ -345,7 +375,7 @@ export class MeetingManager implements AudioVideoObserver {
           console.error('MeetingManager failed to get device permissions');
           this.deviceLabelTriggerStatus = DeviceLabelTriggerStatus.DENIED;
           this.publishDeviceLabelTriggerStatus();
-          throw new Error(error);
+          throw error;
         }
       };
     }
@@ -455,11 +485,15 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedAudioInputDevice = device;
       this.publishSelectedAudioInputDevice();
     } catch (error) {
-      console.error(
-        'MeetingManager failed to select audio input device',
-        error
+      const newError = new Error(
+        'MeetingManager failed to select audio input device.'
       );
-      throw new Error('MeetingManager failed to select audio input device');
+      if (error instanceof Error) {
+        newError.name = error.name;
+        newError.message += ' ' + error.message;
+      }
+      console.error(newError);
+      throw newError;
     }
   };
 
@@ -483,11 +517,15 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedVideoInputDevice = device;
       this.publishSelectedVideoInputDevice();
     } catch (error) {
-      console.error(
-        'MeetingManager failed to select video input device',
-        error
+      const newError = new Error(
+        'MeetingManager failed to select video input device.'
       );
-      throw new Error('MeetingManager failed to select video input device');
+      if (error instanceof Error) {
+        newError.name = error.name;
+        newError.message += ' ' + error.message;
+      }
+      console.error(newError);
+      throw newError;
     }
   };
 

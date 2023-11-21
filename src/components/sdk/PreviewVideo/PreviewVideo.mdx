@@ -1,0 +1,38 @@
+import { Meta, ArgTypes } from '@storybook/blocks';
+import { PreviewVideo } from './';
+
+<Meta title="SDK Components/PreviewVideo" />
+
+# PreviewVideo
+
+The `PreviewVideo` component renders a preview of the local video. If there is no available video input, the video will be blank. 
+
+A `PreviewVideo` is typically used on a pre-meeting view, or a device settings page. The React SDK depends on the Amazon Chime SDK for JavaScript, wherein, a single video stream is attached to a video element at a time. Hence, if `PreviewVideo` and `LocalVideo` component both are rendered on the same page and if both are enabled, stopping the video preview in `PreviewVideo` component will result into disconnecting the video stream for `LocalVideo` as well showing a black screen.
+
+## Importing
+
+```javascript
+import { PreviewVideo } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  PreviewVideo
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  return (
+    <MeetingProvider>
+      <PreviewVideo />
+    </MeetingProvider>
+  );
+};
+```
+
+## Props
+
+<ArgTypes of={PreviewVideo} />

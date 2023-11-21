@@ -3,7 +3,6 @@
 
 import React from 'react';
 import styled from 'styled-components';
-import { text } from '@storybook/addon-knobs';
 
 import Add from '../Add';
 import Arrow from '../Arrow';
@@ -131,19 +130,31 @@ const IconWrapper = styled.div`
   border-radius: 2px;
 `;
 
-const getIconAndName = (Component) => {
+const getIconAndName = (Icon, args) => {
   return (
     <IconWrapper>
-      <Component width={text('width', '4rem')} />
-      <p>{Component.displayName}</p>
+      <Icon {...args} />
+      <p>{Icon.displayName}</p>
     </IconWrapper>
   );
 };
 
-export const _All = () => {
+export const _All = (args) => {
   return (
     <Flex container flexDirection="row" alignItems="center" flexWrap="wrap">
-      {icons.map((i) => getIconAndName(i))}
+      {icons.map((icon) => getIconAndName(icon, args))}
     </Flex>
   );
+};
+
+_All.argTypes = {
+  width: { control: 'text' },
+};
+
+_All.args = {
+  width: '4rem',
+};
+
+_All.story = {
+  name: 'Arrow',
 };

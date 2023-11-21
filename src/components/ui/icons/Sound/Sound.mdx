@@ -1,8 +1,12 @@
-import { Preview, Props } from '@storybook/addon-docs/blocks';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
 
 import Sound from './';
 import { lightTheme } from '../../../../theme/';
+import { GlobalStyles } from '../../../../theme/GlobalStyles';
+import * as SoundStories from './Sound.stories.tsx';
+
+<Meta of={SoundStories} />
 
 # Sound Icon
 
@@ -19,9 +23,10 @@ import { Sound } from 'amazon-chime-sdk-component-library-react';
 With custom width and height
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <GlobalStyles />
+  <Canvas>
     <Sound width="2rem" height="2rem" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -31,9 +36,9 @@ With custom width and height
 Disabled sound icon
 
 <ThemeProvider theme={lightTheme}>
-  <Preview>
+  <Canvas>
     <Sound width="2rem" height="2rem" disabled title="Sound off" />
-  </Preview>
+  </Canvas>
 </ThemeProvider>
 
 ```jsx
@@ -42,4 +47,4 @@ Disabled sound icon
 
 ## Props
 
-<Props of={Sound} />
+<ArgTypes of={Sound} />
