@@ -21,11 +21,11 @@ The [Amazon Chime SDK Project Board](https://github.com/orgs/aws/projects/12) ca
 
 [Amazon Chime SDK](https://aws.amazon.com/chime/chime-sdk/)
 
-[Amazon SDK Pricing](https://aws.amazon.com/chime/pricing/#Chime_SDK_)
+[Amazon Chime SDK Pricing](https://aws.amazon.com/chime/chime-sdk/pricing/)
 
 [Supported Browsers](https://docs.aws.amazon.com/chime/latest/dg/meetings-sdk.html#mtg-browsers)
 
-[Amazon Chime API Reference](https://docs.aws.amazon.com/chime/latest/APIReference/Welcome.html)
+[Amazon Chime SDK API Reference](https://docs.aws.amazon.com/chime-sdk/latest/APIReference/welcome.html)
 
 [Amazon Chime SDK for JavaScript Documentation](https://aws.github.io/amazon-chime-sdk-js/#amazon-chime-sdk-for-javascript)
 
@@ -39,7 +39,7 @@ The [Amazon Chime SDK Project Board](https://github.com/orgs/aws/projects/12) ca
 
 [Messaging Demo](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/chat)
 
-[Building Breakout Room Experiences with the Amazon Chime SDK React Component Library](https://aws.amazon.com/blogs/business-productivity/breakout-room-amazon-chime-sdk-react-component-library/)
+[Building Breakout Room Experiences with the Amazon Chime SDK React Component Library](https://github.com/aws-samples/amazon-chime-sdk-meetings-breakout-rooms/tree/main)
 
 [Quickly launch an Amazon Chime SDK application with AWS Amplify](https://aws.amazon.com/blogs/business-productivity/quickly-launch-an-amazon-chime-sdk-application-with-aws-amplify/)
 
