@@ -1,6 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import React from 'react';
 import {
   ConsoleLogger,
   DefaultEventController,
@@ -18,9 +19,11 @@ import { MeetingManagerJoinOptions } from '../../../src/providers/MeetingProvide
 import '@testing-library/jest-dom';
 
 import { act, renderHook } from '@testing-library/react';
-import React from 'react';
 
-import { MeetingProvider, useMeetingManager } from '../../../src/providers/MeetingProvider';
+import {
+  MeetingProvider,
+  useMeetingManager,
+} from '../../../src/providers/MeetingProvider';
 
 describe('Meeting Provider', () => {
   it('events are received correctly', async () => {
@@ -28,7 +31,9 @@ describe('Meeting Provider', () => {
     // set up. Otherwise, the amazon-chime-sdk-js will not detect a valid
     // browser to use.
     const userAgentGet = jest.spyOn(navigator, 'userAgent', 'get');
-    userAgentGet.mockReturnValue('Chrome/96.0');
+    userAgentGet.mockReturnValue(
+      'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36'
+    );
 
     // Event details
     const eventName = 'audioInputFailed';
@@ -39,20 +44,29 @@ describe('Meeting Provider', () => {
       meetingInfo: {
         meetingId: '',
         externalMeetingId: '',
-        mediaplacement: new MeetingSessionURLs()
-      }, 
-      attendeeInfo: new MeetingSessionCredentials(),  
-    }
+        mediaplacement: new MeetingSessionURLs(),
+      },
+      attendeeInfo: new MeetingSessionCredentials(),
+    };
     let eventController = new DefaultEventController(
-      new MeetingSessionConfiguration(joinData.meetingInfo, joinData.attendeeInfo), 
-      new NoOpDebugLogger(),
-      );
+      new MeetingSessionConfiguration(
+        joinData.meetingInfo,
+        joinData.attendeeInfo
+      ),
+      new NoOpDebugLogger()
+    );
     let meetingManagerJoinOptions: MeetingManagerJoinOptions = {
       eventController: eventController,
     };
-    let meetingManager = new MeetingManager(new ConsoleLogger('MeetingManager'));
-    await meetingManager.join(new MeetingSessionConfiguration(joinData.meetingInfo, joinData.attendeeInfo),
-      meetingManagerJoinOptions,
+    let meetingManager = new MeetingManager(
+      new ConsoleLogger('MeetingManager')
+    );
+    await meetingManager.join(
+      new MeetingSessionConfiguration(
+        joinData.meetingInfo,
+        joinData.attendeeInfo
+      ),
+      meetingManagerJoinOptions
     );
 
     let calls = 0;
@@ -91,7 +105,7 @@ describe('Meeting Provider', () => {
     await new Promise((r) => setTimeout(r, 10));
     // Should have been called twice
     expect(calls).toBe(2);
-  })
+  });
 
   it('should not change params', async () => {
     // @ts-ignore

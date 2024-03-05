@@ -10,8 +10,8 @@
     "NOTICE"
   ],
   "engines": {
-    "node": "^12 || ^14 || ^15 || ^16 || ^18",
-    "npm": "^6 || ^7 || ^8"
+    "node": "^18 || ^19 || ^20",
+    "npm": "^8 || ^9 || ^10"
   },
   "repository": {
     "type": "git",
@@ -85,7 +85,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "add": "^2.0.6",
-    "amazon-chime-sdk-js": "^3.18.2",
+    "amazon-chime-sdk-js": "^3.20.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^6.7.1",
     "eslint": "^7.32.0",
