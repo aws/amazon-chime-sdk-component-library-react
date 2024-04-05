@@ -128,11 +128,11 @@ export const ContentShareProvider: React.FC<
         audioVideo.stopContentShare();
       } else {
         if (source && typeof source === 'string') {
-          audioVideo.startContentShareFromScreenCapture(source);
-        } else if (source instanceof MediaStream) {
-          audioVideo.startContentShare(source);
+          await audioVideo.startContentShareFromScreenCapture(source);
+        } else if (source && source instanceof MediaStream) {
+          await audioVideo.startContentShare(source);
         } else {
-          audioVideo.startContentShareFromScreenCapture();
+          await audioVideo.startContentShareFromScreenCapture();
         }
         dispatch({ type: ContentActionType.STARTING });
       }
