@@ -10,7 +10,7 @@
   "dependencies": {
     "chromedriver": "^101.0.0",
     "fs-extra": "^10.0.0",
-    "geckodriver": "^3.0.1",
+    "geckodriver": "^4.3.3",
     "minimist": "^1.2.6",
     "mocha": "^9.2.0",
     "selenium-webdriver": "^4.1.0",
