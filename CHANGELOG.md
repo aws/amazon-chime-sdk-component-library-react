@@ -11,6 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Add `changeBackgroundReplacementImage` function in the `BackgroundReplacementProvider` to enable the functionality of changing the background replacement image. 
+
 ### Removed
 
 ### Changed
