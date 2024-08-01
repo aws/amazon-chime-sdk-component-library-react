@@ -42,7 +42,7 @@ interface BackgroundReplacementProviderState {
   backgroundReplacementProcessor: BackgroundReplacementProcessor | undefined;
   changeBackgroundReplacementImage: (
     imageBlob: Blob
-  ) => {};
+  ) => Promise<void>;
 }
 
 const BackgroundReplacementProviderContext = createContext<
