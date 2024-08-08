@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Add `changeBackgroundReplacementImage` function in the `BackgroundReplacementProvider` to enable the functionality of changing the background replacement image. `changeBackgroundReplacementImage` will take a `Blob` as parameter and return a `Promise`.
+- Add `changeBackgroundReplacementImage` function in the `BackgroundReplacementProvider` to enable the functionality of changing the background replacement image. `changeBackgroundReplacementImage` will take a `Blob` as its parameter and return a `Promise`.
 
 ### Removed
 
