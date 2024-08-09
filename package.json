@@ -1,6 +1,6 @@
 {
   "name": "amazon-chime-sdk-component-library-react",
-  "version": "3.9.0",
+  "version": "3.10.0",
   "description": "Amazon Chime SDK Component Library - React",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -85,7 +85,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "add": "^2.0.6",
-    "amazon-chime-sdk-js": "^3.21.1",
+    "amazon-chime-sdk-js": "^3.23.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^6.7.1",
     "eslint": "^7.32.0",
@@ -126,7 +126,7 @@
     "webpack-cli": "^4.9.2"
   },
   "peerDependencies": {
-    "amazon-chime-sdk-js": "^3.21.1",
+    "amazon-chime-sdk-js": "^3.23.0",
     "react": "^17.0.1 || ^18.0.0",
     "react-dom": "^17.0.1 || ^18.0.0",
     "styled-components": "^5.0.0",
