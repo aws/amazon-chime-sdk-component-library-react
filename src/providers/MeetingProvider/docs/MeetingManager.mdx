@@ -190,7 +190,6 @@ const MyApp = () => {
     meetingSessionConfiguration.attendeePresenceTimeoutMs = 120;
     meetingSessionConfiguration.videoDownlinkBandwidthPolicy = new VideoPriorityBasedPolicy(
       logger,
-      VideoPriorityBasedPolicyConfig.UnstableNetworkPreset,
     );
 
     // Create a `MeetingSession` using `join()` function with the modified `MeetingSessionConfiguration`
