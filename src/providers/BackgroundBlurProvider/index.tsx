@@ -6,10 +6,8 @@ import {
   BackgroundBlurProcessor,
   BackgroundBlurVideoFrameProcessor,
   BackgroundFilterSpec,
-  ConsoleLogger,
   DefaultVideoTransformDevice,
   Device,
-  LogLevel,
   NoOpVideoFrameProcessor,
 } from 'amazon-chime-sdk-js';
 import React, {
@@ -51,7 +49,8 @@ export const BackgroundBlurProvider: FC<React.PropsWithChildren<Props>> = ({
   options,
   children,
 }) => {
-  const logger = useLogger();
+  let logger = useLogger();
+  logger = options?.logger || logger;
   const [isBackgroundBlurSupported, setIsBackgroundBlurSupported] = useState<
     boolean | undefined
   >(undefined);
@@ -158,9 +157,6 @@ export const BackgroundBlurProvider: FC<React.PropsWithChildren<Props>> = ({
     );
     const currentProcessor = await initializeBackgroundBlur();
     try {
-      const logger =
-        options?.logger ||
-        new ConsoleLogger('BackgroundBlurProvider', LogLevel.INFO);
       if (currentProcessor) {
         const chosenVideoTransformDevice = new DefaultVideoTransformDevice(
           logger,

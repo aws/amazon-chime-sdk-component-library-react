@@ -6,10 +6,8 @@ import {
   BackgroundReplacementOptions,
   BackgroundReplacementProcessor,
   BackgroundReplacementVideoFrameProcessor,
-  ConsoleLogger,
   DefaultVideoTransformDevice,
   Device,
-  LogLevel,
   NoOpVideoFrameProcessor,
 } from 'amazon-chime-sdk-js';
 import React, {
@@ -52,7 +50,8 @@ const BackgroundReplacementProviderContext = createContext<
 export const BackgroundReplacementProvider: FC<
   React.PropsWithChildren<Props>
 > = ({ spec, options, children }) => {
-  const logger = useLogger();
+  let logger = useLogger();
+  logger = options?.logger || logger;
   const [
     isBackgroundReplacementSupported,
     setIsBackgroundReplacementSupported,
@@ -160,9 +159,6 @@ export const BackgroundReplacementProvider: FC<
     );
     const currentProcessor = await initializeBackgroundReplacement();
     try {
-      const logger =
-        options?.logger ||
-        new ConsoleLogger('BackgroundReplacementProvider', LogLevel.INFO);
       if (currentProcessor) {
         const chosenVideoTransformDevice = new DefaultVideoTransformDevice(
           logger,
