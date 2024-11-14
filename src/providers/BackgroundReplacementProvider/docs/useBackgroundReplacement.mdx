@@ -19,6 +19,7 @@ Lastly, make sure to construct a new `DefaultVideoTransformDevice` using `create
 
 You can access the current `backgroundReplacementProcessor` applied to the video device that is generated when you call `createBackgroundBlurDevice`. You can apply observer notifications to the processor. Refer to [the guide for adding observer notifications to a BackgroundReplacementProcessor](https://github.com/aws/amazon-chime-sdk-js/blob/main/guides/15_Background_Filter_Video_Processor.md#observer-notifications)
 
+You can change the background replacement image by `changeBackgroundReplacementImage`. The background can be set to either a custom color or an image, both of which need to be converted into a `Blob`. Refer to [BackgroundReplacementDropdown in aws-samples/amazon-chime-sdk](https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/components/DeviceSelection/CameraDevices/BackgroundReplacementDropdown.tsx) for usage.
 Background replacement related logs can be found in the browser developer tools when the `BackgroundReplacementProvider` is used within the app component tree.
 
 ## Return Value
@@ -30,6 +31,12 @@ Background replacement related logs can be found in the browser developer tools 
 
   // A function to transform a video input device to a `DefaultVideoTransformDevice`.
   createBackgroundReplacementDevice: (device: Device) => Promise<DefaultVideoTransformDevice>;
+
+  // The current `backgroundBlurProcessor` applied to the video device that is generated when you call `createBackgroundBlurDevice`.
+  backgroundReplacementProcessor: BackgroundReplacementProcessor | undefined;
+
+  // A function to change the background replacement image.
+  changeBackgroundReplacementImage: (imageBlob: Blob) => Promise<void>;
 }
 
 ```
@@ -53,6 +60,7 @@ import {
   useMeetingManager,
   useBackgroundReplacement,
   useVideoInputs,
+  useLogger,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -71,7 +79,9 @@ const MyChild = () => {
   const {
     isBackgroundReplacementSupported,
     createBackgroundReplacementDevice,
+    changeBackgroundReplacementImage,
   } = useBackgroundReplacement();
+  const logger = useLogger();
 
   useEffect(() => {
     async function toggleBackgroundReplacement() {
@@ -100,6 +110,19 @@ const MyChild = () => {
     setisVideoTransformCheckBoxOn((current) => !current);
   };
 
+  const changeBackgroundReplacementOption = async (hexColor: string) => {
+    let current = selectedDevice;
+    if (current === undefined) {
+      return;
+    }
+    try {
+      const blob = await createBlob(hexColor); // Refer to https://github.com/aws-samples/amazon-chime-sdk/blob/main/apps/meeting/src/utils/background-replacement.ts#L7 for the implementation.
+      await changeBackgroundReplacementImage(blob);
+    } catch (error) {
+      logger.error(`Error trying to change background replacement image ${error}`);
+    }
+  };
+
   return (
     <div>
       {isBackgroundReplacementSupported && (
@@ -107,6 +130,11 @@ const MyChild = () => {
           {isVideoTranformDevice(selectedDevice)
             ? 'Background Replacement Enabled'
             : 'Enable Background Replacement'}
+        </button>
+        <button
+            onClick={async () => await changeBackgroundReplacementOption('#000000')}
+        >
+          'Change background replacement to Black'
         </button>
       )}
     </div>

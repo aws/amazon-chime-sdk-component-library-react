@@ -6,10 +6,8 @@ import {
   BackgroundReplacementOptions,
   BackgroundReplacementProcessor,
   BackgroundReplacementVideoFrameProcessor,
-  ConsoleLogger,
   DefaultVideoTransformDevice,
   Device,
-  LogLevel,
   NoOpVideoFrameProcessor,
 } from 'amazon-chime-sdk-js';
 import React, {
@@ -40,6 +38,9 @@ interface BackgroundReplacementProviderState {
   ) => Promise<DefaultVideoTransformDevice>;
   isBackgroundReplacementSupported: boolean | undefined;
   backgroundReplacementProcessor: BackgroundReplacementProcessor | undefined;
+  changeBackgroundReplacementImage: (
+    imageBlob: Blob
+  ) => Promise<void>;
 }
 
 const BackgroundReplacementProviderContext = createContext<
@@ -49,7 +50,8 @@ const BackgroundReplacementProviderContext = createContext<
 export const BackgroundReplacementProvider: FC<
   React.PropsWithChildren<Props>
 > = ({ spec, options, children }) => {
-  const logger = useLogger();
+  let logger = useLogger();
+  logger = options?.logger || logger;
   const [
     isBackgroundReplacementSupported,
     setIsBackgroundReplacementSupported,
@@ -157,9 +159,6 @@ export const BackgroundReplacementProvider: FC<
     );
     const currentProcessor = await initializeBackgroundReplacement();
     try {
-      const logger =
-        options?.logger ||
-        new ConsoleLogger('BackgroundReplacementProvider', LogLevel.INFO);
       if (currentProcessor) {
         const chosenVideoTransformDevice = new DefaultVideoTransformDevice(
           logger,
@@ -179,10 +178,29 @@ export const BackgroundReplacementProvider: FC<
     }
   };
 
+  const changeBackgroundReplacementImage = async (
+    imageBlob: Blob
+  ): Promise<void> => {
+    if (!backgroundReplacementProcessor) {
+      logger.warn(`BackgroundReplacementProcessor has not been initialized yet.`);
+      return;
+    }
+    try {
+      await backgroundReplacementProcessor.setImageBlob(imageBlob);
+      logger.info(`Background replacement image changed to new imageBlob: ${imageBlob}`);
+    } catch (error) {
+      logger.error(`Failed to change the background replacement image: ${error}`)
+      throw new Error(
+        `Failed to change the background replacement image: ${error}`
+      );
+    }
+  };
+
   const value: BackgroundReplacementProviderState = {
     createBackgroundReplacementDevice,
     isBackgroundReplacementSupported,
     backgroundReplacementProcessor,
+    changeBackgroundReplacementImage,
   };
 
   return (
