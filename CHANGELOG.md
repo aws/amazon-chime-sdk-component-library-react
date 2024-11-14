@@ -7,9 +7,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.10.0] - 2024-08-08
+
+### Added
+
+### Removed
+
+### Changed
+
+- Change to use loggers from `LoggerProvider` as default when initialize background blur/replacement processor.
+
+### Fixed
+
+## [3.9.0] - 2024-04-12
+
+### Added
+
+- Add `changeBackgroundReplacementImage` function in the `BackgroundReplacementProvider` to enable the functionality of changing the background replacement image. `changeBackgroundReplacementImage` will take a `Blob` as its parameter and return a `Promise`.
+- Add usage of `changeBackgroundReplacementImage` in storybook.
+
+### Removed
+
+### Changed
+
+### Fixed
+
 ## [3.8.0] - 2023-06-05
 
 ### Added
+
+- Add support for node 20 and drop support for node < 18.
 
 ### Removed
 

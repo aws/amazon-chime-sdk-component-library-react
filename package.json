@@ -1,6 +1,6 @@
 {
   "name": "amazon-chime-sdk-component-library-react",
-  "version": "3.8.0",
+  "version": "3.10.0",
   "description": "Amazon Chime SDK Component Library - React",
   "main": "lib/index.js",
   "module": "lib/index.esm.js",
@@ -10,8 +10,8 @@
     "NOTICE"
   ],
   "engines": {
-    "node": "^12 || ^14 || ^15 || ^16 || ^18",
-    "npm": "^6 || ^7 || ^8"
+    "node": "^18 || ^19 || ^20",
+    "npm": "^8 || ^9 || ^10"
   },
   "repository": {
     "type": "git",
@@ -85,7 +85,7 @@
     "@typescript-eslint/eslint-plugin": "^4.33.0",
     "@typescript-eslint/parser": "^4.33.0",
     "add": "^2.0.6",
-    "amazon-chime-sdk-js": "^3.18.2",
+    "amazon-chime-sdk-js": "^3.23.0",
     "babel-loader": "^8.1.0",
     "css-loader": "^6.7.1",
     "eslint": "^7.32.0",
@@ -114,7 +114,7 @@
     "rollup": "^2.26.3",
     "rollup-plugin-peer-deps-external": "^2.2.2",
     "rollup-plugin-typescript2": "^0.27.1",
-    "start-server-and-test": "^1.14.0",
+    "start-server-and-test": "^2.0.8",
     "storybook": "^7.0.2",
     "style-loader": "^0.23.1",
     "styled-components": "^5.3.9",
@@ -126,7 +126,7 @@
     "webpack-cli": "^4.9.2"
   },
   "peerDependencies": {
-    "amazon-chime-sdk-js": "^3.14.1",
+    "amazon-chime-sdk-js": "^3.23.0",
     "react": "^17.0.1 || ^18.0.0",
     "react-dom": "^17.0.1 || ^18.0.0",
     "styled-components": "^5.0.0",
