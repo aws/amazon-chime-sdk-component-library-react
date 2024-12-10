@@ -6,6 +6,9 @@ on:
       - main
       - 'release-**.x'
 
+permissions:
+  id-token: write   # This is required for requesting the JWT
+
 jobs:
   deploy:
     name: Deploy Demo App and Storybook
@@ -13,14 +16,12 @@ jobs:
     env:
       AWS_DEFAULT_REGION: us-east-1
       AWS_DEFAULT_OUTPUT: text
-      AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY}}
-      AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
     steps:
       - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME_SDK_DEV }}
+          role-session-name: deploy-react-demo-app
           aws-region: us-east-1
       - name: Checkout Package
         uses: actions/checkout@v2
