@@ -39,7 +39,7 @@ jobs:
           branch=${{github.ref}}
           branch=${branch#refs/heads/}
           echo $branch
-          echo ::set-output name=branch_name::$branch
+          echo "branch_name=$branch" >> $GITHUB_OUTPUT
       - name: Checkout amazon-chime-sdk repo
         uses: actions/checkout@v2
         with:
@@ -65,7 +65,7 @@ jobs:
         run: |
           result=$(.github/script/need-deploy-storybook.js)
           echo $result
-          echo ::set-output name=need_deploy::$result
+          echo "need_deploy=$result" >> $GITHUB_OUTPUT
       - name: Publish Storybook Documentation
         if: startsWith(steps.need_deploy.outputs.need_deploy, 'Deploy storybook')
         run: npm run deploy-storybook -- --ci

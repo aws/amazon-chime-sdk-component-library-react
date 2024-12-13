@@ -26,7 +26,7 @@ jobs:
         run: |
           pre_release_name=$(.github/script/get-pre-release-name.js)
           echo "Pre release name:" $pre_release_name
-          echo ::set-output name=npm_tag::$pre_release_name  
+          echo "npm_tag=$pre_release_name  " >> $GITHUB_OUTPUT
       - name: Publish to NPM latest
         if:  steps.npm_tag.outputs.npm_tag == ''
         run: npm publish
