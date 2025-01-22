@@ -130,11 +130,7 @@ export const BackgroundReplacementProvider: FC<
         setIsBackgroundReplacementSupported(false);
         return undefined;
       } else {
-        logger.info(
-          `Initialized background replacement processor: ${JSON.stringify(
-            createdProcessor
-          )}`
-        );
+        logger.info('Initialized background replacement processor');
         setBackgroundReplacementProcessor(createdProcessor);
         setIsBackgroundReplacementSupported(true);
         return createdProcessor;
