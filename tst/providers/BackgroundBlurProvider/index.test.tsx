@@ -63,7 +63,7 @@ describe.only('BackgroundBlurProvider', () => {
     expect(loggerInfoMock).toHaveBeenCalledWith(
       `Initializing background blur processor with, spec: ${JSON.stringify(
         undefined
-      )}, options: ${JSON.stringify(blurOptions)}`
+      )}, options: { blurStrength: ${blurOptions.blurStrength}, filterCPUUtilization: ${blurOptions.filterCPUUtilization}, reportingPeriodMillis: ${blurOptions.reportingPeriodMillis} }`
     );
     expect(loggerInfoMock).toHaveBeenCalledWith(
       'Specs or options were changed. Destroying and re-initializing background blur processor.'

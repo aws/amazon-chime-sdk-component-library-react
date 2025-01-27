@@ -82,8 +82,7 @@ export const BackgroundReplacementProvider: FC<
         return true;
       }
       if (
-        prev?.imageBlob?.size === next?.imageBlob?.size ||
-        prev?.filterCPUUtilization === next?.filterCPUUtilization ||
+        prev?.filterCPUUtilization !== next?.filterCPUUtilization ||
         prev?.logger !== next?.logger ||
         prev?.reportingPeriodMillis !== next?.reportingPeriodMillis
       ) {
@@ -111,7 +110,11 @@ export const BackgroundReplacementProvider: FC<
     logger.info(
       `Initializing background replacement processor with, ${JSON.stringify(
         spec
-      )}, ${JSON.stringify(options)}`
+      )}, options: { filterCPUUtilization: ${
+        options?.filterCPUUtilization
+      }, reportingPeriodMillis: ${
+        options?.reportingPeriodMillis
+      }}`
     );
 
     try {
