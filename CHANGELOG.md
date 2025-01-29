@@ -16,8 +16,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Change to use loggers from `LoggerProvider` as default when initialize background blur/replacement processor.
+- Change to not log the entire stringified `options` object in background blur/replacement processor.
 
 ### Fixed
+
+- Fix conditions where `BackgroundReplacementProvider` needs to be re-rendered.
 
 ## [3.9.0] - 2024-04-12
 
