@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import styled, { css } from 'styled-components';
+import styled, { css, RuleSet } from 'styled-components';
 
 import { darkTheme } from '../../../theme/dark';
 import { lightTheme } from '../../../theme/light';
@@ -27,13 +27,13 @@ const gridTemplateColumnMap = {
   'popOver&vertical': 'grid-template-columns: 1.5rem 1.5rem 1.5rem',
 };
 
-export const isVertical = (layout: ControlBarLayout) => {
+export const isVertical = (layout: ControlBarLayout): boolean => {
   return (
     layout === 'right' || layout === 'left' || layout === 'undocked-vertical'
   );
 };
 
-export const isUndocked = (layout: ControlBarLayout) => {
+export const isUndocked = (layout: ControlBarLayout): boolean => {
   return layout === 'undocked-vertical' || layout === 'undocked-horizontal';
 };
 const unsetPosition = {
@@ -43,27 +43,23 @@ const unsetPosition = {
   left: 'unset;',
 };
 
-export const responsiveStyles = (props: StyledControlBarProps) => {
+export const responsiveStyles = (
+  props: StyledControlBarProps
+): RuleSet<StyledControlBarProps> => {
   return css`
     ${({ theme }) => theme.mediaQueries.max.sm} {
       ${unsetPosition}
-      ${(props: StyledControlBarProps) =>
-        isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
-      box-shadow: ${(props: StyledControlBarProps) =>
-        props.theme.controlBar.shadow};
+      ${isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
+      box-shadow: ${props.theme.controlBar.shadow};
       border: none;
-      height: ${(props: StyledControlBarProps) =>
-        isVertical(props.layout) && '100%'};
-      width: ${(props: StyledControlBarProps) =>
-        !isVertical(props.layout) && '100%'};
+      height: ${isVertical(props.layout) && '100%'};
+      width: ${!isVertical(props.layout) && '100%'};
     }
 
     ${({ theme }) => theme.mediaQueries.max.xs} {
-      justify-content: ${(props: StyledControlBarProps) =>
-        isVertical(props.layout) ? 'center' : 'space-around'};
+      justify-content: ${isVertical(props.layout) ? 'center' : 'space-around'};
       ${unsetPosition}
-      ${(props: StyledControlBarProps) =>
-        isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
+      ${isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
       box-shadow: ${({ theme }) => theme.controlBar.shadow};
       border: none;
     }
