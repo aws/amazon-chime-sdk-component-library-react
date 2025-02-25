@@ -5,6 +5,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Direction } from '../../../../types';
+import { defaultStyledConfig } from '../../../../utils/style';
 import Svg, { SvgProps } from '../Svg';
 
 const dirTransform = {
@@ -20,7 +21,7 @@ interface CaretProps extends SvgProps {
   className?: string;
 }
 
-const StyledCaret = styled(Svg)<CaretProps>`
+const StyledCaret = styled(Svg).withConfig(defaultStyledConfig)<CaretProps>`
   transform: ${({ direction }) =>
     `rotate(${dirTransform[direction || 'up']}deg)`};
 `;

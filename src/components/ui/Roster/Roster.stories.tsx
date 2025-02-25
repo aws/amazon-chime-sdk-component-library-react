@@ -191,7 +191,7 @@ export const _RosterHeaderWithNavigationIcon = (args) => {
 _RosterHeaderWithNavigationIcon.argTypes = {
   title: { control: 'text', table: { disable: false } },
   badge: { control: 'number' },
-  ...commonHiddenArgTypes
+  ...commonHiddenArgTypes,
 };
 
 _RosterHeaderWithNavigationIcon.args = {
@@ -233,7 +233,7 @@ export const _RosterHeaderWithCustomElements = (args) => {
 _RosterHeaderWithCustomElements.argTypes = {
   title: { control: 'text', table: { disable: false } },
   badge: { control: 'number' },
-  ...commonHiddenArgTypes
+  ...commonHiddenArgTypes,
 };
 
 _RosterHeaderWithCustomElements.args = {
@@ -272,7 +272,7 @@ _RosterCell.argTypes = {
   sharingContent: { control: 'boolean' },
   poorConnection: { control: 'boolean' },
   micPosition: { control: 'select', options: ['grouped', 'leading'] },
-  ...commonHiddenArgTypes
+  ...commonHiddenArgTypes,
 };
 
 _RosterCell.args = {

@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 
 import { darkTheme } from '../../../theme/dark';
 import { lightTheme } from '../../../theme/light';
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import { PopOverItemProps } from '../PopOver/PopOverItem';
 import { ControlBarLayout, ControlBarProps } from '.';
@@ -47,30 +48,26 @@ export const responsiveStyles = (props: StyledControlBarProps) => {
   return css`
     ${({ theme }) => theme.mediaQueries.max.sm} {
       ${unsetPosition}
-      ${(props: StyledControlBarProps) =>
-        isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
-      box-shadow: ${(props: StyledControlBarProps) =>
-        props.theme.controlBar.shadow};
+      ${isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
+      box-shadow: ${props.theme.controlBar.shadow};
       border: none;
-      height: ${(props: StyledControlBarProps) =>
-        isVertical(props.layout) && '100%'};
-      width: ${(props: StyledControlBarProps) =>
-        !isVertical(props.layout) && '100%'};
+      height: ${isVertical(props.layout) && '100%'};
+      width: ${!isVertical(props.layout) && '100%'};
     }
 
     ${({ theme }) => theme.mediaQueries.max.xs} {
-      justify-content: ${(props: StyledControlBarProps) =>
-        isVertical(props.layout) ? 'center' : 'space-around'};
+      justify-content: ${isVertical(props.layout) ? 'center' : 'space-around'};
       ${unsetPosition}
-      ${(props: StyledControlBarProps) =>
-        isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
+      ${isVertical(props.layout) ? layoutMap['left'] : layoutMap['bottom']};
       box-shadow: ${({ theme }) => theme.controlBar.shadow};
       border: none;
     }
   `;
 };
 
-export const StyledControlBar = styled.div<StyledControlBarProps>`
+export const StyledControlBar = styled.div.withConfig(
+  defaultStyledConfig
+)<StyledControlBarProps>`
   display: inline-flex;
   justify-content: center;
   align-items: center;
@@ -98,7 +95,9 @@ interface StyledControlBarItemProps extends StyledControlBarProps {
   isSelected: boolean;
 }
 
-export const StyledControlBarItem = styled.div<StyledControlBarItemProps>`
+export const StyledControlBarItem = styled.div.withConfig(
+  defaultStyledConfig
+)<StyledControlBarItemProps>`
   margin: ${({ layout }) => (isVertical(layout) ? '0.625rem 0' : '0 0.625rem')};
   display: grid;
   grid-template-rows: ${({ showLabels }) =>

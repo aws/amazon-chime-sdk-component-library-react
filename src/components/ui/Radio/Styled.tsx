@@ -3,9 +3,13 @@
 
 import styled from 'styled-components';
 
-import { absoluteCenter, visuallyHidden } from '../../../utils/style';
+import {
+  absoluteCenter,
+  defaultStyledConfig,
+  visuallyHidden,
+} from '../../../utils/style';
 
-export const HiddenRadio = styled.input`
+export const HiddenRadio = styled.input.withConfig(defaultStyledConfig)`
   ${visuallyHidden};
 
   &[aria-invalid='true'] + .ch-radio {
@@ -14,12 +18,12 @@ export const HiddenRadio = styled.input`
   }
 `;
 
-export const StyledRadioWrapper = styled.span`
+export const StyledRadioWrapper = styled.span.withConfig(defaultStyledConfig)`
   > label {
     margin-left: 0.5rem;
   }
 `;
-export const StyledRadio = styled.div<any>`
+export const StyledRadio = styled.div.withConfig(defaultStyledConfig)<any>`
   background-color: ${(props) => props.theme.inputs.bgd};
   border: ${(props) => props.theme.inputs.border};
   border-radius: ${(props) => props.theme.radii.circle};
@@ -39,7 +43,9 @@ export const StyledRadio = styled.div<any>`
   }
 `;
 
-export const StyledRadioLabel = styled(StyledRadio)<any>`
+export const StyledRadioLabel = styled(StyledRadio).withConfig(
+  defaultStyledConfig
+)<any>`
   display: inline-block;
   height: 1rem;
   position: relative;
@@ -60,7 +66,9 @@ export const StyledRadioLabel = styled(StyledRadio)<any>`
   }
 `;
 
-export const StyledRadioIcon = styled(StyledRadio)<any>`
+export const StyledRadioIcon = styled(StyledRadio).withConfig(
+  defaultStyledConfig
+)<any>`
   display: flex;
   align-items: center;
   justify-content: center;

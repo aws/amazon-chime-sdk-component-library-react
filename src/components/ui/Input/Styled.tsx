@@ -3,6 +3,7 @@
 
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import { InputWrapperProps } from './InputWrapper';
 
@@ -13,7 +14,9 @@ const getPadding = (props: InputWrapperProps) => {
     : `0.34375rem 1.75rem 0.34375rem ${leadingIcon ? '1.3125rem' : '0.5rem'}`;
 };
 
-export const StyledInputWrapper = styled.span<InputWrapperProps>`
+export const StyledInputWrapper = styled.span.withConfig(
+  defaultStyledConfig
+)<InputWrapperProps>`
   position: relative;
 
   > .ch-icon {
@@ -30,7 +33,7 @@ export const StyledInputWrapper = styled.span<InputWrapperProps>`
   }
 `;
 
-export const StyledInput = styled.input`
+export const StyledInput = styled.input.withConfig(defaultStyledConfig)`
   align-items: center;
   display: flex;
   letter-spacing: -0.005625rem;
@@ -61,9 +64,9 @@ export const StyledInput = styled.input`
 
   // Hides native clear button
   &::-webkit-search-decoration,
-  ::-webkit-search-cancel-button,
-  ::-webkit-search-results-button,
-  ::-webkit-search-results-decoration {
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
     display: none;
   }
 
@@ -82,7 +85,9 @@ interface ClearProps {
   active: boolean;
 }
 
-export const StyledClear = styled.button<ClearProps>`
+export const StyledClear = styled.button.withConfig(
+  defaultStyledConfig
+)<ClearProps>`
   position: absolute;
   top: 50%;
   right: 0.125rem;

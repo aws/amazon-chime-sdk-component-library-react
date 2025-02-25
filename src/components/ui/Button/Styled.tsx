@@ -3,11 +3,13 @@
 
 import styled, { css } from 'styled-components';
 
-import { visuallyHidden } from '../../../utils/style';
+import { defaultStyledConfig, visuallyHidden } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import { ButtonProps } from './';
 
-export const StyledButton = styled.button<ButtonProps>`
+export const StyledButton = styled.button.withConfig(
+  defaultStyledConfig
+)<ButtonProps>`
   border-radius: ${(props) => props.theme.radii.default};
   font-size: ${(props) => props.theme.fontSizes.text.fontSize};
   padding: 0.5rem 1rem;
@@ -219,7 +221,9 @@ export const StyledIconButton = css<ButtonProps>`
   }
 `;
 
-export const StyledIconButtonWrapper = styled.span`
+export const StyledIconButtonWrapper = styled.span.withConfig(
+  defaultStyledConfig
+)`
   display: inline-block;
   position: relative;
 `;

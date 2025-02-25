@@ -3,9 +3,10 @@
 
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 
-export const StyledWrapper = styled.div`
+export const StyledWrapper = styled.div.withConfig(defaultStyledConfig)`
   position: relative;
 
   .ch-select-icon {
@@ -16,7 +17,7 @@ export const StyledWrapper = styled.div`
   ${baseStyles}
 `;
 
-export const StyledSelectInput = styled.select`
+export const StyledSelectInput = styled.select.withConfig(defaultStyledConfig)`
   background-color: ${(props) => props.theme.inputs.bgd};
   border: ${(props) => props.theme.inputs.border};
   border-radius: ${(props) => props.theme.inputs.borderRadius};

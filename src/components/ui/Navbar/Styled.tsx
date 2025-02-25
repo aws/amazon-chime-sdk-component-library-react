@@ -3,12 +3,13 @@
 
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import Flex from '../Flex';
 import { NavbarProps } from '.';
 import { NavbarItemProps } from './NavbarItem';
 
-export const StyledHeader = styled.div`
+export const StyledHeader = styled.div.withConfig(defaultStyledConfig)`
   display: flex;
   height: 3rem;
   align-items: center;
@@ -30,7 +31,9 @@ export const StyledHeader = styled.div`
   }
 `;
 
-export const StyledNavbarItem = styled.div<Partial<NavbarItemProps>>`
+export const StyledNavbarItem = styled.div.withConfig(defaultStyledConfig)<
+  Partial<NavbarItemProps>
+>`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -49,7 +52,9 @@ export const StyledNavbarItem = styled.div<Partial<NavbarItemProps>>`
   }
 `;
 
-export const StyledNavbar = styled(Flex)<NavbarProps>`
+export const StyledNavbar = styled(Flex).withConfig(
+  defaultStyledConfig
+)<NavbarProps>`
   display: flex;
   flex-direction: column;
   height: 100%;

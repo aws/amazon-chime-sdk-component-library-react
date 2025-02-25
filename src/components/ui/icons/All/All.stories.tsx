@@ -130,9 +130,9 @@ const IconWrapper = styled.div`
   border-radius: 2px;
 `;
 
-const getIconAndName = (Icon, args) => {
+const getIconAndName = (Icon, args, index) => {
   return (
-    <IconWrapper>
+    <IconWrapper key={index}>
       <Icon {...args} />
       <p>{Icon.displayName}</p>
     </IconWrapper>
@@ -142,7 +142,7 @@ const getIconAndName = (Icon, args) => {
 export const _All = (args) => {
   return (
     <Flex container flexDirection="row" alignItems="center" flexWrap="wrap">
-      {icons.map((icon) => getIconAndName(icon, args))}
+      {icons.map((icon, index) => getIconAndName(icon, args, index))}
     </Flex>
   );
 };

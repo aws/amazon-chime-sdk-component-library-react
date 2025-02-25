@@ -3,6 +3,7 @@
 
 import styled, { css } from 'styled-components';
 
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import { FieldWrapperProps } from './';
 
@@ -180,7 +181,9 @@ const layoutMap = {
   'input-only': inputOnly,
 };
 
-export const StyledFormField = styled.div<FieldWrapperProps>`
+export const StyledFormField = styled.div.withConfig(
+  defaultStyledConfig
+)<FieldWrapperProps>`
   display: flex;
   margin-bottom: 1rem;
   position: relative;

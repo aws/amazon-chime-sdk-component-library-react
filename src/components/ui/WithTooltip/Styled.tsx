@@ -3,6 +3,7 @@
 
 import styled, { css } from 'styled-components';
 
+import { defaultStyledConfig } from '../../../utils/style';
 import { ToolTipPositionType } from '.';
 
 // All units are in rem
@@ -79,7 +80,9 @@ const RightProps = css<StyledTooltipProps>`
   }
 `;
 
-export const StyledTooltip = styled.span<StyledTooltipProps>`
+export const StyledTooltip = styled.span.withConfig(
+  defaultStyledConfig
+)<StyledTooltipProps>`
   @keyframes fadeIn {
     0% {
       opacity: 0;

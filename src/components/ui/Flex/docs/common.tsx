@@ -3,9 +3,10 @@
 
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../../utils/style';
 import Flex from '..';
 
-export const Child = styled(Flex)`
+export const Child = styled(Flex).withConfig(defaultStyledConfig)`
   background-color: ${(props) => props.theme.colors.primary.lightest};
   color: ${(props) => props.theme.colors.primary.darkest};
   margin: 1vh;
@@ -14,25 +15,25 @@ export const Child = styled(Flex)`
   width: 20vw;
 `;
 
-export const Block = styled(Flex)`
+export const Block = styled(Flex).withConfig(defaultStyledConfig)`
   background-color: ${(props) => props.theme.colors.primary.lightest};
   height: 5vh;
   margin: 1rem;
   border-radius: 4px;
 `;
 
-export const Stack = styled(Flex)`
+export const Stack = styled(Flex).withConfig(defaultStyledConfig)`
   padding: 1rem 20vw;
 `;
 
-export const StackChild = styled.div`
+export const StackChild = styled.div.withConfig(defaultStyledConfig)`
   height: 20vh;
   width: 20vw;
   margin: 1vh;
   background-color: ${(props) => props.theme.colors.primary.lightest};
 `;
 
-export const Title = styled.h1`
+export const Title = styled.h1.withConfig(defaultStyledConfig)`
   background-color: ${(props) => props.theme.colors.primary.lightest};
   color: ${(props) => props.theme.colors.primary.darkest};
   padding: 2rem;

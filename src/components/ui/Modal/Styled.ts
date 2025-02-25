@@ -4,10 +4,13 @@
 import styled from 'styled-components';
 
 import { fadeAnimation, slideDownAndScaleUp } from '../../../utils/animations';
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import { ModalProps } from './';
 
-export const StyledModal = styled.div<ModalProps>`
+export const StyledModal = styled.div.withConfig(
+  defaultStyledConfig
+)<ModalProps>`
   position: fixed;
   top: 0;
   left: 0;
@@ -56,7 +59,7 @@ export const StyledModal = styled.div<ModalProps>`
   ${baseStyles}
 `;
 
-export const StyledModalHeader = styled.header`
+export const StyledModalHeader = styled.header.withConfig(defaultStyledConfig)`
   padding: 1rem 1.5rem;
 
   .ch-close-button {
@@ -76,7 +79,7 @@ export const StyledModalHeader = styled.header`
   ${baseStyles}
 `;
 
-export const StyledModalBody = styled.div`
+export const StyledModalBody = styled.div.withConfig(defaultStyledConfig)`
   font-size: ${(props) => props.theme.fontSizes.text.fontSize};
   line-height: ${(props) => props.theme.fontSizes.text.lineHeight};
   padding: 0 1.5rem;
@@ -87,7 +90,9 @@ export const StyledModalBody = styled.div`
   ${baseStyles}
 `;
 
-export const StyledModalButtonGroup = styled.footer`
+export const StyledModalButtonGroup = styled.footer.withConfig(
+  defaultStyledConfig
+)`
   padding: 1.5rem;
   border-top: 1px solid ${(props) => props.theme.modal.border};
   display: flex;

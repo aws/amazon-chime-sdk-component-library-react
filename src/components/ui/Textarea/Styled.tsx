@@ -3,7 +3,9 @@
 
 import styled from 'styled-components';
 
-export const StyledTextarea = styled.textarea`
+import { defaultStyledConfig } from '../../../utils/style';
+
+export const StyledTextarea = styled.textarea.withConfig(defaultStyledConfig)`
   background-color: ${(props) => props.theme.inputs.bgd};
   border: ${(props) => props.theme.inputs.border};
   border-radius: ${(props) => props.theme.inputs.borderRadius};

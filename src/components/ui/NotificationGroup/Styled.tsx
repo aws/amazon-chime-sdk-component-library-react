@@ -3,7 +3,11 @@
 
 import styled from 'styled-components';
 
-export const StyledNotificationGroup = styled.div`
+import { defaultStyledConfig } from '../../../utils/style';
+
+export const StyledNotificationGroup = styled.div.withConfig(
+  defaultStyledConfig
+)`
   position: fixed;
   top: 2rem;
   left: 0;

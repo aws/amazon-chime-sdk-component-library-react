@@ -3,10 +3,13 @@
 
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../../utils/style';
 import { baseSpacing, baseStyles } from '../../Base';
 import { RosterCellProps } from '.';
 
-export const StyledCell = styled.div<RosterCellProps>`
+export const StyledCell = styled.div.withConfig(
+  defaultStyledConfig
+)<RosterCellProps>`
   display: flex;
   align-items: center;
   padding: 0.625rem 1rem;
@@ -51,7 +54,7 @@ export const StyledCell = styled.div<RosterCellProps>`
   ${baseStyles}
 `;
 
-export const StyledLateMessage = styled.div`
+export const StyledLateMessage = styled.div.withConfig(defaultStyledConfig)`
   display: flex;
   align-items: center;
   white-space: nowrap;

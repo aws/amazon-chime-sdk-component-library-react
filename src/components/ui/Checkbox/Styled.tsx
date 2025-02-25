@@ -3,10 +3,10 @@
 
 import styled from 'styled-components';
 
-import { visuallyHidden } from '../../../utils/style';
+import { defaultStyledConfig, visuallyHidden } from '../../../utils/style';
 import { StyledCheckboxProps } from './';
 
-export const HiddenCheckbox = styled.input`
+export const HiddenCheckbox = styled.input.withConfig(defaultStyledConfig)`
   ${visuallyHidden};
 
   &[aria-invalid='true'] + .ch-checkbox {
@@ -15,7 +15,9 @@ export const HiddenCheckbox = styled.input`
   }
 `;
 
-export const StyledCheckbox = styled.div<StyledCheckboxProps>`
+export const StyledCheckbox = styled.div.withConfig(
+  defaultStyledConfig
+)<StyledCheckboxProps>`
   background-color: ${(props) => props.theme.inputs.bgd};
   border: ${(props) => props.theme.inputs.border};
   border-radius: ${(props) => props.theme.radii.default};

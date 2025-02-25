@@ -3,10 +3,10 @@
 
 import styled from 'styled-components';
 
-import { ellipsis } from '../../../utils/style';
+import { defaultStyledConfig, ellipsis } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 
-export const StyledRoster = styled.aside`
+export const StyledRoster = styled.aside.withConfig(defaultStyledConfig)`
   width: 100%;
   height: 100%;
   padding-bottom: 1rem;
@@ -24,7 +24,7 @@ export const StyledRoster = styled.aside`
   ${baseStyles}
 `;
 
-export const StyledTitle = styled.span`
+export const StyledTitle = styled.span.withConfig(defaultStyledConfig)`
   display: inline-block;
   margin: 0 0.625rem 0 0;
   font-weight: 600;
@@ -32,7 +32,7 @@ export const StyledTitle = styled.span`
   color: ${(props) => props.theme.roster.secondaryText};
 `;
 
-export const StyledGroupWrapper = styled.div`
+export const StyledGroupWrapper = styled.div.withConfig(defaultStyledConfig)`
   margin: 0 0.5rem;
 
   & + & {
@@ -43,7 +43,7 @@ export const StyledGroupWrapper = styled.div`
   ${baseStyles}
 `;
 
-export const StyledGroup = styled.div`
+export const StyledGroup = styled.div.withConfig(defaultStyledConfig)`
   background-color: ${(props) => props.theme.roster.fgd};
   border-radius: ${(props) => props.theme.radii.default};
 
@@ -51,7 +51,7 @@ export const StyledGroup = styled.div`
   ${baseStyles}
 `;
 
-export const StyledHeader = styled.div<any>`
+export const StyledHeader = styled.div.withConfig(defaultStyledConfig)<any>`
   position: relative;
   display: flex;
   align-items: center;
@@ -114,7 +114,7 @@ export const StyledHeader = styled.div<any>`
   ${baseStyles}
 `;
 
-export const StyledName = styled.div`
+export const StyledName = styled.div.withConfig(defaultStyledConfig)`
   flex-grow: 1;
   min-width: 0;
   line-height: 1.5;

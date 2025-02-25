@@ -3,11 +3,13 @@
 
 import styled from 'styled-components';
 
-import { ellipsis } from '../../../utils/style';
+import { defaultStyledConfig, ellipsis } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import { VideoTileProps } from './';
 
-export const StyledVideoTile = styled.div<VideoTileProps>`
+export const StyledVideoTile = styled.div.withConfig(
+  defaultStyledConfig
+)<VideoTileProps>`
   height: 100%;
   width: 100%;
   position: relative;
@@ -21,7 +23,7 @@ export const StyledVideoTile = styled.div<VideoTileProps>`
     bottom: 0;
     width: 100%;
     height: 100%;
-    object-fit: ${(props) => props.objectFit || 'cover'}};
+    object-fit: ${(props) => props.objectFit || 'cover'};
   }
 
   .ch-icon {

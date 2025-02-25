@@ -3,10 +3,13 @@
 
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import { BadgeProps } from './';
 
-export const StyledBadge = styled.span<Partial<BadgeProps>>`
+export const StyledBadge = styled.span.withConfig(defaultStyledConfig)<
+  Partial<BadgeProps>
+>`
   ${(props) => {
     if (typeof props.value === 'object') {
       const element: JSX.Element = props.value as JSX.Element;

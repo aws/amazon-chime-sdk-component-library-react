@@ -5,6 +5,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import { Direction } from '../../../../types';
+import { defaultStyledConfig } from '../../../../utils/style';
 import Svg, { SvgProps } from '../Svg';
 
 const dirTransform = {
@@ -19,7 +20,7 @@ interface ArrowProps extends SvgProps {
   direction?: Direction;
 }
 
-const StyledArrow = styled(Svg)<ArrowProps>`
+const StyledArrow = styled(Svg).withConfig(defaultStyledConfig)<ArrowProps>`
   transform: ${({ direction }) =>
     `rotate(${dirTransform[direction || 'up']}deg)`};
 `;

@@ -3,9 +3,9 @@
 
 import styled from 'styled-components';
 
-import { ellipsis } from '../../../utils/style';
+import { defaultStyledConfig, ellipsis } from '../../../utils/style';
 
-export const StyledPopOverMenu = styled.ul`
+export const StyledPopOverMenu = styled.ul.withConfig(defaultStyledConfig)`
   width: fit-content;
   max-width: 22rem;
   background-color: ${(props) => props.theme.popOver.menuBgd};
@@ -21,7 +21,9 @@ export const StyledPopOverMenu = styled.ul`
   overflow: inherit;
 `;
 
-export const StyledPopOverToggle = styled.button`
+export const StyledPopOverToggle = styled.button.withConfig(
+  defaultStyledConfig
+)`
   background-color: transparent;
   padding: 0;
   border: none;
@@ -31,7 +33,7 @@ export const StyledPopOverToggle = styled.button`
   }
 `;
 
-export const StyledPopOverItem = styled.li`
+export const StyledPopOverItem = styled.li.withConfig(defaultStyledConfig)`
   height: 2rem;
   position: relative;
 
@@ -85,7 +87,9 @@ export const StyledPopOverItem = styled.li`
   }
 `;
 
-export const StyledSubMenu = styled(StyledPopOverItem)`
+export const StyledSubMenu = styled(StyledPopOverItem).withConfig(
+  defaultStyledConfig
+)`
   > span {
     width: 100%;
     height: 100%;
@@ -107,7 +111,9 @@ export const StyledSubMenu = styled(StyledPopOverItem)`
   }
 `;
 
-export const StyledPopOverHeader = styled.header`
+export const StyledPopOverHeader = styled.header.withConfig(
+  defaultStyledConfig
+)`
   border-bottom: 0.0625rem solid ${(props) => props.theme.popOver.separator};
   margin-bottom: 0.75rem;
   max-width: 22rem;
@@ -144,7 +150,7 @@ export const StyledPopOverHeader = styled.header`
   }
 `;
 
-export const StyledPopOverSeparator = styled.li`
+export const StyledPopOverSeparator = styled.li.withConfig(defaultStyledConfig)`
   margin: 0;
   border-width: 0.0625rem 0 0 0;
   border-style: solid;

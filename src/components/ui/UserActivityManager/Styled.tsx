@@ -4,9 +4,12 @@
 import styled from 'styled-components';
 
 import { fadeAnimation } from '../../../utils/animations';
+import { defaultStyledConfig } from '../../../utils/style';
 import { Props } from './';
 
-export const StyledUserActivityManager = styled.div<Props>`
+export const StyledUserActivityManager = styled.div.withConfig(
+  defaultStyledConfig
+)<Props>`
   z-index: ${(props) =>
     props.isActive ? props.theme.zIndex.controlBar : '-10'};
   visibility: ${(props) => (props.isActive ? 'visible' : 'hidden')};

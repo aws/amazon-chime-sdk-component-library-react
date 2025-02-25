@@ -3,6 +3,7 @@
 
 import styled, { keyframes } from 'styled-components';
 
+import { defaultStyledConfig } from '../../../../utils/style';
 import { baseSpacing, baseStyles } from '../../Base';
 import { InfiniteListProps } from './';
 
@@ -18,7 +19,9 @@ const rotate = keyframes`
 
 interface StyledInfiniteListProps extends InfiniteListProps {}
 
-export const StyledInfiniteList = styled.ul<StyledInfiniteListProps>`
+export const StyledInfiniteList = styled.ul.withConfig(
+  defaultStyledConfig
+)<StyledInfiniteListProps>`
   background-color: ${(props) => props.theme.chatBubble.container.bgd};
   overflow-y: scroll;
   display: flex;
