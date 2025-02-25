@@ -14,12 +14,8 @@ interface StyledNotificationProps extends NotificationProps {
   severity: Severity;
 }
 
-export const StyledCloseIconButton = styled(IconButton).withConfig(
-  defaultStyledConfig
-)``;
-export const StyledNotificationButton = styled(SecondaryButton).withConfig(
-  defaultStyledConfig
-)``;
+export const StyledCloseIconButton = styled(IconButton)``;
+export const StyledNotificationButton = styled(SecondaryButton)``;
 
 export const StyledNotification = styled.div.withConfig(
   defaultStyledConfig

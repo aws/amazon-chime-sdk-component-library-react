@@ -87,9 +87,7 @@ export const StyledPopOverItem = styled.li.withConfig(defaultStyledConfig)`
   }
 `;
 
-export const StyledSubMenu = styled(StyledPopOverItem).withConfig(
-  defaultStyledConfig
-)`
+export const StyledSubMenu = styled(StyledPopOverItem)`
   > span {
     width: 100%;
     height: 100%;

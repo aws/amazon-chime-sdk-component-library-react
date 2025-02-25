@@ -7,7 +7,6 @@ import styled from 'styled-components';
 import { useApplyVideoObjectFit } from '../../../hooks/useApplyVideoObjectFit';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
-import { defaultStyledConfig } from '../../../utils/style';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
 
@@ -16,7 +15,7 @@ interface Props extends BaseSdkProps {
   nameplate?: string;
 }
 
-const StyledLocalVideo = styled<any>(VideoTile).withConfig(defaultStyledConfig)`
+const StyledLocalVideo = styled<any>(VideoTile)`
   ${(props) => (!props.active ? 'display: none' : '')};
 `;
 
