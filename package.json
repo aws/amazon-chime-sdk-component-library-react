@@ -77,7 +77,6 @@
     "@types/react-dom": "^18.0.11",
     "@types/react-test-renderer": "^18.0.0",
     "@types/resize-observer-browser": "^0.1.3",
-    "@types/styled-components": "^5.1.26",
     "@types/styled-system": "^5.1.16",
     "@types/testing-library__react": "^10.2.0",
     "@types/throttle-debounce": "^2.1.0",
@@ -117,8 +116,9 @@
     "start-server-and-test": "^2.0.8",
     "storybook": "^7.0.2",
     "style-loader": "^0.23.1",
-    "styled-components": "^5.3.9",
+    "styled-components": "^6.1.15",
     "styled-system": "^5.1.5",
+    "stylis": "^4.3.6",
     "ts-jest": "^26.5.2",
     "ts-loader": "^6.0.2",
     "typescript": "^4.2.1",
@@ -129,7 +129,7 @@
     "amazon-chime-sdk-js": "^3.23.0",
     "react": "^17.0.1 || ^18.0.0",
     "react-dom": "^17.0.1 || ^18.0.0",
-    "styled-components": "^5.0.0",
+    "styled-components": "^5.0.0 || ^6.0.0",
     "styled-system": "^5.1.5"
   },
   "prettier": {
