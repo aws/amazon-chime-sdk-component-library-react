@@ -26,12 +26,12 @@ export const absoluteCenter = css`
   transform: translate(-50%, -50%);
 `;
 
-export const isValidCSSHex = (hex: string) => {
+export const isValidCSSHex = (hex: string): boolean => {
   // matches 6 digit characters prefixed with a '#'.
   return /^#[0-9A-F]{6}$/i.test(hex);
 };
 
-export const hexTorgba = (hex: string, alpha: number = 1) => {
+export const hexTorgba = (hex: string, alpha: number = 1): string => {
   if (!isValidCSSHex(hex)) {
     return '';
   }
@@ -52,12 +52,13 @@ export const hexTorgba = (hex: string, alpha: number = 1) => {
  */
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const createStyledConfig = (additionalProps: string[] = []) => ({
-  shouldForwardProp: (prop: string) =>
-    // Native HTML props is forwarded
-    isPropValid(prop) ||
-    // Allow additional non-HTML/custom props to be forwarded
-    additionalProps.includes(prop),
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  shouldForwardProp: (prop: string) => {
+    // Forward custom props
+    if (additionalProps.includes(prop)) return true;
+
+    return isPropValid(prop);
+  },
 });
 
-// Default styled config with no additional props
 export const defaultStyledConfig = createStyledConfig();

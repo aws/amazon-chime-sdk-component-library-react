@@ -15,12 +15,16 @@ _Microphone.argTypes = {
   width: { control: 'text' },
   poorConnection: { control: 'boolean' },
   muted: { control: 'boolean' },
+  mutedTitle: { control: 'text' },
+  unmutedTitle: { control: 'text' },
 };
 
 _Microphone.args = {
   width: '2rem',
   poorConnection: false,
   muted: false,
+  mutedTitle: 'Muted microphone',
+  unmutedTitle: 'Microphone',
 };
 
 _Microphone.story = {

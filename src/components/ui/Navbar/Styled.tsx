@@ -52,9 +52,7 @@ export const StyledNavbarItem = styled.div.withConfig(defaultStyledConfig)<
   }
 `;
 
-export const StyledNavbar = styled(Flex).withConfig(
-  defaultStyledConfig
-)<NavbarProps>`
+export const StyledNavbar = styled(Flex)<NavbarProps>`
   display: flex;
   flex-direction: column;
   height: 100%;

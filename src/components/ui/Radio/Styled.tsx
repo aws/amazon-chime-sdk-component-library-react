@@ -43,9 +43,7 @@ export const StyledRadio = styled.div.withConfig(defaultStyledConfig)<any>`
   }
 `;
 
-export const StyledRadioLabel = styled(StyledRadio).withConfig(
-  defaultStyledConfig
-)<any>`
+export const StyledRadioLabel = styled(StyledRadio)<any>`
   display: inline-block;
   height: 1rem;
   position: relative;
@@ -66,9 +64,7 @@ export const StyledRadioLabel = styled(StyledRadio).withConfig(
   }
 `;
 
-export const StyledRadioIcon = styled(StyledRadio).withConfig(
-  defaultStyledConfig
-)<any>`
+export const StyledRadioIcon = styled(StyledRadio)<any>`
   display: flex;
   align-items: center;
   justify-content: center;

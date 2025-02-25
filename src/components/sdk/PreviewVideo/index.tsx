@@ -9,11 +9,10 @@ import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
 import { useMeetingManager } from '../../../providers/MeetingProvider';
-import { defaultStyledConfig } from '../../../utils/style';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
 
-const StyledPreview = styled(VideoTile).withConfig(defaultStyledConfig)`
+const StyledPreview = styled(VideoTile)`
   height: auto;
   background: unset;
 

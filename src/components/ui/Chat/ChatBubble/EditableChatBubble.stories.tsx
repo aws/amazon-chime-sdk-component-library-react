@@ -42,7 +42,7 @@ export const _EditableChatBubble = (args) => {
         senderName={args.senderName}
         content="This messsage has typos that ned to be fixxed."
         showTail={args.showTail}
-        showName={args.boolean}
+        showName={args.showName}
         saveLabel={args.saveLabel}
         cancelLabel={args.cancelLabel}
         css={bubbleStyles}

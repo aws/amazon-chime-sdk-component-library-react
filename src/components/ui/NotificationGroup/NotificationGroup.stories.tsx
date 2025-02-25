@@ -54,6 +54,7 @@ const AddNotificationButtonGroup = () => {
     message:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod.',
     autoClose: true,
+    autoCloseDelay: 2000,
   };
   return (
     <StyledWrapper>

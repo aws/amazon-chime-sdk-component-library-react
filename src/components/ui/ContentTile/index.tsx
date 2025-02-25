@@ -3,12 +3,9 @@
 
 import styled from 'styled-components';
 
-import { createStyledConfig } from '../../../utils/style';
 import { VideoTile } from '../../ui/VideoTile';
 
-export const ContentTile = styled(VideoTile).withConfig(
-  createStyledConfig(['nameplate'])
-)`
+export const ContentTile = styled(VideoTile)`
   background-color: ${({ theme }) => theme.colors.greys.grey80};
 `;
 

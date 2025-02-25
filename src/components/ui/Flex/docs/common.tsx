@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { defaultStyledConfig } from '../../../../utils/style';
 import Flex from '..';
 
-export const Child = styled(Flex).withConfig(defaultStyledConfig)`
+export const Child = styled(Flex)`
   background-color: ${(props) => props.theme.colors.primary.lightest};
   color: ${(props) => props.theme.colors.primary.darkest};
   margin: 1vh;
@@ -15,14 +15,14 @@ export const Child = styled(Flex).withConfig(defaultStyledConfig)`
   width: 20vw;
 `;
 
-export const Block = styled(Flex).withConfig(defaultStyledConfig)`
+export const Block = styled(Flex)`
   background-color: ${(props) => props.theme.colors.primary.lightest};
   height: 5vh;
   margin: 1rem;
   border-radius: 4px;
 `;
 
-export const Stack = styled(Flex).withConfig(defaultStyledConfig)`
+export const Stack = styled(Flex)`
   padding: 1rem 20vw;
 `;
 
