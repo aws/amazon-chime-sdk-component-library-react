@@ -3,6 +3,7 @@
 
 import styled, { css } from 'styled-components';
 
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import { FlexProps } from './';
 
@@ -47,7 +48,7 @@ const layoutMap = {
   stack,
 };
 
-export const StyledFlex = styled.div<FlexProps>`
+export const StyledFlex = styled.div.withConfig(defaultStyledConfig)<FlexProps>`
   align-items: ${(props) => props.alignItems};
   display: ${(props) => (props.container ? 'flex' : 'block')};
   flex: ${(props) => props.flex || ''};

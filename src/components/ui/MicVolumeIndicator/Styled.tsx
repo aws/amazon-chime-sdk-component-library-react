@@ -3,10 +3,13 @@
 
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import { MicVolumeIndicatorProps } from '.';
 
-export const StyledMicVolumeIndicator = styled.div<MicVolumeIndicatorProps>`
+export const StyledMicVolumeIndicator = styled.div.withConfig(
+  defaultStyledConfig
+)<MicVolumeIndicatorProps>`
   position: relative;
   height: inherit;
   line-height: 0;

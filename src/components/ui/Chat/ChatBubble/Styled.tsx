@@ -3,6 +3,7 @@
 
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../../utils/style';
 import { BaseProps, baseSpacing, baseStyles } from '../../Base';
 import { MessageVariant } from './ChatBubbleContainer';
 
@@ -15,7 +16,9 @@ interface StyledChatBubbleProps extends BaseProps {
   editable?: boolean;
 }
 
-export const StyledChatBubbleContainer = styled.div<StyledChatBubbleContainerProps>`
+export const StyledChatBubbleContainer = styled.div.withConfig(
+  defaultStyledConfig
+)<StyledChatBubbleContainerProps>`
   display: flex;
   flex-direction: row;
   font-size: 0.65rem;
@@ -32,7 +35,9 @@ export const StyledChatBubbleContainer = styled.div<StyledChatBubbleContainerPro
   ${baseStyles}
 `;
 
-export const StyledChatBubble = styled.div<StyledChatBubbleProps>`
+export const StyledChatBubble = styled.div.withConfig(
+  defaultStyledConfig
+)<StyledChatBubbleProps>`
   background-color: ${(props) => props.theme.chatBubble[props.variant].bgd};
   padding: 0.625rem 1rem;
   border-radius: 4px;
@@ -94,7 +99,7 @@ export const StyledChatBubble = styled.div<StyledChatBubbleProps>`
   ${baseStyles};
 `;
 
-export const StyledChatBubbleInfo = styled.div`
+export const StyledChatBubbleInfo = styled.div.withConfig(defaultStyledConfig)`
   display: flex;
   margin-right: 0.5rem;
   margin-left: auto;

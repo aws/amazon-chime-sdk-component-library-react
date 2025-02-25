@@ -4,6 +4,7 @@
 import styled from 'styled-components';
 
 import { Severity } from '../../../providers/NotificationProvider';
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import IconButton from '../Button/IconButton';
 import SecondaryButton from '../Button/SecondaryButton';
@@ -13,10 +14,16 @@ interface StyledNotificationProps extends NotificationProps {
   severity: Severity;
 }
 
-export const StyledCloseIconButton = styled(IconButton)``;
-export const StyledNotificationButton = styled(SecondaryButton)``;
+export const StyledCloseIconButton = styled(IconButton).withConfig(
+  defaultStyledConfig
+)``;
+export const StyledNotificationButton = styled(SecondaryButton).withConfig(
+  defaultStyledConfig
+)``;
 
-export const StyledNotification = styled.div<StyledNotificationProps>`
+export const StyledNotification = styled.div.withConfig(
+  defaultStyledConfig
+)<StyledNotificationProps>`
   align-items: center;
   position: relative;
   display: inline-flex;
@@ -58,7 +65,7 @@ export const StyledNotification = styled.div<StyledNotificationProps>`
     background-color: ${({ theme, severity }) =>
       theme.colors[severity].primary};
     color: ${({ theme, severity }) =>
-      theme.notification[severity].closeButton.text}};
+      theme.notification[severity].closeButton.text};
   }
 
   ${StyledCloseIconButton}:hover, ${StyledCloseIconButton}:focus, ${StyledNotificationButton}:hover, ${StyledNotificationButton}:focus {

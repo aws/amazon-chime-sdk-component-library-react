@@ -3,11 +3,14 @@
 
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../../utils/style';
 import { baseSpacing, baseStyles } from '../../Base';
 import { ChannelListProps } from '.';
 import { ChannelItemProps } from './ChannelItem';
 
-export const StyledChannelList = styled.ul<ChannelListProps>`
+export const StyledChannelList = styled.ul.withConfig(
+  defaultStyledConfig
+)<ChannelListProps>`
   display: flex;
   flex-direction: column;
   width: 20rem;
@@ -16,7 +19,9 @@ export const StyledChannelList = styled.ul<ChannelListProps>`
   ${baseSpacing}
 `;
 
-export const StyledChannelItem = styled.li<ChannelItemProps>`
+export const StyledChannelItem = styled.li.withConfig(
+  defaultStyledConfig
+)<ChannelItemProps>`
   position: relative;
 
   ${baseStyles};

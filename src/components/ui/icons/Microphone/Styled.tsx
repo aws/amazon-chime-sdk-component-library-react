@@ -4,6 +4,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../../utils/style';
 import Svg from '../Svg';
 import { MicrophoneProps } from './';
 
@@ -13,7 +14,9 @@ const SvgWithoutMicrophoneProps = ({
   ...rest
 }: MicrophoneProps) => <Svg {...rest} />;
 
-export const StyledSvg = styled(SvgWithoutMicrophoneProps)<MicrophoneProps>`
+export const StyledSvg = styled(SvgWithoutMicrophoneProps).withConfig(
+  defaultStyledConfig
+)<MicrophoneProps>`
   ${(props) =>
     props.poorConnection ? `color: ${props.theme.colors.error.light}` : ''}
 `;

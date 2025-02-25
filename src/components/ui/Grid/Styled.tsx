@@ -4,11 +4,12 @@
 import styled from 'styled-components';
 import { grid } from 'styled-system';
 
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import { GridProps } from './';
 import { CellProps } from './Cell';
 
-export const StyledGrid = styled.div<GridProps>`
+export const StyledGrid = styled.div.withConfig(defaultStyledConfig)<GridProps>`
   display: grid;
   width: 100%;
   height: 100%;
@@ -33,7 +34,7 @@ export const StyledGrid = styled.div<GridProps>`
   ${(props) => props.css || ''}
 `;
 
-export const StyledCell = styled.div<CellProps>`
+export const StyledCell = styled.div.withConfig(defaultStyledConfig)<CellProps>`
   ${baseSpacing}
   ${grid}
 

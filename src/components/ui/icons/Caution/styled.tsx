@@ -3,6 +3,7 @@
 
 import styled, { css } from 'styled-components';
 
+import { defaultStyledConfig } from '../../../../utils/style';
 import { CautionProps } from './';
 
 const defaultStyle = css`
@@ -45,6 +46,8 @@ const variantMap = {
   'fill-error': errorStyle,
 };
 
-export const StyledCaution = styled.g<CautionProps>`
+export const StyledCaution = styled.g.withConfig(
+  defaultStyledConfig
+)<CautionProps>`
   ${(props) => variantMap[props.variant || 'default']};
 `;

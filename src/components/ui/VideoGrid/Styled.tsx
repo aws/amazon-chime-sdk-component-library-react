@@ -4,6 +4,7 @@
 import styled from 'styled-components';
 
 import { AspectRatio } from '../../../hooks/useElementAspectRatio';
+import { defaultStyledConfig } from '../../../utils/style';
 import { VideoGridProps } from './';
 
 interface StyledGridProps extends VideoGridProps {
@@ -431,7 +432,9 @@ const landscapeStyles = `
   }
 `;
 
-export const StyledGrid = styled.div<StyledGridProps>`
+export const StyledGrid = styled.div.withConfig(
+  defaultStyledConfig
+)<StyledGridProps>`
   position: relative;
   display: grid;
   height: 100%;

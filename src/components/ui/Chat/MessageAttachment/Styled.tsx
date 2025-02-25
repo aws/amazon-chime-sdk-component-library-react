@@ -3,13 +3,16 @@
 
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../../utils/style';
 import { BaseProps, baseSpacing, baseStyles } from '../../Base';
 
 interface StyledMessageAttachmentProps extends BaseProps {
   imgStyles?: string;
 }
 
-export const StyledMessageAttachmentContent = styled.div`
+export const StyledMessageAttachmentContent = styled.div.withConfig(
+  defaultStyledConfig
+)`
   display: flex;
   flex-direction: row;
   padding: 10px;
@@ -30,9 +33,9 @@ export const StyledMessageAttachmentContent = styled.div`
     margin-left: 1rem;
 
     & a:link,
-    a:visited,
-    a:hover,
-    a:active {
+    & a:visited,
+    & a:hover,
+    & a:active {
       color: ${(props) => props.theme.messageAttachment.name.fontColor};
       text-decoration: none;
     }
@@ -45,7 +48,9 @@ export const StyledMessageAttachmentContent = styled.div`
   }
 `;
 
-export const StyledMessageAttachment = styled.div<StyledMessageAttachmentProps>`
+export const StyledMessageAttachment = styled.div.withConfig(
+  defaultStyledConfig
+)<StyledMessageAttachmentProps>`
   color: ${(props) => props.theme.messageAttachment.content.fontColor};
   display: flex;
   flex-direction: column;

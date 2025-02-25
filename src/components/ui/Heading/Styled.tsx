@@ -3,10 +3,13 @@
 
 import styled from 'styled-components';
 
+import { defaultStyledConfig } from '../../../utils/style';
 import { baseSpacing, baseStyles } from '../Base';
 import { HeadingProps } from './';
 
-export const StyledHeading = styled.h1<HeadingProps>`
+export const StyledHeading = styled.h1.withConfig(
+  defaultStyledConfig
+)<HeadingProps>`
   display: block;
   margin: 0;
 
