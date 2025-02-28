@@ -97,7 +97,7 @@ const checkNPMDepsInstall = () => {
   }
   process.chdir(path.join(__dirname, '../../dependency-check-app'));
   spawnOrFail('npm', ['init -y']);
-  spawnOrFail('npm', ['install react react-dom']);
+  spawnOrFail('npm', ['install react@18 react-dom@18']);
 
   // As of June 5, 2023, running `npm install styled-components` fails due to this issue.
   // https://github.com/styled-components/styled-components/issues/3998
