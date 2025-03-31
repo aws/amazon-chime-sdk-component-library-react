@@ -68,6 +68,7 @@ jobs:
           echo ::set-output name=need_deploy::$result
       - name: Publish Storybook Documentation
         if: startsWith(steps.need_deploy.outputs.need_deploy, 'Deploy storybook')
-        run: npm run deploy-storybook -- --ci
-        env:
-          GH_TOKEN: chime-sdk-js-bot:${{ secrets.GITHUBPAGES}}
+        uses: bitovi/github-actions-storybook-to-github-pages@v1.0.3
+        with:
+          path: storybook-static 
+          checkout: false
