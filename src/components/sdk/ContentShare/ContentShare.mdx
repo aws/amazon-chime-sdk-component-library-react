@@ -5,11 +5,15 @@ import { ContentShare } from './';
 
 # ContentShare
 
-The `ContentShare` component renders a `ContentTile` for the active content share video, remote or local.
+The `ContentShare` component renders a `ContentTile` for a content share video, remote or local.
 
 If used within the `VideoGrid` component, it will automatically place the active tile in the featured grid slot. It takes precedence over the featured video tile.
 
 Once a meeting session has been started, a user can start and stop content sharing by using the `useContentShareControls` hook.
+
+## Multiple Content Shares
+
+With the support for multiple content shares, you can now specify which content share tile to render by providing the `tileId` prop. If no `tileId` is provided, the component will render the default content share tile from (`const { tileId } = useContentShareState()`).
 
 ## Importing
 
@@ -19,12 +23,14 @@ import { ContentShare } from 'amazon-chime-sdk-component-library-react';
 
 ## Usage
 
+### With Single Content Share
+
 ```jsx
 import React from 'react';
 import {
   MeetingProvider,
   ContentShare,
-  useContentShareControls
+  useContentShareControls,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {
@@ -32,9 +38,66 @@ const App = () => {
 
   return (
     <MeetingProvider>
-      <ContentShare nameplate='Content share' />
+      <ContentShare nameplate="Content share" />
       <button onClick={toggleContentShare}>Toggle content share</button>
     </MeetingProvider>
+  );
+};
+```
+
+### With Multiple Content Shares
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  ContentShare,
+  ContentShareProvider,
+  useContentShareState,
+  useContentShareControls,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  return (
+    <MeetingProvider>
+      <ContentShareProvider maxContentShares={2}>
+        <ContentShareView />
+        <ContentShareControls />
+      </ContentShareProvider>
+    </MeetingProvider>
+  );
+};
+
+const ContentShareView = () => {
+  const { tiles, tileIdToAttendeeId } = useContentShareState();
+
+  return (
+    <div>
+      {tiles.length === 0 ? (
+        <p>No content is being shared</p>
+      ) : (
+        <div className="content-share-container">
+          {tiles.map((tileId) => (
+            <ContentShare
+              key={tileId}
+              tileId={tileId}
+              nameplate={`Shared by: ${tileIdToAttendeeId[tileId.toString()]}`}
+            />
+          ))}
+        </div>
+      )}
+    </div>
+  );
+};
+
+const ContentShareControls = () => {
+  const { toggleContentShare } = useContentShareControls();
+  const { canStartContentShare } = useContentShareState();
+
+  return (
+    <button onClick={toggleContentShare} disabled={!canStartContentShare}>
+      Share content
+    </button>
   );
 };
 ```

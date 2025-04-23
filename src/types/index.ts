@@ -41,8 +41,19 @@ export type LocalVideoContextType = {
 
 export type ContentShareControlContextType = {
   paused: boolean;
+  isLocalUserSharing: boolean;
+  isLocalShareLoading: boolean;
   toggleContentShare: (source?: string | MediaStream) => Promise<void>;
   togglePauseContentShare: () => void;
+  canStartContentShare: boolean;
+};
+
+export type TileMap = {
+  [key: string]: string;
+};
+
+export type AttendeeMap = {
+  [key: string]: number;
 };
 
 export enum MeetingStatus {

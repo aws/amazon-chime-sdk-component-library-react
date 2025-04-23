@@ -1,18 +1,12 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-type tileMap = {
-  [key: string]: string;
-};
-
-type attendeeMap = {
-  [key: string]: number;
-};
+import { AttendeeMap, TileMap } from '../../types';
 
 export type State = {
   tiles: number[];
-  tileIdToAttendeeId: tileMap;
-  attendeeIdToTileId: attendeeMap;
+  tileIdToAttendeeId: TileMap;
+  attendeeIdToTileId: AttendeeMap;
   size: number;
 };
 

@@ -5,7 +5,7 @@ import { VideoTileGrid } from './';
 
 # VideoTileGrid
 
-The `VideoTileGrid` component renders all meeting session video tiles in a responsive grid layout. This includes the local tile, remote tiles, and content share tile. By default a user joins without video, so in order to see the VideoTileGrid there must be at least one video tile being shared. To start sharing a video, see the [LocalVideo](?path=/docs/sdk-components-localvideo--page) component. 
+The `VideoTileGrid` component renders all meeting session video tiles in a responsive grid layout. This includes the local tile, remote tiles, and content share tile. By default a user joins without video, so in order to see the VideoTileGrid there must be at least one video tile being shared. To start sharing a video, see the [LocalVideo](?path=/docs/sdk-components-localvideo--page) component.
 
 ## Importing
 
@@ -19,7 +19,7 @@ import { VideoTileGrid } from 'amazon-chime-sdk-component-library-react';
 import React from 'react';
 import {
   MeetingProvider,
-  VideoTileGrid
+  VideoTileGrid,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
@@ -27,6 +27,44 @@ const App = () => (
     <VideoTileGrid />
   </MeetingProvider>
 );
+```
+
+## Content Share Behavior
+
+The `VideoTileGrid` component does not support displaying multiple content shares simultaneously:
+
+- It can display only one content share tile at a time in the featured area
+- When multiple content shares are active, only the most recently started content share is displayed, and earlier shares are ignored
+- The grid size calculation always allocates exactly one tile space for content sharing (when content is present), regardless of how many content share tiles actually exist
+
+This means that even if there are multiple content share tiles available through `useContentShareState()`, the VideoTileGrid will only render one of them.
+
+### Custom Handling of Multiple Content Shares
+
+If you need to support multiple simultaneous content shares, you'll need to implement a custom grid using `useContentShareState` hook and `ContentShare` sdk component.
+
+```jsx
+import React from 'react';
+import {
+  useContentShareState,
+  ContentShare,
+} from 'amazon-chime-sdk-component-library-react';
+
+const CustomMultiContentShareGrid = () => {
+  // Access all content share tiles
+  const { tiles: contentTiles } = useContentShareState();
+
+  return (
+    <div className="custom-grid">
+      {/* Render each content share tile */}
+      {contentTiles.map((tileId) => (
+        <ContentShare key={tileId} tileId={tileId} />
+      ))}
+
+      {/* Other video tiles */}
+    </div>
+  );
+};
 ```
 
 ## Props

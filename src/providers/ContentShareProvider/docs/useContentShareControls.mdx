@@ -13,6 +13,18 @@ The `useContentShareControls` hook returns the state and functionality around st
   // Whether or not the local content share is paused
   paused: boolean;
 
+  // Whether or not the local user is currently sharing content
+  isLocalUserSharing: boolean;
+
+  // Whether or not the local user's content share is loading
+  isLocalShareLoading: boolean;
+
+  // Determines if the user can start a new content share
+  // Returns false in two cases:
+  // 1. When the ContentShareProvider has reached its `maxContentShares` limit
+  // 2. When the local user is already sharing content
+  canStartContentShare: boolean;
+
   // A function to toggle content share.
   // If the user is sharing, it will stop the content share.
   // If a user is not sharing, it will start the content share workflow.
@@ -36,23 +48,66 @@ import { useContentShareControls } from 'amazon-chime-sdk-component-library-reac
 
 The hook depends on the `ContentShareProvider`. If you are using `MeetingProvider`, it is rendered by default.
 
+### Basic Usage
+
 ```jsx
 import React from 'react';
 import {
   MeetingProvider,
+  ContentShareProvider,
   useContentShareControls,
 } from 'amazon-chime-sdk-component-library-react';
 
 const App = () => (
   <MeetingProvider>
-    <MyChild />
+    <ContentShareProvider maxContentShares={2}>
+      <ContentShareButton />
+    </ContentShareProvider>
   </MeetingProvider>
 );
 
-const MyChild = () => {
-  const { toggleContentShare } = useContentShareControls();
+const ContentShareButton = () => {
+  const {
+    toggleContentShare,
+    togglePauseContentShare,
+    paused,
+    isLocalUserSharing,
+    isLocalShareLoading,
+    canStartContentShare,
+  } = useContentShareControls();
 
-  return <button onClick={toggleContentShare}>Toggle content share</button>;
+  return (
+    <div>
+      {/* Content share toggle button */}
+      <button
+        onClick={toggleContentShare}
+        disabled={isLocalShareLoading || !canStartContentShare}
+      >
+        {isLocalShareLoading
+          ? 'Loading...'
+          : isLocalUserSharing
+          ? 'Stop sharing'
+          : 'Start sharing'}
+      </button>
+
+      {/* Pause/resume button only shown when sharing */}
+      {isLocalUserSharing && (
+        <button onClick={togglePauseContentShare}>
+          {paused ? 'Resume content share' : 'Pause content share'}
+        </button>
+      )}
+
+      {/* Status indicator */}
+      <div className="status">
+        {isLocalUserSharing && (
+          <span>
+            Status: {paused ? 'Paused' : 'Active'}
+            {isLocalShareLoading && ' (Loading...)'}
+          </span>
+        )}
+      </div>
+    </div>
+  );
 };
 ```
 

@@ -46,14 +46,20 @@ export const VideoTileGrid: React.FC<React.PropsWithChildren<Props>> = ({
   ...rest
 }) => {
   const { tileId: featureTileId } = useFeaturedTileState();
-  const { tiles } = useRemoteVideoTileState();
-  const { tileId: contentTileId } = useContentShareState();
+  const { tiles: remoteVideoTiles } = useRemoteVideoTileState();
+  const { tiles: contentShareTiles } = useContentShareState();
   const { isVideoEnabled } = useLocalVideo();
-  const featured =
-    (layout === 'featured' && !!featureTileId) || !!contentTileId;
-  const remoteSize = tiles.length + (contentTileId ? 1 : 0);
+
+  const hasContentShare = contentShareTiles.length > 0;
+  // contentShareSize is counted as 1 in the grid size calculation, since only the most
+  // recent content share tile is displayed in the featured area when multiple content shares exist
+  const contentShareSize = hasContentShare ? 1 : 0;
+  const remoteSize = remoteVideoTiles.length + contentShareSize;
   const gridSize =
     remoteSize > 1 && isVideoEnabled ? remoteSize + 1 : remoteSize;
+
+  const featured =
+    (layout === 'featured' && !!featureTileId) || hasContentShare;
 
   return (
     <VideoGrid {...rest} size={gridSize} layout={featured ? 'featured' : null}>
