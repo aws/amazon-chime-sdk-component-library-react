@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added support for multiple content shares in meetings through the `ContentShareProvider`. The provider now accepts a `maxContentShares` prop (default: 1, range 1-2) to specify the maximum number of concurrent content shares allowed.
+  - Added new collections in `ContentShareState` to track multiple content shares: `tiles`, `tileIdToAttendeeId`, and `attendeeIdToTileId`.
+  - Added optional `tileId` prop to the `ContentShare` component to specify which content share to render.
+  - Added `canStartContentShare` state to control when content sharing is allowed based on the current number of shares and configured maximum.
+  - Maintained backward compatibility by keeping `tileId` and `sharingAttendeeId` properties, which now point to the most recently started content share when multiple shares are present.
+
 ### Removed
 
 ### Changed

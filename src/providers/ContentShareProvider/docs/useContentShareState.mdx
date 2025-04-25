@@ -10,8 +10,13 @@ The `useContentShareState` hook returns the state related to content share statu
 
 ```javascript
 {
-  // The tile ID of the active content share
+  // The tile ID of the active content share (deprecated, maintained for backward compatibility)
+  // When multiple content shares are present, this points to the most recently started content share
   tileId: number | null;
+
+  // The chime attendee ID of the sharing user (deprecated, maintained for backward compatibility)
+  // When multiple content shares are present, this points to the attendee of the most recently started content share
+  sharingAttendeeId: string | null;
 
   // Whether the content share is paused
   paused: boolean;
@@ -22,8 +27,20 @@ The `useContentShareState` hook returns the state related to content share statu
   // Whether or not the local user's content share is loading
   isLocalShareLoading: boolean;
 
-  // The chime attendee ID of the sharing user
-  sharingAttendeeId: string | null;
+  // Determines if the user can start a new content share
+  // Returns false in two cases:
+  // 1. When the ContentShareProvider has reached its `maxContentShares` limit
+  // 2. When the local user is already sharing content
+  canStartContentShare: boolean;
+
+  // Array of all content share tile IDs
+  tiles: number[];
+
+  // Map of tile IDs to attendee IDs
+  tileIdToAttendeeId: { [key: string]: string };
+
+  // Map of attendee IDs to tile IDs
+  attendeeIdToTileId: { [key: string]: number };
 }
 ```
 
@@ -36,6 +53,8 @@ import { useContentShareState } from 'amazon-chime-sdk-component-library-react';
 ## Usage
 
 The hook depends on the `ContentShareProvider`. If you are using `MeetingProvider`, it is rendered by default.
+
+### Basic Usage
 
 ```jsx
 import React from 'react';
@@ -54,6 +73,169 @@ const MyChild = () => {
   const { isLocalUserSharing } = useContentShareState();
 
   return isLocalUserSharing ? <div>Sharing</div> : <div>Not sharing</div>;
+};
+```
+
+### Single Content Share with All Properties
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  useContentShareState,
+  ContentShare,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <ContentShareView />
+  </MeetingProvider>
+);
+
+const ContentShareView = () => {
+  const {
+    // Deprecated properties (maintained for backward compatibility)
+    tileId,
+    sharingAttendeeId,
+
+    // Content share state
+    paused,
+    isLocalUserSharing,
+    isLocalShareLoading,
+    canStartContentShare,
+
+    // Collections for multiple content shares
+    tiles,
+    tileIdToAttendeeId,
+    attendeeIdToTileId,
+  } = useContentShareState();
+
+  // No content is being shared
+  if (tiles.length === 0) {
+    return (
+      <div className="content-share-container">
+        <p>No content is being shared</p>
+        <p>Can start content share: {canStartContentShare ? 'Yes' : 'No'}</p>
+      </div>
+    );
+  }
+
+  // Get the content share tile ID
+  const contentShareTileId = tiles[0]; // Note: Previously known as `tileId` (deprecated)
+
+  // Attendee Id for content sharer
+  const attendeeId = attendeeIdToTileId[contentShareTileId.toString()]; // Note: Previously known as `sharingAttendeeId` (deprecated)
+
+  return (
+    <div className="content-share-container">
+      <div className="content-share-status">
+        <h3>Content Share Status</h3>
+        <ul>
+          <li>Active content shares: {tiles.length}</li>
+          <li>Current content share ID: {contentShareTileId}</li>
+          <li>Shared by: {attendeeId}</li>
+          <li>Paused: {paused ? 'Yes' : 'No'}</li>
+          <li>Local user is sharing: {isLocalUserSharing ? 'Yes' : 'No'}</li>
+          <li>Loading: {isLocalShareLoading ? 'Yes' : 'No'}</li>
+        </ul>
+      </div>
+
+      <div className="content-share-view">
+        <ContentShare nameplate={`Shared by: ${attendeeId}`} />
+      </div>
+    </div>
+  );
+};
+```
+
+### With Multiple Content Shares
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  ContentShareProvider,
+  useContentShareState,
+  ContentShare,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <ContentShareProvider maxContentShares={2}>
+      <ContentShareList />
+    </ContentShareProvider>
+  </MeetingProvider>
+);
+
+const ContentShareList = () => {
+  const {
+    // Content share state
+    paused,
+    isLocalUserSharing,
+    isLocalShareLoading,
+    canStartContentShare,
+
+    // Collections for multiple content shares
+    tiles,
+    tileIdToAttendeeId,
+    attendeeIdToTileId,
+  } = useContentShareState();
+
+  return (
+    <div>
+      <h2>Content Shares ({tiles.length})</h2>
+
+      {/* Status information */}
+      <div className="content-share-status">
+        <p>
+          {canStartContentShare
+            ? 'You can start a content share (limit not reached)'
+            : "Maximum number of content shares reached or you're already sharing"}
+        </p>
+
+        {isLocalUserSharing && (
+          <div className="local-share-status">
+            <p>You are currently sharing content</p>
+            <p>Status: {paused ? 'Paused' : 'Active'}</p>
+            {isLocalShareLoading && <p>Loading your content share...</p>}
+          </div>
+        )}
+      </div>
+
+      {/* Content share tiles */}
+      <div className="content-shares">
+        {tiles.length === 0 ? (
+          <p>No content is being shared</p>
+        ) : (
+          tiles.map((tileId) => {
+            const attendeeId = tileIdToAttendeeId[tileId.toString()];
+
+            return (
+              <ContentShare
+                key={tileId}
+                tileId={tileId}
+                nameplate={`Shared by: ${attendeeId}`}
+              />
+            );
+          })
+        )}
+      </div>
+
+      {/* Mapping between attendees and tiles */}
+      {tiles.length > 0 && (
+        <div className="content-share-mapping">
+          <h3>Content Share Mappings:</h3>
+          <ul>
+            {Object.entries(attendeeIdToTileId).map(([attendeeId, tileId]) => (
+              <li key={attendeeId}>
+                Attendee {attendeeId} → Tile {tileId}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
 };
 ```
 

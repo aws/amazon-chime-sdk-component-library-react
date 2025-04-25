@@ -6,12 +6,26 @@ import { Meta } from '@storybook/blocks';
 
 The `ContentShareProvider` provides state and functionality for content sharing.
 
+### Props
+
+```javascript
+{
+  // Maximum number of concurrent content shares allowed (default: 1, range: 1-2)
+  maxContentShares?: number;
+}
+```
+
 ### State
 
 ```javascript
 {
-  // The tile ID of the active content share
+  // The tile ID of the active content share (deprecated, maintained for backward compatibility)
+  // When multiple content shares are present, this points to the most recently started content share
   tileId: number | null;
+
+  // The chime attendee ID of the user sharing (deprecated, maintained for backward compatibility)
+  // When multiple content shares are present, this points to the attendee of the most recently started content share
+  sharingAttendeeId: string | null;
 
   // Whether the content share is paused
   paused: boolean;
@@ -22,8 +36,17 @@ The `ContentShareProvider` provides state and functionality for content sharing.
   // Whether or not the local user's content share is loading
   isLocalShareLoading: boolean;
 
-  // The chime attendee ID of the user sharing
-  sharingAttendeeId: string | null;
+  // Whether the user can start a content share based on current limits and `isLocalUserSharing`
+  canStartContentShare: boolean;
+
+  // Array of all content share tile IDs
+  tiles: number[];
+
+  // Map of tile IDs to attendee IDs
+  tileIdToAttendeeId: { [key: string]: string };
+
+  // Map of attendee IDs to tile IDs
+  attendeeIdToTileId: { [key: string]: number };
 }
 ```
 
@@ -50,6 +73,49 @@ const MyChild = () => {
   const { isLocalUserSharing } = useContentShareState();
 
   return isLocalUserSharing ? <div>Sharing</div> : <div>Not sharing</div>;
+};
+```
+
+## Multiple Content Shares
+
+You can configure the maximum number of concurrent content shares allowed (up to 2):
+
+```jsx
+import React from 'react';
+import {
+  MeetingProvider,
+  ContentShareProvider,
+  useContentShareState,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    {/* Override the default maxContentShares value (1) in ContentShareProvider */}
+    <ContentShareProvider maxContentShares={2}>
+      <MyComponent />
+    </ContentShareProvider>
+  </MeetingProvider>
+);
+
+const MyComponent = () => {
+  const { tiles, tileIdToAttendeeId, canStartContentShare } =
+    useContentShareState();
+
+  return (
+    <div>
+      <p>Content shares available: {tiles.length}</p>
+      <p>Can start content share: {canStartContentShare ? 'Yes' : 'No'}</p>
+      <div>
+        {tiles.map((tileId) => (
+          <ContentShare
+            key={tileId}
+            tileId={tileId}
+            nameplate={`Shared by: ${tileIdToAttendeeId[tileId.toString()]}`}
+          />
+        ))}
+      </div>
+    </div>
+  );
 };
 ```
 

@@ -21,17 +21,58 @@ import {
   reducer,
 } from './state';
 
+// Define the supported range for content shares
+const MIN_SUPPORTED_CONTENT_SHARES = 1;
+const MAX_SUPPORTED_CONTENT_SHARES = 2;
+
 const ContentShareContext = createContext<ContentShareState | null>(null);
 const ContentShareControlContext =
   createContext<ContentShareControlContextType | null>(null);
 
+/**
+ * Provider for content sharing functionality.
+ * @param maxContentShares - Maximum number of concurrent content shares allowed. Default is 1.
+ * Currently supported range is 1-2. Values outside this range will be clamped.
+ * If set to 1, only one content share is allowed at a time, and newer shares will take precedence.
+ */
 export const ContentShareProvider: React.FC<
-  React.PropsWithChildren<unknown>
-> = ({ children }) => {
+  React.PropsWithChildren<{
+    maxContentShares?: number;
+  }>
+> = ({ children, maxContentShares = 1 }) => {
   const audioVideo = useAudioVideo();
   const [state, dispatch] = useReducer(reducer, initialState);
-  const { paused, isLocalUserSharing, isLocalShareLoading } = state;
+  const {
+    paused,
+    isLocalUserSharing,
+    isLocalShareLoading,
+    canStartContentShare,
+  } = state;
   const localUserTileIdRef = useRef<number | null>(null);
+  const localAttendeeId = (audioVideo as any)?.audioVideoController
+    ?.realtimeController?.state?.localAttendeeId;
+
+  const validatedMaxContentShares = useMemo(() => {
+    return Math.max(
+      MIN_SUPPORTED_CONTENT_SHARES,
+      Math.min(maxContentShares, MAX_SUPPORTED_CONTENT_SHARES)
+    );
+  }, [maxContentShares]);
+
+  useEffect(() => {
+    if (maxContentShares > MAX_SUPPORTED_CONTENT_SHARES) {
+      console.warn(
+        `ContentShareProvider: maxContentShares value ${maxContentShares} exceeds the currently` +
+          ` supported maximum of ${MAX_SUPPORTED_CONTENT_SHARES}.` +
+          `The value has been set to ${validatedMaxContentShares} instead.`
+      );
+    } else if (maxContentShares < MIN_SUPPORTED_CONTENT_SHARES) {
+      console.warn(
+        `ContentShareProvider: maxContentShares value ${maxContentShares} is below the minimum` +
+          ` of ${MIN_SUPPORTED_CONTENT_SHARES}. The value has been set to ${validatedMaxContentShares} instead.`
+      );
+    }
+  }, [maxContentShares, validatedMaxContentShares]);
 
   useEffect(() => {
     if (!audioVideo) {
@@ -50,11 +91,10 @@ export const ContentShareProvider: React.FC<
 
         const { boundAttendeeId } = tileState;
         const baseAttendeeId = new DefaultModality(boundAttendeeId).base();
-        const localAttendeeId = (audioVideo as any).audioVideoController
-          .realtimeController.state.localAttendeeId;
         const isLocalUser = baseAttendeeId === localAttendeeId;
 
         if (
+          validatedMaxContentShares === 1 &&
           !isLocalUser &&
           localUserTileIdRef.current &&
           localUserTileIdRef.current < tileState.tileId
@@ -76,20 +116,30 @@ export const ContentShareProvider: React.FC<
         });
       },
       videoTileWasRemoved: (tileId: number) => {
-        if (tileId === localUserTileIdRef.current) {
+        const isLocalUser = tileId === localUserTileIdRef.current;
+        if (isLocalUser) {
           localUserTileIdRef.current = null;
         }
 
         dispatch({
           type: ContentActionType.REMOVE,
-          payload: tileId,
+          payload: {
+            isLocalUser,
+            tileId,
+          },
         });
       },
     };
 
     const contentShareObserver = {
       contentShareDidStop: () => {
-        dispatch({ type: ContentActionType.DID_STOP });
+        dispatch({
+          type: ContentActionType.DID_STOP,
+          payload: {
+            localAttendeeId: (audioVideo as any)?.audioVideoController
+              ?.realtimeController?.state?.localAttendeeId,
+          },
+        });
       },
     };
 
@@ -101,7 +151,7 @@ export const ContentShareProvider: React.FC<
       audioVideo.removeContentShareObserver(contentShareObserver);
       dispatch({ type: ContentActionType.RESET });
     };
-  }, [audioVideo]);
+  }, [audioVideo, localAttendeeId, validatedMaxContentShares]);
 
   useEffect(() => {
     if (!audioVideo) {
@@ -116,7 +166,7 @@ export const ContentShareProvider: React.FC<
 
     window.addEventListener('unhandledrejection', cb);
     return () => window.removeEventListener('unhandledrejection', cb);
-  }, [isLocalShareLoading]);
+  }, [audioVideo, isLocalShareLoading]);
 
   const toggleContentShare = useCallback(
     async (source?: string | MediaStream): Promise<void> => {
@@ -154,6 +204,15 @@ export const ContentShareProvider: React.FC<
     dispatch({ type: ContentActionType.TOGGLE_PAUSE });
   }, [audioVideo, paused, isLocalUserSharing]);
 
+  useEffect(() => {
+    dispatch({
+      type: ContentActionType.UPDATE_CAN_START,
+      payload: {
+        maxContentShares: validatedMaxContentShares,
+      },
+    });
+  }, [isLocalUserSharing, state.tiles.length, validatedMaxContentShares]);
+
   const controlsValue: ContentShareControlContextType = useMemo(
     () => ({
       paused,
@@ -161,13 +220,15 @@ export const ContentShareProvider: React.FC<
       isLocalShareLoading,
       toggleContentShare,
       togglePauseContentShare,
+      canStartContentShare,
     }),
     [
       paused,
-      toggleContentShare,
-      togglePauseContentShare,
       isLocalUserSharing,
       isLocalShareLoading,
+      toggleContentShare,
+      togglePauseContentShare,
+      canStartContentShare,
     ]
   );
 

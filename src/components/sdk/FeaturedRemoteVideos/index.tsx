@@ -21,19 +21,20 @@ export const FeaturedRemoteVideos: FC<React.PropsWithChildren<Props>> = (
   const gridData = useGridData();
   const { roster } = useRosterState();
   const { tileId: featuredTileId } = useFeaturedTileState();
-  const { tileId: contentTileId } = useContentShareState();
+  const { tiles: contentTiles } = useContentShareState();
   const { tiles, tileIdToAttendeeId } = useRemoteVideoTileState();
 
   return (
     <>
       {tiles.map((tileId) => {
-        const featured = !contentTileId && featuredTileId === tileId;
+        const hasContentShare = contentTiles.length > 0;
+        const featured = !hasContentShare && featuredTileId === tileId;
         const styles = gridData && featured ? 'grid-area: ft;' : '';
         const classes = `${featured ? 'ch-featured-tile' : ''} ${
           props.className || ''
         }`;
         const attendee = roster[tileIdToAttendeeId[tileId]] || {};
-        const { name }: any = attendee;
+        const { name = undefined }: { name?: string } = attendee;
 
         return (
           <RemoteVideo

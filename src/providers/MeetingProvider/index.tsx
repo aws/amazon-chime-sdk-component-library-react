@@ -26,6 +26,7 @@ interface Props {
    * Check `meetingManager` prop documentation for more information.
    */
   meetingManager?: MeetingManager;
+  maxContentShares?: number;
 }
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
@@ -33,6 +34,7 @@ export const MeetingContext = createContext<MeetingManager | null>(null);
 export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
   onDeviceReplacement,
   meetingManager: meetingManagerProp,
+  maxContentShares,
   children,
 }) => {
   const logger = useLogger();
@@ -49,7 +51,7 @@ export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
               <RemoteVideoTileProvider>
                 <LocalVideoProvider>
                   <LocalAudioOutputProvider>
-                    <ContentShareProvider>
+                    <ContentShareProvider maxContentShares={maxContentShares}>
                       <FeaturedVideoTileProvider>
                         {children}
                       </FeaturedVideoTileProvider>
