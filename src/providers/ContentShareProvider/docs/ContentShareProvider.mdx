@@ -36,7 +36,10 @@ The `ContentShareProvider` provides state and functionality for content sharing.
   // Whether or not the local user's content share is loading
   isLocalShareLoading: boolean;
 
-  // Whether the user can start a content share based on current limits and `isLocalUserSharing`
+  // Determines if the user can start a new content share
+  // Returns false in two cases:
+  // 1. When the ContentShareProvider has reached its `maxContentShares` limit
+  // 2. When the local user is already sharing content
   canStartContentShare: boolean;
 
   // Array of all content share tile IDs
