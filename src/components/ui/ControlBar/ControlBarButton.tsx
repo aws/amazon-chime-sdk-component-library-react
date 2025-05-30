@@ -17,7 +17,7 @@ export interface ControlBarButtonProps
     BaseProps,
     Tooltipable {
   /** The icon of the control bar item. */
-  icon: JSX.Element;
+  icon: React.ReactNode;
   /** The callback fired when the item is clicked. */
   onClick: () => void;
   /** The label of an control bar item. */
