@@ -8,7 +8,7 @@ import { StyledBadge } from './Styled';
 
 export interface BadgeProps extends BaseProps {
   /** The value shows in the badge*/
-  value: string | number | JSX.Element;
+  value: string | number | React.ReactNode;
   /** The status of the badge */
   status?: 'default' | 'alert';
 }
