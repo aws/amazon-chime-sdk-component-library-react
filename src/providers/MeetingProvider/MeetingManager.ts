@@ -219,7 +219,7 @@ export class MeetingManager implements AudioVideoObserver {
         await this.meetingSession?.deviceController.chooseAudioOutput(null);
         await this.meetingSession?.deviceController.destroy();
       } catch (error) {
-        console.log(
+        this.logger.info(
           'MeetingManager failed to clean up media resources on leave'
         );
       }
@@ -238,7 +238,7 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   audioVideoDidStart = (): void => {
-    console.log(
+    this.logger.info(
       '[MeetingManager audioVideoDidStart] Meeting started successfully'
     );
     this.meetingStatus = MeetingStatus.Succeeded;
@@ -259,19 +259,19 @@ export class MeetingManager implements AudioVideoObserver {
     const sessionStatusCode = sessionStatus.statusCode();
     switch (sessionStatusCode) {
       case MeetingSessionStatusCode.MeetingEnded:
-        console.log(
+        this.logger.info(
           `[MeetingManager audioVideoDidStop] Meeting ended for all: ${sessionStatusCode}`
         );
         this.meetingStatus = MeetingStatus.Ended;
         break;
       case MeetingSessionStatusCode.Left:
-        console.log(
+        this.logger.info(
           `[MeetingManager audioVideoDidStop] Left the meeting: ${sessionStatusCode}`
         );
         this.meetingStatus = MeetingStatus.Left;
         break;
       case MeetingSessionStatusCode.AudioJoinedFromAnotherDevice:
-        console.log(
+        this.logger.info(
           `[MeetingManager audioVideoDidStop] Meeting joined from another device: ${sessionStatusCode}`
         );
         this.meetingStatus = MeetingStatus.JoinedFromAnotherDevice;
@@ -279,17 +279,17 @@ export class MeetingManager implements AudioVideoObserver {
       default:
         // The following status codes are Failures according to MeetingSessionStatus
         if (sessionStatus.isFailure() && !sessionStatus.isTerminal()) {
-          console.log(
+          this.logger.info(
             `[MeetingManager audioVideoDidStop] Non-Terminal failure occurred: ${sessionStatusCode}`
           );
           this.meetingStatus = MeetingStatus.Failed;
         } else if (sessionStatus.isTerminal()) {
-          console.log(
+          this.logger.info(
             `[MeetingManager audioVideoDidStop] Terminal failure occurred: ${sessionStatusCode}`
           );
           this.meetingStatus = MeetingStatus.TerminalFailure;
         } else {
-          console.log(
+          this.logger.info(
             `[MeetingManager audioVideoDidStop] session stopped with code ${sessionStatusCode}`
           );
         }
@@ -372,7 +372,7 @@ export class MeetingManager implements AudioVideoObserver {
           this.publishDeviceLabelTriggerStatus();
           return stream;
         } catch (error) {
-          console.error('MeetingManager failed to get device permissions');
+          this.logger.error('MeetingManager failed to get device permissions');
           this.deviceLabelTriggerStatus = DeviceLabelTriggerStatus.DENIED;
           this.publishDeviceLabelTriggerStatus();
           throw error;
@@ -440,9 +440,8 @@ export class MeetingManager implements AudioVideoObserver {
           this.audioInputDevices[0].deviceId
         );
       } catch (error) {
-        console.error(
-          'MeetingManager failed to select audio input device on join',
-          error
+        this.logger.error(
+          `MeetingManager failed to select audio input device on join: ${error}`
         );
       }
       this.publishSelectedAudioInputDevice();
@@ -460,9 +459,8 @@ export class MeetingManager implements AudioVideoObserver {
             this.audioOutputDevices[0].deviceId
           );
         } catch (error) {
-          console.error(
-            'MeetingManager failed to select audio output device on join',
-            error
+          this.logger.error(
+            `MeetingManager failed to select audio output device on join: ${error}`
           );
         }
       }
@@ -492,7 +490,7 @@ export class MeetingManager implements AudioVideoObserver {
         newError.name = error.name;
         newError.message += ' ' + error.message;
       }
-      console.error(newError);
+      this.logger.error(newError.toString());
       throw newError;
     }
   };
@@ -503,9 +501,8 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedAudioOutputDevice = deviceId;
       this.publishSelectedAudioOutputDevice();
     } catch (error) {
-      console.error(
-        'MeetingManager failed to select audio output device',
-        error
+      this.logger.error(
+        `MeetingManager failed to select audio output device: ${error}`
       );
       throw new Error('MeetingManager failed to select audio output device');
     }
@@ -524,7 +521,7 @@ export class MeetingManager implements AudioVideoObserver {
         newError.name = error.name;
         newError.message += ' ' + error.message;
       }
-      console.error(newError);
+      this.logger.error(newError.toString());
       throw newError;
     }
   };
@@ -535,9 +532,8 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedVideoInputDevice = undefined;
       this.publishSelectedVideoInputDevice();
     } catch (error) {
-      console.error(
-        'MeetingManager failed to unselect video input device',
-        error
+      this.logger.error(
+        `MeetingManager failed to unselect video input device: ${error}`
       );
       throw new Error('MeetingManager failed to unselect video input device');
     }

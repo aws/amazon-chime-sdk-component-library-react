@@ -14,6 +14,7 @@ import React, {
 
 import { ContentShareControlContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useLogger } from '../LoggerProvider';
 import {
   ContentActionType,
   ContentShareState,
@@ -41,6 +42,7 @@ export const ContentShareProvider: React.FC<
   }>
 > = ({ children, maxContentShares = 1 }) => {
   const audioVideo = useAudioVideo();
+  const logger = useLogger();
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     paused,
@@ -61,13 +63,13 @@ export const ContentShareProvider: React.FC<
 
   useEffect(() => {
     if (maxContentShares > MAX_SUPPORTED_CONTENT_SHARES) {
-      console.warn(
+      logger.warn(
         `ContentShareProvider: maxContentShares value ${maxContentShares} exceeds the currently` +
           ` supported maximum of ${MAX_SUPPORTED_CONTENT_SHARES}.` +
           `The value has been set to ${validatedMaxContentShares} instead.`
       );
     } else if (maxContentShares < MIN_SUPPORTED_CONTENT_SHARES) {
-      console.warn(
+      logger.warn(
         `ContentShareProvider: maxContentShares value ${maxContentShares} is below the minimum` +
           ` of ${MIN_SUPPORTED_CONTENT_SHARES}. The value has been set to ${validatedMaxContentShares} instead.`
       );
