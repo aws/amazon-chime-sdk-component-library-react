@@ -16,6 +16,25 @@ If you want to apply Amazon Voice Focus feature, try this `AudioInputVFControl`.
 
 You can use it in the [ControlBar component](/docs/ui-components-controlbar--page) to build the meeting controls bar.
 
+## Prerequisites
+
+Amazon Voice Focus and Echo Reduction features require Web Audio to be enabled in your meeting session. Configure this when joining a meeting:
+
+```javascript
+await meetingManager.join(meetingSessionConfiguration, {
+  enableWebAudio: true,
+});
+```
+
+### Voice Focus and WebAudio Best Practice
+
+When joining a meeting, only enable WebAudio when Voice Focus is both supported and desired by the user. Enabling WebAudio may cause browsers to disable their built-in noise cancellation features. If Voice Focus is not supported in this scenario, users will experience degraded audio quality due to the loss of both browser-level and SDK-level noise suppression. To prevent this, implement a conditional check: `enableWebAudio: userWantsVoiceFocus && (isVoiceFocusSupported === true)`
+
+- userWantsVoiceFocus: Your application's user preference (e.g., checkbox state)
+- isVoiceFocusSupported: SDK-provided capability check from useVoiceFocus hook
+
+This ensures WebAudio is only activated when Voice Focus can provide effective noise cancellation, maintaining optimal audio quality across all browser environments and device capabilities.
+
 ## Importing
 
 ```javascript
@@ -23,21 +42,29 @@ import { AudioInputVFControl } from 'amazon-chime-sdk-component-library-react';
 ```
 
 ## Usage
-`joinInfo` here is the response of [CreateMeeting](https://docs.aws.amazon.com/chime-sdk/latest/APIReference/API_CreateMeeting.html) 
-from  [Amazon Chime SDK Meetings endpoint](https://docs.aws.amazon.com/chime-sdk/latest/dg/meeting-namespace-migration.html).
+
+`joinInfo` here is the response of [CreateMeeting](https://docs.aws.amazon.com/chime-sdk/latest/APIReference/API_CreateMeeting.html)
+from [Amazon Chime SDK Meetings endpoint](https://docs.aws.amazon.com/chime-sdk/latest/dg/meeting-namespace-migration.html).
 `joinInfo` is needed here so as to decide whether download Voice Focus or Echo Reduction model according to `CreatingMeetingResponse`.
 
 ```jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MeetingProvider,
   VoiceFocusProvider,
   AudioInputVFControl,
+  useMeetingManager,
+  useVoiceFocus,
 } from 'amazon-chime-sdk-component-library-react';
+import { VoiceFocusModelName } from 'amazon-chime-sdk-js';
 
-const enableWebAudio = true;
-const meetingConfig = { enableWebAudio };
-const joinInfo = { Meeting: {} }
+const joinInfo = {
+  Meeting: {
+    MeetingFeatures: {
+      Audio: { EchoReduction: 'AVAILABLE' }
+    }
+  }
+};
 
 function voiceFocusName(name: string): VoiceFocusModelName {
   if (name && ['default', 'ns_es'].includes(name)) {
@@ -48,7 +75,7 @@ function voiceFocusName(name: string): VoiceFocusModelName {
 
 function getVoiceFocusSpecName(): VoiceFocusModelName {
   if (
-    joinInfo && 
+    joinInfo &&
     joinInfo.Meeting?.MeetingFeatures?.Audio?.EchoReduction === 'AVAILABLE'
   ) {
     return voiceFocusName('ns_es');
@@ -57,19 +84,37 @@ function getVoiceFocusSpecName(): VoiceFocusModelName {
 }
 
 const vfConfigValue = {
-  spec: {name: getVoiceFocusSpecName()},
+  spec: { name: getVoiceFocusSpecName() },
   createMeetingResponse: joinInfo,
+};
+
+const MeetingComponent = () => {
+  const meetingManager = useMeetingManager();
+  const { isVoiceFocusSupported } = useVoiceFocus();
+  const [userWantsVoiceFocus, setUserWantsVoiceFocus] = useState(true); // Set via UI such as a checkbox
+
+  const joinMeeting = async () => {
+    // Only enable WebAudio when Voice Focus is supported and desired
+    const enableWebAudio = userWantsVoiceFocus && (isVoiceFocusSupported === true);
+
+    await meetingManager.join(meetingSessionConfiguration, {
+      enableWebAudio
+    });
+  };
+
+  return <AudioInputVFControl />;
 };
 
 const App = () => {
   return (
     <VoiceFocusProvider {...vfConfigValue}>
-      <MeetingProvider {...meetingConfig}>
-        <AudioInputVFControl />
+      <MeetingProvider>
+        <MeetingComponent />
       </MeetingProvider>
     </VoiceFocusProvider>
   );
 };
+
 ```
 
 ## Props

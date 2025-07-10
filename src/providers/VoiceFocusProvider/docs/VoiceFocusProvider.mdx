@@ -15,6 +15,23 @@ the provider is unmounted.
 This provider is independent from `MeetingProvider`. You can put `VoiceFocusProvider` wherever you want in the component tree to control the workflow of Voice Focus, so long
 as any component which relies on `VoiceFocusProvider` is nested within `VoiceFocusProvider`.
 
+## Prerequisites
+
+Amazon Voice Focus and Echo Reduction features require Web Audio to be enabled in your meeting session. Configure this when joining a meeting:
+
+```javascript
+await meetingManager.join(meetingSessionConfiguration, { enableWebAudio: true });
+```
+
+### Voice Focus and WebAudio Best Practice
+
+When joining a meeting, only enable WebAudio when Voice Focus is both supported and desired by the user. Enabling WebAudio may cause browsers to disable their built-in noise cancellation features. If Voice Focus is not supported in this scenario, users will experience degraded audio quality due to the loss of both browser-level and SDK-level noise suppression. To prevent this, implement a conditional check: `enableWebAudio: userWantsVoiceFocus && (isVoiceFocusSupported === true)`
+
+- userWantsVoiceFocus: Your application's user preference (e.g., checkbox state)
+- isVoiceFocusSupported: SDK-provided capability check from useVoiceFocus hook
+
+This ensures WebAudio is only activated when Voice Focus can provide effective noise cancellation, maintaining optimal audio quality across all browser environments and device capabilities.
+
 ## State
 
 ```typescript

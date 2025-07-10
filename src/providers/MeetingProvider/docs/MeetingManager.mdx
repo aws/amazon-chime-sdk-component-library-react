@@ -55,7 +55,24 @@ options?: {
   eventController?: EventController;
 
   // If you want to enable Amazon Voice Focus feature, you should enable Web Audio for the meeting and pass the `enableWebAudio` prop with value set to `true`.
-  // By default, `enableWebAudio` is `false`.
+  // Recommended: Only enable WebAudio when Voice Focus is both supported and desired by the user.
+  // 
+  // Why this matters:
+  // - Enabling WebAudio may cause browsers to disable built-in noise cancellation
+  // - If Voice Focus is unsupported, users lose both browser-level AND SDK-level noise suppression
+  // - This results in significantly degraded audio quality
+  //
+  // Best Practice:
+  // enableWebAudio: userWantsVoiceFocus && (isVoiceFocusSupported === true)
+  //
+  // Where:
+  // - userWantsVoiceFocus: Your application's user preference (e.g., checkbox state)
+  // - isVoiceFocusSupported: SDK-provided support check from `useVoiceFocus` hook
+  //
+  // This ensures WebAudio is only activated when Voice Focus can provide effective
+  // noise cancellation, maintaining optimal audio quality across all environments.
+  //
+  // Default: false
   enableWebAudio?: boolean;
 
   // The `ActiveSpeakerPolicy` object that you want to be used in the meeting session.
