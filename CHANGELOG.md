@@ -77,6 +77,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Remove analyser node on unmount of useLocalAudioInputActivity hook
+
 ## [3.7.0] - 2023-04-25
 
 ### Added
