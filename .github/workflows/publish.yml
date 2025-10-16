@@ -4,6 +4,10 @@ on:
   release:
     types: [published]
 
+permissions:
+  id-token: write  # Required for OIDC
+  contents: read
+
 jobs:
   publish-and-deploy-documentation:
     runs-on: ubuntu-latest
@@ -13,10 +17,13 @@ jobs:
         with:
           ref: ${{ github.event.release.tag_name }}
       - name: Setup Node environment
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
+      # Ensure npm 11.5.1 or later is installed
+      - name: Update npm
+        run: npm install -g npm@latest
       - name: NPM Install
         run: npm install
       - name: NPM run build
@@ -30,10 +37,6 @@ jobs:
       - name: Publish to NPM latest
         if:  steps.npm_tag.outputs.npm_tag == ''
         run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
       - name: Publish to NPM with tag
         if: steps.npm_tag.outputs.npm_tag != ''
         run: npm publish --tag ${{ steps.npm_tag.outputs.npm_tag }}
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}
