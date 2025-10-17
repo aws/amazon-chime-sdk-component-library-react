@@ -7,7 +7,6 @@ import { fireEvent, waitFor } from '@testing-library/dom';
 import { act } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { Simulate } from 'react-dom/test-utils';
 
 import PopOver from '../../../../src/components/ui/PopOver';
 import PopOverItem from '../../../../src/components/ui/PopOver/PopOverItem';
@@ -235,12 +234,12 @@ describe('PopOver', () => {
     click(toggle);
     const option2 = getByTestId('option 2');
     act(() => {
-      Simulate.keyDown(document.activeElement || document.body, {
+      fireEvent.keyDown(document.activeElement || document.body, {
         key: 'ArrowDown',
         keyCode: 40,
         which: 40,
       }); // key down to Option 1
-      Simulate.keyDown(document.activeElement || document.body, {
+      fireEvent.keyDown(document.activeElement || document.body, {
         key: 'ArrowDown',
         keyCode: 40,
         which: 40,
@@ -270,17 +269,17 @@ describe('PopOver', () => {
     click(toggle);
     const option1 = getByTestId('option 1');
     act(() => {
-      Simulate.keyDown(document.activeElement || document.body, {
+      fireEvent.keyDown(document.activeElement || document.body, {
         key: 'ArrowDown',
         keyCode: 40,
         which: 40,
       }); // key down to Option 1
-      Simulate.keyDown(document.activeElement || document.body, {
+      fireEvent.keyDown(document.activeElement || document.body, {
         key: 'ArrowDown',
         keyCode: 40,
         which: 40,
       }); // key down to Option 2
-      Simulate.keyDown(document.activeElement || document.body, {
+      fireEvent.keyDown(document.activeElement || document.body, {
         key: 'ArrowUp',
         keyCode: 38,
         which: 38,
@@ -305,7 +304,7 @@ describe('PopOver', () => {
     click(toggle);
     const menu = queryByTestId('menu');
     act(() => {
-      Simulate.keyDown(document.activeElement || document.body, {
+      fireEvent.keyDown(document.activeElement || document.body, {
         key: 'Escape',
         keyCode: 27,
         which: 27,

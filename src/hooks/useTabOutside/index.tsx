@@ -4,7 +4,7 @@
 import { RefObject, useEffect } from 'react';
 
 export function useTabOutside(
-  ref: RefObject<HTMLElement>,
+  ref: RefObject<HTMLElement | null>,
   onTabOutside: (e: KeyboardEvent) => void
 ) {
   const isOutside = () => {

@@ -11,7 +11,7 @@ import { StyledSubMenu } from './Styled';
 export interface PopOverSubMenuProps
   extends Omit<HTMLAttributes<HTMLUListElement>, 'css'>,
     BaseProps {
-  children?: JSX.Element | JSX.Element[];
+  children?: React.ReactNode;
   /** The text shown in the item. */
   text: string;
 }

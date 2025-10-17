@@ -7,7 +7,7 @@ function useMemoCompare<T>(
   next: any,
   compare: (prev: T | undefined, next: T | undefined) => boolean
 ) {
-  const previousRef = useRef();
+  const previousRef = useRef<T | undefined>(undefined);
   const previous = previousRef.current;
   const isEqual = compare(previous, next);
 

@@ -10,7 +10,7 @@ export interface ButtonProps
   extends Omit<HTMLAttributes<HTMLButtonElement>, 'css'>,
     BaseProps {
   /** The icon element to be shown in the button. */
-  icon?: JSX.Element;
+  icon?: React.ReactNode;
   /** The text of the button. */
   label: string;
   /** The variant of button. */
