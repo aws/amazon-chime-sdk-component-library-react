@@ -3,7 +3,7 @@
 
 import { RefObject, useEffect } from 'react';
 
-export function useApplyVideoObjectFit(videoEl: RefObject<HTMLVideoElement>) {
+export function useApplyVideoObjectFit(videoEl: RefObject<HTMLVideoElement | null>) {
   useEffect(() => {
     function onLoaded() {
       if (!videoEl.current) {
