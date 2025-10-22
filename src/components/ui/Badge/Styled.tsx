@@ -1,6 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import React from 'react';
 import styled from 'styled-components';
 
 import { defaultStyledConfig } from '../../../utils/style';
@@ -12,7 +13,7 @@ export const StyledBadge = styled.span.withConfig(defaultStyledConfig)<
 >`
   ${(props) => {
     if (typeof props.value === 'object') {
-      const element: JSX.Element = props.value as JSX.Element;
+      const element: React.JSX.Element = props.value as React.JSX.Element;
       const width: string = (element.props && element.props.width) || '1rem';
       return `width: ${width};`;
     }

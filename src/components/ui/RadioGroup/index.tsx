@@ -8,7 +8,7 @@ import Radio from '../Radio';
 export interface RadioProps {
   label: string;
   value: string;
-  icon?: JSX.Element;
+  icon?: React.JSX.Element;
   inputProps?: InputHTMLAttributes<HTMLButtonElement>;
   /* Unique identifier to target element */
   testId?: string;
