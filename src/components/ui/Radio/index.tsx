@@ -16,7 +16,7 @@ export interface RadioProps {
   /** Whether or not the radio is selected. */
   checked?: boolean;
   /** The icon for the radio. */
-  icon?: JSX.Element;
+  icon?: React.JSX.Element;
   /** The label of the radio. */
   label: string;
   /** The value of the radio. */
