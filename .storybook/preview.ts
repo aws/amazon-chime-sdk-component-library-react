@@ -1,5 +1,5 @@
 import { ThemeProvider } from 'styled-components';
-import { withThemeFromJSXProvider } from '@storybook/addon-styling';
+import { withThemeFromJSXProvider } from '@storybook/addon-themes';
 
 import { GlobalStyles } from '../src/theme/GlobalStyles';
 import lightTheme from '../src/theme/light';
