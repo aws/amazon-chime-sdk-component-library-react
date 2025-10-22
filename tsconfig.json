@@ -7,7 +7,7 @@
     "lib": ["ES2015", "ES2016", "ES2017", "DOM"],
     "sourceMap": true,
     "allowJs": false,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "moduleResolution": "node",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
