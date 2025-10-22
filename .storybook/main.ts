@@ -20,7 +20,7 @@ const config: StorybookConfig = {
       },
     },
     '@storybook/addon-storysource',
-    '@storybook/addon-styling',
+    '@storybook/addon-themes',
     '@storybook/addon-a11y',
   ],
   framework: {
