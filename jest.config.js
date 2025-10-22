@@ -3,10 +3,10 @@ module.exports = {
   setupFilesAfterEnv: ['./tst/setupTests.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'jsx', 'node'],
   transform: {
-    '\\.tsx?$': ['ts-jest', {
-      tsconfig: 'tsconfig.json'
-    }]
+    '\\.tsx?$': 'ts-jest',
+    '^.+\\.m?js$': 'ts-jest',
   },
+  preset: 'ts-jest',
   testPathIgnorePatterns: ['node_modules', '/tst/snapshots/',],
   testEnvironment: 'jsdom',
   collectCoverage: true,
@@ -32,4 +32,7 @@ module.exports = {
    * https://jestjs.io/docs/configuration#coverageprovider-string
    */
   coverageProvider: 'v8',
+  transformIgnorePatterns: [
+    'node_modules/(?!uuid)',
+  ],
 };

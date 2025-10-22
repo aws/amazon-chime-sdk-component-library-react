@@ -177,7 +177,7 @@ export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
   };
 
   return (
-    <>
+    <span data-testid="popover">
       {renderButton ? (
         <StyledPopOverToggle {...buttonProps}>
           {renderButton(isOpen)}
@@ -190,13 +190,12 @@ export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
 
       {isOpen && (
         <FloatingPortal>
-          <div
-            ref={refs.setFloating}
-            style={floatingStyles}
-            {...getFloatingProps()}
-            onKeyDown={handleKeyUp}
-          >
+          <FloatingFocusManager context={context} modal={false}>
             <StyledPopOverMenu
+              ref={refs.setFloating}
+              style={floatingStyles}
+              {...getFloatingProps()}
+              onKeyDown={handleKeyUp}
               data-placement={placement}
               onClick={(e: any) => closePopover(e)}
               data-testid="menu"
@@ -204,10 +203,10 @@ export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
             >
               {children}
             </StyledPopOverMenu>
-          </div>
+          </FloatingFocusManager>
         </FloatingPortal>
       )}
-    </>
+    </span>
   );
 };
 
