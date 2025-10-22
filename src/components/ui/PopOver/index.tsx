@@ -10,7 +10,19 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import { Manager, Popper, Reference } from 'react-popper';
+import {
+  useFloating,
+  autoUpdate,
+  offset,
+  flip,
+  shift,
+  useClick,
+  useDismiss,
+  useRole,
+  useInteractions,
+  FloatingFocusManager,
+  FloatingPortal,
+} from '@floating-ui/react';
 
 import { KEY_CODES } from '../../../constants';
 import useClickOutside from '../../../hooks/useClickOutside';
@@ -65,18 +77,41 @@ export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
   closeOnClick = true,
   ...rest
 }) => {
-  const menuRef = createRef<HTMLSpanElement>();
   const [isOpen, setIsOpen] = useState(false);
 
+  const { refs, floatingStyles, context } = useFloating({
+    open: isOpen,
+    onOpenChange: setIsOpen,
+    placement: placement,
+    whileElementsMounted: autoUpdate,
+    middleware: [
+      offset({ mainAxis: 0, crossAxis: -8 }),
+      flip(),
+      shift()
+    ],
+  });
+
+  const click = useClick(context);
+  const dismiss = useDismiss(context);
+  const role = useRole(context);
+
+  const { getReferenceProps, getFloatingProps } = useInteractions([
+    click,
+    dismiss,
+    role,
+  ]);
+
   useEffect(() => {
-    if (isOpen && !!menuRef.current) {
-      const nodes = getFocusableElements(menuRef.current);
-      !!nodes && nodes[0].focus();
+    if (isOpen && refs.floating.current) {
+      const nodes = getFocusableElements(refs.floating.current);
+      if (nodes && nodes.length > 0) {
+        nodes[0].focus();
+      }
     }
   }, [isOpen]);
 
   const move = (direction: string) => {
-    const node = menuRef.current;
+    const node = refs.floating.current;
 
     if (isSubMenu) {
       // the parent menu can access
@@ -122,69 +157,57 @@ export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
   };
 
   const handlePopOverClick = () => {
-    setIsOpen(!isOpen);
+    const newIsOpen = !isOpen;
+    setIsOpen(newIsOpen);
     if (onPopOverClick) {
       onPopOverClick(isOpen);
     }
   };
 
-  useClickOutside(menuRef, () => setIsOpen(false));
-  useTabOutside(menuRef, () => setIsOpen(false));
+  const buttonProps = {
+    ref: refs.setReference,
+    className: classnames(className, 'ch-popover-toggle'),
+    onClick: handlePopOverClick,
+    'data-menu': isSubMenu ? 'submenu' : null,
+    'aria-label': a11yLabel,
+    'aria-haspopup': true,
+    'aria-expanded': isOpen,
+    'data-testid': 'popover-toggle',
+    ...getReferenceProps(),
+  };
 
   return (
-    <span ref={menuRef} onKeyDown={handleKeyUp} data-testid="popover">
-      <Manager>
-        <Reference>
-          {({ ref }) => {
-            const props = {
-              ref,
-              className: classnames(className, 'ch-popover-toggle'),
-              onClick: handlePopOverClick,
-              'data-menu': isSubMenu ? 'submenu' : null,
-              'aria-label': a11yLabel,
-              'aria-haspopup': true,
-              'aria-expanded': isOpen,
-              'data-testid': 'popover-toggle',
-            };
+    <>
+      {renderButton ? (
+        <StyledPopOverToggle {...buttonProps}>
+          {renderButton(isOpen)}
+        </StyledPopOverToggle>
+      ) : renderButtonWrapper ? (
+        <span ref={refs.setReference}>
+          {renderButtonWrapper(isOpen, { ...buttonProps, ref: undefined })}
+        </span>
+      ) : null}
 
-            if (renderButton) {
-              return (
-                <StyledPopOverToggle {...props}>
-                  {renderButton(isOpen)}
-                </StyledPopOverToggle>
-              );
-            }
-
-            if (renderButtonWrapper) {
-              const { ref, ...rest } = props;
-              return <span ref={ref}>{renderButtonWrapper(isOpen, rest)}</span>;
-            }
-
-            return null;
-          }}
-        </Reference>
-        {isOpen && (
-          <Popper
-            placement={placement}
-            modifiers={[{ name: 'offset', options: { offset: [-8, 0] } }]}
-            {...rest}
+      {isOpen && (
+        <FloatingPortal>
+          <div
+            ref={refs.setFloating}
+            style={floatingStyles}
+            {...getFloatingProps()}
+            onKeyDown={handleKeyUp}
           >
-            {({ ref, style, placement }) => (
-              <StyledPopOverMenu
-                data-placement={placement}
-                onClick={(e: any) => closePopover(e)}
-                ref={ref}
-                style={style}
-                data-testid="menu"
-                className="ch-popover-menu"
-              >
-                {children}
-              </StyledPopOverMenu>
-            )}
-          </Popper>
-        )}
-      </Manager>
-    </span>
+            <StyledPopOverMenu
+              data-placement={placement}
+              onClick={(e: any) => closePopover(e)}
+              data-testid="menu"
+              className="ch-popover-menu"
+            >
+              {children}
+            </StyledPopOverMenu>
+          </div>
+        </FloatingPortal>
+      )}
+    </>
   );
 };
 
