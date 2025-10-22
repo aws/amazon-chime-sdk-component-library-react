@@ -33,7 +33,9 @@ export const ModalButtonGroup: FC<
     });
   };
 
-  const addCloseBehaviorToButtons = (buttons: React.JSX.Element[] | React.JSX.Element) => {
+  const addCloseBehaviorToButtons = (
+    buttons: React.JSX.Element[] | React.JSX.Element
+  ) => {
     if (
       !context.dismissible ||
       !buttons ||

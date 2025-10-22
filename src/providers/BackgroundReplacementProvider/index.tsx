@@ -38,9 +38,7 @@ interface BackgroundReplacementProviderState {
   ) => Promise<DefaultVideoTransformDevice>;
   isBackgroundReplacementSupported: boolean | undefined;
   backgroundReplacementProcessor: BackgroundReplacementProcessor | undefined;
-  changeBackgroundReplacementImage: (
-    imageBlob: Blob
-  ) => Promise<void>;
+  changeBackgroundReplacementImage: (imageBlob: Blob) => Promise<void>;
 }
 
 const BackgroundReplacementProviderContext = createContext<
@@ -112,9 +110,7 @@ export const BackgroundReplacementProvider: FC<
         spec
       )}, options: { filterCPUUtilization: ${
         options?.filterCPUUtilization
-      }, reportingPeriodMillis: ${
-        options?.reportingPeriodMillis
-      }}`
+      }, reportingPeriodMillis: ${options?.reportingPeriodMillis}}`
     );
 
     try {
@@ -181,14 +177,20 @@ export const BackgroundReplacementProvider: FC<
     imageBlob: Blob
   ): Promise<void> => {
     if (!backgroundReplacementProcessor) {
-      logger.warn(`BackgroundReplacementProcessor has not been initialized yet.`);
+      logger.warn(
+        `BackgroundReplacementProcessor has not been initialized yet.`
+      );
       return;
     }
     try {
       await backgroundReplacementProcessor.setImageBlob(imageBlob);
-      logger.info(`Background replacement image changed to new imageBlob: ${imageBlob}`);
+      logger.info(
+        `Background replacement image changed to new imageBlob: ${imageBlob}`
+      );
     } catch (error) {
-      logger.error(`Failed to change the background replacement image: ${error}`)
+      logger.error(
+        `Failed to change the background replacement image: ${error}`
+      );
       throw new Error(
         `Failed to change the background replacement image: ${error}`
       );

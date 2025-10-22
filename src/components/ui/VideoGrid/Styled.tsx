@@ -454,14 +454,16 @@ export const StyledGrid = styled.div.withConfig(
 
     for (let i = 0; i <= index; i++) {
       const currentRatio = sortedRatios[i];
-      const baseStyles =
-        (ratioStyles as any)[`${size}.${currentRatio}${featured ? '.featured' : ''}`];
+      const baseStyles = (ratioStyles as any)[
+        `${size}.${currentRatio}${featured ? '.featured' : ''}`
+      ];
       styles += baseStyles || '';
     }
 
     const mobileStyles =
-      (responsiveStyles as any)[`${size}.${ratio}${featured ? '.featured' : ''}`] ||
-      (responsiveStyles as any)[`${size}${featured ? '.featured' : ''}`];
+      (responsiveStyles as any)[
+        `${size}.${ratio}${featured ? '.featured' : ''}`
+      ] || (responsiveStyles as any)[`${size}${featured ? '.featured' : ''}`];
 
     if (mobileStyles) {
       styles += mobileStyles;
