@@ -3,8 +3,7 @@ module.exports = {
   setupFilesAfterEnv: ['./tst/setupTests.js'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'jsx', 'node'],
   transform: {
-    '\\.tsx?$': 'ts-jest',
-    '^.+\\.mdx$': '@storybook/addon-docs/jest-transform-mdx'
+    '\\.tsx?$': 'ts-jest'
   },
   globals: {
     'ts-jest': {
