@@ -3,11 +3,9 @@
 
 import classnames from 'classnames';
 import React, {
-  createRef,
   FC,
   HTMLAttributes,
   ReactNode,
-  useEffect,
   useState,
 } from 'react';
 import {
@@ -25,8 +23,6 @@ import {
 } from '@floating-ui/react';
 
 import { KEY_CODES } from '../../../constants';
-import useClickOutside from '../../../hooks/useClickOutside';
-import useTabOutside from '../../../hooks/useTabOutside';
 import { BaseProps } from '../Base';
 import { StyledPopOverMenu, StyledPopOverToggle } from './Styled';
 
@@ -65,6 +61,8 @@ const getFocusableElements = (node: HTMLElement): NodeListOf<HTMLElement> => {
   return node.querySelectorAll('button, [href]');
 };
 
+// May migrate to useListNavigation for key-based navigation
+// https://floating-ui.com/docs/useListNavigation
 export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
   renderButton,
   renderButtonWrapper,
@@ -101,15 +99,6 @@ export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
     role,
   ]);
 
-  useEffect(() => {
-    if (isOpen && refs.floating.current) {
-      const nodes = getFocusableElements(refs.floating.current);
-      if (nodes && nodes.length > 0) {
-        nodes[0].focus();
-      }
-    }
-  }, [isOpen]);
-
   const move = (direction: string) => {
     const node = refs.floating.current;
 
@@ -125,15 +114,18 @@ export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
       for (let i = 0; i < nodes.length; i++) {
         if (nodes[i] === currentElement) {
           if (direction === 'down' && i !== nodes.length - 1) {
-            return nodes[i + 1].focus();
+            nodes[i + 1].focus();
+            return;
           }
 
           if (direction === 'up' && i > 0) {
-            return nodes[i - 1].focus();
+            nodes[i - 1].focus();
+            return;
           }
           break;
         }
       }
+      nodes[0].focus();
     }
   };
 

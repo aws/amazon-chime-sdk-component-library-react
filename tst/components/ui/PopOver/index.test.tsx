@@ -233,8 +233,10 @@ describe('PopOver', () => {
     const toggle = getByTestId('popover-toggle');
     click(toggle);
     const option2 = getByTestId('option 2');
+
+    const menu = getByTestId('menu');
     act(() => {
-      fireEvent.keyDown(document.activeElement || document.body, {
+      fireEvent.keyDown(menu, {
         key: 'ArrowDown',
         keyCode: 40,
         which: 40,
