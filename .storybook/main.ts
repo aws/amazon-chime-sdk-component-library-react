@@ -11,6 +11,26 @@ const config: StorybookConfig = {
         prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
     },
   },
+  webpackFinal: async (config) => {
+    config.module = config.module || {};
+    config.module.rules = config.module.rules || [];
+    
+    // Ensure TypeScript files are handled correctly
+    config.module.rules.push({
+      test: /\.tsx?$/,
+      use: [
+        {
+          loader: require.resolve('ts-loader'),
+          options: {
+            transpileOnly: true,
+          },
+        },
+      ],
+      exclude: /node_modules/,
+    });
+    
+    return config;
+  },
   stories: ['../src/**/*.@(stories.tsx|mdx)'],
   addons: [
     {
@@ -19,7 +39,6 @@ const config: StorybookConfig = {
         actions: false,
       },
     },
-    '@storybook/addon-storysource',
     '@storybook/addon-themes',
     '@storybook/addon-a11y',
   ],
