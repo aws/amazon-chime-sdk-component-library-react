@@ -113,19 +113,29 @@ export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
 
       for (let i = 0; i < nodes.length; i++) {
         if (nodes[i] === currentElement) {
-          if (direction === 'down' && i !== nodes.length - 1) {
+          if (direction === 'down') {
+            if (i === nodes.length - 1) {
+              return; // At last element, don't wrap around
+            }
             nodes[i + 1].focus();
             return;
           }
 
-          if (direction === 'up' && i > 0) {
+          if (direction === 'up') {
+            if (i === 0) {
+              return; // At first element, don't wrap around
+            }
             nodes[i - 1].focus();
             return;
           }
-          break;
+          return;
         }
       }
-      nodes[0].focus();
+      
+      // If current element not found in nodes, focus first node
+      if (nodes.length > 0) {
+        nodes[0].focus();
+      }
     }
   };
 
@@ -149,8 +159,7 @@ export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
   };
 
   const handlePopOverClick = () => {
-    const newIsOpen = !isOpen;
-    setIsOpen(newIsOpen);
+    setIsOpen(!isOpen);
     if (onPopOverClick) {
       onPopOverClick(isOpen);
     }
