@@ -51,17 +51,6 @@ If you are adding this library to your existing application, add `amazon-chime-s
 npm install --save amazon-chime-sdk-component-library-react amazon-chime-sdk-js styled-components styled-system
 ```
 
-## React Version Compatibility
-
-This library supports React 17, 18, and 19. The minimum required versions are:
-- React >= 17.0.1
-- React DOM >= 17.0.1
-
-For React 19 support, ensure you're using:
-- React ^19.0.0
-- React DOM ^19.0.0
-- TypeScript ^5.0.0 (recommended for full React 19 JSX support and modern type definitions)
-
 Otherwise clone the repo and install the dependencies.
 
 ## Contributing to the component library
