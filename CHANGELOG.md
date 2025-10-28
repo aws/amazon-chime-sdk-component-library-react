@@ -16,6 +16,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Changed
+- Add support for React 19.
+- Migrate storybook to v8.
+- Migrate Jest to v29.
+- Rewrite PopOver component using floating-ui
 
 ### Fixed
 
