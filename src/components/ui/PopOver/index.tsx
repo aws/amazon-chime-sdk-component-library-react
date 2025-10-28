@@ -168,13 +168,13 @@ export const PopOver: FC<React.PropsWithChildren<PopOverProps>> = ({
   const buttonProps = {
     ref: refs.setReference,
     className: classnames(className, 'ch-popover-toggle'),
-    onClick: handlePopOverClick,
     'data-menu': isSubMenu ? 'submenu' : null,
     'aria-label': a11yLabel,
     'aria-haspopup': true,
     'aria-expanded': isOpen,
     'data-testid': 'popover-toggle',
     ...getReferenceProps(),
+    onClick: handlePopOverClick,
   };
 
   return (

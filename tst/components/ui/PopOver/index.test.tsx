@@ -270,8 +270,9 @@ describe('PopOver', () => {
     const toggle = getByTestId('popover-toggle');
     click(toggle);
     const option1 = getByTestId('option 1');
+    const menu = getByTestId('menu');
     act(() => {
-      fireEvent.keyDown(document.activeElement || document.body, {
+      fireEvent.keyDown(menu, {
         key: 'ArrowDown',
         keyCode: 40,
         which: 40,
@@ -314,4 +315,132 @@ describe('PopOver', () => {
     });
     await waitFor(() => expect(menu).not.toBeInTheDocument());
   });
+
+  describe('handlePopOverClick', () => {
+    it('should call onPopOverClick with false when popover is opened (isOpen was false)', async () => {
+      const onPopOverClick = jest.fn();
+      const component = (
+        <PopOver
+          renderButton={popOverButton}
+          children={testChild}
+          a11yLabel="test-label"
+          onPopOverClick={onPopOverClick}
+        />
+      );
+      const { getByTestId } = renderWithTheme(lightTheme, component);
+      const toggle = getByTestId('popover-toggle');
+      
+      click(toggle);
+      
+      await waitFor(() => {
+        expect(onPopOverClick).toHaveBeenCalledWith(false);
+        expect(onPopOverClick).toHaveBeenCalledTimes(1);
+      });
+    });
+
+    it('should call onPopOverClick with true when popover is closed (isOpen was true)', async () => {
+      const onPopOverClick = jest.fn();
+      const component = (
+        <PopOver
+          renderButton={popOverButton}
+          children={testChild}
+          a11yLabel="test-label"
+          onPopOverClick={onPopOverClick}
+        />
+      );
+      const { getByTestId } = renderWithTheme(lightTheme, component);
+      const toggle = getByTestId('popover-toggle');
+      
+      // First click to open
+      click(toggle);
+      // Second click to close
+      click(toggle);
+      
+      await waitFor(() => {
+        expect(onPopOverClick).toHaveBeenNthCalledWith(1, false); // First call when opening
+        expect(onPopOverClick).toHaveBeenNthCalledWith(2, true);  // Second call when closing
+        expect(onPopOverClick).toHaveBeenCalledTimes(2);
+      });
+    });
+
+    it('should toggle isOpen state without calling onPopOverClick when callback is not provided', () => {
+      const component = (
+        <PopOver
+          renderButton={popOverButton}
+          children={testChild}
+          a11yLabel="test-label"
+        />
+      );
+      const { getByTestId, queryByTestId } = renderWithTheme(lightTheme, component);
+      const toggle = getByTestId('popover-toggle');
+      
+      // Initially closed
+      expect(queryByTestId('menu')).not.toBeInTheDocument();
+      
+      // Click to open
+      click(toggle);
+      expect(queryByTestId('menu')).toBeInTheDocument();
+      
+      // Click to close
+      click(toggle);
+      expect(queryByTestId('menu')).not.toBeInTheDocument();
+    });
+
+    it('should properly toggle state multiple times and call onPopOverClick with correct values', async () => {
+      const onPopOverClick = jest.fn();
+      const component = (
+        <PopOver
+          renderButton={popOverButton}
+          children={testChild}
+          a11yLabel="test-label"
+          onPopOverClick={onPopOverClick}
+        />
+      );
+      const { getByTestId, queryByTestId } = renderWithTheme(lightTheme, component);
+      const toggle = getByTestId('popover-toggle');
+      
+      // Initial state: closed
+      expect(queryByTestId('menu')).not.toBeInTheDocument();
+      
+      // First click: open
+      click(toggle);
+      await waitFor(() => {
+        expect(queryByTestId('menu')).toBeInTheDocument();
+        expect(onPopOverClick).toHaveBeenNthCalledWith(1, false);
+      });
+      
+      // Second click: close
+      click(toggle);
+      await waitFor(() => {
+        expect(queryByTestId('menu')).not.toBeInTheDocument();
+        expect(onPopOverClick).toHaveBeenNthCalledWith(2, true);
+      });
+      
+      // Third click: open again
+      click(toggle);
+      await waitFor(() => {
+        expect(queryByTestId('menu')).toBeInTheDocument();
+        expect(onPopOverClick).toHaveBeenNthCalledWith(3, false);
+        expect(onPopOverClick).toHaveBeenCalledTimes(3);
+      });
+    });
+
+    it('should not throw error when onPopOverClick is undefined', () => {
+      const component = (
+        <PopOver
+          renderButton={popOverButton}
+          children={testChild}
+          a11yLabel="test-label"
+          onPopOverClick={undefined}
+        />
+      );
+      const { getByTestId } = renderWithTheme(lightTheme, component);
+      const toggle = getByTestId('popover-toggle');
+      
+      expect(() => {
+        click(toggle);
+      }).not.toThrow();
+    });
+  });
+
 });
