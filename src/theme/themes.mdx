@@ -1,20 +1,19 @@
 import { Meta, Canvas } from '@storybook/blocks';
 import { ThemeProvider } from 'styled-components';
+import * as ThemeStories from './themes.stories';
 
 import { lightTheme, darkTheme, GlobalStyles } from './';
-import {
-  Button,
-  Meeting,
-  PrimaryButton,
-  Roster,
-  RosterGroup,
-  RosterHeader,
-  RosterCell,
-  SecondaryButton,
-  Flex,
-} from '../';
+import { Button } from '../components/ui/Button';
+import PrimaryButton from '../components/ui/Button/PrimaryButton';
+import SecondaryButton from '../components/ui/Button/SecondaryButton';
+import Meeting from '../components/ui/icons/Meeting';
+import { Roster } from '../components/ui/Roster';
+import RosterGroup from '../components/ui/Roster/RosterGroup';
+import RosterHeader from '../components/ui/Roster/RosterHeader';
+import RosterCell from '../components/ui/Roster/RosterCell';
+import Flex from '../components/ui/Flex';
 
-<Meta title="Themes" />
+<Meta of={ThemeStories} />
 
 # Themes
 
