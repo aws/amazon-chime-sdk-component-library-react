@@ -17,9 +17,9 @@ export const BasicInfiniteList = () => {
   const numberOfBatches = 5;
   const batchSize = 50;
 
-  const createBatch = (batchNum) => {
+  const createBatch = (batchNum: number) => {
     if (batchNum <= numberOfBatches) {
-      const batch: JSX.Element[] = [];
+      const batch: React.JSX.Element[] = [];
       for (let i = 1; i <= batchSize; i++) {
         batch.push(
           <div

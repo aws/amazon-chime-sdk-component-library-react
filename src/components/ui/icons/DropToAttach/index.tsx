@@ -5,7 +5,9 @@ import React from 'react';
 
 import Svg, { SvgProps } from '../Svg';
 
-export const DropToAttach: React.FC<React.PropsWithChildren<SvgProps>> = (props) => (
+export const DropToAttach: React.FC<React.PropsWithChildren<SvgProps>> = (
+  props
+) => (
   <Svg {...props} viewBox="0 0 130 130">
     <path
       fill="#FFF"

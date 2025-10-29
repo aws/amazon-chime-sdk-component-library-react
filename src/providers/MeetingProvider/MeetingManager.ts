@@ -148,7 +148,7 @@ export class MeetingManager implements AudioVideoObserver {
       eventController,
       enableWebAudio,
       activeSpeakerPolicy,
-      skipDeviceSelection
+      skipDeviceSelection,
     } = this.parseJoinParams(options);
     this.meetingSessionConfiguration = meetingSessionConfiguration;
     this.meetingId = this.meetingSessionConfiguration.meetingId;
@@ -177,7 +177,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.logger.info('[MeetingManager.join] listing and selecting devices');
       await this.listAndSelectDevices(deviceLabels);
     }
-    
+
     this.publishAudioVideo();
     this.setupActiveSpeakerDetection(activeSpeakerPolicy);
     this.meetingStatus = MeetingStatus.Loading;
@@ -201,7 +201,7 @@ export class MeetingManager implements AudioVideoObserver {
       eventController,
       enableWebAudio,
       activeSpeakerPolicy,
-      skipDeviceSelection
+      skipDeviceSelection,
     };
   }
 

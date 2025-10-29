@@ -443,7 +443,7 @@ export const StyledGrid = styled.div.withConfig(
   background-color: ${(props) => props.theme.videoGrid.bgd};
 
   ${({ size, featured }) =>
-    ratioStyles[`${size}${featured ? '.featured' : ''}`] || ''}
+    (ratioStyles as any)[`${size}${featured ? '.featured' : ''}`] || ''}
   ${({ size, featured, ratio }) => {
     if (!ratio) {
       return;
@@ -454,14 +454,16 @@ export const StyledGrid = styled.div.withConfig(
 
     for (let i = 0; i <= index; i++) {
       const currentRatio = sortedRatios[i];
-      const baseStyles =
-        ratioStyles[`${size}.${currentRatio}${featured ? '.featured' : ''}`];
+      const baseStyles = (ratioStyles as any)[
+        `${size}.${currentRatio}${featured ? '.featured' : ''}`
+      ];
       styles += baseStyles || '';
     }
 
     const mobileStyles =
-      responsiveStyles[`${size}.${ratio}${featured ? '.featured' : ''}`] ||
-      responsiveStyles[`${size}${featured ? '.featured' : ''}`];
+      (responsiveStyles as any)[
+        `${size}.${ratio}${featured ? '.featured' : ''}`
+      ] || (responsiveStyles as any)[`${size}${featured ? '.featured' : ''}`];
 
     if (mobileStyles) {
       styles += mobileStyles;
