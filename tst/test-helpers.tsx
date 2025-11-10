@@ -2,7 +2,7 @@ import { render } from '@testing-library/react';
 import React from 'react';
 import { ThemeProvider } from 'styled-components';
 
-export const renderWithTheme = (theme: any, children: JSX.Element) =>
+export const renderWithTheme = (theme: any, children: React.ReactElement) =>
   render(<ThemeProvider theme={theme}>{children}</ThemeProvider>);
 
 export function setupIntersectionObserverMock({

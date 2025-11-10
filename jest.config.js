@@ -4,13 +4,9 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'json', 'jsx', 'node'],
   transform: {
     '\\.tsx?$': 'ts-jest',
-    '^.+\\.mdx$': '@storybook/addon-docs/jest-transform-mdx'
+    '^.+\\.m?js$': 'ts-jest',
   },
-  globals: {
-    'ts-jest': {
-      tsconfig: 'tsconfig.json'
-    }
-  },
+  preset: 'ts-jest',
   testPathIgnorePatterns: ['node_modules', '/tst/snapshots/',],
   testEnvironment: 'jsdom',
   collectCoverage: true,
@@ -36,4 +32,7 @@ module.exports = {
    * https://jestjs.io/docs/configuration#coverageprovider-string
    */
   coverageProvider: 'v8',
+  transformIgnorePatterns: [
+    'node_modules/(?!uuid)',
+  ],
 };

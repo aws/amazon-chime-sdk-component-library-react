@@ -4,7 +4,7 @@
 import { RefObject, useEffect } from 'react';
 
 export function useClickOutside(
-  ref: RefObject<HTMLElement>,
+  ref: RefObject<HTMLElement | null>,
   onClickOutside?: (e: MouseEvent | TouchEvent) => void
 ) {
   const isOutside = (e: MouseEvent | TouchEvent) => {
