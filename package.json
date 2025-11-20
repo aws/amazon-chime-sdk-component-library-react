@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/aws/amazon-chime-sdk-component-library"
+    "url": "https://github.com/aws/amazon-chime-sdk-component-library-react"
   },
   "types": "lib/index.d.ts",
   "scripts": {
