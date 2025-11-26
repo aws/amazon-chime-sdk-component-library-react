@@ -14,13 +14,13 @@ const config: StorybookConfig = {
   webpackFinal: async (config) => {
     config.module = config.module || {};
     config.module.rules = config.module.rules || [];
-    
+
     // Ensure TypeScript files are handled correctly
     config.module.rules.push({
       test: /\.tsx?$/,
       use: [
         {
-          loader: require.resolve('ts-loader'),
+          loader: 'ts-loader',
           options: {
             transpileOnly: true,
           },
@@ -28,7 +28,7 @@ const config: StorybookConfig = {
       ],
       exclude: /node_modules/,
     });
-    
+
     return config;
   },
   stories: ['../src/**/*.@(stories.tsx|mdx)'],
