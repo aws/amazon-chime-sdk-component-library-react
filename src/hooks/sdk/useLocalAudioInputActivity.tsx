@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 
 import { useAudioVideo } from '../../providers/AudioVideoProvider';
 import { useAudioInputs } from '../../providers/DevicesProvider';
+import { RemovableAnalyserNode } from 'amazon-chime-sdk-js';
 
 export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
   const audioVideo = useAudioVideo();
@@ -15,7 +16,7 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
       return;
     }
 
-    let analyserNode: AnalyserNode | null;
+    let analyserNode: RemovableAnalyserNode | null;
     let restart = false;
     let data: Uint8Array;
     let frameIndex: number;
@@ -80,6 +81,7 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
 
     return () => {
       isMounted = false;
+      analyserNode?.removeOriginalInputs();
     };
   }, [audioVideo, selectedDevice, cb]);
 };
