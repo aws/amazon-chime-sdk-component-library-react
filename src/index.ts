@@ -117,6 +117,7 @@ export { useApplyVideoObjectFit } from './hooks/useApplyVideoObjectFit';
 export { useElementAspectRatio } from './hooks/useElementAspectRatio';
 
 export { useMeetingManager } from './providers/MeetingProvider';
+export { useDeviceManager } from './providers/DeviceProvider';
 export { useVoiceFocus } from './providers/VoiceFocusProvider';
 export { useBackgroundBlur } from './providers/BackgroundBlurProvider';
 export { useBackgroundReplacement } from './providers/BackgroundReplacementProvider';
@@ -151,6 +152,7 @@ export { useMediaStreamMetrics } from './hooks/sdk/useMediaStreamMetrics';
 // Providers
 export { NotificationProvider } from './providers/NotificationProvider';
 export { MeetingProvider } from './providers/MeetingProvider';
+export { DeviceProvider } from './providers/DeviceProvider';
 export { LocalAudioOutputProvider } from './providers/LocalAudioOutputProvider';
 export { LocalVideoProvider } from './providers/LocalVideoProvider';
 export { ContentShareProvider } from './providers/ContentShareProvider';
@@ -195,9 +197,11 @@ export { Severity, ActionType } from './providers/NotificationProvider';
 
 // Class
 export { MeetingManager } from './providers/MeetingProvider/MeetingManager';
+export { DeviceManager } from './providers/DeviceProvider/DeviceManager';
 
 // Interface
 export { MeetingManagerJoinOptions } from './providers/MeetingProvider/types';
+export { OnDeviceReplacement } from './providers/DeviceProvider/DeviceManager';
 export { NotificationType, Action } from './providers/NotificationProvider';
 
 // Utilities

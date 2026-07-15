@@ -110,6 +110,18 @@ export class DeviceManager {
   }
 
   /**
+   * Update the `onDeviceReplacement` callback after construction. `DeviceProvider` calls this from an
+   * effect keyed on its `onDeviceReplacement` prop, so a builder that changes the prop at runtime is
+   * honored instead of the stale value captured when the manager was first created (the manager is
+   * created once via `useState`). Kept as a setter (not a constructor-only field) for exactly this reason.
+   */
+  setOnDeviceReplacement = (
+    onDeviceReplacement?: OnDeviceReplacement
+  ): void => {
+    this.onDeviceReplacement = onDeviceReplacement;
+  };
+
+  /**
    * Returns the owned `DefaultDeviceController` so the session layer can build a
    * `DefaultMeetingSession` from it. This is the **only** intended use of the raw controller —
    * device operations should go through this class's methods (see facade-insulation note above).
