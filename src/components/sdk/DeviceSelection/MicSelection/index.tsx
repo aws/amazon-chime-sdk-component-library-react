@@ -3,9 +3,9 @@
 
 import React from 'react';
 
+import { useDeviceManager } from '../../../../providers/DeviceProvider';
 import { useAudioInputs } from '../../../../providers/DevicesProvider';
 import { useLogger } from '../../../../providers/LoggerProvider';
-import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { BaseSdkProps } from '../../Base';
 import DeviceInput from '../DeviceInput';
 
@@ -23,11 +23,11 @@ export const MicSelection: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const logger = useLogger();
   const { devices, selectedDevice } = useAudioInputs();
-  const meetingManager = useMeetingManager();
+  const deviceManager = useDeviceManager();
 
   const handleSelect = async (deviceId: string): Promise<void> => {
     try {
-      await meetingManager.startAudioInputDevice(deviceId);
+      await deviceManager.startAudioInputDevice(deviceId);
     } catch (error) {
       logger.error('MicSelection failed to select mic');
     }

@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
 import { BackgroundBlurOptions, isVideoTransformDevice, LogLevel } from 'amazon-chime-sdk-js';
 import {
+  DeviceProvider,
   MeetingProvider,
   useBackgroundBlur,
   BackgroundBlurProvider,
@@ -13,7 +14,7 @@ import {
   FormField,
   Select,
   VideoInputBackgroundBlurControl,
-  useMeetingManager,
+  useDeviceManager,
 } from 'amazon-chime-sdk-component-library-react';
 import MeetingInfo from '../components/MeetingInfo';
 import MeetingLeaveControl from '../components/MeetingLeaveControl';
@@ -36,10 +37,12 @@ export const VideoFilterTestApp: React.FC = () => {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '70%', margin: 'auto' }}>
       <BackgroundBlurProvider options={backgroundBlurOptions}>
-        <MeetingProvider {...{ logLevel: LogLevel.INFO }}>
-          <h3 data-testid='app-name'>Video Filter Test</h3>
-          <Meeting onBlurStrengthChanged={(newBlurStrength) => setBlurStrength(newBlurStrength)} />
-        </MeetingProvider>
+        <DeviceProvider>
+          <MeetingProvider {...{ logLevel: LogLevel.INFO }}>
+            <h3 data-testid='app-name'>Video Filter Test</h3>
+            <Meeting onBlurStrengthChanged={(newBlurStrength) => setBlurStrength(newBlurStrength)} />
+          </MeetingProvider>
+        </DeviceProvider>
       </BackgroundBlurProvider>
     </div>
   )
@@ -51,7 +54,7 @@ interface Props {
 
 const Meeting: React.FC<Props> = ({ onBlurStrengthChanged }) => {
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } = useBackgroundBlur();
-  const meetingManager = useMeetingManager();
+  const deviceManager = useDeviceManager();
   const { selectedDevice } = useVideoInputs();
   const { toggleVideo } = useLocalVideo();
   const meetingStatus = useMeetingStatus();
@@ -77,7 +80,7 @@ const Meeting: React.FC<Props> = ({ onBlurStrengthChanged }) => {
           current = intrinsicDevice;
         }
         current = await createBackgroundBlurDevice(current);
-        await meetingManager.startVideoInputDevice(current);
+        await deviceManager.startVideoInputDevice(current);
         toggleVideo();
       }
       catch (error) {
@@ -88,8 +91,8 @@ const Meeting: React.FC<Props> = ({ onBlurStrengthChanged }) => {
   }, [
     isBackgroundBlurSupported,
     meetingStatus,
-    meetingManager,
-    meetingManager.startVideoInputDevice,
+    deviceManager,
+    deviceManager.startVideoInputDevice,
   ]);
 
   const updateBlurStrength = (e: ChangeEvent<HTMLSelectElement>) => {

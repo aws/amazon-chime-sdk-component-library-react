@@ -1,13 +1,9 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-} from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
+import { DevicesProvider } from '../DevicesProvider';
 import { useLogger } from '../LoggerProvider';
 import { DeviceManager, OnDeviceReplacement } from './DeviceManager';
 
@@ -36,12 +32,9 @@ const DeviceContext = createContext<DeviceManager | null>(null);
  * `MeetingProvider`, it lets an application enumerate, select, and preview devices — and run a
  * mic-level meter — before a meeting exists, and reuse that device state across meetings.
  *
- * Scope note (implementation order): this provider intentionally does **not** render `DevicesProvider`
- * yet. `DevicesProvider`'s children currently read `MeetingManager`, so hosting them here before they
- * are re-pointed to `useDeviceManager()` would either throw with no `MeetingProvider` in scope or
- * double-mount alongside `MeetingProvider`'s own `DevicesProvider`. Composition moves here once the
- * consumers are re-pointed and `MeetingProvider` stops rendering `DevicesProvider`. Until then,
- * mounting `DeviceProvider` is purely additive and changes no existing behavior.
+ * `DeviceProvider` renders `DevicesProvider` so the device hooks (`useAudioInputs`, etc.) resolve
+ * against the `DeviceManager` with no meeting in scope. `MeetingProvider` no longer renders
+ * `DevicesProvider` — it reads the same `DeviceManager` via `useDeviceManager()`.
  */
 export const DeviceProvider: React.FC<React.PropsWithChildren<Props>> = ({
   enableWebAudio,
@@ -69,7 +62,7 @@ export const DeviceProvider: React.FC<React.PropsWithChildren<Props>> = ({
 
   return (
     <DeviceContext.Provider value={deviceManager}>
-      {children}
+      <DevicesProvider>{children}</DevicesProvider>
     </DeviceContext.Provider>
   );
 };

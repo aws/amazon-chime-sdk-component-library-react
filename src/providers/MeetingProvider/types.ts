@@ -1,16 +1,31 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { ActiveSpeakerPolicy, EventController } from 'amazon-chime-sdk-js';
+import {
+  ActiveSpeakerPolicy,
+  DefaultDeviceController,
+  EventController,
+} from 'amazon-chime-sdk-js';
 
-import { DeviceLabels, DeviceLabelTrigger } from '../../types';
+/**
+ * Construction config for `MeetingManager`. It borrows a `DefaultDeviceController` from the device
+ * layer (`DeviceManager.getController()`): `join()` builds its `DefaultMeetingSession` from this
+ * controller but the session layer never creates or destroys it. Passed as an object (not a
+ * positional arg) so the config can grow without widening the constructor signature.
+ */
+export interface MeetingManagerConfig {
+  deviceController: DefaultDeviceController;
+}
 
+/**
+ * Options for `MeetingManager.join()`. Session-only concerns: device setup
+ * (`deviceLabels` / `skipDeviceSelection`) and Web Audio (`enableWebAudio`) moved to the device
+ * layer — do device setup via `DeviceManager.setupDevices()` before `join()`, and set
+ * `enableWebAudio` on `DeviceProvider`.
+ */
 export interface MeetingManagerJoinOptions {
-  deviceLabels?: DeviceLabels | DeviceLabelTrigger;
   eventController?: EventController;
-  enableWebAudio?: boolean;
   activeSpeakerPolicy?: ActiveSpeakerPolicy;
-  skipDeviceSelection?: boolean;
 }
 
 export interface AttendeeResponse {
@@ -19,18 +34,6 @@ export interface AttendeeResponse {
 }
 
 export type ParsedJoinParams = {
-  deviceLabels: DeviceLabels | DeviceLabelTrigger;
   eventController: EventController | undefined;
-  enableWebAudio: boolean;
   activeSpeakerPolicy: ActiveSpeakerPolicy;
-  skipDeviceSelection: boolean;
-};
-
-export type FullDeviceInfoType = {
-  selectedAudioOutputDevice: string | null;
-  selectedAudioInputDevice: string | null;
-  selectedVideoInputDevice: string | null;
-  audioInputDevices: MediaDeviceInfo[] | null;
-  audioOutputDevices: MediaDeviceInfo[] | null;
-  videoInputDevices: MediaDeviceInfo[] | null;
 };

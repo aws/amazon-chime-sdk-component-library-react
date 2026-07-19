@@ -6,10 +6,10 @@ import isEqual from 'lodash.isequal';
 import React, { ReactNode, useEffect, useState } from 'react';
 
 import { useBackgroundBlur } from '../../../providers/BackgroundBlurProvider';
+import { useDeviceManager } from '../../../providers/DeviceProvider';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { DeviceType } from '../../../types';
 import { isOptionActive } from '../../../utils/device-utils';
 import useMemoCompare from '../../../utils/use-memo-compare';
@@ -34,7 +34,7 @@ export const VideoInputBackgroundBlurControl: React.FC<
   ...rest
 }) => {
   const logger = useLogger();
-  const meetingManager = useMeetingManager();
+  const deviceManager = useDeviceManager();
   const { devices, selectedDevice } = useVideoInputs();
   const { isVideoEnabled, toggleVideo } = useLocalVideo();
   const { isBackgroundBlurSupported, createBackgroundBlurDevice } =
@@ -78,7 +78,7 @@ export const VideoInputBackgroundBlurControl: React.FC<
       }
       // If we're currently using a video transform device, and a non-video transform device is selected
       // then the video transform device will be stopped automatically
-      await meetingManager.startVideoInputDevice(current);
+      await deviceManager.startVideoInputDevice(current);
     } catch (error) {
       logger.error('Failed to toggle Background Blur');
     } finally {
@@ -103,9 +103,9 @@ export const VideoInputBackgroundBlurControl: React.FC<
         }
 
         if (isVideoEnabled) {
-          await meetingManager.startVideoInputDevice(newDevice);
+          await deviceManager.startVideoInputDevice(newDevice);
         } else {
-          meetingManager.selectVideoInputDevice(newDevice);
+          deviceManager.selectVideoInputDevice(newDevice);
         }
       } catch (error) {
         logger.error('Failed to select video input device');
@@ -150,8 +150,8 @@ export const VideoInputBackgroundBlurControl: React.FC<
     getDropdownWithVideoTransformOptions();
   }, [
     createBackgroundBlurDevice,
-    meetingManager,
-    meetingManager.startVideoInputDevice,
+    deviceManager,
+    deviceManager.startVideoInputDevice,
     videoDevices,
     isLoading,
     isVideoEnabled,

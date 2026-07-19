@@ -4,6 +4,7 @@
 import React from 'react';
 import {
   ConsoleLogger,
+  DefaultDeviceController,
   DefaultEventController,
   EventAttributes,
   EventName,
@@ -20,6 +21,7 @@ import '@testing-library/jest-dom';
 
 import { act, renderHook } from '@testing-library/react';
 
+import { DeviceProvider } from '../../../src/providers/DeviceProvider';
 import {
   MeetingProvider,
   useMeetingManager,
@@ -58,8 +60,15 @@ describe('Meeting Provider', () => {
     let meetingManagerJoinOptions: MeetingManagerJoinOptions = {
       eventController: eventController,
     };
+    // MeetingManager now borrows a device controller (constructed by the device layer). This test
+    // runs a real join(), so provide a real DefaultDeviceController for it to build the session from.
     let meetingManager = new MeetingManager(
-      new ConsoleLogger('MeetingManager')
+      new ConsoleLogger('MeetingManager'),
+      {
+        deviceController: new DefaultDeviceController(
+          new ConsoleLogger('MeetingManager')
+        ),
+      }
     );
     await meetingManager.join(
       new MeetingSessionConfiguration(
@@ -111,10 +120,15 @@ describe('Meeting Provider', () => {
     // @ts-ignore
     const meetingProviderParams: MeetingManager = jest.fn();
 
-    // Render and unmount the provider.
+    // Render and unmount the provider. MeetingProvider now reads useDeviceManager(), so it must be
+    // mounted within a DeviceProvider (which owns the device layer it borrows the controller from).
     const { unmount } = renderHook(() => useMeetingManager(), {
       wrapper: ({ children }) => (
-        <MeetingProvider {...meetingProviderParams}>{children}</MeetingProvider>
+        <DeviceProvider>
+          <MeetingProvider {...meetingProviderParams}>
+            {children}
+          </MeetingProvider>
+        </DeviceProvider>
       ),
     });
 

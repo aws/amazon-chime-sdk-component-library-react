@@ -5,9 +5,9 @@ import { isVideoTransformDevice, VideoInputDevice } from 'amazon-chime-sdk-js';
 import React, { useState } from 'react';
 
 import { useBackgroundBlur } from '../../../../providers/BackgroundBlurProvider';
+import { useDeviceManager } from '../../../../providers/DeviceProvider';
 import { useVideoInputs } from '../../../../providers/DevicesProvider';
 import { useLogger } from '../../../../providers/LoggerProvider';
-import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { Checkbox } from '../../../ui/Checkbox';
 import { FormField } from '../../../ui/FormField';
 import { BaseSdkProps } from '../../Base';
@@ -25,7 +25,7 @@ export const BackgroundBlurCheckbox: React.FC<
     useBackgroundBlur();
   const [isLoading, setIsLoading] = useState(false);
   const { selectedDevice } = useVideoInputs();
-  const meetingManager = useMeetingManager();
+  const deviceManager = useDeviceManager();
 
   const toggleBackgroundBlur = async (): Promise<void> => {
     if (isLoading || !selectedDevice) {
@@ -55,7 +55,7 @@ export const BackgroundBlurCheckbox: React.FC<
           )}`
         );
       }
-      await meetingManager.startVideoInputDevice(current);
+      await deviceManager.startVideoInputDevice(current);
     } catch (error) {
       logger.error('Failed to toggle Background Blur');
     } finally {

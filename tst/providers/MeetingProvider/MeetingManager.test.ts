@@ -25,7 +25,13 @@ describe('Meeting Manager', () => {
     // @ts-ignore
     MeetingSessionConfiguration = jest.fn().mockImplementation(() => {});
     mockMeetingSessionConfiguration = new MeetingSessionConfiguration();
-    meetingManager = new MeetingManager(new ConsoleLogger('MeetingManager'));
+    // MeetingManager now borrows a DefaultDeviceController from the device layer (it no longer
+    // creates its own). Inject a mock; join() sets `eventController = undefined` on it before
+    // building the session, so a plain writable object suffices.
+    const mockDeviceController = {} as DefaultDeviceController;
+    meetingManager = new MeetingManager(new ConsoleLogger('MeetingManager'), {
+      deviceController: mockDeviceController,
+    });
     // @ts-ignore
     DefaultDeviceController = jest.fn().mockReturnValue({});
     // @ts-ignore

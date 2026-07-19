@@ -437,6 +437,12 @@ export class DeviceManager {
   stopVideoPreviewForVideoInput = (element: HTMLVideoElement): void =>
     this.deviceController.stopVideoPreviewForVideoInput(element);
 
+  // Stop the video capture stream WITHOUT clearing the tracked selection. Unlike
+  // `stopVideoInputDevice()` (which also resets `selectedVideoInputDevice` and publishes), this is
+  // the stream-only teardown used e.g. by `PreviewVideo` on unmount so ending a preview does not
+  // wipe the user's camera choice for other consumers.
+  stopVideoInput = (): Promise<void> => this.deviceController.stopVideoInput();
+
   createAnalyserNodeForAudioInput = (): RemovableAnalyserNode | null =>
     this.deviceController.createAnalyserNodeForAudioInput();
 

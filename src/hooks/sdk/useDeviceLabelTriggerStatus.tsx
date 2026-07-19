@@ -3,21 +3,21 @@
 
 import { useEffect, useState } from 'react';
 
-import { useMeetingManager } from '../../providers/MeetingProvider';
+import { useDeviceManager } from '../../providers/DeviceProvider';
 import { DeviceLabelTriggerStatus } from '../../types';
 
 export function useDeviceLabelTriggerStatus(): DeviceLabelTriggerStatus {
-  const meetingManager = useMeetingManager();
+  const deviceManager = useDeviceManager();
   const [status, setStatus] = useState<DeviceLabelTriggerStatus>(
     DeviceLabelTriggerStatus.UNTRIGGERED
   );
 
   useEffect(() => {
-    meetingManager.subscribeToDeviceLabelTriggerStatus(setStatus);
+    deviceManager.subscribeToDeviceLabelTriggerStatus(setStatus);
     return () => {
-      meetingManager.unsubscribeFromDeviceLabelTriggerStatus(setStatus);
+      deviceManager.unsubscribeFromDeviceLabelTriggerStatus(setStatus);
     };
-  }, [meetingManager]);
+  }, [deviceManager]);
 
   return status;
 }

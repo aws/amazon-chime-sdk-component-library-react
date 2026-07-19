@@ -1,10 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import type {
-  AudioInputDevice,
-  DeviceChangeObserver,
-} from 'amazon-chime-sdk-js';
+import type { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 import React, {
   createContext,
   useContext,
@@ -15,50 +12,30 @@ import React, {
 } from 'react';
 
 import { AudioInputContextType, DeviceLabels } from '../../types';
-import { useAudioVideo } from '../AudioVideoProvider';
+import { useDeviceManager } from '../DeviceProvider';
 import { useLogger } from '../LoggerProvider';
-import { useMeetingManager } from '../MeetingProvider';
-
-interface Props {
-  onDeviceReplacement?: (
-    nextDevice: string,
-    currentDevice: AudioInputDevice | undefined
-  ) => Promise<AudioInputDevice>;
-}
 
 const Context = createContext<AudioInputContextType | null>(null);
 
-export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
+export const AudioInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
-  onDeviceReplacement,
 }) => {
   const logger = useLogger();
-  const meetingManager = useMeetingManager();
-  const audioVideo = useAudioVideo();
+  const deviceManager = useDeviceManager();
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
   const [selectedAudioInputDevice, setSelectedAudioInputDevice] = useState(
-    meetingManager.selectedAudioInputDevice
+    deviceManager.selectedAudioInputDevice
   );
   const selectedInputRef = useRef(selectedAudioInputDevice);
   selectedInputRef.current = selectedAudioInputDevice;
 
-  const replaceDevice = async (device: string): Promise<AudioInputDevice> => {
-    if (onDeviceReplacement) {
-      return onDeviceReplacement(
-        device,
-        meetingManager.selectedAudioInputDevice
-      );
-    }
-    return device;
-  };
-
   useEffect(() => {
-    meetingManager.subscribeToSelectedAudioInputDevice(
+    deviceManager.subscribeToSelectedAudioInputDevice(
       setSelectedAudioInputDevice
     );
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedAudioInputDevice(
+      deviceManager.unsubscribeFromSelectedAudioInputDevice(
         setSelectedAudioInputDevice
       );
     };
@@ -72,8 +49,8 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
         logger.info('AudioInputProvider - audio inputs updated');
 
         if (
-          meetingManager.getDeviceLabels() !== DeviceLabels.Audio &&
-          meetingManager.getDeviceLabels() !== DeviceLabels.AudioAndVideo
+          deviceManager.getDeviceLabels() !== DeviceLabels.Audio &&
+          deviceManager.getDeviceLabels() !== DeviceLabels.AudioAndVideo
         ) {
           logger.info(
             'Device labels do not allow audio, skipping audio input selection on audioInputsChanged'
@@ -104,9 +81,9 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
           );
         }
 
-        const nextDevice = await replaceDevice(nextInput);
+        const nextDevice = await deviceManager.replaceDevice(nextInput);
         try {
-          await meetingManager.startAudioInputDevice(nextDevice);
+          await deviceManager.startAudioInputDevice(nextDevice);
         } catch (e) {
           logger.error(
             `Failed to select audio input device on audioInputsChanged: ${e}`
@@ -118,15 +95,11 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
     };
 
     async function initAudioInput(): Promise<void> {
-      if (!audioVideo) {
-        return;
-      }
-
-      const devices = await audioVideo.listAudioInputDevices();
+      const devices = await deviceManager.listAudioInputDevices();
 
       if (isMounted) {
         setAudioInputs(devices);
-        audioVideo.addDeviceChangeObserver(observer);
+        deviceManager.addDeviceChangeObserver(observer);
       }
     }
 
@@ -134,16 +107,16 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
       initAudioInput();
     };
 
-    meetingManager.subscribeToDeviceLabelTrigger(callback);
+    deviceManager.subscribeToDeviceLabelTrigger(callback);
 
     initAudioInput();
 
     return () => {
       isMounted = false;
-      audioVideo?.removeDeviceChangeObserver(observer);
-      meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
+      deviceManager.removeDeviceChangeObserver(observer);
+      deviceManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
-  }, [audioVideo, onDeviceReplacement]);
+  }, [deviceManager]);
 
   const contextValue: AudioInputContextType = useMemo(
     () => ({

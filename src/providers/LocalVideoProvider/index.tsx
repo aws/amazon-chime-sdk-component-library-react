@@ -13,17 +13,19 @@ import React, {
 
 import { LocalVideoContextType } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useDeviceManager } from '../DeviceProvider';
 import { useVideoInputs } from '../DevicesProvider';
 import { useLogger } from '../LoggerProvider';
-import { useMeetingManager } from '../MeetingProvider';
 
-const Context = createContext<LocalVideoContextType | null>(null);
+export const LocalVideoContext = createContext<LocalVideoContextType | null>(
+  null
+);
 
 export const LocalVideoProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const logger = useLogger();
-  const meetingManager = useMeetingManager();
+  const deviceManager = useDeviceManager();
   const audioVideo = useAudioVideo();
   const { devices, selectedDevice } = useVideoInputs();
   const [isVideoEnabled, setIsVideoEnabled] = useState(false);
@@ -82,7 +84,7 @@ export const LocalVideoProvider: React.FC<React.PropsWithChildren<unknown>> = ({
         await audioVideo?.stopVideoInput();
         setIsVideoEnabled(false);
       } else if (!hasReachedVideoLimit) {
-        await meetingManager.startVideoInputDevice(selectedDevice);
+        await deviceManager.startVideoInputDevice(selectedDevice);
         audioVideo?.startLocalVideoTile();
         setIsVideoEnabled(true);
       } else {
@@ -135,11 +137,15 @@ export const LocalVideoProvider: React.FC<React.PropsWithChildren<unknown>> = ({
     ]
   );
 
-  return <Context.Provider value={value}>{children}</Context.Provider>;
+  return (
+    <LocalVideoContext.Provider value={value}>
+      {children}
+    </LocalVideoContext.Provider>
+  );
 };
 
 export const useLocalVideo = (): LocalVideoContextType => {
-  const context = useContext(Context);
+  const context = useContext(LocalVideoContext);
 
   if (!context) {
     throw new Error('useLocalVideo must be used within LocalVideoProvider');

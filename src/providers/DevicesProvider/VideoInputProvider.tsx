@@ -11,9 +11,8 @@ import React, {
 } from 'react';
 
 import { VideoInputContextType } from '../../types';
-import { useAudioVideo } from '../AudioVideoProvider';
+import { useDeviceManager } from '../DeviceProvider';
 import { useLogger } from '../LoggerProvider';
-import { useMeetingManager } from '../MeetingProvider';
 
 const Context = createContext<VideoInputContextType | null>(null);
 
@@ -21,20 +20,19 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const logger = useLogger();
-  const audioVideo = useAudioVideo();
+  const deviceManager = useDeviceManager();
   const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);
-  const meetingManager = useMeetingManager();
   const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState<
     VideoInputDevice | undefined
-  >(meetingManager.selectedVideoInputDevice);
+  >(deviceManager.selectedVideoInputDevice);
 
   useEffect(() => {
-    meetingManager.subscribeToSelectedVideoInputDevice(
+    deviceManager.subscribeToSelectedVideoInputDevice(
       setSelectedVideoInputDevice
     );
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedVideoInputDevice(
+      deviceManager.unsubscribeFromSelectedVideoInputDevice(
         setSelectedVideoInputDevice
       );
     };
@@ -51,15 +49,11 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
     };
 
     async function initVideoInput(): Promise<void> {
-      if (!audioVideo) {
-        return;
-      }
-
-      const devices = await audioVideo.listVideoInputDevices();
+      const devices = await deviceManager.listVideoInputDevices();
 
       if (isMounted) {
         setVideoInputs(devices);
-        audioVideo.addDeviceChangeObserver(observer);
+        deviceManager.addDeviceChangeObserver(observer);
       }
     }
 
@@ -67,16 +61,16 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
       initVideoInput();
     };
 
-    meetingManager.subscribeToDeviceLabelTrigger(callback);
+    deviceManager.subscribeToDeviceLabelTrigger(callback);
 
     initVideoInput();
 
     return () => {
       isMounted = false;
-      audioVideo?.removeDeviceChangeObserver(observer);
-      meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
+      deviceManager.removeDeviceChangeObserver(observer);
+      deviceManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
-  }, [audioVideo]);
+  }, [deviceManager]);
 
   const contextValue: VideoInputContextType = useMemo(
     () => ({

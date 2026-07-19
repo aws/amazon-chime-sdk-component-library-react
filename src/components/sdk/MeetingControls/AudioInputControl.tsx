@@ -4,9 +4,9 @@
 import React, { useEffect, useState } from 'react';
 
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
+import { useDeviceManager } from '../../../providers/DeviceProvider';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { isOptionActive } from '../../../utils/device-utils';
 import { ControlBarButton } from '../../ui/ControlBar/ControlBarButton';
 import { Microphone } from '../../ui/icons';
@@ -32,7 +32,7 @@ export const AudioInputControl: React.FC<React.PropsWithChildren<Props>> = ({
   ...rest
 }) => {
   const logger = useLogger();
-  const meetingManager = useMeetingManager();
+  const deviceManager = useDeviceManager();
   const { muted, toggleMute } = useToggleLocalMute();
   const { devices, selectedDevice } = useAudioInputs();
   const [dropdownOptions, setDropdownOptions] = useState<PopOverItemProps[]>(
@@ -42,7 +42,7 @@ export const AudioInputControl: React.FC<React.PropsWithChildren<Props>> = ({
   useEffect(() => {
     const handleClick = async (deviceId: string): Promise<void> => {
       try {
-        await meetingManager.startAudioInputDevice(deviceId);
+        await deviceManager.startAudioInputDevice(deviceId);
       } catch (error) {
         logger.error('AudioInputControl failed to select audio input device');
       }
@@ -63,8 +63,8 @@ export const AudioInputControl: React.FC<React.PropsWithChildren<Props>> = ({
   }, [
     devices,
     selectedDevice,
-    meetingManager,
-    meetingManager.startAudioInputDevice,
+    deviceManager,
+    deviceManager.startAudioInputDevice,
   ]);
 
   return (

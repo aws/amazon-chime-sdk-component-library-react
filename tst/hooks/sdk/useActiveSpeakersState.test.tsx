@@ -32,7 +32,13 @@ describe('useActiveSpeakersState', () => {
     const { result, unmount } = renderHook(() => useActiveSpeakersState(), {
       wrapper: ({ children }) => (
         <MeetingContext.Provider
-          value={ new MeetingManager(new ConsoleLogger('MeetingManager')) }
+          value={
+            new MeetingManager(new ConsoleLogger('MeetingManager'), {
+              // MeetingManager is mocked here, so the controller is unused at runtime; this arg
+              // only satisfies the (logger, MeetingManagerConfig) signature.
+              deviceController: {} as any,
+            })
+          }
         >
           {children}
         </MeetingContext.Provider>

@@ -1,14 +1,13 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import React, { useEffect, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { useDeviceManager } from '../../../providers/DeviceProvider';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
-import { useLocalVideo } from '../../../providers/LocalVideoProvider';
+import { LocalVideoContext } from '../../../providers/LocalVideoProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
 import VideoTile from '../../ui/VideoTile';
 import { BaseSdkProps } from '../Base';
 
@@ -25,40 +24,49 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
   props
 ) => {
   const logger = useLogger();
-  const audioVideo = useAudioVideo();
+  const deviceManager = useDeviceManager();
   const { selectedDevice } = useVideoInputs();
   const videoEl = useRef<HTMLVideoElement>(null);
-  const meetingManager = useMeetingManager();
-  const { setIsVideoEnabled } = useLocalVideo();
+  // Read the local-video context directly (not via useLocalVideo, which throws) so PreviewVideo also
+  // works in a pre-call lobby that has no MeetingProvider/LocalVideoProvider. `setIsVideoEnabled`
+  // tracks the in-meeting local video tile; with no LocalVideoProvider there is no tile to track, so
+  // the calls simply no-op.
+  const localVideo = useContext(LocalVideoContext);
+  const setIsVideoEnabled = localVideo?.setIsVideoEnabled;
 
   useEffect(() => {
     const videoElement = videoEl.current;
     return () => {
       if (videoElement) {
-        audioVideo?.stopVideoPreviewForVideoInput(videoElement);
-        audioVideo?.stopVideoInput();
-        setIsVideoEnabled(false);
+        deviceManager.stopVideoPreviewForVideoInput(videoElement);
+        // Stream-only stop; do NOT use stopVideoInputDevice() here — that also clears the tracked
+        // camera selection and publishes it, wiping the user's choice for every consumer. Ending a
+        // preview should stop capture without deselecting the device.
+        void deviceManager.stopVideoInput();
+        setIsVideoEnabled?.(false);
       }
     };
-  }, [audioVideo]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deviceManager]);
 
   useEffect(() => {
     async function startPreview(): Promise<void> {
-      if (!audioVideo || !selectedDevice || !videoEl.current) {
+      if (!selectedDevice || !videoEl.current) {
         return;
       }
 
       try {
-        await meetingManager.startVideoInputDevice(selectedDevice);
-        audioVideo.startVideoPreviewForVideoInput(videoEl.current);
-        setIsVideoEnabled(true);
+        await deviceManager.startVideoInputDevice(selectedDevice);
+        deviceManager.startVideoPreviewForVideoInput(videoEl.current);
+        setIsVideoEnabled?.(true);
       } catch (error) {
         logger.error('Failed to start video preview');
       }
     }
 
     startPreview();
-  }, [audioVideo, selectedDevice]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [deviceManager, selectedDevice]);
 
   return <StyledPreview {...props} ref={videoEl} />;
 };

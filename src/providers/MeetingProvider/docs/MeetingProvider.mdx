@@ -67,10 +67,14 @@ const Root = () => {
 
 #### onDeviceReplacement
 
+> **Moved to `DeviceProvider`.** As part of the standalone device layer, `onDeviceReplacement` is now a
+> prop on `DeviceProvider` (which owns the device state), not on `MeetingProvider`/`DevicesProvider`.
+> Pass it to `DeviceProvider` instead. The behavior below is unchanged; only the prop's location moved.
+
 When a selected device is disconnected, or when the Operating System (OS) default device is selected and is changed by the OS (e.g., if a Bluetooth headset is disconnected),
 the `AudioInputProvider` encapsulated by `DevicesProvider` is forced to automatically select a new audio input. This behaves as expected when the selected device is an ordinary device provided by the browser.
 However, when your application is using a transform device like Amazon Voice Focus, the `AudioInputProvider` needs a way to transform the newly selected device to avoid reverting to a non-transform device.
-This is accomplished by exposing a `onDeviceReplacement` prop on `MeetingProvider` and `DevicesProvider`, allowing your application to customize the behavior of this device reselection step.
+This is accomplished by exposing a `onDeviceReplacement` prop on `DeviceProvider`, allowing your application to customize the behavior of this device reselection step.
 Provide a function that accepts a `Device` as input and returns a `Device` or `AudioTransformDevice` of your choice.
 
 #### meetingManager

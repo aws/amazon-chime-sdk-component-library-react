@@ -1,6 +1,7 @@
 import React from 'react';
 import { LogLevel } from 'amazon-chime-sdk-js';
 import {
+  DeviceProvider,
   MeetingProvider,
   RosterAttendeeType,
   useAttendeeStatus,
@@ -18,11 +19,13 @@ export const RosterTestApp: React.FC = () => {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', width: '70%', margin: 'auto' }}>
-      <MeetingProvider {...config}>
-        <h3 data-testid='app-name'>Roster Test</h3>
-        <MeetingForm />
-        <Meeting />
-      </MeetingProvider>
+      <DeviceProvider>
+        <MeetingProvider {...config}>
+          <h3 data-testid='app-name'>Roster Test</h3>
+          <MeetingForm />
+          <Meeting />
+        </MeetingProvider>
+      </DeviceProvider>
     </div>
   )
 };

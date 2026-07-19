@@ -45,6 +45,17 @@ meetingSessionConfiguration: MeetingSessionConfiguration;
 
 ##### `MeetingManagerJoinOptions`
 
+> **Updated for the standalone device layer.** `MeetingManager` is now session-only and borrows its
+> device controller from `DeviceManager`. Device setup moved out of `join()`:
+> - **`deviceLabels` and `skipDeviceSelection`** are gone — `join()` no longer enumerates or auto-selects
+>   devices. Do device setup with **`DeviceManager.setupDevices(deviceLabels)`** (via `useDeviceManager()`)
+>   **before** calling `join()`. Starting a meeting with no device selected is allowed (the attendee joins
+>   view-only/muted until a device is chosen).
+> - **`enableWebAudio`** moved to a **`DeviceProvider`** prop (it's a constructor-only option on the
+>   controller, which the device layer now owns).
+>
+> The remaining `join()` options are `eventController` and `activeSpeakerPolicy` (both shown below).
+
 ```typescript
 options?: {
   // The kind of device for which the browser requests permission.

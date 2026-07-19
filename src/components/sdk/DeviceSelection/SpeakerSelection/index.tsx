@@ -3,9 +3,9 @@
 
 import React from 'react';
 
+import { useDeviceManager } from '../../../../providers/DeviceProvider';
 import { useAudioOutputs } from '../../../../providers/DevicesProvider';
 import { useLogger } from '../../../../providers/LoggerProvider';
-import { useMeetingManager } from '../../../../providers/MeetingProvider';
 import { BaseSdkProps } from '../../Base';
 import DeviceInput from '../DeviceInput';
 
@@ -27,11 +27,11 @@ export const SpeakerSelection: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const logger = useLogger();
   const { devices, selectedDevice } = useAudioOutputs();
-  const meetingManager = useMeetingManager();
+  const deviceManager = useDeviceManager();
 
   const handleSelect = async (deviceId: string): Promise<void> => {
     try {
-      await meetingManager.startAudioOutputDevice(deviceId);
+      await deviceManager.startAudioOutputDevice(deviceId);
       onChange && onChange(deviceId);
     } catch (error) {
       logger.error('SpeakerSelection failed to select speaker');

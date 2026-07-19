@@ -11,9 +11,8 @@ import React, {
 } from 'react';
 
 import { AudioOutputContextType } from '../../types';
-import { useAudioVideo } from '../AudioVideoProvider';
+import { useDeviceManager } from '../DeviceProvider';
 import { useLogger } from '../LoggerProvider';
-import { useMeetingManager } from '../MeetingProvider';
 
 const AudioOutputContext = createContext<AudioOutputContextType | null>(null);
 
@@ -21,20 +20,19 @@ export const AudioOutputProvider: React.FC<
   React.PropsWithChildren<unknown>
 > = ({ children }) => {
   const logger = useLogger();
-  const audioVideo = useAudioVideo();
+  const deviceManager = useDeviceManager();
   const [audioOutputs, setAudioOutputs] = useState<MediaDeviceInfo[]>([]);
-  const meetingManager = useMeetingManager();
   const [selectedAudioOutputDevice, setSelectedAudioOutputDevice] = useState(
-    meetingManager.selectedAudioOutputDevice
+    deviceManager.selectedAudioOutputDevice
   );
 
   useEffect(() => {
-    meetingManager.subscribeToSelectedAudioOutputDevice(
+    deviceManager.subscribeToSelectedAudioOutputDevice(
       setSelectedAudioOutputDevice
     );
 
     return (): void => {
-      meetingManager.unsubscribeFromSelectedAudioOutputDevice(
+      deviceManager.unsubscribeFromSelectedAudioOutputDevice(
         setSelectedAudioOutputDevice
       );
     };
@@ -51,15 +49,11 @@ export const AudioOutputProvider: React.FC<
     };
 
     async function initAudioOutput(): Promise<void> {
-      if (!audioVideo) {
-        return;
-      }
-
-      const devices = await audioVideo.listAudioOutputDevices();
+      const devices = await deviceManager.listAudioOutputDevices();
 
       if (isMounted) {
         setAudioOutputs(devices);
-        audioVideo.addDeviceChangeObserver(observer);
+        deviceManager.addDeviceChangeObserver(observer);
       }
     }
 
@@ -67,16 +61,16 @@ export const AudioOutputProvider: React.FC<
       initAudioOutput();
     };
 
-    meetingManager.subscribeToDeviceLabelTrigger(callback);
+    deviceManager.subscribeToDeviceLabelTrigger(callback);
 
     initAudioOutput();
 
     return () => {
       isMounted = false;
-      audioVideo?.removeDeviceChangeObserver(observer);
-      meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
+      deviceManager.removeDeviceChangeObserver(observer);
+      deviceManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
-  }, [audioVideo]);
+  }, [deviceManager]);
 
   const contextValue: AudioOutputContextType = useMemo(
     () => ({

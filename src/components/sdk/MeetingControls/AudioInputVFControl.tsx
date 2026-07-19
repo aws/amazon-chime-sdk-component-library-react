@@ -10,9 +10,9 @@ import React, { ReactNode, useEffect, useState } from 'react';
 
 import { useToggleLocalMute } from '../../../hooks/sdk/useToggleLocalMute';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { useDeviceManager } from '../../../providers/DeviceProvider';
 import { useAudioInputs } from '../../../providers/DevicesProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
-import { useMeetingManager } from '../../../providers/MeetingProvider';
 import { useVoiceFocus } from '../../../providers/VoiceFocusProvider';
 import { DeviceType } from '../../../types';
 import { isOptionActive } from '../../../utils/device-utils';
@@ -52,7 +52,7 @@ export const AudioInputVFControl: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const logger = useLogger();
   const audioVideo = useAudioVideo();
-  const meetingManager = useMeetingManager();
+  const deviceManager = useDeviceManager();
   const [isLoading, setIsLoading] = useState(false);
   // When the user click on Amazon Voice Focus option, the state will change.
   const [isVoiceFocusChecked, setIsVoiceFocusChecked] = useState(false);
@@ -113,9 +113,9 @@ export const AudioInputVFControl: React.FC<React.PropsWithChildren<Props>> = ({
           setIsLoading(true);
           const receivedDevice = deviceId;
           const currentDevice = await addVoiceFocus(receivedDevice);
-          await meetingManager.startAudioInputDevice(currentDevice);
+          await deviceManager.startAudioInputDevice(currentDevice);
         } else {
-          await meetingManager.startAudioInputDevice(deviceId);
+          await deviceManager.startAudioInputDevice(deviceId);
         }
       } catch (error) {
         logger.error('AudioInputVFControl failed to select audio input device');
@@ -167,8 +167,8 @@ export const AudioInputVFControl: React.FC<React.PropsWithChildren<Props>> = ({
     // but also on the Voice Focus state, including `addVoiceFocus` which is used inside
     // the click handler.
     addVoiceFocus,
-    meetingManager,
-    meetingManager.startAudioInputDevice,
+    deviceManager,
+    deviceManager.startAudioInputDevice,
     audioInputDevices,
     isLoading,
     isVoiceFocusEnabled,
@@ -198,7 +198,7 @@ export const AudioInputVFControl: React.FC<React.PropsWithChildren<Props>> = ({
             current = selectedDevice.getInnerDevice();
           }
         }
-        await meetingManager.startAudioInputDevice(current);
+        await deviceManager.startAudioInputDevice(current);
       } catch (error) {
         logger.error(
           'AudioInputVFControl failed to select audio input device onVFCheckboxChange change'
