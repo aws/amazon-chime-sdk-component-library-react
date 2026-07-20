@@ -17,6 +17,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed `useLocalAudioInputActivity` so the microphone activity meter works before a meeting.
+  The hook now reads the audio analyser from the standalone device layer (`DeviceManager`) when no
+  meeting is active and from the in-meeting `audioVideo` facade when one is, and removes its
+  device-change observer on cleanup.
+
 
 ## [3.12.0] - 2025-06-10
 
