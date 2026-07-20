@@ -32,17 +32,18 @@ interface Props {
   meetingManager?: MeetingManager;
   maxContentShares?: number;
   /**
-   * Opt in to hosting the device controller before a meeting. When `true`, `MeetingProvider`
-   * creates and owns a `DefaultDeviceController` on mount (via an internal `DeviceControllerProvider`)
-   * and injects it into the `MeetingManager`, so device setup (enumerate / select / preview / mic
-   * meter / permission prompt) works before `join()` and device selections persist across a rejoin.
+   * Opt in to creating and persisting the device controller independently of a meeting. When `true`,
+   * `MeetingProvider` creates and owns a `DefaultDeviceController` on mount (via an internal
+   * `DeviceControllerProvider`) and injects it into the `MeetingManager`, so device setup (enumerate
+   * / select / preview / mic meter / permission prompt) works before `join()` and the controller —
+   * along with the device selections — persists across `leave()`/rejoin instead of being destroyed.
    * When unset, behavior is unchanged: the `MeetingManager` creates its own controller inside
-   * `join()` as before.
+   * `join()` and destroys it on `leave()`, as before.
    */
-  hostDeviceController?: boolean;
+  persistDeviceController?: boolean;
   /**
    * Enable Web Audio on the hosted `DefaultDeviceController`. Required for Amazon Voice Focus. Only
-   * used when `hostDeviceController` is set (it is a constructor-only option, so it must be known when
+   * used when `persistDeviceController` is set (it is a constructor-only option, so it must be known when
    * the controller is created on mount — decide Voice Focus up front). On the non-opted-in path,
    * pass `enableWebAudio` through `MeetingManager.join` options as before.
    */
@@ -98,7 +99,7 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
 };
 
 export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
-  hostDeviceController,
+  persistDeviceController,
   enableWebAudio,
   children,
   ...rest
@@ -106,7 +107,7 @@ export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
   // Always mount DeviceControllerProvider; when not opted in it creates no controller and provides
   // `undefined`, so MeetingProviderInner constructs the MeetingManager exactly as before.
   <DeviceControllerProvider
-    enabled={hostDeviceController}
+    enabled={persistDeviceController}
     enableWebAudio={enableWebAudio}
   >
     <MeetingProviderInner {...rest}>{children}</MeetingProviderInner>

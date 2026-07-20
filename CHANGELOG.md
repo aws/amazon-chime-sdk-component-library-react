@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added `DeviceControllerProvider` and the `useDeviceController` hook. When opted in (via the
-  forthcoming `MeetingProvider` `hostDeviceController` prop), `MeetingProvider` mounts this internally
+  forthcoming `MeetingProvider` `persistDeviceController` prop), `MeetingProvider` mounts this internally
   to create and own a `DefaultDeviceController` before a meeting exists, so device setup (enumerate,
   select, preview, mic meter, permission prompt) can work before `join()`. `useDeviceController`
   returns `undefined` when not opted in, so existing behavior is unchanged.
@@ -22,8 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `DefaultDeviceController`; when provided, `join()` reuses it and `leave()` releases its media but
   does not destroy it (device selections persist for a warm rejoin). When not provided, `join()`
   creates its own controller and `leave()` destroys it — unchanged from before.
-- Added `hostDeviceController` and `enableWebAudio` props to `MeetingProvider`. When
-  `hostDeviceController` is set, `MeetingProvider` mounts an internal `DeviceControllerProvider`,
+- Added `persistDeviceController` and `enableWebAudio` props to `MeetingProvider`. When
+  `persistDeviceController` is set, `MeetingProvider` mounts an internal `DeviceControllerProvider`,
   creates a `DefaultDeviceController` on mount (with `enableWebAudio`), and injects it into the
   `MeetingManager` so device setup works before `join()`. When unset, `MeetingProvider` behaves
   exactly as before (no controller created until `join()`).
@@ -34,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `AudioInputProvider`, `AudioOutputProvider`, `VideoInputProvider`, and `PreviewVideo` now resolve
   their device source from `audioVideo ?? deviceController` (the hosted controller when opted in via
-  `hostDeviceController`), so device enumeration, device-change observers, and camera preview work
+  `persistDeviceController`), so device enumeration, device-change observers, and camera preview work
   before a meeting. When not opted in, the source is `audioVideo` exactly as before.
 
 ### Fixed

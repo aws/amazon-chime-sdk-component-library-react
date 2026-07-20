@@ -111,7 +111,7 @@ export class MeetingManager implements AudioVideoObserver {
   private deviceLabels: DeviceLabels | DeviceLabelTrigger;
 
   /**
-   * When the application opts in (via `MeetingProvider`'s `hostDeviceController`),
+   * When the application opts in (via `MeetingProvider`'s `persistDeviceController`),
    * `DeviceControllerProvider` creates a `DefaultDeviceController` before any meeting and injects it
    * here. In that case device APIs work before `join()`, and this manager **borrows** the controller:
    * it builds the session from it but never destroys it (the provider owns its lifecycle).

@@ -14,7 +14,7 @@ interface Props {
    * {@link useDeviceController} returns `undefined` — behavior is identical to before this provider
    * existed (the `MeetingManager` creates its own controller inside `join()` as it always has).
    *
-   * `MeetingProvider` sets this from its `hostDeviceController` prop.
+   * `MeetingProvider` sets this from its `persistDeviceController` prop.
    */
   enabled?: boolean;
   /**
@@ -33,7 +33,7 @@ const DeviceControllerContext = createContext<
 /**
  * `DeviceControllerProvider` optionally creates and owns a `DefaultDeviceController` whose lifecycle
  * is independent of any meeting. `MeetingProvider` mounts it internally and, when opted in via
- * `hostDeviceController`, constructor-injects the controller into `MeetingManager` (through
+ * `persistDeviceController`, constructor-injects the controller into `MeetingManager` (through
  * `MeetingProviderInner`) so device setup works before a `MeetingSession` exists.
  *
  * When not opted in (`enabled` is falsy) it creates nothing and provides `undefined`, so device
@@ -71,7 +71,7 @@ export const DeviceControllerProvider: React.FC<
 
 /**
  * Returns the provider-owned `DefaultDeviceController`, or `undefined` when the application has not
- * opted in (`hostDeviceController` unset). Intentionally does **not** throw when there is no
+ * opted in (`persistDeviceController` unset). Intentionally does **not** throw when there is no
  * controller: callers treat `undefined` as "no pre-meeting controller" and fall back to the
  * in-meeting `audioVideo` facade, which preserves the pre-existing behavior.
  */
