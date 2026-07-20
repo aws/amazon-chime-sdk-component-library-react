@@ -2,7 +2,13 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { DefaultDeviceController } from 'amazon-chime-sdk-js';
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import { useLogger } from '../LoggerProvider';
 
@@ -53,14 +59,40 @@ export const DeviceControllerProvider: React.FC<
       : undefined
   );
 
+  // `enabled`/`enableWebAudio` are read ONCE, in the initializer above (the controller is
+  // constructor-configured and its identity is fixed for the provider's life). Warn if they change
+  // after mount, since the change is silently ignored — a builder driving `persistDeviceController`
+  // from an async check (e.g. Voice Focus support) would otherwise get no controller and no signal.
+  const initialProps = useRef({ enabled, enableWebAudio });
+  useEffect(() => {
+    if (
+      initialProps.current.enabled !== enabled ||
+      initialProps.current.enableWebAudio !== enableWebAudio
+    ) {
+      logger.warn(
+        'DeviceControllerProvider: `persistDeviceController`/`enableWebAudio` changed after mount ' +
+          'and were ignored. The device controller is created once on mount (enableWebAudio is ' +
+          'constructor-only in the JS SDK); decide these up front and mount MeetingProvider after.'
+      );
+    }
+  }, [enabled, enableWebAudio, logger]);
+
   // This provider created the controller, so this provider destroys it on unmount. (When the
   // controller is injected into a meeting, `MeetingManager` must NOT destroy it — the provider owns
-  // the lifecycle. See MeetingManager.leave().)
+  // the lifecycle. See MeetingManager.leave().) `destroy()` is async and can reject (e.g. a closed
+  // AudioContext or a teardown racing an in-flight getUserMedia), so swallow rejections here — a
+  // cleanup cannot await, and an unhandled rejection would surface as a spurious error. Note: if a
+  // meeting is still live at unmount, `MeetingProviderInner` calls `leave()` first (its cleanup runs
+  // before this one, being a child), so this destroy runs on an already-released controller.
   useEffect(() => {
     return () => {
-      void deviceController?.destroy();
+      void deviceController?.destroy().catch((error) => {
+        logger.info(
+          `DeviceControllerProvider failed to destroy controller: ${error}`
+        );
+      });
     };
-  }, [deviceController]);
+  }, [deviceController, logger]);
 
   return (
     <DeviceControllerContext.Provider value={deviceController}>

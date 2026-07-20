@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 import { AudioInputDevice } from 'amazon-chime-sdk-js';
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { AudioVideoProvider } from '../AudioVideoProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
@@ -72,6 +72,36 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
   const [meetingManager] = useState(
     () => meetingManagerProp || new MeetingManager(logger, deviceController)
   );
+
+  // A caller-supplied `meetingManager` is constructed by the caller with no device controller, so it
+  // cannot receive the hosted one created here — the two features don't compose. Warn rather than
+  // silently split device state (the hosted controller feeds the device UI while the custom
+  // manager's own device methods no-op pre-meeting).
+  useEffect(() => {
+    if (meetingManagerProp && deviceController) {
+      logger.warn(
+        'MeetingProvider: `persistDeviceController` has no effect when a `meetingManager` prop is ' +
+          'also provided — the hosted device controller cannot be injected into a caller-owned ' +
+          'MeetingManager. Use one or the other.'
+      );
+    }
+  }, [meetingManagerProp, deviceController, logger]);
+
+  // If the app unmounts MeetingProvider while a meeting is still live without calling leave()
+  // (e.g. a route change), stop the session cleanly here. This matters specifically on the opted-in
+  // path: DeviceControllerProvider (our parent, so its cleanup runs AFTER this child's) will
+  // destroy() the shared controller on unmount, which would otherwise tear the mic/camera out from
+  // under a still-connected session. Running leave() first stops the session properly. No-op when
+  // there is no active meeting (meetingSession is null pre-meeting / after a prior leave), so this
+  // does not interfere with the pre-meeting or StrictMode cases. Not done for a caller-supplied
+  // manager — its lifecycle is the caller's responsibility.
+  useEffect(() => {
+    return () => {
+      if (!meetingManagerProp && meetingManager.meetingSession) {
+        void meetingManager.leave();
+      }
+    };
+  }, [meetingManager, meetingManagerProp]);
 
   return (
     <MeetingContext.Provider value={meetingManager}>

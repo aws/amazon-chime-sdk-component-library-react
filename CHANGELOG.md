@@ -26,7 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `persistDeviceController` is set, `MeetingProvider` mounts an internal `DeviceControllerProvider`,
   creates a `DefaultDeviceController` on mount (with `enableWebAudio`), and injects it into the
   `MeetingManager` so device setup works before `join()`. When unset, `MeetingProvider` behaves
-  exactly as before (no controller created until `join()`).
+  exactly as before (no controller created until `join()`). On the opted-in path, `MeetingManager`
+  re-applies the preserved audio output device on a warm rejoin (so remote audio routes to the
+  selected speaker, not the system default), releases controller media on a pre-meeting `leave()`,
+  and clears the controller's stale `eventController` on `leave()`. If `MeetingProvider` unmounts
+  while a meeting is still live, it now stops the session before the hosted controller is destroyed.
 
 ### Removed
 
@@ -34,8 +38,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - `AudioInputProvider`, `AudioOutputProvider`, `VideoInputProvider`, and `PreviewVideo` now resolve
   their device source from `audioVideo ?? deviceController` (the hosted controller when opted in via
-  `persistDeviceController`), so device enumeration, device-change observers, and camera preview work
-  before a meeting. When not opted in, the source is `audioVideo` exactly as before.
+  `persistDeviceController`) through the new internal `useDeviceSource` hook, so device enumeration,
+  device-change observers, and camera preview work before a meeting. When not opted in, the source is
+  `audioVideo` exactly as before. `PreviewVideo` only stops the camera input when no meeting is active
+  at cleanup, so it no longer stops the meeting's camera at the pre-meeting → in-meeting handoff.
 
 ### Fixed
 

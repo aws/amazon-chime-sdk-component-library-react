@@ -10,9 +10,8 @@ import React, {
   useState,
 } from 'react';
 
+import { useDeviceSource } from '../../hooks/sdk/useDeviceSource';
 import { VideoInputContextType } from '../../types';
-import { useAudioVideo } from '../AudioVideoProvider';
-import { useDeviceController } from '../DeviceControllerProvider';
 import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
@@ -22,10 +21,8 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const logger = useLogger();
-  const audioVideo = useAudioVideo();
-  const deviceController = useDeviceController();
   // In-meeting facade, or the hosted controller before a meeting (opt-in); undefined otherwise.
-  const deviceSource = audioVideo ?? deviceController;
+  const deviceSource = useDeviceSource();
   const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);
   const meetingManager = useMeetingManager();
   const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState<

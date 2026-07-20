@@ -6,6 +6,7 @@ import '@testing-library/jest-dom';
 import {
   ConsoleLogger,
   DefaultActiveSpeakerPolicy,
+  DefaultBrowserBehavior,
   DefaultDeviceController,
   DefaultMeetingSession,
   MeetingSessionConfiguration,
@@ -25,6 +26,10 @@ describe('Meeting Manager', () => {
     // @ts-ignore
     MeetingSessionConfiguration = jest.fn().mockImplementation(() => {});
     mockMeetingSessionConfiguration = new MeetingSessionConfiguration();
+    // Report setSinkId support so the audio-output selection / warm-rejoin re-apply path runs.
+    jest
+      .spyOn(DefaultBrowserBehavior.prototype, 'supportsSetSinkId')
+      .mockReturnValue(true);
     meetingManager = new MeetingManager(new ConsoleLogger('MeetingManager'));
     // @ts-ignore
     DefaultDeviceController = jest.fn().mockReturnValue({});
@@ -39,6 +44,7 @@ describe('Meeting Manager', () => {
         startAudioInput: jest.fn().mockReturnValue({}),
         stopAudioInput: jest.fn().mockResolvedValue(undefined),
         stopVideoInput: jest.fn().mockResolvedValue(undefined),
+        chooseAudioOutput: jest.fn().mockResolvedValue(undefined),
         setDeviceLabelTrigger: jest.fn().mockReturnValue({}),
         subscribeToActiveSpeakerDetector: jest.fn().mockReturnValue({}),
         unsubscribeFromActiveSpeakerDetector: jest.fn().mockReturnValue({}),
@@ -162,6 +168,45 @@ describe('Meeting Manager', () => {
       // Session is torn down; live input selections are cleared so the next setup re-acquires them.
       expect(meetingManager.audioVideo).toBeNull();
       expect(meetingManager.selectedAudioInputDevice).toBeUndefined();
+    });
+
+    it('releases the injected controller media on a pre-meeting leave (no meeting yet)', async () => {
+      // setupDevices() acquires a live mic on the injected controller with no meeting (audioVideo null).
+      await meetingManager.setupDevices();
+      expect(meetingManager.audioVideo).toBeNull();
+
+      // A pre-meeting leave() (e.g. lobby "cancel") must still stop the controller's streams, not skip
+      // release just because there is no meeting — otherwise the mic/camera leak until unmount.
+      await meetingManager.leave();
+
+      expect(injectedController.stopAudioInput).toHaveBeenCalled();
+      expect(injectedController.stopVideoInput).toHaveBeenCalled();
+    });
+
+    it('clears the injected controller eventController on leave (no stale between-meetings ref)', async () => {
+      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+
+      await meetingManager.leave();
+
+      // Cleared on leave so pre-rejoin device events do not publish to the ended session.
+      expect(injectedController.eventController).toBeUndefined();
+    });
+
+    it('re-applies the preserved audio output device on warm rejoin', async () => {
+      // First meeting selects a non-default speaker, then leaves (output selection preserved).
+      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+      meetingManager.selectedAudioOutputDevice = 'speaker-1';
+      await meetingManager.leave();
+      expect(meetingManager.selectedAudioOutputDevice).toBe('speaker-1');
+
+      // Rejoin: listAndSelectDevices' default-pick guard is skipped (output already set), so the
+      // preserved sink must be explicitly re-applied. In-meeting the device source is the audioVideo
+      // facade (which delegates to the same shared controller in production), so assert on it.
+      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+
+      expect(meetingManager.audioVideo?.chooseAudioOutput).toHaveBeenCalledWith(
+        'speaker-1'
+      );
     });
   });
 });

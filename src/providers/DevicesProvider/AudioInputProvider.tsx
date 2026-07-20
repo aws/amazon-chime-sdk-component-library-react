@@ -14,9 +14,8 @@ import React, {
   useState,
 } from 'react';
 
+import { useDeviceSource } from '../../hooks/sdk/useDeviceSource';
 import { AudioInputContextType, DeviceLabels } from '../../types';
-import { useAudioVideo } from '../AudioVideoProvider';
-import { useDeviceController } from '../DeviceControllerProvider';
 import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
@@ -35,11 +34,8 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const logger = useLogger();
   const meetingManager = useMeetingManager();
-  const audioVideo = useAudioVideo();
-  const deviceController = useDeviceController();
-  // Read the device source from the in-meeting facade, or the hosted controller before a meeting
-  // (opt-in). `undefined` when neither exists (not opted in, no meeting) -> effect no-ops as before.
-  const deviceSource = audioVideo ?? deviceController;
+  // In-meeting facade, or the hosted controller before a meeting (opt-in); undefined otherwise.
+  const deviceSource = useDeviceSource();
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
   const [selectedAudioInputDevice, setSelectedAudioInputDevice] = useState(
     meetingManager.selectedAudioInputDevice
