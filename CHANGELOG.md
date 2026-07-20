@@ -22,6 +22,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `DefaultDeviceController`; when provided, `join()` reuses it and `leave()` releases its media but
   does not destroy it (device selections persist for a warm rejoin). When not provided, `join()`
   creates its own controller and `leave()` destroys it — unchanged from before.
+- Added `hostDeviceController` and `enableWebAudio` props to `MeetingProvider`. When
+  `hostDeviceController` is set, `MeetingProvider` mounts an internal `DeviceControllerProvider`,
+  creates a `DefaultDeviceController` on mount (with `enableWebAudio`), and injects it into the
+  `MeetingManager` so device setup works before `join()`. When unset, `MeetingProvider` behaves
+  exactly as before (no controller created until `join()`).
 
 ### Removed
 
