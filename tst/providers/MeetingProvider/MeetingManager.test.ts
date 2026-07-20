@@ -37,8 +37,20 @@ describe('Meeting Manager', () => {
         listVideoInputDevices: jest.fn().mockReturnValue({}),
         listAudioOutputDevices: jest.fn().mockReturnValue({}),
         startAudioInput: jest.fn().mockReturnValue({}),
+        stopAudioInput: jest.fn().mockResolvedValue(undefined),
+        stopVideoInput: jest.fn().mockResolvedValue(undefined),
         setDeviceLabelTrigger: jest.fn().mockReturnValue({}),
         subscribeToActiveSpeakerDetector: jest.fn().mockReturnValue({}),
+        unsubscribeFromActiveSpeakerDetector: jest.fn().mockReturnValue({}),
+        stopContentShare: jest.fn().mockReturnValue({}),
+        stopLocalVideoTile: jest.fn().mockReturnValue({}),
+        unbindAudioElement: jest.fn().mockReturnValue({}),
+        stop: jest.fn().mockReturnValue({}),
+      },
+      // The controller MeetingManager creates on the non-opted-in path; leave() destroys it.
+      deviceController: {
+        chooseAudioOutput: jest.fn().mockResolvedValue(undefined),
+        destroy: jest.fn().mockResolvedValue(undefined),
       },
       eventController:  {
         addObserver: jest.fn().mockReturnValue({}),
@@ -77,6 +89,79 @@ describe('Meeting Manager', () => {
       expect(meetingManager?.audioVideo?.addObserver).toHaveBeenCalledTimes(
         1
       );
+    });
+  });
+
+  describe('leave', () => {
+    it('destroys the self-created controller and wipes device state when not opted in', async () => {
+      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+      meetingManager.selectedAudioOutputDevice = 'speaker-1';
+      // Capture the destroy spy before leave(): leave() nulls meetingSession, so it is unreachable
+      // through meetingManager.meetingSession afterward.
+      const destroySpy = meetingManager.meetingSession?.deviceController.destroy;
+
+      await meetingManager.leave();
+
+      // Not opted in => the controller MeetingManager created is destroyed on leave, and device
+      // state is fully reset (legacy behavior).
+      expect(destroySpy).toHaveBeenCalled();
+      expect(meetingManager.selectedAudioOutputDevice).toBeNull();
+      expect(meetingManager.selectedAudioInputDevice).toBeUndefined();
+      expect(meetingManager.audioVideo).toBeNull();
+    });
+  });
+
+  describe('with an injected device controller (opted in)', () => {
+    let injectedController: any;
+
+    beforeEach(() => {
+      injectedController = {
+        destroy: jest.fn().mockResolvedValue(undefined),
+        listAudioInputDevices: jest.fn().mockResolvedValue([]),
+        listVideoInputDevices: jest.fn().mockResolvedValue([]),
+        listAudioOutputDevices: jest.fn().mockResolvedValue([]),
+        startAudioInput: jest.fn().mockResolvedValue({}),
+        startVideoInput: jest.fn().mockResolvedValue({}),
+        stopAudioInput: jest.fn().mockResolvedValue(undefined),
+        stopVideoInput: jest.fn().mockResolvedValue(undefined),
+        chooseAudioOutput: jest.fn().mockResolvedValue(undefined),
+        setDeviceLabelTrigger: jest.fn(),
+        eventController: undefined,
+      };
+      meetingManager = new MeetingManager(
+        new ConsoleLogger('MeetingManager'),
+        injectedController
+      );
+    });
+
+    it('enumerates devices before a meeting via setupDevices (no MeetingSession)', async () => {
+      await meetingManager.setupDevices();
+
+      expect(injectedController.setDeviceLabelTrigger).toHaveBeenCalled();
+      expect(injectedController.listAudioInputDevices).toHaveBeenCalled();
+      // No meeting was ever joined.
+      expect(meetingManager.meetingSession).toBeNull();
+    });
+
+    it('reuses the injected controller on join instead of creating a new one', async () => {
+      // @ts-ignore - reset so we can assert it is NOT constructed on the opted-in path
+      DefaultDeviceController.mockClear?.();
+      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+      expect(DefaultDeviceController).not.toHaveBeenCalled();
+    });
+
+    it('does NOT destroy the injected controller on leave, and keeps the output selection', async () => {
+      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+      meetingManager.selectedAudioOutputDevice = 'speaker-1';
+
+      await meetingManager.leave();
+
+      // Provider owns the controller => must NOT be destroyed; output selection persists for rejoin.
+      expect(injectedController.destroy).not.toHaveBeenCalled();
+      expect(meetingManager.selectedAudioOutputDevice).toBe('speaker-1');
+      // Session is torn down; live input selections are cleared so the next setup re-acquires them.
+      expect(meetingManager.audioVideo).toBeNull();
+      expect(meetingManager.selectedAudioInputDevice).toBeUndefined();
     });
   });
 });

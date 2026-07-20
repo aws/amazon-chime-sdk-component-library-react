@@ -16,6 +16,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   to create and own a `DefaultDeviceController` before a meeting exists, so device setup (enumerate,
   select, preview, mic meter, permission prompt) can work before `join()`. `useDeviceController`
   returns `undefined` when not opted in, so existing behavior is unchanged.
+- Added `MeetingManager.setupDevices()`, an opt-in pre-meeting entry point that installs the
+  permission/device-label trigger and enumerates + default-selects devices with no `MeetingSession`
+  (uses the injected controller). `MeetingManager`'s constructor now accepts an optional
+  `DefaultDeviceController`; when provided, `join()` reuses it and `leave()` releases its media but
+  does not destroy it (device selections persist for a warm rejoin). When not provided, `join()`
+  creates its own controller and `leave()` destroys it — unchanged from before.
 
 ### Removed
 

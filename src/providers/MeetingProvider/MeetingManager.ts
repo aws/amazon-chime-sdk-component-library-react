@@ -110,12 +110,42 @@ export class MeetingManager implements AudioVideoObserver {
 
   private deviceLabels: DeviceLabels | DeviceLabelTrigger;
 
+  /**
+   * When the application opts in (via `MeetingProvider`'s `hostDeviceController`),
+   * `DeviceControllerProvider` creates a `DefaultDeviceController` before any meeting and injects it
+   * here. In that case device APIs work before `join()`, and this manager **borrows** the controller:
+   * it builds the session from it but never destroys it (the provider owns its lifecycle).
+   *
+   * When not opted in this stays `undefined`; `join()` creates its own controller and `leave()`
+   * destroys it — exactly the pre-existing behavior.
+   */
+  private injectedDeviceController: DefaultDeviceController | undefined;
+
+  private get controllerInjected(): boolean {
+    return !!this.injectedDeviceController;
+  }
+
+  /**
+   * The object device methods should target: the in-meeting `audioVideo` facade when a meeting is
+   * active, otherwise the injected pre-meeting controller (if opted in). Both implement the JS SDK
+   * `DeviceControllerFacade`, so list/select/observe/preview/analyser calls work through either.
+   * `undefined` only when there is no meeting AND no injected controller (not opted in) — in which
+   * case device methods are no-ops, exactly as before.
+   */
+  private get deviceSource():
+    | AudioVideoFacade
+    | DefaultDeviceController
+    | null {
+    return this.audioVideo ?? this.injectedDeviceController ?? null;
+  }
+
   getDeviceLabels(): DeviceLabels | DeviceLabelTrigger {
     return this.deviceLabels;
   }
 
-  constructor(logger: Logger) {
+  constructor(logger: Logger, deviceController?: DefaultDeviceController) {
     this.logger = logger;
+    this.injectedDeviceController = deviceController;
     this.eventDidReceiveRef = {
       eventDidReceive: (name: EventName, attributes: EventAttributes) => {
         this.publishEventDidReceiveUpdate(name, attributes);
@@ -123,20 +153,34 @@ export class MeetingManager implements AudioVideoObserver {
     };
   }
 
-  initializeMeetingManager(): void {
+  /**
+   * Reset session-scoped state only. Split out of `initializeMeetingManager()` so that an opted-in
+   * `leave()` can end the session while **keeping** device selection state for a warm rejoin.
+   */
+  private resetSessionState(): void {
     this.meetingSession = null;
     this.audioVideo = null;
     this.meetingSessionConfiguration = undefined;
     this.meetingId = null;
+    this.activeSpeakers = [];
+    this.activeSpeakerListener = null;
+    this.audioVideoObservers = {};
+  }
+
+  /** Reset device selection/enumeration state. Kept separate so it is only run on the legacy
+   * (self-created controller) path, where the controller is destroyed and device state must be wiped. */
+  private resetDeviceState(): void {
     this.selectedAudioOutputDevice = null;
     this.selectedAudioInputDevice = undefined;
     this.selectedVideoInputDevice = undefined;
     this.audioInputDevices = [];
     this.audioOutputDevices = [];
     this.videoInputDevices = [];
-    this.activeSpeakers = [];
-    this.activeSpeakerListener = null;
-    this.audioVideoObservers = {};
+  }
+
+  initializeMeetingManager(): void {
+    this.resetSessionState();
+    this.resetDeviceState();
   }
 
   async join(
@@ -153,9 +197,22 @@ export class MeetingManager implements AudioVideoObserver {
     this.meetingSessionConfiguration = meetingSessionConfiguration;
     this.meetingId = this.meetingSessionConfiguration.meetingId;
 
-    const deviceController = new DefaultDeviceController(this.logger, {
-      enableWebAudio: enableWebAudio,
-    });
+    let deviceController: DefaultDeviceController;
+    if (this.injectedDeviceController) {
+      // Opted in: reuse the provider-owned controller so pre-meeting device selections carry into
+      // the session. It may have been used by a prior meeting; `DefaultMeetingSession` only binds an
+      // eventController when one isn't already set, so clear the (now-stale) reference to let this
+      // session bind its own — otherwise device-level events would publish to a dead controller.
+      deviceController = this.injectedDeviceController;
+      deviceController.eventController = undefined;
+    } else {
+      // Not opted in: create the controller here, exactly as before. `enableWebAudio` comes from the
+      // join options on this legacy path.
+      deviceController = new DefaultDeviceController(this.logger, {
+        enableWebAudio: enableWebAudio,
+      });
+    }
+
     this.meetingSession = new DefaultMeetingSession(
       meetingSessionConfiguration,
       this.logger,
@@ -216,8 +273,18 @@ export class MeetingManager implements AudioVideoObserver {
       this.audioVideo.unbindAudioElement();
 
       try {
-        await this.meetingSession?.deviceController.chooseAudioOutput(null);
-        await this.meetingSession?.deviceController.destroy();
+        if (this.controllerInjected) {
+          // Opted in: the provider owns the controller, so release the media it holds (stop mic +
+          // camera) but do NOT destroy it — it must survive for a warm rejoin. Do not
+          // `chooseAudioOutput(null)` either; that is only a default-output selection and the output
+          // choice is convenient to preserve.
+          await this.audioVideo.stopAudioInput();
+          await this.audioVideo.stopVideoInput();
+        } else {
+          // Not opted in: destroy the controller this manager created, exactly as before.
+          await this.meetingSession?.deviceController.chooseAudioOutput(null);
+          await this.meetingSession?.deviceController.destroy();
+        }
       } catch (error) {
         this.logger.info(
           'MeetingManager failed to clean up media resources on leave'
@@ -232,7 +299,22 @@ export class MeetingManager implements AudioVideoObserver {
 
       this.audioVideo.stop();
     }
-    this.initializeMeetingManager();
+
+    if (this.controllerInjected) {
+      // Keep device selection state (warm rejoin); only tear down the session. But the streams were
+      // just stopped, so clear the tracked *input* selections — otherwise the next setupDevices()/
+      // listAndSelectDevices() would skip re-acquiring them (guard is `!selectedAudioInputDevice`),
+      // leaving a dead mic/camera while the UI still shows a device selected. Output selection (a
+      // setSinkId choice, no live stream) is left intact.
+      this.resetSessionState();
+      this.selectedAudioInputDevice = undefined;
+      this.publishSelectedAudioInputDevice();
+      this.selectedVideoInputDevice = undefined;
+      this.publishSelectedVideoInputDevice();
+    } else {
+      this.initializeMeetingManager();
+    }
+
     this.publishAudioVideo();
     this.publishActiveSpeaker();
   }
@@ -315,20 +397,24 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   async updateDeviceLists(): Promise<void> {
+    // `deviceSource` is the in-meeting facade, or the injected pre-meeting controller when opted in,
+    // so device enumeration works before `join()`. Falls back to `audioVideo` (today's behavior)
+    // when not opted in.
     this.audioInputDevices =
-      (await this.audioVideo?.listAudioInputDevices()) || [];
+      (await this.deviceSource?.listAudioInputDevices()) || [];
     this.videoInputDevices =
-      (await this.audioVideo?.listVideoInputDevices()) || [];
+      (await this.deviceSource?.listVideoInputDevices()) || [];
     this.audioOutputDevices =
-      (await this.audioVideo?.listAudioOutputDevices()) || [];
+      (await this.deviceSource?.listAudioOutputDevices()) || [];
   }
 
   setupDeviceLabelTrigger(
     deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo
   ): void {
     /**
-     * A builder can set device labels either using `meetingManager.join` or using `meetingManager.invokeDeviceProvider` methods.
-     * Both use `setupDeviceLabelTrigger` methods, thus, set the `deviceLabels` in this method.
+     * A builder can set device labels either using `meetingManager.join`,
+     * `meetingManager.invokeDeviceProvider`, or (opted in) `meetingManager.setupDevices`. All use
+     * `setupDeviceLabelTrigger`, thus, set the `deviceLabels` in this method.
      */
     this.deviceLabels = deviceLabels;
 
@@ -380,7 +466,19 @@ export class MeetingManager implements AudioVideoObserver {
       };
     }
 
-    this.audioVideo?.setDeviceLabelTrigger(callback);
+    this.deviceSource?.setDeviceLabelTrigger(callback);
+  }
+
+  /**
+   * Pre-meeting entry point (opt-in). Install the permission/label trigger, then enumerate and
+   * default-select devices — all with no `MeetingSession`, via the injected controller. Safe to call
+   * before a meeting exists. No-op source-wise if not opted in (no controller, no meeting).
+   */
+  async setupDevices(
+    deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo
+  ): Promise<void> {
+    this.setupDeviceLabelTrigger(deviceLabels);
+    await this.listAndSelectDevices(deviceLabels);
   }
 
   private setupActiveSpeakerDetection(
@@ -434,17 +532,20 @@ export class MeetingManager implements AudioVideoObserver {
       this.audioInputDevices &&
       this.audioInputDevices.length
     ) {
-      this.selectedAudioInputDevice = this.audioInputDevices[0].deviceId;
+      // Record + publish the selection only AFTER the input actually starts. If startAudioInput
+      // rejects (permission denied / device busy) — reachable pre-meeting via setupDevices() — we
+      // must not leave state claiming a mic is active while no stream was captured.
       try {
-        await this.audioVideo?.startAudioInput(
+        await this.deviceSource?.startAudioInput(
           this.audioInputDevices[0].deviceId
         );
+        this.selectedAudioInputDevice = this.audioInputDevices[0].deviceId;
+        this.publishSelectedAudioInputDevice();
       } catch (error) {
         this.logger.error(
           `MeetingManager failed to select audio input device on join: ${error}`
         );
       }
-      this.publishSelectedAudioInputDevice();
     }
     if (
       isAudioDeviceRequested &&
@@ -455,7 +556,7 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedAudioOutputDevice = this.audioOutputDevices[0].deviceId;
       if (new DefaultBrowserBehavior().supportsSetSinkId()) {
         try {
-          await this.audioVideo?.chooseAudioOutput(
+          await this.deviceSource?.chooseAudioOutput(
             this.audioOutputDevices[0].deviceId
           );
         } catch (error) {
@@ -479,7 +580,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   startAudioInputDevice = async (device: AudioInputDevice): Promise<void> => {
     try {
-      await this.audioVideo?.startAudioInput(device);
+      await this.deviceSource?.startAudioInput(device);
       this.selectedAudioInputDevice = device;
       this.publishSelectedAudioInputDevice();
     } catch (error) {
@@ -497,7 +598,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   startAudioOutputDevice = async (deviceId: string): Promise<void> => {
     try {
-      await this.audioVideo?.chooseAudioOutput(deviceId);
+      await this.deviceSource?.chooseAudioOutput(deviceId);
       this.selectedAudioOutputDevice = deviceId;
       this.publishSelectedAudioOutputDevice();
     } catch (error) {
@@ -510,7 +611,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   startVideoInputDevice = async (device: VideoInputDevice): Promise<void> => {
     try {
-      await this.audioVideo?.startVideoInput(device);
+      await this.deviceSource?.startVideoInput(device);
       this.selectedVideoInputDevice = device;
       this.publishSelectedVideoInputDevice();
     } catch (error) {
@@ -528,7 +629,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   stopVideoInputDevice = async (): Promise<void> => {
     try {
-      await this.audioVideo?.stopVideoInput();
+      await this.deviceSource?.stopVideoInput();
       this.selectedVideoInputDevice = undefined;
       this.publishSelectedVideoInputDevice();
     } catch (error) {
