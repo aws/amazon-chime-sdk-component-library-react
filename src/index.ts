@@ -131,6 +131,7 @@ export {
 } from './providers/DevicesProvider';
 export { useLocalAudioOutput } from './providers/LocalAudioOutputProvider';
 export { useLocalVideo } from './providers/LocalVideoProvider';
+export { useDeviceController } from './providers/DeviceControllerProvider';
 export {
   useContentShareState,
   useContentShareControls,
@@ -157,6 +158,7 @@ export { ContentShareProvider } from './providers/ContentShareProvider';
 export { AudioVideoProvider } from './providers/AudioVideoProvider';
 export { RosterProvider } from './providers/RosterProvider';
 export { DevicesProvider } from './providers/DevicesProvider';
+export { DeviceControllerProvider } from './providers/DeviceControllerProvider';
 export { RemoteVideoTileProvider } from './providers/RemoteVideoTileProvider';
 export { FeaturedVideoTileProvider } from './providers/FeaturedVideoTileProvider';
 export { VoiceFocusProvider } from './providers/VoiceFocusProvider';

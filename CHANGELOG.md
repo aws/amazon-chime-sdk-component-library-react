@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- Added `DeviceControllerProvider` and the `useDeviceController` hook. When opted in (via the
+  forthcoming `MeetingProvider` `hostDeviceController` prop), `MeetingProvider` mounts this internally
+  to create and own a `DefaultDeviceController` before a meeting exists, so device setup (enumerate,
+  select, preview, mic meter, permission prompt) can work before `join()`. `useDeviceController`
+  returns `undefined` when not opted in, so existing behavior is unchanged.
+
 ### Removed
 
 ### Changed
