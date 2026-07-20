@@ -10,11 +10,8 @@ import { useDeviceSource } from './useDeviceSource';
 export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
   const { selectedDevice } = useAudioInputs();
 
-  // Read the analyser from the in-meeting facade when a meeting is active, and otherwise from the
-  // hosted pre-meeting controller (opt-in). This lets the mic meter work BEFORE a meeting (pre-call
-  // lobby), where `audioVideo` is undefined but the hosted controller already owns a live audio
-  // input stream. Both expose the same `createAnalyserNodeForAudioInput` / device-change-observer
-  // API. `undefined` when neither exists (not opted in, no meeting) -> the effect no-ops as before.
+  // Resolves to the meeting's device source, or the controller hosted for use before a meeting, so
+  // the mic activity meter works both during and before a meeting.
   const deviceSource = useDeviceSource();
 
   useEffect(() => {

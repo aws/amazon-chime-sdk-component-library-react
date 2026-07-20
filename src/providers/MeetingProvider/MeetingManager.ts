@@ -111,22 +111,15 @@ export class MeetingManager implements AudioVideoObserver {
   private deviceLabels: DeviceLabels | DeviceLabelTrigger;
 
   /**
-   * When the application opts in (via `MeetingProvider`'s `persistDeviceController`),
-   * `DeviceControllerProvider` creates a `DefaultDeviceController` before any meeting and injects it
-   * here. In that case device APIs work before `join()`, and this manager **borrows** the controller:
-   * it builds the session from it but never destroys it (the provider owns its lifecycle).
-   *
-   * When not opted in this stays `undefined`; `join()` creates its own controller and `leave()`
-   * destroys it — exactly the pre-existing behavior.
+   * Device controller supplied by `MeetingProvider` when device setup is hosted independently of a
+   * meeting. When present, the manager borrows it — it builds the session from it and does not
+   * destroy it. When absent, the manager creates and destroys its own controller for each meeting.
    */
   private injectedDeviceController: DefaultDeviceController | undefined;
 
   /**
-   * The object device methods should target: the in-meeting `audioVideo` facade when a meeting is
-   * active, otherwise the injected pre-meeting controller (if opted in). Both implement the JS SDK
-   * `DeviceControllerFacade`, so list/select/observe/preview/analyser calls work through either.
-   * `undefined` only when there is no meeting AND no injected controller (not opted in) — in which
-   * case device methods are no-ops, exactly as before.
+   * Target for device operations: the meeting's `audioVideo` while in a meeting, otherwise the
+   * hosted controller. `null` when neither is available, in which case device operations are no-ops.
    */
   private get deviceSource():
     | AudioVideoFacade
@@ -149,10 +142,7 @@ export class MeetingManager implements AudioVideoObserver {
     };
   }
 
-  /**
-   * Reset session-scoped state only. Split out of `initializeMeetingManager()` so that an opted-in
-   * `leave()` can end the session while **keeping** device selection state for a warm rejoin.
-   */
+  /** Reset session-scoped state, leaving device selection state intact. */
   private resetSessionState(): void {
     this.meetingSession = null;
     this.audioVideo = null;
@@ -163,8 +153,7 @@ export class MeetingManager implements AudioVideoObserver {
     this.audioVideoObservers = {};
   }
 
-  /** Reset device selection/enumeration state. Kept separate so it is only run on the legacy
-   * (self-created controller) path, where the controller is destroyed and device state must be wiped. */
+  /** Reset device selection and enumeration state. */
   private resetDeviceState(): void {
     this.selectedAudioOutputDevice = null;
     this.selectedAudioInputDevice = undefined;
@@ -195,27 +184,20 @@ export class MeetingManager implements AudioVideoObserver {
 
     let deviceController: DefaultDeviceController;
     if (this.injectedDeviceController) {
-      // Opted in: reuse the provider-owned controller so pre-meeting device selections carry into
-      // the session. It may have been used by a prior meeting; `DefaultMeetingSession` only binds an
-      // eventController when one isn't already set, so clear the (now-stale) reference to let this
-      // session bind its own — otherwise device-level events would publish to a dead controller.
+      // Build the session from the hosted controller so device selections made before the meeting
+      // carry into it. Clear its event controller so this session binds its own.
       deviceController = this.injectedDeviceController;
       deviceController.eventController = undefined;
-      // `enableWebAudio` is constructor-only in the JS SDK, so on the opted-in path it was already
-      // fixed when `DeviceControllerProvider` built the controller (from `MeetingProvider`'s
-      // `enableWebAudio` prop). A value passed via `join()` options here cannot be applied and is
-      // silently dropped — warn so a builder migrating from the legacy join-option pattern doesn't
-      // get Voice Focus quietly disabled with no signal.
+      // Web Audio is fixed when the hosted controller is created (the MeetingProvider `enableWebAudio`
+      // prop), so an `enableWebAudio` join option cannot take effect here. Warn instead of ignoring it
+      // silently, which would leave Amazon Voice Focus unexpectedly disabled.
       if (enableWebAudio) {
         this.logger.warn(
-          'MeetingManager: `enableWebAudio` was passed to join(), but the device controller is ' +
-            'hosted by MeetingProvider (persistDeviceController). enableWebAudio is constructor-only ' +
-            'and must be set via the MeetingProvider `enableWebAudio` prop; the join() value is ignored.'
+          'MeetingManager: `enableWebAudio` passed to join() is ignored when the device controller ' +
+            'is hosted by MeetingProvider. Set the MeetingProvider `enableWebAudio` prop instead.'
         );
       }
     } else {
-      // Not opted in: create the controller here, exactly as before. `enableWebAudio` comes from the
-      // join options on this legacy path.
       deviceController = new DefaultDeviceController(this.logger, {
         enableWebAudio: enableWebAudio,
       });
@@ -283,22 +265,14 @@ export class MeetingManager implements AudioVideoObserver {
 
     try {
       if (this.injectedDeviceController) {
-        // Opted in: the provider owns the controller, so release the media it holds (stop mic +
-        // camera) but do NOT destroy it — it must survive for a warm rejoin. Do not
-        // `chooseAudioOutput(null)` either; that is only a default-output selection and the output
-        // choice is convenient to preserve. Release goes through the injected controller directly
-        // (not `audioVideo`) so a pre-meeting `leave()` — e.g. a lobby "cancel" after
-        // `setupDevices()` but before `join()`, when `audioVideo` is still null — still stops the
-        // live mic/camera the controller acquired, instead of leaking it until provider unmount.
+        // Release the mic and camera the hosted controller holds without destroying it, so it can be
+        // reused for a later meeting. Go through the controller directly rather than `audioVideo` so
+        // this also releases media acquired before a meeting. Clear the event controller so device
+        // operations before the next meeting do not report against the ended session.
         await this.injectedDeviceController.stopAudioInput();
         await this.injectedDeviceController.stopVideoInput();
-        // The controller is reused across meetings; drop the ended session's eventController so
-        // pre-rejoin device operations don't publish device events into a stale session (the next
-        // `join()` binds a fresh one). Cleared here, not only at join, to close the between-meetings
-        // window.
         this.injectedDeviceController.eventController = undefined;
       } else if (this.audioVideo) {
-        // Not opted in: destroy the controller this manager created, exactly as before.
         await this.meetingSession?.deviceController.chooseAudioOutput(null);
         await this.meetingSession?.deviceController.destroy();
       }
@@ -319,13 +293,9 @@ export class MeetingManager implements AudioVideoObserver {
     }
 
     if (this.injectedDeviceController) {
-      // Keep device selection state (warm rejoin); only tear down the session. But the streams were
-      // just stopped, so clear the tracked *input* selections — otherwise the next setupDevices()/
-      // listAndSelectDevices() would skip re-acquiring them (guard is `!selectedAudioInputDevice`),
-      // leaving a dead mic/camera while the UI still shows a device selected. Output selection (a
-      // setSinkId choice, no live stream) is left intact but is explicitly re-applied on the next
-      // join (see `listAndSelectDevices`), since a fresh session's audio-mix controller starts on
-      // the default sink.
+      // Tear down the session but keep device selection state for the next meeting. Clear the input
+      // selections whose streams were just stopped so they are re-acquired next time; the output
+      // selection is kept and re-applied on the next join (see `listAndSelectDevices`).
       this.resetSessionState();
       this.selectedAudioInputDevice = undefined;
       this.publishSelectedAudioInputDevice();
@@ -490,9 +460,9 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   /**
-   * Pre-meeting entry point (opt-in). Install the permission/label trigger, then enumerate and
-   * default-select devices — all with no `MeetingSession`, via the injected controller. Safe to call
-   * before a meeting exists. No-op source-wise if not opted in (no controller, no meeting).
+   * Prepare devices before a meeting: prompt for permission, then enumerate and select default
+   * devices. Requires `MeetingProvider`'s `persistDeviceController` so a controller is available
+   * before the meeting; otherwise this has no effect.
    */
   async setupDevices(
     deviceLabels: DeviceLabels | DeviceLabelTrigger = DeviceLabels.AudioAndVideo
@@ -588,10 +558,8 @@ export class MeetingManager implements AudioVideoObserver {
       this.selectedAudioOutputDevice &&
       new DefaultBrowserBehavior().supportsSetSinkId()
     ) {
-      // Warm rejoin (opted in): the output selection was preserved across `leave()`, so the guarded
-      // default-pick above is skipped — but the new meeting session's audio-mix controller starts on
-      // the default sink. Re-apply the preserved selection so remote audio actually routes to the
-      // chosen device instead of the system default (which would silently disagree with the UI).
+      // A device is already selected, so re-apply it to route audio to the chosen output for this
+      // meeting rather than the system default.
       try {
         await this.deviceSource?.chooseAudioOutput(
           this.selectedAudioOutputDevice

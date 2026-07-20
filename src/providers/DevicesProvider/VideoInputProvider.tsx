@@ -21,7 +21,6 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const logger = useLogger();
-  // In-meeting facade, or the hosted controller before a meeting (opt-in); undefined otherwise.
   const deviceSource = useDeviceSource();
   const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);
   const meetingManager = useMeetingManager();

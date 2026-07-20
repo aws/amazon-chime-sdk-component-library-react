@@ -34,7 +34,6 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const logger = useLogger();
   const meetingManager = useMeetingManager();
-  // In-meeting facade, or the hosted controller before a meeting (opt-in); undefined otherwise.
   const deviceSource = useDeviceSource();
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
   const [selectedAudioInputDevice, setSelectedAudioInputDevice] = useState(
