@@ -5,6 +5,7 @@ import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { useDeviceController } from '../../../providers/DeviceControllerProvider';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
@@ -26,6 +27,10 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
 ) => {
   const logger = useLogger();
   const audioVideo = useAudioVideo();
+  const deviceController = useDeviceController();
+  // In-meeting facade, or the hosted controller before a meeting (opt-in), so the preview works
+  // pre-meeting. `undefined` when neither exists -> the effects no-op, exactly as before.
+  const deviceSource = audioVideo ?? deviceController;
   const { selectedDevice } = useVideoInputs();
   const videoEl = useRef<HTMLVideoElement>(null);
   const meetingManager = useMeetingManager();
@@ -35,22 +40,22 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
     const videoElement = videoEl.current;
     return () => {
       if (videoElement) {
-        audioVideo?.stopVideoPreviewForVideoInput(videoElement);
-        audioVideo?.stopVideoInput();
+        deviceSource?.stopVideoPreviewForVideoInput(videoElement);
+        deviceSource?.stopVideoInput();
         setIsVideoEnabled(false);
       }
     };
-  }, [audioVideo]);
+  }, [deviceSource]);
 
   useEffect(() => {
     async function startPreview(): Promise<void> {
-      if (!audioVideo || !selectedDevice || !videoEl.current) {
+      if (!deviceSource || !selectedDevice || !videoEl.current) {
         return;
       }
 
       try {
         await meetingManager.startVideoInputDevice(selectedDevice);
-        audioVideo.startVideoPreviewForVideoInput(videoEl.current);
+        deviceSource.startVideoPreviewForVideoInput(videoEl.current);
         setIsVideoEnabled(true);
       } catch (error) {
         logger.error('Failed to start video preview');
@@ -58,7 +63,7 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
     }
 
     startPreview();
-  }, [audioVideo, selectedDevice]);
+  }, [deviceSource, selectedDevice]);
 
   return <StyledPreview {...props} ref={videoEl} />;
 };

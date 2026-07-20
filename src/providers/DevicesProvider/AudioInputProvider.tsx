@@ -16,6 +16,7 @@ import React, {
 
 import { AudioInputContextType, DeviceLabels } from '../../types';
 import { useAudioVideo } from '../AudioVideoProvider';
+import { useDeviceController } from '../DeviceControllerProvider';
 import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
@@ -35,6 +36,10 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
   const logger = useLogger();
   const meetingManager = useMeetingManager();
   const audioVideo = useAudioVideo();
+  const deviceController = useDeviceController();
+  // Read the device source from the in-meeting facade, or the hosted controller before a meeting
+  // (opt-in). `undefined` when neither exists (not opted in, no meeting) -> effect no-ops as before.
+  const deviceSource = audioVideo ?? deviceController;
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
   const [selectedAudioInputDevice, setSelectedAudioInputDevice] = useState(
     meetingManager.selectedAudioInputDevice
@@ -118,15 +123,15 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
     };
 
     async function initAudioInput(): Promise<void> {
-      if (!audioVideo) {
+      if (!deviceSource) {
         return;
       }
 
-      const devices = await audioVideo.listAudioInputDevices();
+      const devices = await deviceSource.listAudioInputDevices();
 
       if (isMounted) {
         setAudioInputs(devices);
-        audioVideo.addDeviceChangeObserver(observer);
+        deviceSource.addDeviceChangeObserver(observer);
       }
     }
 
@@ -140,10 +145,10 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
 
     return () => {
       isMounted = false;
-      audioVideo?.removeDeviceChangeObserver(observer);
+      deviceSource?.removeDeviceChangeObserver(observer);
       meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
-  }, [audioVideo, onDeviceReplacement]);
+  }, [deviceSource, onDeviceReplacement]);
 
   const contextValue: AudioInputContextType = useMemo(
     () => ({

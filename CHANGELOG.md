@@ -32,7 +32,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `AudioInputProvider`, `AudioOutputProvider`, `VideoInputProvider`, and `PreviewVideo` now resolve
+  their device source from `audioVideo ?? deviceController` (the hosted controller when opted in via
+  `hostDeviceController`), so device enumeration, device-change observers, and camera preview work
+  before a meeting. When not opted in, the source is `audioVideo` exactly as before.
+
 ### Fixed
+
+- Fixed `useLocalAudioInputActivity` so the microphone activity meter works before a meeting. The
+  hook now reads the audio analyser from the hosted `DefaultDeviceController`
+  (`audioVideo ?? deviceController`) when no meeting is active, and removes its device-change
+  observer on cleanup.
 
 
 ## [3.12.0] - 2025-06-10

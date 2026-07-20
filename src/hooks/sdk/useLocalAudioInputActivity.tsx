@@ -1,17 +1,27 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import type { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 import { useEffect } from 'react';
 
 import { useAudioVideo } from '../../providers/AudioVideoProvider';
+import { useDeviceController } from '../../providers/DeviceControllerProvider';
 import { useAudioInputs } from '../../providers/DevicesProvider';
 
 export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
   const audioVideo = useAudioVideo();
+  const deviceController = useDeviceController();
   const { selectedDevice } = useAudioInputs();
 
+  // Read the analyser from the in-meeting facade when a meeting is active, and otherwise from the
+  // hosted pre-meeting controller (opt-in). This lets the mic meter work BEFORE a meeting (pre-call
+  // lobby), where `audioVideo` is undefined but the hosted controller already owns a live audio
+  // input stream. Both expose the same `createAnalyserNodeForAudioInput` / device-change-observer
+  // API. `undefined` when neither exists (not opted in, no meeting) -> the effect no-ops as before.
+  const deviceSource = audioVideo ?? deviceController;
+
   useEffect(() => {
-    if (!audioVideo) {
+    if (!deviceSource) {
       return;
     }
 
@@ -22,16 +32,17 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
     let isMounted = true;
     let lastDecimal: number;
 
-    audioVideo.addDeviceChangeObserver({
+    const deviceChangeObserver: DeviceChangeObserver = {
       audioInputsChanged: () => {
         restart = true;
       },
-    });
+    };
+    deviceSource.addDeviceChangeObserver(deviceChangeObserver);
 
     function initializePreview() {
-      if (!audioVideo || !isMounted) return;
+      if (!deviceSource || !isMounted) return;
 
-      analyserNode = audioVideo.createAnalyserNodeForAudioInput();
+      analyserNode = deviceSource.createAnalyserNodeForAudioInput();
 
       if (!analyserNode?.getByteTimeDomainData) {
         return;
@@ -80,8 +91,9 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
 
     return () => {
       isMounted = false;
+      deviceSource.removeDeviceChangeObserver(deviceChangeObserver);
     };
-  }, [audioVideo, selectedDevice, cb]);
+  }, [deviceSource, selectedDevice, cb]);
 };
 
 export default useLocalAudioInputActivity;
