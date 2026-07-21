@@ -1,0 +1,188 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="SDK Hooks/useBackgroundSegmentation" />
+
+# useBackgroundSegmentation
+
+The `useBackgroundSegmentation` hook returns functions for creating a segmentation video device and switching effects at runtime, along with `isSupported` state indicating browser compatibility.
+
+This hook provides a unified API for background blur, color replacement, and image replacement. Once a segmentation device is created, you can switch between effects at runtime using `updateEffect` without recreating the device — avoiding blank frames during transitions, unlike `useBackgroundBlur` and `useBackgroundReplacement` which require separate providers and device recreation to switch effects. We recommend migrating to `useBackgroundSegmentation` for improved segmentation quality and seamless effect switching.
+
+Background segmentation related logs can be found in the browser developer tools when the provider is active.
+
+## Return Value
+
+```typescript
+{
+  // Whether background segmentation is supported in the current browser.
+  // Determined by checking for: WebGL2, WebAssembly, Web Workers, and OffscreenCanvas.
+  // The default value is undefined (check in progress), then resolves to true or false.
+  isSupported: boolean | undefined;
+
+  // Create a video transform device with the specified segmentation effect.
+  // Check isSupported before calling — throws if browser is not compatible.
+  createSegmentationDevice: (
+    device: Device,
+    config: BackgroundSegmentationVideoFrameProcessorConfig,
+    options?: { modelType?: ModelType; cpuUsagePercentage?: number }
+  ) => Promise<VideoTransformDevice>;
+
+  // Switch the active effect at runtime. Requires createSegmentationDevice to have been called first.
+  updateEffect: (config: BackgroundSegmentationVideoFrameProcessorConfig) => void;
+
+  // Change the segmentation model type at runtime (SELFIE_GENERAL or SELFIE_MULTICLASS).
+  updateModelType: (modelType: ModelType) => void;
+
+  // Change the CPU usage percentage budget at runtime (range: 10-80).
+  updateCPUUsagePercentage: (percentage: number) => void;
+}
+```
+
+## Effect Config Types
+
+The `updateEffect` method accepts a discriminated union config that enforces mutually exclusive effect properties at compile time:
+
+```typescript
+// Blur effect
+updateEffect({ type: ProcessorEffect.BLUR, blurStrength: BackgroundSegmentationBlurStrength.HIGH });
+
+// Color replacement
+updateEffect({ type: ProcessorEffect.COLOR_REPLACEMENT, replacementColor: '#FF0000' });
+
+// Image replacement
+updateEffect({ type: ProcessorEffect.IMAGE_REPLACEMENT, replacementImageURL: 'https://...' });
+```
+
+## Importing
+
+```javascript
+import { useBackgroundSegmentation } from 'amazon-chime-sdk-component-library-react';
+```
+
+The hook is available within any component nested inside `MeetingProvider` — no explicit `BackgroundSegmentationProvider` wrapping needed since it is auto-mounted internally.
+
+## Usage
+
+```jsx
+import React, { useState } from 'react';
+import {
+  isVideoTransformDevice,
+  ProcessorEffect,
+  BackgroundSegmentationBlurStrength,
+  BackgroundSegmentationVideoFrameProcessorConfig,
+  ModelType,
+} from 'amazon-chime-sdk-js';
+import {
+  MeetingProvider,
+  useMeetingManager,
+  useBackgroundSegmentation,
+  useVideoInputs,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const meetingManager = useMeetingManager();
+  const { selectedDevice } = useVideoInputs();
+  const {
+    isSupported,
+    createSegmentationDevice,
+    updateEffect,
+    updateModelType,
+    updateCPUUsagePercentage,
+  } = useBackgroundSegmentation();
+  const [isProcessorActive, setIsProcessorActive] = useState(false);
+
+  // Enable or switch effect (first activation creates the processor)
+  const enableEffect = async (
+    config: BackgroundSegmentationVideoFrameProcessorConfig,
+    modelType?: ModelType,
+    cpuUsagePercentage?: number
+  ) => {
+    if (!selectedDevice || !isSupported) return;
+
+    try {
+      if (!isProcessorActive) {
+        // First activation — create segmentation device
+        let current = selectedDevice;
+        if (isVideoTransformDevice(current)) {
+          const intrinsic = await current.intrinsicDevice();
+          await current.stop();
+          current = intrinsic;
+        }
+        const device = await createSegmentationDevice(current, config, { modelType, cpuUsagePercentage });
+        await meetingManager.startVideoInputDevice(device);
+        setIsProcessorActive(true);
+      } else {
+        // Processor already active — seamless switch (no blank frame)
+        updateModelType(modelType);
+        updateEffect(config);
+        updateCPUUsagePercentage(cpuUsagePercentage);
+      }
+    } catch (error) {
+      // Handle effect enablement failure here
+      console.error('Failed to enable background effect', error);
+    }
+  };
+
+   // Disable effect (stop transform device, return to raw camera)
+  const disableEffect = async () => {
+    if (!selectedDevice) return;
+
+    try {
+      let current = selectedDevice;
+      if (isVideoTransformDevice(current)) {
+        const intrinsic = await current.intrinsicDevice();
+        await current.stop();
+        current = intrinsic;
+      }
+      await meetingManager.startVideoInputDevice(current);
+      setIsProcessorActive(false);
+    } catch (error) {
+      // Handle effect disablement failure here
+      console.error('Failed to disable background effect', error);
+    }
+  };
+
+  return (
+    <div>
+      {isSupported && (
+        <>
+          <button onClick={() => enableEffect(
+            { type: ProcessorEffect.BLUR, blurStrength: BackgroundSegmentationBlurStrength.MEDIUM },
+            ModelType.SELFIE_GENERAL,
+            30
+          )}>
+            Blur (General, 30% CPU)
+          </button>
+          <button onClick={() => enableEffect(
+            { type: ProcessorEffect.COLOR_REPLACEMENT, replacementColor: '#0000FF' },
+            ModelType.SELFIE_MULTICLASS,
+            30
+          )}>
+            Color Replacement (Multiclass, 30% CPU)
+          </button>
+          <button onClick={() => enableEffect(
+            { type: ProcessorEffect.IMAGE_REPLACEMENT, replacementImageURL: 'https://example.com/bg.jpg' },
+            ModelType.SELFIE_MULTICLASS,
+            40
+          )}>
+            Image Replacement (Multiclass, 40% CPU)
+          </button>
+          <button onClick={disableEffect}>Disable</button>
+        </>
+      )}
+    </div>
+  );
+};
+```
+
+For a complete implementation with all 10 effect options (blur/color/image across General and Multiclass models), refer to the [meeting demo app](https://github.com/aws-samples/amazon-chime-sdk/tree/main/apps/meeting).
+
+### Dependencies
+
+- `MeetingProvider` (auto-mounts `BackgroundSegmentationProvider` internally)
