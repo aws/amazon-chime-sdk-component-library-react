@@ -1,0 +1,146 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="SDK Hooks/useBackgroundSegmentation" />
+
+# useBackgroundSegmentation
+
+The `useBackgroundSegmentation` hook returns functions for creating a segmentation video device and switching effects at runtime, along with `isSupported` state indicating browser compatibility.
+
+This hook provides a unified API for background blur, color replacement, and image replacement. Once a segmentation device is created, you can switch between effects at runtime using `updateEffect` without recreating the device — avoiding blank frames during transitions.
+
+Background segmentation related logs can be found in the browser developer tools when the provider is active.
+
+## Return Value
+
+```typescript
+{
+  // Whether background segmentation is supported. The default value is undefined, then changes to true or false.
+  isSupported: boolean | undefined;
+
+  // Create a video transform device with the segmentation processor applied.
+  createSegmentationDevice: (device: Device) => Promise<VideoTransformDevice>;
+
+  // Switch the active effect at runtime. Requires createSegmentationDevice to have been called first.
+  updateEffect: (config: BackgroundSegmentationVideoFrameProcessorConfig) => void;
+
+  // Change the segmentation model type at runtime (SELFIE_GENERAL or SELFIE_MULTICLASS).
+  updateModelType: (modelType: ModelType) => void;
+
+  // Change the CPU usage percentage budget at runtime (range: 10-80).
+  updateCPUUsagePercentage: (percentage: number) => void;
+}
+```
+
+## Effect Config Types
+
+The `updateEffect` method accepts a discriminated union config that enforces mutually exclusive effect properties at compile time:
+
+```typescript
+// Blur effect
+updateEffect({ type: ProcessorEffect.BLUR, blurStrength: BackgroundSegmentationBlurStrength.HIGH });
+
+// Color replacement
+updateEffect({ type: ProcessorEffect.COLOR_REPLACEMENT, replacementColor: '#FF0000' });
+
+// Image replacement
+updateEffect({ type: ProcessorEffect.IMAGE_REPLACEMENT, replacementImageURL: 'https://...' });
+```
+
+## Importing
+
+```javascript
+import { useBackgroundSegmentation } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook is available automatically within `MeetingProvider` (no explicit provider wrapping needed).
+
+```jsx
+import React, { useState, useEffect } from 'react';
+import {
+  isVideoTransformDevice,
+  ProcessorEffect,
+  BackgroundSegmentationBlurStrength,
+  ModelType,
+} from 'amazon-chime-sdk-js';
+import {
+  MeetingProvider,
+  BackgroundSegmentationProvider,
+  useMeetingManager,
+  useBackgroundSegmentation,
+  useVideoInputs,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const meetingManager = useMeetingManager();
+  const { selectedDevice } = useVideoInputs();
+  const {
+    isSupported,
+    createSegmentationDevice,
+    updateEffect,
+    updateModelType,
+    updateCPUUsagePercentage,
+  } = useBackgroundSegmentation();
+
+  const enableBlur = async () => {
+    if (!selectedDevice || !isSupported) return;
+
+    try {
+      const device = await createSegmentationDevice(selectedDevice);
+      updateEffect({
+        type: ProcessorEffect.BLUR,
+        blurStrength: BackgroundSegmentationBlurStrength.MEDIUM,
+      });
+      await meetingManager.startVideoInputDevice(device);
+    } catch (error) {
+      console.error('Failed to enable background blur', error);
+    }
+  };
+
+  // Switch to replacement — no device recreation needed
+  const switchToReplacement = () => {
+    updateEffect({
+      type: ProcessorEffect.COLOR_REPLACEMENT,
+      replacementColor: '#6E0FC3',
+    });
+  };
+
+  // Upgrade model quality at runtime
+  const upgradeModel = () => {
+    updateModelType(ModelType.SELFIE_MULTICLASS);
+  };
+
+  const disableEffect = async () => {
+    if (!selectedDevice) return;
+    if (isVideoTransformDevice(selectedDevice)) {
+      const intrinsic = await selectedDevice.intrinsicDevice();
+      await selectedDevice.stop();
+      await meetingManager.startVideoInputDevice(intrinsic);
+    }
+  };
+
+  return (
+    <div>
+      {isSupported && (
+        <>
+          <button onClick={enableBlur}>Enable Blur</button>
+          <button onClick={switchToReplacement}>Switch to Color Replacement</button>
+          <button onClick={upgradeModel}>High Quality Model</button>
+          <button onClick={disableEffect}>Disable</button>
+        </>
+      )}
+    </div>
+  );
+};
+```
+
+### Dependencies
+
+- `MeetingProvider` (auto-mounts `BackgroundSegmentationProvider` internally)

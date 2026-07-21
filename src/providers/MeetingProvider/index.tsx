@@ -8,6 +8,7 @@ import {
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { AudioVideoProvider } from '../AudioVideoProvider';
+import { BackgroundSegmentationProvider } from '../BackgroundSegmentationProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
 import { DevicesProvider } from '../DevicesProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
@@ -82,7 +83,9 @@ export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
                   <LocalAudioOutputProvider>
                     <ContentShareProvider maxContentShares={maxContentShares}>
                       <FeaturedVideoTileProvider>
-                        {children}
+                        <BackgroundSegmentationProvider effect="none">
+                          {children}
+                        </BackgroundSegmentationProvider>
                       </FeaturedVideoTileProvider>
                     </ContentShareProvider>
                   </LocalAudioOutputProvider>

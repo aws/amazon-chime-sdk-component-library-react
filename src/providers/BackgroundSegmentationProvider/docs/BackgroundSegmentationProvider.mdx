@@ -1,0 +1,169 @@
+import { Meta, ArgTypes } from '@storybook/blocks';
+import { BackgroundSegmentationProvider } from '../';
+
+<Meta title="SDK Providers/BackgroundSegmentationProvider" />
+
+# BackgroundSegmentationProvider
+
+The `BackgroundSegmentationProvider` provides a unified interface for background blur, color replacement, and image replacement using the new `BackgroundSegmentationVideoFrameProcessor` (CDN-loaded ML model with improved segmentation quality).
+
+This provider manages a single processor instance that supports runtime switching between effects without recreating the processor or causing blank frames during transitions.
+
+`BackgroundSegmentationProvider` is auto-mounted inside `MeetingProvider` with `effect="none"`, so consumers can use `useBackgroundSegmentation()` without any explicit wrapping. The provider remains inert (zero-cost) until `createSegmentationDevice()` is called — no assets are loaded and no processor is created until then.
+
+Background segmentation related logs can be found in the browser developer tools when the provider is active.
+
+## State
+
+```typescript
+{
+  // Whether background segmentation is supported. The default value is undefined, then changes to true or false.
+  isSupported: boolean | undefined;
+
+  // Create a video transform device with the current segmentation effect applied.
+  createSegmentationDevice: (device: Device) => Promise<VideoTransformDevice>;
+
+  // Switch the active effect at runtime (blur, color-replacement, image-replacement).
+  updateEffect: (config: BackgroundSegmentationVideoFrameProcessorConfig) => void;
+
+  // Change the segmentation model type at runtime.
+  updateModelType: (modelType: ModelType) => void;
+
+  // Change the CPU usage percentage budget at runtime (range: 10-80).
+  updateCPUUsagePercentage: (percentage: number) => void;
+}
+```
+
+You can check whether or not the processor is supported by checking the state of `isSupported`.
+`createSegmentationDevice` will throw an error if the browser does not support the required features (WebGL2, WebAssembly, Web Workers, OffscreenCanvas).
+You should check `isSupported` before calling `createSegmentationDevice`.
+
+Once you have a `VideoTransformDevice`, you can switch between blur, color replacement, and image replacement at runtime using `updateEffect` — no need to destroy and recreate the device.
+
+You can access the state by using the [useBackgroundSegmentation](/docs/sdk-hooks-usebackgroundsegmentation--page) hook.
+
+## Props
+
+<ArgTypes of={BackgroundSegmentationProvider} />
+
+## Importing
+
+```javascript
+import { BackgroundSegmentationProvider } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+```jsx
+import React, { useState, useEffect } from 'react';
+import {
+  isVideoTransformDevice,
+  ModelType,
+  ProcessorEffect,
+  BackgroundSegmentationBlurStrength,
+} from 'amazon-chime-sdk-js';
+import {
+  MeetingProvider,
+  BackgroundSegmentationProvider,
+  useMeetingManager,
+  useBackgroundSegmentation,
+  useVideoInputs,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MyChild />
+  </MeetingProvider>
+);
+
+const MyChild = () => {
+  const meetingManager = useMeetingManager();
+  const { selectedDevice } = useVideoInputs();
+  const {
+    isSupported,
+    createSegmentationDevice,
+    updateEffect,
+    updateModelType,
+  } = useBackgroundSegmentation();
+  const [isBlurOn, setIsBlurOn] = useState(false);
+
+  useEffect(() => {
+    async function toggleBlur() {
+      if (!selectedDevice) return;
+
+      try {
+        let current = selectedDevice;
+        if (isBlurOn) {
+          current = await createSegmentationDevice(selectedDevice);
+          updateEffect({
+            type: ProcessorEffect.BLUR,
+            blurStrength: BackgroundSegmentationBlurStrength.MEDIUM,
+          });
+        } else {
+          if (isVideoTransformDevice(selectedDevice)) {
+            const intrinsic = await selectedDevice.intrinsicDevice();
+            await selectedDevice.stop();
+            current = intrinsic;
+          }
+        }
+        await meetingManager.startVideoInputDevice(current);
+      } catch (error) {
+        console.error('Failed to toggle background segmentation');
+      }
+    }
+
+    toggleBlur();
+  }, [isBlurOn]);
+
+  // Switch to color replacement at runtime (no device recreation needed)
+  const switchToColorReplacement = () => {
+    updateEffect({
+      type: ProcessorEffect.COLOR_REPLACEMENT,
+      replacementColor: '#0000FF',
+    });
+  };
+
+  // Switch to image replacement at runtime
+  const switchToImageReplacement = () => {
+    updateEffect({
+      type: ProcessorEffect.IMAGE_REPLACEMENT,
+      replacementImageURL: 'https://example.com/background.jpg',
+    });
+  };
+
+  return (
+    <div>
+      {isSupported && (
+        <>
+          <button onClick={() => setIsBlurOn((prev) => !prev)}>
+            {isBlurOn ? 'Disable Background Effect' : 'Enable Background Blur'}
+          </button>
+          {isBlurOn && (
+            <>
+              <button onClick={switchToColorReplacement}>
+                Switch to Color Replacement
+              </button>
+              <button onClick={switchToImageReplacement}>
+                Switch to Image Replacement
+              </button>
+              <button onClick={() => updateModelType(ModelType.SELFIE_MULTICLASS)}>
+                Use High Quality Model
+              </button>
+            </>
+          )}
+        </>
+      )}
+    </div>
+  );
+};
+```
+
+### Migration from V1 Providers
+
+- `BackgroundBlurProvider` → `BackgroundSegmentationProvider` with `effect="blur"`
+- `BackgroundReplacementProvider` → `BackgroundSegmentationProvider` with `effect="color-replacement"` or `effect="image-replacement"`
+- V1 providers remain unchanged and can coexist with the new provider.
+
+### Dependencies
+
+- `MeetingProvider` (auto-mounts `BackgroundSegmentationProvider` internally)

@@ -120,6 +120,7 @@ export { useMeetingManager } from './providers/MeetingProvider';
 export { useVoiceFocus } from './providers/VoiceFocusProvider';
 export { useBackgroundBlur } from './providers/BackgroundBlurProvider';
 export { useBackgroundReplacement } from './providers/BackgroundReplacementProvider';
+export { useBackgroundSegmentation } from './providers/BackgroundSegmentationProvider';
 export { useAudioVideo } from './providers/AudioVideoProvider';
 export { useRosterState } from './providers/RosterProvider';
 export { useRemoteVideoTileState } from './providers/RemoteVideoTileProvider';
@@ -163,6 +164,11 @@ export { FeaturedVideoTileProvider } from './providers/FeaturedVideoTileProvider
 export { VoiceFocusProvider } from './providers/VoiceFocusProvider';
 export { BackgroundBlurProvider } from './providers/BackgroundBlurProvider';
 export { BackgroundReplacementProvider } from './providers/BackgroundReplacementProvider';
+export { BackgroundSegmentationProvider } from './providers/BackgroundSegmentationProvider';
+export type {
+  BackgroundSegmentationProviderProps,
+  BackgroundSegmentationState,
+} from './providers/BackgroundSegmentationProvider';
 
 export {
   UserActivityProvider,
