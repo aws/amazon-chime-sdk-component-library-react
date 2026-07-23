@@ -158,7 +158,6 @@ export { ContentShareProvider } from './providers/ContentShareProvider';
 export { AudioVideoProvider } from './providers/AudioVideoProvider';
 export { RosterProvider } from './providers/RosterProvider';
 export { DevicesProvider } from './providers/DevicesProvider';
-export { DeviceControllerProvider } from './providers/DeviceControllerProvider';
 export { RemoteVideoTileProvider } from './providers/RemoteVideoTileProvider';
 export { FeaturedVideoTileProvider } from './providers/FeaturedVideoTileProvider';
 export { VoiceFocusProvider } from './providers/VoiceFocusProvider';

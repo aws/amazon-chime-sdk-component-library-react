@@ -11,44 +11,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added `DeviceControllerProvider` and the `useDeviceController` hook. When opted in (via the
-  forthcoming `MeetingProvider` `persistDeviceController` prop), `MeetingProvider` mounts this internally
-  to create and own a `DefaultDeviceController` before a meeting exists, so device setup (enumerate,
-  select, preview, mic meter, permission prompt) can work before `join()`. `useDeviceController`
-  returns `undefined` when not opted in, so existing behavior is unchanged.
-- Added `MeetingManager.setupDevices()`, an opt-in pre-meeting entry point that installs the
-  permission/device-label trigger and enumerates + default-selects devices with no `MeetingSession`
-  (uses the injected controller). `MeetingManager`'s constructor now accepts an optional
-  `DefaultDeviceController`; when provided, `join()` reuses it and `leave()` releases its media but
-  does not destroy it (device selections persist for a warm rejoin). When not provided, `join()`
-  creates its own controller and `leave()` destroys it — unchanged from before.
-- Added `persistDeviceController` and `enableWebAudio` props to `MeetingProvider`. When
-  `persistDeviceController` is set, `MeetingProvider` mounts an internal `DeviceControllerProvider`,
-  creates a `DefaultDeviceController` on mount (with `enableWebAudio`), and injects it into the
-  `MeetingManager` so device setup works before `join()`. When unset, `MeetingProvider` behaves
-  exactly as before (no controller created until `join()`). On the opted-in path, `MeetingManager`
-  re-applies the preserved audio output device on a warm rejoin (so remote audio routes to the
-  selected speaker, not the system default), releases controller media on a pre-meeting `leave()`,
-  and clears the controller's stale `eventController` on `leave()`. If `MeetingProvider` unmounts
-  while a meeting is still live, it now stops the session before the hosted controller is destroyed.
+- Added an opt-in `persistDeviceController` prop to `MeetingProvider`. When set, device setup —
+  enumerating devices, selecting inputs and outputs, previewing the camera, and metering the
+  microphone — works before joining a meeting, and the selected devices persist across leaving and
+  rejoining. Pass the optional `enableWebAudio` prop alongside it to enable Web Audio (required for
+  Amazon Voice Focus) before joining. The exported `useDeviceController` hook returns the device
+  controller for building custom pre-meeting device UIs, or `undefined` when the prop is not set.
+  Behavior is unchanged when `persistDeviceController` is not set.
 
 ### Removed
 
 ### Changed
 
-- `AudioInputProvider`, `AudioOutputProvider`, `VideoInputProvider`, and `PreviewVideo` now resolve
-  their device source from `audioVideo ?? deviceController` (the hosted controller when opted in via
-  `persistDeviceController`) through the new internal `useDeviceSource` hook, so device enumeration,
-  device-change observers, and camera preview work before a meeting. When not opted in, the source is
-  `audioVideo` exactly as before. `PreviewVideo` only stops the camera input when no meeting is active
-  at cleanup, so it no longer stops the meeting's camera at the pre-meeting → in-meeting handoff.
-
 ### Fixed
-
-- Fixed `useLocalAudioInputActivity` so the microphone activity meter works before a meeting. The
-  hook now reads the audio analyser from the hosted `DefaultDeviceController`
-  (`audioVideo ?? deviceController`) when no meeting is active, and removes its device-change
-  observer on cleanup.
 
 
 ## [3.12.0] - 2025-06-10

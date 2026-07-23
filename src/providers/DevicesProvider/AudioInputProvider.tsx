@@ -14,8 +14,8 @@ import React, {
   useState,
 } from 'react';
 
-import { useDeviceSource } from '../../hooks/sdk/useDeviceSource';
 import { AudioInputContextType, DeviceLabels } from '../../types';
+import { useDeviceController } from '../DeviceControllerProvider';
 import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
@@ -34,7 +34,7 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const logger = useLogger();
   const meetingManager = useMeetingManager();
-  const deviceSource = useDeviceSource();
+  const deviceSource = useDeviceController();
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
   const [selectedAudioInputDevice, setSelectedAudioInputDevice] = useState(
     meetingManager.selectedAudioInputDevice

@@ -4,15 +4,12 @@
 import type { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 import { useEffect } from 'react';
 
+import { useDeviceController } from '../../providers/DeviceControllerProvider';
 import { useAudioInputs } from '../../providers/DevicesProvider';
-import { useDeviceSource } from './useDeviceSource';
 
 export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
   const { selectedDevice } = useAudioInputs();
-
-  // Resolves to the meeting's device source, or the controller hosted for use before a meeting, so
-  // the mic activity meter works both during and before a meeting.
-  const deviceSource = useDeviceSource();
+  const deviceSource = useDeviceController();
 
   useEffect(() => {
     if (!deviceSource) {

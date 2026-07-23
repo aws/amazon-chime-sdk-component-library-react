@@ -10,8 +10,8 @@ import React, {
   useState,
 } from 'react';
 
-import { useDeviceSource } from '../../hooks/sdk/useDeviceSource';
 import { AudioOutputContextType } from '../../types';
+import { useDeviceController } from '../DeviceControllerProvider';
 import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
@@ -21,7 +21,7 @@ export const AudioOutputProvider: React.FC<
   React.PropsWithChildren<unknown>
 > = ({ children }) => {
   const logger = useLogger();
-  const deviceSource = useDeviceSource();
+  const deviceSource = useDeviceController();
   const [audioOutputs, setAudioOutputs] = useState<MediaDeviceInfo[]>([]);
   const meetingManager = useMeetingManager();
   const [selectedAudioOutputDevice, setSelectedAudioOutputDevice] = useState(

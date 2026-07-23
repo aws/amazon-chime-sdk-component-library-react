@@ -9,11 +9,32 @@ import {
   DefaultBrowserBehavior,
   DefaultDeviceController,
   DefaultMeetingSession,
+  DeviceControllerBasedMediaStreamBroker,
   MeetingSessionConfiguration,
 } from 'amazon-chime-sdk-js';
 
 import { MeetingManager } from '../../../src/providers/MeetingProvider/MeetingManager';
 import { MeetingManagerJoinOptions } from '../../../src/providers/MeetingProvider/types';
+
+// A fake device controller. All device operations run through this in the unified design (before and
+// during a meeting), so tests assert on it rather than on the `audioVideo` facade.
+function makeController(): any {
+  return {
+    listAudioInputDevices: jest.fn().mockResolvedValue([]),
+    listVideoInputDevices: jest.fn().mockResolvedValue([]),
+    listAudioOutputDevices: jest.fn().mockResolvedValue([]),
+    startAudioInput: jest.fn().mockResolvedValue({}),
+    startVideoInput: jest.fn().mockResolvedValue({}),
+    stopAudioInput: jest.fn().mockResolvedValue(undefined),
+    stopVideoInput: jest.fn().mockResolvedValue(undefined),
+    chooseAudioOutput: jest.fn().mockResolvedValue(undefined),
+    setDeviceLabelTrigger: jest.fn(),
+    addDeviceChangeObserver: jest.fn(),
+    removeDeviceChangeObserver: jest.fn(),
+    destroy: jest.fn().mockResolvedValue(undefined),
+    eventController: undefined,
+  };
+}
 
 describe('Meeting Manager', () => {
   let mockMeetingManagerJoinOptions: MeetingManagerJoinOptions;
@@ -31,182 +52,238 @@ describe('Meeting Manager', () => {
       .spyOn(DefaultBrowserBehavior.prototype, 'supportsSetSinkId')
       .mockReturnValue(true);
     meetingManager = new MeetingManager(new ConsoleLogger('MeetingManager'));
+    // Not opted in: join() creates the controller. Hand back a fake so device ops resolve.
     // @ts-ignore
-    DefaultDeviceController = jest.fn().mockReturnValue({});
+    DefaultDeviceController = jest
+      .fn()
+      .mockImplementation(() => makeController());
+    // The session's audioVideo exposes only *session* operations. Device operations must go through
+    // the device controller, not this facade — so omitting them here makes a misroute fail loudly.
     // @ts-ignore
-    DefaultMeetingSession = jest.fn().mockReturnValue({
+    DefaultMeetingSession = jest.fn().mockImplementation(() => ({
       audioVideo: {
         addObserver: jest.fn().mockReturnValue({}),
         removeObserver: jest.fn().mockReturnValue({}),
-        listAudioInputDevices: jest.fn().mockReturnValue({}),
-        listVideoInputDevices: jest.fn().mockReturnValue({}),
-        listAudioOutputDevices: jest.fn().mockReturnValue({}),
-        startAudioInput: jest.fn().mockReturnValue({}),
-        stopAudioInput: jest.fn().mockResolvedValue(undefined),
-        stopVideoInput: jest.fn().mockResolvedValue(undefined),
-        chooseAudioOutput: jest.fn().mockResolvedValue(undefined),
-        setDeviceLabelTrigger: jest.fn().mockReturnValue({}),
         subscribeToActiveSpeakerDetector: jest.fn().mockReturnValue({}),
         unsubscribeFromActiveSpeakerDetector: jest.fn().mockReturnValue({}),
         stopContentShare: jest.fn().mockReturnValue({}),
         stopLocalVideoTile: jest.fn().mockReturnValue({}),
         unbindAudioElement: jest.fn().mockReturnValue({}),
+        start: jest.fn().mockReturnValue({}),
         stop: jest.fn().mockReturnValue({}),
       },
-      // The controller MeetingManager creates on the non-opted-in path; leave() destroys it.
-      deviceController: {
-        chooseAudioOutput: jest.fn().mockResolvedValue(undefined),
-        destroy: jest.fn().mockResolvedValue(undefined),
-      },
-      eventController:  {
+      eventController: {
         addObserver: jest.fn().mockReturnValue({}),
         removeObserver: jest.fn().mockReturnValue({}),
       },
-    });
+    }));
     GlobalAny.navigator = jest.fn().mockReturnValue({
       mediaDevices: jest.fn().mockReturnValue({
         enumerateDevices: jest.fn().mockReturnValue(() => {}),
         getUserMedia: jest.fn().mockReturnValue({
-          some: () => {}
+          some: () => {},
         }),
-      })
+      }),
+    });
+  });
+
+  describe('constructor', () => {
+    it('does not create a device controller when none is supplied (not opted in)', () => {
+      // The controller is created by join() (or supplied by the provider), never in the constructor,
+      // so a not-opted-in app performs no device work before joining.
+      expect(meetingManager.deviceController).toBeUndefined();
+      expect(DefaultDeviceController).not.toHaveBeenCalled();
     });
   });
 
   describe('join', () => {
     it('should call subscribeToActiveSpeakerDetector with new DefaultActiveSpeakerPolicy if one is not passed via MeetinManagerJoinOptions', async () => {
-      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
-      expect(meetingManager?.audioVideo?.subscribeToActiveSpeakerDetector).toHaveBeenCalledWith(
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      expect(
+        meetingManager?.audioVideo?.subscribeToActiveSpeakerDetector
+      ).toHaveBeenCalledWith(
         new DefaultActiveSpeakerPolicy(),
-        meetingManager.activeSpeakerListener,
+        meetingManager.activeSpeakerListener
       );
-      expect(meetingManager?.audioVideo?.subscribeToActiveSpeakerDetector).toHaveBeenCalledTimes(
-        1
-      );
+      expect(
+        meetingManager?.audioVideo?.subscribeToActiveSpeakerDetector
+      ).toHaveBeenCalledTimes(1);
     });
 
     it('should call DefaultMeetingSession', async () => {
-      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
       expect(DefaultMeetingSession).toHaveBeenCalledTimes(1);
     });
 
     it('should call addObserver on AudioVideoFacade', async () => {
-      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
-      expect(meetingManager?.audioVideo?.addObserver).toHaveBeenCalledTimes(
-        1
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
       );
+      expect(meetingManager?.audioVideo?.addObserver).toHaveBeenCalledTimes(1);
+    });
+
+    it('creates the device controller when not opted in and publishes it', async () => {
+      const received: (DeviceControllerBasedMediaStreamBroker | undefined)[] =
+        [];
+      meetingManager.subscribeToDeviceController((dc) => received.push(dc));
+
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+
+      // join() created a controller and published it; it is now the manager's device source.
+      expect(DefaultDeviceController).toHaveBeenCalledTimes(1);
+      expect(meetingManager.deviceController).toBeDefined();
+      expect(received[received.length - 1]).toBe(meetingManager.deviceController);
+    });
+
+    it('builds the session from the same controller and selects devices through it', async () => {
+      await meetingManager.join(mockMeetingSessionConfiguration, {
+        ...mockMeetingManagerJoinOptions,
+      });
+      // Device enumeration during join goes through the controller, not the audioVideo facade.
+      expect(
+        meetingManager.deviceController?.listAudioInputDevices
+      ).toHaveBeenCalled();
+      expect(
+        meetingManager.deviceController?.setDeviceLabelTrigger
+      ).toHaveBeenCalled();
     });
   });
 
-  describe('leave', () => {
-    it('destroys the self-created controller and wipes device state when not opted in', async () => {
-      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+  describe('leave (not opted in)', () => {
+    it('destroys the self-created controller, clears and republishes it, and wipes device state', async () => {
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
       meetingManager.selectedAudioOutputDevice = 'speaker-1';
-      // Capture the destroy spy before leave(): leave() nulls meetingSession, so it is unreachable
-      // through meetingManager.meetingSession afterward.
-      const destroySpy = meetingManager.meetingSession?.deviceController.destroy;
+      const controller = meetingManager.deviceController;
+      const received: (DeviceControllerBasedMediaStreamBroker | undefined)[] =
+        [];
+      meetingManager.subscribeToDeviceController((dc) => received.push(dc));
 
       await meetingManager.leave();
 
-      // Not opted in => the controller MeetingManager created is destroyed on leave, and device
-      // state is fully reset (legacy behavior).
-      expect(destroySpy).toHaveBeenCalled();
+      // Not opted in => the controller join() created is destroyed and cleared, and device state is
+      // fully reset (legacy behavior). Consumers are told the controller is gone.
+      expect(controller?.destroy).toHaveBeenCalled();
+      expect(meetingManager.deviceController).toBeUndefined();
+      expect(received[received.length - 1]).toBeUndefined();
       expect(meetingManager.selectedAudioOutputDevice).toBeNull();
       expect(meetingManager.selectedAudioInputDevice).toBeUndefined();
       expect(meetingManager.audioVideo).toBeNull();
     });
+
+    it('is safe to call with no meeting and no controller', async () => {
+      // A not-opted-in app that never joined has no controller; leave() must not throw.
+      await expect(meetingManager.leave()).resolves.toBeUndefined();
+      expect(meetingManager.deviceController).toBeUndefined();
+    });
   });
 
-  describe('with an injected device controller (opted in)', () => {
-    let injectedController: any;
+  describe('with a hosted device controller (opted in)', () => {
+    let hostedController: any;
 
     beforeEach(() => {
-      injectedController = {
-        destroy: jest.fn().mockResolvedValue(undefined),
-        listAudioInputDevices: jest.fn().mockResolvedValue([]),
-        listVideoInputDevices: jest.fn().mockResolvedValue([]),
-        listAudioOutputDevices: jest.fn().mockResolvedValue([]),
-        startAudioInput: jest.fn().mockResolvedValue({}),
-        startVideoInput: jest.fn().mockResolvedValue({}),
-        stopAudioInput: jest.fn().mockResolvedValue(undefined),
-        stopVideoInput: jest.fn().mockResolvedValue(undefined),
-        chooseAudioOutput: jest.fn().mockResolvedValue(undefined),
-        setDeviceLabelTrigger: jest.fn(),
-        eventController: undefined,
-      };
+      hostedController = makeController();
+      // Provider hands the controller to the constructor with persist = true.
       meetingManager = new MeetingManager(
         new ConsoleLogger('MeetingManager'),
-        injectedController
+        hostedController,
+        true
       );
     });
 
-    it('enumerates devices before a meeting via setupDevices (no MeetingSession)', async () => {
-      await meetingManager.setupDevices();
-
-      expect(injectedController.setDeviceLabelTrigger).toHaveBeenCalled();
-      expect(injectedController.listAudioInputDevices).toHaveBeenCalled();
-      // No meeting was ever joined.
-      expect(meetingManager.meetingSession).toBeNull();
+    it('exposes the hosted controller immediately (before any meeting)', () => {
+      expect(meetingManager.deviceController).toBe(hostedController);
+      // subscribe should call back synchronously with the current controller.
+      const received: (DeviceControllerBasedMediaStreamBroker | undefined)[] =
+        [];
+      meetingManager.subscribeToDeviceController((dc) => received.push(dc));
+      expect(received[0]).toBe(hostedController);
     });
 
-    it('reuses the injected controller on join instead of creating a new one', async () => {
+    it('reuses the hosted controller on join instead of creating a new one', async () => {
       // @ts-ignore - reset so we can assert it is NOT constructed on the opted-in path
       DefaultDeviceController.mockClear?.();
-      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
       expect(DefaultDeviceController).not.toHaveBeenCalled();
+      expect(meetingManager.deviceController).toBe(hostedController);
     });
 
-    it('does NOT destroy the injected controller on leave, and keeps the output selection', async () => {
-      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+    it('does NOT destroy the hosted controller on leave, and keeps the output selection', async () => {
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
       meetingManager.selectedAudioOutputDevice = 'speaker-1';
 
       await meetingManager.leave();
 
       // Provider owns the controller => must NOT be destroyed; output selection persists for rejoin.
-      expect(injectedController.destroy).not.toHaveBeenCalled();
+      expect(hostedController.destroy).not.toHaveBeenCalled();
+      expect(meetingManager.deviceController).toBe(hostedController);
       expect(meetingManager.selectedAudioOutputDevice).toBe('speaker-1');
       // Session is torn down; live input selections are cleared so the next setup re-acquires them.
       expect(meetingManager.audioVideo).toBeNull();
       expect(meetingManager.selectedAudioInputDevice).toBeUndefined();
     });
 
-    it('releases the injected controller media on a pre-meeting leave (no meeting yet)', async () => {
-      // setupDevices() acquires a live mic on the injected controller with no meeting (audioVideo null).
-      await meetingManager.setupDevices();
+    it('releases the hosted controller media on a pre-meeting leave (no meeting yet)', async () => {
+      // No meeting was joined (audioVideo null), but the controller may hold a live mic/camera from
+      // device setup. A pre-meeting leave() (e.g. lobby "cancel") must still stop its streams.
       expect(meetingManager.audioVideo).toBeNull();
 
-      // A pre-meeting leave() (e.g. lobby "cancel") must still stop the controller's streams, not skip
-      // release just because there is no meeting — otherwise the mic/camera leak until unmount.
       await meetingManager.leave();
 
-      expect(injectedController.stopAudioInput).toHaveBeenCalled();
-      expect(injectedController.stopVideoInput).toHaveBeenCalled();
+      expect(hostedController.stopAudioInput).toHaveBeenCalled();
+      expect(hostedController.stopVideoInput).toHaveBeenCalled();
     });
 
-    it('clears the injected controller eventController on leave (no stale between-meetings ref)', async () => {
-      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+    it('clears the hosted controller eventController on leave (no stale between-meetings ref)', async () => {
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
 
       await meetingManager.leave();
 
       // Cleared on leave so pre-rejoin device events do not publish to the ended session.
-      expect(injectedController.eventController).toBeUndefined();
+      expect(hostedController.eventController).toBeUndefined();
     });
 
     it('re-applies the preserved audio output device on warm rejoin', async () => {
       // First meeting selects a non-default speaker, then leaves (output selection preserved).
-      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
       meetingManager.selectedAudioOutputDevice = 'speaker-1';
       await meetingManager.leave();
       expect(meetingManager.selectedAudioOutputDevice).toBe('speaker-1');
 
-      // Rejoin: listAndSelectDevices' default-pick guard is skipped (output already set), so the
-      // preserved sink must be explicitly re-applied. In-meeting the device source is the audioVideo
-      // facade (which delegates to the same shared controller in production), so assert on it.
-      await meetingManager.join(mockMeetingSessionConfiguration, mockMeetingManagerJoinOptions);
+      hostedController.chooseAudioOutput.mockClear();
 
-      expect(meetingManager.audioVideo?.chooseAudioOutput).toHaveBeenCalledWith(
-        'speaker-1'
+      // Rejoin: listAndSelectDevices' default-pick guard is skipped (output already set), so the
+      // preserved sink must be explicitly re-applied through the controller.
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
       );
+
+      expect(hostedController.chooseAudioOutput).toHaveBeenCalledWith('speaker-1');
     });
   });
 });

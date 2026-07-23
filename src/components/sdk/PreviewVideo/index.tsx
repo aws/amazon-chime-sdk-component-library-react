@@ -4,8 +4,8 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import { useDeviceSource } from '../../../hooks/sdk/useDeviceSource';
 import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { useDeviceController } from '../../../providers/DeviceControllerProvider';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
@@ -27,14 +27,13 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
 ) => {
   const logger = useLogger();
   const audioVideo = useAudioVideo();
-  const deviceSource = useDeviceSource();
+  const deviceSource = useDeviceController();
   const { selectedDevice } = useVideoInputs();
   const videoEl = useRef<HTMLVideoElement>(null);
   const meetingManager = useMeetingManager();
   const { setIsVideoEnabled } = useLocalVideo();
 
-  // Read via a ref so the cleanup sees the current meeting state, not the value from the render that
-  // registered the effect.
+  // Ref so the cleanup reads the current meeting state, not the value captured when the effect ran.
   const audioVideoRef = useRef(audioVideo);
   audioVideoRef.current = audioVideo;
 
@@ -43,8 +42,7 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
     return () => {
       if (videoElement) {
         deviceSource?.stopVideoPreviewForVideoInput(videoElement);
-        // Release the camera only when tearing down a preview outside a meeting. During a meeting the
-        // video input is owned by the meeting and must be left running.
+        // Only stop the input outside a meeting; during a meeting the meeting owns the video input.
         if (!audioVideoRef.current) {
           deviceSource?.stopVideoInput();
         }

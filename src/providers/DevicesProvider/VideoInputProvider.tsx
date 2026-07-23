@@ -10,8 +10,8 @@ import React, {
   useState,
 } from 'react';
 
-import { useDeviceSource } from '../../hooks/sdk/useDeviceSource';
 import { VideoInputContextType } from '../../types';
+import { useDeviceController } from '../DeviceControllerProvider';
 import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
@@ -21,7 +21,7 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const logger = useLogger();
-  const deviceSource = useDeviceSource();
+  const deviceSource = useDeviceController();
   const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);
   const meetingManager = useMeetingManager();
   const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState<

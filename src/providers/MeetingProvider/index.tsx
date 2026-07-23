@@ -8,7 +8,7 @@ import { AudioVideoProvider } from '../AudioVideoProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
 import {
   DeviceControllerProvider,
-  useDeviceController,
+  useHostedDeviceController,
 } from '../DeviceControllerProvider';
 import { DevicesProvider } from '../DevicesProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
@@ -39,16 +39,15 @@ interface Props {
   persistDeviceController?: boolean;
   /**
    * Whether to enable Web Audio. Must be enabled for Amazon Voice Focus. Applies when
-   * `persistDeviceController` is set; decide it before mounting `MeetingProvider`, as it cannot be
-   * changed afterward. Otherwise, pass `enableWebAudio` through `MeetingManager.join` options.
+   * `persistDeviceController` is set. Changing it re-creates the device controller (ending any active
+   * meeting), so prefer to set it before joining. Otherwise, pass `enableWebAudio` through
+   * `MeetingManager.join` options.
    */
   enableWebAudio?: boolean;
 }
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
 
-// Renders below DeviceControllerProvider so it can read the hosted controller from context and
-// build the MeetingManager with it (a component cannot read a context its own element provides).
 const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
   onDeviceReplacement,
   meetingManager: meetingManagerProp,
@@ -56,15 +55,13 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
   children,
 }) => {
   const logger = useLogger();
-  const deviceController = useDeviceController();
-  // `deviceController` is undefined unless `persistDeviceController` is set. A `meetingManager` prop
-  // takes precedence.
+  const deviceController = useHostedDeviceController();
   const [meetingManager] = useState(
-    () => meetingManagerProp || new MeetingManager(logger, deviceController)
+    () =>
+      meetingManagerProp ||
+      new MeetingManager(logger, deviceController, !!deviceController)
   );
 
-  // A caller-supplied MeetingManager cannot receive the hosted controller, so the two options do not
-  // combine. Warn rather than silently splitting device state between them.
   useEffect(() => {
     if (meetingManagerProp && deviceController) {
       logger.warn(
@@ -74,12 +71,9 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
     }
   }, [meetingManagerProp, deviceController, logger]);
 
-  // Stop a still-active meeting if this provider unmounts without an explicit leave() (e.g. a route
-  // change), so the session ends before the hosted controller is released. No-op when no meeting is
-  // active; a caller-supplied manager is left for the caller to manage.
   useEffect(() => {
     return () => {
-      if (!meetingManagerProp && meetingManager.meetingSession) {
+      if (!meetingManagerProp) {
         void meetingManager.leave();
       }
     };
@@ -116,9 +110,11 @@ export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   ...rest
 }) => (
-  // DeviceControllerProvider is always mounted; it creates a controller only when enabled.
+  // Keyed so a change to either prop remounts the subtree, recreating the controller with the new
+  // value (both are applied only when the controller is created). Remounting ends any active meeting.
   <DeviceControllerProvider
-    enabled={persistDeviceController}
+    key={`${!!persistDeviceController}-${!!enableWebAudio}`}
+    persistDeviceController={persistDeviceController}
     enableWebAudio={enableWebAudio}
   >
     <MeetingProviderInner {...rest}>{children}</MeetingProviderInner>
