@@ -10,7 +10,6 @@ import {
   DefaultBrowserBehavior,
   DefaultDeviceController,
   DefaultMeetingSession,
-  DeviceControllerBasedMediaStreamBroker,
   EventAttributes,
   EventController,
   EventName,
@@ -115,10 +114,10 @@ export class MeetingManager implements AudioVideoObserver {
    * The device controller for all device operations, before and during a meeting. Supplied by
    * `MeetingProvider` (opted in) or created by `join()`; `undefined` until then.
    */
-  deviceController: DeviceControllerBasedMediaStreamBroker | undefined;
+  deviceController: DefaultDeviceController | undefined;
 
   deviceControllerCallbacks: ((
-    deviceController: DeviceControllerBasedMediaStreamBroker | undefined
+    deviceController: DefaultDeviceController | undefined
   ) => void)[] = [];
 
   /**
@@ -131,14 +130,10 @@ export class MeetingManager implements AudioVideoObserver {
     return this.deviceLabels;
   }
 
-  constructor(
-    logger: Logger,
-    deviceController?: DeviceControllerBasedMediaStreamBroker,
-    persistDeviceController = false
-  ) {
+  constructor(logger: Logger, deviceController?: DefaultDeviceController) {
     this.logger = logger;
     this.deviceController = deviceController;
-    this.persistDeviceController = persistDeviceController;
+    this.persistDeviceController = !!deviceController;
     this.eventDidReceiveRef = {
       eventDidReceive: (name: EventName, attributes: EventAttributes) => {
         this.publishEventDidReceiveUpdate(name, attributes);
@@ -665,7 +660,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   subscribeToDeviceController = (
     callback: (
-      deviceController: DeviceControllerBasedMediaStreamBroker | undefined
+      deviceController: DefaultDeviceController | undefined
     ) => void
   ): void => {
     this.deviceControllerCallbacks.push(callback);
@@ -674,7 +669,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   unsubscribeFromDeviceController = (
     callbackToRemove: (
-      deviceController: DeviceControllerBasedMediaStreamBroker | undefined
+      deviceController: DefaultDeviceController | undefined
     ) => void
   ): void => {
     this.deviceControllerCallbacks = this.deviceControllerCallbacks.filter(

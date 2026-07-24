@@ -1,7 +1,7 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { AudioInputDevice } from 'amazon-chime-sdk-js';
+import { AudioInputDevice, EventController } from 'amazon-chime-sdk-js';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { AudioVideoProvider } from '../AudioVideoProvider';
@@ -44,6 +44,12 @@ interface Props {
    * `MeetingManager.join` options.
    */
   enableWebAudio?: boolean;
+  /**
+   * An optional event controller for reporting device events before a meeting. Applies when
+   * `persistDeviceController` is set. The meeting session reuses it on join, so device events report
+   * to one place across pre-meeting and in-meeting. When unset, the session creates its own on join.
+   */
+  eventController?: EventController;
 }
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
@@ -57,9 +63,7 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
   const logger = useLogger();
   const deviceController = useHostedDeviceController();
   const [meetingManager] = useState(
-    () =>
-      meetingManagerProp ||
-      new MeetingManager(logger, deviceController, !!deviceController)
+    () => meetingManagerProp || new MeetingManager(logger, deviceController)
   );
 
   useEffect(() => {
@@ -107,19 +111,28 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
 export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
   persistDeviceController,
   enableWebAudio,
+  eventController,
   children,
   ...rest
-}) => (
-  // Keyed so a change to either prop remounts the subtree, recreating the controller with the new
-  // value (both are applied only when the controller is created). Remounting ends any active meeting.
-  <DeviceControllerProvider
-    key={`${!!persistDeviceController}-${!!enableWebAudio}`}
-    persistDeviceController={persistDeviceController}
-    enableWebAudio={enableWebAudio}
-  >
-    <MeetingProviderInner {...rest}>{children}</MeetingProviderInner>
-  </DeviceControllerProvider>
-);
+}) => {
+  // Remount the device controller subtree when these creation-time props change, so a new controller
+  // is created with the new value. Booleans keep unset and false equivalent. Remounting ends any
+  // active meeting.
+  const persist = Boolean(persistDeviceController);
+  const webAudio = Boolean(enableWebAudio);
+  const deviceControllerKey = `persist:${persist}-webAudio:${webAudio}`;
+
+  return (
+    <DeviceControllerProvider
+      key={deviceControllerKey}
+      persistDeviceController={persistDeviceController}
+      enableWebAudio={enableWebAudio}
+      eventController={eventController}
+    >
+      <MeetingProviderInner {...rest}>{children}</MeetingProviderInner>
+    </DeviceControllerProvider>
+  );
+};
 
 export const useMeetingManager = (): MeetingManager => {
   const meetingManager = useContext(MeetingContext);

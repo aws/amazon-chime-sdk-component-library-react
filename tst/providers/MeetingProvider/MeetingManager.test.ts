@@ -9,7 +9,6 @@ import {
   DefaultBrowserBehavior,
   DefaultDeviceController,
   DefaultMeetingSession,
-  DeviceControllerBasedMediaStreamBroker,
   MeetingSessionConfiguration,
 } from 'amazon-chime-sdk-js';
 
@@ -130,7 +129,7 @@ describe('Meeting Manager', () => {
     });
 
     it('creates the device controller when not opted in and publishes it', async () => {
-      const received: (DeviceControllerBasedMediaStreamBroker | undefined)[] =
+      const received: (DefaultDeviceController | undefined)[] =
         [];
       meetingManager.subscribeToDeviceController((dc) => received.push(dc));
 
@@ -167,7 +166,7 @@ describe('Meeting Manager', () => {
       );
       meetingManager.selectedAudioOutputDevice = 'speaker-1';
       const controller = meetingManager.deviceController;
-      const received: (DeviceControllerBasedMediaStreamBroker | undefined)[] =
+      const received: (DefaultDeviceController | undefined)[] =
         [];
       meetingManager.subscribeToDeviceController((dc) => received.push(dc));
 
@@ -198,15 +197,14 @@ describe('Meeting Manager', () => {
       // Provider hands the controller to the constructor with persist = true.
       meetingManager = new MeetingManager(
         new ConsoleLogger('MeetingManager'),
-        hostedController,
-        true
+        hostedController
       );
     });
 
     it('exposes the hosted controller immediately (before any meeting)', () => {
       expect(meetingManager.deviceController).toBe(hostedController);
       // subscribe should call back synchronously with the current controller.
-      const received: (DeviceControllerBasedMediaStreamBroker | undefined)[] =
+      const received: (DefaultDeviceController | undefined)[] =
         [];
       meetingManager.subscribeToDeviceController((dc) => received.push(dc));
       expect(received[0]).toBe(hostedController);

@@ -4,7 +4,7 @@
 import {
   DefaultDeviceController,
   DeviceController,
-  DeviceControllerBasedMediaStreamBroker,
+  EventController,
 } from 'amazon-chime-sdk-js';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
@@ -23,10 +23,15 @@ interface Props {
    * is created; `MeetingProvider` remounts this provider if it changes, so the new value takes effect.
    */
   enableWebAudio?: boolean;
+  /**
+   * An optional event controller for the device controller to report device events before a meeting.
+   * `MeetingProvider` sets this from its `eventController` prop.
+   */
+  eventController?: EventController;
 }
 
 const HostedDeviceControllerContext = createContext<
-  DeviceControllerBasedMediaStreamBroker | undefined
+  DefaultDeviceController | undefined
 >(undefined);
 
 /**
@@ -36,14 +41,17 @@ const HostedDeviceControllerContext = createContext<
  */
 export const DeviceControllerProvider: React.FC<
   React.PropsWithChildren<Props>
-> = ({ persistDeviceController, enableWebAudio, children }) => {
+> = ({ persistDeviceController, enableWebAudio, eventController, children }) => {
   const logger = useLogger();
 
-  const [deviceController] = useState<
-    DeviceControllerBasedMediaStreamBroker | undefined
-  >(() =>
+  const [deviceController] = useState<DefaultDeviceController | undefined>(() =>
     persistDeviceController
-      ? new DefaultDeviceController(logger, { enableWebAudio })
+      ? new DefaultDeviceController(
+          logger,
+          { enableWebAudio },
+          undefined,
+          eventController
+        )
       : undefined
   );
 
@@ -70,7 +78,7 @@ export const DeviceControllerProvider: React.FC<
  * `MeetingProvider` uses it to build the `MeetingManager`; not for general consumption.
  */
 export const useHostedDeviceController = ():
-  | DeviceControllerBasedMediaStreamBroker
+  | DefaultDeviceController
   | undefined => {
   return useContext(HostedDeviceControllerContext);
 };
