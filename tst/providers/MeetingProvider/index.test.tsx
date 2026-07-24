@@ -24,6 +24,7 @@ import {
   MeetingProvider,
   useMeetingManager,
 } from '../../../src/providers/MeetingProvider';
+import { useDeviceController } from '../../../src/providers/DeviceControllerProvider';
 
 describe('Meeting Provider', () => {
   it('events are received correctly', async () => {
@@ -105,6 +106,65 @@ describe('Meeting Provider', () => {
     await new Promise((r) => setTimeout(r, 10));
     // Should have been called twice
     expect(calls).toBe(2);
+  });
+
+  it('gives the pre-meeting device controller the supplied eventController', async () => {
+    const eventController = new DefaultEventController(
+      new MeetingSessionConfiguration(
+        {
+          meetingId: '',
+          externalMeetingId: '',
+          mediaplacement: new MeetingSessionURLs(),
+        },
+        new MeetingSessionCredentials()
+      ),
+      new NoOpDebugLogger()
+    );
+
+    const { result } = renderHook(() => useDeviceController(), {
+      wrapper: ({ children }) => (
+        <MeetingProvider
+          persistDeviceController
+          eventController={eventController}
+        >
+          {children}
+        </MeetingProvider>
+      ),
+    });
+
+    // The hosted controller exists before any meeting and carries the supplied eventController, so
+    // pre-meeting device events report to it.
+    expect(result.current).toBeDefined();
+    expect(result.current?.eventController).toBe(eventController);
+
+    // A pre-meeting device event published through it reaches an observer.
+    let received = 0;
+    const observer = {
+      eventDidReceive: (name: EventName): void => {
+        if (name === 'audioInputFailed') {
+          received += 1;
+        }
+      },
+    };
+    eventController.addObserver(observer);
+    await result.current?.eventController?.publishEvent('audioInputFailed', {
+      audioInputErrorMessage: 'nope',
+    });
+    await new Promise((r) => setTimeout(r, 10));
+    expect(received).toBe(1);
+  });
+
+  it('does not set an eventController on the pre-meeting controller when none is supplied', () => {
+    const { result } = renderHook(() => useDeviceController(), {
+      wrapper: ({ children }) => (
+        <MeetingProvider persistDeviceController>{children}</MeetingProvider>
+      ),
+    });
+
+    // Opted in but no eventController supplied: the controller exists but has none (the meeting
+    // session creates one on join).
+    expect(result.current).toBeDefined();
+    expect(result.current?.eventController).toBeUndefined();
   });
 
   it('should not change params', async () => {
