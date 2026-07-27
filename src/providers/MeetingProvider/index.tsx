@@ -109,9 +109,10 @@ export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
   children,
   ...rest
 }) => {
-  // Remount the device controller subtree when the creation-time settings change, so a new controller
-  // is created with the new values. Booleans keep unset and false equivalent. Remounting ends any
-  // active meeting. `eventController` is excluded — it's an object reference, not a create-time toggle.
+  // Recreate the device controller when a create-time setting changes by remounting this subtree under
+  // a new key, which also ends any active meeting. Unset and false produce the same key. Only the
+  // boolean settings are keyed; `eventController` is an object reference applied once at creation, so a
+  // change to it alone does not recreate the controller.
   const persist = Boolean(persistDeviceController);
   const webAudio = Boolean(deviceControllerConfig?.enableWebAudio);
   const mediaFallback = Boolean(deviceControllerConfig?.useMediaConstraintsFallback);

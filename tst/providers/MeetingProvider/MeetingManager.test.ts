@@ -15,8 +15,8 @@ import {
 import { MeetingManager } from '../../../src/providers/MeetingProvider/MeetingManager';
 import { MeetingManagerJoinOptions } from '../../../src/providers/MeetingProvider/types';
 
-// A fake device controller. All device operations run through this in the unified design (before and
-// during a meeting), so tests assert on it rather than on the `audioVideo` facade.
+// A fake device controller. All device operations run through this (before and during a meeting), so
+// tests assert on it for device behavior.
 function makeController(): any {
   return {
     listAudioInputDevices: jest.fn().mockResolvedValue([]),
@@ -186,7 +186,7 @@ describe('Meeting Manager', () => {
       await meetingManager.leave();
 
       // Not opted in => the controller join() created is destroyed and cleared, and device state is
-      // fully reset (legacy behavior). Consumers are told the controller is gone.
+      // fully reset. Consumers are told the controller is gone.
       expect(controller?.destroy).toHaveBeenCalled();
       expect(meetingManager.deviceController).toBeUndefined();
       expect(received[received.length - 1]).toBeUndefined();
@@ -316,16 +316,49 @@ describe('Meeting Manager', () => {
       expect(hostedController.stopVideoInput).toHaveBeenCalled();
     });
 
-    it('clears the hosted controller eventController on leave (no stale between-meetings ref)', async () => {
+    it('clears a session-supplied eventController on leave (no stale between-meetings ref)', async () => {
+      // Builder supplied no eventController, so the meeting session binds its own onto the controller
+      // during join. Simulate that binding (the session ctor is mocked out here).
       await meetingManager.join(
         mockMeetingSessionConfiguration,
         mockMeetingManagerJoinOptions
       );
+      hostedController.eventController = {
+        addObserver: jest.fn(),
+        removeObserver: jest.fn(),
+        publishEvent: jest.fn(),
+      };
 
       await meetingManager.leave();
 
-      // Cleared on leave so pre-rejoin device events do not publish to the ended session.
+      // Cleared on leave (restored to the constructed value, which was none) so pre-rejoin device
+      // events do not publish to the ended session's controller.
       expect(hostedController.eventController).toBeUndefined();
+    });
+
+    it('keeps a builder-supplied eventController across leave (survives for warm rejoin)', async () => {
+      // Opted in WITH an eventController (deviceControllerConfig.eventController): it is
+      // session-independent, so leave() must preserve it, not clear it.
+      const builderEventController: any = {
+        addObserver: jest.fn(),
+        removeObserver: jest.fn(),
+        publishEvent: jest.fn(),
+      };
+      const controllerWithEvents = makeController();
+      controllerWithEvents.eventController = builderEventController;
+      const manager = new MeetingManager(
+        new ConsoleLogger('MeetingManager'),
+        controllerWithEvents
+      );
+
+      await manager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      await manager.leave();
+
+      // Preserved so pre-rejoin device events keep reporting to the builder's controller.
+      expect(controllerWithEvents.eventController).toBe(builderEventController);
     });
 
     it('re-applies the preserved audio output device on warm rejoin', async () => {

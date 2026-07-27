@@ -7,10 +7,9 @@ import { useLocalAudioInputActivity } from '../../../src/hooks/sdk/useLocalAudio
 import { useDeviceController } from '../../../src/providers/DeviceControllerProvider';
 import { useAudioInputs } from '../../../src/providers/DevicesProvider';
 
-// This hook used to read the meeting's `audioVideo`; under the unified design it reads the device
-// controller from `useDeviceController`. These tests mock that dependency to verify the hook wires the
-// analyser/observer when a controller is available (opt-in / in-meeting) and no-ops when it is not
-// (not opted in, before a meeting).
+// The hook reads the device controller from `useDeviceController`. These tests mock that dependency to
+// verify the hook wires the analyser/observer when a controller is available (opt-in / in-meeting) and
+// no-ops when it is not (not opted in, before a meeting).
 jest.mock('../../../src/providers/DeviceControllerProvider');
 jest.mock('../../../src/providers/DevicesProvider');
 

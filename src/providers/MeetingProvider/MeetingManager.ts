@@ -110,10 +110,6 @@ export class MeetingManager implements AudioVideoObserver {
 
   private deviceLabels: DeviceLabels | DeviceLabelTrigger;
 
-  /**
-   * The device controller for all device operations, before and during a meeting. Supplied by
-   * `MeetingProvider` (opted in) or created by `join()`; `undefined` until then.
-   */
   deviceController: DefaultDeviceController | undefined;
 
   deviceControllerCallbacks: ((
@@ -126,6 +122,9 @@ export class MeetingManager implements AudioVideoObserver {
    */
   private persistDeviceController: boolean;
 
+  /** The controller's constructor-supplied eventController, restored on a persist `leave()`. */
+  private hostedEventController: EventController | undefined;
+
   getDeviceLabels(): DeviceLabels | DeviceLabelTrigger {
     return this.deviceLabels;
   }
@@ -134,6 +133,7 @@ export class MeetingManager implements AudioVideoObserver {
     this.logger = logger;
     this.deviceController = deviceController;
     this.persistDeviceController = !!deviceController;
+    this.hostedEventController = deviceController?.eventController;
     this.eventDidReceiveRef = {
       eventDidReceive: (name: EventName, attributes: EventAttributes) => {
         this.publishEventDidReceiveUpdate(name, attributes);
@@ -265,12 +265,11 @@ export class MeetingManager implements AudioVideoObserver {
   private async cleanUpDeviceController(): Promise<void> {
     try {
       if (this.persistDeviceController) {
-        // Keep the controller for a warm rejoin; release its media and clear the ended session's
-        // event controller so pre-rejoin device events don't report against it.
+        // Keep the controller for a warm rejoin; release its media and restore its eventController.
         await this.deviceController?.stopAudioInput();
         await this.deviceController?.stopVideoInput();
         if (this.deviceController) {
-          this.deviceController.eventController = undefined;
+          this.deviceController.eventController = this.hostedEventController;
         }
       } else {
         await this.deviceController?.chooseAudioOutput(null);
