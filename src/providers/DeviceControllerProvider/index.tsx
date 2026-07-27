@@ -11,6 +11,19 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useLogger } from '../LoggerProvider';
 import { MeetingContext } from '../MeetingProvider';
 
+/**
+ * Configuration for the device controller created before a meeting. Mirrors the
+ * `DefaultDeviceController` constructor parameters a builder may want to set.
+ */
+export interface DeviceControllerConfig {
+  /** Whether to enable Web Audio. Must be enabled for Amazon Voice Focus. */
+  enableWebAudio?: boolean;
+  /** Whether to fall back to relaxed media constraints when the ideal constraints fail. */
+  useMediaConstraintsFallback?: boolean;
+  /** An event controller for the device controller to report device events before a meeting. */
+  eventController?: EventController;
+}
+
 interface Props {
   /**
    * When set, creates a device controller on mount so device setup works before joining a meeting.
@@ -19,15 +32,10 @@ interface Props {
    */
   persistDeviceController?: boolean;
   /**
-   * Whether to enable Web Audio. Must be enabled for Amazon Voice Focus. Applied when the controller
-   * is created; `MeetingProvider` remounts this provider if it changes, so the new value takes effect.
+   * Configuration applied when the device controller is created. `MeetingProvider` sets this from its
+   * `deviceControllerConfig` prop.
    */
-  enableWebAudio?: boolean;
-  /**
-   * An optional event controller for the device controller to report device events before a meeting.
-   * `MeetingProvider` sets this from its `eventController` prop.
-   */
-  eventController?: EventController;
+  deviceControllerConfig?: DeviceControllerConfig;
 }
 
 const HostedDeviceControllerContext = createContext<
@@ -41,18 +49,17 @@ const HostedDeviceControllerContext = createContext<
  */
 export const DeviceControllerProvider: React.FC<
   React.PropsWithChildren<Props>
-> = ({ persistDeviceController, enableWebAudio, eventController, children }) => {
+> = ({ persistDeviceController, deviceControllerConfig, children }) => {
   const logger = useLogger();
 
-  const [deviceController] = useState<DefaultDeviceController | undefined>(() =>
-    persistDeviceController
-      ? new DefaultDeviceController(
-          logger,
-          { enableWebAudio },
-          undefined,
-          eventController
-        )
-      : undefined
+  const [deviceController] = useState<DefaultDeviceController | undefined>(
+    () => {
+      if (!persistDeviceController) {
+        return undefined;
+      }
+      const { eventController, ...options } = deviceControllerConfig ?? {};
+      return new DefaultDeviceController(logger, options, undefined, eventController);
+    }
   );
 
   useEffect(() => {

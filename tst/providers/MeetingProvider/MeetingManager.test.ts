@@ -156,6 +156,19 @@ describe('Meeting Manager', () => {
         meetingManager.deviceController?.setDeviceLabelTrigger
       ).toHaveBeenCalled();
     });
+
+    it('does NOT enumerate/select devices when skipDeviceSelection is set', async () => {
+      await meetingManager.join(mockMeetingSessionConfiguration, {
+        skipDeviceSelection: true,
+      });
+      // The label trigger is still installed, but no listing/selection runs.
+      expect(
+        meetingManager.deviceController?.listAudioInputDevices
+      ).not.toHaveBeenCalled();
+      expect(
+        meetingManager.deviceController?.listVideoInputDevices
+      ).not.toHaveBeenCalled();
+    });
   });
 
   describe('leave (not opted in)', () => {
@@ -186,6 +199,59 @@ describe('Meeting Manager', () => {
       // A not-opted-in app that never joined has no controller; leave() must not throw.
       await expect(meetingManager.leave()).resolves.toBeUndefined();
       expect(meetingManager.deviceController).toBeUndefined();
+    });
+
+    it('creates a fresh controller on re-join after a non-persist leave', async () => {
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      const first = meetingManager.deviceController;
+      await meetingManager.leave();
+      expect(meetingManager.deviceController).toBeUndefined();
+
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      // Non-persist: each meeting gets its own controller — never the destroyed one.
+      expect(meetingManager.deviceController).toBeDefined();
+      expect(meetingManager.deviceController).not.toBe(first);
+    });
+  });
+
+  describe('device selection (negative paths)', () => {
+    it('startAudioInputDevice rethrows and does not update the selection when the controller fails', async () => {
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      const before = meetingManager.selectedAudioInputDevice;
+      (
+        meetingManager.deviceController?.startAudioInput as jest.Mock
+      ).mockRejectedValueOnce(new Error('device in use'));
+
+      await expect(
+        meetingManager.startAudioInputDevice('mic-2')
+      ).rejects.toThrow(/failed to select audio input device/i);
+      // Selection is unchanged because the start failed.
+      expect(meetingManager.selectedAudioInputDevice).toBe(before);
+    });
+
+    it('startVideoInputDevice rethrows and does not update the selection when the controller fails', async () => {
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      const before = meetingManager.selectedVideoInputDevice;
+      (
+        meetingManager.deviceController?.startVideoInput as jest.Mock
+      ).mockRejectedValueOnce(new Error('camera in use'));
+
+      await expect(
+        meetingManager.startVideoInputDevice('cam-2')
+      ).rejects.toThrow(/failed to select video input device/i);
+      expect(meetingManager.selectedVideoInputDevice).toBe(before);
     });
   });
 

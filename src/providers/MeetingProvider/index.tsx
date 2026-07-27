@@ -1,12 +1,13 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { AudioInputDevice, EventController } from 'amazon-chime-sdk-js';
+import { AudioInputDevice } from 'amazon-chime-sdk-js';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { AudioVideoProvider } from '../AudioVideoProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
 import {
+  DeviceControllerConfig,
   DeviceControllerProvider,
   useHostedDeviceController,
 } from '../DeviceControllerProvider';
@@ -38,18 +39,12 @@ interface Props {
    */
   persistDeviceController?: boolean;
   /**
-   * Whether to enable Web Audio. Must be enabled for Amazon Voice Focus. Applies when
-   * `persistDeviceController` is set. Changing it re-creates the device controller (ending any active
-   * meeting), so prefer to set it before joining. Otherwise, pass `enableWebAudio` through
-   * `MeetingManager.join` options.
+   * Configuration for the device controller created when `persistDeviceController` is set (e.g.
+   * `enableWebAudio` for Amazon Voice Focus, or an `eventController` for pre-meeting device events).
+   * Applied when the controller is created; changing it re-creates the controller (ending any active
+   * meeting), so prefer to set it before joining.
    */
-  enableWebAudio?: boolean;
-  /**
-   * An optional event controller for reporting device events before a meeting. Applies when
-   * `persistDeviceController` is set. The meeting session reuses it on join, so device events report
-   * to one place across pre-meeting and in-meeting. When unset, the session creates its own on join.
-   */
-  eventController?: EventController;
+  deviceControllerConfig?: DeviceControllerConfig;
 }
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
@@ -110,24 +105,23 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
 
 export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
   persistDeviceController,
-  enableWebAudio,
-  eventController,
+  deviceControllerConfig,
   children,
   ...rest
 }) => {
-  // Remount the device controller subtree when these creation-time props change, so a new controller
-  // is created with the new value. Booleans keep unset and false equivalent. Remounting ends any
-  // active meeting.
+  // Remount the device controller subtree when the creation-time settings change, so a new controller
+  // is created with the new values. Booleans keep unset and false equivalent. Remounting ends any
+  // active meeting. `eventController` is excluded — it's an object reference, not a create-time toggle.
   const persist = Boolean(persistDeviceController);
-  const webAudio = Boolean(enableWebAudio);
-  const deviceControllerKey = `persist:${persist}-webAudio:${webAudio}`;
+  const webAudio = Boolean(deviceControllerConfig?.enableWebAudio);
+  const mediaFallback = Boolean(deviceControllerConfig?.useMediaConstraintsFallback);
+  const deviceControllerKey = `persist:${persist}-webAudio:${webAudio}-mediaFallback:${mediaFallback}`;
 
   return (
     <DeviceControllerProvider
       key={deviceControllerKey}
       persistDeviceController={persistDeviceController}
-      enableWebAudio={enableWebAudio}
-      eventController={eventController}
+      deviceControllerConfig={deviceControllerConfig}
     >
       <MeetingProviderInner {...rest}>{children}</MeetingProviderInner>
     </DeviceControllerProvider>

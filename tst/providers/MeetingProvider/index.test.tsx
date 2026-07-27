@@ -125,7 +125,7 @@ describe('Meeting Provider', () => {
       wrapper: ({ children }) => (
         <MeetingProvider
           persistDeviceController
-          eventController={eventController}
+          deviceControllerConfig={{ eventController }}
         >
           {children}
         </MeetingProvider>

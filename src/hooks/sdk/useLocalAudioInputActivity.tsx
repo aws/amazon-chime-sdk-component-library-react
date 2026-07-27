@@ -9,10 +9,10 @@ import { useAudioInputs } from '../../providers/DevicesProvider';
 
 export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
   const { selectedDevice } = useAudioInputs();
-  const deviceSource = useDeviceController();
+  const deviceController = useDeviceController();
 
   useEffect(() => {
-    if (!deviceSource) {
+    if (!deviceController) {
       return;
     }
 
@@ -28,12 +28,12 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
         restart = true;
       },
     };
-    deviceSource.addDeviceChangeObserver(deviceChangeObserver);
+    deviceController.addDeviceChangeObserver(deviceChangeObserver);
 
     function initializePreview() {
-      if (!deviceSource || !isMounted) return;
+      if (!deviceController || !isMounted) return;
 
-      analyserNode = deviceSource.createAnalyserNodeForAudioInput();
+      analyserNode = deviceController.createAnalyserNodeForAudioInput();
 
       if (!analyserNode?.getByteTimeDomainData) {
         return;
@@ -82,9 +82,9 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
 
     return () => {
       isMounted = false;
-      deviceSource.removeDeviceChangeObserver(deviceChangeObserver);
+      deviceController.removeDeviceChangeObserver(deviceChangeObserver);
     };
-  }, [deviceSource, selectedDevice, cb]);
+  }, [deviceController, selectedDevice, cb]);
 };
 
 export default useLocalAudioInputActivity;
