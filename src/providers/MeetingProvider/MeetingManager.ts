@@ -10,6 +10,7 @@ import {
   DefaultBrowserBehavior,
   DefaultDeviceController,
   DefaultMeetingSession,
+  DeviceControllerBasedMediaStreamBroker,
   EventAttributes,
   EventController,
   EventName,
@@ -110,29 +111,24 @@ export class MeetingManager implements AudioVideoObserver {
 
   private deviceLabels: DeviceLabels | DeviceLabelTrigger;
 
-  deviceController: DefaultDeviceController | undefined;
+  deviceController: DeviceControllerBasedMediaStreamBroker | undefined;
 
   deviceControllerCallbacks: ((
-    deviceController: DefaultDeviceController | undefined
+    deviceController: DeviceControllerBasedMediaStreamBroker | undefined
   ) => void)[] = [];
 
-  /**
-   * When true (from `MeetingProvider`'s `persistDeviceController`), `leave()` keeps the controller and
-   * device selections for a warm rejoin; when false, `leave()` destroys the controller.
-   */
-  private persistDeviceController: boolean;
+  private providedDeviceController: boolean;
 
-  /** The controller's constructor-supplied eventController, restored on a persist `leave()`. */
   private hostedEventController: EventController | undefined;
 
   getDeviceLabels(): DeviceLabels | DeviceLabelTrigger {
     return this.deviceLabels;
   }
 
-  constructor(logger: Logger, deviceController?: DefaultDeviceController) {
+  constructor(logger: Logger, deviceController?: DeviceControllerBasedMediaStreamBroker) {
     this.logger = logger;
     this.deviceController = deviceController;
-    this.persistDeviceController = !!deviceController;
+    this.providedDeviceController = !!deviceController;
     this.hostedEventController = deviceController?.eventController;
     this.eventDidReceiveRef = {
       eventDidReceive: (name: EventName, attributes: EventAttributes) => {
@@ -141,7 +137,6 @@ export class MeetingManager implements AudioVideoObserver {
     };
   }
 
-  /** Reset session-scoped state, leaving device selection state intact. */
   private resetSessionState(): void {
     this.meetingSession = null;
     this.audioVideo = null;
@@ -152,7 +147,6 @@ export class MeetingManager implements AudioVideoObserver {
     this.audioVideoObservers = {};
   }
 
-  /** Reset device selection and enumeration state. */
   private resetDeviceState(): void {
     this.selectedAudioOutputDevice = null;
     this.selectedAudioInputDevice = undefined;
@@ -187,11 +181,9 @@ export class MeetingManager implements AudioVideoObserver {
       });
       this.publishDeviceController();
     } else if (enableWebAudio) {
-      // Web Audio is fixed when the hosted controller is created, so a join-time `enableWebAudio`
-      // cannot apply here; warn rather than silently leaving Amazon Voice Focus disabled.
       this.logger.warn(
-        'MeetingManager: `enableWebAudio` passed to join() is ignored when the device controller ' +
-          'is hosted by MeetingProvider. Set the MeetingProvider `enableWebAudio` prop instead.'
+        'MeetingManager: `enableWebAudio` passed to join() is ignored when a `deviceController` is ' +
+          'provided to MeetingProvider. Construct that controller with `{ enableWebAudio: true }` instead.'
       );
     }
 
@@ -248,6 +240,10 @@ export class MeetingManager implements AudioVideoObserver {
     this.audioVideo?.start();
   }
 
+  hasJoinedMeeting(): boolean {
+    return this.audioVideo !== null;
+  }
+
   async leave(): Promise<void> {
     this.audioVideo?.stopContentShare();
     this.audioVideo?.stopLocalVideoTile();
@@ -264,8 +260,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   private async cleanUpDeviceController(): Promise<void> {
     try {
-      if (this.persistDeviceController) {
-        // Keep the controller for a warm rejoin; release its media and restore its eventController.
+      if (this.providedDeviceController) {
         await this.deviceController?.stopAudioInput();
         await this.deviceController?.stopVideoInput();
         if (this.deviceController) {
@@ -293,9 +288,7 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   private resetState(): void {
-    if (this.persistDeviceController) {
-      // Keep device selection state for the next meeting, but clear the input selections whose streams
-      // were just stopped so they are re-acquired on rejoin (the output selection is kept and re-applied).
+    if (this.providedDeviceController) {
       this.resetSessionState();
       this.selectedAudioInputDevice = undefined;
       this.publishSelectedAudioInputDevice();
@@ -517,8 +510,6 @@ export class MeetingManager implements AudioVideoObserver {
       this.publishSelectedAudioInputDevice();
     }
     if (isAudioDeviceRequested) {
-      // First join with no prior selection: default to the first enumerated output. Otherwise keep the
-      // existing selection and re-apply it, so a warm rejoin routes audio there rather than the default.
       if (!this.selectedAudioOutputDevice && this.audioOutputDevices?.length) {
         this.selectedAudioOutputDevice = this.audioOutputDevices[0].deviceId;
         this.publishSelectedAudioOutputDevice();
@@ -649,7 +640,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   subscribeToDeviceController = (
     callback: (
-      deviceController: DefaultDeviceController | undefined
+      deviceController: DeviceControllerBasedMediaStreamBroker | undefined
     ) => void
   ): void => {
     this.deviceControllerCallbacks.push(callback);
@@ -658,7 +649,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   unsubscribeFromDeviceController = (
     callbackToRemove: (
-      deviceController: DefaultDeviceController | undefined
+      deviceController: DeviceControllerBasedMediaStreamBroker | undefined
     ) => void
   ): void => {
     this.deviceControllerCallbacks = this.deviceControllerCallbacks.filter(

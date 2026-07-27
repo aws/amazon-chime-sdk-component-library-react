@@ -1,16 +1,14 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import { AudioInputDevice } from 'amazon-chime-sdk-js';
+import {
+  AudioInputDevice,
+  DeviceControllerBasedMediaStreamBroker,
+} from 'amazon-chime-sdk-js';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { AudioVideoProvider } from '../AudioVideoProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
-import {
-  DeviceControllerConfig,
-  DeviceControllerProvider,
-  useHostedDeviceController,
-} from '../DeviceControllerProvider';
 import { DevicesProvider } from '../DevicesProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
 import { LocalAudioOutputProvider } from '../LocalAudioOutputProvider';
@@ -33,18 +31,13 @@ interface Props {
   meetingManager?: MeetingManager;
   maxContentShares?: number;
   /**
-   * Enables device setup before joining a meeting. When set, device enumeration, selection, camera
-   * preview, the mic activity meter, and permission prompts work before `join()`, and the selected
-   * devices persist across leaving and rejoining a meeting.
+   * A device controller for device setup before joining a meeting. When provided, device enumeration,
+   * selection, camera preview, the mic activity meter, and permission prompts work before `join()`, and
+   * the same controller carries into the meeting so selected devices persist across leaving and
+   * rejoining. Construct it (e.g. `new DefaultDeviceController(logger, { enableWebAudio })`) and destroy
+   * it in your application; the library uses it but does not create or destroy a controller you pass.
    */
-  persistDeviceController?: boolean;
-  /**
-   * Configuration for the device controller created when `persistDeviceController` is set (e.g.
-   * `enableWebAudio` for Amazon Voice Focus, or an `eventController` for pre-meeting device events).
-   * Applied when the controller is created; changing it re-creates the controller (ending any active
-   * meeting), so prefer to set it before joining.
-   */
-  deviceControllerConfig?: DeviceControllerConfig;
+  deviceController?: DeviceControllerBasedMediaStreamBroker;
 }
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
@@ -53,10 +46,10 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
   onDeviceReplacement,
   meetingManager: meetingManagerProp,
   maxContentShares,
+  deviceController,
   children,
 }) => {
   const logger = useLogger();
-  const deviceController = useHostedDeviceController();
   const [meetingManager] = useState(
     () => meetingManagerProp || new MeetingManager(logger, deviceController)
   );
@@ -64,7 +57,7 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
   useEffect(() => {
     if (meetingManagerProp && deviceController) {
       logger.warn(
-        'MeetingProvider: `persistDeviceController` has no effect when a `meetingManager` prop is ' +
+        'MeetingProvider: the `deviceController` prop has no effect when a `meetingManager` prop is ' +
           'also provided. Use one or the other.'
       );
     }
@@ -104,29 +97,10 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
 };
 
 export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
-  persistDeviceController,
-  deviceControllerConfig,
   children,
   ...rest
 }) => {
-  // Recreate the device controller when a create-time setting changes by remounting this subtree under
-  // a new key, which also ends any active meeting. Unset and false produce the same key. Only the
-  // boolean settings are keyed; `eventController` is an object reference applied once at creation, so a
-  // change to it alone does not recreate the controller.
-  const persist = Boolean(persistDeviceController);
-  const webAudio = Boolean(deviceControllerConfig?.enableWebAudio);
-  const mediaFallback = Boolean(deviceControllerConfig?.useMediaConstraintsFallback);
-  const deviceControllerKey = `persist:${persist}-webAudio:${webAudio}-mediaFallback:${mediaFallback}`;
-
-  return (
-    <DeviceControllerProvider
-      key={deviceControllerKey}
-      persistDeviceController={persistDeviceController}
-      deviceControllerConfig={deviceControllerConfig}
-    >
-      <MeetingProviderInner {...rest}>{children}</MeetingProviderInner>
-    </DeviceControllerProvider>
-  );
+  return <MeetingProviderInner {...rest}>{children}</MeetingProviderInner>;
 };
 
 export const useMeetingManager = (): MeetingManager => {

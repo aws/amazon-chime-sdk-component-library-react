@@ -4,6 +4,7 @@
 import React from 'react';
 import {
   ConsoleLogger,
+  DefaultDeviceController,
   DefaultEventController,
   EventAttributes,
   EventName,
@@ -108,7 +109,7 @@ describe('Meeting Provider', () => {
     expect(calls).toBe(2);
   });
 
-  it('gives the pre-meeting device controller the supplied eventController', async () => {
+  it('exposes the provided device controller and its eventController before any meeting', async () => {
     const eventController = new DefaultEventController(
       new MeetingSessionConfiguration(
         {
@@ -120,21 +121,24 @@ describe('Meeting Provider', () => {
       ),
       new NoOpDebugLogger()
     );
+    const deviceController = new DefaultDeviceController(
+      new NoOpDebugLogger(),
+      { enableWebAudio: false },
+      undefined,
+      eventController
+    );
 
     const { result } = renderHook(() => useDeviceController(), {
       wrapper: ({ children }) => (
-        <MeetingProvider
-          persistDeviceController
-          deviceControllerConfig={{ eventController }}
-        >
+        <MeetingProvider deviceController={deviceController}>
           {children}
         </MeetingProvider>
       ),
     });
 
-    // The hosted controller exists before any meeting and carries the supplied eventController, so
+    // The provided controller is available before any meeting and carries its eventController, so
     // pre-meeting device events report to it.
-    expect(result.current).toBeDefined();
+    expect(result.current).toBe(deviceController);
     expect(result.current?.eventController).toBe(eventController);
 
     // A pre-meeting device event published through it reaches an observer.
@@ -154,16 +158,21 @@ describe('Meeting Provider', () => {
     expect(received).toBe(1);
   });
 
-  it('does not set an eventController on the pre-meeting controller when none is supplied', () => {
+  it('exposes a provided controller with no eventController when none was constructed with one', () => {
+    const deviceController = new DefaultDeviceController(new NoOpDebugLogger(), {
+      enableWebAudio: false,
+    });
+
     const { result } = renderHook(() => useDeviceController(), {
       wrapper: ({ children }) => (
-        <MeetingProvider persistDeviceController>{children}</MeetingProvider>
+        <MeetingProvider deviceController={deviceController}>
+          {children}
+        </MeetingProvider>
       ),
     });
 
-    // Opted in but no eventController supplied: the controller exists but has none (the meeting
-    // session creates one on join).
-    expect(result.current).toBeDefined();
+    // The controller is available but has no eventController (the meeting session creates one on join).
+    expect(result.current).toBe(deviceController);
     expect(result.current?.eventController).toBeUndefined();
   });
 

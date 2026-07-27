@@ -9,6 +9,7 @@ import {
   DefaultBrowserBehavior,
   DefaultDeviceController,
   DefaultMeetingSession,
+  DeviceControllerBasedMediaStreamBroker,
   MeetingSessionConfiguration,
 } from 'amazon-chime-sdk-js';
 
@@ -129,7 +130,7 @@ describe('Meeting Manager', () => {
     });
 
     it('creates the device controller when not opted in and publishes it', async () => {
-      const received: (DefaultDeviceController | undefined)[] =
+      const received: (DeviceControllerBasedMediaStreamBroker | undefined)[] =
         [];
       meetingManager.subscribeToDeviceController((dc) => received.push(dc));
 
@@ -179,7 +180,7 @@ describe('Meeting Manager', () => {
       );
       meetingManager.selectedAudioOutputDevice = 'speaker-1';
       const controller = meetingManager.deviceController;
-      const received: (DefaultDeviceController | undefined)[] =
+      const received: (DeviceControllerBasedMediaStreamBroker | undefined)[] =
         [];
       meetingManager.subscribeToDeviceController((dc) => received.push(dc));
 
@@ -260,7 +261,7 @@ describe('Meeting Manager', () => {
 
     beforeEach(() => {
       hostedController = makeController();
-      // Provider hands the controller to the constructor with persist = true.
+      // Builder provides the controller to the constructor (via MeetingProvider's `deviceController`).
       meetingManager = new MeetingManager(
         new ConsoleLogger('MeetingManager'),
         hostedController
@@ -270,7 +271,7 @@ describe('Meeting Manager', () => {
     it('exposes the hosted controller immediately (before any meeting)', () => {
       expect(meetingManager.deviceController).toBe(hostedController);
       // subscribe should call back synchronously with the current controller.
-      const received: (DefaultDeviceController | undefined)[] =
+      const received: (DeviceControllerBasedMediaStreamBroker | undefined)[] =
         [];
       meetingManager.subscribeToDeviceController((dc) => received.push(dc));
       expect(received[0]).toBe(hostedController);
@@ -337,8 +338,8 @@ describe('Meeting Manager', () => {
     });
 
     it('keeps a builder-supplied eventController across leave (survives for warm rejoin)', async () => {
-      // Opted in WITH an eventController (deviceControllerConfig.eventController): it is
-      // session-independent, so leave() must preserve it, not clear it.
+      // Builder provides a controller carrying its own eventController: it is session-independent, so
+      // leave() must preserve it, not clear it.
       const builderEventController: any = {
         addObserver: jest.fn(),
         removeObserver: jest.fn(),
