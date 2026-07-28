@@ -42,7 +42,7 @@ interface Props {
 
 export const MeetingContext = createContext<MeetingManager | null>(null);
 
-const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
+export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
   onDeviceReplacement,
   meetingManager: meetingManagerProp,
   maxContentShares,
@@ -94,13 +94,6 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
       </MeetingEventProvider>
     </MeetingContext.Provider>
   );
-};
-
-export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
-  children,
-  ...rest
-}) => {
-  return <MeetingProviderInner {...rest}>{children}</MeetingProviderInner>;
 };
 
 export const useMeetingManager = (): MeetingManager => {

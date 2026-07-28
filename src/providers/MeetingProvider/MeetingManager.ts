@@ -117,8 +117,15 @@ export class MeetingManager implements AudioVideoObserver {
     deviceController: DeviceControllerBasedMediaStreamBroker | undefined
   ) => void)[] = [];
 
-  private providedDeviceController: boolean;
+  private persistDeviceController: boolean;
 
+  /**
+   * The eventController the device controller was constructed with, captured so `leave()` can restore
+   * it. `DefaultMeetingSession` assigns its own eventController onto the device controller only when the
+   * controller has none; for a persisted controller that outlives the session, restoring this on leave
+   * clears a session-assigned controller (captured value was `undefined`) while keeping a
+   * builder-supplied one.
+   */
   private hostedEventController: EventController | undefined;
 
   getDeviceLabels(): DeviceLabels | DeviceLabelTrigger {
@@ -128,7 +135,7 @@ export class MeetingManager implements AudioVideoObserver {
   constructor(logger: Logger, deviceController?: DeviceControllerBasedMediaStreamBroker) {
     this.logger = logger;
     this.deviceController = deviceController;
-    this.providedDeviceController = !!deviceController;
+    this.persistDeviceController = !!deviceController;
     this.hostedEventController = deviceController?.eventController;
     this.eventDidReceiveRef = {
       eventDidReceive: (name: EventName, attributes: EventAttributes) => {
@@ -264,7 +271,7 @@ export class MeetingManager implements AudioVideoObserver {
 
   private async cleanUpDeviceController(): Promise<void> {
     try {
-      if (this.providedDeviceController) {
+      if (this.persistDeviceController) {
         await this.deviceController?.stopAudioInput();
         await this.deviceController?.stopVideoInput();
         if (this.deviceController) {
@@ -292,7 +299,7 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   private resetState(): void {
-    if (this.providedDeviceController) {
+    if (this.persistDeviceController) {
       this.resetSessionState();
       this.selectedAudioInputDevice = undefined;
       this.publishSelectedAudioInputDevice();

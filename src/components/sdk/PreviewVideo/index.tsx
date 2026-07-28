@@ -4,7 +4,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import { useDeviceController } from '../../../providers/DeviceControllerProvider';
+import { useDeviceController } from '../../../hooks/sdk/useDeviceController';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useLogger } from '../../../providers/LoggerProvider';

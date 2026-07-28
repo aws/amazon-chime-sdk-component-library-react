@@ -4,13 +4,13 @@
 import { renderHook } from '@testing-library/react';
 
 import { useLocalAudioInputActivity } from '../../../src/hooks/sdk/useLocalAudioInputActivity';
-import { useDeviceController } from '../../../src/providers/DeviceControllerProvider';
+import { useDeviceController } from '../../../src/hooks/sdk/useDeviceController';
 import { useAudioInputs } from '../../../src/providers/DevicesProvider';
 
 // The hook reads the device controller from `useDeviceController`. These tests mock that dependency to
 // verify the hook wires the analyser/observer when a controller is available (opt-in / in-meeting) and
 // no-ops when it is not (not opted in, before a meeting).
-jest.mock('../../../src/providers/DeviceControllerProvider');
+jest.mock('../../../src/hooks/sdk/useDeviceController');
 jest.mock('../../../src/providers/DevicesProvider');
 
 const mockUseDeviceController = useDeviceController as jest.Mock;

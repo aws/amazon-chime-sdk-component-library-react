@@ -4,7 +4,7 @@
 import type { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 import { useEffect } from 'react';
 
-import { useDeviceController } from '../../providers/DeviceControllerProvider';
+import { useDeviceController } from './useDeviceController';
 import { useAudioInputs } from '../../providers/DevicesProvider';
 
 export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {

@@ -11,7 +11,7 @@ import React, {
 } from 'react';
 
 import { AudioOutputContextType } from '../../types';
-import { useDeviceController } from '../DeviceControllerProvider';
+import { useDeviceController } from '../../hooks/sdk/useDeviceController';
 import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 

@@ -25,7 +25,7 @@ import {
   MeetingProvider,
   useMeetingManager,
 } from '../../../src/providers/MeetingProvider';
-import { useDeviceController } from '../../../src/providers/DeviceControllerProvider';
+import { useDeviceController } from '../../../src/hooks/sdk/useDeviceController';
 
 describe('Meeting Provider', () => {
   it('events are received correctly', async () => {

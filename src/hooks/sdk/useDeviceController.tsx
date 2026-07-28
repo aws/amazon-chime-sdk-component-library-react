@@ -4,7 +4,7 @@
 import { DeviceController } from 'amazon-chime-sdk-js';
 import { useContext, useEffect, useState } from 'react';
 
-import { MeetingContext } from '../MeetingProvider';
+import { MeetingContext } from '../../providers/MeetingProvider';
 
 /**
  * Returns the device controller for building custom device UIs, or `undefined` when no controller is
