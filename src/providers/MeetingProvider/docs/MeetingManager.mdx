@@ -21,6 +21,16 @@ const logger = new ConsoleLogger('LoggerName');
 const meetingManager = new MeetingManager(logger);
 ```
 
+You can optionally pass a device controller as a second parameter to set up devices before joining a meeting. This is a builder-supplied controller (for example, a `DefaultDeviceController` from the Amazon Chime SDK for JavaScript). When provided, the `MeetingManager` uses this controller instead of creating one during `join()`, so device enumeration, selection, camera preview, the microphone activity meter, and permission prompts work before the meeting and the selected devices persist across leaving and rejoining. Your application owns this controller: construct it and destroy it yourself. When omitted, the `MeetingManager` creates a device controller internally during `join()`.
+
+```js
+import { DefaultDeviceController } from 'amazon-chime-sdk-js';
+
+const logger = new ConsoleLogger('LoggerName');
+const deviceController = new DefaultDeviceController(logger, { enableWebAudio: false });
+const meetingManager = new MeetingManager(logger, deviceController);
+```
+
 ## Interface
 
 ### `meetingManager.join`

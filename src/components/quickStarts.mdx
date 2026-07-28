@@ -287,6 +287,39 @@ Result:
 
 Check out [useDeviceLabelTriggerStatus](?path=/story/sdk-hooks-usedevicelabeltriggerstatus--page) for more details.
 
+## Set Up Devices Before Joining a Meeting
+
+`MeetingProvider` accepts an optional `deviceController` prop for setting up devices before joining a meeting. When you pass a device controller, device enumeration, selection, camera preview, the microphone activity meter, and permission prompts work before `join()`, and the same controller carries into the meeting so selected devices persist across leaving and rejoining.
+
+Construct a `DefaultDeviceController` from the Amazon Chime SDK for JavaScript and pass it to `MeetingProvider`. Your application owns the controller: create it and destroy it yourself. The library uses the controller you pass but does not create or destroy it.
+
+```jsx
+import { DefaultDeviceController } from 'amazon-chime-sdk-js';
+import { MeetingProvider, useLogger } from 'amazon-chime-sdk-component-library-react';
+
+const App = () => {
+  const logger = useLogger();
+  const deviceController = useMemo(
+    () => new DefaultDeviceController(logger, { enableWebAudio: false }),
+    [logger]
+  );
+
+  useEffect(() => () => { void deviceController.destroy(); }, [deviceController]);
+
+  return (
+    <MeetingProvider deviceController={deviceController}>
+      <MyApp />
+    </MeetingProvider>
+  );
+};
+```
+
+`MeetingProvider` reads `deviceController` once, when it creates its `MeetingManager`. Provide the controller before `MeetingProvider` first mounts; to change or clear it, remount `MeetingProvider` (for example, with a React `key`).
+
+When you omit the `deviceController` prop, `join()` creates a device controller internally.
+
+To build a pre-meeting device UI, use [`useDeviceController`](?path=/docs/sdk-hooks-usedevicecontroller--page) to access the controller, [`PreviewVideo`](?path=/docs/sdk-components-previewvideo--page) to render a camera preview, and [`useLocalAudioInputActivity`](?path=/docs/sdk-hooks-uselocalaudioinputactivity--page) to render a microphone activity meter.
+
 ## Enable Camera and Display the Video Stream in the Grid
 
 The [`VideoTileGrid`](https://aws.github.io/amazon-chime-sdk-component-library-react/?path=/docs/sdk-components-videotilegrid--page) component renders all meeting session video tiles in a responsive grid layout. This includes the local tile, remote tiles, and content share tile. By default a user joins without video, so in order to see the `VideoTileGrid`, there must be at least one video tile being shared.
