@@ -120,13 +120,12 @@ export class MeetingManager implements AudioVideoObserver {
   private persistDeviceController: boolean;
 
   /**
-   * The eventController the device controller was constructed with, captured so `leave()` can restore
-   * it. `DefaultMeetingSession` assigns its own eventController onto the device controller only when the
-   * controller has none; for a persisted controller that outlives the session, restoring this on leave
-   * clears a session-assigned controller (captured value was `undefined`) while keeping a
-   * builder-supplied one.
+   * Whether `leave()` should clear the device controller's `eventController`. Set on join: when the
+   * provided controller has no eventController of its own, `DefaultMeetingSession` binds a
+   * session-scoped one that must be released on leave so the next join binds a correctly-scoped
+   * controller. A builder-supplied eventController is left untouched — the builder owns it.
    */
-  private hostedEventController: EventController | undefined;
+  private clearEventControllerOnLeave = false;
 
   getDeviceLabels(): DeviceLabels | DeviceLabelTrigger {
     return this.deviceLabels;
@@ -136,7 +135,6 @@ export class MeetingManager implements AudioVideoObserver {
     this.logger = logger;
     this.deviceController = deviceController;
     this.persistDeviceController = !!deviceController;
-    this.hostedEventController = deviceController?.eventController;
     this.eventDidReceiveRef = {
       eventDidReceive: (name: EventName, attributes: EventAttributes) => {
         this.publishEventDidReceiveUpdate(name, attributes);
@@ -201,6 +199,8 @@ export class MeetingManager implements AudioVideoObserver {
           'to join() to unify them.'
       );
     }
+
+    this.clearEventControllerOnLeave = !this.deviceController.eventController;
 
     this.meetingSession = new DefaultMeetingSession(
       meetingSessionConfiguration,
@@ -274,8 +274,8 @@ export class MeetingManager implements AudioVideoObserver {
       if (this.persistDeviceController) {
         await this.deviceController?.stopAudioInput();
         await this.deviceController?.stopVideoInput();
-        if (this.deviceController) {
-          this.deviceController.eventController = this.hostedEventController;
+        if (this.deviceController && this.clearEventControllerOnLeave) {
+          this.deviceController.eventController = undefined;
         }
       } else {
         await this.deviceController?.chooseAudioOutput(null);

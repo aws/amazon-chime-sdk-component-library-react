@@ -332,13 +332,13 @@ describe('Meeting Manager', () => {
 
       await meetingManager.leave();
 
-      // Cleared on leave (restored to the constructed value, which was none) so pre-rejoin device
+      // Cleared on leave (the session bound it, so the builder does not own it) so pre-rejoin device
       // events do not publish to the ended session's controller.
       expect(hostedController.eventController).toBeUndefined();
     });
 
     it('keeps a builder-supplied eventController across leave (survives for warm rejoin)', async () => {
-      // Builder provides a controller carrying its own eventController: it is session-independent, so
+      // Builder provides a controller carrying its own eventController: it is builder-owned, so
       // leave() must preserve it, not clear it.
       const builderEventController: any = {
         addObserver: jest.fn(),
@@ -360,6 +360,27 @@ describe('Meeting Manager', () => {
 
       // Preserved so pre-rejoin device events keep reporting to the builder's controller.
       expect(controllerWithEvents.eventController).toBe(builderEventController);
+    });
+
+    it('keeps an eventController attached after mount but before join (builder-owned)', async () => {
+      // Builder opts in with a controller that has no eventController, then attaches their own before
+      // join (a valid window, since the provider reads the controller at mount). leave() must treat it
+      // as builder-owned and preserve it — the decision is made at join from the controller's state,
+      // not at construction.
+      const builderEventController: any = {
+        addObserver: jest.fn(),
+        removeObserver: jest.fn(),
+        publishEvent: jest.fn(),
+      };
+      hostedController.eventController = builderEventController;
+
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      await meetingManager.leave();
+
+      expect(hostedController.eventController).toBe(builderEventController);
     });
 
     it('re-applies the preserved audio output device on warm rejoin', async () => {
