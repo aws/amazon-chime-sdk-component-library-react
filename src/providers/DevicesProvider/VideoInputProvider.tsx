@@ -21,7 +21,7 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const logger = useLogger();
-  const deviceSource = useDeviceController();
+  const deviceController = useDeviceController();
   const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);
   const meetingManager = useMeetingManager();
   const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState<
@@ -51,15 +51,15 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
     };
 
     async function initVideoInput(): Promise<void> {
-      if (!deviceSource) {
+      if (!deviceController) {
         return;
       }
 
-      const devices = await deviceSource.listVideoInputDevices();
+      const devices = await deviceController.listVideoInputDevices();
 
       if (isMounted) {
         setVideoInputs(devices);
-        deviceSource.addDeviceChangeObserver(observer);
+        deviceController.addDeviceChangeObserver(observer);
       }
     }
 
@@ -73,10 +73,10 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
 
     return () => {
       isMounted = false;
-      deviceSource?.removeDeviceChangeObserver(observer);
+      deviceController?.removeDeviceChangeObserver(observer);
       meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
-  }, [deviceSource]);
+  }, [deviceController]);
 
   const contextValue: VideoInputContextType = useMemo(
     () => ({

@@ -25,7 +25,7 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
   props
 ) => {
   const logger = useLogger();
-  const deviceSource = useDeviceController();
+  const deviceController = useDeviceController();
   const { selectedDevice } = useVideoInputs();
   const videoEl = useRef<HTMLVideoElement>(null);
   const meetingManager = useMeetingManager();
@@ -35,24 +35,24 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
     const videoElement = videoEl.current;
     return () => {
       if (videoElement) {
-        deviceSource?.stopVideoPreviewForVideoInput(videoElement);
+        deviceController?.stopVideoPreviewForVideoInput(videoElement);
         if (!meetingManager.hasJoinedMeeting()) {
-          deviceSource?.stopVideoInput();
+          deviceController?.stopVideoInput();
         }
         setIsVideoEnabled(false);
       }
     };
-  }, [deviceSource, meetingManager]);
+  }, [deviceController, meetingManager]);
 
   useEffect(() => {
     async function startPreview(): Promise<void> {
-      if (!deviceSource || !selectedDevice || !videoEl.current) {
+      if (!deviceController || !selectedDevice || !videoEl.current) {
         return;
       }
 
       try {
         await meetingManager.startVideoInputDevice(selectedDevice);
-        deviceSource.startVideoPreviewForVideoInput(videoEl.current);
+        deviceController.startVideoPreviewForVideoInput(videoEl.current);
         setIsVideoEnabled(true);
       } catch (error) {
         logger.error('Failed to start video preview');
@@ -60,7 +60,7 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
     }
 
     startPreview();
-  }, [deviceSource, selectedDevice]);
+  }, [deviceController, selectedDevice]);
 
   return <StyledPreview {...props} ref={videoEl} />;
 };

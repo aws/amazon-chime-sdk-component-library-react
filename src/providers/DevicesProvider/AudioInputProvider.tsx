@@ -34,7 +34,7 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const logger = useLogger();
   const meetingManager = useMeetingManager();
-  const deviceSource = useDeviceController();
+  const deviceController = useDeviceController();
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
   const [selectedAudioInputDevice, setSelectedAudioInputDevice] = useState(
     meetingManager.selectedAudioInputDevice
@@ -118,15 +118,15 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
     };
 
     async function initAudioInput(): Promise<void> {
-      if (!deviceSource) {
+      if (!deviceController) {
         return;
       }
 
-      const devices = await deviceSource.listAudioInputDevices();
+      const devices = await deviceController.listAudioInputDevices();
 
       if (isMounted) {
         setAudioInputs(devices);
-        deviceSource.addDeviceChangeObserver(observer);
+        deviceController.addDeviceChangeObserver(observer);
       }
     }
 
@@ -140,10 +140,10 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
 
     return () => {
       isMounted = false;
-      deviceSource?.removeDeviceChangeObserver(observer);
+      deviceController?.removeDeviceChangeObserver(observer);
       meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
-  }, [deviceSource, onDeviceReplacement]);
+  }, [deviceController, onDeviceReplacement]);
 
   const contextValue: AudioInputContextType = useMemo(
     () => ({
