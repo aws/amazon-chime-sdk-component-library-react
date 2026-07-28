@@ -187,6 +187,14 @@ export class MeetingManager implements AudioVideoObserver {
       );
     }
 
+    if (!eventController && this.deviceController.eventController) {
+      this.logger.info(
+        'MeetingManager: the provided device controller has its own eventController; device events ' +
+          'report to it, while meeting events use a separate event controller. Pass an eventController ' +
+          'to join() to unify them.'
+      );
+    }
+
     this.meetingSession = new DefaultMeetingSession(
       meetingSessionConfiguration,
       this.logger,

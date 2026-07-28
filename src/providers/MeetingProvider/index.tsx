@@ -57,8 +57,8 @@ const MeetingProviderInner: React.FC<React.PropsWithChildren<Props>> = ({
   useEffect(() => {
     if (meetingManagerProp && deviceController) {
       logger.warn(
-        'MeetingProvider: the `deviceController` prop has no effect when a `meetingManager` prop is ' +
-          'also provided. Use one or the other.'
+        'MeetingProvider: `meetingManager` prop takes precedence; the `deviceController` prop is ' +
+          'ignored when both are provided.'
       );
     }
   }, [meetingManagerProp, deviceController, logger]);
