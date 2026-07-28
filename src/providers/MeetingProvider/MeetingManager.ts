@@ -248,10 +248,6 @@ export class MeetingManager implements AudioVideoObserver {
     this.audioVideo?.start();
   }
 
-  hasJoinedMeeting(): boolean {
-    return this.audioVideo !== null;
-  }
-
   async leave(): Promise<void> {
     this.audioVideo?.stopContentShare();
     this.audioVideo?.stopLocalVideoTile();

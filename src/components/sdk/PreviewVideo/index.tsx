@@ -36,13 +36,11 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
     return () => {
       if (videoElement) {
         deviceController?.stopVideoPreviewForVideoInput(videoElement);
-        if (!meetingManager.hasJoinedMeeting()) {
-          deviceController?.stopVideoInput();
-        }
+        deviceController?.stopVideoInput();
         setIsVideoEnabled(false);
       }
     };
-  }, [deviceController, meetingManager]);
+  }, [deviceController]);
 
   useEffect(() => {
     async function startPreview(): Promise<void> {
