@@ -23,7 +23,7 @@ import { useDeviceController } from 'amazon-chime-sdk-component-library-react';
 The hook depends on the `MeetingProvider`.
 
 ```jsx
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   MeetingProvider,
   useDeviceController,
@@ -31,14 +31,28 @@ import {
 
 const App = () => (
   <MeetingProvider>
-    <MyChild />
+    <MicrophoneList />
   </MeetingProvider>
 );
 
-const MyChild = () => {
+const MicrophoneList = () => {
   const deviceController = useDeviceController();
+  const [microphones, setMicrophones] = useState([]);
 
-  // Build a custom pre-meeting device UI with `deviceController`.
+  useEffect(() => {
+    if (!deviceController) {
+      return;
+    }
+    deviceController.listAudioInputDevices().then(setMicrophones);
+  }, [deviceController]);
+
+  return (
+    <ul>
+      {microphones.map((mic) => (
+        <li key={mic.deviceId}>{mic.label}</li>
+      ))}
+    </ul>
+  );
 };
 ```
 

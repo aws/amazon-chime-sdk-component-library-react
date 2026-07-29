@@ -120,10 +120,9 @@ export class MeetingManager implements AudioVideoObserver {
   private persistDeviceController: boolean;
 
   /**
-   * Whether `leave()` should clear the device controller's `eventController`. Set on join: when the
-   * provided controller has no eventController of its own, `DefaultMeetingSession` binds a
-   * session-scoped one that must be released on leave so the next join binds a correctly-scoped
-   * controller. A builder-supplied eventController is left untouched — the builder owns it.
+   * `DefaultMeetingSession` binds a session-scoped `eventController` onto a device controller that has
+   * none; this flags `leave()` to clear it so the next join re-binds a correctly-scoped one. A
+   * builder-supplied eventController is left untouched.
    */
   private clearEventControllerOnLeave = false;
 
@@ -131,7 +130,10 @@ export class MeetingManager implements AudioVideoObserver {
     return this.deviceLabels;
   }
 
-  constructor(logger: Logger, deviceController?: DeviceControllerBasedMediaStreamBroker) {
+  constructor(
+    logger: Logger,
+    deviceController?: DeviceControllerBasedMediaStreamBroker
+  ) {
     this.logger = logger;
     this.deviceController = deviceController;
     this.persistDeviceController = !!deviceController;
@@ -197,6 +199,16 @@ export class MeetingManager implements AudioVideoObserver {
         'MeetingManager: the provided device controller has its own eventController; device events ' +
           'report to it, while meeting events use a separate event controller. Pass an eventController ' +
           'to join() to unify them.'
+      );
+    } else if (
+      eventController &&
+      this.deviceController.eventController &&
+      eventController !== this.deviceController.eventController
+    ) {
+      this.logger.warn(
+        'MeetingManager: the eventController passed to join() differs from the one on the provided ' +
+          "device controller; device events report to the controller's eventController, while meeting " +
+          'events report to the one passed to join(). Pass the same eventController to both to unify them.'
       );
     }
 

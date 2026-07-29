@@ -383,6 +383,52 @@ describe('Meeting Manager', () => {
       expect(hostedController.eventController).toBe(builderEventController);
     });
 
+    it('warns when the join() eventController differs from the one on the device controller', async () => {
+      // Builder supplies an eventController on the controller and a different one to join(): device
+      // events go to the controller's, meeting events to join()'s. Warn so the split is not silent.
+      const logger = new ConsoleLogger('MeetingManager');
+      const warn = jest.spyOn(logger, 'warn').mockImplementation(() => {});
+      const manager = new MeetingManager(logger, hostedController);
+      hostedController.eventController = {
+        addObserver: jest.fn(),
+        removeObserver: jest.fn(),
+        publishEvent: jest.fn(),
+      };
+
+      await manager.join(mockMeetingSessionConfiguration, {
+        eventController: {
+          addObserver: jest.fn(),
+          removeObserver: jest.fn(),
+          publishEvent: jest.fn(),
+        } as any,
+      });
+
+      expect(warn).toHaveBeenCalledWith(
+        expect.stringContaining('differs from the one on the provided')
+      );
+    });
+
+    it('does not warn when the same eventController is on the controller and passed to join()', async () => {
+      // Matching eventControllers => unified, no warning.
+      const logger = new ConsoleLogger('MeetingManager');
+      const warn = jest.spyOn(logger, 'warn').mockImplementation(() => {});
+      const sharedEventController: any = {
+        addObserver: jest.fn(),
+        removeObserver: jest.fn(),
+        publishEvent: jest.fn(),
+      };
+      const manager = new MeetingManager(logger, hostedController);
+      hostedController.eventController = sharedEventController;
+
+      await manager.join(mockMeetingSessionConfiguration, {
+        eventController: sharedEventController,
+      });
+
+      expect(warn).not.toHaveBeenCalledWith(
+        expect.stringContaining('differs from the one on the provided')
+      );
+    });
+
     it('re-applies the preserved audio output device on warm rejoin', async () => {
       // First meeting selects a non-default speaker, then leaves (output selection preserved).
       await meetingManager.join(

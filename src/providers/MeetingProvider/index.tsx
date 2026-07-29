@@ -35,7 +35,7 @@ interface Props {
    * selection, camera preview, the mic activity meter, and permission prompts work before `join()`, and
    * the same controller carries into the meeting so selected devices persist across leaving and
    * rejoining. Construct it (e.g. `new DefaultDeviceController(logger, { enableWebAudio })`) and destroy
-   * it in your application; the library uses it but does not create or destroy a controller you pass.
+   * it in your application; the library uses it but does not destroy a controller you pass.
    */
   deviceController?: DeviceControllerBasedMediaStreamBroker;
 }

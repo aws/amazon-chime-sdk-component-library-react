@@ -289,36 +289,58 @@ Check out [useDeviceLabelTriggerStatus](?path=/story/sdk-hooks-usedevicelabeltri
 
 ## Set Up Devices Before Joining a Meeting
 
-`MeetingProvider` accepts an optional `deviceController` prop for setting up devices before joining a meeting. When you pass a device controller, device enumeration, selection, camera preview, the microphone activity meter, and permission prompts work before `join()`, and the same controller carries into the meeting so selected devices persist across leaving and rejoining.
+`MeetingProvider` accepts an optional `deviceController` prop for setting up devices before joining a meeting. When you pass a device controller, device enumeration, selection, camera preview, the microphone activity meter, and permission prompts work before `MeetingManager.join()`. The same controller then carries into the meeting, and it is not destroyed across `MeetingManager.leave()` and `MeetingManager.join()`, so selected devices persist when you leave and rejoin.
 
-Construct a `DefaultDeviceController` from the Amazon Chime SDK for JavaScript and pass it to `MeetingProvider`. Your application owns the controller: create it and destroy it yourself. The library uses the controller you pass but does not create or destroy it.
+Construct a `DefaultDeviceController` from the Amazon Chime SDK for JavaScript and pass it to `MeetingProvider`. Your application owns the controller: create it and destroy it yourself.
+
+To receive device and meeting events, provide an optional `eventController`. Pass one to `MeetingManager.join()` as shown in the client event ingestion example below, or construct the device controller with your own `EventController` implementation to also capture device events before the meeting.
 
 ```jsx
+import { useEffect, useState } from 'react';
 import { DefaultDeviceController } from 'amazon-chime-sdk-js';
-import { MeetingProvider, useLogger } from 'amazon-chime-sdk-component-library-react';
+import {
+  CameraSelection,
+  MeetingProvider,
+  MicSelection,
+  PreviewVideo,
+  SpeakerSelection,
+  useLogger,
+} from 'amazon-chime-sdk-component-library-react';
 
 const App = () => {
   const logger = useLogger();
-  const deviceController = useMemo(
-    () => new DefaultDeviceController(logger, { enableWebAudio: false }),
-    [logger]
+  const [deviceController] = useState(
+    () => new DefaultDeviceController(logger)
   );
 
+  // Destroy the controller you created when the component unmounts.
   useEffect(() => () => { void deviceController.destroy(); }, [deviceController]);
 
   return (
     <MeetingProvider deviceController={deviceController}>
-      <MyApp />
+      <DeviceSetup />
     </MeetingProvider>
   );
 };
+
+// A pre-meeting device-setup page. These components read the provided device controller through the
+// `MeetingProvider`, so they enumerate devices, select them, and render a camera preview before
+// `MeetingManager.join()` is ever called.
+const DeviceSetup = () => (
+  <div>
+    <MicSelection />
+    <SpeakerSelection />
+    <CameraSelection />
+    <PreviewVideo />
+  </div>
+);
 ```
 
-`MeetingProvider` reads `deviceController` once, when it creates its `MeetingManager`. Provide the controller before `MeetingProvider` first mounts; to change or clear it, remount `MeetingProvider` (for example, with a React `key`).
+`MeetingProvider` reads `deviceController` once, when it creates its `MeetingManager`, so provide the controller before `MeetingProvider` first mounts.
 
-When you omit the `deviceController` prop, `join()` creates a device controller internally.
+When you omit the `deviceController` prop, `MeetingManager.join()` creates a device controller internally and destroys it on `MeetingManager.leave()`.
 
-To build a pre-meeting device UI, use [`useDeviceController`](?path=/docs/sdk-hooks-usedevicecontroller--page) to access the controller, [`PreviewVideo`](?path=/docs/sdk-components-previewvideo--page) to render a camera preview, and [`useLocalAudioInputActivity`](?path=/docs/sdk-hooks-uselocalaudioinputactivity--page) to render a microphone activity meter.
+To build a pre-meeting device UI, use [`useDeviceController`](?path=/docs/sdk-hooks-usedevicecontroller--page) to access the controller, [`MicSelection`](?path=/docs/sdk-components-deviceselection-micselection--page), [`SpeakerSelection`](?path=/docs/sdk-components-deviceselection-speakerselection--page), and [`CameraSelection`](?path=/docs/sdk-components-deviceselection-camera-cameraselection--page) to select devices, [`PreviewVideo`](?path=/docs/sdk-components-previewvideo--page) to render a camera preview, and [`useLocalAudioInputActivity`](?path=/docs/sdk-hooks-uselocalaudioinputactivity--page) to render a microphone activity meter.
 
 ## Enable Camera and Display the Video Stream in the Grid
 
