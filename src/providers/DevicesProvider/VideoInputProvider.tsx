@@ -11,7 +11,7 @@ import React, {
 } from 'react';
 
 import { VideoInputContextType } from '../../types';
-import { useAudioVideo } from '../AudioVideoProvider';
+import { useDeviceController } from '../../hooks/sdk/useDeviceController';
 import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
@@ -21,7 +21,7 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
   children,
 }) => {
   const logger = useLogger();
-  const audioVideo = useAudioVideo();
+  const deviceController = useDeviceController();
   const [videoInputs, setVideoInputs] = useState<MediaDeviceInfo[]>([]);
   const meetingManager = useMeetingManager();
   const [selectedVideoInputDevice, setSelectedVideoInputDevice] = useState<
@@ -51,15 +51,15 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
     };
 
     async function initVideoInput(): Promise<void> {
-      if (!audioVideo) {
+      if (!deviceController) {
         return;
       }
 
-      const devices = await audioVideo.listVideoInputDevices();
+      const devices = await deviceController.listVideoInputDevices();
 
       if (isMounted) {
         setVideoInputs(devices);
-        audioVideo.addDeviceChangeObserver(observer);
+        deviceController.addDeviceChangeObserver(observer);
       }
     }
 
@@ -73,10 +73,10 @@ export const VideoInputProvider: React.FC<React.PropsWithChildren<unknown>> = ({
 
     return () => {
       isMounted = false;
-      audioVideo?.removeDeviceChangeObserver(observer);
+      deviceController?.removeDeviceChangeObserver(observer);
       meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
-  }, [audioVideo]);
+  }, [deviceController]);
 
   const contextValue: VideoInputContextType = useMemo(
     () => ({

@@ -1,17 +1,18 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
+import type { DeviceChangeObserver } from 'amazon-chime-sdk-js';
 import { useEffect } from 'react';
 
-import { useAudioVideo } from '../../providers/AudioVideoProvider';
+import { useDeviceController } from './useDeviceController';
 import { useAudioInputs } from '../../providers/DevicesProvider';
 
 export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
-  const audioVideo = useAudioVideo();
   const { selectedDevice } = useAudioInputs();
+  const deviceController = useDeviceController();
 
   useEffect(() => {
-    if (!audioVideo) {
+    if (!deviceController) {
       return;
     }
 
@@ -22,16 +23,17 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
     let isMounted = true;
     let lastDecimal: number;
 
-    audioVideo.addDeviceChangeObserver({
+    const deviceChangeObserver: DeviceChangeObserver = {
       audioInputsChanged: () => {
         restart = true;
       },
-    });
+    };
+    deviceController.addDeviceChangeObserver(deviceChangeObserver);
 
     function initializePreview() {
-      if (!audioVideo || !isMounted) return;
+      if (!deviceController || !isMounted) return;
 
-      analyserNode = audioVideo.createAnalyserNodeForAudioInput();
+      analyserNode = deviceController.createAnalyserNodeForAudioInput();
 
       if (!analyserNode?.getByteTimeDomainData) {
         return;
@@ -80,8 +82,9 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
 
     return () => {
       isMounted = false;
+      deviceController.removeDeviceChangeObserver(deviceChangeObserver);
     };
-  }, [audioVideo, selectedDevice, cb]);
+  }, [deviceController, selectedDevice, cb]);
 };
 
 export default useLocalAudioInputActivity;

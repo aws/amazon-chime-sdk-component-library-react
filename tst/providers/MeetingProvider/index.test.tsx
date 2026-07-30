@@ -4,6 +4,7 @@
 import React from 'react';
 import {
   ConsoleLogger,
+  DefaultDeviceController,
   DefaultEventController,
   EventAttributes,
   EventName,
@@ -24,6 +25,7 @@ import {
   MeetingProvider,
   useMeetingManager,
 } from '../../../src/providers/MeetingProvider';
+import { useDeviceController } from '../../../src/hooks/sdk/useDeviceController';
 
 describe('Meeting Provider', () => {
   it('events are received correctly', async () => {
@@ -107,6 +109,73 @@ describe('Meeting Provider', () => {
     expect(calls).toBe(2);
   });
 
+  it('exposes the provided device controller and its eventController before any meeting', async () => {
+    const eventController = new DefaultEventController(
+      new MeetingSessionConfiguration(
+        {
+          meetingId: '',
+          externalMeetingId: '',
+          mediaplacement: new MeetingSessionURLs(),
+        },
+        new MeetingSessionCredentials()
+      ),
+      new NoOpDebugLogger()
+    );
+    const deviceController = new DefaultDeviceController(
+      new NoOpDebugLogger(),
+      { enableWebAudio: false },
+      undefined,
+      eventController
+    );
+
+    const { result } = renderHook(() => useDeviceController(), {
+      wrapper: ({ children }) => (
+        <MeetingProvider deviceController={deviceController}>
+          {children}
+        </MeetingProvider>
+      ),
+    });
+
+    // The provided controller is available before any meeting and carries its eventController, so
+    // pre-meeting device events report to it.
+    expect(result.current).toBe(deviceController);
+    expect(result.current?.eventController).toBe(eventController);
+
+    // A pre-meeting device event published through it reaches an observer.
+    let received = 0;
+    const observer = {
+      eventDidReceive: (name: EventName): void => {
+        if (name === 'audioInputFailed') {
+          received += 1;
+        }
+      },
+    };
+    eventController.addObserver(observer);
+    await result.current?.eventController?.publishEvent('audioInputFailed', {
+      audioInputErrorMessage: 'nope',
+    });
+    await new Promise((r) => setTimeout(r, 10));
+    expect(received).toBe(1);
+  });
+
+  it('exposes a provided controller with no eventController when none was constructed with one', () => {
+    const deviceController = new DefaultDeviceController(new NoOpDebugLogger(), {
+      enableWebAudio: false,
+    });
+
+    const { result } = renderHook(() => useDeviceController(), {
+      wrapper: ({ children }) => (
+        <MeetingProvider deviceController={deviceController}>
+          {children}
+        </MeetingProvider>
+      ),
+    });
+
+    // The controller is available but has no eventController (the meeting session creates one on join).
+    expect(result.current).toBe(deviceController);
+    expect(result.current?.eventController).toBeUndefined();
+  });
+
   it('should not change params', async () => {
     // @ts-ignore
     const meetingProviderParams: MeetingManager = jest.fn();
@@ -123,5 +192,50 @@ describe('Meeting Provider', () => {
     });
 
     expect(meetingProviderParams).toStrictEqual(meetingProviderParams);
+  });
+
+  it('does not call leave() on unmount when not opted in (no deviceController)', async () => {
+    // Backward compatibility: existing consumers pass no deviceController, and the base provider did
+    // no unmount cleanup. Unmounting must not tear down their session.
+    const leaveSpy = jest
+      .spyOn(MeetingManager.prototype, 'leave')
+      .mockResolvedValue(undefined);
+
+    const { unmount } = renderHook(() => useMeetingManager(), {
+      wrapper: ({ children }) => <MeetingProvider>{children}</MeetingProvider>,
+    });
+
+    await act(async () => {
+      unmount();
+    });
+
+    expect(leaveSpy).not.toHaveBeenCalled();
+    leaveSpy.mockRestore();
+  });
+
+  it('calls leave() on unmount when opted in (deviceController provided)', async () => {
+    // The opt-in path releases the controller's media on unmount (leave() stops inputs without
+    // destroying a builder-owned controller).
+    const leaveSpy = jest
+      .spyOn(MeetingManager.prototype, 'leave')
+      .mockResolvedValue(undefined);
+    const deviceController = new DefaultDeviceController(new NoOpDebugLogger(), {
+      enableWebAudio: false,
+    });
+
+    const { unmount } = renderHook(() => useMeetingManager(), {
+      wrapper: ({ children }) => (
+        <MeetingProvider deviceController={deviceController}>
+          {children}
+        </MeetingProvider>
+      ),
+    });
+
+    await act(async () => {
+      unmount();
+    });
+
+    expect(leaveSpy).toHaveBeenCalledTimes(1);
+    leaveSpy.mockRestore();
   });
 });

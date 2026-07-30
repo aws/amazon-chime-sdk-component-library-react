@@ -15,7 +15,7 @@ import React, {
 } from 'react';
 
 import { AudioInputContextType, DeviceLabels } from '../../types';
-import { useAudioVideo } from '../AudioVideoProvider';
+import { useDeviceController } from '../../hooks/sdk/useDeviceController';
 import { useLogger } from '../LoggerProvider';
 import { useMeetingManager } from '../MeetingProvider';
 
@@ -34,7 +34,7 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const logger = useLogger();
   const meetingManager = useMeetingManager();
-  const audioVideo = useAudioVideo();
+  const deviceController = useDeviceController();
   const [audioInputs, setAudioInputs] = useState<MediaDeviceInfo[]>([]);
   const [selectedAudioInputDevice, setSelectedAudioInputDevice] = useState(
     meetingManager.selectedAudioInputDevice
@@ -118,15 +118,15 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
     };
 
     async function initAudioInput(): Promise<void> {
-      if (!audioVideo) {
+      if (!deviceController) {
         return;
       }
 
-      const devices = await audioVideo.listAudioInputDevices();
+      const devices = await deviceController.listAudioInputDevices();
 
       if (isMounted) {
         setAudioInputs(devices);
-        audioVideo.addDeviceChangeObserver(observer);
+        deviceController.addDeviceChangeObserver(observer);
       }
     }
 
@@ -140,10 +140,10 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
 
     return () => {
       isMounted = false;
-      audioVideo?.removeDeviceChangeObserver(observer);
+      deviceController?.removeDeviceChangeObserver(observer);
       meetingManager.unsubscribeFromDeviceLabelTrigger(callback);
     };
-  }, [audioVideo, onDeviceReplacement]);
+  }, [deviceController, onDeviceReplacement]);
 
   const contextValue: AudioInputContextType = useMemo(
     () => ({

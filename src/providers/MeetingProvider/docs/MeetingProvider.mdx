@@ -86,3 +86,9 @@ The video will not work due to limitations of JS SDK to bind a video stream to a
 
 Please make sure your app calls `meetingManager.join()` only once with the same `attendeeInfo`.
 Otherwise, the previous attendee who joined the meeting will leave the meeting with [AudioJoinedFromAnotherDevice](https://aws.github.io/amazon-chime-sdk-js/enums/meetingsessionstatuscode.html#audiojoinedfromanotherdevice).
+
+#### deviceController
+
+Pass a device controller to set up devices before joining a meeting. When provided, device enumeration, selection, camera preview, the microphone activity meter, and permission prompts work before `join()`. The same controller then carries into the meeting, and it is not destroyed across `leave()` and `join()`, so selected devices persist when you leave and rejoin. Construct it (for example, `new DefaultDeviceController(logger)` from the Amazon Chime SDK for JavaScript) and destroy it in your application; the library uses the controller you pass but does not destroy it.
+
+`MeetingProvider` reads `deviceController` once, when it creates its `MeetingManager`, so provide the controller before `MeetingProvider` first mounts. When omitted, `join()` creates a device controller internally and destroys it on `leave()`.
