@@ -65,11 +65,11 @@ export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
 
   useEffect(() => {
     return () => {
-      if (!meetingManagerProp) {
+      if (!meetingManagerProp && deviceController) {
         void meetingManager.leave();
       }
     };
-  }, [meetingManager, meetingManagerProp]);
+  }, [meetingManager, meetingManagerProp, deviceController]);
 
   return (
     <MeetingContext.Provider value={meetingManager}>

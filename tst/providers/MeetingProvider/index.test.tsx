@@ -193,4 +193,49 @@ describe('Meeting Provider', () => {
 
     expect(meetingProviderParams).toStrictEqual(meetingProviderParams);
   });
+
+  it('does not call leave() on unmount when not opted in (no deviceController)', async () => {
+    // Backward compatibility: existing consumers pass no deviceController, and the base provider did
+    // no unmount cleanup. Unmounting must not tear down their session.
+    const leaveSpy = jest
+      .spyOn(MeetingManager.prototype, 'leave')
+      .mockResolvedValue(undefined);
+
+    const { unmount } = renderHook(() => useMeetingManager(), {
+      wrapper: ({ children }) => <MeetingProvider>{children}</MeetingProvider>,
+    });
+
+    await act(async () => {
+      unmount();
+    });
+
+    expect(leaveSpy).not.toHaveBeenCalled();
+    leaveSpy.mockRestore();
+  });
+
+  it('calls leave() on unmount when opted in (deviceController provided)', async () => {
+    // The opt-in path releases the controller's media on unmount (leave() stops inputs without
+    // destroying a builder-owned controller).
+    const leaveSpy = jest
+      .spyOn(MeetingManager.prototype, 'leave')
+      .mockResolvedValue(undefined);
+    const deviceController = new DefaultDeviceController(new NoOpDebugLogger(), {
+      enableWebAudio: false,
+    });
+
+    const { unmount } = renderHook(() => useMeetingManager(), {
+      wrapper: ({ children }) => (
+        <MeetingProvider deviceController={deviceController}>
+          {children}
+        </MeetingProvider>
+      ),
+    });
+
+    await act(async () => {
+      unmount();
+    });
+
+    expect(leaveSpy).toHaveBeenCalledTimes(1);
+    leaveSpy.mockRestore();
+  });
 });

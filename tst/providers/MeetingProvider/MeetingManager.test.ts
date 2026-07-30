@@ -317,24 +317,51 @@ describe('Meeting Manager', () => {
       expect(hostedController.stopVideoInput).toHaveBeenCalled();
     });
 
-    it('clears a session-supplied eventController on leave (no stale between-meetings ref)', async () => {
+    it('clears and destroys a session-supplied eventController on leave (no stale between-meetings ref)', async () => {
       // Builder supplied no eventController, so the meeting session binds its own onto the controller
       // during join. Simulate that binding (the session ctor is mocked out here).
       await meetingManager.join(
         mockMeetingSessionConfiguration,
         mockMeetingManagerJoinOptions
       );
-      hostedController.eventController = {
+      const sessionEventController = {
         addObserver: jest.fn(),
         removeObserver: jest.fn(),
         publishEvent: jest.fn(),
+        destroy: jest.fn().mockResolvedValue(undefined),
       };
+      hostedController.eventController = sessionEventController;
 
       await meetingManager.leave();
 
       // Cleared on leave (the session bound it, so the builder does not own it) so pre-rejoin device
-      // events do not publish to the ended session's controller.
+      // events do not publish to the ended session's controller, and destroyed to release its reporter
+      // timer and window listeners.
       expect(hostedController.eventController).toBeUndefined();
+      expect(sessionEventController.destroy).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not clear an eventController passed to join() and bound onto a bare controller (builder-owned)', async () => {
+      // Builder opts in with a controller that has no eventController, but passes their own to join().
+      // The session binds that join eventController onto the controller; it is builder-owned, so leave()
+      // must not clear it.
+      const joinEventController: any = {
+        addObserver: jest.fn(),
+        removeObserver: jest.fn(),
+        publishEvent: jest.fn(),
+        destroy: jest.fn().mockResolvedValue(undefined),
+      };
+
+      await meetingManager.join(mockMeetingSessionConfiguration, {
+        eventController: joinEventController,
+      });
+      // Simulate the session binding the join eventController onto the bare controller.
+      hostedController.eventController = joinEventController;
+
+      await meetingManager.leave();
+
+      expect(hostedController.eventController).toBe(joinEventController);
+      expect(joinEventController.destroy).not.toHaveBeenCalled();
     });
 
     it('keeps a builder-supplied eventController across leave (survives for warm rejoin)', async () => {

@@ -15,6 +15,7 @@ import {
   EventController,
   EventName,
   EventObserver,
+  isDestroyable,
   Logger,
   MeetingSessionConfiguration,
   MeetingSessionStatus,
@@ -120,11 +121,14 @@ export class MeetingManager implements AudioVideoObserver {
   private persistDeviceController: boolean;
 
   /**
-   * `DefaultMeetingSession` binds a session-scoped `eventController` onto a device controller that has
-   * none; this flags `leave()` to clear it so the next join re-binds a correctly-scoped one. A
-   * builder-supplied eventController is left untouched.
+   * When neither the caller (`join()`) nor the device controller supplies an eventController,
+   * `DefaultMeetingSession` creates a `DefaultEventController` scoped to that session and binds it onto
+   * the device controller. This flags `leave()` to destroy and unbind it: when the device controller
+   * persists across meetings, the next join must create a fresh `DefaultEventController` scoped to the
+   * new session, which only happens if the controller has no eventController. A builder-supplied
+   * eventController — whether built into the controller or passed to `join()` — is left untouched.
    */
-  private clearEventControllerOnLeave = false;
+  private clearDefaultEventControllerOnLeave = false;
 
   getDeviceLabels(): DeviceLabels | DeviceLabelTrigger {
     return this.deviceLabels;
@@ -190,29 +194,32 @@ export class MeetingManager implements AudioVideoObserver {
     } else if (enableWebAudio) {
       this.logger.warn(
         'MeetingManager: `enableWebAudio` passed to join() is ignored when a `deviceController` is ' +
-          'provided to MeetingProvider. Construct that controller with `{ enableWebAudio: true }` instead.'
+          'provided to MeetingProvider. Construct the `DeviceController` with `{ enableWebAudio: true }` instead.'
       );
     }
 
-    if (!eventController && this.deviceController.eventController) {
-      this.logger.info(
-        'MeetingManager: the provided device controller has its own eventController; device events ' +
-          'report to it, while meeting events use a separate event controller. Pass an eventController ' +
-          'to join() to unify them.'
-      );
-    } else if (
-      eventController &&
-      this.deviceController.eventController &&
-      eventController !== this.deviceController.eventController
-    ) {
-      this.logger.warn(
-        'MeetingManager: the eventController passed to join() differs from the one on the provided ' +
-          "device controller; device events report to the controller's eventController, while meeting " +
-          'events report to the one passed to join(). Pass the same eventController to both to unify them.'
-      );
+    // Device events use the device controller's own eventController; meeting events use the one passed
+    // to join() (or a new DefaultEventController). They diverge only when the device controller brought
+    // its own and it isn't the one the meeting session will use.
+    const deviceEventController = this.deviceController.eventController;
+    if (deviceEventController && deviceEventController !== eventController) {
+      if (eventController) {
+        this.logger.warn(
+          'MeetingManager: the eventController passed to join() differs from the one on the provided ' +
+            "device controller; device events report to the controller's eventController, while meeting " +
+            'events report to the one passed to join(). Pass the same eventController to both to unify them.'
+        );
+      } else {
+        this.logger.info(
+          'MeetingManager: the provided device controller has its own eventController; device events ' +
+            'report to it, while meeting events use a separate event controller. Pass an eventController ' +
+            'to join() to unify them.'
+        );
+      }
     }
 
-    this.clearEventControllerOnLeave = !this.deviceController.eventController;
+    this.clearDefaultEventControllerOnLeave =
+      !eventController && !this.deviceController.eventController;
 
     this.meetingSession = new DefaultMeetingSession(
       meetingSessionConfiguration,
@@ -286,8 +293,13 @@ export class MeetingManager implements AudioVideoObserver {
       if (this.persistDeviceController) {
         await this.deviceController?.stopAudioInput();
         await this.deviceController?.stopVideoInput();
-        if (this.deviceController && this.clearEventControllerOnLeave) {
+        if (this.deviceController && this.clearDefaultEventControllerOnLeave) {
+          // Destroy (not just unbind) to release the reporter's interval timer and window listeners.
+          const ownedEventController = this.deviceController.eventController;
           this.deviceController.eventController = undefined;
+          if (isDestroyable(ownedEventController)) {
+            await ownedEventController.destroy();
+          }
         }
       } else {
         await this.deviceController?.chooseAudioOutput(null);
