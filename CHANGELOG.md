@@ -11,13 +11,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added an opt-in `persistDeviceController` prop to `MeetingProvider`. When set, device setup —
-  enumerating devices, selecting inputs and outputs, previewing the camera, and metering the
-  microphone — works before joining a meeting, and the selected devices persist across leaving and
-  rejoining. Pass the optional `enableWebAudio` prop alongside it to enable Web Audio (required for
-  Amazon Voice Focus) before joining. The exported `useDeviceController` hook returns the device
-  controller for building custom pre-meeting device UIs, or `undefined` when the prop is not set.
-  Behavior is unchanged when `persistDeviceController` is not set.
+- Add an optional `deviceController` prop to `MeetingProvider` to enable device selection, camera
+  preview, and the microphone activity meter before joining a meeting, persisting selections across
+  leaving and rejoining. The builder owns the passed controller's lifecycle. Add a `useDeviceController`
+  hook to access the controller for custom pre-meeting device UIs. Behavior is unchanged when the prop
+  is omitted.
 
 ### Removed
 
