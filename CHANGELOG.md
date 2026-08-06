@@ -16,13 +16,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   leaving and rejoining. The builder owns the passed controller's lifecycle. Add a `useDeviceController`
   hook to access the controller for custom pre-meeting device UIs. Behavior is unchanged when the prop
   is omitted.
+- Added `BackgroundSegmentationProvider` and `useBackgroundSegmentation` hook with unified blur, color-replacement, and image-replacement support via `BackgroundSegmentationVideoFrameProcessor`. Auto-mounted inside `MeetingProvider` with zero-cost `effect="none"` default. Supports runtime effect switching via `updateEffect()`, model switching via `updateModelType()`, and CPU budget control via `updateCPUUsagePercentage()`.
 
 ### Removed
 
 ### Changed
 
-### Fixed
+- Bumped `amazon-chime-sdk-js` peer dependency to `^3.32.0`.
+- Added `RTCRtpSender`/`RTCRtpReceiver` mock in test setup for JSSDK 3.32.0 JSDOM compatibility.
 
+### Fixed
 
 ## [3.12.0] - 2025-06-10
 
