@@ -324,11 +324,11 @@ export class MeetingManager implements AudioVideoObserver {
 
   private resetState(): void {
     if (this.persistDeviceController) {
+      // Opt-in (builder-supplied controller): tear down only the session. The device *selections*
+      // (input and output) and the enumerated device lists persist across leave/rejoin so the app
+      // can restore them; the live media was already stopped in cleanUpDeviceController(). Restarting
+      // input is the application's responsibility.
       this.resetSessionState();
-      this.selectedAudioInputDevice = undefined;
-      this.publishSelectedAudioInputDevice();
-      this.selectedVideoInputDevice = undefined;
-      this.publishSelectedVideoInputDevice();
     } else {
       this.initializeMeetingManager();
     }

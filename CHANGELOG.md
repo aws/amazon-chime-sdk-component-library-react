@@ -12,8 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Add an optional `deviceController` prop to `MeetingProvider` to enable device selection, camera
-  preview, and the microphone activity meter before joining a meeting, persisting selections across
-  leaving and rejoining. The builder owns the passed controller's lifecycle. Add a `useDeviceController`
+  preview, and the microphone activity meter before joining a meeting. Device selections persist
+  across leaving and rejoining, while the media inputs are stopped on leave for the application to
+  restart on rejoin. The builder owns the passed controller's lifecycle. Add a `useDeviceController`
   hook to access the controller for custom pre-meeting device UIs. Behavior is unchanged when the prop
   is omitted.
 
@@ -22,7 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 ### Fixed
-
 
 ## [3.12.0] - 2025-06-10
 
@@ -33,6 +33,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Removed
 
 ### Changed
+
 - Add support for React 19.
 - Migrate storybook to v8.
 - Migrate Jest to v29.
