@@ -1,0 +1,77 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="SDK Providers/BackgroundSegmentationProvider" />
+
+# BackgroundSegmentationProvider
+
+The `BackgroundSegmentationProvider` provides a unified interface for background blur, color replacement, and image replacement using the new `BackgroundSegmentationVideoFrameProcessor` (CDN-loaded ML model with improved segmentation quality).
+
+This provider manages a single processor instance that supports runtime switching between effects without recreating the processor or causing blank frames during transitions — unlike `BackgroundBlurProvider` and `BackgroundReplacementProvider` which require unmounting one provider and mounting another to switch effects. We recommend migrating to `BackgroundSegmentationProvider` for improved segmentation quality and seamless effect switching.
+
+`BackgroundSegmentationProvider` is auto-mounted inside `MeetingProvider`, so consumers can use `useBackgroundSegmentation()` without any explicit wrapping. The provider remains inert (zero-cost) until `createSegmentationDevice()` is called — no assets are loaded and no processor is created until then.
+
+Background segmentation related logs can be found in the browser developer tools when the provider is active.
+
+## State
+
+```typescript
+{
+  // Whether background segmentation is supported in the current browser.
+  // Determined by checking for: WebGL2, WebAssembly, Web Workers, and OffscreenCanvas.
+  // The default value is undefined (check in progress), then resolves to true or false.
+  isSupported: boolean | undefined;
+
+  // Create a video transform device with the specified segmentation effect.
+  // Check isSupported before calling — throws if browser is not compatible.
+  createSegmentationDevice: (
+    device: Device,
+    config: BackgroundSegmentationVideoFrameProcessorConfig,
+    options?: { modelType?: ModelType; cpuUsagePercentage?: number }
+  ) => Promise<VideoTransformDevice>;
+
+  // Switch the active effect at runtime (blur, color-replacement, image-replacement).
+  updateEffect: (config: BackgroundSegmentationVideoFrameProcessorConfig) => void;
+
+  // Change the segmentation model type at runtime.
+  updateModelType: (modelType: ModelType) => void;
+
+  // Change the CPU usage percentage budget at runtime (range: 10-80).
+  updateCPUUsagePercentage: (percentage: number) => void;
+}
+```
+
+Once you have a `VideoTransformDevice`, you can switch between blur, color replacement, and image replacement at runtime using `updateEffect` — no need to destroy and recreate the device.
+
+You can access the state by using the [useBackgroundSegmentation](/docs/sdk-hooks-usebackgroundsegmentation--page) hook.
+
+## Importing
+
+```javascript
+import { useBackgroundSegmentation } from 'amazon-chime-sdk-component-library-react';
+
+import {
+  BackgroundSegmentationBlurStrength,
+  BackgroundSegmentationVideoFrameProcessorConfig,
+  Device,
+  isVideoTransformDevice,
+  ModelType,
+  ProcessorEffect,
+  VideoTransformDevice,
+} from 'amazon-chime-sdk-js';
+```
+
+If you are using `MeetingProvider`, `BackgroundSegmentationProvider` is rendered by default.
+
+## Usage
+
+See [useBackgroundSegmentation](/docs/sdk-hooks-usebackgroundsegmentation--page) for usage examples.
+
+### Migration from V1 Providers
+
+- `BackgroundBlurProvider` → use `useBackgroundSegmentation()` with `updateEffect({ type: ProcessorEffect.BLUR, ... })`
+- `BackgroundReplacementProvider` → use `useBackgroundSegmentation()` with `updateEffect({ type: ProcessorEffect.COLOR_REPLACEMENT, ... })` or `updateEffect({ type: ProcessorEffect.IMAGE_REPLACEMENT, ... })`
+- V1 providers remain unchanged and can coexist with the new provider, as long as only one video transform device is active on the video stream at a time.
+
+### Dependencies
+
+- `MeetingProvider` (auto-mounts `BackgroundSegmentationProvider` internally)

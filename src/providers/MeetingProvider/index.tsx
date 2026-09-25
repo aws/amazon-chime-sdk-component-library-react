@@ -8,6 +8,7 @@ import {
 import React, { createContext, useContext, useEffect, useState } from 'react';
 
 import { AudioVideoProvider } from '../AudioVideoProvider';
+import { BackgroundSegmentationProvider } from '../BackgroundSegmentationProvider';
 import { ContentShareProvider } from '../ContentShareProvider';
 import { DevicesProvider } from '../DevicesProvider';
 import { FeaturedVideoTileProvider } from '../FeaturedVideoTileProvider';
@@ -76,19 +77,21 @@ export const MeetingProvider: React.FC<React.PropsWithChildren<Props>> = ({
       <MeetingEventProvider>
         <AudioVideoProvider>
           <DevicesProvider onDeviceReplacement={onDeviceReplacement}>
-            <RosterProvider>
-              <RemoteVideoTileProvider>
-                <LocalVideoProvider>
-                  <LocalAudioOutputProvider>
-                    <ContentShareProvider maxContentShares={maxContentShares}>
-                      <FeaturedVideoTileProvider>
-                        {children}
-                      </FeaturedVideoTileProvider>
-                    </ContentShareProvider>
-                  </LocalAudioOutputProvider>
-                </LocalVideoProvider>
-              </RemoteVideoTileProvider>
-            </RosterProvider>
+            <BackgroundSegmentationProvider>
+              <RosterProvider>
+                <RemoteVideoTileProvider>
+                  <LocalVideoProvider>
+                    <LocalAudioOutputProvider>
+                      <ContentShareProvider maxContentShares={maxContentShares}>
+                        <FeaturedVideoTileProvider>
+                          {children}
+                        </FeaturedVideoTileProvider>
+                      </ContentShareProvider>
+                    </LocalAudioOutputProvider>
+                  </LocalVideoProvider>
+                </RemoteVideoTileProvider>
+              </RosterProvider>
+            </BackgroundSegmentationProvider>
           </DevicesProvider>
         </AudioVideoProvider>
       </MeetingEventProvider>
