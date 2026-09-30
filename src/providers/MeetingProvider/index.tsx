@@ -35,8 +35,10 @@ interface Props {
    * A device controller for device setup before joining a meeting. When provided, device enumeration,
    * selection, camera preview, the mic activity meter, and permission prompts work before `join()`, and
    * the same controller carries into the meeting so selected devices persist across leaving and
-   * rejoining. Construct it (e.g. `new DefaultDeviceController(logger, { enableWebAudio })`) and destroy
-   * it in your application; the library uses it but does not destroy a controller you pass.
+   * rejoining. On rejoin, `join()` re-applies the audio output selection automatically. Restart the
+   * microphone and camera yourself (call `startAudioInput` and `startVideoInput`); `leave()` stops
+   * their media. Construct it (e.g. `new DefaultDeviceController(logger, { enableWebAudio })`) and
+   * destroy it in your application; the library uses it but does not destroy a controller you pass.
    */
   deviceController?: DeviceControllerBasedMediaStreamBroker;
 }

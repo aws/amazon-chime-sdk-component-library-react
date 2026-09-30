@@ -142,7 +142,9 @@ describe('Meeting Manager', () => {
       // join() created a controller and published it; it is now the manager's device source.
       expect(DefaultDeviceController).toHaveBeenCalledTimes(1);
       expect(meetingManager.deviceController).toBeDefined();
-      expect(received[received.length - 1]).toBe(meetingManager.deviceController);
+      expect(received[received.length - 1]).toBe(
+        meetingManager.deviceController
+      );
     });
 
     it('builds the session from the same controller and selects devices through it', async () => {
@@ -288,22 +290,30 @@ describe('Meeting Manager', () => {
       expect(meetingManager.deviceController).toBe(hostedController);
     });
 
-    it('does NOT destroy the hosted controller on leave, and keeps the output selection', async () => {
+    it('keeps device selections and stops media on leave, without destroying the hosted controller', async () => {
       await meetingManager.join(
         mockMeetingSessionConfiguration,
         mockMeetingManagerJoinOptions
       );
       meetingManager.selectedAudioOutputDevice = 'speaker-1';
+      meetingManager.selectedAudioInputDevice = 'mic-1';
+      meetingManager.selectedVideoInputDevice = 'cam-1';
 
       await meetingManager.leave();
 
-      // Provider owns the controller => must NOT be destroyed; output selection persists for rejoin.
+      // Provider owns the controller => must NOT be destroyed.
       expect(hostedController.destroy).not.toHaveBeenCalled();
       expect(meetingManager.deviceController).toBe(hostedController);
+      // Media streams are stopped on leave (hardware released)...
+      expect(hostedController.stopAudioInput).toHaveBeenCalled();
+      expect(hostedController.stopVideoInput).toHaveBeenCalled();
+      // ...but the device *selections* persist across leave/rejoin (the opt-in contract), for input
+      // as well as output. Restarting the media is the application's responsibility.
       expect(meetingManager.selectedAudioOutputDevice).toBe('speaker-1');
-      // Session is torn down; live input selections are cleared so the next setup re-acquires them.
+      expect(meetingManager.selectedAudioInputDevice).toBe('mic-1');
+      expect(meetingManager.selectedVideoInputDevice).toBe('cam-1');
+      // The session itself is torn down.
       expect(meetingManager.audioVideo).toBeNull();
-      expect(meetingManager.selectedAudioInputDevice).toBeUndefined();
     });
 
     it('releases the hosted controller media on a pre-meeting leave (no meeting yet)', async () => {
@@ -475,7 +485,83 @@ describe('Meeting Manager', () => {
         mockMeetingManagerJoinOptions
       );
 
-      expect(hostedController.chooseAudioOutput).toHaveBeenCalledWith('speaker-1');
+      expect(hostedController.chooseAudioOutput).toHaveBeenCalledWith(
+        'speaker-1'
+      );
+    });
+
+    it('does not republish input selections as undefined on leave (UI keeps the selection)', async () => {
+      // The device dropdowns subscribe to these; leave() must not notify them with `undefined`,
+      // or the UI shows an empty selection even though the choice is preserved for rejoin.
+      const audioReceived: any[] = [];
+      const videoReceived: any[] = [];
+      meetingManager.subscribeToSelectedAudioInputDevice((d) =>
+        audioReceived.push(d)
+      );
+      meetingManager.subscribeToSelectedVideoInputDevice((d) =>
+        videoReceived.push(d)
+      );
+
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      await meetingManager.startAudioInputDevice('mic-1');
+      await meetingManager.startVideoInputDevice('cam-1');
+
+      await meetingManager.leave();
+
+      expect(audioReceived[audioReceived.length - 1]).toBe('mic-1');
+      expect(videoReceived[videoReceived.length - 1]).toBe('cam-1');
+    });
+
+    it('does not override preserved input selections on a skipDeviceSelection rejoin', async () => {
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      meetingManager.selectedAudioInputDevice = 'mic-1';
+      meetingManager.selectedVideoInputDevice = 'cam-1';
+      await meetingManager.leave();
+
+      hostedController.startAudioInput.mockClear();
+      hostedController.startVideoInput.mockClear();
+
+      // Customer's recommended rejoin path: the library selects/starts nothing; the app owns restart.
+      await meetingManager.join(mockMeetingSessionConfiguration, {
+        skipDeviceSelection: true,
+      });
+
+      expect(meetingManager.selectedAudioInputDevice).toBe('mic-1');
+      expect(meetingManager.selectedVideoInputDevice).toBe('cam-1');
+      expect(hostedController.startAudioInput).not.toHaveBeenCalled();
+      expect(hostedController.startVideoInput).not.toHaveBeenCalled();
+    });
+
+    it('does not auto-open a default input on a warm rejoin when a selection is preserved', async () => {
+      // Default (non-skip) rejoin: because the input selection now persists, listAndSelectDevices'
+      // "pick + start devices[0]" guard is skipped — the mic is NOT auto-reopened. Restarting the
+      // media is the application's responsibility (matching how the library already treats video).
+      hostedController.listAudioInputDevices.mockResolvedValue([
+        { deviceId: 'mic-0' },
+      ] as any);
+
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      meetingManager.selectedAudioInputDevice = 'mic-1';
+      await meetingManager.leave();
+
+      hostedController.startAudioInput.mockClear();
+
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+
+      expect(meetingManager.selectedAudioInputDevice).toBe('mic-1');
+      expect(hostedController.startAudioInput).not.toHaveBeenCalled();
     });
   });
 });

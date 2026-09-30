@@ -323,14 +323,9 @@ export class MeetingManager implements AudioVideoObserver {
   }
 
   private resetState(): void {
-    if (this.persistDeviceController) {
-      this.resetSessionState();
-      this.selectedAudioInputDevice = undefined;
-      this.publishSelectedAudioInputDevice();
-      this.selectedVideoInputDevice = undefined;
-      this.publishSelectedVideoInputDevice();
-    } else {
-      this.initializeMeetingManager();
+    this.resetSessionState();
+    if (!this.persistDeviceController) {
+      this.resetDeviceState();
     }
   }
 
