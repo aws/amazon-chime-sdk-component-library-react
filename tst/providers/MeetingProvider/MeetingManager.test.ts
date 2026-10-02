@@ -11,6 +11,8 @@ import {
   DefaultMeetingSession,
   DeviceControllerBasedMediaStreamBroker,
   MeetingSessionConfiguration,
+  MeetingSessionStatus,
+  MeetingSessionStatusCode,
 } from 'amazon-chime-sdk-js';
 
 import { MeetingManager } from '../../../src/providers/MeetingProvider/MeetingManager';
@@ -327,7 +329,7 @@ describe('Meeting Manager', () => {
       expect(hostedController.stopVideoInput).toHaveBeenCalled();
     });
 
-    it('clears and destroys a session-supplied eventController on leave (no stale between-meetings ref)', async () => {
+    it('destroys the SDK-created eventController on audioVideoDidStop, not during leave (after the terminal publish)', async () => {
       // Builder supplied no eventController, so the meeting session binds its own onto the controller
       // during join. Simulate that binding (the session ctor is mocked out here).
       await meetingManager.join(
@@ -344,9 +346,17 @@ describe('Meeting Manager', () => {
 
       await meetingManager.leave();
 
-      // Cleared on leave (the session bound it, so the builder does not own it) so pre-rejoin device
-      // events do not publish to the ended session's controller, and destroyed to release its reporter
-      // timer and window listeners.
+      // leave() must NOT tear it down yet: the terminal event (meetingEnded) still has to publish
+      // against a live configuration first. The controller stays bound and alive through leave().
+      expect(hostedController.eventController).toBe(sessionEventController);
+      expect(sessionEventController.destroy).not.toHaveBeenCalled();
+
+      // The SDK fires audioVideoDidStop after it publishes the terminal event. Only now unbind (so the
+      // next join creates a fresh controller) and destroy (release the reporter timer and listeners).
+      await meetingManager.audioVideoDidStop(
+        new MeetingSessionStatus(MeetingSessionStatusCode.Left)
+      );
+
       expect(hostedController.eventController).toBeUndefined();
       expect(sessionEventController.destroy).toHaveBeenCalledTimes(1);
     });

@@ -293,14 +293,6 @@ export class MeetingManager implements AudioVideoObserver {
       if (this.persistDeviceController) {
         await this.deviceController?.stopAudioInput();
         await this.deviceController?.stopVideoInput();
-        if (this.deviceController && this.clearDefaultEventControllerOnLeave) {
-          // Destroy (not just unbind) to release the reporter's interval timer and window listeners.
-          const ownedEventController = this.deviceController.eventController;
-          this.deviceController.eventController = undefined;
-          if (isDestroyable(ownedEventController)) {
-            await ownedEventController.destroy();
-          }
-        }
       } else {
         await this.deviceController?.chooseAudioOutput(null);
         await this.deviceController?.destroy();
@@ -347,7 +339,9 @@ export class MeetingManager implements AudioVideoObserver {
     }
   };
 
-  audioVideoDidStop = (sessionStatus: MeetingSessionStatus): void => {
+  audioVideoDidStop = async (
+    sessionStatus: MeetingSessionStatus
+  ): Promise<void> => {
     const sessionStatusCode = sessionStatus.statusCode();
     switch (sessionStatusCode) {
       case MeetingSessionStatusCode.MeetingEnded:
@@ -388,6 +382,21 @@ export class MeetingManager implements AudioVideoObserver {
     }
 
     this.publishMeetingStatus();
+    // Tear down an SDK-created event controller only after the terminal event has published.
+    // notifyStop publishes it synchronously and dispatches this observer on a later tick, so the
+    // controller's configuration is still live for that publish. Unbind so the next join creates a
+    // fresh controller, then destroy to release the reporter's timer and window listeners.
+    if (
+      this.persistDeviceController &&
+      this.clearDefaultEventControllerOnLeave &&
+      this.deviceController?.eventController
+    ) {
+      const ownedEventController = this.deviceController.eventController;
+      this.deviceController.eventController = undefined;
+      if (isDestroyable(ownedEventController)) {
+        await ownedEventController.destroy();
+      }
+    }
     this.audioVideo?.removeObserver(this.audioVideoObservers);
     this.leave();
   };
