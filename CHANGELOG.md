@@ -25,8 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Bumped `amazon-chime-sdk-js` peer dependency to `^3.32.0`.
 
-- Fix an End Call crash with an opt-in `deviceController`: destroy the SDK-created event controller after the terminal meeting event publishes (in `audioVideoDidStop`) rather than during `leave()`, so publishing `meetingEnded` no longer reads a torn-down configuration.
-
 ### Fixed
 
 ## [3.12.0] - 2025-06-10
