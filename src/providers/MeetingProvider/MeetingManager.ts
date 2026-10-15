@@ -120,16 +120,6 @@ export class MeetingManager implements AudioVideoObserver {
 
   private persistDeviceController: boolean;
 
-  /**
-   * When neither the caller (`join()`) nor the device controller supplies an eventController,
-   * `DefaultMeetingSession` creates a `DefaultEventController` scoped to that session and binds it onto
-   * the device controller. This flags `leave()` to destroy and unbind it: when the device controller
-   * persists across meetings, the next join must create a fresh `DefaultEventController` scoped to the
-   * new session, which only happens if the controller has no eventController. A builder-supplied
-   * eventController — whether built into the controller or passed to `join()` — is left untouched.
-   */
-  private clearDefaultEventControllerOnLeave = false;
-
   getDeviceLabels(): DeviceLabels | DeviceLabelTrigger {
     return this.deviceLabels;
   }
@@ -217,9 +207,6 @@ export class MeetingManager implements AudioVideoObserver {
         );
       }
     }
-
-    this.clearDefaultEventControllerOnLeave =
-      !eventController && !this.deviceController.eventController;
 
     this.meetingSession = new DefaultMeetingSession(
       meetingSessionConfiguration,
@@ -382,37 +369,51 @@ export class MeetingManager implements AudioVideoObserver {
     }
 
     this.publishMeetingStatus();
-    // Tear down an SDK-created event controller only after the terminal event has published.
-    // notifyStop publishes it synchronously and dispatches this observer on a later tick, so the
-    // controller's configuration is still live for that publish. Unbind so the next join creates a
-    // fresh controller, then destroy to release the reporter's timer and window listeners.
-    if (
-      this.persistDeviceController &&
-      this.clearDefaultEventControllerOnLeave &&
-      this.deviceController?.eventController
-    ) {
-      const ownedEventController = this.deviceController.eventController;
-      this.deviceController.eventController = undefined;
-      if (isDestroyable(ownedEventController)) {
-        await ownedEventController.destroy();
-      }
-    }
     this.audioVideo?.removeObserver(this.audioVideoObservers);
-    this.leave();
+    await this.leave();
   };
 
+  /**
+   * Destroys a meeting session after its terminal event has published. The SDK publishes it
+   * synchronously in `notifyStop` and dispatches `audioVideoDidStop` on a later tick, so the session's
+   * event controller is still live for that publish.
+   */
+  private async destroyMeetingSession(
+    meetingSession: DefaultMeetingSession
+  ): Promise<void> {
+    // `destroy()` clears these fields, so read them first.
+    const { deviceController, eventController } = meetingSession;
+    await meetingSession.destroy();
+    // TODO(aws/amazon-chime-sdk-js#3264): remove once the amazon-chime-sdk-js dependency includes
+    // aws/amazon-chime-sdk-js#3267, whose destroy() unbinds the event controller it destroyed.
+    if (
+      isDestroyable(eventController) &&
+      deviceController?.eventController === eventController
+    ) {
+      deviceController.eventController = undefined;
+    }
+  }
+
   setupAudioVideoObservers(): void {
-    if (!this.audioVideo) {
+    // Bind the stop handler to this session, then destroy it after `audioVideoDidStop`: by the time
+    // the SDK fires it, `leave()` has reset `this.meetingSession`, and a rejoin may have replaced it.
+    const meetingSession = this.meetingSession;
+    if (!meetingSession) {
       return;
     }
 
     this.audioVideoObservers = {
       audioVideoDidStart: this.audioVideoDidStart,
       audioVideoDidStartConnecting: this.audioVideoDidStartConnecting,
-      audioVideoDidStop: this.audioVideoDidStop,
+      audioVideoDidStop: async (
+        sessionStatus: MeetingSessionStatus
+      ): Promise<void> => {
+        await this.audioVideoDidStop(sessionStatus);
+        await this.destroyMeetingSession(meetingSession);
+      },
     };
 
-    this.audioVideo.addObserver(this.audioVideoObservers);
+    meetingSession.audioVideo.addObserver(this.audioVideoObservers);
   }
 
   async updateDeviceLists(): Promise<void> {
