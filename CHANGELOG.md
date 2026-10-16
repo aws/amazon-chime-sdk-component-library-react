@@ -21,6 +21,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- `MeetingManager` now calls `meetingSession.destroy()` once the meeting stops (in `audioVideoDidStop`), following the Amazon Chime SDK for JavaScript lifecycle.
+
 ### Fixed
 
 

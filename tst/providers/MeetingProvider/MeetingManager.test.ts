@@ -38,6 +38,15 @@ function makeController(): any {
   };
 }
 
+function makeEventController(): any {
+  return {
+    addObserver: jest.fn(),
+    removeObserver: jest.fn(),
+    publishEvent: jest.fn(),
+    destroy: jest.fn().mockResolvedValue(undefined),
+  };
+}
+
 describe('Meeting Manager', () => {
   let mockMeetingManagerJoinOptions: MeetingManagerJoinOptions;
   let mockMeetingSessionConfiguration: MeetingSessionConfiguration;
@@ -62,23 +71,40 @@ describe('Meeting Manager', () => {
     // The session's audioVideo exposes only *session* operations. Device operations must go through
     // the device controller, not this facade — so omitting them here makes a misroute fail loudly.
     // @ts-ignore
-    DefaultMeetingSession = jest.fn().mockImplementation(() => ({
-      audioVideo: {
-        addObserver: jest.fn().mockReturnValue({}),
-        removeObserver: jest.fn().mockReturnValue({}),
-        subscribeToActiveSpeakerDetector: jest.fn().mockReturnValue({}),
-        unsubscribeFromActiveSpeakerDetector: jest.fn().mockReturnValue({}),
-        stopContentShare: jest.fn().mockReturnValue({}),
-        stopLocalVideoTile: jest.fn().mockReturnValue({}),
-        unbindAudioElement: jest.fn().mockReturnValue({}),
-        start: jest.fn().mockReturnValue({}),
-        stop: jest.fn().mockReturnValue({}),
-      },
-      eventController: {
-        addObserver: jest.fn().mockReturnValue({}),
-        removeObserver: jest.fn().mockReturnValue({}),
-      },
-    }));
+    DefaultMeetingSession = jest
+      .fn()
+      .mockImplementation(
+        (_configuration, _logger, deviceController, eventController) => {
+          // Bind like the real constructor: use the join() eventController or create one, and attach
+          // it to the device controller only when the controller has none.
+          const sessionEventController =
+            eventController ?? makeEventController();
+          if (deviceController && !deviceController.eventController) {
+            deviceController.eventController = sessionEventController;
+          }
+          return {
+            audioVideo: {
+              addObserver: jest.fn().mockReturnValue({}),
+              removeObserver: jest.fn().mockReturnValue({}),
+              subscribeToActiveSpeakerDetector: jest.fn().mockReturnValue({}),
+              unsubscribeFromActiveSpeakerDetector: jest
+                .fn()
+                .mockReturnValue({}),
+              stopContentShare: jest.fn().mockReturnValue({}),
+              stopLocalVideoTile: jest.fn().mockReturnValue({}),
+              unbindAudioElement: jest.fn().mockReturnValue({}),
+              start: jest.fn().mockReturnValue({}),
+              stop: jest.fn().mockReturnValue({}),
+            },
+            deviceController,
+            eventController: sessionEventController,
+            // Matches amazon-chime-sdk-js 3.32.0: destroys the event controller, leaves the binding.
+            destroy: jest.fn().mockImplementation(async () => {
+              await sessionEventController.destroy?.();
+            }),
+          };
+        }
+      );
     GlobalAny.navigator = jest.fn().mockReturnValue({
       mediaDevices: jest.fn().mockReturnValue({
         enumerateDevices: jest.fn().mockReturnValue(() => {}),
@@ -260,6 +286,163 @@ describe('Meeting Manager', () => {
     });
   });
 
+  describe('audioVideoDidStop destroys the meeting session', () => {
+    let hostedController: any;
+
+    const leftStatus = (): MeetingSessionStatus =>
+      new MeetingSessionStatus(MeetingSessionStatusCode.Left);
+
+    // The observer join() registered on the session, captured before leave() resets audioVideo.
+    const registeredObserver = (manager: MeetingManager): any =>
+      (manager.audioVideo?.addObserver as jest.Mock).mock.calls[0][0];
+
+    beforeEach(() => {
+      hostedController = makeController();
+      meetingManager = new MeetingManager(
+        new ConsoleLogger('MeetingManager'),
+        hostedController
+      );
+    });
+
+    it('destroys the session on audioVideoDidStop, after leave() and the terminal publish', async () => {
+      await meetingManager.join(mockMeetingSessionConfiguration);
+      const session: any = meetingManager.meetingSession;
+      const observer = registeredObserver(meetingManager);
+
+      await meetingManager.leave();
+      expect(session.destroy).not.toHaveBeenCalled();
+
+      await observer.audioVideoDidStop(leftStatus());
+      expect(session.destroy).toHaveBeenCalledTimes(1);
+    });
+
+    it('runs leave() before destroying the session when the meeting ends remotely', async () => {
+      await meetingManager.join(mockMeetingSessionConfiguration);
+      const session: any = meetingManager.meetingSession;
+
+      await registeredObserver(meetingManager).audioVideoDidStop(
+        new MeetingSessionStatus(MeetingSessionStatusCode.MeetingEnded)
+      );
+
+      expect(session.audioVideo.stop).toHaveBeenCalled();
+      expect(session.destroy).toHaveBeenCalledTimes(1);
+      expect(session.audioVideo.stop.mock.invocationCallOrder[0]).toBeLessThan(
+        session.destroy.mock.invocationCallOrder[0]
+      );
+      expect(meetingManager.meetingSession).toBeNull();
+    });
+
+    it('unbinds the SDK-created eventController so the next join binds a fresh one', async () => {
+      await meetingManager.join(mockMeetingSessionConfiguration);
+      const firstEventController: any =
+        meetingManager.meetingSession?.eventController;
+      expect(hostedController.eventController).toBe(firstEventController);
+      const observer = registeredObserver(meetingManager);
+
+      await meetingManager.leave();
+      await observer.audioVideoDidStop(leftStatus());
+
+      expect(firstEventController.destroy).toHaveBeenCalledTimes(1);
+      expect(hostedController.eventController).toBeUndefined();
+
+      await meetingManager.join(mockMeetingSessionConfiguration);
+      const secondEventController =
+        meetingManager.meetingSession?.eventController;
+      expect(secondEventController).not.toBe(firstEventController);
+      expect(hostedController.eventController).toBe(secondEventController);
+    });
+
+    it('destroys and unbinds a join() eventController the session bound onto the controller', async () => {
+      const firstEventController = makeEventController();
+      await meetingManager.join(mockMeetingSessionConfiguration, {
+        eventController: firstEventController,
+      });
+      expect(hostedController.eventController).toBe(firstEventController);
+      const observer = registeredObserver(meetingManager);
+
+      await meetingManager.leave();
+      await observer.audioVideoDidStop(leftStatus());
+
+      expect(firstEventController.destroy).toHaveBeenCalledTimes(1);
+      expect(hostedController.eventController).toBeUndefined();
+
+      const secondEventController = makeEventController();
+      await meetingManager.join(mockMeetingSessionConfiguration, {
+        eventController: secondEventController,
+      });
+      expect(hostedController.eventController).toBe(secondEventController);
+    });
+
+    it('keeps a builder eventController mounted on the controller', async () => {
+      const mountedEventController = makeEventController();
+      hostedController.eventController = mountedEventController;
+      await meetingManager.join(mockMeetingSessionConfiguration);
+      const observer = registeredObserver(meetingManager);
+
+      await meetingManager.leave();
+      await observer.audioVideoDidStop(leftStatus());
+
+      expect(mountedEventController.destroy).not.toHaveBeenCalled();
+      expect(hostedController.eventController).toBe(mountedEventController);
+    });
+
+    it('keeps a join() eventController that has no destroy() bound to the controller', async () => {
+      const eventController: any = {
+        addObserver: jest.fn(),
+        removeObserver: jest.fn(),
+        publishEvent: jest.fn(),
+      };
+      await meetingManager.join(mockMeetingSessionConfiguration, {
+        eventController,
+      });
+      const observer = registeredObserver(meetingManager);
+
+      await meetingManager.leave();
+      await observer.audioVideoDidStop(leftStatus());
+
+      expect(hostedController.eventController).toBe(eventController);
+    });
+
+    it('keeps the public audioVideoDidStop limited to leave()', async () => {
+      await meetingManager.join(mockMeetingSessionConfiguration);
+      const session: any = meetingManager.meetingSession;
+
+      await meetingManager.audioVideoDidStop(leftStatus());
+
+      expect(session.audioVideo.stop).toHaveBeenCalled();
+      expect(session.destroy).not.toHaveBeenCalled();
+    });
+
+    it('destroys the session the observer belongs to after a rejoin', async () => {
+      await meetingManager.join(mockMeetingSessionConfiguration);
+      const firstSession: any = meetingManager.meetingSession;
+      const firstObserver = registeredObserver(meetingManager);
+      await meetingManager.leave();
+
+      await meetingManager.join(mockMeetingSessionConfiguration);
+      const secondSession: any = meetingManager.meetingSession;
+
+      await firstObserver.audioVideoDidStop(leftStatus());
+
+      expect(firstSession.destroy).toHaveBeenCalledTimes(1);
+      expect(secondSession.destroy).not.toHaveBeenCalled();
+    });
+
+    it('destroys the session when the controller is not persisted', async () => {
+      const manager = new MeetingManager(new ConsoleLogger('MeetingManager'));
+      await manager.join(mockMeetingSessionConfiguration);
+      const session: any = manager.meetingSession;
+      const sessionEventController: any = session.eventController;
+      const observer = registeredObserver(manager);
+
+      await manager.leave();
+      await observer.audioVideoDidStop(leftStatus());
+
+      expect(session.destroy).toHaveBeenCalledTimes(1);
+      expect(sessionEventController.destroy).toHaveBeenCalledTimes(1);
+    });
+  });
+
   describe('with a hosted device controller (opted in)', () => {
     let hostedController: any;
 
@@ -327,107 +510,6 @@ describe('Meeting Manager', () => {
 
       expect(hostedController.stopAudioInput).toHaveBeenCalled();
       expect(hostedController.stopVideoInput).toHaveBeenCalled();
-    });
-
-    it('destroys the SDK-created eventController on audioVideoDidStop, not during leave (after the terminal publish)', async () => {
-      // Builder supplied no eventController, so the meeting session binds its own onto the controller
-      // during join. Simulate that binding (the session ctor is mocked out here).
-      await meetingManager.join(
-        mockMeetingSessionConfiguration,
-        mockMeetingManagerJoinOptions
-      );
-      const sessionEventController = {
-        addObserver: jest.fn(),
-        removeObserver: jest.fn(),
-        publishEvent: jest.fn(),
-        destroy: jest.fn().mockResolvedValue(undefined),
-      };
-      hostedController.eventController = sessionEventController;
-
-      await meetingManager.leave();
-
-      // leave() must NOT tear it down yet: the terminal event (meetingEnded) still has to publish
-      // against a live configuration first. The controller stays bound and alive through leave().
-      expect(hostedController.eventController).toBe(sessionEventController);
-      expect(sessionEventController.destroy).not.toHaveBeenCalled();
-
-      // The SDK fires audioVideoDidStop after it publishes the terminal event. Only now unbind (so the
-      // next join creates a fresh controller) and destroy (release the reporter timer and listeners).
-      await meetingManager.audioVideoDidStop(
-        new MeetingSessionStatus(MeetingSessionStatusCode.Left)
-      );
-
-      expect(hostedController.eventController).toBeUndefined();
-      expect(sessionEventController.destroy).toHaveBeenCalledTimes(1);
-    });
-
-    it('does not clear an eventController passed to join() and bound onto a bare controller (builder-owned)', async () => {
-      // Builder opts in with a controller that has no eventController, but passes their own to join().
-      // The session binds that join eventController onto the controller; it is builder-owned, so leave()
-      // must not clear it.
-      const joinEventController: any = {
-        addObserver: jest.fn(),
-        removeObserver: jest.fn(),
-        publishEvent: jest.fn(),
-        destroy: jest.fn().mockResolvedValue(undefined),
-      };
-
-      await meetingManager.join(mockMeetingSessionConfiguration, {
-        eventController: joinEventController,
-      });
-      // Simulate the session binding the join eventController onto the bare controller.
-      hostedController.eventController = joinEventController;
-
-      await meetingManager.leave();
-
-      expect(hostedController.eventController).toBe(joinEventController);
-      expect(joinEventController.destroy).not.toHaveBeenCalled();
-    });
-
-    it('keeps a builder-supplied eventController across leave (survives for warm rejoin)', async () => {
-      // Builder provides a controller carrying its own eventController: it is builder-owned, so
-      // leave() must preserve it, not clear it.
-      const builderEventController: any = {
-        addObserver: jest.fn(),
-        removeObserver: jest.fn(),
-        publishEvent: jest.fn(),
-      };
-      const controllerWithEvents = makeController();
-      controllerWithEvents.eventController = builderEventController;
-      const manager = new MeetingManager(
-        new ConsoleLogger('MeetingManager'),
-        controllerWithEvents
-      );
-
-      await manager.join(
-        mockMeetingSessionConfiguration,
-        mockMeetingManagerJoinOptions
-      );
-      await manager.leave();
-
-      // Preserved so pre-rejoin device events keep reporting to the builder's controller.
-      expect(controllerWithEvents.eventController).toBe(builderEventController);
-    });
-
-    it('keeps an eventController attached after mount but before join (builder-owned)', async () => {
-      // Builder opts in with a controller that has no eventController, then attaches their own before
-      // join (a valid window, since the provider reads the controller at mount). leave() must treat it
-      // as builder-owned and preserve it — the decision is made at join from the controller's state,
-      // not at construction.
-      const builderEventController: any = {
-        addObserver: jest.fn(),
-        removeObserver: jest.fn(),
-        publishEvent: jest.fn(),
-      };
-      hostedController.eventController = builderEventController;
-
-      await meetingManager.join(
-        mockMeetingSessionConfiguration,
-        mockMeetingManagerJoinOptions
-      );
-      await meetingManager.leave();
-
-      expect(hostedController.eventController).toBe(builderEventController);
     });
 
     it('warns when the join() eventController differs from the one on the device controller', async () => {
