@@ -548,10 +548,9 @@ describe('Meeting Manager', () => {
       expect(hostedController.startVideoInput).not.toHaveBeenCalled();
     });
 
-    it('does not auto-open a default input on a warm rejoin when a selection is preserved', async () => {
-      // Default (non-skip) rejoin: because the input selection now persists, listAndSelectDevices'
-      // "pick + start devices[0]" guard is skipped — the mic is NOT auto-reopened. Restarting the
-      // media is the application's responsibility (matching how the library already treats video).
+    it('restarts the preserved input on a warm rejoin', async () => {
+      // `leave()` stops the mic but keeps the selection, so listAndSelectDevices' default-pick guard
+      // is skipped. It must restart the kept device instead of leaving the user without a mic.
       hostedController.listAudioInputDevices.mockResolvedValue([
         { deviceId: 'mic-0' },
       ] as any);
@@ -560,10 +559,14 @@ describe('Meeting Manager', () => {
         mockMeetingSessionConfiguration,
         mockMeetingManagerJoinOptions
       );
-      meetingManager.selectedAudioInputDevice = 'mic-1';
+      await meetingManager.startAudioInputDevice('mic-1');
       await meetingManager.leave();
 
       hostedController.startAudioInput.mockClear();
+      const published: any[] = [];
+      meetingManager.subscribeToSelectedAudioInputDevice((d) =>
+        published.push(d)
+      );
 
       await meetingManager.join(
         mockMeetingSessionConfiguration,
@@ -571,7 +574,99 @@ describe('Meeting Manager', () => {
       );
 
       expect(meetingManager.selectedAudioInputDevice).toBe('mic-1');
+      expect(hostedController.startAudioInput).toHaveBeenCalledTimes(1);
+      expect(hostedController.startAudioInput).toHaveBeenCalledWith('mic-1');
+      // Published so listeners such as the activity meter can attach to the restarted mic.
+      expect(published).toContain('mic-1');
+    });
+
+    it('restarts the underlying device of a preserved transform device on rejoin', async () => {
+      const transformDevice: any = {
+        mute: jest.fn(),
+        stop: jest.fn(),
+        intrinsicDevice: jest.fn().mockResolvedValue('mic-1'),
+      };
+
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      await meetingManager.startAudioInputDevice(transformDevice);
+      await meetingManager.leave();
+
+      hostedController.startAudioInput.mockClear();
+      // DefaultDeviceController is mocked in this suite; give getDeviceId its static ID lookup.
+      // @ts-ignore
+      DefaultDeviceController.getIntrinsicDeviceId = (d: any) => d;
+
+      await meetingManager.listAndSelectDevices();
+
+      // The stale transform is not reused; its inner device is restarted.
+      expect(hostedController.startAudioInput).toHaveBeenCalledTimes(1);
+      expect(hostedController.startAudioInput).toHaveBeenCalledWith('mic-1');
+      expect(meetingManager.selectedAudioInputDevice).toBe('mic-1');
+    });
+
+    it('restarts the preserved input only once after leave', async () => {
+      // Device setup page calls listAndSelectDevices, then join() calls it again.
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      await meetingManager.startAudioInputDevice('mic-1');
+      await meetingManager.leave();
+
+      hostedController.startAudioInput.mockClear();
+
+      await meetingManager.listAndSelectDevices();
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+
+      expect(hostedController.startAudioInput).toHaveBeenCalledTimes(1);
+    });
+
+    it('does not restart when the builder already restarted the input after leave', async () => {
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      await meetingManager.startAudioInputDevice('mic-1');
+      await meetingManager.leave();
+
+      await meetingManager.startAudioInputDevice('mic-1');
+      hostedController.startAudioInput.mockClear();
+
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+
       expect(hostedController.startAudioInput).not.toHaveBeenCalled();
+    });
+
+    it('keeps the input running and logs when the restart fails', async () => {
+      const logger = new ConsoleLogger('MeetingManager');
+      const error = jest.spyOn(logger, 'error').mockImplementation(() => {});
+      const manager = new MeetingManager(logger, hostedController);
+
+      await manager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      await manager.startAudioInputDevice('mic-1');
+      await manager.leave();
+
+      hostedController.startAudioInput.mockRejectedValueOnce(
+        new Error('NotReadableError')
+      );
+
+      await expect(manager.listAndSelectDevices()).resolves.toBeUndefined();
+      expect(error).toHaveBeenCalledWith(
+        expect.stringContaining('failed to restart the selected audio input')
+      );
+      expect(manager.selectedAudioInputDevice).toBe('mic-1');
     });
   });
 });
