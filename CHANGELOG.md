@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Update `useLocalAudioInputActivity` (and the microphone activity preview) when the selected microphone restarts. The hook used to attach only when the selected device changed, so after `leave()` and rejoin the meter stayed flat for the same device.
+
 
 ## [3.12.0] - 2025-06-10
 
