@@ -1,27 +1,33 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import type { DeviceChangeObserver } from 'amazon-chime-sdk-js';
-import { useEffect } from 'react';
+import type {
+  DeviceChangeObserver,
+  RemovableAnalyserNode,
+} from 'amazon-chime-sdk-js';
+import { useContext, useEffect } from 'react';
 
+import { MeetingContext } from '../../providers/MeetingProvider';
 import { useDeviceController } from './useDeviceController';
-import { useAudioInputs } from '../../providers/DevicesProvider';
 
 export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
-  const { selectedDevice } = useAudioInputs();
   const deviceController = useDeviceController();
+  // Read the context directly rather than `useMeetingManager`, which throws outside `MeetingProvider`.
+  const meetingManager = useContext(MeetingContext);
 
   useEffect(() => {
     if (!deviceController) {
       return;
     }
 
-    let analyserNode: AnalyserNode | null;
+    let analyserNode: RemovableAnalyserNode | null = null;
     let restart = false;
     let data: Uint8Array;
     let frameIndex: number;
     let isMounted = true;
     let lastDecimal: number;
+    // Each (re)initialization starts a new animation loop; older loops stop when this changes.
+    let generation = 0;
 
     const deviceChangeObserver: DeviceChangeObserver = {
       audioInputsChanged: () => {
@@ -30,9 +36,16 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
     };
     deviceController.addDeviceChangeObserver(deviceChangeObserver);
 
+    function releaseAnalyser() {
+      analyserNode?.removeOriginalInputs?.();
+      analyserNode = null;
+    }
+
     function initializePreview() {
       if (!deviceController || !isMounted) return;
 
+      releaseAnalyser();
+      generation += 1;
       analyserNode = deviceController.createAnalyserNodeForAudioInput();
 
       if (!analyserNode?.getByteTimeDomainData) {
@@ -43,11 +56,12 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
       frameIndex = 0;
       restart = false;
 
-      requestAnimationFrame(analyserNodeCallback);
+      const loopGeneration = generation;
+      requestAnimationFrame(() => analyserNodeCallback(loopGeneration));
     }
 
-    function analyserNodeCallback() {
-      if (!analyserNode) {
+    function analyserNodeCallback(loopGeneration: number) {
+      if (!analyserNode || loopGeneration !== generation) {
         return;
       }
 
@@ -74,17 +88,26 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
       if (restart) {
         setTimeout(initializePreview, 500);
       } else if (isMounted) {
-        requestAnimationFrame(analyserNodeCallback);
+        requestAnimationFrame(() => analyserNodeCallback(loopGeneration));
       }
     }
+
+    // `MeetingManager` publishes the selected audio input after every successful start, including a
+    // restart of the same device (for example on rejoin, when `leave()` stopped the mic but kept the
+    // selection), so attach to the newly started input each time.
+    meetingManager?.subscribeToSelectedAudioInputDevice(initializePreview);
 
     initializePreview();
 
     return () => {
       isMounted = false;
+      releaseAnalyser();
+      meetingManager?.unsubscribeFromSelectedAudioInputDevice(
+        initializePreview
+      );
       deviceController.removeDeviceChangeObserver(deviceChangeObserver);
     };
-  }, [deviceController, selectedDevice, cb]);
+  }, [deviceController, meetingManager, cb]);
 };
 
 export default useLocalAudioInputActivity;
