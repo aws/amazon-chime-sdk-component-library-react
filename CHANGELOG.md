@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Restart the selected microphone in `listAndSelectDevices` after `leave()` when a `deviceController` is passed to `MeetingProvider`. The selection persists across leave and rejoin, but `leave()` stops the mic, so rejoining left it stopped. A kept transform device such as Voice Focus restarts its underlying device.
+- Update `useLocalAudioInputActivity` when the selected microphone restarts. The hook attached only when the selected device changed, so after `leave()` and rejoin the meter stayed flat for the same device.
 
 
 ## [3.12.0] - 2025-06-10
