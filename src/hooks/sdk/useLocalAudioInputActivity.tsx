@@ -1,27 +1,31 @@
 // Copyright Amazon.com, Inc. or its affiliates. All Rights Reserved.
 // SPDX-License-Identifier: Apache-2.0
 
-import type { DeviceChangeObserver } from 'amazon-chime-sdk-js';
-import { useEffect } from 'react';
+import type {
+  DeviceChangeObserver,
+  RemovableAnalyserNode,
+} from 'amazon-chime-sdk-js';
+import { useContext, useEffect } from 'react';
 
 import { useDeviceController } from './useDeviceController';
-import { useAudioInputs } from '../../providers/DevicesProvider';
+import { MeetingContext } from '../../providers/MeetingProvider';
 
 export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
-  const { selectedDevice } = useAudioInputs();
   const deviceController = useDeviceController();
+  const meetingManager = useContext(MeetingContext);
 
   useEffect(() => {
     if (!deviceController) {
       return;
     }
 
-    let analyserNode: AnalyserNode | null;
+    let analyserNode: RemovableAnalyserNode | null = null;
     let restart = false;
     let data: Uint8Array;
     let frameIndex: number;
     let isMounted = true;
     let lastDecimal: number;
+    let rafId = 0;
 
     const deviceChangeObserver: DeviceChangeObserver = {
       audioInputsChanged: () => {
@@ -33,6 +37,9 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
     function initializePreview() {
       if (!deviceController || !isMounted) return;
 
+      // Stop the current loop so only one loop reads the analyser.
+      cancelAnimationFrame(rafId);
+      analyserNode?.removeOriginalInputs?.();
       analyserNode = deviceController.createAnalyserNodeForAudioInput();
 
       if (!analyserNode?.getByteTimeDomainData) {
@@ -43,7 +50,7 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
       frameIndex = 0;
       restart = false;
 
-      requestAnimationFrame(analyserNodeCallback);
+      rafId = requestAnimationFrame(analyserNodeCallback);
     }
 
     function analyserNodeCallback() {
@@ -74,17 +81,25 @@ export const useLocalAudioInputActivity = (cb: (decimal: number) => void) => {
       if (restart) {
         setTimeout(initializePreview, 500);
       } else if (isMounted) {
-        requestAnimationFrame(analyserNodeCallback);
+        rafId = requestAnimationFrame(analyserNodeCallback);
       }
     }
+
+    // Published after every successful mic start, including a restart of the same device.
+    meetingManager?.subscribeToSelectedAudioInputDevice(initializePreview);
 
     initializePreview();
 
     return () => {
       isMounted = false;
+      cancelAnimationFrame(rafId);
+      analyserNode?.removeOriginalInputs?.();
+      meetingManager?.unsubscribeFromSelectedAudioInputDevice(
+        initializePreview
+      );
       deviceController.removeDeviceChangeObserver(deviceChangeObserver);
     };
-  }, [deviceController, selectedDevice, cb]);
+  }, [deviceController, meetingManager, cb]);
 };
 
 export default useLocalAudioInputActivity;
