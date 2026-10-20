@@ -106,7 +106,7 @@ export const AudioInputProvider: React.FC<React.PropsWithChildren<Props>> = ({
 
         const nextDevice = await replaceDevice(nextInput);
         try {
-          await meetingManager.startAudioInputDevice(nextDevice);
+          await meetingManager.handleAudioInputsChanged(nextDevice);
         } catch (e) {
           logger.error(
             `Failed to select audio input device on audioInputsChanged: ${e}`

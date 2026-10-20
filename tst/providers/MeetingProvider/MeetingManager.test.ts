@@ -668,5 +668,78 @@ describe('Meeting Manager', () => {
       );
       expect(manager.selectedAudioInputDevice).toBe('mic-1');
     });
+
+    describe('handleAudioInputsChanged', () => {
+      it('starts the device while the mic is in use', async () => {
+        await meetingManager.join(
+          mockMeetingSessionConfiguration,
+          mockMeetingManagerJoinOptions
+        );
+        await meetingManager.startAudioInputDevice('mic-1');
+        hostedController.startAudioInput.mockClear();
+
+        await meetingManager.handleAudioInputsChanged('mic-2');
+
+        expect(hostedController.startAudioInput).toHaveBeenCalledWith('mic-2');
+        expect(meetingManager.selectedAudioInputDevice).toBe('mic-2');
+      });
+
+      it('selects and publishes without starting after leave, then rejoin starts the new device', async () => {
+        await meetingManager.join(
+          mockMeetingSessionConfiguration,
+          mockMeetingManagerJoinOptions
+        );
+        await meetingManager.startAudioInputDevice('mic-1');
+        await meetingManager.leave();
+        hostedController.startAudioInput.mockClear();
+        const published: any[] = [];
+        meetingManager.subscribeToSelectedAudioInputDevice((d) =>
+          published.push(d)
+        );
+
+        // mic-1 is unplugged while the user is out of the meeting.
+        await meetingManager.handleAudioInputsChanged('mic-2');
+
+        expect(hostedController.startAudioInput).not.toHaveBeenCalled();
+        expect(meetingManager.selectedAudioInputDevice).toBe('mic-2');
+        expect(published).toEqual(['mic-2']);
+
+        // Back on the device setup page, the new selection is restarted, not the lost one.
+        await meetingManager.listAndSelectDevices();
+        expect(hostedController.startAudioInput).toHaveBeenCalledTimes(1);
+        expect(hostedController.startAudioInput).toHaveBeenCalledWith('mic-2');
+      });
+
+      it('starts the device again once the mic restarted after leave', async () => {
+        await meetingManager.join(
+          mockMeetingSessionConfiguration,
+          mockMeetingManagerJoinOptions
+        );
+        await meetingManager.startAudioInputDevice('mic-1');
+        await meetingManager.leave();
+        await meetingManager.listAndSelectDevices();
+        hostedController.startAudioInput.mockClear();
+
+        await meetingManager.handleAudioInputsChanged('mic-2');
+
+        expect(hostedController.startAudioInput).toHaveBeenCalledWith('mic-2');
+      });
+    });
+  });
+
+  describe('handleAudioInputsChanged (not opted in)', () => {
+    it('starts the device during a meeting', async () => {
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      const controller = meetingManager.deviceController as any;
+      controller.startAudioInput.mockClear();
+
+      await meetingManager.handleAudioInputsChanged('mic-2');
+
+      expect(controller.startAudioInput).toHaveBeenCalledWith('mic-2');
+      expect(meetingManager.selectedAudioInputDevice).toBe('mic-2');
+    });
   });
 });

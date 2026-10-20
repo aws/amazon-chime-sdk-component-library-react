@@ -607,6 +607,21 @@ export class MeetingManager implements AudioVideoObserver {
     }
   }
 
+  /**
+   * Selects `device` after the audio input list changes. Starts it, unless `leave()` stopped the mic
+   * with a persisted device controller; then the next `listAndSelectDevices` starts it.
+   */
+  handleAudioInputsChanged = async (
+    device: AudioInputDevice
+  ): Promise<void> => {
+    if (this.audioInputStoppedOnLeave) {
+      this.selectedAudioInputDevice = device;
+      this.publishSelectedAudioInputDevice();
+      return;
+    }
+    await this.startAudioInputDevice(device);
+  };
+
   startAudioInputDevice = async (device: AudioInputDevice): Promise<void> => {
     try {
       await this.deviceController?.startAudioInput(device);
