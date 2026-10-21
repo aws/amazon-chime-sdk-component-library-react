@@ -28,6 +28,27 @@ import {
 import { useDeviceController } from '../../../src/hooks/sdk/useDeviceController';
 
 describe('Meeting Provider', () => {
+  // jsdom does not implement WebRTC. amazon-chime-sdk-js >= 3.31 reads
+  // `RTCRtpSender.prototype` when constructing a DefaultMeetingSession, so
+  // provide a minimal stub for tests that join a real session.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const globalAny = global as any;
+  const originalRTCRtpSender = globalAny.RTCRtpSender;
+
+  beforeAll(() => {
+    if (typeof globalAny.RTCRtpSender === 'undefined') {
+      globalAny.RTCRtpSender = class MockRTCRtpSender {
+        static getCapabilities(): RTCRtpCapabilities {
+          return { codecs: [], headerExtensions: [] };
+        }
+      };
+    }
+  });
+
+  afterAll(() => {
+    globalAny.RTCRtpSender = originalRTCRtpSender;
+  });
+
   it('events are received correctly', async () => {
     // Mock the user agent to ensure the MeetingManager event subscription is
     // set up. Otherwise, the amazon-chime-sdk-js will not detect a valid
