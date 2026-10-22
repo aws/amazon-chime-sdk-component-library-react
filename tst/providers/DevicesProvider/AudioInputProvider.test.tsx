@@ -25,6 +25,7 @@ function makeController(): any {
     stopAudioInput: jest.fn().mockResolvedValue(undefined),
     stopVideoInput: jest.fn().mockResolvedValue(undefined),
     chooseAudioOutput: jest.fn().mockResolvedValue(undefined),
+    unmuteLocalAudioInputStream: jest.fn(),
     setDeviceLabelTrigger: jest.fn(),
     addDeviceChangeObserver: jest.fn(),
     removeDeviceChangeObserver: jest.fn(),

@@ -30,6 +30,8 @@ function makeController(): any {
     stopAudioInput: jest.fn().mockResolvedValue(undefined),
     stopVideoInput: jest.fn().mockResolvedValue(undefined),
     chooseAudioOutput: jest.fn().mockResolvedValue(undefined),
+    muteLocalAudioInputStream: jest.fn(),
+    unmuteLocalAudioInputStream: jest.fn(),
     setDeviceLabelTrigger: jest.fn(),
     addDeviceChangeObserver: jest.fn(),
     removeDeviceChangeObserver: jest.fn(),
@@ -193,6 +195,8 @@ describe('Meeting Manager', () => {
       // Not opted in => the controller join() created is destroyed and cleared, and device state is
       // fully reset. Consumers are told the controller is gone.
       expect(controller?.destroy).toHaveBeenCalled();
+      // Non-persist: the controller is destroyed, so its mute flag is not reset.
+      expect(controller?.unmuteLocalAudioInputStream).not.toHaveBeenCalled();
       expect(meetingManager.deviceController).toBeUndefined();
       expect(received[received.length - 1]).toBeUndefined();
       expect(meetingManager.selectedAudioOutputDevice).toBeNull();
@@ -316,6 +320,68 @@ describe('Meeting Manager', () => {
       expect(meetingManager.selectedVideoInputDevice).toBe('cam-1');
       // The session itself is torn down.
       expect(meetingManager.audioVideo).toBeNull();
+    });
+
+    it('resets the controller mute flag on leave, after the mic is stopped', async () => {
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+
+      await meetingManager.leave();
+
+      expect(
+        hostedController.unmuteLocalAudioInputStream
+      ).toHaveBeenCalledTimes(1);
+      // Unmuting before the stop would re-enable the live track while the session is still up.
+      expect(
+        hostedController.stopAudioInput.mock.invocationCallOrder[0]
+      ).toBeLessThan(
+        hostedController.unmuteLocalAudioInputStream.mock.invocationCallOrder[0]
+      );
+    });
+
+    it('does not mute the audio transform of the next meeting after leaving while muted', async () => {
+      // Model the JS SDK DefaultDeviceController: a mute flag that survives stopAudioInput and is
+      // applied to the transform device when the mic starts (Web Audio path).
+      let muted = false;
+      hostedController.muteLocalAudioInputStream.mockImplementation(() => {
+        muted = true;
+      });
+      hostedController.unmuteLocalAudioInputStream.mockImplementation(() => {
+        muted = false;
+      });
+      hostedController.startAudioInput.mockImplementation(
+        async (device: any) => {
+          await device?.mute?.(muted);
+          return {};
+        }
+      );
+
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      await meetingManager.startAudioInputDevice('mic-1');
+      // Mute in meeting 1 (realtimeMuteLocalAudio reaches the controller like this).
+      hostedController.muteLocalAudioInputStream();
+      await meetingManager.leave();
+
+      await meetingManager.join(
+        mockMeetingSessionConfiguration,
+        mockMeetingManagerJoinOptions
+      );
+      const voiceFocus = {
+        mute: jest.fn().mockResolvedValue(undefined),
+        intrinsicMedia: jest.fn().mockResolvedValue('mic-1'),
+        transformStream: jest.fn(),
+        stop: jest.fn(),
+        createAudioNode: jest.fn(),
+      };
+      await meetingManager.startAudioInputDevice(voiceFocus as any);
+
+      expect(voiceFocus.mute).toHaveBeenCalledWith(false);
+      expect(voiceFocus.mute).not.toHaveBeenCalledWith(true);
     });
 
     it('releases the hosted controller media on a pre-meeting leave (no meeting yet)', async () => {

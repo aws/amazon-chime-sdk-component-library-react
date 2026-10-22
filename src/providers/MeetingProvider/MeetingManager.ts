@@ -296,6 +296,14 @@ export class MeetingManager implements AudioVideoObserver {
     try {
       if (this.persistDeviceController) {
         await this.deviceController?.stopAudioInput();
+        // TODO: Remove this call once the minimum amazon-chime-sdk-js version is 3.33.0 or later.
+        // From 3.33.0, `stopAudioInput()` resets the mute flag itself, so this call is a no-op.
+        // The controller keeps its local mute flag after `stopAudioInput()`. If the user left muted,
+        // the stale flag mutes the audio transform started in the next meeting, even though that
+        // meeting is unmuted, so Voice Focus stays bypassed until the user mutes and unmutes.
+        // Reset the flag only after the mic is stopped: `audioVideo.stop()` runs after this, so
+        // unmuting earlier would re-enable the live track and send audio while leaving.
+        this.deviceController?.unmuteLocalAudioInputStream();
         this.audioInputStoppedOnLeave = !!this.selectedAudioInputDevice;
         await this.deviceController?.stopVideoInput();
       } else {

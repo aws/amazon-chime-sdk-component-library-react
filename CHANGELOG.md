@@ -17,6 +17,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Reset the device controller's local mute state in `leave()` when a `deviceController` is passed to `MeetingProvider`. After leaving a meeting while muted, Voice Focus enabled in the next meeting stayed bypassed until the user muted and unmuted.
+
 ## [3.13.0] - 2025-11-10
 
 ### Added
