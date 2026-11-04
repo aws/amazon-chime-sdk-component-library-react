@@ -4,7 +4,7 @@
 import React, { useEffect, useRef } from 'react';
 import styled from 'styled-components';
 
-import { useAudioVideo } from '../../../providers/AudioVideoProvider';
+import { useDeviceController } from '../../../hooks/sdk/useDeviceController';
 import { useVideoInputs } from '../../../providers/DevicesProvider';
 import { useLocalVideo } from '../../../providers/LocalVideoProvider';
 import { useLogger } from '../../../providers/LoggerProvider';
@@ -25,7 +25,7 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
   props
 ) => {
   const logger = useLogger();
-  const audioVideo = useAudioVideo();
+  const deviceController = useDeviceController();
   const { selectedDevice } = useVideoInputs();
   const videoEl = useRef<HTMLVideoElement>(null);
   const meetingManager = useMeetingManager();
@@ -35,22 +35,22 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
     const videoElement = videoEl.current;
     return () => {
       if (videoElement) {
-        audioVideo?.stopVideoPreviewForVideoInput(videoElement);
-        audioVideo?.stopVideoInput();
+        deviceController?.stopVideoPreviewForVideoInput(videoElement);
+        deviceController?.stopVideoInput();
         setIsVideoEnabled(false);
       }
     };
-  }, [audioVideo]);
+  }, [deviceController]);
 
   useEffect(() => {
     async function startPreview(): Promise<void> {
-      if (!audioVideo || !selectedDevice || !videoEl.current) {
+      if (!deviceController || !selectedDevice || !videoEl.current) {
         return;
       }
 
       try {
         await meetingManager.startVideoInputDevice(selectedDevice);
-        audioVideo.startVideoPreviewForVideoInput(videoEl.current);
+        deviceController.startVideoPreviewForVideoInput(videoEl.current);
         setIsVideoEnabled(true);
       } catch (error) {
         logger.error('Failed to start video preview');
@@ -58,7 +58,7 @@ export const PreviewVideo: React.FC<React.PropsWithChildren<BaseSdkProps>> = (
     }
 
     startPreview();
-  }, [audioVideo, selectedDevice]);
+  }, [deviceController, selectedDevice]);
 
   return <StyledPreview {...props} ref={videoEl} />;
 };

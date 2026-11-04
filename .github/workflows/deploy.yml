@@ -1,6 +1,7 @@
 name: Deploy Components Demo App Workflow
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - main

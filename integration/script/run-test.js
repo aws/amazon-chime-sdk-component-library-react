@@ -213,21 +213,27 @@ const startTesting = () => {
 };
 
 const terminateTestDemo = () => {
-  const demoPid = runSync(
-    'lsof',
-    ['-i', ':9000', '-t'],
-    null,
-    (printOutput = false)
-  );
-  if (demoPid) kill(demoPid, 'SIGKILL');
-
-  const serverPid = runSync(
-    'lsof',
-    ['-i', ':8080', '-t'],
-    null,
-    (printOutput = false)
-  );
-  if (serverPid) kill(serverPid, 'SIGKILL');
+  // lsof prints one pid per line, and kill() throws on a multi line string,
+  // which would skip checkTestResult.
+  for (const port of [9000, 8080]) {
+    const output = runSync(
+      'lsof',
+      ['-i', `:${port}`, '-t'],
+      null,
+      (printOutput = false)
+    );
+    output
+      .split('\n')
+      .map((line) => Number.parseInt(line, 10))
+      .filter((pid) => Number.isInteger(pid))
+      .forEach((pid) => {
+        try {
+          kill(pid, 'SIGKILL');
+        } catch (error) {
+          // The process may have already exited.
+        }
+      });
+  }
   console.log(green, 'Terminated the test demo');
 };
 

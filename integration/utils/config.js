@@ -32,7 +32,10 @@ const config = {
         'ignore-gpu-blacklist',
         'test-type',
         'disable-gpu',
-        '--disable-features=EnableEphemeralFlashPermission'
+        '--disable-features=EnableEphemeralFlashPermission',
+        // A narrow window clips the roster nameplates away.
+        '--window-size=1280,720',
+        ...(process.env.HEADLESS_MODE === 'true' ? ['--headless=new'] : []),
       ],
     },
   },

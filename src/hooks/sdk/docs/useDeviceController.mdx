@@ -1,0 +1,61 @@
+import { Meta } from '@storybook/blocks';
+
+<Meta title="SDK Hooks/useDeviceController" />
+
+# useDeviceController
+
+The `useDeviceController` hook returns the current device controller from the `MeetingManager`. It is available before a meeting when a `deviceController` was passed to `MeetingProvider`, and during a meeting; otherwise it returns `undefined`. Use it to build custom pre-meeting device UIs.
+
+### Return Value
+
+```javascript
+deviceController: DeviceController | undefined;
+```
+
+## Importing
+
+```javascript
+import { useDeviceController } from 'amazon-chime-sdk-component-library-react';
+```
+
+## Usage
+
+The hook depends on the `MeetingProvider`.
+
+```jsx
+import React, { useEffect, useState } from 'react';
+import {
+  MeetingProvider,
+  useDeviceController,
+} from 'amazon-chime-sdk-component-library-react';
+
+const App = () => (
+  <MeetingProvider>
+    <MicrophoneList />
+  </MeetingProvider>
+);
+
+const MicrophoneList = () => {
+  const deviceController = useDeviceController();
+  const [microphones, setMicrophones] = useState([]);
+
+  useEffect(() => {
+    if (!deviceController) {
+      return;
+    }
+    deviceController.listAudioInputDevices().then(setMicrophones);
+  }, [deviceController]);
+
+  return (
+    <ul>
+      {microphones.map((mic) => (
+        <li key={mic.deviceId}>{mic.label}</li>
+      ))}
+    </ul>
+  );
+};
+```
+
+### Dependencies
+
+- `MeetingProvider`

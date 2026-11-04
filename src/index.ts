@@ -131,6 +131,7 @@ export {
 } from './providers/DevicesProvider';
 export { useLocalAudioOutput } from './providers/LocalAudioOutputProvider';
 export { useLocalVideo } from './providers/LocalVideoProvider';
+export { useDeviceController } from './hooks/sdk/useDeviceController';
 export {
   useContentShareState,
   useContentShareControls,
