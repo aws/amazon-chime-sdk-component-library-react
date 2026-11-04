@@ -44,7 +44,7 @@
     "fast-memoize": "^2.5.2",
     "lodash.isequal": "^4.5.0",
     "throttle-debounce": "^2.3.0",
-    "uuid": "^8.0.0"
+    "uuid": "^14.0.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.21.4",
