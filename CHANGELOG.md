@@ -17,8 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Update the `amazon-chime-sdk-js` dev and peer dependency to `^3.33.0`. That release resets the
   local mute state on `stopAudioInput()`, so with a `deviceController` passed to `MeetingProvider`,
-  leaving a meeting while muted no longer leaves Amazon Voice Focus bypassed in the next meeting. It
-  also unbinds the destroyed `EventController` from a reused device controller.
+  leaving a meeting while muted no longer leaves Amazon Voice Focus bypassed in the next meeting.
 
 ### Fixed
 
