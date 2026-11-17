@@ -9,8 +9,6 @@ let port = 8080;
 let protocol = 'http';
 let options = {};
 
-// Create meetings with the Amazon Chime SDK meetings namespace. The legacy `AWS.Chime` meeting
-// APIs reject calls with "Not authorized to call service with Account Id".
 const chimeSDKMeetings = new AWS.ChimeSDKMeetings({ region: 'us-east-1' });
 
 const meetingCache = {};
