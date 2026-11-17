@@ -62,6 +62,8 @@ options?: {
   deviceLabels?: DeviceLabels | DeviceLabelTrigger;
 
   // Override the default event controller in the Amazon Chime SDK for JavaScript.
+  // MeetingManager destroys it when the meeting stops if it implements `destroy()`,
+  // so create a new one for each `join()`.
   eventController?: EventController;
 
   // If you want to enable Amazon Voice Focus feature, you should enable Web Audio for the meeting and pass the `enableWebAudio` prop with value set to `true`.
@@ -276,6 +278,8 @@ The Amazon Chime SDK for JavaScript sends meeting events to the Amazon Chime bac
 This helps to improve your meeting experience. For more information, check the [client event ingestion guide](https://aws.github.io/amazon-chime-sdk-js/modules/clientevent_ingestion.html) in the Amazon Chime SDK for JavaScript guides.
 
 To opt-out of event ingestion from the Amazon Chime SDK for JavaScript, provide a `DefaultEventController` with a `NoOpEventReporter` as the `eventReporter` while joining the meeting.
+
+`MeetingManager` destroys the `eventController` passed to `join()` when the meeting stops, if it implements `destroy()`. Create a new one for each `join()`, as the example below does.
 
 ```jsx
 import React from 'react';
