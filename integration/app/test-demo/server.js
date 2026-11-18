@@ -9,7 +9,7 @@ let port = 8080;
 let protocol = 'http';
 let options = {};
 
-const chime = new AWS.Chime({ region: 'us-east-1' });
+const chimeSDKMeetings = new AWS.ChimeSDKMeetings({ region: 'us-east-1' });
 
 const meetingCache = {};
 const attendeeCache = {};
@@ -36,9 +36,10 @@ const server = require(protocol).createServer(
         const region = query.region || 'us-east-1';
 
         if (!meetingCache[title]) {
-          meetingCache[title] = await chime
+          meetingCache[title] = await chimeSDKMeetings
             .createMeeting({
               ClientRequestToken: uuidv4(),
+              ExternalMeetingId: title.substring(0, 64),
               MediaRegion: region
             })
             .promise();
@@ -49,7 +50,7 @@ const server = require(protocol).createServer(
             Title: title,
             Meeting: meetingCache[title].Meeting,
             Attendee: (
-              await chime
+              await chimeSDKMeetings
                 .createAttendee({
                   MeetingId: meetingCache[title].Meeting.MeetingId,
                   ExternalUserId: uuidv4()
