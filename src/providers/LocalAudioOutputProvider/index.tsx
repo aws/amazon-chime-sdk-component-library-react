@@ -30,7 +30,7 @@ export const LocalAudioOutputProvider: React.FC<
       return;
     }
 
-    if (audioRef.current) {
+    if (audioRef.current && isAudioOn) {
       (async (element: HTMLAudioElement) => {
         try {
           await audioVideo.bindAudioElement(element);
