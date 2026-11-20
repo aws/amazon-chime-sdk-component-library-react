@@ -295,6 +295,8 @@ Construct a `DefaultDeviceController` from the Amazon Chime SDK for JavaScript a
 
 To receive device and meeting events, provide an optional `eventController`. Pass one to `MeetingManager.join()` as shown in the client event ingestion example below, or construct the device controller with your own `EventController` implementation to also capture device events before the meeting.
 
+An `eventController` you construct the device controller with stays on the controller across meetings. `MeetingManager` destroys the `eventController` passed to `join()` when the meeting stops, if it implements `destroy()`. To use one instance for both, create a new instance for each `join()` and set it on the device controller too.
+
 ```jsx
 import { useEffect, useState } from 'react';
 import { DefaultDeviceController } from 'amazon-chime-sdk-js';

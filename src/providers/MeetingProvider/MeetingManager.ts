@@ -3,6 +3,7 @@
 
 import {
   ActiveSpeakerPolicy,
+  AsyncScheduler,
   AudioInputDevice,
   AudioVideoFacade,
   AudioVideoObserver,
@@ -16,7 +17,6 @@ import {
   EventName,
   EventObserver,
   isAudioTransformDevice,
-  isDestroyable,
   Logger,
   MeetingSessionConfiguration,
   MeetingSessionStatus,
@@ -124,16 +124,6 @@ export class MeetingManager implements AudioVideoObserver {
   // Set when `leave()` stops the persisted controller's mic; the next `listAndSelectDevices` restarts it.
   private audioInputStoppedOnLeave = false;
 
-  /**
-   * When neither the caller (`join()`) nor the device controller supplies an eventController,
-   * `DefaultMeetingSession` creates a `DefaultEventController` scoped to that session and binds it onto
-   * the device controller. This flags `leave()` to destroy and unbind it: when the device controller
-   * persists across meetings, the next join must create a fresh `DefaultEventController` scoped to the
-   * new session, which only happens if the controller has no eventController. A builder-supplied
-   * eventController — whether built into the controller or passed to `join()` — is left untouched.
-   */
-  private clearDefaultEventControllerOnLeave = false;
-
   getDeviceLabels(): DeviceLabels | DeviceLabelTrigger {
     return this.deviceLabels;
   }
@@ -221,9 +211,6 @@ export class MeetingManager implements AudioVideoObserver {
         );
       }
     }
-
-    this.clearDefaultEventControllerOnLeave =
-      !eventController && !this.deviceController.eventController;
 
     this.meetingSession = new DefaultMeetingSession(
       meetingSessionConfiguration,
@@ -387,37 +374,32 @@ export class MeetingManager implements AudioVideoObserver {
     }
 
     this.publishMeetingStatus();
-    // Tear down an SDK-created event controller only after the terminal event has published.
-    // notifyStop publishes it synchronously and dispatches this observer on a later tick, so the
-    // controller's configuration is still live for that publish. Unbind so the next join creates a
-    // fresh controller, then destroy to release the reporter's timer and window listeners.
-    if (
-      this.persistDeviceController &&
-      this.clearDefaultEventControllerOnLeave &&
-      this.deviceController?.eventController
-    ) {
-      const ownedEventController = this.deviceController.eventController;
-      this.deviceController.eventController = undefined;
-      if (isDestroyable(ownedEventController)) {
-        await ownedEventController.destroy();
-      }
-    }
     this.audioVideo?.removeObserver(this.audioVideoObservers);
-    this.leave();
+    await this.leave();
   };
 
   setupAudioVideoObservers(): void {
-    if (!this.audioVideo) {
+    // Capture this session for the stop handler: `leave()` resets `this.meetingSession` before the SDK
+    // fires `audioVideoDidStop`, and the next `join()` replaces it.
+    const meetingSession = this.meetingSession;
+    if (!meetingSession) {
       return;
     }
 
     this.audioVideoObservers = {
       audioVideoDidStart: this.audioVideoDidStart,
       audioVideoDidStartConnecting: this.audioVideoDidStartConnecting,
-      audioVideoDidStop: this.audioVideoDidStop,
+      audioVideoDidStop: async (
+        sessionStatus: MeetingSessionStatus
+      ): Promise<void> => {
+        await this.audioVideoDidStop(sessionStatus);
+        // The SDK dispatches each `audioVideoDidStop` observer on its own `AsyncScheduler.nextTick`,
+        // and `destroy()` clears the observers. Destroy on a later tick so every observer runs first.
+        AsyncScheduler.nextTick(() => meetingSession.destroy());
+      },
     };
 
-    this.audioVideo.addObserver(this.audioVideoObservers);
+    meetingSession.audioVideo.addObserver(this.audioVideoObservers);
   }
 
   async updateDeviceLists(): Promise<void> {
