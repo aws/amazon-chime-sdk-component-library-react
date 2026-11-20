@@ -392,7 +392,18 @@ export class MeetingManager implements AudioVideoObserver {
       audioVideoDidStop: async (
         sessionStatus: MeetingSessionStatus
       ): Promise<void> => {
-        await this.audioVideoDidStop(sessionStatus);
+        // Skip a late stop from a previous meeting after the app joined the next one.
+        if (
+          // Local leave: the app called `leave()`, which resets `this.meetingSession` to null in
+          // `resetSessionState()` before the SDK fires `audioVideoDidStop`.
+          this.meetingSession === null ||
+          // Stopped without a local leave, such as the meeting ending for everyone, the attendee
+          // being removed, joining from another device, or a connection failure. The current
+          // session is still the one this observer captured.
+          this.meetingSession === meetingSession
+        ) {
+          await this.audioVideoDidStop(sessionStatus);
+        }
         // The SDK dispatches each `audioVideoDidStop` observer on its own `AsyncScheduler.nextTick`,
         // and `destroy()` clears the observers. Destroy on a later tick so every observer runs first.
         AsyncScheduler.nextTick(() => meetingSession.destroy());

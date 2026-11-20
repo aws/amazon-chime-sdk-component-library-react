@@ -501,6 +501,23 @@ describe('Meeting Manager', () => {
       expect(secondSession.destroy).not.toHaveBeenCalled();
     });
 
+    it('a late audioVideoDidStop from the previous meeting does not leave the next meeting or change its status', async () => {
+      await meetingManager.join(mockMeetingSessionConfiguration);
+      const firstObserver = registeredObserver(meetingManager);
+      await meetingManager.leave();
+
+      await meetingManager.join(mockMeetingSessionConfiguration);
+      const secondSession: any = meetingManager.meetingSession;
+      const statusBefore = meetingManager.meetingStatus;
+
+      await stop(firstObserver, leftStatus());
+
+      expect(secondSession.audioVideo.stop).not.toHaveBeenCalled();
+      expect(secondSession.audioVideo.removeObserver).not.toHaveBeenCalled();
+      expect(meetingManager.meetingSession).toBe(secondSession);
+      expect(meetingManager.meetingStatus).toBe(statusBefore);
+    });
+
     it('destroys the session when the controller is not persisted', async () => {
       const manager = new MeetingManager(new ConsoleLogger('MeetingManager'));
       await manager.join(mockMeetingSessionConfiguration);
