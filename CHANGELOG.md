@@ -25,6 +25,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Keep the next meeting connected when the previous meeting's `audioVideoDidStop` arrives after the
+  next `join()`.
+
 ## [3.13.0] - 2025-11-10
 
 ### Added
