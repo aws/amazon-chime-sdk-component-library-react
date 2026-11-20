@@ -25,6 +25,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Keep the next meeting connected when `join()` is called right after `leave()` and the previous
+  meeting's `audioVideoDidStop` arrives after it. `MeetingManager` now updates the meeting status and
+  leaves only for the current session, and destroys the previous session.
+
 ## [3.13.0] - 2025-11-10
 
 ### Added
